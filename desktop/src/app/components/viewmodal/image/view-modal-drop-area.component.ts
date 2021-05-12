@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {DropAreaComponent} from '../../image/grid/drop-area.component';
 import {ImageUploader} from '../../image/upload/image-uploader';
 import {Messages} from '../../messages/messages';
@@ -11,6 +11,10 @@ import {Messages} from '../../messages/messages';
 /**
  */
 export class ViewModalDropAreaComponent extends DropAreaComponent {
+
+    @ViewChild('popover', { static: false }) private popover: any;
+
+    @Output() startEditImages = new EventEmitter<any>();
 
     public constructor(
         imageUploader: ImageUploader,

@@ -48,6 +48,6 @@ export class PopoverMenuComponent {
 
     public async openImageViewModal() {
 
-        await this.viewModalLauncher.openImageViewModal(this.document, 'single');
+        await this.viewModalLauncher.openImageViewModal(this.document, 'view');
     }
 }

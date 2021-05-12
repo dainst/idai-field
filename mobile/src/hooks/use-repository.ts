@@ -17,10 +17,10 @@ const useRepository = (
 
     useEffect(() => {
 
-        if (!pouchdbManager) return;
+        if (!pouchdbManager || !pouchdbManager.open || !categories) return;
         
         setupRepository(project, username, categories, pouchdbManager, setRepository);
-    }, [project, username, categories, pouchdbManager]);
+    }, [project, username, categories, pouchdbManager, pouchdbManager?.open]);
 
     return repository;
 };

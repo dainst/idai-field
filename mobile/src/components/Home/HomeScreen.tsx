@@ -1,7 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Preferences } from '../../models/preferences';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
@@ -25,6 +25,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
+
+    useEffect(() => setSelectedProject(preferences.recentProjects[0]), [preferences.recentProjects]);
     
 
     const openProject = useCallback((project: string) => {

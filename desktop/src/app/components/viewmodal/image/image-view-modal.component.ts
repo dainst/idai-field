@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument, Relations} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
@@ -13,7 +13,7 @@ import {ImageRelationsManager} from '../../../core/model/image-relations-manager
 
 export namespace ImageViewModalComponent {
 
-    export type Mode = 'single'|'multiple';
+    export type Mode = 'view'|'edit';
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedDocument: Document;
 
-    public mode: ImageViewModalComponent.Mode = 'single';
+    public mode: ImageViewModalComponent.Mode = 'view';
 
     public selected: Array<ImageDocument> = [];
 
@@ -58,7 +58,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public onImagesUploaded(event: any) {
 
-        console.log("imagesUploaded", event);
         this.loadImages();
     }
 
@@ -75,13 +74,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public getMainImage(): ImageDocument|undefined {
-
-        // return this.documents.find(document => this.isMainImage(document)); TODO enable
-        return undefined;
-    }
-
-
     public setMainImage() {
 
         if (this.selected.length !== 1) return;
@@ -92,20 +84,18 @@ export class ImageViewModalComponent extends ViewModalComponent {
             this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN].filter(targetId => {
                 return targetId !== mainImageId;
             })
-        ); // TODO persist!
+        );
 
-        // this.loadImages(); TODO
+        this.loadImages();
     }
 
 
-    public async initialize(documents?: Array<ImageDocument>,
-                            selectedDocument?: ImageDocument,
-                            linkedDocument?: Document) {
+    public async initialize(linkedDocument: Document) {
 
         this.linkedDocument = linkedDocument;
-        const docs = documents ?? await this.getImageDocuments(linkedDocument?.resource.relations.isDepictedIn);
+        const docs = await this.getImageDocuments(linkedDocument?.resource.relations.isDepictedIn);
         this.images = docs.map(ImageRowItem.ofDocument);
-        selectedDocument = selectedDocument ?? docs.length > 0 ? docs[0] : undefined;
+        const selectedDocument = docs.length > 0 ? docs[0] : undefined;
 
         if (selectedDocument) {
             this.selectedImage = this.images.find(
@@ -118,12 +108,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public setMode(mode: ImageViewModalComponent.Mode) {
 
         this.mode = mode;
-    }
-
-
-    public async onContextMenuItemClicked([_, documents]: [any, Array<Document /* should be ImageDocument*/>]) {
-
-        await this.removeImageLinks(documents as Array<ImageDocument>);
     }
 
 
@@ -150,9 +134,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async startEditImages() {
 
-        // this.menuService.setContext(MenuContext.DOCEDIT);
-
-        const imagePickerModal: NgbModalRef = this.modalService.open(
+        const imagePickerModal = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
         imagePickerModal.componentInstance.mode = 'depicts';
@@ -165,9 +147,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
             this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
                 .map(ImageRowItem.ofDocument);
         } catch {
-            // Image picker modal has been canceled
-        } finally {
-            // this.menuService.setContext(MenuContext.DOCEDIT);
+            // modal cancelled
         }
     }
 
@@ -183,11 +163,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     private async loadImages() {
 
-        // this.documents.sort((a, b) => {
-                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-            // }); ??
-
-        // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
         this.selectedImage =

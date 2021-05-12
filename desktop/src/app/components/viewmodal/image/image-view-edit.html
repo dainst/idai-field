@@ -1,0 +1,17 @@
+<div id="image-grid-container" (window:resize)="onResize()">
+    <image-grid
+        *ngIf="documents && documents.length > 0"
+        #imageGrid [nrOfColumns]="4" [showDropArea]="true" [selected]="selected" [documents]="documents"
+        [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15" [main]="documents && documents.length > 2 && documents[1]"
+        (onClick)="select($event)">
+        <view-modal-drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document"
+            (startEditImages)="startEditImages.emit()">
+        </view-modal-drop-area>
+    </image-grid>
+
+    <div *ngIf="!documents || documents.length === 0">
+        <view-modal-drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document"
+            (startEditImages)="startEditImages.emit()">
+        </view-modal-drop-area>
+    </div>
+</div>

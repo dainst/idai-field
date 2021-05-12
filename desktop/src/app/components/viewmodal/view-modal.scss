@@ -1,4 +1,4 @@
-@import 'image/image-view-multiple.scss';
+@import 'image/image-view-edit.scss';
 @import 'resource/resource-view-modal';
 
 ngb-modal-window {
@@ -16,7 +16,7 @@ ngb-modal-window {
   background-color: $modal-header-background-color;
   border-bottom: 1px solid #ccc;
 
-  div {
+  .heading {
     height: 40px;
     font-size: 1.5em;
     line-height: 40px;

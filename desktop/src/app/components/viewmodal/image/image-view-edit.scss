@@ -3,6 +3,14 @@ $bg-c: #f8f9fa;
 .modal-content {
     background-color: $bg-c;
 
+    .no-images-message {
+        top: 50%;
+        padding: 20px;
+        background-color: white;
+        text-align: center;
+        position: relative;
+    }
+
     #view-modal-body {
         background-color: $bg-c;
 
@@ -28,19 +36,33 @@ $bg-c: #f8f9fa;
             overflow-y: auto;
             margin: 10px 0;
 
-            // .image-grid-container { TODO clean up
-              // height: calc(100vh - 101px);
-              // overflow-x: hidden;
-              // padding: 0 !important;
-              // margin: 0 -15px;
-            // }
-
             .btn-group .btn {
                 margin-left: 0.5rem;
             }
 
             .image-grid {
                 margin-top: 0;
+            }
+
+            #link-images-button,
+            #add-images-button {
+                border-style: none;
+                width: 100%;
+                background-color: white;
+                color: #5572a1;
+
+                &:hover {
+                    background: darken(white, 5%)
+                }
+            }
+
+            .popover-body {
+                padding: 5px !important;
+            }
+
+            #add-images-button {
+                border-bottom-style: solid;
+                border-bottom-color: lighten(#5572a1, 33%);
             }
         }
     }

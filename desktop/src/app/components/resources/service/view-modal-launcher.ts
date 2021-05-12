@@ -25,11 +25,7 @@ export class ViewModalLauncher {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalRef.componentInstance.setMode(mode);
-        await modalRef.componentInstance.initialize(
-            undefined,
-            undefined,
-            document
-        );
+        await modalRef.componentInstance.initialize(document);
         await modalRef.result;
 
         this.menuService.setContext(MenuContext.DEFAULT);

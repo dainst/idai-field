@@ -1,6 +1,6 @@
 import { PouchdbManager } from 'idai-field-core';
 import PouchDB from 'pouchdb-react-native';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const usePouchdbManager = (project: string): PouchdbManager | undefined => {
 
@@ -8,7 +8,16 @@ const usePouchdbManager = (project: string): PouchdbManager | undefined => {
 
     useEffect(() => {
         
-        buildPouchDbManager(project, setPouchdbManager);
+        const managerPromise = buildPouchDbManager(project).then(manager => {
+            setPouchdbManager(manager);
+            return manager;
+        });
+        return () => {
+            managerPromise.then(manager => {
+                console.log('close', manager.getDb().name);
+                manager.close();
+            });
+        };
     }, [project]);
 
     return pouchdbManager;
@@ -17,12 +26,9 @@ const usePouchdbManager = (project: string): PouchdbManager | undefined => {
 export default usePouchdbManager;
 
 
-const buildPouchDbManager = async (
-    project: string,
-    setPouchdbManager: React.Dispatch<SetStateAction<PouchdbManager | undefined>>
- ) => {
+const buildPouchDbManager = async (project: string): Promise<PouchdbManager> => {
 
     const manager = new PouchdbManager((name: string) => new PouchDB(name));
     await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, false);
-    setPouchdbManager(manager);
+    return manager;
 };

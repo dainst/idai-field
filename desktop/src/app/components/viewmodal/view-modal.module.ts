@@ -7,7 +7,7 @@ import {WidgetsModule} from '../widgets/widgets.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
-import {ImageViewMultipleComponent} from './image/image-view-multiple.component';
+import {ImageViewEditComponent} from './image/image-view-edit.component';
 import {ViewModalDropAreaComponent} from './image/view-modal-drop-area.component';
 
 
@@ -22,7 +22,7 @@ import {ViewModalDropAreaComponent} from './image/view-modal-drop-area.component
     ],
     declarations: [
         ImageViewModalComponent,
-        ImageViewMultipleComponent,
+        ImageViewEditComponent,
         ResourceViewModalComponent,
         ViewModalDropAreaComponent
     ],

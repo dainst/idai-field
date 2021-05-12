@@ -6,14 +6,14 @@ import {ImageUploadResult} from '../../image/upload/image-uploader';
 
 
 @Component({
-    selector: 'image-view-multiple',
-    templateUrl: './image-view-multiple.html'
+    selector: 'image-view-edit',
+    templateUrl: './image-view-edit.html'
 })
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class ImageViewMultipleComponent implements OnChanges {
+export class ImageViewEditComponent implements OnChanges {
 
     @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
 
@@ -27,6 +27,8 @@ export class ImageViewMultipleComponent implements OnChanges {
     @Input() selected: Array<ImageDocument> = [];
 
     @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
+
+    @Output() startEditImages = new EventEmitter<any>();
 
 
     ngOnChanges() {
@@ -45,7 +47,7 @@ export class ImageViewMultipleComponent implements OnChanges {
     }
 
 
-    public onResize() { // TODO review
+    public onResize() {
 
         if (!this.images || this.images.length === 0) return;
         this.imageGrid.calcGrid();

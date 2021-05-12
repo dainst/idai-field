@@ -47,7 +47,7 @@ export class ImageViewEditComponent implements OnChanges {
     }
 
 
-    public onResize() { // TODO review
+    public onResize() {
 
         if (!this.images || this.images.length === 0) return;
         this.imageGrid.calcGrid();

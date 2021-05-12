@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument, Relations} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
@@ -111,12 +111,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public async onContextMenuItemClicked([_, documents]: [any, Array<Document /* should be ImageDocument*/>]) {
-
-        await this.removeImageLinks(documents as Array<ImageDocument>);
-    }
-
-
     public async removeLinks() {
 
         await this.removeImageLinks(this.selected);
@@ -140,9 +134,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async startEditImages() {
 
-        // this.menuService.setContext(MenuContext.DOCEDIT);
-
-        const imagePickerModal: NgbModalRef = this.modalService.open(
+        const imagePickerModal = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
         imagePickerModal.componentInstance.mode = 'depicts';
@@ -154,9 +146,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
             this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
             this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
                 .map(ImageRowItem.ofDocument);
-        } catch { // modal cancelled
-        } finally {
-            // this.menuService.setContext(MenuContext.DOCEDIT);
+        } catch {
+            // modal cancelled
         }
     }
 
@@ -172,11 +163,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     private async loadImages() {
 
-        // this.documents.sort((a, b) => {
-                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-            // }); ??
-
-        // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
         this.selectedImage =

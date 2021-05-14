@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
-import { filter, flow, isEmpty, keys } from 'tsfun';
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
 import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
+
 
 /**
  * @author Sebastian Cuy
@@ -322,7 +322,7 @@ export class PouchdbDatastore {
 
         const clonedDocument = Document.clone(document);
         PouchdbDatastore.replaceCategoryWithType(clonedDocument);
-        return PouchdbDatastore.removeEmptyRelationArrays(clonedDocument);
+        return Document.removeEmptyRelationArrays(clonedDocument);
     }
 
 
@@ -333,21 +333,5 @@ export class PouchdbDatastore {
             document.resource.type = document.resource.category;
             delete document.resource.category;
         }
-    }
-
-
-    private static removeEmptyRelationArrays(document: Document): Document {
-
-        return Document.removeRelations(PouchdbDatastore.getEmptyRelationFields(document))(document);
-    }
-
-
-    private static getEmptyRelationFields(document: Document): string[] {
-
-        return flow(
-            document.resource.relations,
-            filter(isEmpty),
-            keys
-        );
     }
 }

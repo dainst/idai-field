@@ -1,8 +1,7 @@
-import { Lookup, ResourceId } from 'idai-field-core';
+import { Lookup, ResourceId, updateRelations } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { includedIn, is, isNot, keysValues, on } from 'tsfun';
 import { InverseRelationsMap } from 'idai-field-core';
-import { updateRelations } from '../../../model/update-relations';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith, unionOfDocuments } from '../utils';
 

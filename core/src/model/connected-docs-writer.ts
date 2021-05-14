@@ -1,12 +1,11 @@
-//import { Document, Datastore, Name, Relations, toResourceId } from 'idai-field-core';
-import { Document, toResourceId } from "./document";
-import { Datastore } from "../datastore/datastore";
-import { Name } from "../tools/named";
-import { Relations } from "./relations";
-import { flatMap, flow, subtract, to } from 'tsfun';
-import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { Document, toResourceId,  } from './document';
+import { Relations } from './relations';
+import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
+import { Name } from "../tools/named";
+import { flatMap, flow, subtract, to } from 'tsfun';
+import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
+import { ProjectConfiguration } from '../configuration/project-configuration';
 
 const NAME = 'name';
 

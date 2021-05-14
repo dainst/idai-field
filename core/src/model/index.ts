@@ -31,3 +31,5 @@ export { Resource } from './resource';
 export { ValuelistDefinition } from './valuelist-definition';
 export { ConfigurationDocument } from './configuration-document';
 export { ConfigurationResource } from './configuration-resource';
+export { ConnectedDocsWriter } from './connected-docs-writer';
+export { updateRelations } from './update-relations';

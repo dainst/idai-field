@@ -1,6 +1,8 @@
 import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
     Pair, pairWith, Predicate, remove, to, update, values, zip } from 'tsfun';
-import { Document, Relations, Resource } from './';
+import { Document } from './document';
+import { Resource } from './resource';
+import { Relations } from './relations'
 import { Name, replaceIn } from "../tools";
 import { InverseRelationsMap } from "../configuration";
 

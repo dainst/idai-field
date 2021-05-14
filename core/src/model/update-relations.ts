@@ -3,8 +3,8 @@ import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt,
 import { Document } from './document';
 import { Resource } from './resource';
 import { Relations } from './relations'
-import { Name, replaceIn } from "../tools";
-import { InverseRelationsMap } from "../configuration";
+import { Name, replaceIn } from '../tools';
+import { InverseRelationsMap } from '../configuration';
 
 
 
@@ -29,7 +29,9 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
                                 inverseRelationsMap: InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
-    const cloneOfTargetDocuments = targetDocuments.map(Document.clone);
+    const cloneOfTargetDocuments = targetDocuments
+        .map(Document.clone)
+        .map(Document.removeEmptyRelationArrays);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);

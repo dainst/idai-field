@@ -1,8 +1,8 @@
-import {Resource} from './resource';
-import {filter, to, isAssociative, isPrimitive, map} from 'tsfun';
-import {NewDocument} from './new-document';
-import {Action} from './action';
-import {ObjectUtils} from '../tools/object-utils';
+import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys } from 'tsfun';
+import { Resource } from './resource';
+import { NewDocument } from './new-document';
+import { Action } from './action';
+import { ObjectUtils } from '../tools/object-utils';
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -90,6 +90,12 @@ export module Document {
     }
 
 
+    export function removeEmptyRelationArrays(document: Document) {
+
+        return removeRelations(getEmptyRelationFields(document))(document);
+    }
+
+
     export function hasRelationTarget(document: Document, relationName: string, targetId: string): boolean {
 
         return Resource.hasRelationTarget(document.resource, relationName, targetId);
@@ -99,5 +105,15 @@ export module Document {
     export function hasRelations(document: Document, relationName: string): boolean {
 
         return Resource.hasRelations(document.resource, relationName);
+    }
+
+
+    function getEmptyRelationFields(document: Document): string[] {
+
+        return flow(
+            document.resource.relations,
+            filter(isEmpty),
+            keys
+        );
     }
 }

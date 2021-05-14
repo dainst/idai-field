@@ -1,6 +1,6 @@
-import {Document} from 'idai-field-core';
-import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
-import {ProjectConfiguration} from 'idai-field-core';
+import {Document} from '../../src/model/document';
+import {RelationsManager} from '../../src/model/relations-manager';
+import {ProjectConfiguration} from '../../src/configuration/project-configuration';
 
 
 /**
@@ -68,7 +68,7 @@ describe('RelationsManager', () => {
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
         persistenceManager = new RelationsManager(
-            mockDatastore, projectConfiguration, mockSettingsProvider
+            mockDatastore, projectConfiguration, mockSettingsProvider.getSettings().username
         );
 
         mockDatastore.get.and.callFake(getFunction);

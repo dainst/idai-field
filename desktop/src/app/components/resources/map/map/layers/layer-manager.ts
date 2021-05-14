@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FieldDocument, ImageDocument, Relations, moveInArray, Datastore } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { Document, RelationsManager } from 'idai-field-core';
 import * as tsfun from 'tsfun';
-import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
 
 

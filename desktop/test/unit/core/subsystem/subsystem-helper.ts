@@ -1,6 +1,6 @@
 import {
     AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
-    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId
+    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId, RelationsManager
 } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
@@ -14,7 +14,6 @@ import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/vi
 import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../../src/app/core/import/import/utils';
 import { ImageRelationsManager } from '../../../../src/app/core/model/image-relations-manager';
-import { RelationsManager } from '../../../../src/app/core/model/relations-manager';
 import { Validator } from '../../../../src/app/core/model/validator';
 import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade';
@@ -146,7 +145,7 @@ export async function createApp(projectName = 'testdb') {
     const relationsManager = new RelationsManager(
         datastore,
         projectConfiguration,
-        settingsProvider
+        settingsProvider.getSettings().username
     );
 
     const imageRelationsManager = new ImageRelationsManager(

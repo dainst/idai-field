@@ -5,14 +5,13 @@ import { Category, Document, Datastore, IdGenerator, SyncService } from 'idai-fi
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ProjectCategories } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
+import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';
 import { JavaToolExecutor } from '../../core/java/java-tool-executor';
 import { ImageRelationsManager } from '../../core/model/image-relations-manager';
 import { ModelUtil } from '../../core/model/model-util';
-import { RelationsManager } from '../../core/model/relations-manager';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { ExtensionUtil } from '../../core/util/extension-util';

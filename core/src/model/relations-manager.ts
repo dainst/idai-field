@@ -1,5 +1,14 @@
-import { Injectable } from '@angular/core';
-import { DatastoreErrors, Document, Datastore, FindIdsResult, FindResult, Relations, NewDocument, ProjectConfiguration, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID, ConnectedDocsWriter } from 'idai-field-core';
+
+import { Document } from './document';
+import { DatastoreErrors } from '../datastore/datastore-errors'
+import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
+import { Relations } from './relations';
+import { ConnectedDocsWriter } from './connected-docs-writer'
+import { NewDocument } from './new-document';
+import { ProjectConfiguration } from '../configuration/project-configuration'
+import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
+import {Query } from './query'
+
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
@@ -7,7 +16,7 @@ import {
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 
 
-@Injectable()
+
 /**
  * Maintains a consistent state of relations between the
  * documents by updating related documents relations during update or delete operations.

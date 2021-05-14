@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {set, to} from 'tsfun';
-import {FieldDocument} from 'idai-field-core';
+import {FieldDocument, RelationsManager} from 'idai-field-core';
 import {DeleteModalComponent} from './delete-modal.component';
-import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {ProjectCategories} from 'idai-field-core';

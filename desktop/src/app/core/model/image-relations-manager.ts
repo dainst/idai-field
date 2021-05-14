@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories,
-    ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
+    ON_RESOURCE_ID, ResourceId, toResourceId, Forest, RelationsManager } from 'idai-field-core';
 import { flatten, includedIn, all, isDefined, isNot, on, separate, set, subtract, to, isnt, update, filter, not, rest, first } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
-import { RelationsManager } from './relations-manager';
 import DEPICTS = Relations.Image.DEPICTS;
 import ISDEPICTEDIN = Relations.Image.ISDEPICTEDIN;
 

@@ -1,7 +1,6 @@
 import { Category, Document, Datastore, FieldDefinition, NewDocument, Resource} from 'idai-field-core';
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
-import { ProjectConfiguration } from 'idai-field-core';
-import { RelationsManager } from '../model/relations-manager';
+import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Validations } from '../model/validations';
 import { Validator } from '../model/validator';
 import { trimFields } from '../util/trim-fields';

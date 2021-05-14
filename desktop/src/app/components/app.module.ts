@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, SyncService } from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, SyncService, RelationsManager } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
@@ -22,7 +22,6 @@ import { PouchDbFsImagestore } from '../core/images/imagestore/pouch-db-fs-image
 import { ImportValidator } from '../core/import/import/process/import-validator';
 import { InitializationProgress } from '../core/initialization-progress';
 import { ImageRelationsManager } from '../core/model/image-relations-manager';
-import { RelationsManager } from '../core/model/relations-manager';
 import { Validator } from '../core/model/validator';
 import { SettingsProvider } from '../core/settings/settings-provider';
 import { SettingsService } from '../core/settings/settings-service';
@@ -167,7 +166,14 @@ registerLocaleData(localeIt, 'it');
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.indexFacade,
             deps: [AppInitializerServiceLocator]
         },
-        RelationsManager,
+        {
+            provide: RelationsManager,
+            useFactory: (datastore: Datastore, 
+                        projectConfiguration: ProjectConfiguration, 
+                        settingsProvider: SettingsProvider) => 
+                            new RelationsManager(datastore, projectConfiguration, settingsProvider.getSettings().username),
+            deps: [Datastore, ProjectConfiguration, SettingsProvider]
+        },
         ImageRelationsManager,
         {
             provide: Validator,

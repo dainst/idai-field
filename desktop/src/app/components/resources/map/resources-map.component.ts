@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChangesStream, Datastore, FieldDocument, FieldGeometry } from 'idai-field-core';
-import { RelationsManager } from '../../../core/model/relations-manager';
+import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManager } from 'idai-field-core';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SettingsProvider } from '../../../core/settings/settings-provider';

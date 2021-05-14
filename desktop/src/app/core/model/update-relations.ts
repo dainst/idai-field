@@ -3,7 +3,6 @@ import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt,
 import { Document, Relations, Resource, Name, replaceIn } from 'idai-field-core';
 import { InverseRelationsMap } from '../configuration/inverse-relations-map';
 
-
 /**
  * Determines which targetDocuments need their relations updated, based
  * on the relations seen in <i>document</i> alone, and performs the updates.
@@ -25,7 +24,9 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
                                 inverseRelationsMap: InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
-    const cloneOfTargetDocuments = targetDocuments.map(Document.clone);
+    const cloneOfTargetDocuments = targetDocuments
+        .map(Document.clone)
+        .map(Document.removeEmptyRelationArrays);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);

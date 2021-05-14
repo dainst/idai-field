@@ -4,7 +4,6 @@ import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
 } from 'tsfun';
-import { SettingsProvider } from '../settings/settings-provider';
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 
 
@@ -23,7 +22,7 @@ export class RelationsManager {
     constructor(
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration,
-        private settingsProvider: SettingsProvider
+        private username: string
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -53,7 +52,7 @@ export class RelationsManager {
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash);
 
-        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.settingsProvider.getSettings().username);
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.username);
         return persistedDocument;
     }
 
@@ -138,7 +137,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash), this.settingsProvider.getSettings().username);
+            updated, [oldVersion].concat(revisionsToSquash), this.username);
         return updated as Document;
     }
 
@@ -146,7 +145,7 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document, this.settingsProvider.getSettings().username);
+            document, this.username);
         await this.datastore.remove(document);
     }
 
@@ -173,7 +172,7 @@ export class RelationsManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
-        const username = this.settingsProvider.getSettings().username;
+        const username = this.username;
 
         return document.resource.id
             ? this.datastore.update(

@@ -1,5 +1,6 @@
-import {Document, ProjectConfiguration} from 'idai-field-core';
-import {ConnectedDocsWriter} from '../../../../src/app/core/model/connected-docs-writer';
+import { ProjectConfiguration } from "../../src/configuration/project-configuration";
+import { Document } from "../../src/model/document";
+import { ConnectedDocsWriter } from '../../src/model/connected-docs-writer'
 
 /**
  * @author Daniel de Oliveira

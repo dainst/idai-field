@@ -1,4 +1,4 @@
-import {updateRelations} from '../../../../src/app/core/model/update-relations';
+import {updateRelations} from '../../src/model/update-relations';
 
 
 /**

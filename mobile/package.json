@@ -97,7 +97,8 @@
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
-          "varsIgnorePattern": "_"
+          "varsIgnorePattern": "^_",
+          "argsIgnorePattern": "^_"
         }
       ],
       "@typescript-eslint/array-type": [

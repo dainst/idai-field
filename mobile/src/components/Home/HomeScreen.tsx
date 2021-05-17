@@ -1,5 +1,3 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Preferences } from '../../models/preferences';
@@ -8,18 +6,18 @@ import DeleteProjectModal from './DeleteProjectModal';
 
 
 interface HomeScreenProps {
-    navigation: StackNavigationProp<AppStackParamList, 'HomeScreen'>;
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
+    navigate: (screen: string) => void;
 }
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({
-    navigation,
     preferences,
     setCurrentProject,
-    deleteProject
+    deleteProject,
+    navigate,
 }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
@@ -36,8 +34,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         setSelectedProject(project);
         setCurrentProject(project);
-        navigation.navigate('DocumentsScreen');
-    }, [navigation, setCurrentProject]);
+        navigate('DocumentsScreen');
+    }, [navigate, setCurrentProject]);
 
 
     const onDeleteProject = useCallback((project: string) => {
@@ -70,7 +68,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 }
                 <IconButton
                     icon={ <Icon type="Ionicons" name="settings" /> }
-                    onPress={ () => navigation.navigate('SettingsScreen') }
+                    onPress={ () => navigate('SettingsScreen') }
                 />
             </Row>
             <Center flex={ 1 }>

@@ -56,11 +56,11 @@ export default function App(): ReactElement {
                 <NavigationContainer>
                     <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
                         <Stack.Screen name="HomeScreen">
-                            { (props) => <HomeScreen
-                                { ...props }
+                            { ({ navigation }) => <HomeScreen
                                 preferences={ preferences }
                                 setCurrentProject={ setCurrentProject }
                                 deleteProject={ deleteProject }
+                                navigate={ (screen: string) => navigation.navigate(screen) }
                             /> }
                         </Stack.Screen>
                         <Stack.Screen name="DocumentsScreen">

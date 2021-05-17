@@ -55,43 +55,13 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                <span *ngIf="!editing">
-                    <span *ngIf="getInputType() === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
-                    <span *ngIf="getInputType() === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</span>
-                    <span *ngIf="getInputType() === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</span>
-                    <span *ngIf="getInputType() === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</span>
-                    <span *ngIf="getInputType() === 'float'" i18n="@@config.inputType.float">Kommazahl</span>
-                    <span *ngIf="getInputType() === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</span>
-                    <span *ngIf="getInputType() === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</span>
-                    <span *ngIf="getInputType() === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</span>
-                    <span *ngIf="getInputType() === 'radio'" i18n="@@config.inputType.radio">Radiobutton</span>
-                    <span *ngIf="getInputType() === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</span>
-                    <span *ngIf="getInputType() === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</span>
-                    <span *ngIf="getInputType() === 'dating'" i18n="@@config.inputType.dating">Datierungsangabe</span>
-                    <span *ngIf="getInputType() === 'date'" i18n="@@config.inputType.date">Datum</span>
-                    <span *ngIf="getInputType() === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</span>
-                    <span *ngIf="getInputType() === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</span>
-                    <span *ngIf="getInputType() === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</span>
-                    <span *ngIf="getInputType() === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
-                </span>
+                <span *ngIf="!editing">{{getInputTypeLabel()}}</span>
                 <select *ngIf="editing" (change)="setInputType($event.target.value)" class="form-control">
-                    <option value="input" [selected]="getInputType() === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</option>
-                    <option value="multiInput" [selected]="getInputType() === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</option>
-                    <option value="text" [selected]="getInputType() === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</option>
-                    <option value="unsignedInt" [selected]="getInputType() === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</option>
-                    <option value="float" [selected]="getInputType() === 'float'" i18n="@@config.inputType.float">Kommazahl</option>
-                    <option value="unsignedFloat" [selected]="getInputType() === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</option>
-                    <option value="dropdown" [selected]="getInputType() === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</option>
-                    <option value="dropdownRange" [selected]="getInputType() === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</option>
-                    <option value="radio" [selected]="getInputType() === 'radio'" i18n="@@config.inputType.radio">Radiobutton</option>
-                    <option value="boolean" [selected]="getInputType() === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</option>
-                    <option value="checkboxes" [selected]="getInputType() === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</option>
-                    <option value="dating" [selected]="getInputType() === 'dating'" i18n="@@config.inputType.dating">Datierungsangabe</option>
-                    <option value="date" [selected]="getInputType() === 'date'" i18n="@@config.inputType.date">Datum</option>
-                    <option value="dimension" [selected]="getInputType() === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</option>
-                    <option value="literature" [selected]="getInputType() === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</option>
-                    <option value="geometry" [selected]="getInputType() === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</option>
-                    <option value="instanceOf" [selected]="getInputType() === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</option>
+                    <option *ngFor="let inputType of getAvailableInputTypes()"
+                            value="{{inputType.name}}"
+                            [selected]="getInputType() === inputType.name">
+                        {{inputType.label}}
+                    </option>
                 </select>
             </li>
 

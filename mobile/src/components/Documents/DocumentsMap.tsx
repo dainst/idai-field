@@ -49,10 +49,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             )
             .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
     }, [repository, navigation, toast]);
-
-   const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
         
-
     return (
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
@@ -60,8 +57,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
                     geoDocuments={ allDocuments.filter(doc => doc?.resource.geometry) }
-                    config={ config }
-                    navigateToDocument={ navigateToDocument } />
+                    config={ config } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>

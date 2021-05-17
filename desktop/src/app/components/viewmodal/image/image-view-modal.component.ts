@@ -105,6 +105,14 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
+    public async initializeWithoutLinkedDocument(imageDocument: ImageDocument,
+                                                 imageDocuments: Array<ImageDocument>) {
+
+        this.selectedImage = ImageRowItem.ofDocument(imageDocument);
+        this.images = imageDocuments.map(ImageRowItem.ofDocument);
+    }
+
+
     public setMode(mode: ImageViewModalComponent.Mode) {
 
         this.mode = mode;

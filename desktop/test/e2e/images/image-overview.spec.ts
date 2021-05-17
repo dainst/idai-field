@@ -216,7 +216,7 @@ describe('images --', function() {
     });
 
 
-    it('navigate from overview to view, and back to overview', async done => { // TODO Check: this test seems to be included in the test "perform constraint search"
+    it('navigate from overview to view, and back to overview', async done => {
 
         const imageName = await ImageOverviewPage.getCellImageName(0);
 

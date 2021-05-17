@@ -133,11 +133,11 @@ export class ImageOverviewComponent implements OnInit {
             ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        await modalRef.componentInstance.initialize(
+        await modalRef.componentInstance.initializeWithoutLinkedDocument(
+            document,
             openConflictResolver
                 ? [document]
-                : this.getDocuments().filter(document => document.id !== 'droparea'),
-            document
+                : this.getDocuments().filter(_ => _.id !== 'droparea')
         );
         if (openConflictResolver) {
             await modalRef.componentInstance.startEdit(true, 'conflicts');

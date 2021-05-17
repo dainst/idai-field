@@ -29,11 +29,11 @@ export const PLACEHOLDER = 'PLACEHOLDER';
  */
 export class ImageRow {
 
-    private firstShownImageIndex: number = 0;
-    private lastShownImageIndex: number = 0;
-    private highestImageIndex: number = -1;
+    private firstShownImageIndex = 0;
+    private lastShownImageIndex = 0;
+    private highestImageIndex = -1;
 
-    private lastImageFullyVisible: boolean = false;
+    private lastImageFullyVisible = false;
     private imageWidths: { [imageId: string]: number } = {};
 
 
@@ -61,7 +61,7 @@ export class ImageRow {
         return {
             newImageIds: newImagesIds,
             firstShownImageIndex: this.firstShownImageIndex
-        }
+        };
     }
 
 

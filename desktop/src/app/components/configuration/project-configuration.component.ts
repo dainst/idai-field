@@ -117,10 +117,11 @@ export class ProjectConfigurationComponent {
     public isHidden = (category: Category) => (field: FieldDefinition): boolean => {
 
         const customCategoryDefinition: CustomCategoryDefinition
-            = this.customConfigurationDocument.resource.categories[category.libraryId];
+            = this.customConfigurationDocument.resource.categories[category.libraryId ?? category.name];
 
         const parentCustomCategoryDefinition = category.parentCategory
-            ? this.customConfigurationDocument.resource.categories[category.parentCategory.libraryId]
+            ? this.customConfigurationDocument.resource
+                .categories[category.parentCategory.libraryId ?? category.parentCategory.libraryId]
             : undefined;
 
         return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
@@ -140,6 +141,14 @@ export class ProjectConfigurationComponent {
             if (!customCategoryDefinition.hidden) customCategoryDefinition.hidden = [];
             customCategoryDefinition.hidden.push(field.name);
         }
+    }
+
+
+    public getCustomFieldDefinition(category: Category, field: FieldDefinition) {
+
+        return this.customConfigurationDocument.resource
+            .categories[category.libraryId ?? category.name]
+            .fields[field.name];
     }
 
 

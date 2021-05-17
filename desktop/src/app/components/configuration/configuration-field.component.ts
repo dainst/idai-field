@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { flatten, to } from 'tsfun';
-import { Category, FieldDefinition, ValuelistDefinition } from 'idai-field-core';
+import { Category, CustomFieldDefinition, FieldDefinition, ValuelistDefinition } from 'idai-field-core';
 import { ValuelistUtil } from '../../core/util/valuelist-util';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
 
@@ -21,12 +21,15 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     @Input() category: Category;
     @Input() field: FieldDefinition;
+    @Input() customFieldDefinition: CustomFieldDefinition | undefined;
     @Input() hidden: boolean;
 
     @Output() onToggleHidden: EventEmitter<void> = new EventEmitter();
 
     public parentField: boolean = false;
     public editable: boolean = false;
+    public hideable: boolean = false;
+    public editing: boolean = false;
 
 
     constructor() {}
@@ -38,6 +41,8 @@ export class ConfigurationFieldComponent implements OnChanges {
 
         this.parentField = this.isParentField();
         this.editable = this.isEditable();
+        this.hideable = this.isHideable();
+        this.editing = false;
     }
 
 
@@ -51,6 +56,35 @@ export class ConfigurationFieldComponent implements OnChanges {
     public toggleHidden = () => this.onToggleHidden.emit();
 
 
+    public startEditing() {
+
+        this.editing = true;
+    }
+
+
+    public finishEditing() {
+
+        this.editing = false;
+    }
+
+
+    public getInputType() {
+
+
+        return this.customFieldDefinition
+            ? this.customFieldDefinition.inputType
+            : this.field.inputType;
+    }
+
+
+    public setInputType(newInputType: string) {
+
+        if (!this.customFieldDefinition) throw 'Custom field definiton is missing!';
+
+        this.customFieldDefinition.inputType = newInputType;
+    }
+
+
     private isParentField(): boolean {
 
         if (!this.category.parentCategory) return false;
@@ -62,6 +96,14 @@ export class ConfigurationFieldComponent implements OnChanges {
 
 
     private isEditable(): boolean {
+
+        return !this.parentField
+            && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
+            && this.field.source === 'custom';
+    }
+
+
+    private isHideable(): boolean {
 
         return !this.parentField
             && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)

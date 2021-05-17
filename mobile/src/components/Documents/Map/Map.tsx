@@ -1,7 +1,7 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import { Text, View } from 'native-base';
-import React, { ReactElement, useMemo, useRef } from 'react';
+import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { Circle, G } from 'react-native-svg';
@@ -12,6 +12,7 @@ import {
 } from './geo-svg';
 import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
+import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillAndOpacity } from './svg-element-style';
 import SvgMap from './SvgMap/SvgMap';
 
@@ -19,45 +20,64 @@ interface MapProps {
     geoDocuments: Document[];
     selectedGeoDocuments: Document[];
     config: ProjectConfiguration;
-    navigateToDocument: (docId: string) => void;
 }
 
 
-const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, navigateToDocument }) => {
+const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config }) => {
 
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
     const transformationMatrix = setupTransformationMatrix(geometryBoundings,viewPort.current);
+
+    const [selectedDocument, setSelectedDocument] = useState<Document>();
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const selectDocHandler = (doc: Document) => {
+
+        setSelectedDocument(doc);
+        setModalVisible(true);
+    };
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
 
         viewPort.current = event.nativeEvent.layout;
     };
 
+
     return (
-        <View onLayout={ handleLayoutChange } style={ { flex: 1 } }>
-            {geoDocuments && geometryBoundings && viewPort.current ?
-                <SvgMap style={ styles.svg } viewPort={ viewPort.current }
-                    viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
-                    {geoDocuments.map(doc =>(
-                        <G key={ doc._id }>
-                            {renderGeoSvgElement(
-                                doc,
-                                processTransform2d.bind(this, transformationMatrix),
-                                selectedGeoDocuments,
-                                selectedGeoDocuments.length === geoDocuments.length,
-                                config,
-                                navigateToDocument)}
-                        </G>))
-                    }
-                </SvgMap> :
-                <Text>No docs available</Text>
-            }
+        <View style={ { flex: 1 } }>
+            <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
+                {geoDocuments && geometryBoundings && viewPort.current ?
+                    <SvgMap style={ styles.svg } viewPort={ viewPort.current }
+                        // eslint-disable-next-line max-len
+                        viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
+                        {geoDocuments.map(doc =>(
+                            <G key={ doc._id }>
+                                {renderGeoSvgElement(
+                                    doc,
+                                    processTransform2d.bind(this, transformationMatrix),
+                                    selectedGeoDocuments,
+                                    selectedGeoDocuments.length === geoDocuments.length,
+                                    config,
+                                    selectDocHandler)}
+                            </G>))
+                        }
+                    </SvgMap> :
+                    <Text>No docs available</Text>
+                }
+            </View>
+            <MapBottomDrawer
+                closeHandler={ () => setModalVisible(false) }
+                document={ selectedDocument }
+                isVisible={ isModalVisible } />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mapContainer: {
+        flex: 1,
+    },
     svg: {
         height: '100%',
         width: '100%'
@@ -71,14 +91,14 @@ const renderGeoSvgElement = (
         selectedDocuments: Document[],
         noDocsSelected: boolean,
         config: ProjectConfiguration,
-        onPressHandler: (id: string) => void): ReactElement => {
+        onPressHandler: (doc: Document) => void): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
         ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected, config),
-        onPress: () => onPressHandler(document.resource.id)
+        onPress: () => onPressHandler(document)
     };
  
 

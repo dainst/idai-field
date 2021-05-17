@@ -52,8 +52,6 @@ export class AppComponent {
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
-
-        if (remote.getGlobal('mode') === 'test') this.enableMenuShortCutsForTests();
     }
 
 
@@ -61,38 +59,6 @@ export class AppComponent {
 
         document.addEventListener('dragover', event => event.preventDefault());
         document.addEventListener('drop', event => event.preventDefault());
-    }
-
-
-    private enableMenuShortCutsForTests() {
-
-        this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
-            if (!event.ctrlKey || event.metaKey) return;
-
-            switch(event.key) {
-                case 's':
-                    if (event.ctrlKey && event.altKey) {
-                        this.menuService.onMenuItemClicked('settings');
-                    }
-                    break;
-                case ',':
-                    if (event.metaKey) this.menuService.onMenuItemClicked('settings');
-                    break;
-                case 'b':
-                    this.menuService.onMenuItemClicked('images');
-                    break;
-                case 'i':
-                    this.menuService.onMenuItemClicked('import');
-                    break;
-                case 't':
-                    this.menuService.onMenuItemClicked('resources/types');
-                    break;
-                case 'y':
-                case 'z':
-                    this.menuService.onMenuItemClicked('matrix');
-                    break;
-            }
-        });
     }
 
 

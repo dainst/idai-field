@@ -6,7 +6,6 @@ import { NavbarPage } from '../navbar.page';
 import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
-import { DoceditImageTabPage } from '../docedit/docedit-image-tab.page';
 import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
@@ -71,7 +70,7 @@ describe('resources --', () => {
         await ImageViewModalPage.clickPlusButton();
         await ImageViewModalPage.clickLinkImagesButton();
 
-        await DoceditImageTabPage.waitForCells();
+        await ImageViewModalPage.waitForCells();
         await click((await ImagePickerModalPage.getCells())[0]);
         await click((await ImagePickerModalPage.getCells())[1]);
         await ImagePickerModalPage.clickAddImages();
@@ -612,11 +611,11 @@ describe('resources --', () => {
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuImagesButton();
 
-        await DoceditImageTabPage.waitForCells();
-        await click((await DoceditImageTabPage.getCells())[0]);
-        await DoceditImageTabPage.clickDeleteImages();
+        await ImageViewModalPage.waitForCells();
+        await click((await ImageViewModalPage.getCells())[0]);
+        await ImageViewModalPage.clickDeleteImages();
         await pause(1000);
-        let cells = await DoceditImageTabPage.getCells();
+        let cells = await ImageViewModalPage.getCells();
         expect(cells.length).toBe(1);
         ImageViewModalPage.clickCloseButton();
 
@@ -631,11 +630,11 @@ describe('resources --', () => {
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuImagesButton();
-        await DoceditImageTabPage.waitForCells();
-        await click((await DoceditImageTabPage.getCells())[0]);
-        await DoceditImageTabPage.clickDeleteImages();
+        await ImageViewModalPage.waitForCells();
+        await click((await ImageViewModalPage.getCells())[0]);
+        await ImageViewModalPage.clickDeleteImages();
         await pause(1000);
-        cells = await DoceditImageTabPage.getCells();
+        cells = await ImageViewModalPage.getCells();
         expect(cells.length).toBe(0);
 
         await ImageViewModalPage.clickCloseButton();

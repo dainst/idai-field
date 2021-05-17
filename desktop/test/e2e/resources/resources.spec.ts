@@ -11,6 +11,7 @@ import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
+import {ImageViewModalPage} from '../image-view-modal.page';
 
 
 /**
@@ -65,15 +66,16 @@ describe('resources --', () => {
 
     async function addTwoImages(identifier) {
 
-        await ResourcesPage.openEditByDoubleClickResource(identifier);
-        await DoceditPage.clickGotoImagesTab();
-        await DoceditImageTabPage.clickInsertImage();
+        await ResourcesPage.clickOpenContextMenu(identifier);
+        await ResourcesPage.clickContextMenuImagesButton();
+        await ImageViewModalPage.clickPlusButton();
+        await ImageViewModalPage.clickLinkImagesButton();
 
         await DoceditImageTabPage.waitForCells();
         await click((await ImagePickerModalPage.getCells())[0]);
         await click((await ImagePickerModalPage.getCells())[1]);
         await ImagePickerModalPage.clickAddImages();
-        await DoceditPage.clickSaveDocument();
+        await ImageViewModalPage.clickCloseButton();
     }
 
 
@@ -124,7 +126,7 @@ describe('resources --', () => {
 
         const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
         expect(identifier).toBe('2');
-        
+
         done();
     });
 
@@ -182,7 +184,7 @@ describe('resources --', () => {
         expect(label).toContain('newTrench');
         const elements = await ResourcesPage.getListItemEls();
         expect(elements.length).toBe(0);
-        
+
         done();
     });
 
@@ -366,7 +368,7 @@ describe('resources --', () => {
         FieldsViewPage.clickAccordionTab(1);
         let fieldValue = await FieldsViewPage.getFieldValue(1, 0);
         expect(fieldValue).toEqual('Außenmauer');
-        
+
         await DetailSidebarPage.doubleClickEditDocument('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
@@ -406,7 +408,7 @@ describe('resources --', () => {
         await ResourcesPage.clickSelectGeometryType('point');
         let elements = await ResourcesPage.getListItemMarkedNewEls();
         expect(elements.length).toBe(1);
-        
+
         await MapPage.clickMapOption('ok');
         await DoceditPage.clickCloseEdit();
         elements = await ResourcesPage.getListItemMarkedNewEls();
@@ -487,7 +489,7 @@ describe('resources --', () => {
         await ResourcesPage.clickOpenContextMenu('S1');
         await ResourcesPage.clickContextMenuMoveButton();
         await ResourcesPage.typeInMoveModalSearchBarInput('P');
-        
+
         let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
         for (let label of labels) {
             expect(await getText(label)).not.toEqual('Projekt');
@@ -548,7 +550,7 @@ describe('resources --', () => {
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('trench', 'modal');
-        
+
         let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
         for (let label of labels) {
             expect(await getText(label)).not.toEqual('S1');
@@ -607,8 +609,8 @@ describe('resources --', () => {
         await ImageViewPage.clickCloseButton();
 
         // delete links to one image
-        await ResourcesPage.openEditByDoubleClickResource('SE0');
-        await DoceditPage.clickGotoImagesTab();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuImagesButton();
 
         await DoceditImageTabPage.waitForCells();
         await click((await DoceditImageTabPage.getCells())[0]);
@@ -616,26 +618,27 @@ describe('resources --', () => {
         await pause(1000);
         let cells = await DoceditImageTabPage.getCells();
         expect(cells.length).toBe(1);
-        await DoceditPage.clickSaveDocument();
+        ImageViewModalPage.clickCloseButton();
 
         await ResourcesPage.clickThumbnail();
         images = await ImageRowPage.getImages();
         expect(images.length).toBe(1);
 
-        await ImageViewPage.clickCloseButton();
+        await ImageViewModalPage.clickCloseButton();
 
         // delete links to the other
         await waitForExist(await ResourcesPage.getThumbnail());
 
-        await ResourcesPage.openEditByDoubleClickResource('SE0');
-        await DoceditPage.clickGotoImagesTab();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuImagesButton();
         await DoceditImageTabPage.waitForCells();
         await click((await DoceditImageTabPage.getCells())[0]);
         await DoceditImageTabPage.clickDeleteImages();
         await pause(1000);
         cells = await DoceditImageTabPage.getCells();
         expect(cells.length).toBe(0);
-        await DoceditPage.clickSaveDocument();
+
+        await ImageViewModalPage.clickCloseButton();
 
         await waitForNotExist(await ResourcesPage.getThumbnail());
 

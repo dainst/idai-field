@@ -33,6 +33,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuImagesButton() {
+
+        return click('#context-menu-images-button');
+    }
+
+
     public static clickContextMenuDeleteButton() {
 
         return click('#context-menu-delete-button');

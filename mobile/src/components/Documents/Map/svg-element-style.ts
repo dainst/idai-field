@@ -1,4 +1,4 @@
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 
 interface FillOpacity {
     fill: string;
@@ -13,7 +13,8 @@ export const getDocumentFillAndOpacity = (
     document: Document,
     selectedDocuments: Document[],
     noSelectedDocs: boolean,
-    config: ProjectConfiguration): FillOpacity => {
+    config: ProjectConfiguration,
+    geoType: FieldGeometryType): FillOpacity => {
 
      
     const doc_id = document.resource.id;
@@ -22,7 +23,7 @@ export const getDocumentFillAndOpacity = (
 
     if(noSelectedDocs) return {
         opacity: 0.8,
-        fill: 'none',
+        fill: isGeoTypePoint(geoType) ? color : 'none',
         stroke: color,
         strokeOpacity: 1,
         strokeWidth: documentHasNoParents(document) ? 0.5 : strokeWidth };
@@ -31,14 +32,16 @@ export const getDocumentFillAndOpacity = (
         
         if(doc.resource.id === doc_id){
             return { opacity: 0.5, stroke: color, fill: color, strokeDasharray: [1], strokeWidth };
-        } else if(document.resource.relations.isRecordedIn &&
-            document.resource.relations.isRecordedIn.includes(doc.resource.id)){
-                return { opacity: 1, fill: color, stroke: 'white', strokeWidth };
         }
 
     }
-
-    return { opacity: 0.5, fill: 'none', stroke: color, strokeOpacity: 0.3, strokeWidth };
+  
+    return {
+        opacity: 0.5,
+        fill: isGeoTypePoint(geoType) ? color : 'none',
+        stroke: color, strokeOpacity: 0.3, strokeWidth };
 };
+
+const isGeoTypePoint = (type: FieldGeometryType) => type === 'Point' || type === 'MultiPoint';
 
 const documentHasNoParents = (document: Document): boolean => !Object.keys(document.resource.relations).length;

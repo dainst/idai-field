@@ -100,7 +100,7 @@ const renderGeoSvgElement = (
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
-        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected, config),
+        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected, config, geometry.type),
         onPress: () => onPressHandler(document)
     };
  

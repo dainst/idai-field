@@ -77,9 +77,11 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     buttonGroup: {
+        width: '100%',
         justifyContent: 'space-between',
         marginTop: 'auto',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        paddingLeft: 10
     }
 });
 

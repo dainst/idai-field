@@ -72,7 +72,7 @@ export module Assertions {
                 if (!selectedCategoryNames.includes(selectedCategory.categoryName)) {
                     return selectedCategoryNames.concat([selectedCategory.categoryName]);
                 }
-                throw [ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedCategory.categoryName];
+                throw [[ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedCategory.categoryName]];
 
             }, [] as string[]);
 
@@ -87,13 +87,13 @@ export module Assertions {
 
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
                 if (!field.valuelistId && !field.valuelistFromProjectField) {
-                    throw [ConfigurationErrors.NO_VALUELIST_PROVIDED, categoryName, fieldName];
+                    throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, categoryName, fieldName]];
                 }
             }
 
             if (['dimension'].includes(field.inputType ? field.inputType : '')) {
                 if (!field.positionValuelistId) {
-                    throw [ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, categoryName, fieldName];
+                    throw [[ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, categoryName, fieldName]];
                 }
             }
         });
@@ -107,7 +107,7 @@ export module Assertions {
         return (categoryName: string, fieldName: string, field: any) => {
 
             if (!field.inputType && !Object.keys(commonFields).includes(fieldName)) {
-                throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', categoryName, fieldName];
+                throw [[ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', categoryName, fieldName]];
             }
         }
     }

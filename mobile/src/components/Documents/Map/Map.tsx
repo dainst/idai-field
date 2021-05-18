@@ -69,7 +69,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config })
             <MapBottomDrawer
                 closeHandler={ () => setModalVisible(false) }
                 document={ selectedDocument }
-                isVisible={ isModalVisible } />
+                isVisible={ isModalVisible }
+                config={ config } />
         </View>
     );
 };

@@ -1,5 +1,5 @@
-import { Document } from 'idai-field-core';
-import { Text, View } from 'native-base';
+import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Avatar, HStack, Text, View } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
@@ -8,24 +8,30 @@ interface MapBottomDrawerProps {
     document: Document | undefined;
     isVisible: boolean;
     closeHandler: () => void;
+    config: ProjectConfiguration;
 }
 
-const MapBottomDrawer: React.FC<MapBottomDrawerProps> = (props) => {
+const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({ document, isVisible, closeHandler, config }) => {
 
     const animationDuration = 500;
-    if(!props.document) return null;
+    if(!document) return null;
     
     return (
         <Modal
-            isVisible={ props.isVisible }
+            isVisible={ isVisible }
             animationInTiming={ animationDuration }
             animationOutTiming={ animationDuration }
-            onBackdropPress={ props.closeHandler }
+            onBackdropPress={ closeHandler }
             backdropOpacity={ 0.0 }
             style={ styles.modal }>
             <View style={ styles.container }>
-                <Text>Drawer</Text>
-                <Text>{props.document.resource.id}</Text>
+                <HStack p={ 4 } space={ 2 } alignItems="center">
+                    <Avatar bg={ config.getColorForCategory(document.resource.category) }>
+                            { document.resource.category[0].toUpperCase() }
+                    </Avatar>
+                    <Text fontSize="2xl" >{document.resource.identifier} </Text>
+                </HStack>
+                
             </View>
         </Modal>
     );
@@ -38,8 +44,8 @@ const styles = StyleSheet.create({
     },
     container: {
         width: '100%',
-        height: '25%',
-        justifyContent: 'center',
+        height: '20%',
+        justifyContent: 'flex-start',
         backgroundColor: 'white',
         borderRadius: 10
     }

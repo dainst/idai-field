@@ -20,10 +20,11 @@ interface MapProps {
     geoDocuments: Document[];
     selectedGeoDocuments: Document[];
     config: ProjectConfiguration;
+    navigateToDocument: (docId: string) => void;
 }
 
 
-const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config }) => {
+const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, navigateToDocument }) => {
 
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
@@ -70,7 +71,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config })
                 closeHandler={ () => setModalVisible(false) }
                 document={ selectedDocument }
                 isVisible={ isModalVisible }
-                config={ config } />
+                config={ config }
+                navigateToDocument={ navigateToDocument } />
         </View>
     );
 };

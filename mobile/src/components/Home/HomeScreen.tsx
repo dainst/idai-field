@@ -1,6 +1,12 @@
-import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
+import Button from '../common/Button';
+import Column from '../common/Column';
+import Row from '../common/Row';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 
@@ -57,78 +63,78 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             onProjectDeleted={ onDeleteProject }
             onClose={ () => setIsDeleteModalOpen(false) }
         />
-        <View flex={ 1 } safeArea>
-            <Row justifyContent="flex-end">
+        <SafeAreaView style={ { flex: 1 } }>
+            <Row style={ { justifyContent: 'flex-end' } }>
                 { preferences.username === '' &&
-                    <Row bg="red.200" p={ 2 } alignItems="center" rounded="lg" space={ 2 }>
-                        <Icon type="Ionicons" name="alert-circle" color="red" />
-                        <Text color="red.600" bold>Make sure to set your name!</Text>
-                        <Icon type="Ionicons" name="arrow-forward" />
+                    <Row style={ { backgroundColor: 'red', padding: 8, alignItems: 'center', borderRadius: 5 } }>
+                        <Ionicons name="alert-circle" size={ 16 } />
+                        <Text style={ { fontWeight: 'bold' } }>Make sure to set your name!</Text>
+                        <Ionicons name="arrow-forward" size={ 16 } />
                     </Row>
                 }
-                <IconButton
-                    icon={ <Icon type="Ionicons" name="settings" /> }
+                <Button
+                    icon={ <Ionicons name="settings" size={ 16 } /> }
                     onPress={ () => navigate('SettingsScreen') }
+                    variant="transparent"
                 />
             </Row>
-            <Center flex={ 1 }>
-                <Column space={ 3 }>
-                    { preferences.recentProjects.length > 0 && <Center rounded="lg" p={ 5 } bg="gray.200">
-                        <Column space={ 3 }>
-                            <Text style={ { fontWeight: 'bold' } }>
-                                Open existing project:
-                            </Text>
-                            <Select
-                                variant="native"
-                                selectedValue={ selectedProject }
-                                minWidth={ 200 }
-                                minHeight={ 10 }
-                                onValueChange={ setSelectedProject }
-                                androidIconColor="gray"
-                                androidPrompt="Select project:"
-                            >
-                                { preferences.recentProjects.map(project =>
-                                    <Select.Item label={ project }value={ project } key={ project } /> ) }
-                            </Select>
-                            <View style={ { flexDirection: 'row' } }>
-                                <Button
-                                    style={ { flex: 1 } }
-                                    mr={ 1 }
-                                    colorScheme="blue"
-                                    variant="solid"
-                                    startIcon={ <Icon name="folder-open" size={ 6 } type="Ionicons" color="white" /> }
-                                    onPress={ () => openProject(selectedProject) }
-                                >
-                                    Open
-                                </Button>
-                                <IconButton
-                                    p={ 3 }
-                                    colorScheme="red"
-                                    variant="solid"
-                                    icon={ <Icon name="trash" size={ 6 } type="Ionicons" color="white" /> }
-                                    onPress={ () => setIsDeleteModalOpen(true) }
-                                />
-                            </View>
-                        </Column>
-                    </Center> }
-                    <Button
-                        colorScheme="green"
-                        startIcon={ <Icon name="add-circle" size={ 6 } type="Ionicons" color="white" /> }
-                        onPress={ () => setIsProjectModalOpen(true) }
-                    >
-                        Create new project
-                    </Button>
-                    <Button
-                        colorScheme="yellow"
-                        startIcon={ <Icon name="folder-open" size={ 6 } type="Ionicons" /> }
-                        onPress={ () => openProject('test') }
-                    >
-                        Open test project
-                    </Button>
-                </Column>
-            </Center>
-        </View>
+            <Column style={ { margin: 3 } }>
+                { preferences.recentProjects.length > 0 && renderRecentProjects(
+                    selectedProject,
+                    setSelectedProject,
+                    preferences.recentProjects,
+                    openProject,
+                    setIsDeleteModalOpen
+                ) }
+                <Button
+                    icon={ <Ionicons name="add-circle" size={ 16 } /> }
+                    onPress={ () => setIsProjectModalOpen(true) }
+                    title="Create new project"
+                    variant="success"
+                />
+                <Button
+                    icon={ <Ionicons name="folder-open" size={ 16 } /> }
+                    onPress={ () => openProject('test') }
+                    title="Open test project"
+                />
+            </Column>
+        </SafeAreaView>
     </>;
 };
 
 export default HomeScreen;
+
+
+const renderRecentProjects = (
+    selectedProject: string,
+    setSelectedProject: React.Dispatch<React.SetStateAction<string>>,
+    recentProjects: string[],
+    openProject: (project: string) => void,
+    setIsDeleteModalOpen: (open: boolean) => void
+) =>
+<Column style={ { margin: 3 } }>
+    <Text style={ { fontWeight: 'bold' } }>
+        Open existing project:
+    </Text>
+    <Picker
+        selectedValue={ selectedProject }
+        onValueChange={ setSelectedProject }
+    >
+        { recentProjects.map(project =>
+            <Picker.Item label={ project }value={ project } key={ project } /> ) }
+    </Picker>
+    <View style={ { flexDirection: 'row' } }>
+        <Button
+            style={ { marginRight: 1 } }
+            icon={ <Ionicons name="folder-open" size={ 16 } /> }
+            onPress={ () => openProject(selectedProject) }
+            title="Open"
+            variant="primary"
+        />
+        <Button
+            icon={ <Ionicons name="trash" size={ 16 } /> }
+            onPress={ () => setIsDeleteModalOpen(true) }
+            variant="danger"
+        />
+    </View>
+</Column>;

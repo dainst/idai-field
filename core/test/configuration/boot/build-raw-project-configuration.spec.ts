@@ -253,7 +253,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A', 'aField'
+                [ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A', 'aField']
             ]);
         }
     });
@@ -291,7 +291,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A:0', 'aField'
+                [ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A:0', 'aField']
             ]);
         }
     });
@@ -337,7 +337,7 @@ describe('buildRawProjectConfiguration', () => {
             );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']);
+            expect(expected).toEqual([[ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']]);
         }
     });
 
@@ -369,7 +369,7 @@ describe('buildRawProjectConfiguration', () => {
             );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']);
+            expect(expected).toEqual([[ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']]);
         }
     });
 
@@ -660,7 +660,7 @@ describe('buildRawProjectConfiguration', () => {
 
     // err cases
 
-    it('field property validation - invalid input Type', () => {
+    it('field property validation - invalid input type', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -713,7 +713,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'C', 'cField'
+                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'C', 'cField']
             ]);
         }
     });
@@ -743,7 +743,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'A:0', 'aField'
+                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'A:0', 'aField']
             ]);
         }
     });
@@ -802,7 +802,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B:0', 'bField'
+                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B:0', 'bField']
             ]);
         }
     });

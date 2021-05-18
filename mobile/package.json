@@ -67,7 +67,6 @@
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
-    "@types/react-test-renderer": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "babel-eslint": "^10.1.0",
@@ -82,7 +81,6 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest-expo": "^40.0.2",
-    "react-test-renderer": "16.13.1",
     "ts-jest": "^26.5.4",
     "typescript": "~4.0.0"
   },

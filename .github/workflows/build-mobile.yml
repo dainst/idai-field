@@ -21,7 +21,10 @@ jobs:
         run: npm install -g npm@latest
       - name: Install root node modules
         run: npm i
-      - name: Install and link package node modules 
+      - name: Install mobile node modules
+        run: npm i
+        working-directory: mobile
+      - name: Bootstrap monorepo packages
         run: npm run bootstrap
       - name: Build core
         run: npm run build

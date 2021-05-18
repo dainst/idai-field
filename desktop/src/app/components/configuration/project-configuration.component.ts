@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { to, on, is, isnt, or, any, compose, map, Predicate, includedIn, and, not, flatten } from 'tsfun';
 import { FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition, Datastore,
     ConfigurationDocument, Relations, ProjectConfiguration, CustomCategoryDefinition } from 'idai-field-core';
@@ -26,7 +26,7 @@ export const OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ProjectConfigurationComponent {
+export class ProjectConfigurationComponent implements OnInit {
 
     public toplevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
@@ -47,10 +47,16 @@ export class ProjectConfigurationComponent {
         this.toplevelCategoriesArray = projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
         this.selectCategory(this.toplevelCategoriesArray[0]);
-        this.datastore.get('configuration').then(document => {
-            this.customConfigurationDocument = document as ConfigurationDocument;
-            this.permanentlyHiddenFields = this.getPermanentlyHiddenFields(projectConfiguration.getCategoriesArray());
-        });
+    }
+
+
+    async ngOnInit() {
+
+        this.customConfigurationDocument = await this.datastore.get(
+            'configuration',
+            { skipCache: true }
+        ) as ConfigurationDocument;
+        this.permanentlyHiddenFields = this.getPermanentlyHiddenFields(this.projectConfiguration.getCategoriesArray());
     }
 
 

@@ -43,6 +43,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                         <Text fontSize="2xl" >{document.resource.identifier} </Text>
                     </HStack>
                 </TouchableOpacity>
+                <Text pl={ 6 }>Short description: { document.resource.shortDescription }</Text>
             </View>
         </Modal>
     );

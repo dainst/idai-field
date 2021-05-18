@@ -1,5 +1,5 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import { Avatar, HStack, Text, View } from 'native-base';
+import { Avatar, HStack, Icon, IconButton, Text, View } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -17,6 +17,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
     document, isVisible, closeHandler, config, navigateToDocument }) => {
 
     const animationDuration = 500;
+    const iconSize = 60;
 
 
     if(!document) return null;
@@ -44,6 +45,19 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                     </HStack>
                 </TouchableOpacity>
                 <Text pl={ 6 }>Short description: { document.resource.shortDescription }</Text>
+                <HStack style={ styles.buttonGroup }>
+                    <IconButton
+                        onPress={ () => {console.log('button');} }
+                        icon={ <Icon type="AntDesign" name="pluscircle" size={ iconSize } color="green" /> }
+                    />
+                    <IconButton
+                        onPress={ () => {console.log('button');} }
+                        icon={
+                            <Icon
+                                type="MaterialCommunityIcons"
+                                name="map-search-outline" size={ iconSize } color="#565350" /> }
+                    />
+                </HStack>
             </View>
         </Modal>
     );
@@ -58,8 +72,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '20%',
         justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         backgroundColor: 'white',
         borderRadius: 10
+    },
+    buttonGroup: {
+        justifyContent: 'space-between',
+        marginTop: 'auto',
+        alignSelf: 'flex-end'
     }
 });
 

@@ -8,6 +8,7 @@ describe('geo-svg/math-utils', () => {
         expect(pointArea()).toBe(Math.PI * Math.pow(pointRadius,2));
     });
 
+    
     it('should calculate the area of a polygon regarding https://en.wikipedia.org/wiki/Polygon#Area', () => {
 
         const polygon = [
@@ -15,6 +16,7 @@ describe('geo-svg/math-utils', () => {
         ];
         expect(polygonArea(polygon)).toBe(117);
     });
+
 
     it('should calculate the area of a polygon with holes', () => {
         const polygon = [

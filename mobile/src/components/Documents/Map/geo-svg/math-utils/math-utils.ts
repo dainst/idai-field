@@ -20,6 +20,7 @@ export const polygonArea = (polygon: Position[][]): number => {
     return outerArea - innerAreas;
 };
 
+
 const lineStringArea = (lineString: Position[]) => {
     
     let sum = 0;
@@ -32,6 +33,8 @@ const lineStringArea = (lineString: Position[]) => {
     return Math.abs(sum) / 2;
 };
 
+
 export const pointArea = (): number => Math.PI * Math.pow(pointRadius,2);
+
 
 export const lineArea = (): 0 => 0;

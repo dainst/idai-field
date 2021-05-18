@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { flatten, to } from 'tsfun';
+import { clone, flatten, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, ValuelistDefinition } from 'idai-field-core';
 import { ValuelistUtil } from '../../core/util/valuelist-util';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
@@ -34,6 +34,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Output() onToggleHidden: EventEmitter<void> = new EventEmitter();
 
     public parentField: boolean = false;
+    public customFieldDefinitionClone: CustomFieldDefinition | undefined;
     public editable: boolean = false;
     public hideable: boolean = false;
     public editing: boolean = false;
@@ -50,6 +51,9 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.editable = this.isEditable();
         this.hideable = this.isHideable();
         this.editing = false;
+        this.customFieldDefinitionClone = this.customFieldDefinition
+            ? clone(this.customFieldDefinition)
+            : undefined;
     }
 
 
@@ -71,6 +75,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public finishEditing() {
 
+        this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
         this.editing = false;
     }
 
@@ -108,16 +113,18 @@ export class ConfigurationFieldComponent implements OnChanges {
     public getInputType() {
 
         return this.customFieldDefinition
-            ? this.customFieldDefinition.inputType
+            ? this.editing
+                ? this.customFieldDefinitionClone.inputType
+                : this.customFieldDefinition.inputType
             : this.field.inputType;
     }
 
 
     public setInputType(newInputType: string) {
 
-        if (!this.customFieldDefinition) throw 'Custom field definiton is missing!';
+        if (!this.customFieldDefinitionClone) throw 'Custom field definition is missing!';
 
-        this.customFieldDefinition.inputType = newInputType;
+        this.customFieldDefinitionClone.inputType = newInputType;
     }
 
 

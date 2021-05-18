@@ -10,7 +10,7 @@ export { FeatureRelations } from './feature-relations';
 export { FeatureResource } from './feature-resource';
 export { FieldDefinition } from './field-definition';
 export { FieldDocument } from './field-document';
-export { FieldGeometry } from './field-geometry';
+export { FieldGeometry, FieldGeometryType } from './field-geometry';
 export { FieldRelations } from './field-relations';
 export { FieldResource } from './field-resource';
 export { BaseGroup, Group, Groups } from './group';

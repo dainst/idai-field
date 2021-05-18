@@ -14,8 +14,7 @@ interface MapBottomDrawerProps {
 }
 
 const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
-    document, isVisible,
-    closeHandler, config, navigateToDocument }) => {
+    document, isVisible, closeHandler, config, navigateToDocument }) => {
 
     const animationDuration = 500;
 

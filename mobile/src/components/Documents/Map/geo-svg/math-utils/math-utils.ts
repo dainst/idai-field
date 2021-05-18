@@ -12,16 +12,16 @@ import { pointRadius } from '../constants';
  */
 export const polygonArea = (polygon: Position[][]): number => {
     
-    const outerArea = lineStringArea(polygon[0]);
+    const outerArea = ringCoordinatesArea(polygon[0]);
     let innerAreas = 0;
     for(let i = 1; i < polygon.length; i++){
-        innerAreas += lineStringArea(polygon[i]);
+        innerAreas += ringCoordinatesArea(polygon[i]);
     }
     return outerArea - innerAreas;
 };
 
 
-const lineStringArea = (lineString: Position[]) => {
+const ringCoordinatesArea = (lineString: Position[]) => {
     
     let sum = 0;
     const lineStringLength = lineString.length;

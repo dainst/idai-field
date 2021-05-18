@@ -15,13 +15,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      #- name: Setup NPM cache
-      #  uses: c-hive/gha-npm-cache@v1
+      - name: Setup NPM cache
+        uses: c-hive/gha-npm-cache@v1
       - name: Install latest version of npm
         run: npm install -g npm@latest
       - name: Install root node modules
         run: npm i
-      - name: Install and link package node modules 
+      - name: Install mobile node modules
+        run: npm i
+        working-directory: mobile
+      - name: Bootstrap monorepo packages
         run: npm run bootstrap
       - name: Build core
         run: npm run build

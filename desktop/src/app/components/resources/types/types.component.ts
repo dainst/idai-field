@@ -154,6 +154,9 @@ export class TypesComponent extends BaseList implements OnChanges {
             case 'delete':
                 await this.resourcesComponent.deleteDocument([document]);
                 break;
+            case 'edit-images':
+                await this.viewModalLauncher.openImageViewModal(document, 'edit');
+                break;
         }
     }
 

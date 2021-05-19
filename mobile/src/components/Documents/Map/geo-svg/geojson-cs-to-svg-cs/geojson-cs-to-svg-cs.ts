@@ -1,7 +1,52 @@
 import { Position } from 'geojson';
+import { Document, FieldGeometry } from 'idai-field-core';
 import { identityMatrix4, Matrix4, matrixVecMul4, multiply4, processTransform3d } from 'react-native-redash';
 import { GeometryBoundings } from './cs-transform-utils';
 import { getViewPortTransform, ViewBox, ViewPort } from './viewport-utils/viewport-utils';
+
+export interface TransformedDocument {
+    doc: Document;
+    transformedCoordinates: Position | Position[] | Position[][] | Position[][][]
+}
+
+export const transformDocumentsGeometry = (transformationMatrix: Matrix4, docs: Document[]): TransformedDocument[] => {
+
+    return docs.map((doc: Document) => {
+        return {
+            doc: doc,
+            transformedCoordinates: transformGeometry(transformationMatrix, doc.resource.geometry)
+        };
+    });
+};
+
+
+const transformGeometry = (transformationMatrix: Matrix4, geo: FieldGeometry) => {
+
+    switch(geo.type){
+        case('Polygon'):
+        case('MultiLineString'):
+            return transformGeometry2d(transformationMatrix, geo.coordinates);
+        case('Point'):
+            return processTransform2d(transformationMatrix, geo.coordinates);
+        case('MultiPoint'):
+        case('LineString'):
+            return transformGeometry1d(transformationMatrix, geo.coordinates);
+        case('MultiPolygon'):
+            return transformGeometry3d(transformationMatrix, geo.coordinates);
+    }
+};
+
+
+export const transformGeometry3d = (transformationMatrix: Matrix4, coordinates: Position[][][]): Position[][][] =>
+    coordinates.map(coords => transformGeometry2d(transformationMatrix, coords));
+
+
+export const transformGeometry2d = (transformationMatrix: Matrix4, coordinates: Position[][]): Position[][] =>
+    coordinates.map(coords => transformGeometry1d(transformationMatrix, coords));
+
+
+export const transformGeometry1d = (transformationMatrix: Matrix4, coordinates: Position[]): Position[] =>
+    coordinates.map(coord => processTransform2d(transformationMatrix, coord));
 
 
 export const processTransform2d = (transformationMatrix: Matrix4, position: Position): Position => {

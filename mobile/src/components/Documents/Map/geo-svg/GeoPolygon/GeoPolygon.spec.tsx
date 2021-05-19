@@ -7,7 +7,6 @@ import { GeoPolygon } from './GeoPolygon';
 
 
 const props: GeoElementsCommonProps = {
-    csTransformFunction: (pos) => [pos[0] * 2, pos[1] - 4],
     coordinates: [
         [[1,1],[12.2, 8.1], [7.7, 5], [76, 5.5]],
         [[0,0], [3,3],[7,5]],
@@ -39,7 +38,7 @@ describe('<GeoMultiPolygon />', () => {
 
     it('Applies the csTransform function to the Path prop d',() => {
 
-        const expectedProp = ' M152 1.5 L15.4 1 L24.4 4.1 L2 -3 M0 -4 L6 -1 L14 1 Z';
+        const expectedProp = ' M76 5.5 L7.7 5 L12.2 8.1 L1 1 M0 0 L3 3 L7 5 Z';
         expect(wrapper.find(Path).prop('d')).toEqual(expectedProp);
     });
 });

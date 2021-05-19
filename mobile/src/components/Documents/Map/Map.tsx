@@ -1,4 +1,3 @@
-import { Position } from 'geojson';
 import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import { Text, View } from 'native-base';
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
@@ -8,7 +7,8 @@ import { Circle, G } from 'react-native-svg';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon,
-    processTransform2d, setupTransformationMatrix
+    processTransform2d, setupTransformationMatrix,
+    transformDocumentsGeometry, TransformedDocument
 } from './geo-svg';
 import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
@@ -29,7 +29,9 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
     const transformationMatrix = setupTransformationMatrix(geometryBoundings,viewPort.current);
+    const transformedGeoDocuments = transformDocumentsGeometry(transformationMatrix, geoDocuments);
 
+    
     const [selectedDocument, setSelectedDocument] = useState<Document>();
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -48,17 +50,16 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     return (
         <View style={ { flex: 1 } }>
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
-                {geoDocuments && geometryBoundings && viewPort.current ?
+                {transformedGeoDocuments && geometryBoundings && viewPort.current ?
                     <SvgMap style={ styles.svg } viewPort={ viewPort.current }
                         // eslint-disable-next-line max-len
                         viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
-                        {geoDocuments.map(doc =>(
-                            <G key={ doc._id }>
+                        {transformedGeoDocuments.map(tDoc =>(
+                            <G key={ tDoc.doc._id }>
                                 {renderGeoSvgElement(
-                                    doc,
-                                    processTransform2d.bind(this, transformationMatrix),
+                                    tDoc,
                                     selectedGeoDocuments,
-                                    selectedGeoDocuments.length === geoDocuments.length,
+                                    selectedGeoDocuments.length === transformedGeoDocuments.length,
                                     config,
                                     selectDocHandler)}
                             </G>))
@@ -89,19 +90,17 @@ const styles = StyleSheet.create({
 
 
 const renderGeoSvgElement = (
-        document: Document,
-        csTransformFunc: (pos: Position) => Position,
+        transformedDocument: TransformedDocument,
         selectedDocuments: Document[],
         noDocsSelected: boolean,
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void): ReactElement => {
     
-    const geometry: FieldGeometry = document.resource.geometry;
+    const geometry: FieldGeometry = transformedDocument.doc.resource.geometry;
     const props = {
-        coordinates: geometry.coordinates,
-        csTransformFunction: csTransformFunc,
-        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected, config, geometry.type),
-        onPress: () => onPressHandler(document)
+        coordinates: transformedDocument.transformedCoordinates,
+        ...getDocumentFillAndOpacity(transformedDocument.doc, selectedDocuments, noDocsSelected, config, geometry.type),
+        onPress: () => onPressHandler(transformedDocument.doc)
     };
  
 

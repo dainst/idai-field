@@ -12,5 +12,5 @@ export const GeoMultiPolygon: React.FC<GeoMultiPolygonProps> = (props) => {
         <Path
             { ...props }
             vectorEffect="non-scaling-stroke"
-            d={ multiPolygonToPath(props.coordinates as Position[][][], props.csTransformFunction) } />);
+            d={ multiPolygonToPath(props.coordinates as Position[][][]) } />);
 };

@@ -13,6 +13,6 @@ export const GeoMultiLineString: React.FC<GeoMultiLineStringProps> = (props) => 
             fill="none"
             strokeWidth={ 1 }
             vectorEffect="non-scaling-stroke"
-            d={ multiLineStringToPath(props.coordinates as Position[][], props.csTransformFunction) } />
+            d={ multiLineStringToPath(props.coordinates as Position[][]) } />
     );
 };

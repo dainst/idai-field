@@ -6,7 +6,6 @@ import { GeoElementsCommonProps } from '../common-props';
 import { GeoPoint } from './GeoPoint';
 
 const props: GeoElementsCommonProps = {
-    csTransformFunction: (pos) => [pos[0] * 4, pos[1] + 5],
     coordinates: [2,2],
 };
 
@@ -26,7 +25,7 @@ describe('<GeoPoint />', () => {
 
     it('applies the the transformation function correctly', () => {
 
-        expect(wrapper.find(Circle).prop('cx')).toBe(8);
-        expect(wrapper.find(Circle).prop('cy')).toBe(7);
+        expect(wrapper.find(Circle).prop('cx')).toBe(2);
+        expect(wrapper.find(Circle).prop('cy')).toBe(2);
     });
 });

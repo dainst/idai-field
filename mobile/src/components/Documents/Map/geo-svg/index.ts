@@ -1,4 +1,9 @@
-import { processTransform2d, setupTransformationMatrix } from './geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import {
+    processTransform2d,
+    setupTransformationMatrix,
+    transformDocumentsGeometry,
+    TransformedDocument
+} from './geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
 import { GeoLineString } from './GeoLineString';
 import { GeoMultiLineString } from './GeoMultiLineString';
 import { GeoMultiPoint } from './GeoMultiPoint/GeoMultiPoint';
@@ -14,6 +19,8 @@ export {
     GeoPoint,
     GeoMultiPoint,
     processTransform2d,
-    setupTransformationMatrix
+    setupTransformationMatrix,
+    transformDocumentsGeometry,
+    TransformedDocument
 };
 

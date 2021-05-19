@@ -6,13 +6,12 @@
  */
 import { Position } from 'geojson';
 
-type csTransformFunc = (position: Position) => Position;
 
-export const multiPolygonToPath = (multiPolygon: Position[][][], csTransform: csTransformFunc): string => {
+export const multiPolygonToPath = (multiPolygon: Position[][][]): string => {
 
     let path = '';
     for (const polygon of multiPolygon)
-        path += polygonToPath(polygon, csTransform);
+        path += polygonToPath(polygon);
     
     return path;
 };
@@ -26,11 +25,11 @@ export const multiPolygonToPath = (multiPolygon: Position[][][], csTransform: cs
  * @param polygon Polygon coordinates
  * @returns string to be used with SVG path element
  */
-export const polygonToPath = (polygon: Position[][], csTransform: csTransformFunc): string => {
+export const polygonToPath = (polygon: Position[][]): string => {
    
     let path = '';
     polygon.forEach((ringCoordinates, i) => {
-        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates,csTransform);
+        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates);
     });
 
     return path + ' Z';
@@ -44,17 +43,17 @@ export const polygonToPath = (polygon: Position[][], csTransform: csTransformFun
  * @param multiLineString MutliLineString coordinates
  * @returns string to be used with SVG path element
  */
-export const multiLineStringToPath = (multiLineString: Position[][], csTransform: csTransformFunc): string =>
-    polygonToPath(multiLineString, csTransform);
+export const multiLineStringToPath = (multiLineString: Position[][]): string =>
+    polygonToPath(multiLineString);
 
 
-export const lineStringToPath = (lineString: Position[], csTransform: csTransformFunc): string => {
+export const lineStringToPath = (lineString: Position[]): string => {
     
     let path = '';
     lineString.forEach((pos: Position, i: number) => {
-        const transformedPos = csTransform(pos);
-        if(i === 0) path = `M${transformedPos[0]} ${transformedPos[1]}`;
-        else path += ` L${transformedPos[0]} ${transformedPos[1]}`;
+        const [x,y] = pos;
+        if(i === 0) path = `M${x} ${y}`;
+        else path += ` L${x} ${y}`;
     });
 
     return path;

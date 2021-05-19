@@ -8,7 +8,7 @@ interface GeoPointProps extends CircleProps, GeoElementsCommonProps {}
 
 export const GeoPoint: React.FC<GeoPointProps> = (props) => {
 
-    const [x, y] = props.csTransformFunction(props.coordinates as Position);
+    const [x, y] = props.coordinates as Position;
 
     return (
         <Circle

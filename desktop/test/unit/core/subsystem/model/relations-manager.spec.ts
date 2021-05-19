@@ -150,6 +150,33 @@ describe('subsystem/relations-manager',() => {
     });
 
 
+    it('skip image deletion', async done => {
+
+        const tc1 = doc('', 'identifiertc1', 'TypeCatalog', 'tc1') as FieldDocument;
+        const t1 = doc('', 'identifiert1', 'Type', 't1') as FieldDocument;
+        const i1 = doc('', 'identifieri1', 'Image', 'i1') as ImageDocument;
+        const i2 = doc('', 'identifieri2', 'Image', 'i2') as ImageDocument;
+        i1.resource.relations = { depicts: ['tc1'] };
+        i2.resource.relations = { depicts: ['t1'] };
+        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
+        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
+
+        await app.datastore.create(tc1, 'test');
+        await app.datastore.create(t1, 'test');
+        await app.datastore.create(i1, 'test');
+        await app.datastore.create(i2, 'test');
+
+        expect((await app.datastore.find({})).documents.length).toBe(4);
+
+        await app.relationsManager.remove(tc1, { descendants: true });
+
+        const documents = (await app.datastore.find({})).documents;
+        expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
+        await helpers.expectDocuments('i1', 'i2');
+        done();
+    });
+
+
     it('update', async done => {
 
         let t1 = doc('', 'identifiert1', 'Feature', 't1') as FieldDocument;
@@ -173,34 +200,6 @@ describe('subsystem/relations-manager',() => {
 
         expect(t2old.resource.relations.isBefore).toEqual(['t1']);
 
-        done();
-    });
-
-
-    // TODO review: this was moved from image-relations-manager
-    xit('skip image deletion', async done => {
-
-        const tc1 = doc('', 'identifiertc1', 'TypeCatalog', 'tc1') as FieldDocument;
-        const t1 = doc('', 'identifiert1', 'Type', 't1') as FieldDocument;
-        const i1 = doc('', 'identifieri1', 'Image', 'i1') as ImageDocument;
-        const i2 = doc('', 'identifieri2', 'Image', 'i2') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1'] };
-        i2.resource.relations = { depicts: ['t1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        await app.datastore.create(tc1, 'test');
-        await app.datastore.create(t1, 'test');
-        await app.datastore.create(i1, 'test');
-        await app.datastore.create(i2, 'test');
-
-        expect((await app.datastore.find({})).documents.length).toBe(4);
-
-        await app.relationsManager.remove(tc1, { descendants: true });
-
-        const documents = (await app.datastore.find({})).documents;
-        expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
-        await helpers.expectDocuments('i1', 'i2');
         done();
     });
 });

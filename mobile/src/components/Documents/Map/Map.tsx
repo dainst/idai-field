@@ -13,7 +13,7 @@ import {
 import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import MapBottomDrawer from './MapBottomDrawer';
-import { getDocumentFillAndOpacity } from './svg-element-style';
+import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap from './SvgMap/SvgMap';
 
 interface MapProps {
@@ -102,7 +102,12 @@ const renderGeoSvgElement = (
     const geometry: FieldGeometry = transformedDocument.doc.resource.geometry;
     const props = {
         coordinates: transformedDocument.transformedCoordinates,
-        ...getDocumentFillAndOpacity(transformedDocument.doc, selectedDocuments, noDocsSelected, config, geometry.type),
+        ...getDocumentFillOpacityPress(
+            transformedDocument.doc,
+            selectedDocuments,
+             noDocsSelected,
+             config,
+             geometry.type),
         onPress: () => onPressHandler(transformedDocument.doc)
     };
  

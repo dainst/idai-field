@@ -1,6 +1,6 @@
 import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 
-interface FillOpacity {
+interface ElementProps {
     fill: string;
     opacity: number;
     strokeWidth: number;
@@ -9,12 +9,12 @@ interface FillOpacity {
     strokeOpacity?: number;
 }
 
-export const getDocumentFillAndOpacity = (
+export const getDocumentFillOpacityPress = (
     document: Document,
     selectedDocuments: Document[],
     noSelectedDocs: boolean,
     config: ProjectConfiguration,
-    geoType: FieldGeometryType): FillOpacity => {
+    geoType: FieldGeometryType): ElementProps => {
 
      
     const doc_id = document.resource.id;

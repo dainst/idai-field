@@ -93,8 +93,7 @@ export class ConfigLoader {
         try {
             const configurationDocument = (await this.loadCustomConfiguration(
                 customConfigurationName ?? 'Default',
-                username,
-                languages
+                username
             ));
             customCategories = configurationDocument.resource.categories;
             languageConfigurations = this.readLanguageConfigurations(
@@ -137,19 +136,17 @@ export class ConfigLoader {
     }
 
 
-    private async loadCustomConfiguration(customConfigurationName: string, username: string,
-                                          languages: string[]): Promise<ConfigurationDocument> {
+    private async loadCustomConfiguration(customConfigurationName: string, username: string): Promise<ConfigurationDocument> {
 
         try {
             return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
-            return await this.storeCustomConfigurationInDatabase(customConfigurationName, username, languages);
+            return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
         }
     }
 
 
-    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
-                                                     languages: string[]): Promise<ConfigurationDocument> {
+    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string): Promise<ConfigurationDocument> {
 
         const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = await this.readCustomLanguageConfigurations(customConfigurationName);

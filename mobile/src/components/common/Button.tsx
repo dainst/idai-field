@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, TouchableHighlight, View, ViewStyle } from 'react-native';
 import { colors, textColors } from '../../utils/colors';
 
 
@@ -12,15 +11,16 @@ interface ButtonProps {
     title?: string;
     icon?: ReactNode;
     variant?: ButtonVariant;
+    isDisabled?: boolean;
     onPress: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
 }
 
 
-const Button = ({ style, title, icon, variant = 'secondary', onPress }: ButtonProps): ReactElement => {
+const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled }: ButtonProps): ReactElement => {
 
     return <TouchableHighlight
             onPress={ onPress }
-            containerStyle={ [getButtonStyle(variant), style] }
+            style={ [getButtonStyle(variant), style, isDisabled && styles.disabledButton] }
             underlayColor="transparent">
         <View style={ styles.container }>
             { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
@@ -50,5 +50,8 @@ const styles = StyleSheet.create({
     },
     separator: {
         width: 5,
+    },
+    disabledButton: {
+        opacity: .7
     }
 });

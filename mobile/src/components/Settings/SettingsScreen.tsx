@@ -1,8 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
-import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
 import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
+import Button from '../common/Button';
+import Column from '../common/Column';
+import Input from '../common/Input';
+import TitleBar from '../common/TitleBar';
 
 
 interface SettingsScreenProps {
@@ -27,40 +33,45 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
     };
 
     return (
-        <View flex={ 1 } safeArea>
-            <Center flex={ 1 }>
-                <FormControl isRequired isInvalid={ usernameVal === '' }>
-                    <Stack mx={ 8 }>
-                        <FormControl.Label>Editor name</FormControl.Label>
-                        <Input
-                            p={ 2 }
-                            mt={ 2 }
-                            value={ usernameVal }
-                            onChangeText={ setUsernameVal }
-                            autoCompleteType="name"
-                            autoCorrect={ false }
-                            autoFocus
-                        />
-                        <FormControl.HelperText mt={ 1 }>
-                            The editor name is saved in the editing history in order
-                            to allow dataset changes to be attributable to a person.
-                        </FormControl.HelperText>
-                        { usernameVal === '' && <FormControl.ErrorMessage mt={ 1 }>
-                            Editor name must not be empty.
-                        </FormControl.ErrorMessage> }
-                    </Stack>
-                </FormControl>
-                <Row mt={ 5 } space={ 2 }>
-                    <Button colorScheme="green" size="md" onPress={ () => saveSettings() }>
-                        Save
-                    </Button>
-                    <Button size="md" onPress={ () => navigation.goBack() }>
-                        Cancel
-                    </Button>
-                </Row>
-            </Center>
-        </View>
+        <SafeAreaView style={ styles.container }>
+            <TitleBar title="Settings"
+                left={ <Button
+                    variant="transparent"
+                    onPress={ () => navigation.goBack() }
+                    title="Cancel"
+                    icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                /> }
+                right={ <Button variant="success" onPress={ () => saveSettings() } title="Save" /> }
+            />
+            <Column style={ styles.contentColumn }>
+                <Input
+                    label="Editor name"
+                    value={ usernameVal }
+                    onChangeText={ setUsernameVal }
+                    autoCompleteType="name"
+                    autoCorrect={ false }
+                    autoFocus
+                    helpText="The editor name is saved in the editing history in order
+                        to allow dataset changes to be attributable to a person."
+                    isValid={ usernameVal !== '' }
+                    invalidText="Editor name must not be empty."
+                />
+            </Column>
+        </SafeAreaView>
     );
 };
 
 export default SettingsScreen;
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#ececec',
+    },
+    contentColumn: {
+        flex: 1,
+        flexDirection: 'column',
+        padding: 10,
+    }
+});

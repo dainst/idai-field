@@ -52,17 +52,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
 
     return <>
-        <CreateProjectModal
-            isOpen={ isProjectModalOpen }
+        { isProjectModalOpen && <CreateProjectModal
             onProjectCreated={ openProject }
             onClose={ () => setIsProjectModalOpen(false) }
-        />
-        <DeleteProjectModal
+        /> }
+        { isDeleteModalOpen && <DeleteProjectModal
             project={ selectedProject }
-            isOpen={ isDeleteModalOpen }
             onProjectDeleted={ onDeleteProject }
             onClose={ () => setIsDeleteModalOpen(false) }
-        />
+        /> }
         <SafeAreaView style={ styles.container }>
             <Row style={ styles.topRow }>
                 { preferences.username === '' &&
@@ -85,7 +83,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 openProject,
                 setIsDeleteModalOpen
             ) }
-            <Row style={ styles.bottomRow }>
+            <Column style={ styles.bottomRow }>
                 <Button
                     icon={ <Ionicons name="add-circle" size={ 16 } /> }
                     onPress={ () => setIsProjectModalOpen(true) }
@@ -99,7 +97,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     title="Open test project"
                     style={ styles.bottomRowButton }
                 />
-            </Row>
+            </Column>
         </SafeAreaView>
     </>;
 };
@@ -115,7 +113,7 @@ const renderRecentProjects = (
     setIsDeleteModalOpen: (open: boolean) => void
 ) => (
     <Column style={ styles.projectPickerContainer }>
-        <Text style={ { fontWeight: 'bold' } }>
+        <Text style={ { fontWeight: '600', fontSize: 16 } }>
             Open existing project:
         </Text>
         <Picker

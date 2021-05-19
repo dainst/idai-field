@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Picker, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
 import { colors, textColors } from '../../utils/colors';
@@ -124,11 +123,11 @@ const renderRecentProjects = (
             onValueChange={ setSelectedProject }
         >
             { recentProjects.map(project =>
-                <Picker.Item label={ project }value={ project } key={ project } /> ) }
+                <Picker.Item label={ project } value={ project } key={ project } /> ) }
         </Picker>
         <Row>
             <Button
-                style={ { marginRight: 1, flex: 1 } }
+                style={ { marginRight: 5, flex: 1 } }
                 icon={ <Ionicons name="folder-open" size={ 16 } /> }
                 onPress={ () => openProject(selectedProject) }
                 title="Open"

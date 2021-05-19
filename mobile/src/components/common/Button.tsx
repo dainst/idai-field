@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, TouchableHighlight, View, ViewStyle } from 'react-native';
+import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { colors, textColors } from '../../utils/colors';
 
 
@@ -18,16 +18,17 @@ interface ButtonProps {
 
 const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled }: ButtonProps): ReactElement => {
 
-    return <TouchableHighlight
+    return <TouchableOpacity
             onPress={ onPress }
             style={ [getButtonStyle(variant), style, isDisabled && styles.disabledButton] }
-            underlayColor="transparent">
+            activeOpacity={ .9 }
+        >
         <View style={ styles.container }>
             { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
             { icon && title && <Text style={ styles.separator } />}
             { title && <Text style={ getTextStyle(variant) }>{ title }</Text> }
         </View>
-    </TouchableHighlight>;
+    </TouchableOpacity>;
 };
 
 export default Button;

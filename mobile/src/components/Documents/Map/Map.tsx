@@ -26,10 +26,12 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, navigateToDocument }) => {
 
-    const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
+    const geometryBoundings = useMemo(() => getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
-    const transformationMatrix = setupTransformationMatrix(geometryBoundings,viewPort.current);
-    const transformedGeoDocuments = transformDocumentsGeometry(transformationMatrix, geoDocuments);
+    const transformationMatrix = useMemo(() =>
+            setupTransformationMatrix(geometryBoundings,viewPort.current),[geometryBoundings,viewPort]);
+    const transformedGeoDocuments = useMemo(() =>
+            transformDocumentsGeometry(transformationMatrix, geoDocuments),[transformationMatrix, geoDocuments]) ;
 
     
     const [selectedDocument, setSelectedDocument] = useState<Document>();

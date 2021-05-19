@@ -1,14 +1,17 @@
-import { Button, FormControl, Input, Modal, Stack, Text } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
+import { Modal } from 'react-native';
+import Button from '../common/Button';
+import Input from '../common/Input';
+import TitleBar from '../common/TitleBar';
 
 interface CreateProjectModalProps {
-    isOpen: boolean;
     onProjectCreated: (project: string) => void;
     onClose: () => void;
 }
 
 
-const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProjectCreated, onClose }) => {
+const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreated, onClose }) => {
 
     const [project, setProject] = useState<string>('');
 
@@ -29,53 +32,43 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
 
 
     return <Modal
-        isCentered
-        isOpen={ isOpen }
-        onClose={ onCancel }
-        motionPreset="fade"
-        closeOnOverlayClick
+        onRequestClose={ onCancel }
+        animationType="slide"
     >
-        <Modal.Content>
-            <Modal.CloseButton />
-            <Modal.Header>
-                <Text bold>
-                    Create project
-                </Text>
-            </Modal.Header>
-            <Modal.Body>
-                <FormControl isRequired isInvalid={ project === '' }>
-                    <Stack>
-                        <FormControl.Label>Project name</FormControl.Label>
-                        <Input
-                            p={ 2 }
-                            mt={ 2 }
-                            value={ project }
-                            onChangeText={ setProject }
-                            autoCapitalize="none"
-                            autoCompleteType="off"
-                            autoCorrect={ false }
-                            autoFocus
-                        />
-                        <FormControl.HelperText mt={ 1 }>
-                            The project name is the unique identifier for the project.
-                            Make sure to use the exact same project name if you intend to sync
-                            to other instances of iDAI.field.
-                        </FormControl.HelperText>
-                        { project === '' && <FormControl.ErrorMessage mt={ 1 }>
-                            Project name must not be empty.
-                        </FormControl.ErrorMessage> }
-                    </Stack>
-                </FormControl>
-            </Modal.Body>
-            <Modal.Footer space={ 2 }>
-                <Button colorScheme="green" size="md" onPress={ onCreate } isDisabled={ !project }>
-                    Create
-                </Button>
-                <Button size="md" onPress={ onCancel }>
-                    Cancel
-                </Button>
-            </Modal.Footer>
-        </Modal.Content>
+        <TitleBar title="Create project"
+            left={ <Button
+                title="Cancel"
+                variant="transparent"
+                icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                onPress={ () => onCancel() }
+            /> }
+            right={ <Button
+                title="Create"
+                variant="success"
+                onPress={ onCreate }
+                isDisabled={ !project }
+            /> }
+        />
+        <Input
+            label="Project name"
+            value={ project }
+            onChangeText={ setProject }
+            autoCapitalize="none"
+            autoCompleteType="off"
+            autoCorrect={ false }
+            autoFocus
+            helpText="The project name is the unique identifier for the project.
+                Make sure to use the exact same project name if you intend to sync
+                to other instances of iDAI.field."
+            invalidText="Project name must not be empty."
+            isValid={ project !== '' }
+        />
+        <Button
+                title="Cancel"
+                variant="transparent"
+                icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                onPress={ () => onCancel() }
+            />
     </Modal>;
 };
 

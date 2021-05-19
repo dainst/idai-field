@@ -52,11 +52,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
 
     return <>
-        <CreateProjectModal
-            isOpen={ isProjectModalOpen }
+        { isProjectModalOpen && <CreateProjectModal
             onProjectCreated={ openProject }
             onClose={ () => setIsProjectModalOpen(false) }
-        />
+        /> }
         <DeleteProjectModal
             project={ selectedProject }
             isOpen={ isDeleteModalOpen }

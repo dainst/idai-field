@@ -3,7 +3,7 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 
 interface ColumnProps {
-    style: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
     children: ReactNode;
 }
 

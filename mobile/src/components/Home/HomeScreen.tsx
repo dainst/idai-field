@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
+import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';
 import Column from '../common/Column';
 import Row from '../common/Row';
@@ -66,10 +67,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         <SafeAreaView style={ { flex: 1 } }>
             <Row style={ { justifyContent: 'flex-end' } }>
                 { preferences.username === '' &&
-                    <Row style={ { backgroundColor: 'red', padding: 8, alignItems: 'center', borderRadius: 5 } }>
-                        <Ionicons name="alert-circle" size={ 16 } />
-                        <Text style={ { fontWeight: 'bold' } }>Make sure to set your name!</Text>
-                        <Ionicons name="arrow-forward" size={ 16 } />
+                    <Row style={ styles.usernameWarning }>
+                        <Ionicons name="alert-circle" size={ 16 } style={ styles.usernameWarningText } />
+                        <Text style={ styles.usernameWarningText }>Make sure to set your name!</Text>
+                        <Ionicons name="arrow-forward" size={ 16 } style={ styles.usernameWarningText } />
                     </Row>
                 }
                 <Button
@@ -138,3 +139,16 @@ const renderRecentProjects = (
         />
     </View>
 </Column>;
+
+
+const styles = StyleSheet.create({
+    usernameWarning: {
+        backgroundColor: colors.danger,
+        padding: 8,
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    usernameWarningText: {
+        color: textColors.danger,
+    }
+});

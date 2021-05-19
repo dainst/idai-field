@@ -1,6 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import { colors, textColors } from '../../utils/colors';
 
 
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'transparent';
@@ -28,40 +29,18 @@ const Button = ({ style, title, icon, variant = 'secondary', onPress }: ButtonPr
 
 export default Button;
 
-const getButtonStyle = (variant: ButtonVariant): ViewStyle => {
+const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
+    backgroundColor: colors[variant],
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'center'
+});
 
-    const colors = {
-        secondary: '#f9f9f9',
-        primary: '#5572a1',
-        success: '#32a852',
-        danger: '#dc3545',
-        transparent: 'transparent'
-    };
-
-    return {
-        backgroundColor: colors[variant],
-        alignItems: 'center',
-        padding: 10,
-        borderRadius: 5,
-        flexDirection: 'row',
-        justifyContent: 'center'
-    };
-};
-
-const getTextStyle = (variant: ButtonVariant): TextStyle => {
-
-    const colors = {
-        secondary: 'black',
-        primary: 'white',
-        success: 'white',
-        danger: 'white',
-        transparent: 'black'
-    };
-
-    return {
-        color: colors[variant]
-    };
-};
+const getTextStyle = (variant: ButtonVariant): TextStyle => ({
+    color: textColors[variant]
+});
 
 const styles = StyleSheet.create({
     separator: {

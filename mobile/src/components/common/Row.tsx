@@ -3,7 +3,7 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 
 interface RowProps {
-    style: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
     children: ReactNode;
 }
 

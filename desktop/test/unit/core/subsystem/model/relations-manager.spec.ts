@@ -1,4 +1,4 @@
-import { doc, FieldDocument, ImageDocument } from 'idai-field-core';
+import { doc, FieldDocument, ImageDocument, Document } from 'idai-field-core';
 import { flatten } from 'tsfun';
 import { makeDocumentsLookup } from '../../../../../src/app/core/import/import/utils';
 import { createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';
@@ -146,6 +146,33 @@ describe('subsystem/relations-manager',() => {
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
         await helpers.expectDocuments('id3', 'id5', 'id6', 'id7');
+        done();
+    });
+
+
+    it('update', async done => {
+
+        let t1 = doc('', 'identifiert1', 'Feature', 't1') as FieldDocument;
+        let t2 = doc('', 'identifiert2', 'Feature', 't2') as FieldDocument;
+        t1.resource.relations = { isAfter: ['t2'], isRecordedIn: [] };
+        t2.resource.relations = { isBefore: ['t1'], isRecordedIn: [] };
+
+        await app.datastore.create(t1, 'test');
+        t2 = await app.datastore.create(t2, 'test');
+
+        const t2old = Document.clone(t2);
+        t2.resource.relations['isBefore'] = [];
+        t2.resource.identifier = 'identifiert2new';
+
+        await app.relationsManager.update(t2, t2old);
+        t1 = await app.datastore.get('t1');
+        t2 = await app.datastore.get('t2');
+
+        expect(t2.resource.relations.isBefore).toEqual([]);
+        expect(t1.resource.relations.isAfter).toEqual([]);
+
+        expect(t2old.resource.relations.isBefore).toEqual(['t1']);
+
         done();
     });
 

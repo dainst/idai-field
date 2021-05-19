@@ -31,7 +31,7 @@ export class RelationsManager {
     constructor(
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration,
-        private username: string
+        private username: () => string
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -61,7 +61,7 @@ export class RelationsManager {
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash);
 
-        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.username);
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.username());
         return persistedDocument;
     }
 
@@ -146,7 +146,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash), this.username);
+            updated, [oldVersion].concat(revisionsToSquash), this.username());
         return updated as Document;
     }
 
@@ -154,7 +154,7 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document, this.username);
+            document, this.username());
         await this.datastore.remove(document);
     }
 
@@ -186,9 +186,9 @@ export class RelationsManager {
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
-                username,
+                username(),
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, username);
+            : this.datastore.create(document, username());
     }
 
 

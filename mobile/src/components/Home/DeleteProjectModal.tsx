@@ -13,7 +13,7 @@ interface DeleteProjectModalProps {
 }
 
 
-const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen, onProjectDeleted, onClose }) => {
+const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, onProjectDeleted, onClose }) => {
 
     const [projectVal, setProjectVal] = useState<string>('');
 

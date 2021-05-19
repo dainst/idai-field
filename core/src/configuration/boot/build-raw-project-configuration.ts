@@ -1,17 +1,13 @@
-import {
-    clone, compose, cond,
-    copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    keysValues, lookup, Map,
-    map, Mapping, on,
-    or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
-    update, update as updateStruct, assoc
-} from 'tsfun';
+import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
+    keysValues, lookup, Map, map, Mapping, on, or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
+    update, update as updateStruct, assoc } from 'tsfun';
 import {RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition} from '../../model';
 import {ValuelistDefinition} from '../../model/valuelist-definition';
 import {Forest,Tree,sortStructArray,Labelled,withDissoc} from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
+import { LanguageConfiguration } from '../model/language-configuration';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
 import { ProjectCategories } from '../project-categories';
@@ -45,7 +41,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                              extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
-                                             languageConfigurations: any[] = [],
+                                             languageConfigurations: Array<LanguageConfiguration> = [],
                                              searchConfiguration: any = {},
                                              orderConfiguration: any = {},
                                              validateFields: any = identity): RawProjectConfiguration {
@@ -81,7 +77,7 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 
 function processCategories(orderConfiguration: any,
                            validateFields: any,
-                           languageConfigurations: any[][],
+                           languageConfigurations: Array<LanguageConfiguration>,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
 
@@ -103,11 +99,13 @@ function processCategories(orderConfiguration: any,
 }
 
 
-const setGeometriesInGroups = (languageConfigurations: any[]) => (categoriesTree: Forest<Category>) =>
-    Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
+const setGeometriesInGroups = (languageConfigurations: Array<LanguageConfiguration>) =>
+    (categoriesTree: Forest<Category>) =>
+        Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
 
 
-function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: Forest<Category>) {
+function adjustCategoryGeometry(languageConfigurations: Array<LanguageConfiguration>,
+                                categoriesTree: Forest<Category>) {
 
     return (category: Category /* modified in place */): Category => {
 
@@ -175,7 +173,7 @@ const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
-function setGroupLabels(languageConfigurations: any[]) {
+function setGroupLabels(languageConfigurations: Array<LanguageConfiguration>) {
 
     return (category: Category) => {
 

@@ -7,6 +7,7 @@ import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { LanguageConfiguration } from '../model/language-configuration';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { ProjectConfiguration } from '../project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
@@ -85,7 +86,7 @@ export class ConfigLoader {
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
         let customCategories;
-        let languageConfigurations: any[];
+        let languageConfigurations: Array<LanguageConfiguration>;
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
@@ -173,7 +174,7 @@ export class ConfigLoader {
 
 
     private readLanguageConfigurations(customLanguageConfigurations: { [language: string]: any },
-                                       languages: string[]): any[] {
+                                       languages: string[]): Array<LanguageConfiguration> {
 
         const configurations = [];
 
@@ -191,13 +192,14 @@ export class ConfigLoader {
     }
 
 
-    private readCustomLanguageConfigurations(customConfigurationName: string): { [language: string]: any } {
+    private readCustomLanguageConfigurations(customConfigurationName: string)
+            : { [language: string]: LanguageConfiguration } {
 
         const configurations = {};
         const fileNames: string[] = this.configReader.getCustomLanguageConfigurationFileNames(customConfigurationName);
 
         for (const fileName of fileNames) {
-            const configuration = this.readLanguageConfiguration(fileName);
+            const configuration: LanguageConfiguration|undefined = this.readLanguageConfiguration(fileName);
             const language: string = fileName.split('.')[1];
             if (configuration) configurations[language] = configuration;
         }
@@ -206,7 +208,7 @@ export class ConfigLoader {
     }
 
 
-    private readLanguageConfiguration(path: string): any|undefined {
+    private readLanguageConfiguration(path: string): LanguageConfiguration|undefined {
 
         if (!this.configReader.exists(path)) return undefined;
         return this.configReader.read(path);

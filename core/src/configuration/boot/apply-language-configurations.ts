@@ -1,9 +1,12 @@
+import { LanguageConfiguration } from '../model/language-configuration';
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export function applyLanguageConfigurations(languageConfigurations: any[]) {
+export function applyLanguageConfigurations(languageConfigurations: Array<LanguageConfiguration>) {
 
     return (configuration: [any, any]) => {
 
@@ -20,7 +23,7 @@ export function applyLanguageConfigurations(languageConfigurations: any[]) {
 }
 
 
-function applyFields(languageConfigurations: any[], categories: any) {
+function applyFields(languageConfigurations: Array<LanguageConfiguration>, categories: any) {
 
     for (const categoryName of Object.keys(categories)) {
         const category = categories[categoryName];
@@ -40,7 +43,7 @@ function applyFields(languageConfigurations: any[], categories: any) {
 }
 
 
-function applyRelations(languageConfigurations: any[], relations: any) {
+function applyRelations(languageConfigurations: Array<LanguageConfiguration>, relations: any) {
 
     for (const relation of relations) {
         for (let languageConfiguration of languageConfigurations) {
@@ -56,7 +59,7 @@ function applyRelations(languageConfigurations: any[], relations: any) {
 }
 
 
-function applyCategories(languageConfigurations: any[], categories: any) {
+function applyCategories(languageConfigurations: Array<LanguageConfiguration>, categories: any) {
 
     for (const configurationCategoryName of Object.keys(categories)) {
         const configurationCategory = categories[configurationCategoryName];

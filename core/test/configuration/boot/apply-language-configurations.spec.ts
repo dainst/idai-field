@@ -1,7 +1,7 @@
-import {Map} from 'tsfun';
-import {applyLanguageConfigurations} from '../../../src/configuration/boot';
-import {LibraryCategoryDefinition} from '../../../src/configuration/model';
-import {CategoryDefinition} from '../../../src/model';
+import { Map } from 'tsfun';
+import { applyLanguageConfigurations } from '../../../src/configuration/boot';
+import { LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { CategoryDefinition } from '../../../src/model';
 
 
 /**
@@ -69,7 +69,7 @@ describe('applyLanguageConfigurations', () => {
             }
         }];
 
-        const [categories,relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
+        const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
 
         expect(categories['A'].label).toEqual('A_');
         expect(categories['B'].label).toBeUndefined();
@@ -151,7 +151,7 @@ describe('applyLanguageConfigurations', () => {
             }
         }];
 
-        const [categories,relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
+        const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
 
         expect(categories['A'].label).toEqual('A Deutsch');
         expect(categories['B'].label).toEqual('B Deutsch');

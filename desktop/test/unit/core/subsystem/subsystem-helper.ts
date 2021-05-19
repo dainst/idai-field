@@ -145,7 +145,7 @@ export async function createApp(projectName = 'testdb') {
     const relationsManager = new RelationsManager(
         datastore,
         projectConfiguration,
-        settingsProvider.getSettings().username
+        () => settingsProvider.getSettings().username
     );
 
     const imageRelationsManager = new ImageRelationsManager(

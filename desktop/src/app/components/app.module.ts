@@ -171,7 +171,7 @@ registerLocaleData(localeIt, 'it');
             useFactory: (datastore: Datastore, 
                         projectConfiguration: ProjectConfiguration, 
                         settingsProvider: SettingsProvider) => 
-                            new RelationsManager(datastore, projectConfiguration, settingsProvider.getSettings().username),
+                            new RelationsManager(datastore, projectConfiguration, () => settingsProvider.getSettings().username),
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         ImageRelationsManager,

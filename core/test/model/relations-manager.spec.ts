@@ -68,7 +68,7 @@ describe('RelationsManager', () => {
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
         persistenceManager = new RelationsManager(
-            mockDatastore, projectConfiguration, mockSettingsProvider.getSettings().username
+            mockDatastore, projectConfiguration, () => mockSettingsProvider.getSettings().username
         );
 
         mockDatastore.get.and.callFake(getFunction);

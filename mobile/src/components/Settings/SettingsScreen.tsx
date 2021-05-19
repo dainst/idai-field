@@ -1,8 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
-import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
 import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
+import Button from '../common/Button';
+import Column from '../common/Column';
+import Input from '../common/Input';
+import Row from '../common/Row';
 
 
 interface SettingsScreenProps {
@@ -27,40 +33,63 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
     };
 
     return (
-        <View flex={ 1 } safeArea>
-            <Center flex={ 1 }>
-                <FormControl isRequired isInvalid={ usernameVal === '' }>
-                    <Stack mx={ 8 }>
-                        <FormControl.Label>Editor name</FormControl.Label>
-                        <Input
-                            p={ 2 }
-                            mt={ 2 }
-                            value={ usernameVal }
-                            onChangeText={ setUsernameVal }
-                            autoCompleteType="name"
-                            autoCorrect={ false }
-                            autoFocus
-                        />
-                        <FormControl.HelperText mt={ 1 }>
-                            The editor name is saved in the editing history in order
-                            to allow dataset changes to be attributable to a person.
-                        </FormControl.HelperText>
-                        { usernameVal === '' && <FormControl.ErrorMessage mt={ 1 }>
-                            Editor name must not be empty.
-                        </FormControl.ErrorMessage> }
-                    </Stack>
-                </FormControl>
-                <Row mt={ 5 } space={ 2 }>
-                    <Button colorScheme="green" size="md" onPress={ () => saveSettings() }>
-                        Save
-                    </Button>
-                    <Button size="md" onPress={ () => navigation.goBack() }>
-                        Cancel
-                    </Button>
-                </Row>
-            </Center>
-        </View>
+        <SafeAreaView style={ styles.container }>
+            <Row style={ styles.topRow }>
+                <View style={ { flex: 1, alignItems: 'flex-start' } }>
+                    <Button
+                        variant="transparent"
+                        onPress={ () => navigation.goBack() }
+                        title="Cancel"
+                        icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                    />
+                </View>
+                <Text style={ styles.title }>Settings</Text>
+                <View style={ { flex: 1, alignItems: 'flex-end' } }>
+                    <Button variant="success" onPress={ () => saveSettings() } title="Save" />
+                </View>
+            </Row>
+            <Column style={ styles.contentColumn }>
+                <Input
+                    label="Editor name"
+                    value={ usernameVal }
+                    onChangeText={ setUsernameVal }
+                    autoCompleteType="name"
+                    autoCorrect={ false }
+                    autoFocus
+                    helpText="The editor name is saved in the editing history in order
+                        to allow dataset changes to be attributable to a person."
+                    isValid={ usernameVal !== '' }
+                    invalidText="Editor name must not be empty."
+                />
+            </Column>
+        </SafeAreaView>
     );
 };
 
 export default SettingsScreen;
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#ececec',
+    },
+    topRow: {
+        justifyContent: 'space-between',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        padding: 5
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: '500',
+        padding: 10,
+        flex: 1,
+        textAlign: 'center'
+    },
+    contentColumn: {
+        flex: 1,
+        flexDirection: 'column',
+        padding: 10,
+    }
+});

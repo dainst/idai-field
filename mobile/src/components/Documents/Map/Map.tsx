@@ -30,9 +30,10 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     const viewPort = useRef<ViewPort>();
     const transformationMatrix = useMemo(() =>
             setupTransformationMatrix(geometryBoundings,viewPort.current),[geometryBoundings,viewPort]);
-    const transformedGeoDocuments = useMemo(() =>
-        sortDocumentByGeometryArea(transformDocumentsGeometry(transformationMatrix, geoDocuments)),
-            [transformationMatrix, geoDocuments]) ;
+    const transformedGeoDocuments = useMemo(() => sortDocumentByGeometryArea(
+            transformDocumentsGeometry(transformationMatrix, geoDocuments),
+            selectedGeoDocuments.map(doc => doc._id)),
+        [transformationMatrix, geoDocuments, selectedGeoDocuments]) ;
 
     
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);

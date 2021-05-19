@@ -1,5 +1,11 @@
+import { TransformedDocument } from '..';
+import { bu1 } from '../../../../../../test_data/test_docs/bu1';
+import { lineBuilding } from '../../../../../../test_data/test_docs/lineBuilding';
+import { multiPolyTrench } from '../../../../../../test_data/test_docs/multiPolyTrench';
+import { pointBuilding } from '../../../../../../test_data/test_docs/pointBuilding';
 import { pointRadius } from '../constants';
-import { pointArea, polygonArea } from './math-utils';
+import { pointArea, polygonArea, sortDocumentByGeometryArea } from './math-utils';
+
 
 describe('geo-svg/math-utils', () => {
 
@@ -25,4 +31,70 @@ describe('geo-svg/math-utils', () => {
         ];
         expect(polygonArea(polygon)).toBe(32.5 - 5);
     });
+
+
+    it('should sort Document by FieldGeometry area', () => {
+
+        const docs = [tBu1, tLineBuilding, tMultiPolyTrench, tPointBuilding];
+        const expectedOrder = ['multiTrench', 'B1', 'pointBuilding', 'lineBuilding'];
+
+        const sortedDocs = sortDocumentByGeometryArea(docs);
+        console.log(sortedDocs.map(doc => doc.doc.resource.identifier));
+
+        expect(sortedDocs.map(doc => doc.doc.resource.identifier)).toEqual(expectedOrder);
+
+
+    });
 });
+
+const tBu1: TransformedDocument = {
+    doc: bu1,
+    transformedCoordinates: [
+        [
+            [621.7385735809803, 451.1022099405527],
+            [675.4748869910836, 451.1022099405527],
+            [675.4748869910836, 409.1501757800579],
+            [621.7385735809803, 409.1501757800579]
+        ]
+      ]
+};
+
+const tLineBuilding: TransformedDocument = {
+    doc: lineBuilding,
+    transformedCoordinates: [
+        [473.25665494799614, 252.18357609212399],
+        [288.479156203568, 593.456303358078],
+      ]
+};
+
+
+const tMultiPolyTrench: TransformedDocument = {
+    doc: multiPolyTrench,
+    transformedCoordinates: [
+        [
+          [
+            [544.9050728231668, 698.1007031649351],
+            [630.6946258172393, 716.9555499702692],
+            [620.324460066855, 805.5733299851418],
+            [541.1341034621, 793.317679554224]
+          ]
+        ],
+        [
+          [
+            [673.1180311366916, 826.3136614710093],
+            [739.1099949777126, 860.2523857355118],
+            [705.1712707132101, 906.4467604160309],
+            [682.5454545468092, 938.5],
+            [660.8623807132244, 919.6451531797647],
+            [664.6333500742912, 890.4201406240463],
+            [681.6027122065425, 866.8515821099281],
+            [651.4349573031068, 858.3669010549784]
+          ]
+        ]
+      ]
+};
+
+const tPointBuilding: TransformedDocument = {
+    doc: pointBuilding,
+    transformedCoordinates: [490.2260170727968, 546.3191863298416]
+};

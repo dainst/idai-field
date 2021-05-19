@@ -10,6 +10,7 @@ import { GeoMultiPoint } from './GeoMultiPoint/GeoMultiPoint';
 import { GeoMultiPolygon } from './GeoMultiPolygon';
 import { GeoPoint } from './GeoPoint/GeoPoint';
 import { GeoPolygon } from './GeoPolygon/GeoPolygon';
+import { sortDocumentByGeometryArea } from './math-utils/math-utils';
 
 export {
     GeoMultiPolygon,
@@ -21,6 +22,7 @@ export {
     processTransform2d,
     setupTransformationMatrix,
     transformDocumentsGeometry,
-    TransformedDocument
+    TransformedDocument,
+    sortDocumentByGeometryArea
 };
 

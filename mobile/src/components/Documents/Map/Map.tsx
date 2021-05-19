@@ -8,7 +8,7 @@ import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon,
     processTransform2d, setupTransformationMatrix,
-    transformDocumentsGeometry, TransformedDocument
+    sortDocumentByGeometryArea, transformDocumentsGeometry, TransformedDocument
 } from './geo-svg';
 import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
@@ -31,7 +31,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     const transformationMatrix = useMemo(() =>
             setupTransformationMatrix(geometryBoundings,viewPort.current),[geometryBoundings,viewPort]);
     const transformedGeoDocuments = useMemo(() =>
-            transformDocumentsGeometry(transformationMatrix, geoDocuments),[transformationMatrix, geoDocuments]) ;
+        sortDocumentByGeometryArea(transformDocumentsGeometry(transformationMatrix, geoDocuments)),
+            [transformationMatrix, geoDocuments]) ;
 
     
     const [selectedDocument, setSelectedDocument] = useState<Document>();

@@ -1,4 +1,5 @@
 import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
+import { strokeWidth } from './geo-svg/constants';
 
 interface ElementProps {
     fill: string;
@@ -21,7 +22,6 @@ export const getDocumentFillOpacityPress = (
      
     const doc_id = document.resource.id;
     const color = config.getColorForCategory(document.resource.category);
-    const strokeWidth = 1;
 
 
     for( const doc of selectedDocuments) {

@@ -23,7 +23,6 @@ describe('ConfigLoader', () => {
 
         configReader.read.and.returnValues(
             libraryCategories,
-            customLanguageConfiguration,
             languageConfiguration,
             {},
             {},
@@ -35,7 +34,8 @@ describe('ConfigLoader', () => {
         pouchdbManager.getDb.and.returnValue({
             get: (_: string) => Promise.resolve({
                 resource: {
-                    categories: customFieldsConfiguration
+                    categories: customFieldsConfiguration,
+                    languages: { de: customLanguageConfiguration }
                 }
             })
         });
@@ -280,10 +280,13 @@ describe('ConfigLoader', () => {
                         A: { fields: {} },
                         B: { fields: {} }
                     },
-                [{ name: 'r1', label: '', domain: ['A'], range: ['B']},
-                         { name: 'r2', label: '', domain: ['A'], range: ['B']}],
+                [
+                    { name: 'r1', label: '', domain: ['A'], range: ['B'] },
+                    { name: 'r2', label: '', domain: ['A'], range: ['B'] }
+                ],
                 {},
-                 undefined, ['de'], 'User');
+                undefined, ['de'], 'User'
+            );
         } catch(err) {
             fail(err);
         }

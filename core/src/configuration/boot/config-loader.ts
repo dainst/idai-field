@@ -83,7 +83,6 @@ export class ConfigLoader {
         const orderConfigurationPath = '/Order.json';
         const searchConfigurationPath = '/Search.json';
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
-        const customConfigPath = '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
         let customCategories;
         let languageConfigurations: any[];
@@ -92,10 +91,16 @@ export class ConfigLoader {
         let orderConfiguration: any;
 
         try {
+            const configurationDocument = (await this.loadCustomConfiguration(
+                customConfigurationName ?? 'Default',
+                username,
+                languages
+            ));
+            customCategories = configurationDocument.resource.categories;
             languageConfigurations = this.readLanguageConfigurations(
-                languages, customConfigurationName
+                configurationDocument.resource.languages,
+                languages
             );
-            customCategories = (await this.loadCustomConfiguration(customConfigPath, username)).resource.categories;
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
@@ -132,22 +137,24 @@ export class ConfigLoader {
     }
 
 
-    private async loadCustomConfiguration(filePath: string, username: string): Promise<ConfigurationDocument> {
+    private async loadCustomConfiguration(customConfigurationName: string, username: string,
+                                          languages: string[]): Promise<ConfigurationDocument> {
 
         try {
             return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
-            return await this.storeCustomConfigurationInDatabase(filePath, username);
+            return await this.storeCustomConfigurationInDatabase(customConfigurationName, username, languages);
         }
     }
 
 
-    private async storeCustomConfigurationInDatabase(filePath: string,
-                                                     username: string): Promise<ConfigurationDocument> {
+    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
+                                                     languages: string[]): Promise<ConfigurationDocument> {
 
-        const categories = await this.configReader.read(filePath);
+        const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
+        const languageConfigurations = await this.readCustomLanguageConfigurations(languages, customConfigurationName);
         const configuration: ConfigurationDocument
-            = ConfigLoader.createConfigurationDocument(categories, username);
+            = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username);
         try {
             await this.pouchdbManager.getDb().put(configuration);
             return configuration;
@@ -159,18 +166,13 @@ export class ConfigLoader {
     }
 
 
-    private readLanguageConfigurations(languages: string[], customConfigurationName: string): any[] {
+    private readLanguageConfigurations(customLanguageConfigurations: { [language: string]: any },
+                                       languages: string[]): any[] {
 
         const configurations = [];
 
         for (const language of languages) {
-            configurations.push(
-                this.readLanguageConfiguration('/Language-' +
-                    (customConfigurationName
-                        ? customConfigurationName
-                        : 'Custom')
-                    + '.' + language + '.json')
-            );
+            configurations.push(customLanguageConfigurations[language]);
             configurations.push(
                 this.readLanguageConfiguration('/Library/Language.' + language + '.json')
             );
@@ -180,6 +182,26 @@ export class ConfigLoader {
         }
 
         return configurations.filter(not(isUndefinedOrEmpty));
+    }
+
+
+    private readCustomLanguageConfigurations(languages: string[],
+                                             customConfigurationName: string): { [language: string]: any } {
+
+        // TODO Load all custom language configuration files, also for languages that are not currently configured
+                
+        const configurations = {};
+
+        for (const language of languages) {
+            const configuration = this.readLanguageConfiguration('/Language-' +
+                (customConfigurationName
+                    ? customConfigurationName
+                    : 'Custom')
+                + '.' + language + '.json');
+            if (configuration) configurations[language] = configuration;
+        }
+
+        return configurations;
     }
 
 
@@ -200,6 +222,7 @@ export class ConfigLoader {
     
 
     private static createConfigurationDocument(categories: { [formName: string]: CustomCategoryDefinition },
+                                               languageConfigurations: { [language: string]: any },
                                                username: string): ConfigurationDocument {
 
         return {
@@ -214,7 +237,8 @@ export class ConfigLoader {
                 identifier: 'Configuration',
                 category: 'Configuration',
                 relations: {},
-                categories: categories
+                categories: categories,
+                languages: languageConfigurations
             }
         };
     }

@@ -6,11 +6,10 @@ import { Matrix4 } from 'react-native-redash';
 import { Circle, G } from 'react-native-svg';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
-    GeoMultiPolygon, GeoPoint, GeoPolygon,
+    GeoMultiPolygon, GeoPoint, GeoPolygon, getGeometryBoundings,
     processTransform2d, setupTransformationMatrix,
     sortDocumentByGeometryArea, transformDocumentsGeometry, TransformedDocument
 } from './geo-svg';
-import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';

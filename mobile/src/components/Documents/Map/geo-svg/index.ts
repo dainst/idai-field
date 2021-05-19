@@ -1,3 +1,4 @@
+import { getGeometryBoundings } from './geojson-cs-to-svg-cs/cs-transform-utils/cs-transform-utils';
 import {
     processTransform2d,
     setupTransformationMatrix,
@@ -23,6 +24,7 @@ export {
     setupTransformationMatrix,
     transformDocumentsGeometry,
     TransformedDocument,
-    sortDocumentByGeometryArea
+    sortDocumentByGeometryArea,
+    getGeometryBoundings
 };
 

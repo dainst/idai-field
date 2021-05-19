@@ -138,20 +138,29 @@ export class ConfigLoader {
 
     private async loadCustomConfiguration(customConfigurationName: string, username: string): Promise<ConfigurationDocument> {
 
+        let customConfiguration: ConfigurationDocument;
         try {
-            return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
+            customConfiguration = await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
             return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
+        }
+
+        if (!customConfiguration.resource.categories || !customConfiguration.resource.languages) {
+            return await this.storeCustomConfigurationInDatabase(
+                customConfigurationName, username, customConfiguration._rev
+            );
+        } else {
+            return customConfiguration;
         }
     }
 
 
-    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string): Promise<ConfigurationDocument> {
-
+    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
+                                                     rev?: string): Promise<ConfigurationDocument> {
         const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = await this.readCustomLanguageConfigurations(customConfigurationName);
         const configuration: ConfigurationDocument
-            = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username);
+            = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username, rev);
         try {
             await this.pouchdbManager.getDb().put(configuration);
             return configuration;
@@ -215,9 +224,9 @@ export class ConfigLoader {
 
     private static createConfigurationDocument(categories: { [formName: string]: CustomCategoryDefinition },
                                                languageConfigurations: { [language: string]: any },
-                                               username: string): ConfigurationDocument {
+                                               username: string, rev?: string): ConfigurationDocument {
 
-        return {
+        const configurationDocument = {
             _id: 'configuration',
             created: {
                 user: username,
@@ -233,5 +242,9 @@ export class ConfigLoader {
                 languages: languageConfigurations
             }
         };
+
+        if (rev) configurationDocument['_rev'] = rev;
+
+        return configurationDocument;
     }
 }

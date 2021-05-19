@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 
 interface MapBottomDrawerProps {
-    document: Document | undefined;
+    document: Document | null;
     isVisible: boolean;
     closeHandler: () => void;
     config: ProjectConfiguration;

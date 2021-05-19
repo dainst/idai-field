@@ -35,13 +35,19 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
             [transformationMatrix, geoDocuments]) ;
 
     
-    const [selectedDocument, setSelectedDocument] = useState<Document>();
+    const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
     const selectDocHandler = (doc: Document) => {
 
-        setSelectedDocument(doc);
+        setHighlightedDoc(doc);
         setModalVisible(true);
+    };
+
+    const unSelectDocHandler = () => {
+
+        setModalVisible(false);
+        setHighlightedDoc(null);
     };
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
@@ -63,7 +69,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
                                     tDoc,
                                     selectedGeoDocuments,
                                     config,
-                                    selectDocHandler)}
+                                    selectDocHandler,
+                                    highlightedDoc)}
                             </G>))
                         }
                     </SvgMap> :
@@ -71,8 +78,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
                 }
             </View>
             <MapBottomDrawer
-                closeHandler={ () => setModalVisible(false) }
-                document={ selectedDocument }
+                closeHandler={ unSelectDocHandler }
+                document={ highlightedDoc }
                 isVisible={ isModalVisible }
                 config={ config }
                 navigateToDocument={ navigateToDocument } />
@@ -95,7 +102,8 @@ const renderGeoSvgElement = (
         transformedDocument: TransformedDocument,
         selectedDocuments: Document[],
         config: ProjectConfiguration,
-        onPressHandler: (doc: Document) => void): ReactElement => {
+        onPressHandler: (doc: Document) => void,
+        highlightedDoc: Document | null): ReactElement => {
     
     const geometry: FieldGeometry = transformedDocument.doc.resource.geometry;
     const props = {
@@ -105,7 +113,8 @@ const renderGeoSvgElement = (
             selectedDocuments,
              config,
              geometry.type,
-             onPressHandler.bind(this,transformedDocument.doc)),
+             onPressHandler.bind(this,transformedDocument.doc),
+             highlightedDoc),
     };
  
 

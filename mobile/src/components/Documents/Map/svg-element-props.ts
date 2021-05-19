@@ -15,7 +15,8 @@ export const getDocumentFillOpacityPress = (
     selectedDocuments: Document[],
     config: ProjectConfiguration,
     geoType: FieldGeometryType,
-    onPressHandler: () => void): ElementProps => {
+    onPressHandler: () => void,
+    highlightedDoc: Document | null): ElementProps => {
 
      
     const doc_id = document.resource.id;
@@ -28,10 +29,9 @@ export const getDocumentFillOpacityPress = (
         if(doc.resource.id === doc_id){
             return {
                 opacity: 0.5,
-                stroke: color,
+                stroke: isHighlightedDoc(doc,highlightedDoc) ? 'white' : color,
                 fill: color,
-                strokeDasharray: [1],
-                strokeWidth,
+                strokeWidth: isHighlightedDoc(doc,highlightedDoc) ? 6 : strokeWidth,
                 onPress: onPressHandler
              };
         }
@@ -45,3 +45,6 @@ export const getDocumentFillOpacityPress = (
 };
 
 const isGeoTypePoint = (type: FieldGeometryType) => type === 'Point' || type === 'MultiPoint';
+
+const isHighlightedDoc = (doc: Document, highlightedDoc: Document | null) =>
+    highlightedDoc ? highlightedDoc._id === doc._id : false;

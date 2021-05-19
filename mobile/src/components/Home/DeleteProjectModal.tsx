@@ -1,9 +1,13 @@
-import { Button, Column, Input, Modal, Text } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
+import { Modal, Text } from 'react-native';
+import Button from '../common/Button';
+import Column from '../common/Column';
+import Input from '../common/Input';
+import TitleBar from '../common/TitleBar';
 
 interface DeleteProjectModalProps {
     project: string;
-    isOpen: boolean;
     onProjectDeleted: (project: string) => void;
     onClose: () => void;
 }
@@ -30,54 +34,40 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen
 
 
     return <Modal
-        isCentered
-        isOpen={ isOpen }
-        onClose={ onCancel }
-        motionPreset="fade"
-        closeOnOverlayClick
+        onRequestClose={ onCancel }
+        animationType="slide"
     >
-        <Modal.Content>
-            <Modal.CloseButton />
-            <Modal.Header>
-                <Text bold>
-                    Delete project
-                </Text>
-            </Modal.Header>
-            <Modal.Body>
-                <Column space={ 3 }>
-                    <Text>
-                        This will delete the project and all associated data.
-                    </Text>
-                    <Text>
-                        Type <Text bold>{ project }</Text> to confirm.
-                    </Text>
-                    <Input
-                        p={ 2 }
-                        mt={ 2 }
-                        value={ projectVal }
-                        onChangeText={ setProjectVal }
-                        autoCapitalize="none"
-                        autoCompleteType="off"
-                        autoCorrect={ false }
-                        autoFocus
-                    />
-                </Column>
-            </Modal.Body>
-            <Modal.Footer space={ 2 }>
-                <Button
-                    colorScheme="red"
-                    size="md"
-                    onPress={ onDelete }
-                    isDisabled={ project !== projectVal }
-                    _text={ { color: 'white', fontWeight: 'semibold' } }
-                >
-                    Delete
-                </Button>
-                <Button size="md" onPress={ onCancel }>
-                    Cancel
-                </Button>
-            </Modal.Footer>
-        </Modal.Content>
+        <TitleBar
+            title="Delete project"
+            left={ <Button
+                title="Cancel"
+                variant="transparent"
+                icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                onPress={ onCancel }
+            /> }
+            right={ <Button
+                title="Delete"
+                variant="danger"
+                onPress={ onDelete }
+                isDisabled={ project !== projectVal }
+            /> }
+        />
+        <Column style={ { padding: 15 } }>
+            <Text>
+                This will delete the project and all associated data.
+            </Text>
+            <Text>
+                Type <Text style={ { fontWeight: 'bold' } }>{ project }</Text> to confirm.
+            </Text>
+            <Input
+                value={ projectVal }
+                onChangeText={ setProjectVal }
+                autoCapitalize="none"
+                autoCompleteType="off"
+                autoCorrect={ false }
+                autoFocus
+            />
+        </Column>
     </Modal>;
 };
 

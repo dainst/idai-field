@@ -56,12 +56,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             onProjectCreated={ openProject }
             onClose={ () => setIsProjectModalOpen(false) }
         /> }
-        <DeleteProjectModal
+        { isDeleteModalOpen && <DeleteProjectModal
             project={ selectedProject }
-            isOpen={ isDeleteModalOpen }
             onProjectDeleted={ onDeleteProject }
             onClose={ () => setIsDeleteModalOpen(false) }
-        />
+        /> }
         <SafeAreaView style={ styles.container }>
             <Row style={ styles.topRow }>
                 { preferences.username === '' &&

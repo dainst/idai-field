@@ -40,7 +40,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreate
                 title="Cancel"
                 variant="transparent"
                 icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                onPress={ () => onCancel() }
+                onPress={ onCancel }
             /> }
             right={ <Button
                 title="Create"
@@ -62,13 +62,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreate
                 to other instances of iDAI.field."
             invalidText="Project name must not be empty."
             isValid={ project !== '' }
+            style={ { margin: 10 } }
         />
-        <Button
-                title="Cancel"
-                variant="transparent"
-                icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                onPress={ () => onCancel() }
-            />
     </Modal>;
 };
 

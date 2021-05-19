@@ -9,12 +9,14 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class FsConfigReader implements ConfigReader {
 
-    public constructor(private configDir: string){ }
+    public constructor(private configDir: string) {}
+
 
     public exists(path: string): boolean {
 
         return fs.existsSync(this.configDir + '/' + path);
     }
+
 
     public read(path: string): any {
 
@@ -25,5 +27,12 @@ export class FsConfigReader implements ConfigReader {
         } catch (err) {
             throw [ConfigurationErrors.INVALID_JSON, this.configDir + '/' + path];
         }
+    }
+
+
+    public getCustomLanguageConfigurationFileNames(customConfigurationName: string): string[] {
+
+        return fs.readdirSync(this.configDir)
+            .filter(fileName => fileName.startsWith('Language-' + customConfigurationName));
     }
 }

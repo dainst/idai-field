@@ -152,7 +152,7 @@ export class ConfigLoader {
                                                      languages: string[]): Promise<ConfigurationDocument> {
 
         const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
-        const languageConfigurations = await this.readCustomLanguageConfigurations(languages, customConfigurationName);
+        const languageConfigurations = await this.readCustomLanguageConfigurations(customConfigurationName);
         const configuration: ConfigurationDocument
             = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username);
         try {
@@ -185,19 +185,14 @@ export class ConfigLoader {
     }
 
 
-    private readCustomLanguageConfigurations(languages: string[],
-                                             customConfigurationName: string): { [language: string]: any } {
+    private readCustomLanguageConfigurations(customConfigurationName: string): { [language: string]: any } {
 
-        // TODO Load all custom language configuration files, also for languages that are not currently configured
-                
         const configurations = {};
+        const fileNames: string[] = this.configReader.getCustomLanguageConfigurationFileNames(customConfigurationName);
 
-        for (const language of languages) {
-            const configuration = this.readLanguageConfiguration('/Language-' +
-                (customConfigurationName
-                    ? customConfigurationName
-                    : 'Custom')
-                + '.' + language + '.json');
+        for (const fileName of fileNames) {
+            const configuration = this.readLanguageConfiguration(fileName);
+            const language: string = fileName.split('.')[1];
             if (configuration) configurations[language] = configuration;
         }
 

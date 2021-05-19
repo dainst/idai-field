@@ -39,4 +39,5 @@ export default class RequireConfigReader implements ConfigReader {
 
     read = (path: string): any => clone(PATH_MAP[path]);
 
+    getCustomLanguageConfigurationFileNames = (_: string) => [];
 }

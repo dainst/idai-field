@@ -168,10 +168,11 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: RelationsManager,
-            useFactory: (datastore: Datastore, 
-                        projectConfiguration: ProjectConfiguration, 
-                        settingsProvider: SettingsProvider) => 
-                            new RelationsManager(datastore, projectConfiguration, () => settingsProvider.getSettings().username),
+            useFactory: (datastore: Datastore,
+                        projectConfiguration: ProjectConfiguration,
+                        settingsProvider: SettingsProvider) =>
+                            new RelationsManager(datastore, projectConfiguration,
+                                () => settingsProvider.getSettings().username /* fetch at runtime */),
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         ImageRelationsManager,

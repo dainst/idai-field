@@ -14,6 +14,7 @@ import {
     undefinedOrEmpty
 } from 'tsfun';
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import {Name} from '../tools';
 
 
 
@@ -31,7 +32,7 @@ export class RelationsManager {
     constructor(
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration,
-        private username: () => string
+        private getUser: () => Name
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -61,7 +62,7 @@ export class RelationsManager {
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash);
 
-        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.username());
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.getUser());
         return persistedDocument;
     }
 
@@ -146,7 +147,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash), this.username());
+            updated, [oldVersion].concat(revisionsToSquash), this.getUser());
         return updated as Document;
     }
 
@@ -154,7 +155,7 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document, this.username());
+            document, this.getUser());
         await this.datastore.remove(document);
     }
 
@@ -181,7 +182,7 @@ export class RelationsManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
-        const username = this.username;
+        const username = this.getUser;
 
         return document.resource.id
             ? this.datastore.update(

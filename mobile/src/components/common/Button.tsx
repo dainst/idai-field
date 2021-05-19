@@ -18,8 +18,11 @@ interface ButtonProps {
 
 const Button = ({ style, title, icon, variant = 'secondary', onPress }: ButtonProps): ReactElement => {
 
-    return <TouchableHighlight onPress={ onPress }>
-        <View style={ [getButtonStyle(variant), style] }>
+    return <TouchableHighlight
+            onPress={ onPress }
+            containerStyle={ [getButtonStyle(variant), style] }
+            underlayColor="transparent">
+        <View style={ styles.container }>
             { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
             { icon && title && <Text style={ styles.separator } />}
             { title && <Text style={ getTextStyle(variant) }>{ title }</Text> }
@@ -31,11 +34,8 @@ export default Button;
 
 const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
     backgroundColor: colors[variant],
-    alignItems: 'center',
     padding: 10,
-    borderRadius: 5,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    borderRadius: 5
 });
 
 const getTextStyle = (variant: ButtonVariant): TextStyle => ({
@@ -43,7 +43,12 @@ const getTextStyle = (variant: ButtonVariant): TextStyle => ({
 });
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     separator: {
-        width: 5
+        width: 5,
     }
 });

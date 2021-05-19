@@ -62,7 +62,6 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
                                 {renderGeoSvgElement(
                                     tDoc,
                                     selectedGeoDocuments,
-                                    selectedGeoDocuments.length === transformedGeoDocuments.length,
                                     config,
                                     selectDocHandler)}
                             </G>))
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
 const renderGeoSvgElement = (
         transformedDocument: TransformedDocument,
         selectedDocuments: Document[],
-        noDocsSelected: boolean,
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void): ReactElement => {
     
@@ -105,10 +103,9 @@ const renderGeoSvgElement = (
         ...getDocumentFillOpacityPress(
             transformedDocument.doc,
             selectedDocuments,
-             noDocsSelected,
              config,
-             geometry.type),
-        onPress: () => onPressHandler(transformedDocument.doc)
+             geometry.type,
+             onPressHandler.bind(this,transformedDocument.doc)),
     };
  
 

@@ -1,8 +1,8 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
-import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
@@ -37,8 +37,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     issueSearch
 }): ReactElement => {
 
-    const toast = useToast();
-
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
     const onBarCodeScanned = useCallback((data: string) => {
@@ -47,14 +45,18 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             .then(({ documents: [doc] }) =>
                 navigation.navigate('DocumentDetails', { docId: doc.resource.id })
             )
-            .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
-    }, [repository, navigation, toast]);
+            .catch(() => Alert.alert(
+                'Not found',
+                `Resource  '${data}' is not available`,
+                [ { text: 'OK' } ]
+            ));
+    }, [repository, navigation]);
 
    const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
         
 
     return (
-        <View flex={ 1 } safeArea>
+        <SafeAreaView style={ { flex: 1 } }>
             <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
                 <Map
@@ -64,7 +66,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     navigateToDocument={ navigateToDocument } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -72,9 +74,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    input: {
-        backgroundColor: 'white',
     }
 });
 

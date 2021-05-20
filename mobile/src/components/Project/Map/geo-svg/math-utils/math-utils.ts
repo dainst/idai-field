@@ -4,16 +4,12 @@ import { FieldGeometry } from 'idai-field-core';
 import { pointRadius } from '../constants';
 import { TransformedDocument } from '../geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
 
-export const sortDocumentByGeometryArea = (
-    documents: TransformedDocument[],
-    selectedDocsId: string[]): TransformedDocument[] => {
+export const sortDocumentByGeometryArea = (documents: TransformedDocument[]): TransformedDocument[] => {
 
     return [...documents.sort((doc1,doc2) => {
         
         const a1 = getGeometryArea({ type: doc1.doc.resource.geometry.type, coordinates: doc1.transformedCoordinates });
         const a2 = getGeometryArea({ type: doc2.doc.resource.geometry.type, coordinates: doc2.transformedCoordinates });
-        if(selectedDocsId.includes(doc2.doc._id) && !selectedDocsId.includes(doc1.doc._id)) return -1;
-        if(!selectedDocsId.includes(doc2.doc._id) && selectedDocsId.includes(doc1.doc._id)) return 1;
         if(a1 > a2) return -1;
         else if(a1 < a2) return 1;
         else return 0;

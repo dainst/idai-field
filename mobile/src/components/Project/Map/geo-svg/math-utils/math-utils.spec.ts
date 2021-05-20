@@ -53,19 +53,7 @@ describe('geo-svg/math-utils', () => {
         const docs = [tBu1, tLineBuilding, tMultiPolyTrench, tPointBuilding];
         const expectedOrder = ['multiTrench', 'B1', 'pointBuilding', 'lineBuilding'];
 
-        const sortedDocs = sortDocumentByGeometryArea(docs,[]);
-
-        expect(sortedDocs.map(doc => doc.doc.resource.identifier)).toEqual(expectedOrder);
-    });
-
-
-    // eslint-disable-next-line max-len
-    it('should sort Document by FieldGeometry area taking selected Docs into account. Selected docs should be sorted at the end of the array', () => {
-
-        const docs = [tBu1, tLineBuilding, tMultiPolyTrench, tPointBuilding];
-        const expectedOrder = ['multiTrench', 'lineBuilding', 'B1', 'pointBuilding'];
-
-        const sortedDocs = sortDocumentByGeometryArea(docs,[pointBuilding._id,bu1._id]);
+        const sortedDocs = sortDocumentByGeometryArea(docs);
 
         expect(sortedDocs.map(doc => doc.doc.resource.identifier)).toEqual(expectedOrder);
     });

@@ -64,3 +64,108 @@ export const pointArea = (): number => Math.PI * Math.pow(pointRadius,2);
 
 
 export const lineArea = (): 0 => 0;
+
+
+export const isMultiLineStringInMultiPolygon = (mLineString: Position[][], mulitPolygon: Position[][][]): boolean => {
+    
+    for(const lineString of mLineString)
+        if(isLineStringInMultiPolygon(lineString, mulitPolygon)) return true;
+    return false;
+};
+
+
+export const isMultiLineStringInPolygon = (mLineString: Position[][], polygon: Position[][]): boolean => {
+    
+    for(const lineString of mLineString)
+        if(isLineStringInPolygon(lineString, polygon)) return true;
+    return false;
+};
+
+
+export const isLineStringInMultiPolygon = (lineString: Position[], multiPolygon: Position[][][]): boolean =>
+    isMultiPointInMultiPolygon(lineString, multiPolygon);
+
+
+export const isLineStringInPolygon = (lineString: Position[], polygon: Position[][]): boolean =>
+    isMultiPointInPolygon(lineString, polygon);
+
+
+export const isMultiPolygonInPolygon = (multiPoly: Position[][][], polygon: Position[][]): boolean => {
+    
+    for(const poly of multiPoly)
+        if(isPolygonInPolygon(poly, polygon)) return true;
+    return false;
+};
+
+
+export const isMultiPolygonInMultipolygon = (multiPoly1: Position[][][],multiPoly2: Position[][][]): boolean => {
+    
+    for(const polygon of multiPoly1)
+        if(isPolygonInMultiPolygon(polygon, multiPoly2)) return true;
+
+    return false;
+};
+
+
+export const isMultiPointInMultiPolygon = (points: Position[], multiPoly: Position[][][]): boolean => {
+
+    for(const point of points)
+        if(isPointInMultiPolygon(point, multiPoly)) return true;
+    return false;
+};
+
+
+export const isMultiPointInPolygon = (points: Position[], polygon: Position[][]): boolean => {
+
+    for(const point of points)
+        if(isPointInPolygon(point, polygon)) return true;
+    return false;
+};
+
+
+export const isPolygonInMultiPolygon = (polygon: Position[][], multiPoly: Position[][][]): boolean => {
+
+    for(const poly of multiPoly)
+        if(isPolygonInPolygon(polygon, poly)) return true;
+    return false;
+};
+
+
+/**
+ * Check if polygon1 is positioned inside polygon2.
+ * Only checks the outer contours of the polygons.
+ * Checks if at least one point of polygon1 is inside poylgon2
+ * @param polygon1 GeoJSON polygon
+ * @param polygon2 GeoJSON polygon
+ * @returns true if polygon1 is inside polygon2
+ */
+export const isPolygonInPolygon = (polygon1: Position[][], polygon2: Position[][]): boolean => {
+
+    for(const point of polygon1[0])
+        if(isPointInRingCoordinates(point,polygon2[0])) return true;
+    
+    return false;
+};
+
+
+export const isPointInMultiPolygon = (point: Position, multiPolygon: Position[][][]): boolean => {
+    
+    for(const polygon of multiPolygon)
+        if(isPointInPolygon(point, polygon)) return true;
+
+    return false;
+};
+
+
+export const isPointInPolygon = (point: Position, polygon: Position[][]): boolean => {
+
+    if(!isPointInRingCoordinates(point, polygon[0])) return false;
+    for( let i = 1; i < polygon.length; i++)
+        if(isPointInRingCoordinates(point, polygon[i])) return false;
+    
+    return true;
+};
+
+
+export const isPointInRingCoordinates = (point: Position, ringCoords: Position[]): boolean =>
+    d3.polygonContains(ringCoords as [number,number][], point as [number, number]);

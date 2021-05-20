@@ -250,7 +250,7 @@ function importOneDocument(services: ImportCatalogServices,
         const updateDocument = Document.clone(existingDocument ?? document);
 
         if (!existingDocument) {
-            if (isOwnedCatalog(context, document)) delete updateDocument.project;
+            if (isOwned(context, document)) delete updateDocument.project;
 
             await services.datastore.create(updateDocument, context.username);
             return updateDocument;
@@ -271,7 +271,7 @@ function importOneDocument(services: ImportCatalogServices,
 }
 
 
-function isOwnedCatalog(context: ImportCatalogContext, document: Document) {
+function isOwned(context: ImportCatalogContext, document: Document) {
 
     return document.project === context.selectedProject;
 }

@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
 import Button from '../common/Button';
 import Column from '../common/Column';
+import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
 
@@ -34,7 +35,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
 
     return (
         <SafeAreaView style={ styles.container }>
-            <TitleBar title="Settings"
+            <TitleBar title={ <Heading>Settings</Heading> }
                 left={ <Button
                     variant="transparent"
                     onPress={ () => navigation.goBack() }

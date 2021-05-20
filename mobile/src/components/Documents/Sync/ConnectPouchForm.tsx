@@ -4,6 +4,7 @@ import { Keyboard } from 'react-native';
 import { ProjectSettings } from '../../../models/preferences';
 import Button from '../../common/Button';
 import Column from '../../common/Column';
+import Heading from '../../common/Heading';
 import Input from '../../common/Input';
 import TitleBar from '../../common/TitleBar';
 
@@ -27,7 +28,7 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
     return (
         <>
             <TitleBar
-                title={ 'Connect' }
+                title={ <Heading>Connect</Heading> }
                 left={ <Button
                     title="Cancel"
                     variant="transparent"

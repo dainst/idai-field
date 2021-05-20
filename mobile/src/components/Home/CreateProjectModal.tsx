@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/Button';
+import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
 
@@ -37,7 +38,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreate
         animationType="slide"
     >
         <SafeAreaView>
-            <TitleBar title="Create project"
+            <TitleBar title={ <Heading>Create project</Heading> }
                 left={ <Button
                     title="Cancel"
                     variant="transparent"

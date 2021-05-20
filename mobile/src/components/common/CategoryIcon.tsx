@@ -33,5 +33,6 @@ const getStyles = (config: ProjectConfiguration, document: Document, size: numbe
     },
     text: {
         color: config.getTextColorForCategory(document.resource.category),
+        fontSize: size / 1.5,
     },
 });

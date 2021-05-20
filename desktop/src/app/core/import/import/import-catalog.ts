@@ -249,6 +249,8 @@ function importOneDocument(services: ImportCatalogServices,
         const updateDocument = Document.clone(existingDocument ?? document);
 
         if (!existingDocument) {
+            if (isOwnedCatalog(context, document)) delete updateDocument.project;
+
             await services.datastore.create(updateDocument, context.username);
             return updateDocument;
         }
@@ -265,6 +267,12 @@ function importOneDocument(services: ImportCatalogServices,
         }
         return updateDocument;
     }
+}
+
+
+function isOwnedCatalog(context: ImportCatalogContext, document: Document) {
+
+    return document.project === context.selectedProject;
 }
 
 

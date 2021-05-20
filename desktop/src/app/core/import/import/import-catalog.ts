@@ -262,7 +262,6 @@ function importOneDocument(services: ImportCatalogServices,
             if (oldRelations) updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
             await services.datastore.update(updateDocument, context.username);
         } else {
-            console.log(updateDocument)
             await services.datastore.remove(existingDocument);
             await services.datastore.create(updateDocument, context.username);
         }

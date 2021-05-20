@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         margin: 5,
         fontSize: 16,
+        height: 30,
     },
     invalidInput: {
         borderBottomColor: colors.danger,

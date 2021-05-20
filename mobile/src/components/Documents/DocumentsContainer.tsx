@@ -55,7 +55,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     };
 
     return (
-        
         <Drawer.Navigator
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             drawerContent={ ({ navigation }: { navigation: any }) => {

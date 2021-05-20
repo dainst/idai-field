@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Modal, SafeAreaView, Text } from 'react-native';
+import { Modal, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/Button';
 import Column from '../common/Column';
 import Input from '../common/Input';

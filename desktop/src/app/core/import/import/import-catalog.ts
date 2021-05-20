@@ -59,7 +59,6 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 existingCatalogAndImageDocuments
             ] = await getExistingDocuments(services, importCatalog.resource.id);
 
-
             assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
@@ -204,9 +203,12 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
             problems.push(removedDocument.resource.identifier);
         }
     }
-    if (problems.length > 0 ) throw [
-        ImportCatalogErrors.CONNECTED_TYPE_DELETED,
-        problems.join(',')];
+    if (problems.length > 0 ) {
+        throw [
+            ImportCatalogErrors.CONNECTED_TYPE_DELETED,
+            problems.join(',')
+        ];
+    }
 }
 
 
@@ -238,32 +240,38 @@ function importOneDocument(services: ImportCatalogServices,
                            context: ImportCatalogContext,
                            existingDocuments: Lookup<Document>) {
 
-    return async function(document: Document) {
+    return async (document: Document) => {
 
         delete document[Document._REV];
         delete document[Document.MODIFIED];
         delete document[Document.CREATED];
 
-        const existingDocument: Document | undefined = await existingDocuments[document.resource.id];
+        const existingDocument: Document|undefined = existingDocuments[document.resource.id];
         const updateDocument = Document.clone(existingDocument ?? document);
 
-        if (document.project === context.selectedProject) delete updateDocument.project;
-
-        if (existingDocument) {
-            if (existingDocument.resource.category === 'Type' || existingDocument.resource.category === 'TypeCatalog') {
-                const oldRelations = clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
-                updateDocument.resource = clone(document.resource);
-                if (oldRelations) updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
-            } else {
-                updateDocument.resource = clone(document.resource);
-            }
-            await services.datastore.update(updateDocument, context.username);
-        } else {
+        if (!existingDocument) {
             await services.datastore.create(updateDocument, context.username);
+            return updateDocument;
         }
 
+        if (isTypeOrCatalog(existingDocument)) {
+            const oldRelations = clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
+            updateDocument.resource = clone(document.resource);
+            if (oldRelations) updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
+            await services.datastore.update(updateDocument, context.username);
+        } else {
+            console.log(updateDocument)
+            await services.datastore.remove(existingDocument);
+            await services.datastore.create(updateDocument, context.username);
+        }
         return updateDocument;
     }
+}
+
+
+function isTypeOrCatalog(document: Document) {
+
+    return document.resource.category === 'Type' || document.resource.category === 'TypeCatalog';
 }
 
 

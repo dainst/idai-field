@@ -1,7 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Query, SyncStatus } from 'idai-field-core';
-import { Box, HStack, Icon, IconButton, Input } from 'native-base';
 import React from 'react';
 import { ProjectSettings } from '../../models/preferences';
+import Button from '../common/Button';
+import Input from '../common/Input';
+import Row from '../common/Row';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {
@@ -21,23 +24,25 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
 
     return (
-        <Box style={ styles.box }>
+        <Row style={ styles.container }>
+            { renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
                 style={ styles.input }
                 onChangeText={ (value: string) => issueSearch({ q: value }) }
-                InputLeftElement={ renderLeftIcons(toggleDrawer) }
-                InputRightElement={ renderRightIcons(issueSearch, projectSettings, setProjectSettings, syncStatus) }
+                hideBorder
             />
-        </Box>
+            { renderRightIcons(issueSearch, projectSettings, setProjectSettings, syncStatus) }
+        </Row>
     );
 };
 
 
 const renderLeftIcons = (onPress: () => void) =>
-    <IconButton
+    <Button
+        variant="transparent"
         onPress={ onPress }
-        icon={ <Icon type="Ionicons" name="menu" /> }
+        icon={ <Ionicons name="menu" size={ 18 } /> }
     />;
     
 
@@ -47,25 +52,25 @@ const renderRightIcons = (
     setProjectSettings: (settings: ProjectSettings) => void,
     syncStatus: SyncStatus
 ) =>
-    <HStack>
-        <IconButton
+    <>
+        <Button
+            variant="transparent"
             onPress={ () => issueSearch({ q: '*' }) }
             isDisabled={ syncStatus === SyncStatus.Offline ? true : false }
-            icon={ <Icon type="Ionicons" name="refresh" /> }
+            icon={ <Ionicons name="refresh" size={ 18 } /> }
         />
         <SyncSettingsButton
             settings={ projectSettings }
             setSettings={ setProjectSettings }
             status={ syncStatus }
         />
-    </HStack>;
+    </>;
 
 
 const styles = {
-    box: {
-        padding: 10
-    },
-    input: {
+    container: {
+        margin: 10,
+        padding: 3,
         backgroundColor: 'white',
         shadowColor: '#000',
         shadowOffset: {
@@ -75,6 +80,10 @@ const styles = {
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        borderRadius: 5,
+    },
+    input: {
+        flex: 1
     }
 };
 

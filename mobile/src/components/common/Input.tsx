@@ -8,6 +8,7 @@ interface InputProps extends TextInputProps {
     helpText?: string;
     invalidText?: string;
     isValid?: boolean;
+    hideBorder?: boolean;
 }
 
 
@@ -15,7 +16,7 @@ const Input = (props: InputProps): ReactElement => {
 
     return <View style={ [props.style, styles.container] }>
         { props.label && <Text style={ styles.label }>{ props.label }</Text> }
-        <TextInput { ...props } style={ [styles.input, props.isValid === false && styles.invalidInput] } />
+        <TextInput { ...props } style={ getInputStyles(props.isValid, props.hideBorder) } />
         { props.isValid === false && props.invalidText && <Text style={ styles.invalidText }>
             { props.invalidText }
         </Text> }
@@ -24,6 +25,12 @@ const Input = (props: InputProps): ReactElement => {
 };
 
 export default Input;
+
+const getInputStyles = (isValid?: boolean, hideBorder?: boolean) => [
+    styles.input,
+    isValid === false && styles.invalidInput,
+    hideBorder && { borderBottomWidth: 0 }
+];
 
 const styles = StyleSheet.create({
     container: {

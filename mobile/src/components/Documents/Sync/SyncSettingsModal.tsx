@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'react-native';
+import { Modal, SafeAreaView } from 'react-native';
 import { clone } from 'tsfun';
 import { ProjectSettings } from '../../../models/preferences';
 import ConnectPouchForm from './ConnectPouchForm';
@@ -32,10 +32,12 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
             onRequestClose={ onClose }
             animationType="slide"
         >
-            { settings.connected
-                ? <DisconectPouchForm onDisconnect={ onDisconnect } onClose={ onClose } />
-                : <ConnectPouchForm settings={ settings } onConnect={ onConnect } onClose={ onClose } />
-            }
+            <SafeAreaView>
+                { settings.connected
+                    ? <DisconectPouchForm onDisconnect={ onDisconnect } onClose={ onClose } />
+                    : <ConnectPouchForm settings={ settings } onConnect={ onConnect } onClose={ onClose } />
+                }
+            </SafeAreaView>
         </Modal>);
 };
 

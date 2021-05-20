@@ -1,7 +1,9 @@
+import { Ionicons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import { Avatar, Icon, IconButton, View } from 'native-base';
 import React from 'react';
+import Button from '../common/Button';
+import CategoryIcon from '../common/CategoryIcon';
 
 interface DrawerContentProps {
     documents: Document[];
@@ -20,28 +22,24 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
     onSettingsButtonPressed
 }) => {
 
-    return (
-        <View flex={ 1 } safeArea>
-            <IconButton
-                onPress={ onHomeButtonPressed }
-                icon={ <Icon type="Ionicons" name="home" /> }
-            />
-            <DrawerContentScrollView>
-                { documents.map(doc => <DrawerItem
-                    key={ doc.resource.id }
-                    label={ doc.resource.identifier }
-                    onPress={ () => onDocumentSelected(doc) }
-                    icon={ () => <Avatar size="xs" bg={ config.getColorForCategory(doc.resource.category) } >
-                        { doc.resource.category[0].toUpperCase() }
-                    </Avatar> } />
-                )}
-            </DrawerContentScrollView>
-            <IconButton
-                onPress={ onSettingsButtonPressed }
-                icon={ <Icon type="Ionicons" name="settings" /> }
-            />
-        </View>
-    );
+    return <>
+        <Button
+            onPress={ onHomeButtonPressed }
+            icon={ <Ionicons name="home" size={ 18 } /> }
+        />
+        <DrawerContentScrollView>
+            { documents.map(document => <DrawerItem
+                key={ document.resource.id }
+                label={ document.resource.identifier }
+                onPress={ () => onDocumentSelected(document) }
+                icon={ () => <CategoryIcon size={ 25 } document={ document } config={ config } /> }
+            /> )}
+        </DrawerContentScrollView>
+        <Button
+            onPress={ onSettingsButtonPressed }
+            icon={ <Ionicons name="settings" size={ 18 } /> }
+        />
+    </>;
 };
 
 export default DrawerContent;

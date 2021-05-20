@@ -1,3 +1,4 @@
+import * as d3 from 'd3';
 import { Position } from 'geojson';
 import { FieldGeometry } from 'idai-field-core';
 import { pointRadius } from '../constants';
@@ -56,17 +57,7 @@ export const polygonArea = (polygon: Position[][]): number => {
 };
 
 
-const ringCoordinatesArea = (lineString: Position[]) => {
-    
-    let sum = 0;
-    const lineStringLength = lineString.length;
-    for(let i = 0; i < lineStringLength; i++){
-        const [x_i, y_i] = lineString[i];
-        const [x_i1, y_i1] = lineString[(i + 1) % lineStringLength];
-        sum += x_i * y_i1 - x_i1 * y_i;
-    }
-    return Math.abs(sum) / 2;
-};
+const ringCoordinatesArea = (lineString: Position[]) => Math.abs(d3.polygonArea(lineString as [number, number][]));
 
 
 export const pointArea = (): number => Math.PI * Math.pow(pointRadius,2);

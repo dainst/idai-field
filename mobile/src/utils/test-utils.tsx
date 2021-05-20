@@ -1,5 +1,4 @@
 import { render, RenderAPI, RenderOptions } from '@testing-library/react-native';
-import { NativeBaseProvider } from 'native-base';
 import React, { ReactNode } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -12,9 +11,7 @@ function MockProviders({ children }: { children: ReactNode }) {
                     insets: { top: 0, left: 0, right: 0, bottom: 0 },
                 } }
             >
-            <NativeBaseProvider>
-                { children }
-            </NativeBaseProvider>
+            { children }
         </SafeAreaProvider>
     );
 }

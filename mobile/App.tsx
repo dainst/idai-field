@@ -3,6 +3,7 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import AppLoading from 'expo-app-loading';
 import { NativeBaseProvider } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import DocumentsScreen from './src/components/Documents/DocumentsScreen';
 import HomeScreen from './src/components/Home/HomeScreen';
@@ -53,27 +54,29 @@ export default function App(): ReactElement {
     if (preferences) {
         return (
             <NativeBaseProvider>
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
-                        <Stack.Screen name="HomeScreen">
-                            { ({ navigation }) => <HomeScreen
-                                preferences={ preferences }
-                                setCurrentProject={ setCurrentProject }
-                                deleteProject={ deleteProject }
-                                navigate={ (screen: string) => navigation.navigate(screen) }
-                            /> }
-                        </Stack.Screen>
-                        <Stack.Screen name="DocumentsScreen">
-                            { () => <DocumentsScreen
-                                preferences={ preferences }
-                                setProjectSettings={ setProjectSettings }
-                            /> }
-                        </Stack.Screen>
-                        <Stack.Screen name="SettingsScreen">
-                            { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
-                        </Stack.Screen>
-                    </Stack.Navigator>
-                </NavigationContainer>
+                <SafeAreaProvider>
+                    <NavigationContainer>
+                        <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                            <Stack.Screen name="HomeScreen">
+                                { ({ navigation }) => <HomeScreen
+                                    preferences={ preferences }
+                                    setCurrentProject={ setCurrentProject }
+                                    deleteProject={ deleteProject }
+                                    navigate={ (screen: string) => navigation.navigate(screen) }
+                                /> }
+                            </Stack.Screen>
+                            <Stack.Screen name="DocumentsScreen">
+                                { () => <DocumentsScreen
+                                    preferences={ preferences }
+                                    setProjectSettings={ setProjectSettings }
+                                /> }
+                            </Stack.Screen>
+                            <Stack.Screen name="SettingsScreen">
+                                { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
+                            </Stack.Screen>
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </SafeAreaProvider>
             </NativeBaseProvider>
         );
     } else {

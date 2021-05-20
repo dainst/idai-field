@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Picker, SafeAreaView, StyleSheet, Text } from 'react-native';
+import { Picker, StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
 import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';

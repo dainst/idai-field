@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, SafeAreaView } from 'react-native';
+import { Modal } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { clone } from 'tsfun';
 import { ProjectSettings } from '../../../models/preferences';
 import ConnectPouchForm from './ConnectPouchForm';

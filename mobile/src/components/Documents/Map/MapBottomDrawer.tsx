@@ -1,9 +1,13 @@
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import { Avatar, HStack, Icon, IconButton, Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import Button from '../../common/Button';
+import CategoryIcon from '../../common/CategoryIcon';
+import Heading from '../../common/Heading';
+import Row from '../../common/Row';
 
 interface MapBottomDrawerProps {
     document: Document | null;
@@ -17,7 +21,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
     document, isVisible, closeHandler, config, navigateToDocument }) => {
 
     const animationDuration = 500;
-    const iconSize = 60;
+    const iconSize = 20;
 
 
     if(!document) return null;
@@ -37,27 +41,29 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
             style={ styles.modal }>
             <View style={ styles.container }>
                 <TouchableOpacity onPress={ documentPressHandler }>
-                    <HStack p={ 4 } space={ 2 } alignItems="center">
-                        <Avatar bg={ config.getColorForCategory(document.resource.category) }>
-                                { document.resource.category[0].toUpperCase() }
-                        </Avatar>
-                        <Text fontSize="2xl" >{document.resource.identifier} </Text>
-                    </HStack>
+                    <Row style={ styles.headingRow }>
+                        <CategoryIcon document={ document } config={ config } size={ 30 } />
+                        <Heading style={ styles.heading }>{document.resource.identifier}</Heading>
+                    </Row>
                 </TouchableOpacity>
-                <Text pl={ 6 }>Short description: { document.resource.shortDescription }</Text>
-                <HStack style={ styles.buttonGroup }>
-                    <IconButton
+                <Text>Short description: { document.resource.shortDescription }</Text>
+                <Row style={ styles.buttonGroup }>
+                    <Button
+                        variant="success"
+                        title="Add Child"
                         onPress={ () => {console.log('button');} }
-                        icon={ <Icon type="AntDesign" name="pluscircle" size={ iconSize } color="green" /> }
+                        icon={ <Ionicons name="add" size={ iconSize } /> }
                     />
-                    <IconButton
+                    <Button
+                        title="Focus"
                         onPress={ () => {console.log('button');} }
-                        icon={
-                            <Icon
-                                type="MaterialCommunityIcons"
-                                name="map-search-outline" size={ iconSize } color="#565350" /> }
+                        icon={ <MaterialIcons
+                            name="center-focus-strong"
+                            size={ iconSize }
+                            color="#565350"
+                        /> }
                     />
-                </HStack>
+                </Row>
             </View>
         </Modal>
     );
@@ -74,14 +80,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: 'white',
-        borderRadius: 10
+        borderRadius: 10,
+        padding: 10
+    },
+    headingRow: {
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    heading: {
+        paddingLeft: 5,
     },
     buttonGroup: {
-        width: '100%',
-        justifyContent: 'space-between',
-        marginTop: 'auto',
-        alignSelf: 'flex-end',
-        paddingLeft: 10
+        marginTop: 'auto'
     }
 });
 

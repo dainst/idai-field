@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import Button from '../../common/Button';
+import Heading from '../../common/Heading';
 import TitleBar from '../../common/TitleBar';
 
 interface DisconnectPouchFormProps {
@@ -11,7 +12,7 @@ interface DisconnectPouchFormProps {
 const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ onDisconnect, onClose }) => {
     return (
         <TitleBar
-            title={ 'Connected' }
+            title={ <Heading>Connected</Heading> }
             left={ <Button
                 title="Cancel"
                 variant="transparent"

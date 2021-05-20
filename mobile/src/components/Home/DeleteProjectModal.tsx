@@ -4,6 +4,7 @@ import { Modal, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/Button';
 import Column from '../common/Column';
+import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
 
@@ -40,7 +41,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, onProj
     >
         <SafeAreaView>
             <TitleBar
-                title="Delete project"
+                title={ <Heading>Delete project</Heading> }
                 left={ <Button
                     title="Cancel"
                     variant="transparent"

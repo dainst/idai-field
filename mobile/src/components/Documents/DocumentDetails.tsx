@@ -1,9 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Platform, ScrollView } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { DocumentRepository } from '../../repositories/document-repository';
+import Button from '../common/Button';
+import CategoryIcon from '../common/CategoryIcon';
+import Heading from '../common/Heading';
+import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 
@@ -27,46 +32,45 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
     if (!doc) return null;
 
     return (
-        <Column m={ 4 } space={ 4 } alignItems="flex-start">
-            <IconButton
-                onPress={ () => navigation.navigate('DocumentsMap') }
-                icon={ <Icon type="Ionicons" name="chevron-back" /> }
+        <SafeAreaView>
+            <TitleBar
+                title={ <>
+                    <CategoryIcon
+                        size={ 30 }
+                        config={ config }
+                        document={ doc }
+                    />
+                    <Heading style={ styles.heading }>{ doc.resource.identifier }</Heading>
+                </> }
+                left={ <Button
+                    variant="transparent"
+                    onPress={ () => navigation.navigate('DocumentsMap') }
+                    icon={ <Ionicons name="chevron-back" size={ 18 } /> }
+                /> }
+                right={ <Button
+                    variant="transparent"
+                    onPress={ () => { return; } }
+                    icon={ <Ionicons name="pencil" size={ 18 } /> } /> }
             />
-            <Row alignItems="center" px={ 4 } pt={ 4 }>
-                    <Avatar
-                        size="lg"
-                        _text={ styles.avatar.text }
-                        bg={ config.getColorForCategory(doc.resource.category) }
-                    >
-                        { doc.resource.category[0].toUpperCase() }
-                    </Avatar>
-                    <Column ml={ 2 } space={ 2 }>
-                        <Text fontSize="lg" bold underline>
-                            { doc.resource.identifier }
-                        </Text>
-                        <Text>{ doc.resource.shortDescription }</Text>
-                    </Column>
-            </Row>
             <ScrollView>
                 <Text style={ styles.json }>
                     { JSON.stringify(doc, null, 4) }
                 </Text>
             </ScrollView>
-        </Column>
+        </SafeAreaView>
     );
 };
 
 
-const styles = {
-    avatar: {
-        text: {
-            fontSize: '50px'
-        }
+const styles = StyleSheet.create({
+    heading: {
+        marginLeft: 10,
     },
     json: {
-        fontFamily: (Platform.OS === 'ios') ? 'Menlo' : 'monospace'
-    }
-};
+        margin: 20,
+        fontFamily: (Platform.OS === 'ios') ? 'Menlo' : 'monospace',
+    },
+});
 
 
 export default DrawerContent;

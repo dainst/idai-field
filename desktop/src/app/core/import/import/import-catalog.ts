@@ -46,9 +46,12 @@ export function buildImportCatalog(services: ImportCatalogServices,
             assertProjectAlwaysTheSame(importDocuments);
             const importCatalog = getImportTypeCatalog(importDocuments);
 
-            if (importCatalog.project === context.selectedProject) { // owned catalog
+            if (isOwned(context, importCatalog)) {
                 await assertCatalogNotOwned(services, context, importCatalog);
                 await assertNoImagesOverwritten(services, context, importDocuments);
+                for (const importDocument of importDocuments) {
+                    delete importDocument.project;
+                }
             }
             await assertNoIdentifierClashes(services, importDocuments);
 
@@ -211,7 +214,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 }
 
 
-function getImportTypeCatalog(importDocuments: Array<Document>) {
+function getImportTypeCatalog(importDocuments: Array<Document>): Document {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
@@ -249,8 +252,6 @@ function importOneDocument(services: ImportCatalogServices,
         const updateDocument = Document.clone(existingDocument ?? document);
 
         if (!existingDocument) {
-            if (isOwned(context, document)) delete updateDocument.project;
-
             await services.datastore.create(updateDocument, context.username);
             return updateDocument;
         }

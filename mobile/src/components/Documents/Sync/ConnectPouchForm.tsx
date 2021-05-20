@@ -1,14 +1,19 @@
-import { Button, Center, Input, Stack, Text, View } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Keyboard, StyleSheet } from 'react-native';
+import { Keyboard } from 'react-native';
 import { ProjectSettings } from '../../../models/preferences';
+import Button from '../../common/Button';
+import Column from '../../common/Column';
+import Input from '../../common/Input';
+import TitleBar from '../../common/TitleBar';
 
 interface ConnectPouchFormProps {
     settings: ProjectSettings,
     onConnect: (settings: ProjectSettings) => void;
+    onClose: () => void;
 }
 
-const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect }) => {
+const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect, onClose }) => {
 
     const [url, setUrl] = useState<string>(settings.url);
     const [password, setPassword] = useState<string>(settings.password);
@@ -20,46 +25,35 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
     };
 
     return (
-        <View>
-            <Stack m={ 2 }>
+        <>
+            <TitleBar
+                title={ 'Connect' }
+                left={ <Button
+                    title="Cancel"
+                    variant="transparent"
+                    icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                    onPress={ onClose }
+                /> }
+                right={ <Button variant="success" title="Connect" onPress={ onSubmit } /> }
+            />
+            <Column>
                 <Input placeholder="URL"
                     value={ url }
                     onChangeText={ setUrl }
                     autoCapitalize="none"
                     autoCorrect={ false }
                     autoFocus
-                    m={ 1 }
                 />
                 <Input placeholder="Password"
-                    type="password"
+                    secureTextEntry
                     value={ password }
                     onChangeText={ setPassword }
                     autoCapitalize="none"
                     autoCorrect={ false }
-                    m={ 1 }
                 />
-                <Center m={ 2 }>
-                    <Button colorScheme="blue" onPress={ onSubmit } style={ styles.connectBtn }>
-                        <Text color="white">Connect</Text>
-                    </Button>
-                </Center>
-            </Stack>
-        </View>
+            </Column>
+        </>
     );
 };
-
-const styles = StyleSheet.create({
-    header: {
-        justifyContent: 'center'
-    },
-    connectBtnContainer: {
-        justifyContent: 'center'
-    },
-    connectBtn: {
-        width: '80%',
-        justifyContent: 'center'
-    }
-
-});
 
 export default ConnectPouchForm;

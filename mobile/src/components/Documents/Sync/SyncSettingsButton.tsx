@@ -21,24 +21,23 @@ const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({
 
     const [showSettings, setShowSettings] = useState<boolean>(false);
 
-    return (<>
+    return <>
     
-        <SyncSettingsModal
+        { showSettings && <SyncSettingsModal
             settings={ settings }
             onSettingsSet={ newSettings => {
                 setSettings(newSettings);
                 setShowSettings(false);
             } }
-            isOpen={ showSettings }
             onClose={ () => setShowSettings(false) }
-        />
+        /> }
 
         <Button
             variant="transparent"
             icon={ React.cloneElement(getSyncStatusIcon(status), { size: 18 }) }
             onPress={ () => setShowSettings(true) } />
 
-    </>);
+    </>;
 };
 
 

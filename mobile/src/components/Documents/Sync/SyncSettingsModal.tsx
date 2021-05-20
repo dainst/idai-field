@@ -1,6 +1,5 @@
-import { Modal, Text } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Modal } from 'react-native';
 import { clone } from 'tsfun';
 import { ProjectSettings } from '../../../models/preferences';
 import ConnectPouchForm from './ConnectPouchForm';
@@ -8,7 +7,6 @@ import DisconectPouchForm from './DisconnectPouchForm';
 
 interface SyncSettingsModalProps {
     settings: ProjectSettings;
-    isOpen: boolean;
     onSettingsSet: (syncSettings: ProjectSettings) => void,
     onClose: () => void;
 }
@@ -16,7 +14,6 @@ interface SyncSettingsModalProps {
 
 const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
     settings,
-    isOpen,
     onSettingsSet,
     onClose
 }) => {
@@ -32,35 +29,15 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
 
     return (
         <Modal
-            isCentered
-            isOpen={ isOpen }
-            motionPreset="fade"
-            closeOnOverlayClick
-            onClose={ onClose }
+            onRequestClose={ onClose }
+            animationType="slide"
         >
-            <Modal.Content>
-                <Modal.CloseButton />
-                <Modal.Header style={ styles.header }>
-                    <Text bold>
-                        {settings.connected ? 'Connected' : 'Connect to project'}
-                    </Text>
-                </Modal.Header>
-                <Modal.Body>
-                { settings.connected
-                    ? <DisconectPouchForm onDisconnect={ onDisconnect } />
-                    : <ConnectPouchForm settings={ settings } onConnect={ onConnect } />
-                }
-                </Modal.Body >
-            </Modal.Content>
+            { settings.connected
+                ? <DisconectPouchForm onDisconnect={ onDisconnect } onClose={ onClose } />
+                : <ConnectPouchForm settings={ settings } onConnect={ onConnect } onClose={ onClose } />
+            }
         </Modal>);
 };
-
-
-const styles = StyleSheet.create({
-    header: {
-        alignItems: 'center'
-    }
-});
 
 
 export default SyncSettingsModal;

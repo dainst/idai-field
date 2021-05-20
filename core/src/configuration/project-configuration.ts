@@ -1,6 +1,6 @@
 import { empty, filter, flow, includedIn, is, isNot, Map, map, on, Pair } from 'tsfun';
-import {Category,RelationDefinition,FieldDefinition} from '../model';
-import {Forest,Tree,Named,Name,isTopLevelItemOrChildThereof} from '../tools';
+import { Category, FieldDefinition, RelationDefinition } from '../model';
+import { Forest, isTopLevelItemOrChildThereof, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
@@ -177,7 +177,7 @@ export class ProjectConfiguration {
 
     public getColorForCategory(categoryName: string): string {
 
-        return this.getCategoryColors()[categoryName];
+        return this.getCategoryColors()[categoryName] ?? '#cccccc';
     }
 
 

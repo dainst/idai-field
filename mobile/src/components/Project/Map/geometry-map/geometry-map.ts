@@ -20,9 +20,10 @@ export interface GeoMapEntry {
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
     doc: Document;
     selected?: boolean;
+    isHighlighted?: boolean;
 }
 
-type GeoMap = Map<string, GeoMapEntry>;
+export type GeoMap = Map<string, GeoMapEntry>;
 
 export interface RenderingData {
     geoMap?: GeoMap

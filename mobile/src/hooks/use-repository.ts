@@ -34,7 +34,7 @@ const setupRepository = async (
     setRepository: SetRepository
 ) => {
 
-    const repository = await DocumentRepository.init(project, username, categories, pouchdbManager);
+    const repository = await DocumentRepository.init(username, categories, pouchdbManager);
     setRepository(repository);
 };
 

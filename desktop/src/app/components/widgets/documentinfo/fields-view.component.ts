@@ -1,17 +1,15 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore } from 'idai-field-core';
-import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
+import { Datastore, Dating, Dimension, FieldDefinition, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Group, Groups, Literature, Name, Named, OptionalRange, ProjectConfiguration, RelationDefinition, Resource, ValuelistUtil } from 'idai-field-core';
 import {
-    aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
+    aFlow, aMap,
+
+
+    assoc, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
     L, lookup, map, Mapping, on, pairWith,
-    R, to,
-    assoc
+    R, to
 } from 'tsfun';
-import { ProjectConfiguration } from 'idai-field-core';
-import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
 import { UtilTranslations } from '../../../core/util/util-translations';
-import { ValuelistUtil } from '../../../core/util/valuelist-util';
 import { RoutingService } from '../../routing-service';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 

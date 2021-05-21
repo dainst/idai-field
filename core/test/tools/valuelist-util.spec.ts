@@ -1,11 +1,9 @@
-import {ValuelistUtil} from '../../../src/app/core/util/valuelist-util';
-import {ValuelistDefinition} from 'idai-field-core';
-
+import { ValuelistDefinition } from '../../src/model/valuelist-definition';
+import { ValuelistUtil } from '../../src/tools/valuelist-util';
 
 /**
  * @author Thomas Kleinke
  */
-
 describe('ValuelistUtil', () => {
 
     it('sort values alphanumerically', () => {

@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Datastore, OptionalRange, Resource, ValuelistDefinition } from 'idai-field-core';
+import { Datastore, OptionalRange, Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
-import { ValuelistUtil } from '../../../../core/util/valuelist-util';
 
 const PROJECT = 'project';
 

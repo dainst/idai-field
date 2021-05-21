@@ -1,10 +1,20 @@
-import {Resource} from 'idai-field-core';
-import {FieldResource, Labelled, Named, RelationDefinition, Category, Groups, BaseGroup, FieldDefinition, Relations} from 'idai-field-core';
-import {ValuelistUtil} from './valuelist-util';
-import {compose, flow, assoc, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
-    Predicate, or, is, empty, equal} from 'tsfun';
-import {ValuelistDefinition} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
+import {
+    and, assoc, compose,
+    empty, equal, filter, Filter, flow, includedIn,
+    is, isNot, isString, lookup, map, Map, on,
+    or, Predicate, to, undefinedOrEmpty
+} from 'tsfun';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { Category } from '../model/category';
+import { FieldDefinition } from '../model/field-definition';
+import { FieldResource } from '../model/field-resource';
+import { BaseGroup, Groups } from '../model/group';
+import { RelationDefinition } from '../model/relation-definition';
+import { Relations } from '../model/relations';
+import { Resource } from '../model/resource';
+import { ValuelistDefinition } from '../model/valuelist-definition';
+import { Labelled, Named } from './named';
+import { ValuelistUtil } from './valuelist-util';
 
 
 export interface FieldsViewGroup extends BaseGroup {

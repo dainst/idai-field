@@ -1,8 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Category, CustomFieldDefinition, FieldDefinition, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 import { clone, flatten, to } from 'tsfun';
-import { Category, CustomFieldDefinition, FieldDefinition, ValuelistDefinition } from 'idai-field-core';
-import { ValuelistUtil } from '../../core/util/valuelist-util';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
 
 const locale: string = typeof window !== 'undefined'
@@ -21,7 +20,7 @@ type InputType = {
     templateUrl: './configuration-field.html'
 })
 /**
-* @author Sebastian Cuy 
+* @author Sebastian Cuy
 * @author Thomas Kleinke
  */
 export class ConfigurationFieldComponent implements OnChanges {

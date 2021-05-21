@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, FieldDefinition, Resource } from 'idai-field-core';
+import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
 import { is, on } from 'tsfun';
-import { ProjectConfiguration } from 'idai-field-core';
-import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
 
 
 type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';

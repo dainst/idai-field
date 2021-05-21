@@ -1,7 +1,9 @@
-import {includedIn, clone, isNot, isArray, filter} from 'tsfun';
-import {SortUtil, ValuelistDefinition, FieldDefinition} from 'idai-field-core';
-import {Document, Resource} from 'idai-field-core';
-import {ValueDefinition} from '../../../../../core/src/model/valuelist-definition';
+import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
+import { Document } from '../model/document';
+import { FieldDefinition } from '../model/field-definition';
+import { Resource } from '../model/resource';
+import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
+import { SortUtil } from './sort-util';
 
 
 const languages: string[] = typeof window !== 'undefined'
@@ -114,4 +116,3 @@ export module ValuelistUtil {
         return result;
     }
 }
-

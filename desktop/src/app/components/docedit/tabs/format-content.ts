@@ -1,6 +1,5 @@
+import { Dating, Dimension, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
 import { flow, isArray, isObject, isString } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
-import { ValuelistUtil } from '../../../core/util/valuelist-util';
 
 
 export type InnerHTML = string;

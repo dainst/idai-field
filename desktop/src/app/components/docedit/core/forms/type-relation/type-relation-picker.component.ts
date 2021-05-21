@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, Datastore, FieldDocument, FieldResource, FindResult, Named, Query, Relations } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, Resource } from 'idai-field-core';
+import { Category, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named, ProjectConfiguration, Query, Relations, Resource, ValuelistUtil } from 'idai-field-core';
 import {
-    empty, flow, includedIn, pairWith,
-    is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
+    empty, flow, includedIn,
+    is, isNot, left, map, Mapping, on, Pair, pairWith,
+    prune, right, to, undefinedOrEmpty
 } from 'tsfun';
-import { ProjectConfiguration } from 'idai-field-core';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
-import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
 
 const ALLCATALOGS = 'all-catalogs';
 const NOCRITERION = 'no-criterion';

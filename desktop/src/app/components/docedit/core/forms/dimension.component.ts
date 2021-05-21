@@ -1,10 +1,8 @@
-import {Component, Input} from '@angular/core';
-import {DecimalPipe} from '@angular/common';
-import {clone} from 'tsfun';
-import {Resource, Dimension} from 'idai-field-core';
-import {UtilTranslations} from '../../../../core/util/util-translations';
-import {FieldDefinition} from 'idai-field-core';
-import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import { DecimalPipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { Dimension, FieldDefinition, Resource, ValuelistUtil } from 'idai-field-core';
+import { clone } from 'tsfun';
+import { UtilTranslations } from '../../../../core/util/util-translations';
 
 
 type DimensionInEditing = { original: Dimension, clone: Dimension };

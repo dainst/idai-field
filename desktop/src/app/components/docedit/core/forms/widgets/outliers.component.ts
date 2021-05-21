@@ -1,7 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {ValuelistDefinition} from 'idai-field-core';
-import {Resource} from 'idai-field-core';
-import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
+import { Component, Input } from '@angular/core';
+import { Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 
 
 @Component({

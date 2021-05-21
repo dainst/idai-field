@@ -79,7 +79,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
 
 
 const renderGroup = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (group: FieldsViewGroup) =>
-    <View>
+    <View key={ group.name }>
         <Text style={ styles.groupLabel }>{ group.label }</Text>
         { group.fields.map(renderField) }
         { group.relations.map(renderRelation(nav, config)) }
@@ -87,7 +87,7 @@ const renderGroup = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (
 
 
 const renderField = (field: FieldsViewField) =>
-    <Column style={ styles.fieldColumn }>
+    <Column style={ styles.fieldColumn } key={ field.label }>
         <Text style={ styles.fieldLabel }>{ field.label }</Text>
         { field.type === 'default' && typeof field.value === 'string'
             ? renderStringValue(field.value)
@@ -109,7 +109,7 @@ const renderObjectValue = (_: unknown) => <Text>[Object type rendering is not im
 
 
 const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (relation: FieldsViewRelation) =>
-    <Column style={ styles.fieldColumn }>
+    <Column style={ styles.fieldColumn } key={ relation.label }>
         <Text style={ styles.fieldLabel }>{ relation.label }</Text>
         { relation.targets.map(renderRelationTarget(nav, config)) }
     </Column>;

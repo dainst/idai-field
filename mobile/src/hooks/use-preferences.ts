@@ -78,7 +78,7 @@ const savePreferences = async (preferences: Preferences) =>
 
 const getDefaultPreferences = (): Preferences => ({
     currentProject: 'test',
-    languages: ['de', 'en'], // TODO make language configurable
+    languages: ['en'], // TODO make language configurable
     username: '',
     recentProjects: [],
     projects: {}

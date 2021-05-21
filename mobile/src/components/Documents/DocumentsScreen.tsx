@@ -45,6 +45,7 @@ const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ preferences, setProje
             config={ config }
             repository={ repository }
             syncStatus={ syncStatus }
+            languages={ preferences.languages }
         />
         : null;
 };

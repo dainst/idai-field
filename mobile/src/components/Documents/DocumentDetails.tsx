@@ -25,10 +25,11 @@ interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
     navigation: DocumentDetailsNav;
+    languages: string[];
 }
 
 
-const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, docId, navigation }) => {
+const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, docId, navigation, languages }) => {
 
     const [doc, setDoc] = useState<Document>();
     const [groups, setGroups] = useState<FieldsViewGroup[]>();
@@ -42,9 +43,9 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
 
         if (!doc) return;
 
-        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore)
+        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore, languages)
             .then(setGroups);
-    }, [doc, config, repository]);
+    }, [doc, config, repository, languages]);
 
     if (!doc || !groups) return null;
 

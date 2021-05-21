@@ -30,6 +30,7 @@ interface DocumentsContainerProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
+    languages: string[],
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
 
@@ -42,6 +43,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     syncStatus,
     projectSettings,
     config,
+    languages,
     setProjectSettings
 }) => {
 
@@ -83,6 +85,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     config={ config }
                     docId={ props.route.params.docId }
                     repository={ repository }
+                    languages={ languages }
                 /> }
             </Drawer.Screen>
         </Drawer.Navigator>

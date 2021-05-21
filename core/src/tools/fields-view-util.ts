@@ -63,12 +63,12 @@ export module FieldsViewGroup {
 export module FieldsViewUtil {
 
     export function getValue(fieldContent: any, fieldName: string, projectConfiguration: ProjectConfiguration,
-                             valuelist?: ValuelistDefinition): any {
+                             valuelist?: ValuelistDefinition, languages?: string[]): any {
 
         return fieldName === Resource.CATEGORY
             ? projectConfiguration.getLabelForCategory(fieldContent)
             : valuelist
-                ? ValuelistUtil.getValueLabel(valuelist, fieldContent)
+                ? ValuelistUtil.getValueLabel(valuelist, fieldContent, languages)
                 : isString(fieldContent)
                     ? fieldContent
                         .replace(/^\s+|\s+$/g, '')
@@ -121,13 +121,14 @@ export module FieldsViewUtil {
     export async function getGroupsForResource(
         resource: Resource,
         projectConfiguration: ProjectConfiguration,
-        datastore: Datastore
+        datastore: Datastore,
+        languages?: string[]
     ): Promise<Array<FieldsViewGroup>> {
 
         return await aFlow(
             FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
             putActualResourceRelationsIntoGroups(resource, datastore),
-            putActualResourceFieldsIntoGroups(resource, projectConfiguration),
+            putActualResourceFieldsIntoGroups(resource, projectConfiguration, languages),
             filter(shouldBeDisplayed)
         );
     }
@@ -153,7 +154,7 @@ function putActualResourceRelationsIntoGroups(resource: Resource, datastore: Dat
 }
 
 
-function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration): Mapping {
+function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration, languages?: string[],): Mapping {
 
     const fieldContent: Mapping<FieldDefinition, FieldContent>
         = compose(to(Named.NAME), lookup(resource));
@@ -164,7 +165,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 map(pairWith(fieldContent)),
                 filter(on(R, isDefined)),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
-                map(makeField(projectConfiguration)),
+                map(makeField(projectConfiguration, languages)),
                 flatten() as any /* TODO review typing*/
             )
         )
@@ -172,7 +173,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
 }
 
 
-function makeField(projectConfiguration: ProjectConfiguration) {
+function makeField(projectConfiguration: ProjectConfiguration, languages?: string[]) {
 
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
@@ -181,11 +182,11 @@ function makeField(projectConfiguration: ProjectConfiguration) {
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, field.valuelist
+                        fieldContent, field.name, projectConfiguration, field.valuelist, languages
                     )
                 )
                 : FieldsViewUtil.getValue(
-                    fieldContent, field.name, projectConfiguration, field.valuelist
+                    fieldContent, field.name, projectConfiguration, field.valuelist, languages
                 ),
             type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
             valuelist: field.valuelist,

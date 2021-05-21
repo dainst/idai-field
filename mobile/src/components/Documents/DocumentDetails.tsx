@@ -70,18 +70,18 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
                     icon={ <Ionicons name="pencil" size={ 18 } /> } /> }
             />
             <ScrollView style={ styles.container }>
-                { groups.map(renderGroup(navigation)) }
+                { groups.map(renderGroup(navigation, config)) }
             </ScrollView>
         </SafeAreaView>
     );
 };
 
 
-const renderGroup = (nav: DocumentDetailsNav) => (group: FieldsViewGroup) =>
+const renderGroup = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (group: FieldsViewGroup) =>
     <View>
         <Text style={ styles.groupLabel }>{ group.label }</Text>
         { group.fields.map(renderField) }
-        { group.relations.map(renderRelation(nav)) }
+        { group.relations.map(renderRelation(nav, config)) }
     </View>;
 
 
@@ -100,24 +100,26 @@ const renderField = (field: FieldsViewField) =>
 const renderArrayValue = (values: string[]) => values.map(renderStringValue);
 
 
-const renderStringValue = (value: string) => <Text>{ value }</Text>;
+const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
 
 
 // TODO
 const renderObjectValue = (_: unknown) => <Text>[Object type rendering is not implemented yet]</Text>;
 
 
-const renderRelation = (nav: DocumentDetailsNav) => (relation: FieldsViewRelation) =>
+const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (relation: FieldsViewRelation) =>
     <Column style={ styles.fieldColumn }>
         <Text style={ styles.fieldLabel }>{ relation.label }</Text>
-        { relation.targets.map(renderRelationTarget(nav)) }
+        { relation.targets.map(renderRelationTarget(nav, config)) }
     </Column>;
 
 
-const renderRelationTarget = (nav: DocumentDetailsNav) => (target: Document) =>
+const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (target: Document) =>
     <Button
+        key={ target.resource.id }
         title={ target.resource.identifier }
-        onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) } />;
+        onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
+        icon={ <CategoryIcon config={ config } document={ target } size={ 20 } /> } />;
 
 
 const styles = StyleSheet.create({

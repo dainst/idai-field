@@ -24,7 +24,7 @@ const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled
             activeOpacity={ .9 }
         >
         <View style={ styles.container }>
-            { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
+            { icon }
             { icon && title && <Text style={ styles.separator } />}
             { title && <Text style={ getTextStyle(variant) }>{ title }</Text> }
         </View>
@@ -40,7 +40,7 @@ const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
 });
 
 const getTextStyle = (variant: ButtonVariant): TextStyle => ({
-    color: textColors[variant]
+    color: textColors[variant],
 });
 
 const styles = StyleSheet.create({

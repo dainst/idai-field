@@ -19,7 +19,7 @@ describe('DocumentRepository', () => {
         const manager = new PouchdbManager((name: string) => new PouchDB(name));
         await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
         const categories: Forest<Category> = [createCategory('Feature'), createCategory('Find')];
-        repository = await DocumentRepository.init(project, 'testuser', categories, manager);
+        repository = await DocumentRepository.init('testuser', categories, manager);
     });
 
 

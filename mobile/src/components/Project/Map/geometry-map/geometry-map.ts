@@ -19,7 +19,7 @@ export interface GeoMapEntry {
     childs: string[];
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
     doc: Document;
-    selected?: boolean;
+    isSelected?: boolean;
     isHighlighted?: boolean;
 }
 

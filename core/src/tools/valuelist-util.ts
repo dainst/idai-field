@@ -6,9 +6,9 @@ import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definit
 import { SortUtil } from './sort-util';
 
 
-const languages: string[] = typeof window !== 'undefined'
-  ? window.require('@electron/remote').getGlobal('config').languages
-  : ['de'];
+const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
+    ? window.require('@electron/remote').getGlobal('config').languages
+    : ['de'];
 
 
 /**
@@ -32,7 +32,9 @@ export module ValuelistUtil {
     }
 
 
-    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
+    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, providedLanguages?: string[]): string {
+
+        const languages = providedLanguages || ELECTRON_CONFIG_LANGUAGES;
 
         const value: ValueDefinition|undefined = valuelist ? valuelist.values[valueId] : undefined;
         if (!value) return valueId;

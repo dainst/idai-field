@@ -12,11 +12,10 @@ export class DocumentRepository {
 
     private constructor(private pouchdbManager: PouchdbManager,
                         private pouchdbDatastore: PouchdbDatastore,
-                        private datastore: Datastore,
+                        public datastore: Datastore,
                         private changesStream: ChangesStream) {}
 
     public static async init(
-        project: string,
         username: string,
         categories: Forest<Category>,
         pouchdbManager: PouchdbManager,

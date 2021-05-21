@@ -9,6 +9,7 @@ import {
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
+import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { FieldResource } from '../model/field-resource';
 import { BaseGroup, Group, Groups } from '../model/group';
@@ -33,14 +34,14 @@ export interface FieldsViewGroup extends BaseGroup {
 
 export interface FieldsViewRelation extends Labelled {
 
-    targets: Array<any>;
+    targets: Array<Document>;
 }
 
 
 export interface FieldsViewField extends Labelled {
 
-    value: string;
-    type: 'default'|'array'|'object';
+    value: string | string[]; // TODO add object types
+    type: 'default' | 'array' | 'object';
     valuelist?: ValuelistDefinition;
     positionValues?: ValuelistDefinition;
 }

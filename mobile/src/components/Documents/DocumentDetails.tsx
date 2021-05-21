@@ -1,35 +1,52 @@
+/* eslint-disable react/display-name */
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import {
+    Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation,
+    FieldsViewUtil, ProjectConfiguration
+} from 'idai-field-core';
 import React, { useEffect, useState } from 'react';
-import { Platform, ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
+import Column from '../common/Column';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
+
+
+type DocumentDetailsNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentDetails'>;
 
 
 interface DocumentDetailsProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     docId: string;
-    navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentDetails'>;
+    navigation: DocumentDetailsNav;
 }
 
 
 const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, docId, navigation }) => {
 
     const [doc, setDoc] = useState<Document>();
+    const [groups, setGroups] = useState<FieldsViewGroup[]>();
 
     useEffect(() => {
 
         repository.get(docId).then(setDoc);
     }, [repository, docId]);
 
-    if (!doc) return null;
+    useEffect(() => {
+
+        if (!doc) return;
+
+        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore)
+            .then(setGroups);
+    }, [doc, config, repository]);
+
+    if (!doc || !groups) return null;
 
     return (
         <SafeAreaView>
@@ -52,24 +69,75 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
                     onPress={ () => { return; } }
                     icon={ <Ionicons name="pencil" size={ 18 } /> } /> }
             />
-            <ScrollView>
-                <Text style={ styles.json }>
-                    { JSON.stringify(doc, null, 4) }
-                </Text>
+            <ScrollView style={ styles.container }>
+                { groups.map(renderGroup(navigation)) }
             </ScrollView>
         </SafeAreaView>
     );
 };
 
 
+const renderGroup = (nav: DocumentDetailsNav) => (group: FieldsViewGroup) =>
+    <View>
+        <Text style={ styles.groupLabel }>{ group.label }</Text>
+        { group.fields.map(renderField) }
+        { group.relations.map(renderRelation(nav)) }
+    </View>;
+
+
+const renderField = (field: FieldsViewField) =>
+    <Column style={ styles.fieldColumn }>
+        <Text style={ styles.fieldLabel }>{ field.label }</Text>
+        { field.type === 'default' && typeof field.value === 'string'
+            ? renderStringValue(field.value)
+            : field.type === 'array' && Array.isArray(field.value)
+                ? renderArrayValue(field.value)
+                : renderObjectValue(field.value)
+        }
+    </Column>;
+
+
+const renderArrayValue = (values: string[]) => values.map(renderStringValue);
+
+
+const renderStringValue = (value: string) => <Text>{ value }</Text>;
+
+
+// TODO
+const renderObjectValue = (_: unknown) => <Text>[Object type rendering is not implemented yet]</Text>;
+
+
+const renderRelation = (nav: DocumentDetailsNav) => (relation: FieldsViewRelation) =>
+    <Column style={ styles.fieldColumn }>
+        <Text style={ styles.fieldLabel }>{ relation.label }</Text>
+        { relation.targets.map(renderRelationTarget(nav)) }
+    </Column>;
+
+
+const renderRelationTarget = (nav: DocumentDetailsNav) => (target: Document) =>
+    <Button
+        title={ target.resource.identifier }
+        onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) } />;
+
+
 const styles = StyleSheet.create({
     heading: {
         marginLeft: 10,
     },
-    json: {
-        margin: 20,
-        fontFamily: (Platform.OS === 'ios') ? 'Menlo' : 'monospace',
+    container: {
+        padding: 10,
     },
+    groupLabel: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        paddingVertical: 5,
+    },
+    fieldColumn: {
+        paddingBottom: 5,
+    },
+    fieldLabel: {
+        fontWeight: 'bold',
+    }
 });
 
 

@@ -18,6 +18,7 @@ import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewpor
 export interface GeoMapEntry {
     childs: string[];
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
+    doc: Document;
     selected?: boolean;
 }
 
@@ -45,6 +46,7 @@ export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undef
         geoMap.set(doc.doc.resource.id,{
             transformedCoords: doc.transformedCoordinates,
             childs: findChildDocIds(doc, transformedGeo),
+            doc: doc.doc
         });
     }
 

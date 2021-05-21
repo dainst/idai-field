@@ -82,5 +82,13 @@ describe('geometry-map', () => {
             expect(val.transformedCoords.length).not.toBe(0);
         });
     });
+    
+    
+    it('should have the correct geoType in GeoMapEntry', () => {
+
+        expect(geoMap.get(lineBuildingId)?.doc).toEqual(lineBuilding);
+        expect(geoMap.get(r1Id)?.doc).toEqual(r1);
+        expect(geoMap.get(multiPolyTrenchId)?.doc).toEqual(multiPolyTrench);
+    });
 
 });

@@ -52,10 +52,20 @@ export class FieldsViewComponent implements OnChanges {
 
         if (!this.resource) return;
 
-        this.groups = await aFlow(
-            FieldsViewUtil.getGroups(this.resource.category, Named.arrayToMap(this.projectConfiguration.getCategoriesArray())),
-            await this.putActualResourceRelationsIntoGroups(this.resource),
-            this.putActualResourceFieldsIntoGroups(this.resource),
+        this.groups = await this.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore);
+    }
+
+
+    public async getGroupsForResource(
+        resource: Resource,
+        projectConfiguration: ProjectConfiguration,
+        datastore: Datastore
+    ): Promise<Array<FieldsViewGroup>> {
+
+        return await aFlow(
+            FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(this.projectConfiguration.getCategoriesArray())),
+            this.putActualResourceRelationsIntoGroups(resource, datastore),
+            this.putActualResourceFieldsIntoGroups(resource),
             filter(shouldBeDisplayed)
         );
     }
@@ -154,7 +164,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private putActualResourceRelationsIntoGroups(resource: Resource) {
+    private putActualResourceRelationsIntoGroups(resource: Resource, datastore: Datastore) {
 
         return ($: any) => aMap(async (group: any /* ! modified in place ! */) => {
 
@@ -164,7 +174,7 @@ export class FieldsViewComponent implements OnChanges {
                 aMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,
-                        targets: await this.datastore.getMultiple(resource.relations[relation.name])
+                        targets: await datastore.getMultiple(resource.relations[relation.name])
                     }
                 })
             );

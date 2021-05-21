@@ -26,7 +26,10 @@ const si1Id = si1.resource.id;
 describe('geometry-map', () => {
 
     beforeAll(() => {
-        geoMap = setupGeoMap(geoDocuments, viewPort);
+        
+        const renderData = setupGeoMap(geoDocuments, viewPort);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        geoMap = renderData.geoMap!;
     });
 
 

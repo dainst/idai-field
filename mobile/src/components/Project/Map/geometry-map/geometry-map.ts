@@ -1,5 +1,6 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometryType } from 'idai-field-core';
+import { Matrix4 } from 'react-native-redash';
 import {
     getGeometryBoundings, isLineStringInMultiPolygon,
     isLineStringInPolygon, isMultiLineStringInMultiPolygon,
@@ -20,8 +21,16 @@ export interface GeoMapEntry {
     selected?: boolean;
 }
 
+type GeoMap = Map<string, GeoMapEntry>;
 
-export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort): Map<string, GeoMapEntry> => {
+export interface RenderingData {
+    geoMap?: GeoMap
+    transformationMatrix?: Matrix4
+}
+
+export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undefined): RenderingData => {
+    
+    if(!viewPort || !geoDocuments.length) return {};
 
     const geometryBoundings = getGeometryBoundings(geoDocuments);
     const transformationMatrix = setupTransformationMatrix(geometryBoundings, viewPort);
@@ -39,7 +48,10 @@ export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort): Map<s
         });
     }
 
-    return geoMap;
+    return {
+        geoMap,
+        transformationMatrix
+    };
 };
 
 

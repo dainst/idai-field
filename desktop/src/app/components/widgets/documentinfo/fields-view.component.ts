@@ -1,20 +1,9 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Datastore, Dating, Dimension, FieldDefinition, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Group, Groups, Literature, Name, Named, OptionalRange, ProjectConfiguration, RelationDefinition, Resource, ValuelistUtil } from 'idai-field-core';
-import {
-    aFlow, aMap,
-
-
-    assoc, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
-    L, lookup, map, Mapping, on, pairWith,
-    R, to
-} from 'tsfun';
+import { Datastore, Dating, Dimension, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups, Literature, Name, OptionalRange, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
+import { isBoolean } from 'tsfun';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { RoutingService } from '../../routing-service';
-import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
-
-
-type FieldContent = any;
 
 
 @Component({
@@ -52,22 +41,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (!this.resource) return;
 
-        this.groups = await this.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore);
-    }
-
-
-    public async getGroupsForResource(
-        resource: Resource,
-        projectConfiguration: ProjectConfiguration,
-        datastore: Datastore
-    ): Promise<Array<FieldsViewGroup>> {
-
-        return await aFlow(
-            FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(this.projectConfiguration.getCategoriesArray())),
-            this.putActualResourceRelationsIntoGroups(resource, datastore),
-            this.putActualResourceFieldsIntoGroups(resource),
-            filter(shouldBeDisplayed)
-        );
+        this.groups = await FieldsViewUtil.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore);
     }
 
 
@@ -122,63 +96,5 @@ export class FieldsViewComponent implements OnChanges {
         } else {
             return object;
         }
-    }
-
-
-    private putActualResourceFieldsIntoGroups(resource: Resource): Mapping {
-
-        const fieldContent: Mapping<FieldDefinition, FieldContent>
-            = compose(to(Named.NAME), lookup(resource));
-
-        return map(
-            assoc(Group.FIELDS,
-                compose(
-                    map(pairWith(fieldContent)),
-                    filter(on(R, isDefined)),
-                    filter(on(L, FieldsViewUtil.isVisibleField)),
-                    map(this.makeField.bind(this)),
-                    flatten() as any /* TODO review typing*/
-                )
-            )
-        );
-    }
-
-
-    private makeField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
-
-        return {
-            label: field.label,
-            value: isArray(fieldContent)
-                ? fieldContent.map((fieldContent: any) =>
-                    FieldsViewUtil.getValue(
-                        fieldContent, field.name, this.projectConfiguration, field.valuelist
-                    )
-                )
-                : FieldsViewUtil.getValue(
-                    fieldContent, field.name, this.projectConfiguration, field.valuelist
-                ),
-            type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
-            valuelist: field.valuelist,
-            positionValues: field.positionValues
-        };
-    }
-
-
-    private putActualResourceRelationsIntoGroups(resource: Resource, datastore: Datastore) {
-
-        return ($: any) => aMap(async (group: any /* ! modified in place ! */) => {
-
-            group.relations = await aFlow(
-                group.relations,
-                FieldsViewUtil.filterRelationsToShowFor(resource),
-                aMap(async (relation: RelationDefinition) => {
-                    return {
-                        label: relation.label,
-                        targets: await datastore.getMultiple(resource.relations[relation.name])
-                    }
-                })
-            );
-            return group;
-        }, $);
     }
 }

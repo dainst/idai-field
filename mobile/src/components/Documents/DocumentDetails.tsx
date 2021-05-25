@@ -106,16 +106,16 @@ const renderFieldValue = (field: FieldsViewField, value: unknown, languages: str
         ? renderStringValue(value)
         : field.type === 'array' && Array.isArray(value)
             ? value.map(value => renderFieldValue(field, value, languages))
-            : renderObjectValue(field, languages);
+            : renderObjectValue(value, field, languages);
 
 
 const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
 
 
-const renderObjectValue = (field: FieldsViewField, languages: string[]) =>
+const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[]) =>
     <Text>
         { FieldsViewUtil.getObjectLabel(
-            field.value,
+            value,
             field,
             getTranslation(languages),
             (value: number) => value.toLocaleString(languages)

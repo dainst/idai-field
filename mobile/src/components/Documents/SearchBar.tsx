@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Query, SyncStatus } from 'idai-field-core';
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -23,9 +24,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
     toggleDrawer
 }) => {
 
+    const dimensions = useWindowDimensions();
+
     return (
         <Row style={ styles.container }>
-            { renderLeftIcons(toggleDrawer) }
+            { dimensions.width <= 768 && renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
                 style={ styles.input }

@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Datastore, Dating, Dimension, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups, Literature, Name, OptionalRange, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
+import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { isBoolean } from 'tsfun';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { RoutingService } from '../../routing-service';
@@ -69,32 +69,11 @@ export class FieldsViewComponent implements OnChanges {
 
     public getObjectLabel(object: any, field: FieldsViewField): string {
 
-        if (object.label) {
-            return object.label;
-        } else if (object.begin || object.end) {
-            return Dating.generateLabel(
-                object,
-                (key: string) => this.utilTranslations.getTranslation(key)
-            );
-        } else if (object.inputUnit) {
-            return Dimension.generateLabel(
-                object,
-                (value: any) => this.decimalPipe.transform(value),
-                (key: string) => this.utilTranslations.getTranslation(key),
-                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
-            );
-        } else if (object.quotation) {
-            return Literature.generateLabel(
-                object, (key: string) => this.utilTranslations.getTranslation(key)
-            );
-        } else if (object.value) {
-            return OptionalRange.generateLabel(
-                object,
-                (key: string) => this.utilTranslations.getTranslation(key),
-                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
-            );
-        } else {
-            return object;
-        }
+        return FieldsViewUtil.getObjectLabel(
+            object,
+            field,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (value: number) => this.decimalPipe.transform(value)
+        );
     }
 }

@@ -9,10 +9,14 @@ import {
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
+import { Dating } from '../model/dating';
+import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { FieldResource } from '../model/field-resource';
 import { BaseGroup, Group, Groups } from '../model/group';
+import { Literature } from '../model/literature';
+import { OptionalRange } from '../model/optional-range';
 import { RelationDefinition } from '../model/relation-definition';
 import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
@@ -131,6 +135,43 @@ export module FieldsViewUtil {
             putActualResourceFieldsIntoGroups(resource, projectConfiguration, languages),
             filter(shouldBeDisplayed)
         );
+    }
+
+
+    export function getObjectLabel(
+        object: any,
+        field: FieldsViewField,
+        getTranslation: (key: string) => string,
+        formatDecimal: (value: number) => string
+    ): string {
+
+        if (object.label) {
+            return object.label;
+        } else if (object.begin || object.end) {
+            return Dating.generateLabel(
+                object,
+                getTranslation
+            );
+        } else if (object.inputUnit) {
+            return Dimension.generateLabel(
+                object,
+                formatDecimal,
+                getTranslation,
+                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
+            );
+        } else if (object.quotation) {
+            return Literature.generateLabel(
+                object, getTranslation
+            );
+        } else if (object.value) {
+            return OptionalRange.generateLabel(
+                object,
+                getTranslation,
+                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
+            );
+        } else {
+            return object;
+        }
     }
 }
 

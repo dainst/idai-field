@@ -1,5 +1,8 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import {
+    NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle,
+    TouchableOpacity, View, ViewStyle
+} from 'react-native';
 import { colors, textColors } from '../../utils/colors';
 
 
@@ -24,7 +27,7 @@ const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled
             activeOpacity={ .9 }
         >
         <View style={ styles.container }>
-            { icon }
+            { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
             { icon && title && <Text style={ styles.separator } />}
             { title && <Text style={ getTextStyle(variant) }>{ title }</Text> }
         </View>
@@ -36,7 +39,7 @@ export default Button;
 const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
     backgroundColor: colors[variant],
     padding: 10,
-    borderRadius: 5
+    borderRadius: 5,
 });
 
 const getTextStyle = (variant: ButtonVariant): TextStyle => ({

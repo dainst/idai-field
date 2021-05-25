@@ -10,6 +10,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
+import CategoryButton from '../common/CategoryButton';
 import CategoryIcon from '../common/CategoryIcon';
 import Column from '../common/Column';
 import Heading from '../common/Heading';
@@ -116,11 +117,12 @@ const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) =
 
 
 const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (target: Document) =>
-    <Button
+    <CategoryButton
         key={ target.resource.id }
-        title={ target.resource.identifier }
         onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
-        icon={ <CategoryIcon config={ config } document={ target } size={ 20 } /> } />;
+        config={ config }
+        document={ target }
+        size={ 20 } />;
 
 
 const styles = StyleSheet.create({

@@ -37,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onChangeText={ (value: string) => issueSearch({ q: value }) }
                 hideBorder
             />
-            { renderRightIcons(issueSearch, projectSettings, setProjectSettings, syncStatus) }
+            { renderRightIcons(projectSettings, setProjectSettings, syncStatus) }
         </Row>
     );
 };
@@ -52,18 +52,11 @@ const renderLeftIcons = (onPress: () => void) =>
     
 
 const renderRightIcons = (
-    issueSearch: (q: Query) => void,
     projectSettings: ProjectSettings,
     setProjectSettings: (settings: ProjectSettings) => void,
     syncStatus: SyncStatus
 ) =>
     <>
-        <Button
-            variant="transparent"
-            onPress={ () => issueSearch({ q: '*' }) }
-            isDisabled={ syncStatus === SyncStatus.Offline ? true : false }
-            icon={ <Ionicons name="refresh" size={ 18 } /> }
-        />
         <SyncSettingsButton
             settings={ projectSettings }
             setSettings={ setProjectSettings }

@@ -52,7 +52,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
     if (!doc || !groups) return null;
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={ { flex: 1 } }>
             <TitleBar
                 title={ <>
                     <CategoryIcon
@@ -130,13 +130,15 @@ const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) =
     </Column>;
 
 
-const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (target: Document) =>
-    <CategoryButton
-        key={ target.resource.id }
-        onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
-        config={ config }
-        document={ target }
-        size={ 20 } />;
+const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) =>
+    (target: Document) =>
+        <CategoryButton
+            key={ target.resource.id }
+            onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
+            config={ config }
+            document={ target }
+            size={ 20 }
+        />;
 
 
 const getTranslation = (_languages: string[]) =>
@@ -149,6 +151,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 10,
+        flex: 1,
     },
     groupLabel: {
         fontWeight: 'bold',

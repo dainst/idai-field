@@ -4,6 +4,7 @@ import { Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
+import Row from '../common/Row';
 
 interface DrawerContentProps {
     documents: Document[];
@@ -23,10 +24,6 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
 }) => {
 
     return <>
-        <Button
-            onPress={ onHomeButtonPressed }
-            icon={ <Ionicons name="home" size={ 18 } /> }
-        />
         <DrawerContentScrollView>
             { documents.map(document => <DrawerItem
                 key={ document.resource.id }
@@ -35,10 +32,18 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
                 icon={ () => <CategoryIcon size={ 25 } document={ document } config={ config } /> }
             /> )}
         </DrawerContentScrollView>
-        <Button
-            onPress={ onSettingsButtonPressed }
-            icon={ <Ionicons name="settings" size={ 18 } /> }
-        />
+        <Row>
+            <Button
+                style={ { flex:1 } }
+                onPress={ onHomeButtonPressed }
+                icon={ <Ionicons name="home" size={ 18 } /> }
+            />
+            <Button
+                style={ { flex:1 } }
+                onPress={ onSettingsButtonPressed }
+                icon={ <Ionicons name="settings" size={ 18 } /> }
+            />
+        </Row>
     </>;
 };
 

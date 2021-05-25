@@ -56,7 +56,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     return (
         <View style={ { flex: 1 } }>
-            <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
@@ -65,6 +64,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     navigateToDocument={ navigateToDocument } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
+            <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
         </View>
     );
 };

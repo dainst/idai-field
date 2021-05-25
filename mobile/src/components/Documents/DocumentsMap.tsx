@@ -2,7 +2,6 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
@@ -56,7 +55,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         
 
     return (
-        <SafeAreaView style={ { flex: 1 } }>
+        <View style={ { flex: 1 } }>
             <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
                 <Map
@@ -66,7 +65,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     navigateToDocument={ navigateToDocument } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
-        </SafeAreaView>
+        </View>
     );
 };
 

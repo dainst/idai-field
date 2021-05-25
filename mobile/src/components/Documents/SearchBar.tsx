@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Query, SyncStatus } from 'idai-field-core';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -25,9 +26,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
 
     const dimensions = useWindowDimensions();
+    const insets = useSafeAreaInsets();
 
     return (
-        <Row style={ styles.container }>
+        <Row style={ [styles.container, { marginTop: insets.top + 5 }] }>
             { dimensions.width <= 768 && renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
@@ -70,7 +72,7 @@ const renderRightIcons = (
     </>;
 
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         margin: 10,
         padding: 3,
@@ -84,11 +86,13 @@ const styles = {
         shadowRadius: 3.84,
         elevation: 5,
         borderRadius: 5,
+        position: 'absolute',
+        zIndex: 10,
     },
     input: {
-        flex: 1
+        flex: 1,
     }
-};
+});
 
 
 export default SearchBar;

@@ -8,11 +8,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, SyncService, RelationsManager } from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
-import { FsConfigReader } from '../core/configuration/fs-config-reader';
 import { DatastoreModule } from '../core/datastore/datastore.module';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { BlobMaker } from '../core/images/imagestore/blob-maker';
@@ -102,13 +101,13 @@ registerLocaleData(localeIt, 'it');
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,
         {
-            provide: FsConfigReader,
-            useFactory: function() { return new FsConfigReader(remote.getGlobal('configurationDirPath')); }
+            provide: ConfigReader,
+            useFactory: function() { return new ConfigReader(); }
         },
         {
             provide: ConfigLoader,
             useFactory: function(configReader: ConfigReader, pouchdbManager: PouchdbManager) { return new ConfigLoader(configReader, pouchdbManager); },
-            deps: [FsConfigReader, PouchdbManager]
+            deps: [ConfigReader, PouchdbManager]
         },
         {
             provide: AppConfigurator,

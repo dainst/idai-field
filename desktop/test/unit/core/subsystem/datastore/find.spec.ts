@@ -1,6 +1,6 @@
 import { doc } from 'idai-field-core';
-import * as PouchDB from 'pouchdb-node';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
+import PouchDB =  require('pouchdb-node');
 
 
 describe('subsystem/datastore/find', () => {

@@ -2,6 +2,7 @@ import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/d
 import { RouteProp } from '@react-navigation/native';
 import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -49,6 +50,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     const [documents, issueSearch] = useSearch(repository);
     const [allDocuments, _] = useSearch(repository);
+    const dimensions = useWindowDimensions();
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
@@ -58,6 +60,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     return (
         <Drawer.Navigator
+            drawerType={ dimensions.width > 768 ? 'permanent' : 'front' }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             drawerContent={ ({ navigation }: { navigation: any }) => {
 

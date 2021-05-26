@@ -1,8 +1,8 @@
-import * as PouchDB from 'pouchdb-node';
-import { update } from 'tsfun';
+import PouchDB =  require('pouchdb-node');
 import { Document } from 'idai-field-core';
-import { createApp, setupSyncTestDb } from '../../subsystem-helper';
+import { update } from 'tsfun';
 import { getImageSuggestions } from '../../../../../../src/app/core/docedit/widgets/get-image-suggestions';
+import { createApp, setupSyncTestDb } from '../../subsystem-helper';
 
 
 describe('subsystem/getImageSuggestions', () => {

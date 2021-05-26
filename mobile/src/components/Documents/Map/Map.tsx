@@ -1,6 +1,6 @@
 import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { Circle, G } from 'react-native-svg';
 import {
@@ -58,7 +58,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     return (
         <View style={ { flex: 1 } }>
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
-                {transformedGeoDocuments && geometryBoundings && viewPort.current ?
+                { transformedGeoDocuments && geometryBoundings && viewPort.current &&
                     <SvgMap style={ styles.svg } viewPort={ viewPort.current }
                         // eslint-disable-next-line max-len
                         viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
@@ -72,8 +72,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
                                     highlightedDoc)}
                             </G>))
                         }
-                    </SvgMap> :
-                    <Text>No docs available</Text>
+                    </SvgMap>
                 }
             </View>
             <MapBottomDrawer

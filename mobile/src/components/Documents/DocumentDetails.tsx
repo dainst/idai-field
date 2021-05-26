@@ -5,7 +5,7 @@ import {
     Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation,
     FieldsViewUtil, ProjectConfiguration
 } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -52,7 +52,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
     if (!doc || !groups) return null;
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={ { flex: 1 } }>
             <TitleBar
                 title={ <>
                     <CategoryIcon
@@ -80,41 +80,47 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
 };
 
 
-const renderGroup = (nav: DocumentDetailsNav, config: ProjectConfiguration, languages: string[]) => (group: FieldsViewGroup) =>
-    <View key={ group.name }>
-        <Text style={ styles.groupLabel }>{ group.label }</Text>
-        { group.fields.map(renderField(languages)) }
-        { group.relations.map(renderRelation(nav, config)) }
-    </View>;
+const renderGroup = (
+    nav: DocumentDetailsNav,
+    config: ProjectConfiguration,
+    languages: string[]
+) =>
+    (group: FieldsViewGroup) =>
+        <View key={ group.name }>
+            <Text style={ styles.groupLabel }>{ group.label }</Text>
+            { group.fields.map(renderField(languages)) }
+            { group.relations.map(renderRelation(nav, config)) }
+        </View>;
 
 
-const renderField = (languages: string[]) => (field: FieldsViewField) =>
-    <Column style={ styles.fieldColumn } key={ field.label }>
-        <Text style={ styles.fieldLabel }>{ field.label }</Text>
-        { field.type === 'default' && typeof field.value === 'string'
-            ? renderStringValue(field.value)
-            : field.type === 'array' && Array.isArray(field.value)
-                ? renderArrayValue(field.value)
-                : renderObjectValue(field, languages)
-        }
-    </Column>;
+const renderField = (languages: string[]) =>
+    (field: FieldsViewField) =>
+        <Column style={ styles.fieldColumn } key={ field.label }>
+            <Text style={ styles.fieldLabel }>{ field.label }</Text>
+            { renderFieldValue(field, field.value, languages) }
+        </Column>;
 
 
-// TODO arrays of objects
-const renderArrayValue = (values: string[]) => values.map(renderStringValue);
+const renderFieldValue = (field: FieldsViewField, value: unknown, languages: string[]): ReactNode =>
+    field.type === 'default' && typeof value === 'string'
+        ? renderStringValue(value)
+        : field.type === 'array' && Array.isArray(value)
+            ? value.map(value => renderFieldValue(field, value, languages))
+            : renderObjectValue(value, field, languages);
 
 
 const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
 
 
-const renderObjectValue = (field: FieldsViewField, languages: string[]) => <Text>
-    { FieldsViewUtil.getObjectLabel(
-        field.value,
-        field,
-        getTranslation(languages),
-        (value: number) => value.toLocaleString(languages)
-    ) }
-</Text>;
+const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[]) =>
+    <Text>
+        { FieldsViewUtil.getObjectLabel(
+            value,
+            field,
+            getTranslation(languages),
+            (value: number) => value.toLocaleString(languages)
+        ) }
+    </Text>;
 
 
 const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (relation: FieldsViewRelation) =>
@@ -124,16 +130,19 @@ const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) =
     </Column>;
 
 
-const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (target: Document) =>
-    <CategoryButton
-        key={ target.resource.id }
-        onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
-        config={ config }
-        document={ target }
-        size={ 20 } />;
+const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) =>
+    (target: Document) =>
+        <CategoryButton
+            key={ target.resource.id }
+            onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
+            config={ config }
+            document={ target }
+            size={ 20 }
+        />;
 
 
-const getTranslation = (_languages: string[]) => (key: string) => translations[key];
+const getTranslation = (_languages: string[]) =>
+    (key: string) => translations[key];
 
 
 const styles = StyleSheet.create({
@@ -142,6 +151,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 10,
+        flex: 1,
     },
     groupLabel: {
         fontWeight: 'bold',

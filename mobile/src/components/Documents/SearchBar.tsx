@@ -1,6 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Query, SyncStatus } from 'idai-field-core';
 import React from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -23,16 +25,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
     toggleDrawer
 }) => {
 
+    const dimensions = useWindowDimensions();
+    const insets = useSafeAreaInsets();
+
     return (
-        <Row style={ styles.container }>
-            { renderLeftIcons(toggleDrawer) }
+        <Row style={ [styles.container, { marginTop: insets.top + 5 }] }>
+            { dimensions.width <= 768 && renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
                 style={ styles.input }
                 onChangeText={ (value: string) => issueSearch({ q: value }) }
                 hideBorder
             />
-            { renderRightIcons(issueSearch, projectSettings, setProjectSettings, syncStatus) }
+            { renderRightIcons(projectSettings, setProjectSettings, syncStatus) }
         </Row>
     );
 };
@@ -47,18 +52,11 @@ const renderLeftIcons = (onPress: () => void) =>
     
 
 const renderRightIcons = (
-    issueSearch: (q: Query) => void,
     projectSettings: ProjectSettings,
     setProjectSettings: (settings: ProjectSettings) => void,
     syncStatus: SyncStatus
 ) =>
     <>
-        <Button
-            variant="transparent"
-            onPress={ () => issueSearch({ q: '*' }) }
-            isDisabled={ syncStatus === SyncStatus.Offline ? true : false }
-            icon={ <Ionicons name="refresh" size={ 18 } /> }
-        />
         <SyncSettingsButton
             settings={ projectSettings }
             setSettings={ setProjectSettings }
@@ -67,11 +65,12 @@ const renderRightIcons = (
     </>;
 
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         margin: 10,
         padding: 3,
         backgroundColor: 'white',
+        opacity: 0.9,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -81,11 +80,13 @@ const styles = {
         shadowRadius: 3.84,
         elevation: 5,
         borderRadius: 5,
+        position: 'absolute',
+        zIndex: 10,
     },
     input: {
-        flex: 1
+        flex: 1,
     }
-};
+});
 
 
 export default SearchBar;

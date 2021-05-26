@@ -1,7 +1,7 @@
-import * as PouchDB from 'pouchdb-node';
+import PouchDB =  require('pouchdb-node');
 import * as tsfun from 'tsfun';
-import { createApp, setupSyncTestDb } from '../subsystem-helper';
 import { getDocumentSuggestions } from '../../../../../src/app/core/widgets/get-document-suggestions';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 describe('subsystem/getDocumentSuggestions', () => {

@@ -14,6 +14,8 @@
     "strictNullChecks": false,
     "lib": ["es2017", "dom"],
     "baseUrl": "./",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
   },
   "exclude": [
     "../node_modules",

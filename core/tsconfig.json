@@ -3,9 +3,11 @@
         "outDir": "./dist",
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es5",
+        "target": "es6",
         "declaration": true,
         "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "lib": [
             "dom",
             "es2018"
@@ -14,6 +16,7 @@
     "include": [
         "src/**/*",
         "test/**/*",
+        "config/**/*",
         "index.ts"
     ]
 }

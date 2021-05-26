@@ -12,6 +12,7 @@
     "importHelpers": true,
     "target": "ES5",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "lib": [
       "es2018",
       "dom"

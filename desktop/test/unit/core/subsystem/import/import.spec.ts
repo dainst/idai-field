@@ -1,10 +1,10 @@
 import { Category, PouchdbManager } from 'idai-field-core';
-import * as PouchDB from 'pouchdb-node';
 import { PouchdbServer } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../../src/app/core/import/importer';
 import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';
 import { createApp, createHelpers, setupSettingsService, setupSyncTestDb } from '../subsystem-helper';
+import PouchDB =  require('pouchdb-node');
 
 /**
  * @author Daniel de Oliveira

@@ -1,10 +1,8 @@
 import {
-    AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
-    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId, RelationsManager
+    AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore, Document, DocumentCache,
+    NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, ResourceId, SyncService, toResourceId
 } from 'idai-field-core';
-import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
-import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -22,6 +20,7 @@ import { SettingsProvider } from '../../../../src/app/core/settings/settings-pro
 import { SettingsService } from '../../../../src/app/core/settings/settings-service';
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
+import PouchDB =  require('pouchdb-node');
 
 const fs = require('fs');
 
@@ -46,7 +45,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbmanager,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new FsConfigReader('src/config/'), pouchdbmanager)),
+        new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbmanager)),
         undefined,
         settingsProvider
     );

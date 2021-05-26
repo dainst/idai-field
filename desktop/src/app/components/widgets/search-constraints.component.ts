@@ -365,6 +365,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
             name: dropdownRangeField.name + '.endValue',
             group: dropdownRangeField.group,
+            label: dropdownRangeField.label,
             inputType: 'dropdownRange',
             valuelist: dropdownRangeField.valuelist,
             constraintIndexed: true
@@ -417,30 +418,20 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
 
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
-        if (defaultField) return LabelUtil.getLabel(defaultField);
+        if (defaultField) return this.getFieldLabel(defaultField);
 
-        if (fieldName.includes('.')) {
+        const baseFieldName = fieldName.includes('.')
+            ? fieldName.substring(0, fieldName.indexOf('.'))
+            : fieldName;
 
-            const baseField = Category
-                .getFields(this.projectConfiguration.getCategory(this.category))
-                .find((field: FieldDefinition) => {
-                    return field.name === fieldName.substring(0, fieldName.indexOf('.'));
-                });
+        const field = clone(Category.getFields(this.projectConfiguration.getCategory(this.category))
+            .find(on(FieldDefinition.NAME, is(baseFieldName))));
 
-            if (baseField) return LabelUtil.getLabel(baseField)
-                    + baseField.inputType === 'dropdownRange'
-                        ? this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' })
-                        : ''
-        }
+        if (!field) throw 'Illegal state: Field "' + fieldName + '" does not exist!';
 
-        const field = Category.getFields(this.projectConfiguration.getCategory(this.category))
-            .find(on(FieldDefinition.NAME, is(fieldName)));
+        field.name = fieldName;
 
-        if (!field) throw 'illegal state - field does not exist';
-
-        return field.inputType === 'dropdownRange'
-            ? this.getDropdownRangeLabel(field)
-            : LabelUtil.getLabel(field);
+        return this.getFieldLabel(field);
     }
 
 

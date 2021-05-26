@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 3,
         backgroundColor: 'white',
+        opacity: 0.9,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,

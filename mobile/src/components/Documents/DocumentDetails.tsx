@@ -1,13 +1,11 @@
 /* eslint-disable react/display-name */
 import { Ionicons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import {
-    Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation,
-    FieldsViewUtil, ProjectConfiguration
-} from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation, FieldsViewUtil, LabelUtil,
+    ProjectConfiguration } from 'idai-field-core';
 import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
 import Button from '../common/Button';
@@ -87,7 +85,7 @@ const renderGroup = (
 ) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
-            <Text style={ styles.groupLabel }>{ group.label }</Text>
+            <Text style={ styles.groupLabel }>{ LabelUtil.getLabel(group, languages) }</Text>
             { group.fields.map(renderField(languages)) }
             { group.relations.map(renderRelation(nav, config)) }
         </View>;

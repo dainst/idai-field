@@ -148,10 +148,6 @@ global.toolsPath = global.mode === 'production' ?
     electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
 
-global.configurationDirPath = global.mode === 'production'
-    ?  electron.app.getAppPath().replace('app.asar', 'config/')
-    : './src/config';
-
 global.samplesPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'samples/')
     : './samples/';

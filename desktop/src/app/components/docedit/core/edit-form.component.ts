@@ -1,11 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, clone} from 'tsfun';
-import {Document} from 'idai-field-core';
-import {FieldDefinition, RelationDefinition, Group, Groups} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
-import {Relations} from 'idai-field-core';
-import {ProjectCategories} from 'idai-field-core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { isUndefinedOrEmpty, clone } from 'tsfun';
+import { Document, LabelUtil, ProjectConfiguration, FieldDefinition, RelationDefinition, Group,
+    Groups, Relations, ProjectCategories } from 'idai-field-core';
 
 
 @Component({
@@ -26,13 +23,14 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
 
-
     public categories: string[];
 
     public extraGroups: Array<Group> = [
-        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [] }];
+        { name: 'conflicts', fields: [], relations: [] }
+    ];
 
     public groups: Array<Group> = [];
+    
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
@@ -41,6 +39,33 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public activateGroup = (name: string) => this.activeGroup = name;
 
+
+    ngAfterViewInit() {
+
+        this.focusFirstInputElement();
+    }
+
+
+    ngOnChanges() {
+
+        if (isUndefinedOrEmpty(this.originalGroups)) return;
+
+        this.groups = [];
+        for (const originalGroup of this.originalGroups) {
+            const group = clone(originalGroup);
+            this.groups.push(group);
+        }
+        this.groups = this.groups.concat(this.extraGroups);
+    }
+
+
+    public getLabel(group: Group): string {
+
+        return group.name === 'conflicts'
+            ? this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' })
+            : LabelUtil.getLabel(group);
+    }
+    
 
     public shouldShow(groupName: string) {
 
@@ -65,25 +90,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         return (this.groups.find(group => group.name === groupName) as any).relations
             .filter(relation => relation.name !== Relations.Type.INSTANCEOF);
-    }
-
-
-    ngAfterViewInit() {
-
-        this.focusFirstInputElement();
-    }
-
-
-    ngOnChanges() {
-
-        if (isUndefinedOrEmpty(this.originalGroups)) return;
-
-        this.groups = [];
-        for (const originalGroup of this.originalGroups) {
-            const group = clone(originalGroup);
-            this.groups.push(group);
-        }
-        this.groups = this.groups.concat(this.extraGroups);
     }
 
 

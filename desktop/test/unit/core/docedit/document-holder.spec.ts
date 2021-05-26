@@ -46,21 +46,18 @@ describe('DocumentHolder', () => {
             ,[
                 {
                     name: 'isFoundOn',
-                    label: '',
                     inverse: 'bears',
                     domain: ['Trench'],
                     range: ['Find']
                 },
                 {
                     name: 'isFoundOn2',
-                    label: '',
                     inverse: 'bears',
                     domain: ['Trench'],
                     range: ['Find']
                 },
                 {
                     name: 'isRecordedIn',
-                    label: '',
                     domain: ['Find'],
                     range: ['Trench']
                 }

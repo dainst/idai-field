@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
+import { Datastore, FieldDefinition, LabelUtil, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
 import { is, on } from 'tsfun';
 
 
@@ -40,7 +40,7 @@ export class EmptyValuelistInfoComponent implements OnChanges {
             .getFieldDefinitions('Project')
             .find(on('name', is(this.field.valuelistFromProjectField)));
 
-        return field && field.label ? field.label : '';
+        return field ? LabelUtil.getLabel(field) : '';
     }
 
 

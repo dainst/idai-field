@@ -1,3 +1,6 @@
+import { I18nString } from './i18n-string';
+
+
 export type ValuelistId = string;
 
 export type Valuelists = { [fieldName: string]: ValuelistId }
@@ -38,6 +41,6 @@ export module ValuelistDefinition {
 
 export interface ValueDefinition {
 
-    labels?: { [locale: string]: string },
+    labels?: I18nString,
     references?: { [referenceKey: string]: string },
 }

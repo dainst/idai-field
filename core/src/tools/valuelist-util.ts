@@ -3,12 +3,8 @@ import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { Resource } from '../model/resource';
 import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
+import { LabelUtil } from './label-util';
 import { SortUtil } from './sort-util';
-
-
-const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
-    ? window.require('@electron/remote').getGlobal('config').languages
-    : ['de'];
 
 
 /**
@@ -34,18 +30,8 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, providedLanguages?: string[]): string {
 
-        const languages = providedLanguages || ELECTRON_CONFIG_LANGUAGES;
-
-        const value: ValueDefinition|undefined = valuelist ? valuelist.values[valueId] : undefined;
-        if (!value) return valueId;
-
-        const language: string = languages.find(languageCode => {
-            return valuelist.values[valueId].labels?.[languageCode] !== undefined;
-        });
-
-        return language
-            ? valuelist.values[valueId].labels[language]
-            : valueId;
+        const label: string|undefined = LabelUtil.getTranslation(valuelist.values[valueId]?.labels, providedLanguages);
+        return label ?? valueId;
     }
 
 

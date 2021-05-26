@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { flatten, to } from 'tsfun';
-import { Category, RelationDefinition } from 'idai-field-core';
+import { Category, LabelUtil, RelationDefinition } from 'idai-field-core';
 
 
 @Component({
@@ -20,6 +20,9 @@ export class ConfigurationRelationComponent implements OnChanges {
 
 
     constructor() {}
+
+
+    public getLabel = () => LabelUtil.getTranslation(this.relation.label);
 
 
     ngOnChanges() {

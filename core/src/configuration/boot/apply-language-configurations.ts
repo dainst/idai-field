@@ -1,3 +1,4 @@
+import { I18nString } from '../../model';
 import { LanguageConfiguration } from '../model/language-configuration';
 
 
@@ -6,7 +7,8 @@ import { LanguageConfiguration } from '../model/language-configuration';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export function applyLanguageConfigurations(languageConfigurations: Array<LanguageConfiguration>) {
+export function applyLanguageConfigurations(
+        languageConfigurations: { [language: string]: Array<LanguageConfiguration> }) {
 
     return (configuration: [any, any]) => {
 
@@ -23,86 +25,53 @@ export function applyLanguageConfigurations(languageConfigurations: Array<Langua
 }
 
 
-function applyFields(languageConfigurations: Array<LanguageConfiguration>, categories: any) {
+function applyFields(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+        categories: any) {
 
     for (const categoryName of Object.keys(categories)) {
         const category = categories[categoryName];
 
-        for (const configurationCategoryFieldName of Object.keys(category.fields)) {
-            for (let languageConfiguration of languageConfigurations) {
-                if (languageConfiguration?.fields?.[configurationCategoryFieldName]) {
-                    category.fields[configurationCategoryFieldName].label
-                        = languageConfiguration.fields[configurationCategoryFieldName].label;
-                    category.fields[configurationCategoryFieldName].description
-                        = languageConfiguration.fields[configurationCategoryFieldName].description;
-                    break;
-                }
-            }
+        for (const fieldName of Object.keys(category.fields)) {
+            category.fields[fieldName].label = 
+                LanguageConfiguration.getI18nString(languageConfigurations, 'fields', fieldName, 'label');
+            category.fields[fieldName].description = 
+                LanguageConfiguration.getI18nString(languageConfigurations, 'fields', fieldName, 'description');
         }
     }
 }
 
 
-function applyRelations(languageConfigurations: Array<LanguageConfiguration>, relations: any) {
+function applyRelations(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+        relations: any) {
 
     for (const relation of relations) {
-        for (let languageConfiguration of languageConfigurations) {
-            if (languageConfiguration?.relations?.[relation.name]) {
-                const languageConfigurationRelation = languageConfiguration.relations[relation.name];
-                if (languageConfigurationRelation.label) {
-                    relation.label = languageConfigurationRelation.label;
-                    break;
-                }
-            }
-        }
+        relation.label = LanguageConfiguration.getI18nString(languageConfigurations, 'relations', relation.name, 'label');
     }
 }
 
 
-function applyCategories(languageConfigurations: Array<LanguageConfiguration>, categories: any) {
+function applyCategories(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+        categories: any) {
 
-    for (const configurationCategoryName of Object.keys(categories)) {
-        const configurationCategory = categories[configurationCategoryName];
+    for (const categoryName of Object.keys(categories)) {
+        const category = categories[categoryName];
+        category.label = LanguageConfiguration.getI18nString(languageConfigurations, 'categories', categoryName, 'label');
 
-        for (let languageConfiguration of languageConfigurations) {
-            if (languageConfiguration.categories?.[configurationCategoryName]?.label) {
-                configurationCategory.label
-                    = languageConfiguration.categories[configurationCategoryName].label;
-                break;
-            }
-        }
+        for (const fieldName of Object.keys(category.fields)) {
+            const field = category.fields[fieldName];
 
-        for (const configurationFieldName of Object.keys(configurationCategory.fields)) {
-            let foundInCategories: boolean = false;
-
-            const configurationField = configurationCategory.fields[configurationFieldName];
-
-            for (let languageConfiguration of languageConfigurations) {
-                if (languageConfiguration.categories) {
-                    const languageConfigurationCategory = languageConfiguration.categories[configurationCategoryName];
-                    if (languageConfigurationCategory?.fields) {
-                        const languageConfigurationField
-                            = languageConfigurationCategory.fields[configurationFieldName];
-                        if (languageConfigurationField) {
-                            foundInCategories = true;
-                            configurationField.label = languageConfigurationField.label;
-                            configurationField.description = languageConfigurationField.description;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!foundInCategories) {
-                 for (let languageConfiguration of languageConfigurations) {
-                    if (languageConfiguration.commons?.[configurationFieldName]) {
-                        configurationField.label = languageConfiguration.commons[configurationFieldName].label;
-                        configurationField.description
-                            = languageConfiguration.commons[configurationFieldName].description;
-                        break;
-                    }
-                }
-            }
+            field.label = I18nString.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
+                languageConfigurations, 'commons', fieldName, 'label'
+            ));
+            field.label = I18nString.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
+                languageConfigurations, 'categoriesFields', fieldName, 'label', categoryName
+            ));
+            field.description = I18nString.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
+                languageConfigurations, 'commons', fieldName, 'description'
+            ));
+            field.description = I18nString.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
+                languageConfigurations, 'categoriesFields', fieldName, 'description', categoryName
+            ));
         }
     }
 }

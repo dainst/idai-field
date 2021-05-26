@@ -24,9 +24,7 @@ describe('ConfigLoader', () => {
         configReader.read.and.returnValues(
             libraryCategories,
             languageConfiguration,
-            {},
-            {},
-            {},
+            {}, {}, {}, {}, {}, {}, {}, {}, {},
             orderConfiguration
         );
         configReader.exists.and.returnValue(true);
@@ -86,7 +84,6 @@ describe('ConfigLoader', () => {
                 [],
                 {},
                 undefined,
-                ['de'],
                 'User'
             );
         } catch(err) {
@@ -132,7 +129,6 @@ describe('ConfigLoader', () => {
                 [],
                 {},
                 undefined,
-                ['de'],
                 'User'
             );
         } catch(err) {
@@ -140,8 +136,8 @@ describe('ConfigLoader', () => {
             fail(err);
         }
 
-        expect(pconf.getCategory('B').groups[0].fields[0]['label']).toBe('Bearbeiter/Bearbeiterin');
-        expect(pconf.getCategory('B').groups[0].fields[0]['description']).toBe('abc');
+        expect(pconf.getCategory('B').groups[0].fields[0].label.de).toBe('Bearbeiter/Bearbeiterin');
+        expect(pconf.getCategory('B').groups[0].fields[0].description.de).toBe('abc');
 
         done();
     });
@@ -185,18 +181,15 @@ describe('ConfigLoader', () => {
                 [
                     {
                         name: 'connection',
-                        label: '',
                         domain: ['C'],
                         range: ['D']
                     }, {
                         name: 'connection',
-                        label: '',
                         domain: ['A:inherit'],
                         range: ['B:inherit']
                     }],
                 {},
                 undefined,
-                ['de'],
                 'User'
             );
         } catch(err) {
@@ -229,8 +222,8 @@ describe('ConfigLoader', () => {
                     A: { fields: {}},
                     B: { fields: {}},
                     T: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }},
-                [{ name: 'abc', label: '', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
-                undefined, ['de'], 'User');
+                [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
+                undefined, 'User');
         } catch(err) {
             fail(err);
         }
@@ -255,15 +248,15 @@ describe('ConfigLoader', () => {
                 'B': { fields: {} },
                 'C': { fields: {} },
                 'Parent': { fields: {} }
-                },
-            {
-            categories: {
-                A: { label: 'A_' },
-                B: { label: 'B_' }
             },
-            relations: {
-                r1: { label: 'r1_' }
-            }
+            {
+                categories: {
+                    A: { label: 'A_' },
+                    B: { label: 'B_' }
+                },
+                relations: {
+                    r1: { label: 'r1_' }
+                }
             }, {
                 categories: {
                     B: { label: 'B__' }
@@ -276,27 +269,27 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 {
-                        Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
-                        A: { fields: {} },
-                        B: { fields: {} }
-                    },
+                    Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
+                    A: { fields: {} },
+                    B: { fields: {} }
+                },
                 [
-                    { name: 'r1', label: '', domain: ['A'], range: ['B'] },
-                    { name: 'r2', label: '', domain: ['A'], range: ['B'] }
+                    { name: 'r1', domain: ['A'], range: ['B'] },
+                    { name: 'r2', domain: ['A'], range: ['B'] }
                 ],
                 {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
         } catch(err) {
             fail(err);
         }
 
-        expect(pconf.getCategory('A').label).toEqual('A_');
-        expect(pconf.getCategory('B').label).toEqual('B__');
-        expect(pconf.getCategory('C').label).toBeUndefined();
+        expect(pconf.getCategory('A').label.de).toEqual('A_');
+        expect(pconf.getCategory('B').label.de).toEqual('B__');
+        expect(pconf.getCategory('C').label).toEqual({});
 
-        expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label).toEqual('r1_');
-        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toBeFalsy();
+        expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label.de).toEqual('r1_');
+        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toEqual({});
 
         done();
     });
@@ -346,7 +339,7 @@ describe('ConfigLoader', () => {
                 {
                     'F': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
                     'G': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
 
             expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldA1')
@@ -396,7 +389,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go({},
                 { 'Find': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
 
             expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0'].groups[1].fields.find(field => field.name == 'fieldC1')
@@ -432,7 +425,7 @@ describe('ConfigLoader', () => {
 
         try {
             await configLoader.go({}, {},[], {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
 
             fail();
@@ -460,7 +453,7 @@ describe('ConfigLoader', () => {
 
         try {
             await configLoader.go({}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
-                undefined, ['de'], 'User');
+                undefined, 'User');
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
@@ -529,7 +522,7 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go({},
                 { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},
                 [], {},
-                 undefined, ['de'], 'User'
+                 undefined, 'User'
             );
 
             const result = Named.arrayToMap<Category>(pconf.getCategoriesArray());
@@ -581,7 +574,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go({},
                 { Parent: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }}, [], {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
 
             expect(pconf.getCategoriesArray().length).toBe(2);
@@ -622,7 +615,7 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go({}, { A: { fields: {} }}, [], {},
-                undefined, ['de'], 'User'
+                undefined, 'User'
             );
             const result = pconf.getCategory('A').groups[0];
 

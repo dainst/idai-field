@@ -18,7 +18,7 @@
         <div id="choose-category-option-{{getCategoryId(category)}}" class="category-item">
             <category-icon [category]="category.name" size="30"></category-icon>
             <div class="category-label">
-                {{category.label ? category.label : category.name}}
+                {{getCategoryLabel(category)}}
                 <span *ngIf="highlightCustomCategories && hasCustomFields(category)"> *</span>
             </div>
         </div>

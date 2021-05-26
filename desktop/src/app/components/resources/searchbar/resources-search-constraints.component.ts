@@ -1,8 +1,7 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Datastore, FieldDefinition } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
+import { Datastore, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
@@ -39,6 +38,24 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
     }
 
 
+    public getFieldLabel(field: FieldDefinition): string {
+
+        if (field.name === 'geometry') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.geometry',
+                value: 'Geometrie'
+            });
+        } else if (field.name === 'isDepictedIn') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.linkedImages',
+                value: 'Verknüpfte Bilder'
+            });
+        } else {
+            return super.getFieldLabel(field);
+        }
+    }
+
+
     private initializeDefaultFields() {
 
         this.defaultFields = [];
@@ -46,7 +63,6 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
         if (!this.viewFacade.isInTypesManagement()) {
             this.defaultFields.push({
                 name: 'geometry',
-                label: this.i18n({ id: 'resources.searchBar.constraints.geometry', value: 'Geometrie' }),
                 inputType: 'default',
                 constraintIndexed: true,
                 group: ''
@@ -55,10 +71,6 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.defaultFields.push({
             name: 'isDepictedIn',
-            label: this.i18n({
-                id: 'resources.searchBar.constraints.linkedImages',
-                value: 'Verknüpfte Bilder'
-            }),
             inputType: 'default',
             constraintIndexed: true,
             group: ''

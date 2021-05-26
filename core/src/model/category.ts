@@ -1,7 +1,9 @@
-import {flatten, flow, map, to} from 'tsfun';
+import { flatten, flow, map, to } from 'tsfun';
+import { I18nString } from './i18n-string';
 import { Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
-import {Group} from './group';
+import { Group } from './group';
+import { LabelUtil } from '../tools/label-util';
 
 
 export interface Category extends Named {
@@ -9,7 +11,7 @@ export interface Category extends Named {
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
-    label: string;
+    label: I18nString;
     description: { [language: string]: string };
     color: string|undefined;
     groups: Array<Group>;
@@ -46,11 +48,7 @@ export module Category {
     export function getLabel(fieldName: string, fields: Array<any>): string {
 
         for (let field of fields) {
-            if (field.name === fieldName) {
-                return field.label
-                    ? field.label
-                    : fieldName;
-            }
+            if (field.name === fieldName) return LabelUtil.getLabel(field);
         }
         return fieldName;
     }

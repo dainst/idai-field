@@ -6,7 +6,7 @@
 		<div class="card-body">
 			<div *ngFor="let field of group.fields">
 				<div *ngIf="field.type === 'array' && field.value.length > 0" class="field">
-					<h3 class="field-label">{{field.label}}</h3>
+					<h3 class="field-label">{{getLabel(field)}}</h3>
 					<ul>
 						<li *ngFor="let item of field.value" class="field-value">
 						    {{getObjectLabel(item, field)}}
@@ -15,12 +15,12 @@
 				</div>
 
                 <div *ngIf="field.type === 'object'" class="field">
-                    <h3 class="field-label">{{field.label}}</h3>
+                    <h3 class="field-label">{{getLabel(field)}}</h3>
                     <div class="field-value">{{getObjectLabel(field.value, field)}}</div>
                 </div>
 
 				<div *ngIf="field.type === 'default'" class="field">
-					<h3 class="field-label">{{field.label}}</h3>
+					<h3 class="field-label">{{getLabel(field)}}</h3>
 					<div class="field-value" *ngIf="isBoolean(field.value)">
 						<span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>
 						<span *ngIf="field.value === false" i18n="@@boolean.no">Nein</span>
@@ -31,7 +31,7 @@
 
             <div *ngFor="let relation of group.relations">
                 <div class="field">
-                    <h3 class="field-label">{{relation.label}}</h3>
+                    <h3 class="field-label">{{getLabel(relation)}}</h3>
                     <div *ngFor="let target of relation.targets"
                          class="field-value relation-value"
                          [innerHTML]="target.resource.identifier"

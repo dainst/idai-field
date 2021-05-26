@@ -1,3 +1,6 @@
+import { I18nString } from '../../model';
+
+
 export interface LanguageConfiguration {
 
     categories?: { [categoryName: string]: CategoryLanguageDefinition };
@@ -22,7 +25,39 @@ export interface FieldLanguageDefinition {
     description?: string;
 }
 
+
 export interface RelationLanguageDefinition {
 
     label?: string;
+}
+
+
+/**
+ * @author Thomas Kleinke
+ */
+export module LanguageConfiguration {
+
+    export function getI18nString(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+                                  section: 'categories'|'categoriesFields'|'relations'|'groups'|'commons'
+                                  |'fields'|'other', subSectionName: string, textType?: 'label'|'description', categoryName?: string): I18nString {
+
+        return Object.keys(languageConfigurations).reduce((labels, language) => {
+
+            const configuration = languageConfigurations[language].find(config => {
+                const fieldConfiguration = section === 'categoriesFields'
+                    ? config.categories?.[categoryName]?.fields?.[subSectionName]
+                    : config[section]?.[subSectionName];
+                return fieldConfiguration && (!textType || fieldConfiguration[textType]);
+            });
+
+            if (configuration) {
+                 const element = section === 'categoriesFields'
+                    ? configuration.categories[categoryName].fields[subSectionName]
+                    : configuration[section][subSectionName];
+                labels[language] = textType ? element[textType] : element;
+            }
+
+            return labels;
+        }, {});
+    }
 }

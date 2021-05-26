@@ -1,7 +1,7 @@
 export { assocReduce } from './assoc-reduce';
 export * from './fields-view-util';
 export { Forest, Tree } from './forest';
-export { Labelled, Name, Named } from './named';
+export { Labeled, Name, Named } from './named';
 export { filterTrees, isTopLevelItemOrChildThereof, removeTrees } from './named-forest';
 export { ObjectUtils } from './object-utils';
 export { ObserverUtil } from './observer-util';
@@ -11,3 +11,4 @@ export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export * from './utils';
 export * from './valuelist-util';
+export * from './label-util';

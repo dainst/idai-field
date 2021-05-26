@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef} from '@angular/core';
-import {FieldDocument, Category, Datastore, RelationsManager} from 'idai-field-core';
-import {ResourcesComponent} from '../resources.component';
-import {Validator} from '../../../core/model/validator';
-import {M} from '../../messages/m';
-import {MessagesConversion} from '../../docedit/messages-conversion';
-import {ProjectConfiguration} from 'idai-field-core';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {NavigationService} from '../../../core/resources/navigation/navigation-service';
-import {Messages} from '../../messages/messages';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { FieldDocument, Category, Datastore, RelationsManager, LabelUtil, ProjectConfiguration } from 'idai-field-core';
+import { ResourcesComponent } from '../resources.component';
+import { Validator } from '../../../core/model/validator';
+import { M } from '../../messages/m';
+import { MessagesConversion } from '../../docedit/messages-conversion';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { NavigationService } from '../../../core/resources/navigation/navigation-service';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -60,7 +59,7 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getCategoryLabel = () => this.categoriesMap[this.document.resource.category].label;
+    public getCategoryLabel = () => LabelUtil.getLabel(this.categoriesMap[this.document.resource.category]);
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier

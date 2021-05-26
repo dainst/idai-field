@@ -1,4 +1,4 @@
-import { isUndefinedOrEmpty, Map, map, not } from 'tsfun';
+import { Map, map, set } from 'tsfun';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { FieldDefinition } from '../../model/field-definition';
@@ -13,6 +13,9 @@ import { ProjectConfiguration } from '../project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
 import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';
+
+
+const BUILT_IN_LANGUAGES = ['de', 'en', 'es', 'it'];
 
 
 /**
@@ -33,11 +36,12 @@ export class ConfigLoader {
     constructor(private configReader: ConfigReader,
                 private pouchdbManager: PouchdbManager) {}
 
+
     public async go(commonFields: { [fieldName: string]: any },
                     builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
-                    languages: string[], username: string): Promise<ProjectConfiguration> {
+                    username: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
@@ -55,7 +59,6 @@ export class ConfigLoader {
             relations,
             extraFields,
             customConfigurationName,
-            languages,
             username);
     }
 
@@ -78,7 +81,6 @@ export class ConfigLoader {
                              relations: Array<RelationDefinition>,
                              extraFields: { [fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,
-                             languages: string[],
                              username: string): Promise<ProjectConfiguration> {
 
         const orderConfigurationPath = '/Order.json';
@@ -86,7 +88,7 @@ export class ConfigLoader {
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
         let customCategories;
-        let languageConfigurations: Array<LanguageConfiguration>;
+        let languageConfigurations: { [language: string]: Array<LanguageConfiguration> };
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
@@ -97,10 +99,7 @@ export class ConfigLoader {
                 username
             ));
             customCategories = configurationDocument.resource.categories;
-            languageConfigurations = this.readLanguageConfigurations(
-                configurationDocument.resource.languages,
-                languages
-            );
+            languageConfigurations = this.readLanguageConfigurations(configurationDocument.resource.languages);
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
@@ -173,25 +172,6 @@ export class ConfigLoader {
     }
 
 
-    private readLanguageConfigurations(customLanguageConfigurations: { [language: string]: any },
-                                       languages: string[]): Array<LanguageConfiguration> {
-
-        const configurations = [];
-
-        for (const language of languages) {
-            configurations.push(customLanguageConfigurations[language]);
-            configurations.push(
-                this.readLanguageConfiguration('/Library/Language.' + language + '.json')
-            );
-            configurations.push(
-                this.readLanguageConfiguration('/Core/Language.' + language + '.json')
-            );
-        }
-
-        return configurations.filter(not(isUndefinedOrEmpty));
-    }
-
-
     private readCustomLanguageConfigurations(customConfigurationName: string)
             : { [language: string]: LanguageConfiguration } {
 
@@ -205,6 +185,31 @@ export class ConfigLoader {
         }
 
         return configurations;
+    }
+
+
+    public readLanguageConfigurations(customLanguageConfigurations: { [language: string]: LanguageConfiguration })
+            : { [language: string]: Array<LanguageConfiguration> } {
+
+        const languages: string[] = set(
+            Object.keys(customLanguageConfigurations).concat(BUILT_IN_LANGUAGES)
+        );
+
+        return languages.reduce((configurations, language) => {
+            configurations[language] = [];
+            if (customLanguageConfigurations[language]) {
+                configurations[language].push(customLanguageConfigurations[language]);
+            }
+            if (BUILT_IN_LANGUAGES.includes(language)) {
+                configurations[language].push(
+                    this.readLanguageConfiguration('/Library/Language.' + language + '.json')
+                );
+                configurations[language].push(
+                    this.readLanguageConfiguration('/Core/Language.' + language + '.json')
+                );
+            }
+            return configurations;
+        }, {});
     }
 
 
@@ -225,7 +230,7 @@ export class ConfigLoader {
     
 
     private static createConfigurationDocument(categories: { [formName: string]: CustomCategoryDefinition },
-                                               languageConfigurations: { [language: string]: any },
+                                               languageConfigurations: { [language: string]: LanguageConfiguration },
                                                username: string, rev?: string): ConfigurationDocument {
 
         const configurationDocument = {

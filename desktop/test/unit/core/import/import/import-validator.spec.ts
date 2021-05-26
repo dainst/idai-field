@@ -1,7 +1,7 @@
-import {ImportValidator} from '../../../../../src/app/core/import/import/process/import-validator';
-import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
-import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {Tree, FieldDefinition, ProjectConfiguration} from 'idai-field-core';
+import { Tree, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
+import { ImportValidator } from '../../../../../src/app/core/import/import/process/import-validator';
+import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';
+import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
 
 
 /**
@@ -40,11 +40,11 @@ describe('ImportValidator', () => {
             }, []]
         ] as any),
             [
-                { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
-                { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'isRecordedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'includes', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
-                { name: 'liesWithin', label: '', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
+                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
+                { name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         ]
     );

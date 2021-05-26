@@ -308,34 +308,29 @@ export class AppConfigurator {
             name: 'depicts',
             domain: ['Image:inherit'],
             range: [],
-            inverse: 'isDepictedIn',
-            label: ''
+            inverse: 'isDepictedIn'
         },
         {
             name: 'isDepictedIn',
             domain: [],
             range: ['Image:inherit'],
-            inverse: 'depicts',
-            label: ''
+            inverse: 'depicts'
         },
         {
             name: 'hasMapLayer',
             inverse: 'isMapLayerOf',
             domain: [],
-            range: ['Image:inherit'],
-            label: ''
+            range: ['Image:inherit']
         },
         {
             name: 'isMapLayerOf',
             inverse: 'hasMapLayer',
             domain: ['Image:inherit'],
-            range: [],
-            label: ''
+            range: []
         },
         {
             name: 'isAfter',
             inverse: 'isBefore',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -343,7 +338,6 @@ export class AppConfigurator {
         {
             name: 'isBefore',
             inverse: 'isAfter',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -351,7 +345,6 @@ export class AppConfigurator {
         {
             name: 'isEquivalentTo',
             inverse: 'isEquivalentTo',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -359,7 +352,6 @@ export class AppConfigurator {
         {
             name: 'isContemporaryWith',
             inverse: 'isContemporaryWith',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -367,7 +359,6 @@ export class AppConfigurator {
         {
             name: 'isAbove',
             inverse: 'isBelow',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -375,7 +366,6 @@ export class AppConfigurator {
         {
             name: 'isBelow',
             inverse: 'isAbove',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -383,7 +373,6 @@ export class AppConfigurator {
         {
             name: 'cuts',
             inverse: 'isCutBy',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -391,7 +380,6 @@ export class AppConfigurator {
         {
             name: 'isCutBy',
             inverse: 'cuts',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -399,7 +387,6 @@ export class AppConfigurator {
         {
             name: 'borders',
             inverse: 'borders',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
@@ -407,157 +394,133 @@ export class AppConfigurator {
         {
             name: 'borders',
             inverse: 'borders',
-            label: '',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Inscription'],
             range: ['Trench']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Room'],
             range: ['Building']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['RoomFloor'],
             range: ['Building']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['RoomWall'],
             range: ['Building']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['RoomCeiling'],
             range: ['Building']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Area:inherit'],
             range: ['Survey']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['BuildingPart:inherit'],
             range: ['Building', 'Survey']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Find:inherit'],
             range: ['Trench', 'Survey']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Trench']
         },
         {
             name: 'isRecordedIn',
-            label: '',
             domain: ['Sample'],
             range: ['Trench', 'Survey']
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Operation:inherit', 'Place'],
             range: ['Place']
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Inscription'],
             range: ['Find:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Sample'],
             range: ['Feature:inherit', 'Find:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Area:inherit'],
             range: ['Area:inherit'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['RoomFloor'],
             range: ['Room'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['RoomWall'],
             range: ['Room'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['RoomCeiling'],
             range: ['Room'],
             sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
-            label: '',
             domain: ['Type:inherit'],
             range: ['Type:inherit', 'TypeCatalog:inherit']
         },
         {
             name: 'isInstanceOf',
             inverse: 'hasInstance',
-            label: '',
             domain: ['Find:inherit'],
             range: ['Type:inherit']
         },
         {
             name: 'hasInstance',
             inverse: 'isInstanceOf',
-            label: '',
             domain: ['Type:inherit'],
             range: ['Find:inherit']
         }
@@ -593,13 +556,11 @@ export class AppConfigurator {
             };
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['Wall_surface'],
                 range: ['Trench']
             });
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['Drilling'],
                 range: ['Survey']
             });
@@ -631,28 +592,24 @@ export class AppConfigurator {
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['ProcessUnit'],
                 range: ['Trench']
             });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['BuildingFloor'],
                 range: ['Building']
             });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['SurveyBurial'],
                 range: ['Survey']
             });
 
             this.defaultRelations.push({
                 name: 'liesWithin',
-                label: '',
                 domain: ['SurveyBurial'],
                 range: ['Area:inherit'],
                 sameMainCategoryResource: true
@@ -661,7 +618,6 @@ export class AppConfigurator {
             this.defaultRelations.push({
                 name: 'borders',
                 inverse: 'borders',
-                label: '',
                 domain: ['BuildingFloor'],
                 range: ['BuildingPart:inherit'],
                 sameMainCategoryResource: true
@@ -670,7 +626,6 @@ export class AppConfigurator {
             this.defaultRelations.push({ // override existing definition
                 name: 'borders',
                 inverse: 'borders',
-                label: '',
                 domain: ['BuildingPart:inherit'],
                 range: ['BuildingPart:inherit', 'BuildingFloor'],
                 sameMainCategoryResource: true
@@ -721,28 +676,24 @@ export class AppConfigurator {
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
-                label: '',
                 domain: ['Quantification:inherit', 'Impression'],
                 range: ['Trench:inherit']
             });
 
             this.defaultRelations.push({
                 name: 'liesWithin',
-                label: '',
                 domain: ['Find:inherit'],
                 range: ['Feature:inherit', 'Area:inherit', 'Quantification:inherit']
             });
 
             this.defaultRelations.push({
                 name: 'liesWithin',
-                label: '',
                 domain: ['Impression'],
                 range: ['Feature:inherit']
             });
 
             this.defaultRelations.push({
                 name: 'liesWithin',
-                label: '',
                 domain: ['Quantification:inherit'],
                 range: ['Feature:inherit', 'Quantification:inherit']
             });
@@ -750,7 +701,6 @@ export class AppConfigurator {
             this.defaultRelations.push({
                 name: 'fills',
                 inverse: 'isFilledBy',
-                label: '',
                 domain: ['Feature:inherit'],
                 range: ['Feature:inherit'],
                 sameMainCategoryResource: true
@@ -759,7 +709,6 @@ export class AppConfigurator {
             this.defaultRelations.push({
                 name: 'isFilledBy',
                 inverse: 'fills',
-                label: '',
                 domain: ['Feature:inherit'],
                 range: ['Feature:inherit'],
                 sameMainCategoryResource: true
@@ -768,7 +717,6 @@ export class AppConfigurator {
             this.defaultRelations.push({
                 name: 'wasFoundIn',
                 inverse: 'hasFinds',
-                label: '',
                 domain: ['Find:inherit'],
                 range: ['Building', 'Place', 'Survey', 'Trench']
             });
@@ -776,7 +724,6 @@ export class AppConfigurator {
             this.defaultRelations.push({
                 name: 'hasFinds',
                 inverse: 'wasFoundIn',
-                label: '',
                 domain: ['Building', 'Place', 'Survey', 'Trench'],
                 range: ['Find:inherit']
             });
@@ -805,7 +752,6 @@ export class AppConfigurator {
             this.defaultRelations,
             this.defaultFields,
             customConfigurationName,
-            languages,
             username
         );
     }

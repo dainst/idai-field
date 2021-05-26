@@ -1,5 +1,5 @@
-import {ProjectConfiguration} from '../../src/configuration/project-configuration';
-import {Tree} from '../../src/tools';
+import { ProjectConfiguration } from '../../src/configuration/project-configuration';
+import { Tree } from '../../src/tools';
 
 
 /**
@@ -45,14 +45,14 @@ describe('ProjectConfiguration', () => {
                 name: 'A',
                 fields: [{
                     name: 'aField',
-                    label: 'A Field'
+                    label: { de: 'Ein Feld' }
                 }]
             }]
         } as any;
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[category, []]]), []]);
 
-        expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('A Field');
+        expect(configuration.getFieldDefinitionLabel('T', 'aField')).toBe('Ein Feld');
     });
 
 

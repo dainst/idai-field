@@ -21,7 +21,7 @@
         <li [ngClass]="{ 'abstract-category': imageCategory.isAbstract }" class="list-group-item popover-item"
             id="choose-image-supercategory" (click)="!imageCategory.isAbstract && activeModal.close(imageCategory)">
             <category-icon [category]="imageCategory.name" size="30"></category-icon>
-            <span class="image-category-label">{{imageCategory.label ? imageCategory.label : imageCategory.name}}</span>
+            <span class="image-category-label">{{getImageCategoryLabel()}}</span>
             <ul id="choose-image-subcategory">
                 <li *ngFor="let childCategory of imageCategory.children; let index = index"
                     id="choose-image-subcategory-option-{{index}}"

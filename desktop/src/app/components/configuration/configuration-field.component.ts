@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, CustomFieldDefinition, FieldDefinition, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
+import { Category, CustomFieldDefinition, FieldDefinition, LabelUtil, ValuelistDefinition,
+    ValuelistUtil } from 'idai-field-core';
 import { clone, flatten, to } from 'tsfun';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
 
@@ -42,6 +43,10 @@ export class ConfigurationFieldComponent implements OnChanges {
     constructor(private i18n: I18n) {}
 
 
+    public getLabel = () => LabelUtil.getTranslation(this.field.label);
+    public getDescription = () => LabelUtil.getTranslation(this.field.description);
+
+
     ngOnChanges() {
 
         if (!this.category || !this.field) return;
@@ -64,6 +69,8 @@ export class ConfigurationFieldComponent implements OnChanges {
         ValuelistUtil.getValueLabel(valuelist, valueId);
 
     public toggleHidden = () => this.onToggleHidden.emit();
+
+
 
 
     public startEditing() {

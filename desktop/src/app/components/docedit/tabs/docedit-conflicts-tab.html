@@ -41,7 +41,7 @@
     </div>
     <div *ngFor="let field of differingFields" class="card">
         <div class="card-header">
-            <h3 class="card-title">{{field.label}}</h3>
+            <h3 class="card-title">{{getLabel(field)}}</h3>
         </div>
         <div class="row h-100">
             <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSideForField(field, false)">

@@ -1,4 +1,4 @@
-import {InverseRelationsMap, makeInverseRelationsMap} from '../../src/configuration/inverse-relations-map';
+import { InverseRelationsMap, makeInverseRelationsMap } from '../../src/configuration/inverse-relations-map';
 
 
 describe('InverseRelationsMap', () => {
@@ -8,8 +8,8 @@ describe('InverseRelationsMap', () => {
        const inverseRelationsMap: InverseRelationsMap
            = makeInverseRelationsMap(
                [
-                   { name: 'a', label: '', inverse: 'b', domain: [], range: [] },
-                   { name: 'c', label: '', domain: [], range: [] }
+                   { name: 'a', inverse: 'b', domain: [], range: [] },
+                   { name: 'c', domain: [], range: [] }
                    ]);
 
        expect(inverseRelationsMap).toEqual({

@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, ConstraintIndex, Datastore, FieldDefinition, ProjectConfiguration, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 import { aFilter, clone, is, on } from 'tsfun';
+import { Category, ConstraintIndex, Datastore, FieldDefinition, LabelUtil, ProjectConfiguration, ValuelistDefinition,
+    ValuelistUtil } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
 
@@ -48,7 +49,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           protected i18n: I18n) {}
 
 
-    async ngOnChanges(changes: SimpleChanges) {
+    async ngOnChanges() {
 
         await this.removeInvalidConstraints();
         await this.reset();
@@ -150,6 +151,18 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                 id: 'boolean.no',
                 value: 'Nein'
             });
+    }
+
+
+    public getFieldLabel(field: FieldDefinition): string {
+
+        if (field.name.endsWith('.value')) {
+            return this.getDropdownRangeLabel(field);
+        } else if (field.name.endsWith('.endValue')) {
+            return this.getDropdownRangeEndLabel(field);  
+        } else {
+            return LabelUtil.getLabel(field);
+        }
     }
 
 
@@ -323,9 +336,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         fields
             .filter(field => field.inputType === 'dropdownRange')
             .forEach(field => {
-
                 this.addDropdownRangeEndField(fields, field);
-                field.label = this.getDropdownRangeLabel(field);
                 field.name = field.name += '.value';
             });
 
@@ -335,8 +346,17 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getDropdownRangeLabel(field: FieldDefinition): string {
 
-        return field.label + ' / ' + field.label
+        const fieldLabel: string = LabelUtil.getLabel(field);
+
+        return fieldLabel + ' / ' + fieldLabel
             + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
+    }
+
+
+    private getDropdownRangeEndLabel(field: FieldDefinition): string {
+
+        return LabelUtil.getLabel(field)
+            + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
     }
 
 
@@ -344,8 +364,6 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
             name: dropdownRangeField.name + '.endValue',
-            label: dropdownRangeField.label
-                + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' }),
             group: dropdownRangeField.group,
             inputType: 'dropdownRange',
             valuelist: dropdownRangeField.valuelist,
@@ -399,7 +417,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
 
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
-        if (defaultField) return defaultField.label as string;
+        if (defaultField) return LabelUtil.getLabel(defaultField);
 
         if (fieldName.includes('.')) {
 
@@ -409,7 +427,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                     return field.name === fieldName.substring(0, fieldName.indexOf('.'));
                 });
 
-            if (baseField) return baseField.label
+            if (baseField) return LabelUtil.getLabel(baseField)
                     + baseField.inputType === 'dropdownRange'
                         ? this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' })
                         : ''
@@ -422,7 +440,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         return field.inputType === 'dropdownRange'
             ? this.getDropdownRangeLabel(field)
-            : field.label || '';
+            : LabelUtil.getLabel(field);
     }
 
 

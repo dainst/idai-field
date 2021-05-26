@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { to, on, is, isnt, or, any, compose, map, Predicate, includedIn, and, not, flatten } from 'tsfun';
 import { FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition, Datastore,
-    ConfigurationDocument, Relations, ProjectConfiguration, CustomCategoryDefinition } from 'idai-field-core';
+    ConfigurationDocument, Relations, ProjectConfiguration, CustomCategoryDefinition, LabelUtil } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
@@ -48,6 +48,9 @@ export class ProjectConfigurationComponent implements OnInit {
             .filter(category => !category.parentCategory);
         this.selectCategory(this.toplevelCategoriesArray[0]);
     }
+
+
+    public getLabel = (object: Category|Group) => LabelUtil.getLabel(object);
 
 
     async ngOnInit() {

@@ -48,37 +48,39 @@ describe('applyLanguageConfigurations', () => {
             [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
         ];
 
-        const languageConfigurations = [{
-            categories: {
-                A: {
-                    label: 'A_',
-                    fields: {
-                        a: {
-                            label: 'a_'
-                        },
-                        a1: {
-                            description: 'a1_desc'
+        const languageConfigurations = {
+            en: [{
+                categories: {
+                    A: {
+                        label: 'A_',
+                        fields: {
+                            a: {
+                                label: 'a_'
+                            },
+                            a1: {
+                                description: 'a1_desc'
+                            }
                         }
                     }
+                },
+                relations: {
+                    isRecordedIn: {
+                        label: 'isRecordedIn_'
+                    }
                 }
-            },
-            relations: {
-                isRecordedIn: {
-                    label: 'isRecordedIn_'
-                }
-            }
-        }];
+            }]
+        };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
 
-        expect(categories['A'].label).toEqual('A_');
-        expect(categories['B'].label).toBeUndefined();
-        expect(categories['A'].fields['a'].label).toEqual('a_');
-        expect(categories['A'].fields['a1'].label).toBeUndefined();
-        expect(categories['A'].fields['a'].description).toBeUndefined();
-        expect(categories['A'].fields['a1'].description).toEqual('a1_desc');
-        expect(relations[0].label).toEqual('isRecordedIn_');
-        expect(relations[1].label).toBeUndefined();
+        expect(categories['A'].label.en).toEqual('A_');
+        expect(categories['B'].label).toEqual({});
+        expect(categories['A'].fields['a'].label.en).toEqual('a_');
+        expect(categories['A'].fields['a1'].label.en).toBeUndefined();
+        expect(categories['A'].fields['a'].description).toEqual({});
+        expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');
+        expect(relations[0].label.en).toEqual('isRecordedIn_');
+        expect(relations[1].label).toEqual({});
     });
 
 
@@ -92,98 +94,90 @@ describe('applyLanguageConfigurations', () => {
             [{ name: 'isRecordedIn' }]
         ];
 
-        const languageConfigurations = [{
-            categories: {
-                A: {
-                    fields: {
-                        a: {
-                            label: 'a Spanisches Label',
-                            description: 'a Spanische Beschreibung'
+        const languageConfigurations = {
+            es: [{
+                categories: {
+                    A: {
+                        fields: {
+                            a: {
+                                label: 'a Spanisches Label',
+                                description: 'a Spanische Beschreibung'
+                            }
                         }
                     }
                 }
-            }
-        }, {
-            categories: {
-                A: {
-                    label: 'A Deutsch',
-                    fields: {
-                        a: {
-                            label: 'a Deutsches Label',
-                            description: 'a Deutsche Beschreibung'
+            }],
+            de: [{
+                categories: {
+                    A: {
+                        label: 'A Deutsch',
+                        fields: {
+                            a: {
+                                label: 'a Deutsches Label',
+                                description: 'a Deutsche Beschreibung'
+                            }
+                        }
+                    },
+                    B: {
+                        label: 'B Deutsch'
+                    }
+                },
+                relations: {
+                    isRecordedIn: {
+                        label: 'Liegt in (Deutsch)'
+                    }
+                }
+            }],
+            en: [{
+                categories: {
+                    A: {
+                        label: 'A Englisch',
+                        fields: {
+                            a: {
+                                label: 'a Englisches Label',
+                                description: 'a Englische Beschreibung'
+                            }
+                        }
+                    },
+                    B: {
+                        label: 'B Englisch',
+                        fields: {
+                            b: {
+                                label: 'b Englisches Label',
+                                description: 'b Englische Beschreibung'
+                            }
                         }
                     }
                 },
-                B: {
-                    label: 'B Deutsch'
-                }
-            },
-            relations: {
-                isRecordedIn: {
-                    label: 'Liegt in (Deutsch)'
-                }
-            }
-        }, {
-            categories: {
-                A: {
-                    label: 'A Englisch',
-                    fields: {
-                        a: {
-                            label: 'a Englisches Label',
-                            description: 'a Englische Beschreibung'
-                        }
-                    }
-                },
-                B: {
-                    label: 'B Englisch',
-                    fields: {
-                        b: {
-                            label: 'b Englisches Label',
-                            description: 'b Englische Beschreibung'
-                        }
+                relations: {
+                    isRecordedIn: {
+                        label: 'Liegt in (Englisch)'
                     }
                 }
-            },
-            relations: {
-                isRecordedIn: {
-                    label: 'Liegt in (Englisch)'
-                }
-            }
-        }];
+            }]
+        };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
 
-        expect(categories['A'].label).toEqual('A Deutsch');
-        expect(categories['B'].label).toEqual('B Deutsch');
-        expect(categories['A'].fields['a'].label).toEqual('a Spanisches Label');
-        expect(categories['A'].fields['a'].description).toEqual('a Spanische Beschreibung');
-        expect(categories['B'].fields['b'].label).toEqual('b Englisches Label');
-        expect(categories['B'].fields['b'].description).toEqual('b Englische Beschreibung');
-        expect(relations[0].label).toEqual('Liegt in (Deutsch)');
+        expect(categories['A'].label.de).toEqual('A Deutsch');
+        expect(categories['A'].label.en).toEqual('A Englisch');
+        expect(categories['A'].label.es).toBeUndefined();
+        expect(categories['B'].label.de).toEqual('B Deutsch');
+        expect(categories['B'].label.en).toEqual('B Englisch');
+        expect(categories['B'].label.es).toBeUndefined();
+        expect(categories['A'].fields['a'].label.de).toEqual('a Deutsches Label');
+        expect(categories['A'].fields['a'].label.en).toEqual('a Englisches Label');
+        expect(categories['A'].fields['a'].label.es).toEqual('a Spanisches Label');
+        expect(categories['A'].fields['a'].description.de).toEqual('a Deutsche Beschreibung');
+        expect(categories['A'].fields['a'].description.en).toEqual('a Englische Beschreibung');
+        expect(categories['A'].fields['a'].description.es).toEqual('a Spanische Beschreibung');
+        expect(categories['B'].fields['b'].label.de).toBeUndefined();
+        expect(categories['B'].fields['b'].label.en).toEqual('b Englisches Label');
+        expect(categories['B'].fields['b'].label.es).toBeUndefined();
+        expect(categories['B'].fields['b'].description.de).toBeUndefined();
+        expect(categories['B'].fields['b'].description.en).toEqual('b Englische Beschreibung');
+        expect(categories['B'].fields['b'].description.es).toBeUndefined();
+        expect(relations[0].label.de).toEqual('Liegt in (Deutsch)');
+        expect(relations[0].label.en).toEqual('Liegt in (Englisch)');
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

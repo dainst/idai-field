@@ -1,6 +1,6 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {on, any, is, compose, map, to, Predicate} from 'tsfun';
-import {Named, FieldDefinition, Category} from 'idai-field-core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { on, any, is, compose, map, to, Predicate } from 'tsfun';
+import { Named, FieldDefinition, Category, LabelUtil } from 'idai-field-core';
 
 
 @Component({
@@ -22,6 +22,9 @@ export class CategoryPickerComponent implements OnChanges {
 
 
     public categories: Array<Category> = [];
+
+
+    public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
 
 
     ngOnChanges() {

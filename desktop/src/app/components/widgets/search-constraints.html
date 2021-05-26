@@ -31,7 +31,7 @@
                     id="constraint-field-select-option-{{field.name}}"
                     value="{{field.name}}"
                     [selected]="selectedField && selectedField.name === field.name">
-                {{field.label}}
+                {{getFieldLabel(field)}}
             </option>
         </select>
 

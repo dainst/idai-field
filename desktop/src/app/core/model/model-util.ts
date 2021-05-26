@@ -1,6 +1,6 @@
-import { FieldResource, ResourceId } from 'idai-field-core';
-import { Document, Resource } from 'idai-field-core';
 import { to } from 'tsfun';
+import { FieldResource, ResourceId, Document, Resource } from 'idai-field-core';
+
 
 /**
  * @author: Thomas Kleinke
@@ -10,7 +10,7 @@ export module ModelUtil {
     export type Label = string;
 
 
-    export function getDocumentLabel(document: Document): Label { // TODO move to Document
+    export function getDocumentLabel(document: Document): string { // TODO move to Document
 
         return (document.resource.shortDescription)
             ? document.resource.shortDescription + ' (' + document.resource.identifier + ')'

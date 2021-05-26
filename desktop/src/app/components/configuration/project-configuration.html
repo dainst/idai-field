@@ -42,7 +42,7 @@
                                 i18n-ngbTooltip="@@config.form.custom"
                                 placement="right">
                             </span>
-                            {{selectedCategory.label ? selectedCategory.label : selectedCategory.name}}
+                            {{getLabel(selectedCategory)}}
                         </h5>
                     </div>
                     <div class="col header header-right text-right">
@@ -70,7 +70,7 @@
                                 <a class="nav-link group-button"
                                         [class.active]="selectedGroup === group.name"
                                         (click)="selectedGroup = group.name">
-                                    {{group.label}}
+                                    {{getLabel(group)}}
                                     <span *ngIf="hasCustomFields(group)"> *</span>
                                 </a>
                             </li>

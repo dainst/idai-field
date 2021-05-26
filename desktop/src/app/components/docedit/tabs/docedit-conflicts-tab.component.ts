@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Document, Datastore, Relations, Resource, LabelUtil } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
-import { Document, Datastore, Relations, Resource } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
@@ -50,6 +50,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
         (key: string) => this.utilTranslations.getTranslation(key),
         (value: string) => this.decimalPipe.transform(value)
     );
+
+    public getLabel = (field: any) => LabelUtil.getLabel(field);
 
 
     async ngOnChanges() {

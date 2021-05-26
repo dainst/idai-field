@@ -1,10 +1,10 @@
-import { Labelled, Named } from "../tools/named";
+import { Labeled, Named } from "../tools/named";
 
 
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition extends Named, Labelled {
+export interface RelationDefinition extends Named, Labeled {
 
     domain: string[];
     range: string[];

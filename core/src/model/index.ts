@@ -33,4 +33,5 @@ export { ConfigurationDocument } from './configuration-document';
 export { ConfigurationResource } from './configuration-resource';
 export { ConnectedDocsWriter } from './connected-docs-writer';
 export { updateRelations } from './update-relations';
-export { RelationsManager } from './relations-manager'
+export { RelationsManager } from './relations-manager';
+export { I18nString } from './i18n-string';

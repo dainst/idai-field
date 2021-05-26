@@ -12,7 +12,7 @@
             i18n-ngbTooltip="@@config.source.custom"
             placement="right">
         </span>
-        <b *ngIf="field.label"> {{field.label}}</b>
+        <b *ngIf="getLabel()"> {{getLabel()}}</b>
         <code> {{field.name}}</code>
         <div *ngIf="editable" class="btn-group right hide-buttons">
             <button *ngIf="!editing" class="btn btn-primary edit-field-button"
@@ -51,7 +51,7 @@
     </div>
 
     <div *ngIf="!parentField" class="card-body">
-        <p *ngIf="field.description" class="card-text">{{field.description}}</p>
+        <p *ngIf="getDescription()" class="card-text">{{getDescription()}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:

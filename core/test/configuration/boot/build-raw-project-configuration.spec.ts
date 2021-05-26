@@ -1,8 +1,9 @@
-import {Map, left, to} from 'tsfun';
-import {buildRawProjectConfiguration, ConfigurationErrors} from '../../../src/configuration/boot';
-import {BuiltinCategoryDefinition, CustomCategoryDefinition, LibraryCategoryDefinition} from '../../../src/configuration/model';
-import {Category, FieldDefinition, Groups, ValuelistDefinition} from '../../../src/model';
-import {Named, Tree} from '../../../src/tools';
+import { Map, left, to } from 'tsfun';
+import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
+import { BuiltinCategoryDefinition, CustomCategoryDefinition,
+    LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { Category, FieldDefinition, Groups, ValuelistDefinition } from '../../../src/model';
+import { Named, Tree } from '../../../src/tools';
 import InputType = FieldDefinition.InputType;
 
 
@@ -1203,27 +1204,29 @@ describe('buildRawProjectConfiguration', () => {
             B: { parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT }} }
         };
 
-        const languageConfigurations = [{
-            groups: {
-                'stem': 'Stem',
-                'parent': 'Parent'
-            },
-            categories: {
-                'A': { label: 'A_' },
-                'B': { label: 'B_' }
-            }
-        }];
+        const languageConfigurations = {
+            de: [{
+                groups: {
+                    'stem': 'Stem',
+                    'parent': 'Parent'
+                },
+                categories: {
+                    'A': { label: 'A_' },
+                    'B': { label: 'B_' }
+                }
+            }]
+        };
 
         const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
 
-        expect(result['A'].groups[0].label).toEqual('Stem');
-        expect(result['A'].groups[1].label).toEqual('A_');
+        expect(result['A'].groups[0].label.de).toEqual('Stem');
+        expect(result['A'].groups[1].label.de).toEqual('A_');
 
-        expect(result['B'].groups[0].label).toEqual('Stem');
-        expect(result['B'].groups[1].label).toEqual('A_');
-        expect(result['B'].groups[2].label).toEqual('B_');
+        expect(result['B'].groups[0].label.de).toEqual('Stem');
+        expect(result['B'].groups[1].label.de).toEqual('A_');
+        expect(result['B'].groups[2].label.de).toEqual('B_');
     });
 
 
@@ -1244,7 +1247,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], [], {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, orderConf
         ).map(Named.toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1270,7 +1273,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], [], {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, orderConf
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1334,16 +1337,22 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
+        const languageConfigurations = {
+            en: [{
+                other: { geometry: 'Geometry' }
+            }]
+        };
+
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], [{ other: { geometry: 'Geometry' } }]
+            builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
         const parentGroup = result['P'].groups[0];
         const childGroup = result['P'].children[0].groups[0];
 
         expect(parentGroup.fields[0].name).toEqual('geometry');
-        expect(parentGroup.fields[0].label).toEqual('Geometry');
+        expect(parentGroup.fields[0].label.en).toEqual('Geometry');
         expect(childGroup.fields[0].name).toEqual('geometry');
-        expect(childGroup.fields[0].label).toEqual('Geometry');
+        expect(childGroup.fields[0].label.en).toEqual('Geometry');
     });
 
 
@@ -1365,7 +1374,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const categoriesTree = buildRawProjectConfiguration(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], [{ other: { geometry: 'Geometry' } }]
+            builtInCategories, {}, customCategories, {}, {}, {}, [], {}
         )[0];
 
         expect((Tree.access(categoriesTree, 0) as any).children[0].name).toBe('C');

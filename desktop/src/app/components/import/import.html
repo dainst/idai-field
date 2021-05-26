@@ -147,8 +147,8 @@
                         <select id="importTypeSelect" class="form-control"
                                 [(ngModel)]="importState.selectedCategory">
 
-                            <option *ngFor="let t of importState.categories" [ngValue]="t">
-                                {{t.label}}
+                            <option *ngFor="let category of importState.categories" [ngValue]="category">
+                                {{getCategoryLabel(category)}}
                             </option>
                         </select>
                     </div>

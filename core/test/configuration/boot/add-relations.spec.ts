@@ -1,7 +1,7 @@
-import {Map} from 'tsfun';
-import {addRelations} from '../../../src/configuration/boot';
-import {LibraryCategoryDefinition} from '../../../src/configuration/model';
-import {RelationDefinition} from '../../../src/model';
+import { Map } from 'tsfun';
+import { addRelations } from '../../../src/configuration/boot';
+import { LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { RelationDefinition } from '../../../src/model';
 
 
 /**
@@ -41,7 +41,6 @@ describe('addRelations', () => {
 
         const extraRelation: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['domainA'],
             range : ['rangeA']
         };
@@ -58,14 +57,12 @@ describe('addRelations', () => {
 
         const r1: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['domainA', 'domainB', 'domainC'],
             range : ['rangeA']
         };
 
         const r2: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['domainB', 'domainC'],
             range : ['rangeB']
         };
@@ -86,14 +83,12 @@ describe('addRelations', () => {
 
         const r1: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['T1:inherit'],
             range : ['rangeA']
         };
 
         const r2: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['T1:inherit'],
             range : ['rangeA', 'rangeB', 'rangeC']
         };
@@ -113,7 +108,6 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: ['T2', 'T3'],
             range: []
         };
@@ -131,7 +125,6 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: [],
             range: ['T2', 'T3']
         };
@@ -149,7 +142,6 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T3' ],
-            label: '',
             range: [ 'T1:inherit' ]
         };
 
@@ -170,7 +162,6 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: [ 'T1:inherit' ],
             range: [ 'T3' ]
         };
@@ -193,7 +184,6 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            label: '',
             domain: [ 'T1:inherit' ],
             range: []
         };

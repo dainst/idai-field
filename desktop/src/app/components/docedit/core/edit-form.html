@@ -11,7 +11,7 @@
                     <span *ngIf="group.name === 'conflicts' && document._conflicts"
                           class="mdi mdi-alert">
                     </span>
-                    {{group.label ? group.label : group.name}}
+                    {{getLabel(group)}}
                 </a>
             </li>
         </ul>

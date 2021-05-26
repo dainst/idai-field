@@ -1,8 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone } from 'tsfun'
-import { Datastore, FieldDefinition } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
+import { Datastore, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../core/images/overview/view/imageoverview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
@@ -23,15 +22,12 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
     protected defaultFields: Array<FieldDefinition> = [
         {
             name: 'depicts',
-            label: this.i18n({
-                id: 'imageOverview.searchBar.constraints.linkedResources',
-                value: 'Verknüpfte Ressourcen'
-            }),
             inputType: 'default',
             constraintIndexed: true,
             group: ''
         }
     ];
+
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
@@ -41,6 +37,17 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
                 private imageOverviewFacade: ImageOverviewFacade) {
 
         super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
+    }
+
+
+    public getFieldLabel(field: FieldDefinition): string {
+
+        return field.name === 'depicts'
+            ? this.i18n({
+                id: 'imageOverview.searchBar.constraints.linkedResources',
+                value: 'Verknüpfte Ressourcen'
+            })
+            : super.getFieldLabel(field);
     }
 
 

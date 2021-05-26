@@ -1,6 +1,6 @@
-import {Document} from '../../src/model/document';
-import {RelationsManager} from '../../src/model/relations-manager';
-import {ProjectConfiguration} from '../../src/configuration/project-configuration';
+import { Document } from '../../src/model/document';
+import { RelationsManager } from '../../src/model/relations-manager';
+import { ProjectConfiguration } from '../../src/configuration/project-configuration';
 
 
 /**
@@ -15,20 +15,17 @@ describe('RelationsManager', () => {
             {
                 name: 'BelongsTo',
                 inverse: 'Contains',
-                label: 'Enthalten in',
                 domain: [],
                 range: []
             },
             {
                 name: 'Contains',
                 inverse: 'BelongsTo',
-                label: 'Enthält',
                 domain: [],
                 range: []
             },
             {
                 name: 'isRecordedIn',
-                label: 'Gehört zu',
                 domain: [],
                 range: []
             }

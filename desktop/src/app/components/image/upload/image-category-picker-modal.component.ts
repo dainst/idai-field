@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-field-core';
-import {Category} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Document, LabelUtil, ProjectConfiguration, Category } from 'idai-field-core';
+
 
 @Component({
     selector: 'image-category-picker-modal',
@@ -11,7 +10,6 @@ import {ProjectConfiguration} from 'idai-field-core';
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -27,6 +25,9 @@ export class ImageCategoryPickerModalComponent {
 
         this.imageCategory = projectConfiguration.getCategory('Image');
     }
+
+
+    public getImageCategoryLabel = () => LabelUtil.getLabel(this.imageCategory);
 
 
     public onKeyDown(event: KeyboardEvent) {

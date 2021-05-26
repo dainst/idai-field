@@ -79,7 +79,7 @@
                                 [(ngModel)]="selectedCategory">
                             <option *ngFor="let categoryCount of categoryCounts"
                                     [ngValue]="categoryCount[0]">
-                                {{categoryCount[0].label}} {{categoryCount[1] !== -1 ? '(' + categoryCount[1] + ')' : ''}}
+                                {{getCategoryLabel(categoryCount[0])}} {{categoryCount[1] !== -1 ? '(' + categoryCount[1] + ')' : ''}}
                             </option>
                         </select>
                     </div>

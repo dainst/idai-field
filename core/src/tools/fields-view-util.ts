@@ -1,11 +1,7 @@
-import {
-    aFlow,
-    aMap,
-    and, assoc, compose,
-    empty, equal, filter, Filter, flatten, flow, includedIn,
-    is, isArray, isDefined, isNot, isObject, isString, L, lookup, map, Map, Mapping, on,
-    or, pairWith, Predicate, R, to, undefinedOrEmpty
-} from 'tsfun';
+import { aFlow, aMap, and, assoc, compose, empty, equal, filter, Filter, flatten, flow, includedIn,
+    is, isArray, isDefined, isNot, isObject, isString, L, lookup, map, Map, Mapping, on, or, pairWith,
+    Predicate, R, to, undefinedOrEmpty } from 'tsfun';
+import { LabelUtil } from './label-util';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
@@ -21,7 +17,7 @@ import { RelationDefinition } from '../model/relation-definition';
 import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
 import { ValuelistDefinition } from '../model/valuelist-definition';
-import { Labelled, Named } from './named';
+import { Named } from './named';
 import { ValuelistUtil } from './valuelist-util';
 
 
@@ -36,15 +32,17 @@ export interface FieldsViewGroup extends BaseGroup {
 }
 
 
-export interface FieldsViewRelation extends Labelled {
+export interface FieldsViewRelation {
 
+    label: string;
     targets: Array<Document>;
 }
 
 
-export interface FieldsViewField extends Labelled {
+export interface FieldsViewField {
 
     value: string | string[]; // TODO add object types
+    label: string;
     type: 'default' | 'array' | 'object';
     valuelist?: ValuelistDefinition;
     positionValues?: ValuelistDefinition;
@@ -185,7 +183,7 @@ function putActualResourceRelationsIntoGroups(resource: Resource, datastore: Dat
             FieldsViewUtil.filterRelationsToShowFor(resource),
             aMap(async (relation: RelationDefinition) => {
                 return {
-                    label: relation.label,
+                    label: LabelUtil.getLabel(relation),
                     targets: await datastore.getMultiple(resource.relations[relation.name])
                 }
             })
@@ -219,7 +217,7 @@ function makeField(projectConfiguration: ProjectConfiguration, languages?: strin
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return {
-            label: field.label,
+            label: LabelUtil.getLabel(field),
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(

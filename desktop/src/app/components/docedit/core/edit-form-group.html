@@ -1,10 +1,12 @@
 <div *ngFor="let field of fieldDefinitions" id="edit-form-element-{{field.name}}">
     <div *ngIf="shouldShow(field)" class="form-group card">
         <div class="card-header h4">
-            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+            <span class="card-title">{{getLabel(field)}}</span>
 
-            <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
+            <span *ngIf="getDescription(field)"
+                    placement="left"
+                    container="body"
+                    ngbTooltip="{{getDescription(field)}}"
                   class="mdi mdi-information-outline float-right"></span>
         </div>
 
@@ -17,12 +19,11 @@
 <ul class="list-group list-group-flush">
 
     <ng-template ngFor [ngForOf]="relationDefinitions" let-relationDefinition="$implicit">
-        <li id="{{(relationDefinition.label ? relationDefinition.label : relationDefinition.name).replace(' ', '-').toLowerCase()}}"
+        <li id="{{getLabel(relationDefinition).replace(' ', '-').toLowerCase()}}"
             class="card">
 
             <div class="card-header h4">
-                <span class="card-title" *ngIf="relationDefinition.label">{{relationDefinition.label}}</span>
-                <span class="card-title" *ngIf="!relationDefinition.label">{{relationDefinition.name}}</span>
+                <span class="card-title">{{getLabel(relationDefinition)}}</span>
             </div>
 
             <ul class="card-body">

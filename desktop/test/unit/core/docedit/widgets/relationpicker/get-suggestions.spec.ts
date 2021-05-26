@@ -1,5 +1,4 @@
-import { doc, RelationDefinition } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { doc, RelationDefinition, Document } from 'idai-field-core';
 import { getSuggestions, MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
 
 
@@ -26,7 +25,6 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            label: '',
             domain: [],
             range: ['RangeCategory1', 'RangeCategory2']
         };
@@ -59,7 +57,6 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            label: '',
             inverse: 'inverse',
             domain: [],
             range: ['RangeCategory']
@@ -94,7 +91,6 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            label: '',
             domain: [],
             range: ['RangeCategory'],
             sameMainCategoryResource: true
@@ -128,7 +124,6 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            label: '',
             domain: [],
             range: ['RangeCategory'],
             sameMainCategoryResource: true

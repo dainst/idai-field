@@ -1,7 +1,7 @@
-import { Labelled, Named } from '../tools/named';
+import { Labeled, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { RelationDefinition } from './relation-definition';
-import {Relations} from './relations';
+import { Relations } from './relations';
 
 
 export module Groups {
@@ -50,7 +50,7 @@ export interface Group extends BaseGroup {
 }
 
 
-export interface BaseGroup extends Named, Labelled {
+export interface BaseGroup extends Named, Labeled {
 
     fields: Array<any>;
     relations: Array<any>;

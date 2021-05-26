@@ -3,7 +3,7 @@
         <category-icon *ngIf="parentRelation"
             [size]="28"
             [category]="category.parentCategory.name"></category-icon>
-        <b *ngIf="relation.label">{{relation.label}}</b>
+        <b *ngIf="getLabel()">{{getLabel()}}</b>
         <code> {{relation.name}}</code>
     </div>
 

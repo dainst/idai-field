@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { isBoolean } from 'tsfun';
-import { Datastore, FieldDefinition, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups,
-     LabelUtil, Name, ProjectConfiguration, RelationDefinition, Resource } from 'idai-field-core';
+import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups,
+     LabelUtil, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { RoutingService } from '../../routing-service';
 
@@ -38,7 +38,7 @@ export class FieldsViewComponent implements OnChanges {
                 private utilTranslations: UtilTranslations) {}
             
     
-    public getLabel = (definition: FieldDefinition|RelationDefinition) => LabelUtil.getLabel(definition);
+    public getGroupLabel = (group: FieldsViewGroup) => LabelUtil.getLabel(group);
 
 
     async ngOnChanges() {

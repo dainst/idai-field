@@ -1,11 +1,7 @@
 import {
-    AppConfigurator,
-    ConfigLoader,
-    getConfigurationName,
-    PouchdbManager,
+    AppConfigurator, ConfigLoader, ConfigReader, getConfigurationName, PouchdbManager,
     ProjectConfiguration
 } from 'idai-field-core';
-import RequireConfigReader from './require-config-reader';
 
 
 const loadConfiguration = async (
@@ -16,7 +12,7 @@ const loadConfiguration = async (
 ): Promise<ProjectConfiguration> => {
 
     const customConfigName = getConfigurationName(project);
-    const configurator = new AppConfigurator(new ConfigLoader(new RequireConfigReader(), pouchdbmanager));
+    const configurator = new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbmanager));
     return await configurator.go(customConfigName, languages, username);
 };
 

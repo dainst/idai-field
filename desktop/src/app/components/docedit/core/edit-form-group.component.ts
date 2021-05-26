@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Document, LabelUtil, FieldDefinition, RelationDefinition } from 'idai-field-core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Document, LabelUtil, FieldDefinition, RelationDefinition, LabeledValue } from 'idai-field-core';
 
 
 @Component({
@@ -10,27 +10,40 @@ import { Document, LabelUtil, FieldDefinition, RelationDefinition } from 'idai-f
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class EditFormGroup {
+export class EditFormGroup implements OnChanges {
 
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() document: Document;
 
-
-    public getLabel(object: FieldDefinition|RelationDefinition): string {
-
-        return LabelUtil.getLabel(object);
-    }
+    public labels: { [name: string]: string };
+    public descriptions: { [name: string]: string };
 
 
-    public getDescription(field: FieldDefinition): string|undefined {
+    ngOnChanges() {
 
-        return LabelUtil.getTranslation(field.description);
+        this.updateLabelsAndDescriptions();        
     }
 
 
     public shouldShow(field: FieldDefinition): boolean {
 
         return field !== undefined && field.editable === true;
+    }
+
+
+    private updateLabelsAndDescriptions() {
+
+        this.labels = {};
+        this.descriptions = {};
+
+        const labeledValues: Array<LabeledValue> = (this.fieldDefinitions as Array<LabeledValue>)
+            .concat(this.relationDefinitions as Array<LabeledValue>);
+
+        labeledValues.forEach(field => {
+            const { label, description } = LabelUtil.getLabelAndDescription(field);
+            this.labels[field.name] = label;
+            this.descriptions[field.name] = description;
+        });
     }
 }

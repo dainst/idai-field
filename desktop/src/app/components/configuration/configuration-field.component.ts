@@ -38,13 +38,11 @@ export class ConfigurationFieldComponent implements OnChanges {
     public editable: boolean = false;
     public hideable: boolean = false;
     public editing: boolean = false;
+    public label: string;
+    public description: string;
 
 
     constructor(private i18n: I18n) {}
-
-
-    public getLabel = () => LabelUtil.getTranslation(this.field.label);
-    public getDescription = () => LabelUtil.getTranslation(this.field.description);
 
 
     ngOnChanges() {
@@ -55,6 +53,11 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.editable = this.isEditable();
         this.hideable = this.isHideable();
         this.editing = false;
+
+        const { label, description } = LabelUtil.getLabelAndDescription(this.field);
+        this.label = label;
+        this.description = description;
+
         this.customFieldDefinitionClone = this.customFieldDefinition
             ? clone(this.customFieldDefinition)
             : undefined;

@@ -1,4 +1,4 @@
-import { FieldGeometryType } from 'idai-field-core';
+import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { strokeWidth } from './geo-svg/constants';
 
 interface ElementProps {
@@ -12,28 +12,39 @@ interface ElementProps {
 }
 
 export const getDocumentFillOpacityPress = (
+    document: Document,
+    selectedDocuments: Document[],
+    config: ProjectConfiguration,
     geoType: FieldGeometryType,
-    color: string,
     onPressHandler: () => void,
-    isHighlighted?: boolean,
-    isSelected?: boolean): ElementProps => {
+    highlightedDoc: Document | null): ElementProps => {
 
-    const opacity = 0.5;
-    if(isSelected){
-        return {
-            opacity,
-            stroke: isHighlighted ? 'white' : color,
-            fill: color,
-            strokeWidth: isHighlighted ? 6 : strokeWidth,
-            onPress: onPressHandler
-        };
-    } else {
-        return {
-            opacity,
-            fill: isGeoTypePoint(geoType) ? color : 'none',
-            stroke: color, strokeOpacity: 0.5, strokeWidth };
+     
+    const doc_id = document.resource.id;
+    const color = config.getColorForCategory(document.resource.category);
+
+
+    for( const doc of selectedDocuments) {
+        
+        if(doc.resource.id === doc_id){
+            return {
+                opacity: 0.5,
+                stroke: isHighlightedDoc(doc,highlightedDoc) ? 'white' : color,
+                fill: color,
+                strokeWidth: isHighlightedDoc(doc,highlightedDoc) ? 6 : strokeWidth,
+                onPress: onPressHandler
+             };
+        }
+
     }
+  
+    return {
+        opacity: 0.5,
+        fill: isGeoTypePoint(geoType) ? color : 'none',
+        stroke: color, strokeOpacity: 0.3, strokeWidth };
 };
 
-
 const isGeoTypePoint = (type: FieldGeometryType) => type === 'Point' || type === 'MultiPoint';
+
+const isHighlightedDoc = (doc: Document, highlightedDoc: Document | null) =>
+    highlightedDoc ? highlightedDoc._id === doc._id : false;

@@ -1,4 +1,4 @@
-import { getGeometryBoundings } from './geojson-cs-to-svg-cs/cs-transform-utils/cs-transform-utils';
+import { GeometryBoundings, getGeometryBoundings } from './geojson-cs-to-svg-cs/cs-transform-utils/cs-transform-utils';
 import {
     processTransform2d,
     setupTransformationMatrix,
@@ -44,6 +44,7 @@ export {
     isMultiLineStringInMultiPolygon,
     isMultiLineStringInPolygon,
     isMultiPolygonInMultipolygon,
-    isMultiPolygonInPolygon
+    isMultiPolygonInPolygon,
+    GeometryBoundings
 };
 

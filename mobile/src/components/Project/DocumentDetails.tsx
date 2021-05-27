@@ -1,17 +1,19 @@
 /* eslint-disable react/display-name */
 import { Ionicons } from '@expo/vector-icons';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import {
+    Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation, FieldsViewUtil, LabelUtil,
+    ProjectConfiguration
+} from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation, FieldsViewUtil, LabelUtil,
-    ProjectConfiguration } from 'idai-field-core';
 import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
 import Button from '../common/Button';
-import CategoryButton from '../common/CategoryButton';
 import CategoryIcon from '../common/CategoryIcon';
 import Column from '../common/Column';
+import DocumentButton from '../common/DocumentButton';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
@@ -130,7 +132,7 @@ const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) =
 
 const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) =>
     (target: Document) =>
-        <CategoryButton
+        <DocumentButton
             key={ target.resource.id }
             onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
             config={ config }

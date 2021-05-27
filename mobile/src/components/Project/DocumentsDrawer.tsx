@@ -6,7 +6,7 @@ import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
 import Row from '../common/Row';
 
-interface DrawerContentProps {
+interface DocumentsDrawerProps {
     documents: Document[];
     config: ProjectConfiguration;
     onDocumentSelected: (document: Document) => void;
@@ -15,7 +15,7 @@ interface DrawerContentProps {
 }
 
 
-const DrawerContent: React.FC<DrawerContentProps> = ({
+const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
     documents,
     config,
     onDocumentSelected,
@@ -47,4 +47,4 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
     </>;
 };
 
-export default DrawerContent;
+export default DocumentsDrawer;

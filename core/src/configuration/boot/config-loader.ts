@@ -52,7 +52,7 @@ export class ConfigLoader {
         );
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
-        return this.preprocess(
+        return this.loadConfiguration(
             libraryCategories,
             commonFields,
             builtinCategories,
@@ -75,13 +75,13 @@ export class ConfigLoader {
     }
 
 
-    private async preprocess(libraryCategories: Map<LibraryCategoryDefinition>,
-                             commonFields: any,
-                             builtinCategories: Map<BuiltinCategoryDefinition>,
-                             relations: Array<RelationDefinition>,
-                             extraFields: { [fieldName: string]: FieldDefinition },
-                             customConfigurationName: string|undefined,
-                             username: string): Promise<ProjectConfiguration> {
+    private async loadConfiguration(libraryCategories: Map<LibraryCategoryDefinition>,
+                                    commonFields: any,
+                                    builtinCategories: Map<BuiltinCategoryDefinition>,
+                                    relations: Array<RelationDefinition>,
+                                    extraFields: { [fieldName: string]: FieldDefinition },
+                                    customConfigurationName: string|undefined,
+                                    username: string): Promise<ProjectConfiguration> {
 
         const orderConfigurationPath = '/Order.json';
         const searchConfigurationPath = '/Search.json';

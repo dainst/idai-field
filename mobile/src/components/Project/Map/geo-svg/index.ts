@@ -12,7 +12,7 @@ import { GeoMultiPolygon } from './GeoMultiPolygon';
 import { GeoPoint } from './GeoPoint/GeoPoint';
 import { GeoPolygon } from './GeoPolygon/GeoPolygon';
 import {
-    isLineStringInMultiPolygon, isLineStringInPolygon,
+    getGeometryArea, isLineStringInMultiPolygon, isLineStringInPolygon,
     isMultiLineStringInMultiPolygon, isMultiLineStringInPolygon,
     isMultiPointInMultiPolygon, isMultiPointInPolygon,
     isMultiPolygonInMultipolygon, isMultiPolygonInPolygon, isPointInMultiPolygon, isPointInPolygon,
@@ -32,6 +32,7 @@ export {
     transformDocumentsGeometry,
     TransformedDocument,
     sortDocumentByGeometryArea,
+    getGeometryArea,
     getGeometryBoundings,
     isLineStringInPolygon,
     isLineStringInMultiPolygon,

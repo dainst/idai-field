@@ -17,7 +17,7 @@ export const sortDocumentByGeometryArea = (documents: TransformedDocument[]): Tr
 };
 
 
-const getGeometryArea = (geo: FieldGeometry): number => {
+export const getGeometryArea = (geo: FieldGeometry): number => {
     
     switch(geo.type){
         case 'Point':

@@ -248,6 +248,9 @@
       "longitude": {
         "inputType": "float"
       },
+      "license": {
+        "inputType": "text"
+      },
       "projectURI": {
         "inputType": "input"
       },

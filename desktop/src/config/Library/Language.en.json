@@ -232,6 +232,9 @@
         "longitude": {
           "label": "Longitude"
         },
+        "license": {
+          "label": "License information"
+        },
         "projectURI": {
           "label": "Project URL"
         },

@@ -2,11 +2,17 @@ import { Position } from 'geojson';
 import { Document, FieldGeometryType } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
-    getGeometryBoundings, isLineStringInMultiPolygon,
-    isLineStringInPolygon, isMultiLineStringInMultiPolygon,
-    isMultiLineStringInPolygon, isMultiPointInMultiPolygon,
-    isMultiPointInPolygon, isMultiPolygonInMultipolygon,
-    isMultiPolygonInPolygon, isPointInMultiPolygon, isPointInPolygon,
+    getGeometryBoundings,
+    isLineStringInMultiPolygon,
+    isLineStringInPolygon,
+    isMultiLineStringInMultiPolygon,
+    isMultiLineStringInPolygon,
+    isMultiPointInMultiPolygon,
+    isMultiPointInPolygon,
+    isMultiPolygonInMultipolygon,
+    isMultiPolygonInPolygon,
+    isPointInMultiPolygon,
+    isPointInPolygon,
     isPolygonInMultiPolygon,
     isPolygonInPolygon,
     setupTransformationMatrix, sortDocumentByGeometryArea,
@@ -16,11 +22,11 @@ import {
 import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 
 export interface GeoMapEntry {
-    childs: string[];
+    parents: string[];
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
     doc: Document;
     isSelected?: boolean;
-    isHighlighted?: boolean;
+    //isHighlighted?: boolean;
 }
 
 export type GeoMap = Map<string, GeoMapEntry>;
@@ -38,15 +44,15 @@ export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undef
     const transformationMatrix = setupTransformationMatrix(geometryBoundings, viewPort);
 
     //transform geometries to screen cs
-    const transformedGeo = transformDocumentsGeometry(transformationMatrix, geoDocuments);
-    const sortedGeo = sortDocumentByGeometryArea(transformedGeo);
+    const transformedGeos = transformDocumentsGeometry(transformationMatrix, geoDocuments);
+    const sortedGeo = sortDocumentByGeometryArea(transformedGeos);
 
     //construct geoMap datastructure
     const geoMap: Map<string, GeoMapEntry> = new Map();
     for(const doc of sortedGeo){
         geoMap.set(doc.doc.resource.id,{
             transformedCoords: doc.transformedCoordinates,
-            childs: findChildDocIds(doc, transformedGeo),
+            parents: findParentDocIds(doc, transformedGeos),
             doc: doc.doc
         });
     }
@@ -58,118 +64,66 @@ export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undef
 };
 
 
-const findChildDocIds = (document: TransformedDocument, transformedGeoDocuments: TransformedDocument[]): string[] => {
+const findParentDocIds = (checkDoc: TransformedDocument, transformedGeoDocuments: TransformedDocument[]): string[] => {
     
-    const geoType = document.doc.resource.geometry.type as FieldGeometryType;
-    const docPolygon = document.transformedCoordinates;
-    if(geoType === 'Point' || geoType === 'MultiPoint' || geoType === 'LineString' || geoType === 'MultiLineString')
-        return [];
-
-    const childArray: string[] = [];
+    const toCheckGeoType = checkDoc.doc.resource.geometry.type as FieldGeometryType;
+    const toCeckDocCoords = checkDoc.transformedCoordinates;
+    const parentArray: string[] = [];
 
     for(const doc of transformedGeoDocuments){
-        if(doc.doc.resource.id === document.doc.resource.id ) continue;
-        const addChild = () => childArray.push(doc.doc.resource.id);
+
+        const geoType = doc.doc.resource.geometry.type as FieldGeometryType;
+        if(doc.doc.resource.id === checkDoc.doc.resource.id ) continue;
+        if(geoType === 'Point' || geoType === 'MultiPoint' || geoType === 'LineString' || geoType === 'MultiLineString')
+            continue;
+
+        const addParent = () => parentArray.push(doc.doc.resource.id);
         const coords = doc.transformedCoordinates;
-        switch(doc.doc.resource.geometry.type as FieldGeometryType){
+
+        switch(toCheckGeoType){
             case 'Point':
                 if(geoType === 'Polygon')
-                    isPointInPolygon(coords as Position, docPolygon as Position[][]) && addChild();
+                    isPointInPolygon(toCeckDocCoords as Position, coords as Position[][]) && addParent();
                 else
-                    isPointInMultiPolygon(coords as Position, docPolygon as Position[][][]) && addChild();
+                    isPointInMultiPolygon(toCeckDocCoords as Position, coords as Position[][][]) && addParent();
                 break;
             case 'MultiPoint':
                 if(geoType === 'Polygon')
-                    isMultiPointInPolygon(coords as Position[], docPolygon as Position[][]) && addChild();
+                    isMultiPointInPolygon(toCeckDocCoords as Position[], coords as Position[][]) && addParent();
                 else
-                    isMultiPointInMultiPolygon(coords as Position[], docPolygon as Position[][][]) && addChild();
+                    isMultiPointInMultiPolygon(toCeckDocCoords as Position[], coords as Position[][][]) && addParent();
                 break;
             case 'LineString':
                 if(geoType === 'Polygon')
-                    isLineStringInPolygon(coords as Position[], docPolygon as Position[][]) && addChild();
+                    isLineStringInPolygon(toCeckDocCoords as Position[], coords as Position[][]) && addParent();
                 else
-                    isLineStringInMultiPolygon(coords as Position[], docPolygon as Position[][][]) && addChild();
+                    isLineStringInMultiPolygon(toCeckDocCoords as Position[], coords as Position[][][]) && addParent();
                 break;
             case 'MultiLineString':
                 if(geoType === 'Polygon')
-                    isMultiLineStringInPolygon(coords as Position[][], docPolygon as Position[][]) && addChild();
-                else
-                    isMultiLineStringInMultiPolygon(coords as Position[][], docPolygon as Position[][][]) && addChild();
+                    isMultiLineStringInPolygon(toCeckDocCoords as Position[][], coords as Position[][]) && addParent();
+                else {
+                    isMultiLineStringInMultiPolygon(toCeckDocCoords as Position[][], coords as Position[][][]) &&
+                        addParent();
+                }
                 break;
             case 'Polygon':
                 if(geoType === 'Polygon')
-                    isPolygonInPolygon(coords as Position[][], docPolygon as Position[][]) && addChild();
+                    isPolygonInPolygon(toCeckDocCoords as Position[][], coords as Position[][]) && addParent();
                 else
-                    isPolygonInMultiPolygon(coords as Position[][], docPolygon as Position[][][]) && addChild();
+                    isPolygonInMultiPolygon(toCeckDocCoords as Position[][], coords as Position[][][]) && addParent();
                 break;
             case 'MultiPolygon':
                 if(geoType === 'Polygon')
-                    isMultiPolygonInPolygon(coords as Position[][][], docPolygon as Position[][]) && addChild();
-                else
-                    isMultiPolygonInMultipolygon(coords as Position[][][], docPolygon as Position[][][]) && addChild();
+                    isMultiPolygonInPolygon(toCeckDocCoords as Position[][][], coords as Position[][]) && addParent();
+                else {
+                    isMultiPolygonInMultipolygon(toCeckDocCoords as Position[][][], coords as Position[][][]) &&
+                        addParent();
+                }
                 break;
         }
     }
 
-    return childArray;
+    return parentArray;
 
 };
-
-// const isPointInPolygon = (
-//     point: Position, polygon: Position[][] | Position[][][],
-//     type: 'Polygon' |'MultiPolygon') => {
-
-//         if(type === 'Polygon')
-//             return isPointInPolygon(point, polygon as Position[][])
-        
-// }
-
-
-// const multiPointFinder = (multiPoint: Position[], tGeoDocument: TransformedDocument) => {
-
-//     switch(tGeoDocument.doc.resource.geometry.type as FieldGeometryType){
-//         case 'Point':
-//         case 'LineString':
-//         case 'MultiLineString':
-//         case 'MultiPoint':
-//             return false;
-//         case 'Polygon':
-//             return isMultiPointInPolygon(multiPoint, tGeoDocument.transformedCoordinates as Position[][]);
-//         case 'MultiPolygon':
-//             return isMultiPointInMultiPolygon(multiPoint, tGeoDocument.transformedCoordinates as Position[][][]);
-//     }
-// };
-
-
-// const lineStringFinder = (lineString: Position[], tGeoDocument: TransformedDocument) => {
-
-//     switch(tGeoDocument.doc.resource.geometry.type as FieldGeometryType){
-//         case 'Point':
-//         case 'LineString':
-//         case 'MultiLineString':
-//         case 'MultiPoint':
-//             return false;
-//         case 'Polygon':
-//             return isLineStringInPolygon(lineString, tGeoDocument.transformedCoordinates as Position[][]);
-//         case 'MultiPolygon':
-//             return isLineStringInMultiPolygon(lineString, tGeoDocument.transformedCoordinates as Position[][][]);
-//     }
-// };
-
-
-// const multiLineStringFinder = (multiLineString: Position[][], tGeoDocument: TransformedDocument) => {
-
-//     switch(tGeoDocument.doc.resource.geometry.type as FieldGeometryType){
-//         case 'Point':
-//         case 'LineString':
-//         case 'MultiLineString':
-//         case 'MultiPoint':
-//             return false;
-//         case 'Polygon':
-//             return isMultiLineStringInPolygon(multiLineString, tGeoDocument.transformedCoordinates as Position[][]);
-//         case 'MultiPolygon':
-//             return isMultiLineStringInMultiPolygon(
-//                 multiLineString,
-//                 tGeoDocument.transformedCoordinates as Position[][][]);
-//     }
-// };

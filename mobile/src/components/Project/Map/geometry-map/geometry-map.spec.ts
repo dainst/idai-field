@@ -33,12 +33,12 @@ describe('geometry-map', () => {
     });
 
 
-    it('should not include itself as a child', () => {
+    it('should not include itself as a parent', () => {
 
-        const t2Childs = geoMap.get(t2Id)?.childs;
+        const t2Childs = geoMap.get(t2Id)?.parents;
         expect(t2Childs?.includes(t2Id)).toBe(false);
 
-        const b1Childs = geoMap.get(bu1Id)?.childs;
+        const b1Childs = geoMap.get(bu1Id)?.parents;
         expect(b1Childs?.includes(bu1Id)).toBe(false);
     });
 
@@ -56,22 +56,22 @@ describe('geometry-map', () => {
     });
 
 
-    it('should have r1 as child of bu1', () => {
+    it('should have bu1 as parent of r1', () => {
 
-        const childs = geoMap.get(bu1Id)?.childs;
+        const parents = geoMap.get(r1Id)?.parents;
 
-        expect(childs?.includes(r1Id)).toBe(true);
-        expect(childs?.length).toBe(1);
+        expect(parents?.includes(bu1Id)).toBe(true);
+        expect(parents?.length).toBe(1);
     });
 
     
     it('should have si4 as child of t2',() => {
         
-        const childs = geoMap.get(t2Id)?.childs;
+        const parents = geoMap.get(si4Id)?.parents;
 
-        expect(childs?.includes(si4Id)).toBe(true);
-        expect(childs?.includes(si1Id)).toBe(true);
-        expect(childs?.length).toBe(2);
+        expect(parents?.includes(t2Id)).toBe(true);
+        expect(parents?.includes(si1Id)).toBe(true);
+        expect(parents?.length).toBe(2);
     });
 
 

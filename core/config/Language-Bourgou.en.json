@@ -1,12 +1,12 @@
-  {
-	"Pottery": {
-	  "createdBy": "Heike Möller, 03.03.2021",
-      "description": "Treatment description of rim and base",
+{
+  "categories": {
+    "Pottery": {
       "fields": {
-       "rimTreatmentType": {
-	      "label": "Treatment rim/base"
+        "rimTreatmentType": {
+          "label": "Treatment rim/base",
+          "description": "Treatment description of rim and base"
         }
-	}
+      }
+    }
   }
 }
-

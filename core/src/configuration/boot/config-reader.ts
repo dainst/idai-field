@@ -118,7 +118,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
     'Milet': { de: languageMilet_de, en: languageMilet_en },
     'MonTur': { de: languageMonTur_de },
-    'Pergamon': { de: languagePergamon_de, languagePergamon_en },
+    'Pergamon': { de: languagePergamon_de, en: languagePergamon_en },
     'Postumii': { de: languagePostumii_de, it: languagePostumii_it },
     'Selinunt': { de: languageSelinunt_de, it: languageSelinunt_it },
     'SudanHeritage': { en: languageSudanHeritage_en },

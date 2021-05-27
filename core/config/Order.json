@@ -1,7 +1,7 @@
 {
   "categories": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "collapseDebris", "Floor", "DrillCoreLayer", "Wall_surface", "Area", "SurveyUnit", "Sondage", "Excavation", "BuildingPart", "Room", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "Image", "Drawing", "Photo"],
   "fields": {
-    "Project": ["description", "institution", "projectSupervisor", "contactPerson", "contactMail",  "staff", "campaigns", "projectURI", "externalReference", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"],
+    "Project": ["description", "institution", "projectSupervisor", "contactPerson", "contactMail",  "staff", "campaigns", "projectURI", "externalReference", "license", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"],
     "Operation": ["diaryAbstract"],
     "Trench": ["researchQuestion", "trenchComment", "excavationType", "spatialLocation"],
     "Building": ["material", "context", "condition", "conditionAmount", "conditionComment", "hasRestoration", "buildingType", "buildingTechnique", "buildingCategory", "buildingCategorySpecific", "architecturalOrders", "buildingHistory", "buildingResearchHistory", "excavationHistory", "history"],

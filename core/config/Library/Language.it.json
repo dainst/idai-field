@@ -262,6 +262,9 @@
           "label": "Longitudine",
           "description": "Inserimento come numero decimale, sono possibili valori negativi"
         },
+        "license": {
+          "label": "Licenza"
+        },
         "projectURI": {
           "label": "URL del progetto",
           "description": "Riferimento ad una pagina di progetto esterna con ulteriori informazioni"

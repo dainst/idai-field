@@ -262,6 +262,9 @@
           "label": "Längengrad",
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
         },
+        "license": {
+          "label": "Lizenzinformationen"
+        },
         "projectURI": {
           "label": "Projekt-URL",
           "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen"

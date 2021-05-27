@@ -1,11 +1,29 @@
+import { Position } from 'geojson';
 import { TransformedDocument } from '..';
 import { bu1 } from '../../../../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../../../../test_data/test_docs/lineBuilding';
 import { multiPolyTrench } from '../../../../../../test_data/test_docs/multiPolyTrench';
 import { pointBuilding } from '../../../../../../test_data/test_docs/pointBuilding';
 import { pointRadius } from '../constants';
-import { pointArea, polygonArea, sortDocumentByGeometryArea } from './math-utils';
+import {
+    isLineStringInPolygon,
+    isPointInMultiPolygon, isPointInPolygon, isPointInRingCoordinates,
+    isPolygonInMultiPolygon,
+    isPolygonInPolygon, pointArea, polygonArea,
+    sortDocumentByGeometryArea
+} from './math-utils';
 
+const polygonWithHole = [
+    [[2,2],[2,5],[5,9],[8,7],[9,4],[5,2]],//area 32.5
+    [[4,2],[4,5],[5,6],[6,5],[5,4],[6,3]]//area 5
+];
+
+const multiPolygon: Position[][][] = [
+    polygonWithHole,
+    [
+        [[11,10], [15,12], [15,8], [14,9] ,[13,8]]
+    ]
+];
 
 describe('geo-svg/math-utils', () => {
 
@@ -25,11 +43,8 @@ describe('geo-svg/math-utils', () => {
 
 
     it('should calculate the area of a polygon with holes', () => {
-        const polygon = [
-            [[2,2],[2,5],[5,9],[8,7],[9,4],[5,2]],//32.5
-            [[4,2],[4,5],[5,6],[6,5],[5,4],[6,3]]//5
-        ];
-        expect(polygonArea(polygon)).toBe(32.5 - 5);
+        
+        expect(polygonArea(polygonWithHole)).toBe(32.5 - 5);
     });
 
 
@@ -38,22 +53,78 @@ describe('geo-svg/math-utils', () => {
         const docs = [tBu1, tLineBuilding, tMultiPolyTrench, tPointBuilding];
         const expectedOrder = ['multiTrench', 'B1', 'pointBuilding', 'lineBuilding'];
 
-        const sortedDocs = sortDocumentByGeometryArea(docs,[]);
+        const sortedDocs = sortDocumentByGeometryArea(docs);
 
         expect(sortedDocs.map(doc => doc.doc.resource.identifier)).toEqual(expectedOrder);
     });
 
 
-    // eslint-disable-next-line max-len
-    it('should sort Document by FieldGeometry area taking selected Docs into account. Selected docs should be sorted at the end of the array', () => {
+    it('should detect if a point is inside or outside a simple polygon without holes', () => {
 
-        const docs = [tBu1, tLineBuilding, tMultiPolyTrench, tPointBuilding];
-        const expectedOrder = ['multiTrench', 'lineBuilding', 'B1', 'pointBuilding'];
+        const polygon = [[2,2],[2,5],[5,9],[8,7],[9,4],[5,2]];
+        const point1 = [4,4];
+        const point2 = [2,9];
 
-        const sortedDocs = sortDocumentByGeometryArea(docs,[pointBuilding._id,bu1._id]);
-
-        expect(sortedDocs.map(doc => doc.doc.resource.identifier)).toEqual(expectedOrder);
+        expect(isPointInRingCoordinates(point1, polygon)).toBe(true);
+        expect(isPointInRingCoordinates(point2, polygon)).toBe(false);
     });
+
+
+    it('should detect if a point is inside or outside a polygon WITH holes', () => {
+
+        const p_inside = [3,4];
+        const p_inHole = [5,5];
+        const p_outOuterRing = [10,9];
+
+        expect(isPointInPolygon(p_inside, polygonWithHole)).toBe(true);
+        expect(isPointInPolygon(p_inHole, polygonWithHole)).toBe(false);
+        expect(isPointInPolygon(p_outOuterRing, polygonWithHole)).toBe(false);
+    });
+
+
+    it('should detect if a point is inside or outside a multipolygon', () => {
+
+        const p_inside = [14,10];
+        const p_outside = [3,12];
+        const p_inHole = [4.5,4];
+        
+        expect(isPointInMultiPolygon(p_inside, multiPolygon)).toBe(true);
+        expect(isPointInMultiPolygon(p_outside, multiPolygon)).toBe(false);
+        expect(isPointInMultiPolygon(p_inHole, multiPolygon)).toBe(false);
+    });
+
+
+    it('should detect if a polygon is positioned inside another polygon',() => {
+
+        const outerPolygon = [polygonWithHole[0]];
+        const innerPolygon = [polygonWithHole[1]];
+        const polygonAtOtherPosition = multiPolygon[1];
+        const polyWithOnePointOutsideOuterPolygon = [[[4,2],[2,7],[5,7],[6,4]]];
+
+        expect(isPolygonInPolygon(innerPolygon, outerPolygon)).toBe(true);
+        expect(isPolygonInPolygon(outerPolygon, innerPolygon)).toBe(false);
+        expect(isPolygonInPolygon(innerPolygon, polygonAtOtherPosition)).toBe(false);
+        expect(isPolygonInPolygon(polyWithOnePointOutsideOuterPolygon, outerPolygon)).toBe(true);
+    });
+
+
+    it('should detect if a polygon is positioned in one of the polygon of a multi polygon',() => {
+
+        const polygonOut = [[[3,14],[5,14],[5,12],[3,12]]];
+        const polyPartiallyInside = [[[9,1],[7,3],[7,5],[8,6],[10,2]]];
+        
+        expect(isPolygonInMultiPolygon(polygonOut, multiPolygon)).toBe(false);
+        expect(isPolygonInMultiPolygon(polyPartiallyInside, multiPolygon)).toBe(true);
+    });
+
+
+    it('should detect if a  point line is positioned in a polygon', () => {
+        const polygon = [[[11,10], [15,12], [15,8], [14,9] ,[13,8]]];
+        const lineString = [[12,12],[14,10.5],[16,12]];
+
+        expect(isLineStringInPolygon(lineString,polygon)).toBe(true);
+    });
+
 });
 
 const tBu1: TransformedDocument = {

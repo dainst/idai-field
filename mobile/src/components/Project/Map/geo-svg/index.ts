@@ -1,4 +1,4 @@
-import { getGeometryBoundings } from './geojson-cs-to-svg-cs/cs-transform-utils/cs-transform-utils';
+import { GeometryBoundings, getGeometryBoundings } from './geojson-cs-to-svg-cs/cs-transform-utils/cs-transform-utils';
 import {
     processTransform2d,
     setupTransformationMatrix,
@@ -11,7 +11,14 @@ import { GeoMultiPoint } from './GeoMultiPoint/GeoMultiPoint';
 import { GeoMultiPolygon } from './GeoMultiPolygon';
 import { GeoPoint } from './GeoPoint/GeoPoint';
 import { GeoPolygon } from './GeoPolygon/GeoPolygon';
-import { sortDocumentByGeometryArea } from './math-utils/math-utils';
+import {
+    getGeometryArea, isLineStringInMultiPolygon, isLineStringInPolygon,
+    isMultiLineStringInMultiPolygon, isMultiLineStringInPolygon,
+    isMultiPointInMultiPolygon, isMultiPointInPolygon,
+    isMultiPolygonInMultipolygon, isMultiPolygonInPolygon, isPointInMultiPolygon, isPointInPolygon,
+    isPolygonInMultiPolygon, isPolygonInPolygon,
+    sortDocumentByGeometryArea
+} from './math-utils/math-utils';
 
 export {
     GeoMultiPolygon,
@@ -25,6 +32,20 @@ export {
     transformDocumentsGeometry,
     TransformedDocument,
     sortDocumentByGeometryArea,
-    getGeometryBoundings
+    getGeometryArea,
+    getGeometryBoundings,
+    isLineStringInPolygon,
+    isLineStringInMultiPolygon,
+    isPointInMultiPolygon,
+    isPointInPolygon,
+    isMultiPointInPolygon,
+    isMultiPointInMultiPolygon,
+    isPolygonInPolygon,
+    isPolygonInMultiPolygon,
+    isMultiLineStringInMultiPolygon,
+    isMultiLineStringInPolygon,
+    isMultiPolygonInMultipolygon,
+    isMultiPolygonInPolygon,
+    GeometryBoundings
 };
 

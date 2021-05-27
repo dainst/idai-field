@@ -17,7 +17,7 @@ describe('usePreferences', () => {
 
         await waitForNextUpdate();
       
-        expect(result.current.preferences.currentProject).toBe('test');
+        expect(result.current.preferences.currentProject).toBeUndefined();
         expect(result.current.preferences.recentProjects).toHaveLength(0);
         expect(result.current.preferences.languages).toEqual(['en']);
         expect(result.current.preferences.username).toBe('');
@@ -46,11 +46,7 @@ describe('usePreferences', () => {
         await waitForNextUpdate();
 
         await act(async () => {
-            result.current.setCurrentProject('test2');
-        });
-
-        await act(async () => {
-            result.current.setProjectSettings({
+            result.current.setProjectSettings('test2', {
                 url: 'https://test.url',
                 password: 'testword',
                 connected: true
@@ -71,11 +67,7 @@ describe('usePreferences', () => {
         await waitForNextUpdate();
 
         await act(async () => {
-            result.current.setCurrentProject('test2');
-        });
-
-        await act(async () => {
-            result.current.setProjectSettings({
+            result.current.setProjectSettings('test2', {
                 url: 'https://test.url',
                 password: 'testword',
                 connected: true
@@ -90,7 +82,6 @@ describe('usePreferences', () => {
         
         expect(AsyncStorage.getItem).toBeCalledWith('preferences');
       
-        expect(result2.current.preferences.currentProject).toBe('test2');
         const settings = result2.current.preferences.projects['test2'];
         expect(settings.url).toBe('https://test.url');
         expect(settings.password).toBe('testword');

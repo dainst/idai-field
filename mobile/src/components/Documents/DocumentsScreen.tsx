@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbManager from '../../hooks/use-pouchdb-manager';
 import useRepository from '../../hooks/use-repository';
@@ -8,40 +8,45 @@ import DocumentsContainer from './DocumentsContainer';
 
 
 interface DocumentsScreenProps {
+    currentProject: string;
     preferences: Preferences;
-    setProjectSettings: (projectSettings: ProjectSettings) => void;
+    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
 }
 
 
-const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ preferences, setProjectSettings }) => {
+const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ currentProject, preferences, setProjectSettings }) => {
 
-    const pouchdbManager = usePouchdbManager(preferences.currentProject);
+    const pouchdbManager = usePouchdbManager(currentProject);
 
     const config = useConfiguration(
-        preferences.currentProject,
+        currentProject,
         preferences.languages,
         preferences.username,
         pouchdbManager,
     );
 
     const repository = useRepository(
-        preferences.currentProject,
+        currentProject,
         preferences.username,
         config?.getCategoryForest() || [],
         pouchdbManager,
     );
 
     const syncStatus = useSync(
-        preferences.currentProject,
-        preferences.projects[preferences.currentProject],
+        currentProject,
+        preferences.projects[currentProject],
         repository,
-        pouchdbManager
+        pouchdbManager,
     );
+
+    const setCurrentProjectSettings = useCallback(settings => {
+        setProjectSettings(currentProject, settings);
+    }, [currentProject, setProjectSettings]);
 
     return (repository && config)
         ? <DocumentsContainer
-            projectSettings={ preferences.projects[preferences.currentProject] }
-            setProjectSettings={ setProjectSettings }
+            projectSettings={ preferences.projects[currentProject] }
+            setProjectSettings={ setCurrentProjectSettings }
             config={ config }
             repository={ repository }
             syncStatus={ syncStatus }

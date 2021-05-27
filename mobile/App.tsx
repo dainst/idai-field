@@ -54,7 +54,10 @@ export default function App(): ReactElement {
         return (
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                    <Stack.Navigator
+                        initialRouteName={ preferences.currentProject ? 'DocumentsScreen' : 'HomeScreen' }
+                        screenOptions={ { headerShown: false } }
+                    >
                         <Stack.Screen name="HomeScreen">
                             { ({ navigation }) => <HomeScreen
                                 preferences={ preferences }
@@ -64,7 +67,8 @@ export default function App(): ReactElement {
                             /> }
                         </Stack.Screen>
                         <Stack.Screen name="DocumentsScreen">
-                            { () => <DocumentsScreen
+                            { () => preferences.currentProject && <DocumentsScreen
+                                currentProject={ preferences.currentProject }
                                 preferences={ preferences }
                                 setProjectSettings={ setProjectSettings }
                             /> }

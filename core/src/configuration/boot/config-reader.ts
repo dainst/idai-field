@@ -63,6 +63,7 @@ import libraryLanguageIt from '../../../config/Library/Language.it.json';
 import libraryValuelists from '../../../config/Library/Valuelists.json';
 import order from '../../../config/Order.json';
 import search from '../../../config/Search.json';
+import { LanguageConfiguration } from '../model';
 
 
 const PATH_MAP: Record<string, any> = {
@@ -98,37 +99,30 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Postumii.json': configPostumii,
     '/Config-Selinunt.json': configSelinunt,
     '/Config-SudanHeritage.json': configSudanHeritage,
-    '/Config-Uruk.json': configUruk,
-    '/Language-AbbirCella.en.json': languageAbbirCella_en,
-    '/Language-AbbirCella.fr.json': languageAbbirCella_fr,
-    '/Language-AlUla.en.json': languageAlUla_en,
-    '/Language-Ayamonte.de.json': languageAyamonte_de,
-    '/Language-Ayamonte.en.json': languageAyamonte_en,
-    '/Language-Ayamonte.es.json': languageAyamonte_es,
-    '/Language-Boha.de.json': languageBoha_de,
-    '/Language-Bourgou.de.json': languageBourgou_de,
-    '/Language-Bourgou.en.json': languageBourgou_en,
-    '/Language-Campidoglio.en.json': languageCampidoglio_en,
-    '/Language-Castiglione.en.json': languageCastiglione_en,
-    '/Language-Default.de.json': languageDefault_de,
-    '/Language-Default.en.json': languageDefault_en,
-    '/Language-Gadara.de.json': languageGadara_de,
-    '/Language-Gadara.en.json': languageGadara_en,
-    '/Language-Kalapodi.de.json': languageKalapodi_de,
-    '/Language-Kephissostal.de.json': languageKephissostal_de,
-    '/Language-Meninx.de.json': languageMeninx_de,
-    '/Language-Meninx.en.json': languageMeninx_en,
-    '/Language-Milet.de.json': languageMilet_de,
-    '/Language-Milet.en.json': languageMilet_en,
-    '/Language-MonTur.de.json': languageMonTur_de,
-    '/Language-Pergamon.de.json': languagePergamon_de,
-    '/Language-Pergamon.en.json': languagePergamon_en,
-    '/Language-Postumii.de.json': languagePostumii_de,
-    '/Language-Postumii.it.json': languagePostumii_it,
-    '/Language-Selinunt.de.json': languageSelinunt_de,
-    '/Language-Selinunt.it.json': languageSelinunt_it,
-    '/Language-SudanHeritage.en.json': languageSudanHeritage_en,
-    '/Language-Uruk.en.json': languageUruk_en,
+    '/Config-Uruk.json': configUruk
+};
+
+
+const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: LanguageConfiguration }> = {
+    'AbbirCella': { en: languageAbbirCella_en, fr: languageAbbirCella_fr },
+    'AlUla': { en: languageAlUla_en },
+    'Ayamonte': { de: languageAyamonte_de, en: languageAyamonte_en, es: languageAyamonte_es },
+    'Boha': { de: languageBoha_de },
+    'Bourgou': { de: languageBourgou_de, en: languageBourgou_en },
+    'Campidoglio': { en: languageCampidoglio_en },
+    'Castiglione': { en: languageCastiglione_en },
+    'Default': { de: languageDefault_de, en: languageDefault_en },
+    'Gadara': { de: languageGadara_de, en: languageGadara_en },
+    'Kalapodi': { de: languageKalapodi_de },
+    'Kephissostal': { de: languageKephissostal_de },
+    'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
+    'Milet': { de: languageMilet_de, en: languageMilet_en },
+    'MonTur': { de: languageMonTur_de },
+    'Pergamon': { de: languagePergamon_de, languagePergamon_en },
+    'Postumii': { de: languagePostumii_de, it: languagePostumii_it },
+    'Selinunt': { de: languageSelinunt_de, it: languageSelinunt_it },
+    'SudanHeritage': { en: languageSudanHeritage_en },
+    'Uruk': { en: languageUruk_en }
 };
 
 
@@ -138,5 +132,5 @@ export class ConfigReader {
 
     read = (path: string): any => clone(PATH_MAP[path]);
 
-    getCustomLanguageConfigurationFileNames = (_: string) => [];
+    getCustomLanguageConfigurations = (projectPrefix: string) => CUSTOM_LANGUAGE_CONFIGURATIONS[projectPrefix];
 }

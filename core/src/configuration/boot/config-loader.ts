@@ -158,7 +158,7 @@ export class ConfigLoader {
     private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
                                                      rev?: string): Promise<ConfigurationDocument> {
         const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
-        const languageConfigurations = await this.readCustomLanguageConfigurations(customConfigurationName);
+        const languageConfigurations = this.configReader.getCustomLanguageConfigurations(customConfigurationName);
         const configuration: ConfigurationDocument
             = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username, rev);
         try {
@@ -169,22 +169,6 @@ export class ConfigLoader {
             console.error('Failed to create configuration document!', err);
             throw ['Failed to create configuration document!'];
         }
-    }
-
-
-    private readCustomLanguageConfigurations(customConfigurationName: string)
-            : { [language: string]: LanguageConfiguration } {
-
-        const configurations = {};
-        const fileNames: string[] = this.configReader.getCustomLanguageConfigurationFileNames(customConfigurationName);
-
-        for (const fileName of fileNames) {
-            const configuration: LanguageConfiguration|undefined = this.readLanguageConfiguration(fileName);
-            const language: string = fileName.split('.')[1];
-            if (configuration) configurations[language] = configuration;
-        }
-
-        return configurations;
     }
 
 

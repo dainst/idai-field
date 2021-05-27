@@ -22,8 +22,6 @@ interface ButtonProps {
 
 const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled }: ButtonProps): ReactElement => {
 
-    console.log({ isDisabled });
-
     return <TouchableOpacity
             onPress={ onPress }
             style={ [getButtonStyle(variant), style, isDisabled && getDisabledStyle(variant)] }

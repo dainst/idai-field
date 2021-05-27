@@ -1,12 +1,12 @@
-  {
-	"Pottery": {
-	  "createdBy": "Heike Möller, 03.03.2021",
-      "description": "Beschreibt die Rand und Bodenbeschaffenheit der Gefäße",
+{
+  "categories": {
+    "Pottery": {
       "fields": {
-       "rimTreatmentType": {
-	      "label": "Behandlung Rand/Boden"
+        "rimTreatmentType": {
+          "label": "Behandlung Rand/Boden",
+          "description": "Beschreibt die Rand- und Bodenbeschaffenheit der Gefäße"
         }
-	}
+      }
+    }
   }
 }
-

@@ -1,14 +1,12 @@
 'use strict';
 
-import {sameset} from 'tsfun';
-import {forEach, map} from 'tsfun/associative';
+import { sameset, forEach, map } from 'tsfun';
 
 
 const fs = require('fs');
 
 
 const projectName: string = 'kalapodi';
-
 
 
 const valuelists = JSON.parse(fs.readFileSync('Library/Valuelists.json'));

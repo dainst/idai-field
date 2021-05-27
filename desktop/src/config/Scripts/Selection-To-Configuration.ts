@@ -1,6 +1,6 @@
 'use strict';
 
-import {forEach} from 'tsfun/associative';
+import { forEach } from 'tsfun';
 
 const fs = require('fs');
 

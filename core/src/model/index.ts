@@ -28,4 +28,4 @@ export { Query } from './query';
 export { RelationDefinition } from './relation-definition';
 export { Relations } from './relations';
 export { Resource } from './resource';
-export { ValuelistDefinition } from './valuelist-definition';
+export { ValuelistDefinition, ValueDefinition } from './valuelist-definition';

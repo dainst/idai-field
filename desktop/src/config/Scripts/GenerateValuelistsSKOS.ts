@@ -1,8 +1,7 @@
-import {flatten} from 'tsfun';
-import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
-import {Tree, TreeList} from '../../app/core/util/tree-list';
-import {ValueDefinition, ValuelistDefinition} from '../../app/core/configuration/model/valuelist-definition';
-import {COMMON_FIELDS} from '../../app/core/configuration/app-configurator';
+import { flatten } from 'tsfun';
+import { Tree, Forest, ValueDefinition, ValuelistDefinition } from 'idai-field-core';
+import { PROJECT_MAPPING } from '../../app/core/settings/settings-service';
+import { COMMON_FIELDS } from '../../app/core/configuration/app-configurator';
 
 const fs = require('fs');
 const parameterize = require('parameterize');
@@ -58,7 +57,7 @@ function getConcepts(): Array<Concept> {
 
 function addConceptsForProject(projectName: string, concepts: { [id: string]: Concept }) {
 
-    const configuration: TreeList = readJSON(CONFIG_PATH + projectName + '.json');
+    const configuration: Forest = readJSON(CONFIG_PATH + projectName + '.json');
     configuration.forEach(categoryTree => addCategoryConcept(categoryTree, concepts, projectName));
 }
 

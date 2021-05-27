@@ -1,15 +1,11 @@
-import {to, zip} from 'tsfun';
-import {clone} from 'tsfun/struct';
-import {AppConfigurator} from '../../app/core/configuration/app-configurator';
-import {ConfigLoader} from '../../app/core/configuration/boot/config-loader';
-import {ProjectConfiguration} from '../../app/core/configuration/project-configuration';
-import {mapTreeList, TreeList, zipTreeList} from '../../app/core/util/tree-list';
-import {Category} from '../../app/core/configuration/model/category';
-import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
-import {Group} from '../../app/core/configuration/model/group';
-import {FieldDefinition} from '../../app/core/configuration/model/field-definition';
-import {ConfigReader} from '../../app/core/configuration/boot/config-reader';
-import {Settings} from '../../app/core/settings/settings';
+import { to, zip, clone } from 'tsfun';
+import { Forest, Tree, Category, Group, FieldDefinition } from 'idai-field-core';
+import { AppConfigurator } from '../../app/core/configuration/app-configurator';
+import { ConfigLoader } from '../../app/core/configuration/boot/config-loader';
+import { ProjectConfiguration } from '../../app/core/configuration/project-configuration';
+import { PROJECT_MAPPING } from '../../app/core/settings/settings-service';
+import { ConfigReader } from '../../app/core/configuration/boot/config-reader';
+import { Settings } from '../../app/core/settings/settings';
 
 const fs = require('fs');
 const cldr = require('cldr');
@@ -36,12 +32,12 @@ function writeProjectConfiguration(fullProjectConfiguration: any, project: strin
 
 function getTreeList(projectConfiguration: ProjectConfiguration) {
 
-    return mapTreeList((category: Category) => {
+    return Tree.mapList((category: Category) => {
 
         delete category.children;
         delete category.parentCategory;
         return category;
-    }, projectConfiguration.getCategoryTreelist());
+    }, projectConfiguration.getCategoryForest());
 }
 
 
@@ -129,7 +125,7 @@ async function start() {
 
     for (const [projectName, project] of Object.entries(PROJECT_MAPPING)) {
         console.log('');
-        const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
+        const localizedTreeLists: { [locale: string]: Forest<Category>} = {};
         for (const language of LANGUAGES) {
             console.log('Loading configuration for language: ' + language);
             const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));
@@ -146,7 +142,7 @@ async function start() {
             }
         }
 
-        const fullConfiguration = zipTreeList(mergeCategories(LANGUAGES), Object.values(localizedTreeLists) as any);
+        const fullConfiguration = Tree.zipList(mergeCategories(LANGUAGES), Object.values(localizedTreeLists) as any);
         writeProjectConfiguration(fullConfiguration, projectName);
     }
 }

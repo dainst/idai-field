@@ -81,6 +81,7 @@
                         <div *ngFor="let field of getFields(selectedCategory)">
                             <configuration-field [field]="field"
                                                  [customFieldDefinition]="getCustomFieldDefinition(selectedCategory, field)"
+                                                 [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
                                                  [category]="selectedCategory"
                                                  [hidden]="isHidden(selectedCategory)(field)"
                                                  (onToggleHidden)="toggleHidden(selectedCategory, field)">

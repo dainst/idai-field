@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, CustomFieldDefinition, FieldDefinition, LabelUtil, ValuelistDefinition,
-    ValuelistUtil } from 'idai-field-core';
 import { clone, flatten, to } from 'tsfun';
+import { Category, CustomFieldDefinition, FieldDefinition, LabelUtil, LanguageConfiguration, ValuelistDefinition,
+    ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
 
 const locale: string = typeof window !== 'undefined'
@@ -29,6 +29,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() category: Category;
     @Input() field: FieldDefinition;
     @Input() customFieldDefinition: CustomFieldDefinition | undefined;
+    @Input() customLanguageConfigurations: { [language: string]: LanguageConfiguration };
     @Input() hidden: boolean;
 
     @Output() onToggleHidden: EventEmitter<void> = new EventEmitter();

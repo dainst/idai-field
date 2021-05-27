@@ -7,14 +7,14 @@ import { Preferences, ProjectSettings } from '../../models/preferences';
 import DocumentsContainer from './DocumentsContainer';
 
 
-interface DocumentsScreenProps {
+interface ProjectScreenProps {
     currentProject: string;
     preferences: Preferences;
     setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
 }
 
 
-const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ currentProject, preferences, setProjectSettings }) => {
+const ProjectScreen: React.FC<ProjectScreenProps> = ({ currentProject, preferences, setProjectSettings }) => {
 
     const pouchdbManager = usePouchdbManager(currentProject);
 
@@ -56,4 +56,4 @@ const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ currentProject, prefe
 };
 
 
-export default DocumentsScreen;
+export default ProjectScreen;

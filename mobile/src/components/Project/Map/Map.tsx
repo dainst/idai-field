@@ -1,6 +1,6 @@
 import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { Circle, G } from 'react-native-svg';
 import {

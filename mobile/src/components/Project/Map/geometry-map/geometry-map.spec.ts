@@ -6,6 +6,7 @@ import { si1 } from '../../../../../test_data/test_docs/si1';
 import { si4 } from '../../../../../test_data/test_docs/si4';
 import { t2 } from '../../../../../test_data/test_docs/t2';
 import { tf1 } from '../../../../../test_data/test_docs/tf1';
+import { getGeometryBoundings, setupTransformationMatrix } from '../geo-svg';
 import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { GeoMapEntry, setupGeoMap } from './geometry-map';
 
@@ -27,9 +28,11 @@ describe('geometry-map', () => {
 
     beforeAll(() => {
         
-        const renderData = setupGeoMap(geoDocuments, viewPort);
+        const geoBoundings = getGeometryBoundings(geoDocuments);
+        const transMatrix = setupTransformationMatrix(geoBoundings, viewPort);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        geoMap = renderData.geoMap!;
+        geoMap = setupGeoMap(geoDocuments, transMatrix)!;
+      
     });
 
 

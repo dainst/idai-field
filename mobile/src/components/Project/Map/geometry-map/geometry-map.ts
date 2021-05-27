@@ -2,7 +2,6 @@ import { Position } from 'geojson';
 import { Document, FieldGeometryType } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
-    getGeometryBoundings,
     isLineStringInMultiPolygon,
     isLineStringInPolygon,
     isMultiLineStringInMultiPolygon,
@@ -15,33 +14,26 @@ import {
     isPointInPolygon,
     isPolygonInMultiPolygon,
     isPolygonInPolygon,
-    setupTransformationMatrix, sortDocumentByGeometryArea,
+    sortDocumentByGeometryArea,
     transformDocumentsGeometry,
     TransformedDocument
 } from '../geo-svg';
-import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 
 export interface GeoMapEntry {
     parents: string[];
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
     doc: Document;
     isSelected?: boolean;
-    //isHighlighted?: boolean;
 }
 
 export type GeoMap = Map<string, GeoMapEntry>;
 
-export interface RenderingData {
-    geoMap?: GeoMap
-    transformationMatrix?: Matrix4
-}
 
-export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undefined): RenderingData => {
+export const setupGeoMap = (
+    geoDocuments: Document[] | undefined,
+    transformationMatrix: Matrix4 | undefined): GeoMap | null=> {
     
-    if(!viewPort || !geoDocuments.length) return {};
-
-    const geometryBoundings = getGeometryBoundings(geoDocuments);
-    const transformationMatrix = setupTransformationMatrix(geometryBoundings, viewPort);
+    if(!transformationMatrix || !geoDocuments || !geoDocuments.length) return null;
 
     //transform geometries to screen cs
     const transformedGeos = transformDocumentsGeometry(transformationMatrix, geoDocuments);
@@ -57,10 +49,7 @@ export const setupGeoMap = (geoDocuments: Document[], viewPort: ViewPort | undef
         });
     }
 
-    return {
-        geoMap,
-        transformationMatrix
-    };
+    return geoMap;
 };
 
 

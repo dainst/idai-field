@@ -2,7 +2,7 @@ import { Position } from 'geojson';
 import { Document, FieldGeometryType } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
-    isLineStringInMultiPolygon,
+    getGeometryArea, isLineStringInMultiPolygon,
     isLineStringInPolygon,
     isMultiLineStringInMultiPolygon,
     isMultiLineStringInPolygon,
@@ -14,7 +14,7 @@ import {
     isPointInPolygon,
     isPolygonInMultiPolygon,
     isPolygonInPolygon,
-    sortDocumentByGeometryArea,
+
     transformDocumentsGeometry,
     TransformedDocument
 } from '../geo-svg';
@@ -23,6 +23,7 @@ export interface GeoMapEntry {
     parents: string[];
     transformedCoords: Position | Position[] | Position[][] | Position[][][];
     doc: Document;
+    area: number;
     isSelected?: boolean;
 }
 
@@ -37,15 +38,18 @@ export const setupGeoMap = (
 
     //transform geometries to screen cs
     const transformedGeos = transformDocumentsGeometry(transformationMatrix, geoDocuments);
-    const sortedGeo = sortDocumentByGeometryArea(transformedGeos);
 
     //construct geoMap datastructure
     const geoMap: Map<string, GeoMapEntry> = new Map();
-    for(const doc of sortedGeo){
+    for(const doc of transformedGeos){
         geoMap.set(doc.doc.resource.id,{
             transformedCoords: doc.transformedCoordinates,
             parents: findParentDocIds(doc, transformedGeos),
-            doc: doc.doc
+            doc: doc.doc,
+            area: getGeometryArea({
+                type: doc.doc.resource.geometry.type,
+                coordinates: doc.transformedCoordinates
+            })
         });
     }
 

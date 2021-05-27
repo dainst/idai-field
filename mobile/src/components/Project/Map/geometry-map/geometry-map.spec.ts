@@ -7,6 +7,7 @@ import { si4 } from '../../../../../test_data/test_docs/si4';
 import { t2 } from '../../../../../test_data/test_docs/t2';
 import { tf1 } from '../../../../../test_data/test_docs/tf1';
 import { getGeometryBoundings, setupTransformationMatrix } from '../geo-svg';
+import { pointRadius } from '../geo-svg/constants';
 import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { GeoMapEntry, setupGeoMap } from './geometry-map';
 
@@ -46,14 +47,22 @@ describe('geometry-map', () => {
     });
 
 
-    it('should be ordered by the area in descending order', () => {
+    it('should include the area for each geometry', () => {
 
-        const expectedOrder = [t2Id,multiPolyTrenchId, si1Id, bu1Id, r1Id, si4Id,tf1Id,lineBuildingId ];
-        let cnt = 0;
+        const expectedAreas = {
+            [t2Id]: 24766.862556,
+            [multiPolyTrenchId]: 11565.606821921596,
+            [si1Id]: 7315.8884305,
+            [bu1Id]: 5451.804814123214,
+            [r1Id]: 2591.1655593290925,
+            [si4Id]: 667.521673,
+            [tf1Id]:  Math.PI * Math.pow(pointRadius,2),
+            [lineBuildingId]: 0
+        };
+
         
-        expect(geoMap.size).toBe(expectedOrder.length);
-        geoMap.forEach((_val, key) => {
-            expect(key).toEqual(expectedOrder[cnt++]);
+        geoMap.forEach((val, key) => {
+            expect(val.area).toBeCloseTo(expectedAreas[key],2);
         });
 
     });

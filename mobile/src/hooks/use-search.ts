@@ -20,8 +20,7 @@ const useSearch = (
 
     useEffect(() => {
 
-        // TODO only react to remote changes
-        const s = repository.changed().subscribe(() => issueSearch());
+        const s = repository.remoteChanged().subscribe(() => issueSearch());
         return () => s.unsubscribe();
     }, [repository, issueSearch]);
 

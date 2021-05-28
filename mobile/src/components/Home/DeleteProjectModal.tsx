@@ -63,6 +63,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, onProj
                     Type <Text style={ { fontWeight: 'bold' } }>{ project }</Text> to confirm.
                 </Text>
                 <Input
+                    testID="project-input"
                     value={ projectVal }
                     onChangeText={ setProjectVal }
                     autoCapitalize="none"

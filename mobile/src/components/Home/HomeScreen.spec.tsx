@@ -1,6 +1,6 @@
 import React from 'react';
 import { Preferences } from '../../models/preferences';
-import { render } from '../../utils/test-utils';
+import { fireEvent, render, waitFor } from '../../utils/test-utils';
 import HomeScreen from './HomeScreen';
 
 describe('HomeScreen', () => {
@@ -31,14 +31,30 @@ describe('HomeScreen', () => {
         expect(warning).toBeNull();
     });
     
-    it('displays picker when no projects are present', () => {
+    it('displays picker when projects are present', () => {
         
         const props = mockProps();
         props.preferences.recentProjects = ['project-1', 'project-2'];
         const { getByText } = render(<HomeScreen { ... props } />);
-        const warning = getByText('Open existing project:');
 
-        expect(warning).toBeTruthy();
+        expect(getByText('Open existing project:')).toBeTruthy();
+    });
+
+    it('allows deleting project', async () => {
+
+        const props = mockProps();
+        props.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
+        const deleteButton = getByTestId('delete-project-button');
+        fireEvent.press(deleteButton);
+
+        await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
+        fireEvent.changeText(getByTestId('project-input'), 'project-1');
+        fireEvent.press(getByText('Delete'));
+
+        await waitFor(() => getByTestId('home-screen'));
+
+        expect(props.deleteProject).toHaveBeenCalledWith('project-1');
     });
 
 });
@@ -53,6 +69,6 @@ const mockProps = () => ({
         projects: {}
     } as Preferences,
     setCurrentProject: (_: string) => { return; },
-    deleteProject: (_: string) => { return; },
+    deleteProject: jest.fn(_ => { return; }),
     navigate: (_: string) => { return; }
 });

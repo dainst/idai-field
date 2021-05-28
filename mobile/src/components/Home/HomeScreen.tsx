@@ -61,7 +61,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             onProjectDeleted={ onDeleteProject }
             onClose={ () => setIsDeleteModalOpen(false) }
         /> }
-        <SafeAreaView style={ styles.container }>
+        <SafeAreaView style={ styles.container } testID="home-screen">
             <Row style={ styles.topRow }>
                 { preferences.username === '' &&
                     <Row style={ styles.usernameWarning }>
@@ -132,6 +132,7 @@ const renderRecentProjects = (
                 variant="primary"
             />
             <Button
+                testID="delete-project-button"
                 icon={ <Ionicons name="trash" size={ 16 } /> }
                 onPress={ () => setIsDeleteModalOpen(true) }
                 variant="danger"

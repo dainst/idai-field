@@ -16,16 +16,26 @@ interface ButtonProps {
     icon?: ReactNode;
     variant?: ButtonVariant;
     isDisabled?: boolean;
+    testID?: string;
     onPress: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
 }
 
 
-const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled }: ButtonProps): ReactElement => {
+const Button = ({
+    style,
+    title,
+    icon,
+    variant = 'secondary',
+    isDisabled = false,
+    testID,
+    onPress,
+}: ButtonProps): ReactElement => {
 
     return <TouchableOpacity
             onPress={ onPress }
             style={ [getButtonStyle(variant), style, isDisabled && getDisabledStyle(variant)] }
             activeOpacity={ .9 }
+            testID={ testID }
         >
         <View style={ styles.container }>
             { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }

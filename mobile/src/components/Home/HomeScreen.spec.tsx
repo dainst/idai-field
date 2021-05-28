@@ -67,6 +67,20 @@ describe('HomeScreen', () => {
         expect(props.navigate).toHaveBeenCalledWith('ProjectScreen');
     });
 
+    it('allows creating project', async () => {
+
+        const props = mockProps();
+        const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
+        fireEvent.press(getByText('Create new project'));
+
+        await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
+        fireEvent.changeText(getByTestId('project-input'), 'new-project');
+        fireEvent.press(getByText('Create'));
+
+        expect(props.setCurrentProject).toHaveBeenCalledWith('new-project');
+        expect(props.navigate).toHaveBeenCalledWith('ProjectScreen');
+    });
+
 });
 
 

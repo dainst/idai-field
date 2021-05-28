@@ -53,6 +53,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreate
                 /> }
             />
             <Input
+                testID="project-input"
                 label="Project name"
                 value={ project }
                 onChangeText={ setProject }

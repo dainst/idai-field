@@ -45,8 +45,7 @@ describe('HomeScreen', () => {
         const props = mockProps();
         props.preferences.recentProjects = ['project-1', 'project-2'];
         const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
-        const deleteButton = getByTestId('delete-project-button');
-        fireEvent.press(deleteButton);
+        fireEvent.press(getByTestId('delete-project-button'));
 
         await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
         fireEvent.changeText(getByTestId('project-input'), 'project-1');
@@ -55,6 +54,17 @@ describe('HomeScreen', () => {
         await waitFor(() => getByTestId('home-screen'));
 
         expect(props.deleteProject).toHaveBeenCalledWith('project-1');
+    });
+
+    it('allows opening project', async () => {
+
+        const props = mockProps();
+        props.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByText } = render(<HomeScreen { ... props } />);
+        fireEvent.press(getByText('Open'));
+
+        expect(props.setCurrentProject).toHaveBeenCalledWith('project-1');
+        expect(props.navigate).toHaveBeenCalledWith('ProjectScreen');
     });
 
 });
@@ -68,7 +78,7 @@ const mockProps = () => ({
         recentProjects: [],
         projects: {}
     } as Preferences,
-    setCurrentProject: (_: string) => { return; },
+    setCurrentProject: jest.fn(_ => { return; }),
     deleteProject: jest.fn(_ => { return; }),
-    navigate: (_: string) => { return; }
+    navigate: jest.fn(_ => { return; }),
 });

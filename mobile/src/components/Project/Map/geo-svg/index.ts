@@ -5,6 +5,7 @@ import {
     transformDocumentsGeometry,
     TransformedDocument
 } from './geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import { ViewPort } from './geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { GeoLineString } from './GeoLineString';
 import { GeoMultiLineString } from './GeoMultiLineString';
 import { GeoMultiPoint } from './GeoMultiPoint/GeoMultiPoint';
@@ -46,6 +47,7 @@ export {
     isMultiLineStringInPolygon,
     isMultiPolygonInMultipolygon,
     isMultiPolygonInPolygon,
-    GeometryBoundings
+    GeometryBoundings,
+    ViewPort
 };
 

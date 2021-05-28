@@ -5,10 +5,10 @@ import { Matrix4 } from 'react-native-redash';
 import {
     GeometryBoundings,
     getGeometryBoundings,
-    setupTransformationMatrix
-} from '../components/Documents/Map/geo-svg';
-import { ViewPort } from '../components/Documents/Map/geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
-import { GeoMap, setupGeoMap } from '../components/Documents/Map/geometry-map/geometry-map';
+    setupTransformationMatrix,
+    ViewPort
+} from '../components/Project/Map/geo-svg';
+import { GeoMap, setupGeoMap } from '../components/Project/Map/geometry-map/geometry-map';
 import { DocumentRepository } from '../repositories/document-repository';
 import usePrevious from './use-previous';
 

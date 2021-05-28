@@ -1,127 +1,312 @@
 {
-  "categories": {
-    "Brick": {
-	  "createdBy": "Hanna Hamel",
-      "description": "Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
-      "label": "Baukeramik",
-      "fields": {
-        "clayColorOutside": {
-          "label": "Ton: Farbe und Intensität"
-        }
+   "categories":{
+      "Brick":{
+         "createdBy":"Hanna Hamel",
+         "description":"Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
+         "label":"Baukeramik",
+         "fields":{
+            "clayColorOutside":{
+               "label":"Ton: Farbe und Intensität"
+            }
+         }
+      },
+      "Pottery":{
+         "createdBy":"Hanna Hamel, 28.01.2021",
+         "description":"Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
+         "fields":{
+            "specificType":{
+               "label":"Form",
+               "description":"B: Becher, Bö: Böden, H: Henkel; Ka: Kannen, Kr: Krüge, Sa: Schalen, Sü: Schüsseln, U: Unguentaria, A: Amphoren, D: Deckel, T: Töpfe, P: Pfannen/Platten, Ks: Kasserollen"
+            },
+            "materialType":{
+               "label":"Kategorie der Gefäßkeramik",
+               "description":"FK: Feinkeramik/Tafelgeschirr (lokal und importiert), GK: Gebrauchskeramik (Vorrats-, Zubereitungs- und Transportgefäße; lokal und importiert), KK: Küchengeschirr (vorrangig zum Kochen verwendetes Geschirr)"
+            },
+            "vesselpart":{
+               "label":"Gefäßteil",
+               "description":"WF = Wandfragment, RF = Randfragment, BF = Bodenfragment, H = Henkel, D = Deckel, KOMP = vollständiges Gefäß, VAR = Verschiedenes"
+            },
+            "potteryTypeSpecific":{
+               "label":"Ware",
+               "description":"Tonbestimmung (zur Aufschlüsselung Warenkatalog hinzuziehen)"
+            }
+         }
+      },
+      "Stone":{
+         "label":"Stein",
+         "fields":{
+            "purpose":{
+               "label":"Verwendung",
+               "description":"kurze Beschreibung zur Verwendung des Objekts"
+            },
+            "treatment":{
+               "label":"Bearbeitung",
+               "description":"Auswahl der Bearbeitungsspuren auf der Oberfläche des Objekts"
+            },
+            "workmanship":{
+               "label":"Ausführung",
+               "description":"Beschreibung der Qualität, in der ein bearbeiteter Stein, vorliegt. Ggf. Angabe der sichtbaren Werkzeugspuren oder anderer Marker für die Ausführung der Handwerksarbeit."
+            },
+            "architectureElement":{
+               "label":"Architektonisches Element",
+               "description":"Auswahl des Bauteils, für den das Objekt angefertigt wurde"
+            }
+         }
+      },
+      "Terracotta":{
+         "label":"Tonfund",
+         "fields":{
+            "decorationTechnique":{
+               "label":"Dekorationstechnik"
+            },
+            "objectType":{
+               "label":"Art des Objekts"
+            },
+            "coatInsideType":{
+               "label":"Oberflächenbehandlung innen"
+            },
+            "coatOutsideType":{
+               "label":"Oberflächenbehandlung außen"
+            },
+            "potteryTypeSpecific":{
+               "label":"Ware"
+            }
+         }
+      },
+      "Coin":{
+         "fields":{
+            "mintingRuler":{
+               "label":"Römische Kaiser",
+               "description":"Auswahl des zur Prägung gehörenden römischen Kaisers, sofern vorhanden."
+            }
+         }
+      },
+      "Wood":{
+         "fields":{
+            "surfaceCondition":{
+               "label":"Erhaltung der Oberfläche",
+               "description":"Beschreibung der Erhaltung der Oberfläche. Ggf. auffälligstes Merkmal auswählen und Details in der Beschreibung einfügen."
+            }
+         }
+      },
+      "Glass":{
+         "fields":{
+            "vesselpart":{
+               "label":"Gefäßteil",
+               "description":"WF: Wandfragment; RF: Randfragment; BF: Bodenfragment; H: Henkel; D: Deckel; KOMP: komplettes Profil; VAR: andere"
+            }
+         }
+      },
+      "Find":{
+         "fields":{
+            "sampleGadara":{
+               "label":"entnommene Proben"
+            },
+            "sampleGadaraPlace":{
+               "label":"Probenausfuhr"
+            },
+            "sampleGadaraComm":{
+               "label":"Kommentar zur Probe"
+            },
+            "amountDescription":{
+               "label":"Anzahl (Einheit)"
+            }
+         }
+      },
+      "PlasterFragment":{
+         "fields":{
+            "hasDecoration":{
+               "label":"Oberflächenbehandlung"
+            },
+            "plasterType-Gadara":{
+               "label":"Verwendung des Putzes"
+            }
+         }
+      },
+      "Feature":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Eigene Feldtitel und Beschreibungen",
+         "fields":{
+            "description":{
+               "label":"Beschreibung"
+            },
+            "interpretation":{
+               "label":"Interpretation"
+            },
+            "comparison":{
+               "label":"Vergleich"
+            },
+            "bibliography":{
+               "label":"Bibliographie"
+            }
+         }
+      },
+      "Layer":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Eigene Feldtitel und Beschreibungen",
+         "label":"Schicht (positiver Befund)",
+         "fields":{
+            "depositType":{
+               "label":"Typ Schicht",
+               "description":"Wenn Typ nicht gelistet, dann „Sonstiges“ und freies Feld in „Typ Schicht: Sonstiges“ ausfüllen, Bsp.: geschüttetes Fundament."
+            },
+            "depositTypeOther":{
+               "label":"Typ Schicht: Sonstiges",
+               "description":"Wenn Typ Schicht „Sonstiges“, dann hier freies Feld ausfüllen, Bsp.: geschüttetes Fundament."
+            },
+            "featureBorders":{
+               "label":"Grenzen"
+            },
+            "colorLightness":{
+               "label":"Farbe: Helligkeit",
+               "description":"Für die Farbbeschreibung können folgende drei Felder ausgefüllt werden: Helligkeit, Tendenz und Grundfarbe."
+            },
+            "colorModifier":{
+               "label":"Farbe: Tendenz",
+               "description":"Für die Farbbeschreibung können folgende drei Felder ausgefüllt werden: Helligkeit, Tendenz und Grundfarbe."
+            },
+            "colorBasecolor":{
+               "label":"Farbe: Grundfarbe",
+               "description":"Für die Farbbeschreibung können folgende drei Felder ausgefüllt werden: Helligkeit, Tendenz und Grundfarbe."
+            },
+            "soilType":{
+               "label":"Komposition",
+               "description":"Bodenkundliche Bezeichnung des Bodens. Bei Ascheschicht/Holzkohleschicht „nicht anwendbar“ angeben."
+            },
+            "consistency":{
+               "label":"Konsistenz"
+            },
+            "inclusions":{
+               "label":"Einschlüsse",
+               "description":"Einschlüsse, inklusive Funde. Wenn weitere Einschlüsse vorhanden, dann „Sonstiges“ und freies Feld in „Einschlüsse: Sonstiges“ ausfüllen."
+            },
+            "inclusionsOther":{
+               "label":"Einschlüsse: Sonstiges",
+               "description":"Wenn Einschlüsse „Sonstiges“, dann hier freies Feld ausfüllen."
+            },
+            "samples":{
+               "label":"entnommene Proben"
+            },
+            "sampleStatus":{
+               "label":"Probenausfuhr"
+            },
+            "sampleComm":{
+               "label":"Kommentar zur Probe"
+            }
+         }
+      },
+      "Architecture":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Eigene Feldtitel und Beschreibungen",
+         "label":"Struktur (positiver Befund)",
+         "fields":{
+            "structureType":{
+               "label":"Typ Struktur",
+               "description":"Wenn Typ nicht gelistet, dann „Sonstiges“ und freies Feld ausfüllen, Bsp.: Steinsetzung."
+            },
+            "structureTypeOther":{
+               "label":"Typ Struktur: Sonstiges",
+               "description":"Wenn Typ Struktur „Sonstiges“, dann hier freies Feld ausfüllen, Bsp.: Steinsetzung."
+            },
+            "featureBorders-Gadara":{
+               "label":"Grenzen"
+            },
+            "conditionComment":{
+               "label":"Kommentar zum Erhaltungszustand",
+               "description":"Genauere Beschreibung zur Erhaltung, Bsp.: erhaltene Lagen und deren Höhe, Störungen, Versturz."
+            },
+            "material":{
+               "label":"Material"
+            },
+            "Construction":{
+               "label":"Konstruktion",
+               "description":"Konstruktion, z. Bsp. von Fundament oder Mauer, bei anderen Typen „nicht anwendbar“ ankreuzen."
+            },
+            "masonry":{
+               "label":"Mauerwerk",
+               "description":"Mauerwerk, z. Bsp. von Fundament oder Mauer, bei anderen Typen „nicht anwendbar“ ankreuzen."
+            },
+            "stoneWorking":{
+               "label":"Steinbearbeitung"
+            },
+            "stoneDressing":{
+               "label":"Steinoberfläche"
+            },
+            "mortar":{
+               "label":"Versatzmörtel"
+            },
+            "mortarInclusion":{
+               "label":"Holzkohle/organisches Material im Versatzmörtel enthalten"
+            },
+            "mortarComment":{
+               "label":"Kommentar zum Versatzmörtel"
+            },
+            "plaster":{
+               "label":"Verputz"
+            },
+            "plasterInclusion":{
+               "label":"Holzkohle/organisches Material im Verputz enthalten"
+            },
+            "plastercoloring":{
+               "label":"Farbfassung auf Verputz"
+            },
+            "plasterComment":{
+               "label":"Kommentar zum Verputz"
+            },
+            "inclusions":{
+               "label":"Einschlüsse",
+               "description":"Einschlüsse, inklusive Funde. Wenn weitere Einschlüsse vorhanden, dann „Sonstiges“ und freies Feld in „Einschlüsse: Sonstiges“ ausfüllen."
+            },
+            "inclusionsOther":{
+               "label":"Einschlüsse: Sonstiges",
+               "description":"Wenn Einschlüsse „Sonstiges“, dann hier freies Feld ausfüllen."
+            },
+            "samples":{
+               "label":"entnommene Proben"
+            },
+            "sampleStatus":{
+               "label":"Probenausfuhr"
+            },
+            "sampleComm":{
+               "label":"Kommentar zur Probe"
+            }
+         }
+      },
+      "Cut":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Eigene Feldtitel und Beschreibungen",
+         "label":"Schnitt (negativer Befund)",
+         "fields":{
+            "cutType":{
+               "label":"Typ negativer Befund",
+               "description":"Wenn Typ nicht gelistet, dann „Sonstiges“ und freies Feld ausfüllen, Bsp.: Pfostengrube."
+            },
+            "cutTypeOther":{
+               "label":"Typ negativer Befund: Sonstiges",
+               "description":"Wenn Typ nicht gelistet, dann „Sonstiges“ und freies Feld in „Typ Struktur: Sonstiges“ ausfüllen, Bsp.: Pfostengrube."
+            },
+            "featureBorders":{
+               "label":"Grenzen"
+            },
+            "shapeInPlan":{
+               "label":"Form im Planum"
+            },
+            "shapeInProfile":{
+               "label":"Form im Profil"
+            },
+            "shapeEdges":{
+               "label":"Wandung"
+            },
+            "shapeBreakSlopeTop":{
+               "label":"Grubenanlauf"
+            },
+            "shapeBreakSlopeBase":{
+               "label":"Übergang Ecken"
+            },
+            "shapeBase":{
+               "label":"Basis"
+            }
+         }
       }
-    },
-	"Pottery": {
-	  "createdBy": "Hanna Hamel, 28.01.2021",
-      "description": "Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
-      "fields": {
-        "specificType": {
-          "label": "Form",
-		  "description": "B: Becher, Bö: Böden, H: Henkel; Ka: Kannen, Kr: Krüge, Sa: Schalen, Sü: Schüsseln, U: Unguentaria, A: Amphoren, D: Deckel, T: Töpfe, P: Pfannen/Platten, Ks: Kasserollen"																																																	
-        },
-        "materialType": {
-          "label": "Kategorie der Gefäßkeramik",
-          "description": "FK: Feinkeramik/Tafelgeschirr (lokal und importiert), GK: Gebrauchskeramik (Vorrats-, Zubereitungs- und Transportgefäße; lokal und importiert), KK: Küchengeschirr (vorrangig zum Kochen verwendetes Geschirr)"
-        },
-		"vesselpart": {
-		  "label": "Gefäßteil",
-		  "description": "WF = Wandfragment, RF = Randfragment, BF = Bodenfragment, H = Henkel, D = Deckel, KOMP = vollständiges Gefäß, VAR = Verschiedenes"
-		},
-		"potteryTypeSpecific": {
-		  "label": "Ware",
-		  "description": "Tonbestimmung (zur Aufschlüsselung Warenkatalog hinzuziehen)"
-        }
-      }
-    },
-	"Stone": {
-      "label": "Stein",
-      "fields": {
-        "purpose": {
-          "label": "Verwendung",
-          "description": "kurze Beschreibung zur Verwendung des Objekts"
-        },
-        "treatment": {
-          "label": "Bearbeitung",
-          "description": "Auswahl der Bearbeitungsspuren auf der Oberfläche des Objekts"
-        },
-        "workmanship": {
-          "label": "Ausführung",
-          "description": "Beschreibung der Qualität, in der ein bearbeiteter Stein, vorliegt. Ggf. Angabe der sichtbaren Werkzeugspuren oder anderer Marker für die Ausführung der Handwerksarbeit."
-        },
-        "architectureElement": {
-          "label": "Architektonisches Element",
-		  "description": "Auswahl des Bauteils, für den das Objekt angefertigt wurde"
-        }
-      }
-    },
-	"Terracotta": {
-	  "label": "Tonfund",
-      "fields": {
-	    "decorationTechnique": {
-		  "label": "Dekorationstechnik"
-		},
-		"objectType": {
-		  "label": "Art des Objekts"
-		},
-		"coatInsideType": {
-          "label": "Oberflächenbehandlung innen"
-		},
-		"coatOutsideType": {
-		  "label": "Oberflächenbehandlung außen"
-		},
-		"potteryTypeSpecific": {
-		  "label": "Ware"
-		}
-	  }
-	},
-	"Coin": {
-	  "fields": {
-	    "mintingRuler": {
-		"label": "Römische Kaiser",
-		"description": "Auswahl des zur Prägung gehörenden römischen Kaisers, sofern vorhanden."
-		}
-	  }
-	},
-	"Wood": {
-	  "fields": {
-	    "surfaceCondition": {
-		"label": "Erhaltung der Oberfläche",
-		"description": "Beschreibung der Erhaltung der Oberfläche. Ggf. auffälligstes Merkmal auswählen und Details in der Beschreibung einfügen."
-		}
-	  }
-	},
-	"Glass": {
-	"fields": {
-		"vesselpart": {
-		  "label": "Gefäßteil",
-		  "description": "WF: Wandfragment; RF: Randfragment; BF: Bodenfragment; H: Henkel; D: Deckel; KOMP: komplettes Profil; VAR: andere"
-		}
-      }
-	},
-	"Find": {
-	"fields": {
-		"sampleGadara": {
-		  "label": "entnommene Proben"
-		},
-		"sampleGadaraPlace": {
-		  "label": "Probenausfuhr"
-		},
-		"sampleGadaraComm": {
-		  "label": "Kommentar zur Probe"
-		},
-		"amountDescription": {
-		  "label": "Anzahl (Einheit)"
-		}
-	  }	
-	},
-	"PlasterFragment": {
-    "fields": {
-        "hasDecoration": {
-          "label": "Oberflächenbehandlung"
-        },
-		"plasterType-Gadara": {
-		  "label": "Verwendung des Putzes"
-        }
-	  }
-	}
-  }
+   }
 }

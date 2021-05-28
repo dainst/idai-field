@@ -52417,14 +52417,14 @@
           "de": "Marmor mit Adern",
           "en": "Marble with veins"
         }
-      }, 
+      },
       "nonveined marble": {
         "labels": {
           "de": "Marmor ohne Adern",
           "en": "Marble without veins"
         }
       }
-    }  
+    }
   },
   "quality-milet": {
     "creationDate": "16-03-2021",
@@ -52432,7 +52432,7 @@
     "description": {
       "de": "Qualitätseinschätzung",
       "en": "Assesment of Quality"
-    }, 
+    },
     "order": [],
     "values": {
       "very high quality": {
@@ -52480,7 +52480,7 @@
     "description": {
       "de": "Konsistenz des Erdbefunds",
       "en": "Consistency of Layer"
-    }, 
+    },
     "order": [
       "very_hard",
       "hard",
@@ -52957,7 +52957,7 @@
       "1:25000",
       "1:50000",
       "other"
-    ], 
+    ],
     "values": {
       "1:1": {},
       "1:2": {},
@@ -53315,7 +53315,7 @@
       "Handgeformte Keramik": {},
       "andere": {}
     }
-  }, 
+  },
   "Pottery-functionalCategory-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53446,7 +53446,7 @@
         }
       }
     }
-  }, 
+  },
   "Pottery-fabricHardness-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53472,11 +53472,11 @@
           "de": "klingend hart (nicht mit dem Messer ritzbar)"
         }
       }
-    }, 
+    },
     "order": [
       "weich", "hart", "sehr hart", "klingend hart"
     ]
-  }, 
+  },
   "Pottery-temperType-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53495,7 +53495,7 @@
       "Magerung": {},
       "Vulkanisch": {}
     }
-  }, 
+  },
   "Pottery-temperAmount-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53507,7 +53507,7 @@
       "mittel": {},
       "reichlich": {},
       "sehr viel": {}
-    }, 
+    },
     "order": [
       "nicht erkennbar",
       "wenige",
@@ -53516,7 +53516,7 @@
       "reichlich",
       "sehr viel"
     ]
-  }, 
+  },
   "Pottery-temperGrain-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53527,7 +53527,7 @@
       "mittel": {},
       "grob": {},
       "sehr grob": {}
-    }, 
+    },
     "order": [
       "sehr fein",
       "fein",
@@ -53535,7 +53535,7 @@
       "grob",
       "sehr grob"
     ]
-  }, 
+  },
   "Pottery-surfaceTreatment-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53555,7 +53555,7 @@
       "Kammstrich": {},
       "Fingereindrücke": {}
     }
-  }, 
+  },
   "Pottery-analysisMethod-milet": {
     "creationDate": "16-03-2021",
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
@@ -53891,12 +53891,1264 @@
       "mittel": {},
       "hoch": {},
       "sehr hoch": {}
-    }, 
+    },
     "order": [
       "gering",
       "mittel",
       "hoch",
       "sehr hoch"
     ]
+  },
+  "Deposit-depositType-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"16-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Abhub":{
+           "labels":{
+              "de":"Abhub",
+              "en":"arbitrary spit"
+           }
+        },
+        "Abraum":{
+           "labels":{
+              "de":"Abraum",
+              "en":"refuse deposit"
+           }
+        },
+        "Akkumulation":{
+           "labels":{
+              "de":"Akkumulation",
+              "en":"accumulation"
+           }
+        },
+        "Ascheschicht":{
+           "labels":{
+              "de":"Ascheschicht",
+              "en":"ash layer"
+           }
+        },
+        "Brandschicht":{
+           "labels":{
+              "de":"Brandschicht",
+              "en":"burnt layer"
+           }
+        },
+        "Erdbefund":{
+           "labels":{
+              "de":"Erdbefund",
+              "en":"layer"
+           }
+        },
+        "Gewachsener Boden/Fels":{
+           "labels":{
+              "de":"Gewachsener Boden/Fels",
+              "en":"bedrock"
+           }
+        },
+        "Holzkohlekonzentration":{
+           "labels":{
+              "de":"Holzkohlekonzentration",
+              "en":"charcoal concentration"
+           }
+        },
+        "Laufhorizont (Getretener Boden)":{
+           "labels":{
+              "de":"Laufhorizont (Getretener Boden)",
+              "en":"trodden floor"
+           }
+        },
+        "Planierschicht":{
+           "labels":{
+              "de":"Planierschicht",
+              "en":"levelling layer"
+           }
+        },
+        "Verfüllung":{
+           "labels":{
+              "de":"Verfüllung",
+              "en":"fill"
+           }
+        },
+        "Versturz":{
+           "labels":{
+              "de":"Versturz",
+              "en":"collapse"
+           }
+        },
+        "Sonstiges":{
+           "labels":{
+              "de":"Sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "Abhub",
+        "Abraum",
+        "Akkumulation",
+        "Ascheschicht",
+        "Brandschicht",
+        "Erdbefund",
+        "Gewachsener Boden/Fels",
+        "Holzkohlekonzentration",
+        "Laufhorizont (Getretener Boden)",
+        "Planierschicht",
+        "Verfüllung",
+        "Versturz",
+        "Sonstiges"
+     ]
+  },
+  "featureBorders-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"16-09-2020",
+     "description":{
+        "de":"Verwendung in Kategorien layer/architecture/cut mit verkürzter Werteliste. Ähnelt Feature-featureBorders-default aus Kategorie feature",
+        "en":"Usage in category layer/architecture/cut with a shortened valuelist. Similar to Feature-featureBorders-default from category feature"
+     },
+     "values":{
+        "erahnbar/fließend":{
+           "labels":{
+              "de":"erahnbar/fließend",
+              "en":"diffuse/smooth"
+           }
+        },
+        "undeutlich":{
+           "labels":{
+              "de":"undeutlich",
+              "en":"unclear"
+           }
+        },
+        "deutlich":{
+           "labels":{
+              "de":"deutlich",
+              "en":"clear"
+           }
+        },
+        "sehr deutlich":{
+           "labels":{
+              "de":"sehr deutlich",
+              "en":"very clear"
+           }
+        }
+     },
+     "order":[
+        "erahnbar/fließend",
+        "undeutlich",
+        "deutlich",
+        "sehr deutlich"
+     ]
+  },
+  "Deposit-colorLightness-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"01.10.2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "hell-":{
+           "labels":{
+              "de":"hell-",
+              "en":"light"
+           }
+        },
+        "mittel-":{
+           "labels":{
+              "de":"mittel-",
+              "en":"mid"
+           }
+        },
+        "dunkel-":{
+           "labels":{
+              "de":"dunkel-",
+              "en":"dark"
+           }
+        }
+     },
+     "order":[
+        "hell-",
+        "mittel-",
+        "dunkel-"
+     ]
+  },
+  "Deposit-colorModifier-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"01.10.2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "braun-":{
+           "labels":{
+              "de":"braun-",
+              "en":"brownish"
+           }
+        },
+        "gelb-":{
+           "labels":{
+              "de":"gelb-",
+              "en":"yellowish"
+           }
+        },
+        "grau-":{
+           "labels":{
+              "de":"grau-",
+              "en":"greyish"
+           }
+        },
+        "grün-":{
+           "labels":{
+              "de":"grün-",
+              "en":"greenish"
+           }
+        },
+        "orange-":{
+           "labels":{
+              "de":"orange-",
+              "en":"orange"
+           }
+        },
+        "rot-":{
+           "labels":{
+              "de":"rot-",
+              "en":"reddish"
+           }
+        }
+     },
+     "order":[
+        "braun-",
+        "gelb-",
+        "grau-",
+        "grün-",
+        "orange-",
+        "rot-"
+     ]
+  },
+  "Deposit-colorBasecolor-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"01.10.2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "beige":{
+           "labels":{
+              "de":"beige",
+              "en":"beige"
+           }
+        },
+        "braun":{
+           "labels":{
+              "de":"braun",
+              "en":"brown"
+           }
+        },
+        "gelb":{
+           "labels":{
+              "de":"gelb",
+              "en":"yellow"
+           }
+        },
+        "grün":{
+           "labels":{
+              "de":"grün",
+              "en":"green"
+           }
+        },
+        "ocker":{
+           "labels":{
+              "de":"ocker",
+              "en":"ochre"
+           }
+        },
+        "orange":{
+           "labels":{
+              "de":"orange",
+              "en":"orange"
+           }
+        },
+        "rot":{
+           "labels":{
+              "de":"rot",
+              "en":"red"
+           }
+        },
+        "schwarz":{
+           "labels":{
+              "de":"schwarz",
+              "en":"black"
+           }
+        },
+        "weiß":{
+           "labels":{
+              "de":"weiß",
+              "en":"white"
+           }
+        }
+     },
+     "order":[
+        "beige",
+        "braun",
+        "gelb",
+        "grün",
+        "ocker",
+        "orange",
+        "rot",
+        "schwarz",
+        "weiß"
+     ]
+  },
+  "Layer-soilType-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"13-04-2021",
+     "description":{
+        "de":"Basierend auf Layer-soilType-default mit modifizierter Werteliste",
+        "en":"Based on Layer-soilType-Gadara with a modified valuelist"
+     },
+     "values":{
+        "Erde (bei Altgrabungen)":{
+           "labels":{
+              "de":"Erde (bei Altgrabungen)",
+              "en":"earth (old excavations)"
+           }
+        },
+        "Sand":{
+           "labels":{
+              "de":"Sand",
+              "en":"sand"
+           }
+        },
+        "Sandiger Schluff":{
+           "labels":{
+              "de":"Sandiger Schluff",
+              "en":"sandy silt"
+           }
+        },
+        "Sandiger Ton":{
+           "labels":{
+              "de":"Sandiger Ton",
+              "en":"sandy clay"
+           }
+        },
+        "Schluff":{
+           "labels":{
+              "de":"Schluff",
+              "en":"silt"
+           }
+        },
+        "Schluffiger Sand":{
+           "labels":{
+              "de":"Schluffiger Sand",
+              "en":"silty sand"
+           }
+        },
+        "Schluffiger Ton":{
+           "labels":{
+              "de":"Schluffiger Ton",
+              "en":"silty clay"
+           }
+        },
+        "Kalk":{
+           "labels":{
+              "de":"Kalk",
+              "en":"lime"
+           }
+        },
+        "Lehm":{
+           "labels":{
+              "de":"Lehm",
+              "en":"loam"
+           }
+        },
+        "Ton":{
+           "labels":{
+              "de":"Ton",
+              "en":"clay"
+           }
+        },
+        "Toniger Sand":{
+           "labels":{
+              "de":"Toniger Sand",
+              "en":"clayey sand"
+           }
+        },
+        "Toniger Schluff":{
+           "labels":{
+              "de":"Toniger Schluff",
+              "en":"clayey silt"
+           }
+        },
+        "Nicht anwendbar":{
+           "labels":{
+              "de":"Nicht anwendbar",
+              "en":"non-applicable"
+           }
+        }
+     },
+     "order":[
+        "Erde (bei Altgrabungen)",
+        "Sand",
+        "Sandiger Schluff",
+        "Sandiger Ton",
+        "Schluff",
+        "Schluffiger Sand",
+        "Schluffiger Ton",
+        "Kalk",
+        "Lehm",
+        "Ton",
+        "Toniger Sand",
+        "Toniger Schluff",
+        "Nicht anwendbar"
+     ]
+  },
+  "Layer-consistency-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"14-04-2021",
+     "description":{
+        "de":"Basierend auf Layer-consistency-default mit modifizierter Werteliste",
+        "en":"Based on Layer-consistency-default with a modified valuelist"
+     },
+     "values":{
+        "locker":{
+           "labels":{
+              "de":"locker",
+              "en":"loose"
+           }
+        },
+        "fest":{
+           "labels":{
+              "de":"fest",
+              "en":"firm"
+           }
+        },
+        "sehr fest":{
+           "labels":{
+              "de":"sehr fest",
+              "en":"very firm"
+           }
+        }
+     },
+     "order":[
+        "locker",
+        "fest",
+        "sehr fest"
+     ]
+  },
+  "Structure-structureType-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"18-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Brunnen":{
+           "labels":{
+              "de":"Brunnen",
+              "en":"well"
+           }
+        },
+        "Fundament":{
+           "labels":{
+              "de":"Fundament",
+              "en":"foundation"
+           }
+        },
+        "Fußboden":{
+           "labels":{
+              "de":"Fußboden",
+              "en":"floor"
+           }
+        },
+        "Kanal/Wasserleitung":{
+           "labels":{
+              "de":"Kanal/Wasserleitung",
+              "en":"channel/water pipe"
+           }
+        },
+        "Mauer":{
+           "labels":{
+              "de":"Mauer",
+              "en":"wall"
+           }
+        },
+        "Ofen/Herdstelle":{
+           "labels":{
+              "de":"Ofen/Herdstelle",
+              "en":"oven/hearth"
+           }
+        },
+        "Schwelle":{
+           "labels":{
+              "de":"Schwelle",
+              "en":"threshold"
+           }
+        },
+        "Treppe":{
+           "labels":{
+              "de":"Treppe",
+              "en":"stairs"
+           }
+        },
+        "Zusetzung":{
+           "labels":{
+              "de":"Zusetzung",
+              "en":"(Zusetzung)"
+           }
+        },
+        "Sonstiges":{
+           "labels":{
+              "de":"Sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "Brunnen",
+        "Fundament",
+        "Fußboden",
+        "Kanal/Wasserleitung",
+        "Mauer",
+        "Ofen/Herdstelle",
+        "Schwelle",
+        "Treppe",
+        "Zusetzung",
+        "Sonstiges"
+     ]
+  },
+  "Structure-Material-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"18-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Basalt":{
+           "labels":{
+              "de":"Basalt",
+              "en":"basalt"
+           }
+        },
+        "Estrich":{
+           "labels":{
+              "de":"Estrich",
+              "en":"screed"
+           }
+        },
+        "Granit":{
+           "labels":{
+              "de":"Granit",
+              "en":"granite"
+           }
+        },
+        "Holz":{
+           "labels":{
+              "de":"Holz",
+              "en":"wood"
+           }
+        },
+        "Kalkstein":{
+           "labels":{
+              "de":"Kalkstein",
+              "en":"limestone"
+           }
+        },
+        "Konglomerat":{
+           "labels":{
+              "de":"Konglomerat",
+              "en":"conglomerate"
+           }
+        },
+        "Lehm, gebrannt":{
+           "labels":{
+              "de":"Lehm, gebrannt",
+              "en":"clay, burnt"
+           }
+        },
+        "Lehm, ungebrannt":{
+           "labels":{
+              "de":"Lehm, ungebrannt",
+              "en":"clay, unburnt"
+           }
+        },
+        "Marmor":{
+           "labels":{
+              "de":"Marmor",
+              "en":"marble"
+           }
+        },
+        "Tuffstein":{
+           "labels":{
+              "de":"Tuffstein",
+              "en":"whinstone"
+           }
+        }
+     },
+     "order":[
+        "Basalt",
+        "Estrich",
+        "Granit",
+        "Holz",
+        "Kalkstein",
+        "Konglomerat",
+        "Lehm, gebrannt",
+        "Lehm, ungebrannt",
+        "Marmor",
+        "Tuffstein"
+     ]
+  },
+  "Structure-Construction-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"18-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "einschalig":{
+           "labels":{
+              "de":"einschalig",
+              "en":"one-faced"
+           }
+        },
+        "geschüttet (bei Fundament)":{
+           "labels":{
+              "de":"geschüttet (bei Fundament)",
+              "en":"(“geschüttet”) (foundation)"
+           }
+        },
+        "zweischalig mit Mauerkern":{
+           "labels":{
+              "de":"zweischalig mit Mauerkern",
+              "en":"double-faced with core"
+           }
+        },
+        "zweischalig ohne Mauerkern ":{
+           "labels":{
+              "de":"zweischalig ohne Mauerkern ",
+              "en":"double-faced without core "
+           }
+        },
+        "nicht anwendbar":{
+           "labels":{
+              "de":"nicht anwendbar",
+              "en":"non-applicable"
+           }
+        }
+     },
+     "order":[
+        "einschalig",
+        "geschüttet (bei Fundament)",
+        "zweischalig mit Mauerkern",
+        "zweischalig ohne Mauerkern ",
+        "nicht anwendbar"
+     ]
+  },
+  "Structure-Masonry-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"24-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "nicht in Lagen":{
+           "labels":{
+              "de":"nicht in Lagen",
+              "en":"uncoursed"
+           }
+        },
+        "unregelmäßig in Lagen":{
+           "labels":{
+              "de":"unregelmäßig in Lagen",
+              "en":"uneven coursed"
+           }
+        },
+        "regelmäßig in Lagen":{
+           "labels":{
+              "de":"regelmäßig in Lagen",
+              "en":"regular coursed"
+           }
+        },
+        "nicht anwendbar":{
+           "labels":{
+              "de":"nicht anwendbar",
+              "en":"non-applicable"
+           }
+        }
+     },
+     "order":[
+        "nicht in Lagen",
+        "unregelmäßig in Lagen",
+        "regelmäßig in Lagen",
+        "nicht anwendbar"
+     ]
+  },
+  "Structure-StoneWorking-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"24-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Bruchstein":{
+           "labels":{
+              "de":"Bruchstein",
+              "en":"quarry stone"
+           }
+        },
+        "Haustein":{
+           "labels":{
+              "de":"Haustein",
+              "en":"(Haustein) ashlar?"
+           }
+        },
+        "Lesestein":{
+           "labels":{
+              "de":"Lesestein",
+              "en":"(Lesestein)"
+           }
+        },
+        "Linse":{
+           "labels":{
+              "de":"Linse",
+              "en":"(Linse)"
+           }
+        },
+        "Mosaik":{
+           "labels":{
+              "de":"Mosaik",
+              "en":"mosaic"
+           }
+        },
+        "Pflaster":{
+           "labels":{
+              "de":"Pflaster",
+              "en":"plaster"
+           }
+        },
+        "Platte":{
+           "labels":{
+              "de":"Platte",
+              "en":"flagstone"
+           }
+        },
+        "Spolie":{
+           "labels":{
+              "de":"Spolie",
+              "en":"spolia"
+           }
+        },
+        "Werkstein":{
+           "labels":{
+              "de":"Werkstein",
+              "en":"(Werkstein) ashlar?"
+           }
+        }
+     },
+     "order":[
+        "Bruchstein",
+        "Haustein",
+        "Lesestein",
+        "Linse",
+        "Mosaik",
+        "Pflaster",
+        "Platte",
+        "Spolie",
+        "Werkstein"
+     ]
+  },
+  "Structure-StoneDressing-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"24-09-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Unbehauen":{
+           "labels":{
+              "de":"Unbehauen",
+              "en":"unhewn"
+           }
+        },
+        "Bruchbau":{
+           "labels":{
+              "de":"Bruchbau",
+              "en":"(Bruchbau)"
+           }
+        },
+        "Grob behauen":{
+           "labels":{
+              "de":"Grob behauen",
+              "en":"roughly hewn"
+           }
+        },
+        "Fein behauen":{
+           "labels":{
+              "de":"Fein behauen",
+              "en":"finely hewn"
+           }
+        },
+        "Grob geglättet":{
+           "labels":{
+              "de":"Grob geglättet",
+              "en":"(Grob geglättet)"
+           }
+        },
+        "Fein geglättet":{
+           "labels":{
+              "de":"Fein geglättet",
+              "en":"(Fein geglättet)"
+           }
+        }
+     },
+     "order":[
+        "Unbehauen",
+        "Bruchbau",
+        "Grob behauen",
+        "Fein behauen",
+        "Grob geglättet",
+        "Fein geglättet"
+     ]
+  },
+  "Cut-cutType-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"06-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Baugrube":{
+           "labels":{
+              "de":"Baugrube",
+              "en":"arbitrary spit"
+           }
+        },
+        "Abraum":{
+           "labels":{
+              "de":"Abraum",
+              "en":"foundation trench"
+           }
+        },
+        "Graben":{
+           "labels":{
+              "de":"Graben",
+              "en":"ditch"
+           }
+        },
+        "Grube":{
+           "labels":{
+              "de":"Grube",
+              "en":"pit"
+           }
+        },
+        "Öffnung":{
+           "labels":{
+              "de":"Öffnung",
+              "en":"opening"
+           }
+        },
+        "Sonstiges":{
+           "labels":{
+              "de":"Sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "Baugrube",
+        "Graben",
+        "Grube",
+        "Öffnung",
+        "Sonstiges"
+     ]
+  },
+  "Cut-ShapeInPlan-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "rund":{
+           "labels":{
+              "de":"rund",
+              "en":"circular"
+           }
+        },
+        "oval":{
+           "labels":{
+              "de":"oval",
+              "en":"oval"
+           }
+        },
+        "quadratisch":{
+           "labels":{
+              "de":"quadratisch",
+              "en":"squared"
+           }
+        },
+        "rechteckig/linear":{
+           "labels":{
+              "de":"rechteckig/linear",
+              "en":"rectangular/linear"
+           }
+        },
+        "unregelmäßig":{
+           "labels":{
+              "de":"unregelmäßig",
+              "en":"irregular"
+           }
+        },
+        "sonstiges":{
+           "labels":{
+              "de":"sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "rund",
+        "oval",
+        "quadratisch",
+        "rechteckig/linear",
+        "unregelmäßig",
+        "sonstiges"
+     ]
+  },
+  "Cut-ShapeInProfile-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "V-förmig":{
+           "labels":{
+              "de":"V-förmig",
+              "en":"V-shaped"
+           }
+        },
+        "U-förmig":{
+           "labels":{
+              "de":"U-förmig",
+              "en":"U-shaped"
+           }
+        },
+        "quadratisch":{
+           "labels":{
+              "de":"quadratisch",
+              "en":"squared"
+           }
+        },
+        "rechteckig/linear":{
+           "labels":{
+              "de":"rechteckig/linear",
+              "en":"rectangular/linear"
+           }
+        },
+        "unregelmäßig":{
+           "labels":{
+              "de":"unregelmäßig",
+              "en":"irregular"
+           }
+        },
+        "sonstiges":{
+           "labels":{
+              "de":"sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "V-förmig",
+        "U-förmig",
+        "quadratisch",
+        "rechteckig/linear",
+        "unregelmäßig",
+        "sonstiges"
+     ]
+  },
+  "Cut-ShapeEdges-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "vertikal":{
+           "labels":{
+              "de":"vertikal",
+              "en":"vertical"
+           }
+        },
+        "schräg":{
+           "labels":{
+              "de":"schräg",
+              "en":"sloped"
+           }
+        },
+        "überkippt":{
+           "labels":{
+              "de":"überkippt",
+              "en":"overturned/undercut"
+           }
+        },
+        "konvex":{
+           "labels":{
+              "de":"konvex",
+              "en":"convex"
+           }
+        },
+        "konkav":{
+           "labels":{
+              "de":"konkav",
+              "en":"concave"
+           }
+        },
+        "sonstiges":{
+           "labels":{
+              "de":"sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "vertikal",
+        "schräg",
+        "überkippt",
+        "konvex",
+        "konkav",
+        "sonstiges"
+     ]
+  },
+  "Cut-ShapeBreakSlopeTop-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "scharf":{
+           "labels":{
+              "de":"scharf",
+              "en":"sharp"
+           }
+        },
+        "gerundet":{
+           "labels":{
+              "de":"gerundet",
+              "en":"rounded"
+           }
+        },
+        "fließend":{
+           "labels":{
+              "de":"fließend",
+              "en":"gradual"
+           }
+        }
+     },
+     "order":[
+        "scharf",
+        "gerundet",
+        "fließend"
+     ]
+  },
+  "Cut-ShapeBreakSlopeBase-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "scharf":{
+           "labels":{
+              "de":"scharf",
+              "en":"sharp"
+           }
+        },
+        "gerundet":{
+           "labels":{
+              "de":"gerundet",
+              "en":"rounded"
+           }
+        },
+        "fließend":{
+           "labels":{
+              "de":"fließend",
+              "en":"gradual"
+           }
+        }
+     },
+     "order":[
+        "scharf",
+        "gerundet",
+        "fließend"
+     ]
+  },
+  "Cut-ShapeBase-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"12-10-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "horizontal":{
+           "labels":{
+              "de":"horizontal",
+              "en":"horizontal"
+           }
+        },
+        "konvex":{
+           "labels":{
+              "de":"konvex",
+              "en":"convex"
+           }
+        },
+        "konkav":{
+           "labels":{
+              "de":"konkav",
+              "en":"concave"
+           }
+        },
+        "unregelmäßig":{
+           "labels":{
+              "de":"unregelmäßig",
+              "en":"irregular"
+           }
+        },
+        "sonstiges":{
+           "labels":{
+              "de":"sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "horizontal",
+        "konvex",
+        "konkav",
+        "unregelmäßig",
+        "sonstiges"
+     ]
+  },
+  "inclusions-Gadara":{
+     "createdBy":"Luna Watkins",
+     "creationDate":"09-11-2020",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Basalt":{
+           "labels":{
+              "de":"Basalt",
+              "en":"basalt"
+           }
+        },
+        "Glas":{
+           "labels":{
+              "de":"Glas",
+              "en":"glass"
+           }
+        },
+        "Granit":{
+           "labels":{
+              "de":"Granit",
+              "en":"granit"
+           }
+        },
+        "Holz":{
+           "labels":{
+              "de":"Holz",
+              "en":"wood"
+           }
+        },
+        "Kalkstein":{
+           "labels":{
+              "de":"Kalkstein",
+              "en":"limestone"
+           }
+        },
+        "Keramik":{
+           "labels":{
+              "de":"Keramik",
+              "en":"pottery"
+           }
+        },
+        "Knochen":{
+           "labels":{
+              "de":"Knochen",
+              "en":"bone"
+           }
+        },
+        "Marmor":{
+           "labels":{
+              "de":"Marmor",
+              "en":"marble"
+           }
+        },
+        "Metall":{
+           "labels":{
+              "de":"Metall",
+              "en":"metal"
+           }
+        },
+        "Mörtel/Putz":{
+           "labels":{
+              "de":"Mörtel/Putz",
+              "en":"mortar/plaster"
+           }
+        },
+        "Organisches Material":{
+           "labels":{
+              "de":"Organisches Material",
+              "en":"organic material"
+           }
+        },
+        "Tuffstein":{
+           "labels":{
+              "de":"Tuffstein",
+              "en":"whinstone"
+           }
+        },
+        "Sonstiges":{
+           "labels":{
+              "de":"Sonstiges",
+              "en":"other"
+           }
+        }
+     },
+     "order":[
+        "Basalt",
+        "Glas",
+        "Granit",
+        "Holz",
+        "Kalkstein",
+        "Keramik",
+        "Knochen",
+        "Marmor",
+        "Metall",
+        "Mörtel/Putz",
+        "Organisches Material",
+        "Tuffstein",
+        "Sonstiges"
+     ]
   }
 }

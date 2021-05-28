@@ -1,233 +1,158 @@
 {
    "Project:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+     "hidden":[],
+      "fields":{}
    },
    "Operation:default":{
-      "hidden":[
-         
-      ],
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      }
+      "hidden":[],
+      "fields":{}
    },
    "Survey:default":{
-      "commons":[
-         "dating"
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "commons":["dating"],
+      "hidden":[],
+      "fields":{}
+
    },
    "SurveyUnit:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Place:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Area:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Trench:default":{
       "commons":[
-         "dating"
+        "dating"
       ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Building:default":{
-      "commons":[
-         
-      ],
+      "hidden": [],
+      "fields":{},
       "valuelists":{
-         "period":"periods-gadara"
-      },
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+        "period" :" periods-gadara"
+      }
    },
    "BuildingPart:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+       "hidden":[],
+       "fields":{}
    },
    "Find:default":{
-      "hidden":[
-         "bibliography",
-         "catalogueNumber",
-         "conditionComment",
-         "conditionPercent",
-         "hasRestoration",
-         "storageInventoryNumber",
-         "condition",
-         "conditionAmount"
-      ],
-      "commons":[
-         "dating"
-      ],
-      "fields":{
-         "amountDescription":{
-            "inputType":"radio"
-         },
-         "samples":{
-            "inputType":"radio"
-         },
-         "sampleStatus":{
-            "inputType":"radio"
-         },
-         "sampleComm":{
-            "inputType":"input"
-         }
-      },
-      "valuelists":{
-         "period":"periods-gadara",
-         "amountDescription":"Find-amountDescription-gadara",
-         "samples":"Find-sample-Gadara",
-         "sampleStatus":"Find-samplePl-Gadara",
-         "storagePlace":"Find-Store-Gadara"
-      }
+       "commons":[
+          "dating"
+       ],
+       "hidden":[
+           "bibliography",
+           "catalogueNumber",
+           "conditionComment",
+           "conditionPercent",
+           "hasRestoration",
+           "storageInventoryNumber",
+           "condition",
+           "conditionAmount"
+          ],
+       "fields":{
+            "amountDescription":{
+               "inputType":"radio"
+             },
+            "samples":{
+               "inputType":"radio"
+             },
+            "sampleStatus":{
+               "inputType":"radio"
+             },
+            "sampleComm":{
+               "inputType":"input"
+            }
+          },
+       "valuelists":{
+            "period":"periods-gadara",
+            "amountDescription":"Find-amountDescription-gadara",
+            "samples":"Find-sample-Gadara",
+            "sampleStatus":"Find-samplePl-Gadara",
+            "storagePlace":"Find-Store-Gadara"
+          }
    },
-   "Feature:default":{
-      "commons":[
-         "dimensionHeight"
-      ],
-      "hidden":[
-         
-      ],
-      "valuelists":{
-         "period":"periods-gadara"
-      },
-      "fields":{
-         "colorSoil":{
-            "inputType":"input"
-         }
-      }
+   "Feature": {
+     "color": "black",
+     "commons": [
+       "beginningDate",
+       "endDate",
+       "diary",
+       "description",
+       "processor",
+       "campaign",
+       "dimensionLength",
+       "dimensionWidth",
+       "dimensionVerticalExtent",
+       "area",
+       "dimensionHeight"
+     ],
+     "valuelists": {
+       "period":"periods-gadara"
+
+     },
+     "fields": {
+       "comparison": {
+         "inputType": "text"
+       },
+       "interpretation": {
+         "inputType": "text"
+       },
+        "bibliography": {
+          "inputType": "literature"
+       }
+     }
    },
    "Room:default":{
       "commons":[
          "dating"
       ],
-      "hidden":[
-         
-      ],
+      "hidden":[],
+      "fields":{},
       "valuelists":{
          "period":"periods-gadara"
-      },
-      "fields":{
-         
       }
    },
    "RoomCeiling:default":{
-      "hidden":[
-         
-      ],
-      "fields":{
-         
-      }
+      "hidden":[],
+      "fields":{}
    },
    "RoomFloor:default":{
-      "hidden":[
-         
-      ],
-      "fields":{
-         
-      }
+      "hidden":[],
+      "fields":{}
    },
    "RoomWall:default":{
-      "hidden":[
-         
-      ],
-      "fields":{
-         
-      }
+      "hidden":[],
+      "fields":{}
    },
    "Inscription:default":{
       "commons":[
          "dating"
       ],
-      "hidden":[
-         
-      ],
+      "hidden":[],
+      "fields":{},
       "valuelists":{
          "period":"periods-gadara"
-      },
-      "fields":{
-         
       }
    },
    "Image:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Glass:default":{
-      "commons":[
-         
-      ],
+      "hidden":[],
       "fields":{
          "vesselpart":{
             "inputType":"checkboxes"
          }
       },
-      "hidden":[
-         
-      ],
       "valuelists":{
          "provenance":"provenance-gadara",
          "transparency":"glass-transparency-gadara",
@@ -242,26 +167,14 @@
       }
    },
    "Mollusk:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Metal:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
       "hidden":[
-         "vesselFormSpecific"
-      ],
+        "vesselFormSpecific"
+     ],
+      "fields":{},
       "valuelists":{
          "provenance":"provenance-gadara",
          "formDescription":"glass-formDescription-gadara",
@@ -273,20 +186,17 @@
       }
    },
    "Brick:default":{
-      "commons":[
-         
-      ],
+     "hidden":[
+        "specificType",
+        "coatColorInside",
+        "coatColorOutside"
+     ],
       "fields":{
          "surfaceTreatment":{
             "inputType":"checkboxes"
          }
       },
-      "hidden":[
-         "specificType",
-         "coatColorInside",
-         "coatColorOutside"
-      ],
-      "valuelists":{
+      "valuelists":  {
          "brickForm":"Brick-brickForm-Gadara",
          "brickUsage":"Brick-brickUsage-Gadara",
          "decorationTechnique":"Brick-decorationTechnique-gadara",
@@ -300,20 +210,20 @@
       }
    },
    "Burial:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden": [],
+      "fields":{}
    },
    "Wood:default":{
-      "commons":[
-         
-      ],
+      "hidden":[
+        "paintCondition",
+        "colorOutsideMunsell",
+        "colorInsideMunsell",
+        "colorBreakMunsell",
+        "paintColorMunsell",
+        "colorBreak",
+        "colorInside",
+        "colorOutside"
+     ],
       "fields":{
          "color":{
             "inputType":"checkboxes"
@@ -322,16 +232,6 @@
             "inputType":"checkboxes"
          }
       },
-      "hidden":[
-         "paintCondition",
-         "colorOutsideMunsell",
-         "colorInsideMunsell",
-         "colorBreakMunsell",
-         "paintColorMunsell",
-         "colorBreak",
-         "colorInside",
-         "colorOutside"
-      ],
       "valuelists":{
          "provenance":"provenance-gadara",
          "surfaceCondition":"Terracotta-surfaceCondition-gadara",
@@ -342,44 +242,155 @@
          "manufacturingMethod":"Wood-manufacturingMethod-gadara",
          "typeOfWood":"Wood-typeOfWood-gadara"
       }
-   },
-   "Architecture:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+    },
+   "Architecture":{
+     "parent": "Feature",
+     "color": "#707070",
+     "commons": [
+       "spatialLocation",
+       "orientation"
+     ],
+     "hidden": [],
+     "fields":{
+       "conditionComment": {
+         "inputType": "input"
+       },
+       "structureType": {
+         "inputType": "dropdown"
+       },
+   		 "structureTypeOther": {
+   			 "inputType": "input"
+       },
+   		 "featureBorders": {
+   		    "inputType": "radio"
+   		 },
+   		 "material": {
+   		    "inputType": "checkboxes"
+   		 },
+   		 "construction": {
+   		    "inputType": "radio"
+   		 },
+   		 "masonry": {
+   		    "inputType": "radio"
+   		 },
+   		 "stoneWorking": {
+   		    "inputType": "checkboxes"
+   		 },
+   		 "stoneDressing": {
+   		    "inputType": "checkboxes"
+   		 },
+   		 "mortar": {
+   		    "inputType": "boolean"
+   		 },
+   		 "mortarInclusion": {
+   		    "inputType": "boolean"
+   		 },
+   		 "mortarComment": {
+   		    "inputType": "text"
+   		 },
+   		 "plaster": {
+   		    "inputType": "boolean"
+   		 },
+   		 "plasterInclusion": {
+   		    "inputType": "boolean"
+   		 },
+   		 "plastercoloring": {
+   		    "inputType": "boolean"
+   		 },
+   		 "plasterComment": {
+   		    "inputType": "text"
+   		 },
+   		 "inclusions": {
+   		    "inputType": "checkboxes"
+   		 },
+   		 "inclusionsOther": {
+   		    "inputType": "input"
+   		 },
+   		 "samples": {
+   			"inputType": "radio"
+   		 },
+   		 "sampleStatus": {
+   			"inputType": "radio"
+   		 },
+   		 "sampleComm": {
+   			"inputType": "input"
+   		 }
+     },
+     "valuelists": {
+       "orientation": "orientation-default-1",
+        "structureType": "Structure-structureType-Gadara",
+     	  "featureBorders": "featureBorders-Gadara",
+     	  "material": "Structure-Material-Gadara",
+     	  "construction": "Structure-Construction-Gadara",
+     	  "masonry": "Structure-Masonry-Gadara",
+     	  "stoneWorking": "Structure-StoneWorking-Gadara",
+     	  "stoneDressing": "Structure-StoneDressing-Gadara",
+     	  "inclusions": "inclusions-Gadara",
+     	  "samples": "Find-sample-Gadara",
+     	  "sampleStatus": "Find-samplePl-Gadara"
+      }
    },
    "Layer:default":{
-      "commons":[
-         
-      ],
+      "hidden": ["distinguishingCriteria", "layerClassification", "isNatural"],
       "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+        "depositType": {
+          "inputType": "dropdown"
+     		},
+        "depositTypeOther": {
+              "inputType": "input"
+        },
+        "featureBorders": {
+              "inputType": "radio"
+        },
+        "colorLightness": {
+               "inputType": "radio"
+        },
+        "colorModifier": {
+               "inputType": "radio"
+        },
+        "colorBasecolor": {
+               "inputType": "radio"
+        },
+        "soilType": {
+               "inputType": "dropdown"
+        },
+        "consistency": {
+               "inputType": "radio"
+        },
+        "inclusions": {
+               "inputType": "checkboxes"
+        },
+        "inclusionsOther": {
+             "inputType": "input"
+        },
+        "samples": {
+             "inputType": "radio"
+        },
+        "sampleStatus": {
+              "inputType": "radio"
+        },
+        "sampleComm": {
+              "inputType": "input"
+            }
+          },
+      "valuelists": {
+        "depositType": "Deposit-depositType-Gadara",
+     	  "featureBorders": "featureBorders-Gadara",
+     	  "colorLightness": "Deposit-colorLightness-Gadara",
+     	  "colorModifier": "Deposit-colorModifier-Gadara",
+     	  "colorBasecolor": "Deposit-colorBasecolor-Gadara",
+     	  "soilType": "Layer-soilType-Gadara",
+     	  "consistency": "Layer-consistency-Gadara",
+     	  "inclusions": "inclusions-Gadara",
+     	  "samples": "Find-sample-Gadara",
+     	  "sampleStatus": "Find-samplePl-Gadara"
+      }
    },
    "Floor:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Pottery:default":{
-      "commons":[
-         
-      ],
       "hidden":[
          "amountSherdsWall",
          "amountSherdsRim",
@@ -457,24 +468,108 @@
          "temper":"Brick-temper-gadara"
       }
    },
-   "Grave:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+   "Grave": {
+     "parent": "Feature",
+     "color": "#339900",
+     "commons": [
+       "spatialLocation"
+     ],
+     "valuelists": {
+       "condition": "Building-condition-default",
+       "conditionAmount": "Building-conditionAmount-default",
+       "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+       "graveType": "Grave-graveType-default",
+       "specificType": "Grave-specificType-default",
+       "soilType": "Layer-soilType-default",
+       "tombBuilding": "Grave-tombBuilding-default"
+     },
+     "fields": {
+       "conditionComment": {
+         "inputType": "input"
+       },
+       "findingPlace": {
+         "inputType": "input"
+       },
+       "publicationDatingFinds": {
+         "inputType": "text"
+       },
+       "publicationDatingScientific": {
+         "inputType": "text"
+       },
+       "publicationDatingStratigraphy": {
+         "inputType": "text"
+       },
+       "publicationRemark": {
+         "inputType": "input"
+       },
+       "condition": {
+         "inputType": "dropdown"
+       },
+       "conditionAmount": {
+         "inputType": "dropdown"
+       },
+       "distinguishingCriteria": {
+         "inputType": "radio"
+       },
+       "graveType": {
+         "inputType": "dropdown"
+       },
+       "specificType": {
+         "inputType": "checkboxes"
+       },
+       "soilType": {
+         "inputType": "dropdown"
+       },
+       "tombBuilding": {
+         "inputType": "checkboxes"
+       }
+     }
    },
+   "Cut": {
+      "parent": "Feature",
+      "color": "#660000",
+      "fields": {
+    		 "cutType": {
+    		    "inputType": "dropdown"
+    		},
+    		 "cutTypeOther": {
+    			"inputType": "input"
+    		},
+    		 "featureBorders": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeInPlan": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeInProfile": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeEdges": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeBreakSlopeTop": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeBreakSlopeBase": {
+    		    "inputType": "radio"
+    		},
+    		 "shapeBase": {
+    		    "inputType": "radio"
+    		}
+    	},
+      "valuelists": {
+        "cutType": "Cut-cutType-Gadara",
+    	  "shapeInPlan": "Cut-ShapeInPlan-Gadara",
+    	  "shapeInProfile": "Cut-ShapeInProfile-Gadara",
+    	  "shapeEdges": "Cut-ShapeEdges-Gadara",
+    	  "shapeBreakSlopeTop": "Cut-ShapeBreakSlopeTop-Gadara",
+    	  "shapeBreakSlopeBase": "Cut-ShapeBreakSlopeBase-Gadara",
+    	  "shapeBase": "Cut-ShapeBase-Gadara",
+    	  "featureBorders": "featureBorders-Gadara"
+      }
+    },
    "Bone:default":{
-      "commons":[
-         
-      ],
-      "hidden":[
-         
-      ],
+      "hidden":[],
       "fields":{
          "sex":{
             "inputType":"radio"
@@ -498,9 +593,12 @@
       }
    },
    "Terracotta:default":{
-      "commons":[
-         
-      ],
+      "hidden":[
+        "vesselFormSpecific",
+        "vesselForm",
+        "coatColorInside",
+        "coatColorOutside"
+     ],
       "fields":{
          "coatInsideType":{
             "inputType":"radio"
@@ -531,40 +629,20 @@
          "manufacturingMethod":"Brick-manufacturingMethod-gadara",
          "objectType":"Terracotta-objectType-gadara",
          "surfaceCondition":"Terracotta-surfaceCondition-gadara"
-      },
-      "hidden":[
-         "vesselFormSpecific",
-         "vesselForm",
-         "coatColorInside",
-         "coatColorOutside"
-      ]
+      }
    },
    "Photo:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Drawing:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "Stone:default":{
-      "commons":[
-         
-      ],
+      "hidden":[
+        "origin"
+     ],
       "fields":{
          "treatment":{
             "inputType":"dropdown"
@@ -579,22 +657,14 @@
          "color":"Pottery-coatColor-gadara",
          "treatment":"Stone-treatment-Gadara",
          "material":"Stone-material-gadara"
-      },
-      "hidden":[
-         "origin"
-      ]
+      }
    },
    "Coin:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
       "hidden":[
-         "manufacturingMethod",
-         "preservedDiameter"
-      ],
+        "manufacturingMethod",
+        "preservedDiameter"
+     ],
+      "fields":{},
       "valuelists":{
          "provenance":"provenance-gadara",
          "metalMaterial":"Coin-metalMaterial-gadara",
@@ -603,17 +673,12 @@
       }
    },
    "PlasterFragment:default":{
-      "commons":[
-         
-      ],
-      "hidden":[
-         
-      ],
+      "hidden":[],
       "fields":{
          "plasterComponents":{
             "inputType":"checkboxes"
          },
-         "hasDecoration":{
+         "decoration":{
             "inputType":"radio"
          },
          "plasterType":{
@@ -627,7 +692,7 @@
          }
       },
       "valuelists":{
-         "hasDecoration":"plasterDecoration-Gadara",
+         "decoration":"plasterDecoration-Gadara",
          "plasterType":"plasterType-Gadara",
          "color":"Pottery-coatColor-gadara",
          "plasterComponents":"Brick-temper-gadara",
@@ -636,30 +701,15 @@
       }
    },
    "Excavation:default":{
-      "commons":[
-         
-      ],
-      "fields":{
-         
-      },
-      "hidden":[
-         
-      ]
+      "hidden":[],
+      "fields":{}
    },
    "TypeCatalog:default":{
-      "hidden":[
-         
-      ],
-      "fields":{
-         
-      }
+      "hidden":[],
+      "fields":{}
    },
    "Type:default":{
-      "hidden":[
-         
-      ],
-      "fields":{
-         
-      }
-   }
+      "hidden":[],
+      "fields":{}
+    }
 }

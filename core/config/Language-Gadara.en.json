@@ -1,126 +1,312 @@
 {
-  "categories": {
-    "Brick": {
-	  "createdBy": "Hanna Hamel",
-      "description": "Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
-      "label": "Ceramic Building Material",
-      "fields": {
-        "clayColorOutside": {
-          "label": "Clay: color and intensity"
-        }
-        }
-    },
-	"Pottery": {
-	  "createdBy": "Hanna Hamel, 28.01.2021",
-      "description": "Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
-      "fields": {
-        "specificType": {
-          "label": "form",
-		  "description": "B: cup, Bö: base, H: handle; Ka: jug, Kr: jar, Sa: bowl, Sü: basin, U: unguentaria, A: amphorae, D: lid, T: pot, P: pan, Ks: casserole"																																																	
-        },
-        "materialType": {
-          "label": "category of the pottery",
-          "description": "FK: fine and table ware (local and imported), GK: common ware (storage, preparation and transport vessels; local and imported), KK: kitchen ware (vessels primarily used for cooking)"
-        },
-		"vesselpart": {
-		  "label": "vesselpart",
-		  "description": "WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
-		},
-		"potteryTypeSpecific": {
-		  "label": "fabric",
-		  "description": "clay determination (consult the catalogue of fabrics for description)"
-        }
+   "categories":{
+      "Brick":{
+         "createdBy":"Hanna Hamel",
+         "description":"Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
+         "label":"Ceramic Building Material",
+         "fields":{
+            "clayColorOutside":{
+               "label":"Clay: color and intensity"
+            }
+         }
+      },
+      "Pottery":{
+         "createdBy":"Hanna Hamel, 28.01.2021",
+         "description":"Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
+         "fields":{
+            "specificType":{
+               "label":"form",
+               "description":"B: cup, Bö: base, H: handle; Ka: jug, Kr: jar, Sa: bowl, Sü: basin, U: unguentaria, A: amphorae, D: lid, T: pot, P: pan, Ks: casserole"
+            },
+            "materialType":{
+               "label":"category of the pottery",
+               "description":"FK: fine and table ware (local and imported), GK: common ware (storage, preparation and transport vessels; local and imported), KK: kitchen ware (vessels primarily used for cooking)"
+            },
+            "vesselpart":{
+               "label":"vesselpart",
+               "description":"WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
+            },
+            "potteryTypeSpecific":{
+               "label":"fabric",
+               "description":"clay determination (consult the catalogue of fabrics for description)"
+            }
+         }
+      },
+      "Stone":{
+         "label":"Stone",
+         "fields":{
+            "purpose":{
+               "label":"Purpose",
+               "description":"Short description of the use of the object"
+            },
+            "treatment":{
+               "label":"Treatment",
+               "description":"Selection of working marks on the surface of the object"
+            },
+            "workmanship":{
+               "label":"Workmanship",
+               "description":"Description of the quality of the worked stone. If applicable, indication of visible tool marks or other markers for the execution of the handicraft work."
+            },
+            "architectureElement":{
+               "label":"Architectural element",
+               "description":"Selection of the architectural component for which the object was made."
+            }
+         }
+      },
+      "Terracotta":{
+         "label":"Clay find",
+         "fields":{
+            "decorationTechnique":{
+               "label":"Decoration technique"
+            },
+            "objectType":{
+               "label":"Type of object"
+            },
+            "coatInsideType":{
+               "label":"Surface treatment inside"
+            },
+            "coatOutsideType":{
+               "label":"Surface treatment outside"
+            },
+            "potteryTypeSpecific":{
+               "label":"Ware"
+            }
+         }
+      },
+      "Coin":{
+         "fields":{
+            "mintingRuler":{
+               "label":"Roman emperor",
+               "description":"Selection of the Roman emperor belonging to the coinage, if available."
+            }
+         }
+      },
+      "Wood":{
+         "fields":{
+            "surfaceCondition":{
+               "label":"Preservation of the surface",
+               "description":"Description of the preservation of the surface. If necessary, select the most striking feature and add details in the description."
+            }
+         }
+      },
+      "Glass":{
+         "fields":{
+            "vesselpart":{
+               "label":"vesselpart",
+               "description":"WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
+            }
+         }
+      },
+      "Find":{
+         "fields":{
+            "sampleGadara":{
+               "label":"Samples"
+            },
+            "sampleGadaraPlace":{
+               "label":"Exported samples"
+            },
+            "sampleGadaraComm":{
+               "label":"comment to sample"
+            },
+            "amountDescription":{
+               "label":"Amount (unit)"
+            }
+         }
+      },
+      "PlasterFragment":{
+         "fields":{
+            "hasDecoration":{
+               "label":"Surface treatment"
+            },
+            "plasterType-Gadara":{
+               "label":"Use of the plaster"
+            }
+         }
+      },
+      "Feature":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Own field titles and descriptions",
+         "fields":{
+            "description":{
+               "label":"Description"
+            },
+            "interpretation":{
+               "label":"Interpretation"
+            },
+            "comparison":{
+               "label":"Comparison"
+            },
+            "bibliography":{
+               "label":"Bibliography"
+            }
+         }
+      },
+      "Layer":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Own field titles and description",
+         "label":"Deposit (positive SU)",
+         "fields":{
+            "depositType":{
+               "label":"Deposit type",
+               "description":"If not listed, then “other”  and fill out free field in “Deposit type: other”, ex.: (“geschüttetes”) foundation."
+            },
+            "depositTypeOther":{
+               "label":"Deposit type: other",
+               "description":"If Deposit type “other”, then fill out here free field , ex.: (“geschüttetes”) foundation."
+            },
+            "featureBorders":{
+               "label":"Boundaries"
+            },
+            "colorLightness":{
+               "label":"color: Lightness",
+               "description":"The following three fields can be filled out to describe color: Lightness, Modifier and Base color."
+            },
+            "colorModifier":{
+               "label":"color: Modifier",
+               "description":"The following three fields can be filled out to describe color: Lightness, Modifier and Base color."
+            },
+            "colorBasecolor":{
+               "label":"color: Base color",
+               "description":"The following three fields can be filled out to describe color: Lightness, Modifier and Base color."
+            },
+            "soilType":{
+               "label":"Composition",
+               "description":"Composition of the soil according to soil science. In case of ash layer/charcoal concentration, check “non-applicable”"
+            },
+            "consistency":{
+               "label":"Consistency"
+            },
+            "inclusions":{
+               "label":"Inclusions",
+               "description":"Inclusions, including finds. If further inclusions,  then “other”  and fill out free field in “Inclusions: other”."
+            },
+            "inclusionsOther":{
+               "label":"Inclusions: other",
+               "description":"If inclusions “other”, then fill out here free field."
+            },
+            "samples":{
+               "label":"Samples"
+            },
+            "sampleStatus":{
+               "label":"Samples export"
+            },
+            "sampleComm":{
+               "label":"Comment on samples"
+            }
+         }
+      },
+      "Architecture":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Own field titles and description",
+         "label":"Structure (positive SU)",
+         "fields":{
+            "structureType":{
+               "label":"Structure type",
+               "description":"If not listed, then “other”  and fill out free field in “Structure type: other”, ex.: (Steinsetzung)."
+            },
+            "structureTypeOther":{
+               "label":"Structure type: other",
+               "description":"If Structure type “other”, then fill out here free field , ex.: (Steinsetzung)."
+            },
+            "featureBorders":{
+               "label":"Boundaries"
+            },
+            "conditionComment":{
+               "label":"Comment on preservation/condition",
+               "description":"Specifications about the preservation and condition, ex.: preserved layer und their height, disturbances, collapse."
+            },
+            "Material":{
+               "label":"Material"
+            },
+            "construction":{
+               "label":"Construction",
+               "description":"Construction, for ex. of the foundation or wall, otherwise check “non-applicable”."
+            },
+            "masonry":{
+               "label":"Masonry",
+               "description":"Masonry, for ex. of the foundation or wall, otherwise check “non-applicable”."
+            },
+            "stoneWorking":{
+               "label":"Stone working"
+            },
+            "stoneDressing":{
+               "label":"Stone dressing"
+            },
+            "mortar":{
+               "label":"Mortar"
+            },
+            "mortarInclusion":{
+               "label":"Mortar contains charcoal/organic material"
+            },
+            "mortarComment":{
+               "label":"Comment on mortar"
+            },
+            "plaster":{
+               "label":"Plaster"
+            },
+            "plasterInclusion":{
+               "label":"Plaster contains charcoal/organic material"
+            },
+            "plastercoloring":{
+               "label":"color (Farbfassung) on plaster"
+            },
+            "plasterComment":{
+               "label":"Comment on plaster"
+            },
+            "inclusions":{
+               "label":"Inclusions",
+               "description":"Inclusions, including finds. If further inclusions,  then “other”  and fill out free field in “Inclusions: other”."
+            },
+            "inclusionsOther":{
+               "label":"Inclusions: other",
+               "description":"If inclusions “other”, then fill out here free field."
+            },
+            "samples":{
+               "label":"Samples"
+            },
+            "sampleStatus":{
+               "label":"Samples export"
+            },
+            "sampleComm":{
+               "label":"Comment on samples"
+            }
+         }
+      },
+      "Cut":{
+         "createdBy":"Luna Watkins, 2020/2021",
+         "description":"Own field titles and description",
+         "label":"Cut (negative SU)",
+         "fields":{
+            "cutType":{
+               "label":"Cut type",
+               "description":"If not listed, then “other”  and fill out free field in “Cut type: other”, ex.: post hole."
+            },
+            "cutTypeOther":{
+               "label":"Structure type: other",
+               "description":"If Structure type “other”, then fill out here free field , ex.: post hole."
+            },
+            "featureBorders":{
+               "label":"Boundaries"
+            },
+            "shapeInPlan":{
+               "label":"Form in plan"
+            },
+            "shapeInProfile":{
+               "label":"Form in profile"
+            },
+            "shapeEdges":{
+               "label":"edges"
+            },
+            "shapeBreakSlopeTop":{
+               "label":"break of slope - top"
+            },
+            "shapeBreakSlopeBase":{
+               "label":"break of slope - base"
+            },
+            "shapeBase":{
+               "label":"base"
+            }
+         }
       }
-    },
-	"Stone": {
-      "label": "Stone",
-      "fields": {
-        "purpose": {
-          "label": "Purpose",
-		  "description": "Short description of the use of the object"
-        },
-        "treatment": {
-          "label": "Treatment",
-		  "description": "Selection of working marks on the surface of the object"
-        },
-        "workmanship": {
-          "label": "Workmanship",
-		  "description": "Description of the quality of the worked stone. If applicable, indication of visible tool marks or other markers for the execution of the handicraft work."
-        },
-        "architectureElement": {
-          "label": "Architectural element",
-		  "description": "Selection of the architectural component for which the object was made."
-        }
-      }
-    },
-	"Terracotta": {
-	  "label": "Clay find",
-      "fields": {
-	    "decorationTechnique": {
-		  "label": "Decoration technique"
-		  },
-		"objectType": {
-		  "label": "Type of object"
-		},
-		"coatInsideType": {
-          "label": "Surface treatment inside"
-		},
-		"coatOutsideType": {
-		  "label": "Surface treatment outside"
-		},
-		"potteryTypeSpecific": {
-		  "label": "Ware"		  }
-	  }
-	},
-	"Coin": {
-	  "fields": {
-	    "mintingRuler": {
-		"label": "Roman emperor",
-		"description": "Selection of the Roman emperor belonging to the coinage, if available."
-		}
-	  }
-	},
-	"Wood": {
-	  "fields": {
-	    "surfaceCondition": {
-		"label": "Preservation of the surface",
-		"description": "Description of the preservation of the surface. If necessary, select the most striking feature and add details in the description."
-		}
-	  }
-	},
-	"Glass": {
-	"fields": {
-		"vesselpart": {
-		  "label": "vesselpart",
-		  "description": "WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
-		}
-      }
-	},
-	"Find": {
-	"fields": {
-		"sampleGadara": {
-		  "label": "Samples"
-		},
-		"sampleGadaraPlace": {
-		  "label": "Exported samples"
-		},
-		"sampleGadaraComm": {
-		  "label": "comment to sample"
-		},
-		"amountDescription": {
-		  "label": "Amount (unit)"
-		}
-	  }	
-	},
-	"PlasterFragment": {
-    "fields": {
-        "hasDecoration": {
-          "label": "Surface treatment"
-        },
-		"plasterType-Gadara": {
-		  "label": "Use of the plaster"
-        }
-	  }
-	}
-  }
+   }
 }

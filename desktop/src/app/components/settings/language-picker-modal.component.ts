@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Language, LanguagesUtil } from '../../core/util/languages-util';
 
 
 @Component({
@@ -10,21 +11,15 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
  */
 export class LanguagePickerModalComponent {
 
-    public languages: { [languageCode: string]: string };
+    public languages: { [languageCode: string]: Language };
 
 
     constructor(public activeModal: NgbActiveModal) {}
 
 
-    public getLabel = (languageCode: string) => this.languages[languageCode];
+    public getLanguageCodes = () => LanguagesUtil.getSortedLanguageCodes(this.languages);
 
-    public select = (language: string) => this.activeModal.close(language);
+    public getLabel = (languageCode: string) => this.languages[languageCode].label;
 
-
-    public getLanguages() {
-
-        return Object.keys(this.languages).sort((a: string, b: string) => {
-            return this.getLabel(a).localeCompare(this.getLabel(b));
-        });
-    }
+    public select = (languageCode: string) => this.activeModal.close(languageCode);
 }

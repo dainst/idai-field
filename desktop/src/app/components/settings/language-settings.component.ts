@@ -1,22 +1,11 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
-import { moveInArray } from 'idai-field-core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, map } from 'tsfun';
-import { Settings } from '../../core/settings/settings';
+import { moveInArray } from 'idai-field-core';
 import { MenuContext, MenuService } from '../menu-service';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
-
-const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
-
-type Language = {
-    label: string;
-    info?: string;
-    isMainLanguage: boolean;
-}
+import { Language, LanguagesUtil } from '../../core/util/languages-util';
 
 
 @Component({
@@ -58,9 +47,10 @@ export class LanguageSettingsComponent {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef
-            = this.modalService.open(LanguagePickerModalComponent);
-        modalReference.componentInstance.languages = this.getUnselectedLanguages();
+        const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent);
+        modalReference.componentInstance.languages = LanguagesUtil.getUnselectedLanguages(
+            this.languages, this.selectedLanguages
+        );
 
         try {
             this.selectedLanguages.push(await modalReference.result);
@@ -72,38 +62,15 @@ export class LanguageSettingsComponent {
     }
 
 
-    private getUnselectedLanguages(): { [languageCode: string]: string } {
-
-        const result = map(language => language.label)(clone(this.languages));
-
-        Object.keys(this.languages).forEach(languageCode => {
-            if (this.selectedLanguages.includes(languageCode)) delete result[languageCode];
-        });
-
-        return result as { [languageCode: string]: string };
-    }
-
-
     private getAvailableLanguages(): { [languageCode: string]: Language } {
 
-        const languages = cldr.extractLanguageDisplayNames(Settings.getLocale());
-        const mainLanguages: string[] = remote.getGlobal('getMainLanguages')();
-
-        return Object.keys(languages).reduce((result, languageCode) => {
-            if (languageCode.length === 2 ) {
-                result[languageCode] = {
-                    label: languages[languageCode][0].toUpperCase() + languages[languageCode].slice(1),
-                    isMainLanguage: mainLanguages.includes(languageCode)
-                };
-
-                if (languageCode === 'it') {
-                    result[languageCode].info = this.i18n({
-                        id: 'settings.languageInfo.it',
-                        value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de'
-                    });
-                }
-            }
-            return result;
-        }, {});
-    }
+        const availableLanguages: { [languageCode: string]: Language } = LanguagesUtil.getAvailableLanguages();
+        
+        availableLanguages['it'].info = this.i18n({
+            id: 'settings.languageInfo.it',
+            value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de'
+        });
+        
+        return availableLanguages;
+    } 
 }

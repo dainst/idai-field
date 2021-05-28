@@ -1,7 +1,7 @@
 export interface Preferences {
     username: string;
     languages: string[];
-    currentProject: string;
+    currentProject?: string;
     recentProjects: string[];
     projects: Record<string, ProjectSettings>;
 }

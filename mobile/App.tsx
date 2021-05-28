@@ -4,8 +4,8 @@ import AppLoading from 'expo-app-loading';
 import React, { ReactElement, useCallback } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
-import DocumentsScreen from './src/components/Documents/DocumentsScreen';
 import HomeScreen from './src/components/Home/HomeScreen';
+import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
 import usePouchdbManager from './src/hooks/use-pouchdb-manager';
 import usePreferences from './src/hooks/use-preferences';
@@ -13,7 +13,7 @@ import usePreferences from './src/hooks/use-preferences';
 
 export type AppStackParamList = {
     HomeScreen: undefined;
-    DocumentsScreen: undefined;
+    ProjectScreen: undefined;
     SettingsScreen: undefined;
 };
 
@@ -54,7 +54,10 @@ export default function App(): ReactElement {
         return (
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                    <Stack.Navigator
+                        initialRouteName={ preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
+                        screenOptions={ { headerShown: false } }
+                    >
                         <Stack.Screen name="HomeScreen">
                             { ({ navigation }) => <HomeScreen
                                 preferences={ preferences }
@@ -63,8 +66,9 @@ export default function App(): ReactElement {
                                 navigate={ (screen: string) => navigation.navigate(screen) }
                             /> }
                         </Stack.Screen>
-                        <Stack.Screen name="DocumentsScreen">
-                            { () => <DocumentsScreen
+                        <Stack.Screen name="ProjectScreen">
+                            { () => preferences.currentProject && <ProjectScreen
+                                currentProject={ preferences.currentProject }
                                 preferences={ preferences }
                                 setProjectSettings={ setProjectSettings }
                             /> }

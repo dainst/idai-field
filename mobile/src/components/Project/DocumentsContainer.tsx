@@ -7,8 +7,8 @@ import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentDetails from './DocumentDetails';
+import DocumentsDrawer from './DocumentsDrawer';
 import DocumentsMap from './DocumentsMap';
-import DrawerContent from './DrawerContent';
 
 
 export type DocumentsContainerDrawerParamList = {
@@ -64,7 +64,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             drawerContent={ ({ navigation }: { navigation: any }) => {
 
-                return <DrawerContent
+                return <DocumentsDrawer
                     documents={ documents }
                     config={ config }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }

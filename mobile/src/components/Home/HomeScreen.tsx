@@ -40,7 +40,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         setSelectedProject(project);
         setCurrentProject(project);
-        navigate('DocumentsScreen');
+        navigate('ProjectScreen');
     }, [navigate, setCurrentProject]);
 
 

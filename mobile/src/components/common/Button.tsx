@@ -1,3 +1,4 @@
+import Color from 'color';
 import React, { ReactElement, ReactNode } from 'react';
 import {
     NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle,
@@ -23,7 +24,7 @@ const Button = ({ style, title, icon, variant = 'secondary', onPress, isDisabled
 
     return <TouchableOpacity
             onPress={ onPress }
-            style={ [getButtonStyle(variant), style, isDisabled && styles.disabledButton] }
+            style={ [getButtonStyle(variant), style, isDisabled && getDisabledStyle(variant)] }
             activeOpacity={ .9 }
         >
         <View style={ styles.container }>
@@ -42,6 +43,10 @@ const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
     borderRadius: 5,
 });
 
+const getDisabledStyle = (variant: ButtonVariant): ViewStyle => ({
+    backgroundColor: Color(colors[variant]).alpha(0.7).string()
+});
+
 const getTextStyle = (variant: ButtonVariant): TextStyle => ({
     color: textColors[variant],
 });
@@ -55,7 +60,4 @@ const styles = StyleSheet.create({
     separator: {
         width: 5,
     },
-    disabledButton: {
-        opacity: .7
-    }
 });

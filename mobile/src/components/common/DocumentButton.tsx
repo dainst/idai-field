@@ -5,7 +5,7 @@ import { colors } from '../../utils/colors';
 import CategoryIcon from './CategoryIcon';
 
 
-interface CategoryButtonProps {
+interface DocumentButtonProps {
     config: ProjectConfiguration;
     document: Document;
     size: number;
@@ -13,7 +13,7 @@ interface CategoryButtonProps {
 }
 
 
-const CategoryButton = ({ config, document, size, onPress }: CategoryButtonProps): ReactElement => {
+const DocumentButton = ({ config, document, size, onPress }: DocumentButtonProps): ReactElement => {
 
     return <TouchableOpacity
         onPress={ onPress }
@@ -27,7 +27,7 @@ const CategoryButton = ({ config, document, size, onPress }: CategoryButtonProps
     </TouchableOpacity>;
 };
 
-export default CategoryButton;
+export default DocumentButton;
 
 
 const styles = StyleSheet.create({

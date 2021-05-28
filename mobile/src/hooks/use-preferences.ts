@@ -8,7 +8,7 @@ interface UsePreferences {
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     setUsername: (project: string) => void;
-    setProjectSettings: (projectSettings: ProjectSettings) => void;
+    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     removeProject: (project: string) => void;
 }
 
@@ -41,8 +41,8 @@ const usePreferences = (): UsePreferences => {
         );
 
 
-    const setProjectSettings = (projectSettings: ProjectSettings) =>
-        setPreferences(update(['projects', preferences.currentProject], projectSettings));
+    const setProjectSettings = (project: string, projectSettings: ProjectSettings) =>
+        setPreferences(update(['projects', project], projectSettings));
 
 
     const setUsername = (username: string) =>
@@ -77,7 +77,6 @@ const savePreferences = async (preferences: Preferences) =>
 
 
 const getDefaultPreferences = (): Preferences => ({
-    currentProject: 'test',
     languages: ['en'], // TODO make language configurable
     username: '',
     recentProjects: [],

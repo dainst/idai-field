@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Picker, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Preferences } from '../../models/preferences';
 import { colors, textColors } from '../../utils/colors';
@@ -118,7 +119,7 @@ const renderRecentProjects = (
         </Text>
         <Picker
             selectedValue={ selectedProject }
-            onValueChange={ setSelectedProject }
+            onValueChange={ value => setSelectedProject(value.toString()) }
         >
             { recentProjects.map(project =>
                 <Picker.Item label={ project } value={ project } key={ project } /> ) }

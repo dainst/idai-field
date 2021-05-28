@@ -4,15 +4,16 @@ import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSearch = (
-    repository: DocumentRepository
+    repository: DocumentRepository,
+    categories: string[],
 ): [Document[], (q: string) => void] => {
     
     const [documents, setDocuments] = useState<Document[]>([]);
     const [q, setQ] = useState<string>('*');
 
     const issueSearch = useCallback(
-        () => repository.find({ q }).then(result => setDocuments(result.documents)),
-        [repository, q]
+        () => repository.find({ q, categories }).then(result => setDocuments(result.documents)),
+        [repository, q, categories]
     );
 
     useEffect(() => { issueSearch(); }, [issueSearch]);

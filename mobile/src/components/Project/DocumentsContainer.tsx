@@ -1,7 +1,7 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
-import React from 'react';
+import { Document, ProjectCategories, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import React, { useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
@@ -48,8 +48,11 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     setProjectSettings
 }) => {
 
-    const [documents, issueSearch] = useSearch(repository);
-    const [allDocuments, _] = useSearch(repository);
+    const [categories, _setCategories] = useState<string[]>(
+        ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest())
+    );
+    const [documents, issueSearch] = useSearch(repository, categories);
+    const [allDocuments, _] = useSearch(repository, categories);
     const dimensions = useWindowDimensions();
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {

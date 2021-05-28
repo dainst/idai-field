@@ -14,7 +14,7 @@ interface DocumentsMapProps {
     navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     repository: DocumentRepository;
     documents: Document[];
-    allDocuments: Document[];
+    geoDocuments: Document[];
     selectedDocument?: Document;
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
@@ -28,7 +28,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     navigation,
     repository,
     documents,
-    allDocuments,
+    geoDocuments,
     syncStatus,
     projectSettings,
     config,
@@ -59,7 +59,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             <View style={ styles.container }>
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
-                    geoDocuments={ allDocuments.filter(doc => doc?.resource.geometry) }
+                    geoDocuments={ geoDocuments }
                     config={ config }
                     navigateToDocument={ navigateToDocument } />
             </View>

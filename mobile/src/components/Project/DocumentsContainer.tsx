@@ -48,11 +48,16 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     setProjectSettings
 }) => {
 
-    const [categories, _setCategories] = useState<string[]>(
+    const [categories] = useState<string[]>(
         ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest())
     );
     const [documents, issueSearch] = useSearch(repository, categories);
-    const [allDocuments, _] = useSearch(repository, categories);
+
+    const [geoConstraints] = useState<Record<string,string>>({
+        'geometry:exist': 'KNOWN'
+    });
+    const [geoDocuments] = useSearch(repository, categories, geoConstraints);
+    
     const dimensions = useWindowDimensions();
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
@@ -79,7 +84,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
-                    allDocuments={ allDocuments }
+                    geoDocuments={ geoDocuments }
                     issueSearch={ issueSearch }
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }

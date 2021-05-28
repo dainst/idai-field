@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, flatten, to } from 'tsfun';
-import { Category, CustomFieldDefinition, FieldDefinition, LabelUtil, LanguageConfiguration, ValuelistDefinition,
+import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
 
@@ -39,8 +39,12 @@ export class ConfigurationFieldComponent implements OnChanges {
     public editable: boolean = false;
     public hideable: boolean = false;
     public editing: boolean = false;
+
     public label: string;
     public description: string;
+
+    public editableLabel: I18nString;
+    public editableDescription: I18nString;
 
 
     constructor(private i18n: I18n) {}
@@ -75,17 +79,18 @@ export class ConfigurationFieldComponent implements OnChanges {
     public toggleHidden = () => this.onToggleHidden.emit();
 
 
-
-
     public startEditing() {
 
+        this.editableLabel = this.createEditableI18nString('label');
+        this.editableDescription = this.createEditableI18nString('description');
         this.editing = true;
     }
 
 
     public finishEditing() {
 
-        this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
+        this.updateCustomFieldDefinition();
+        this.updateCustomLanguageConfigurations();
         this.editing = false;
     }
 
@@ -137,6 +142,72 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.customFieldDefinitionClone.inputType = newInputType;
     }
 
+
+    private createEditableI18nString(type: 'label'|'description'): I18nString {
+
+        return Object.keys(this.customLanguageConfigurations).reduce((result: I18nString, languageCode: string) => {
+            const translation = this.customLanguageConfigurations[languageCode]
+                ?.categories?.[this.category.name]
+                ?.fields?.[this.field.name]?.[type];
+            if (translation) result[languageCode] = translation;
+            return result;
+        }, this.field[type] ? clone(this.field[type]) : {});
+    }
+
+
+    private updateCustomFieldDefinition() {
+        
+        this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
+    }
+
+
+    private updateCustomLanguageConfigurations() {
+
+        Object.keys(this.editableLabel).forEach(languageCode => {
+            this.updateCustomLanguageConfigurationSection(
+                'label', this.editableLabel[languageCode], languageCode
+            );
+        });
+
+        Object.keys(this.editableDescription).forEach(languageCode => {
+            this.updateCustomLanguageConfigurationSection(
+                'description', this.editableDescription[languageCode], languageCode
+            );
+        });
+    }
+
+
+    private updateCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
+                                                     languageCode: string) {
+
+            // TODO Do not add if the same label is set in library/core configuration
+            this.addToCustomLanguageConfigurationSection(sectionName, newText, languageCode);
+    }
+
+
+    private addToCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
+                                                    languageCode: string) {
+
+        if (!this.customLanguageConfigurations[languageCode]) {
+            this.customLanguageConfigurations[languageCode] = {};
+        }
+        const languageConfiguration = this.customLanguageConfigurations[languageCode];
+        
+        if (!languageConfiguration.categories) languageConfiguration.categories = {};
+        if (!languageConfiguration.categories[this.category.name]) {
+            languageConfiguration.categories[this.category.name] = {};
+        }
+        const categoryConfiguration = languageConfiguration.categories[this.category.name];
+
+        if (!categoryConfiguration.fields) categoryConfiguration.fields = {};
+        if (!categoryConfiguration.fields[this.field.name]) {
+            categoryConfiguration.fields[this.field.name] = {};
+        }
+        const fieldConfiguration = categoryConfiguration.fields[this.field.name];
+        
+        fieldConfiguration[sectionName] = newText;
+    }
+                                    
 
     private isParentField(): boolean {
 

@@ -51,7 +51,17 @@
     </div>
 
     <div *ngIf="!parentField" class="card-body">
-        <p *ngIf="description" class="card-text">{{description}}</p>
+        <p *ngIf="description && !editing" class="card-text">{{description}}</p>
+        <div *ngIf="editing">
+            <div>
+                <b>Feldbezeichnung</b>
+                <multi-language-input [translations]="editableLabel"></multi-language-input>
+            </div>
+            <div>
+                <b>Beschreibung</b>
+                <multi-language-input [translations]="editableDescription"></multi-language-input>
+            </div>
+        </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:

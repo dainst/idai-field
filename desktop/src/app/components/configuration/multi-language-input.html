@@ -1,0 +1,27 @@
+<div *ngFor="let languageCode of getTranslationLanguages()">
+    <div class="input-group mb-2">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">{{getLanguageLabel(languageCode)}}</label>
+            </div>
+            <div class="col-auto">
+                <input [(ngModel)]="translations[languageCode]" type="text" class="form-control">    
+            </div>
+        </div>
+        <button class="btn btn-danger" type="button" (click)="deleteTranslation(languageCode)">
+            <span class="mdi mdi-delete"></span>
+        </button>
+    </div>
+</div>
+
+<div class="input-group mb-2">
+    <select class="form-control" [(ngModel)]="newTranslationLanguage">
+        <option *ngFor="let languageCode of unusedLanguages"
+                [value]="languageCode">{{getLanguageLabel(languageCode)}}</option>
+    </select>
+    <input [(ngModel)]="newTranslationText" type="text" class="form-control">
+    <button class="btn btn-success" [disabled]="!isNewTranslationValid()" type="button"
+            (click)="addNewTranslation()">
+        <span class="mdi mdi-plus"></span>
+    </button>
+</div>

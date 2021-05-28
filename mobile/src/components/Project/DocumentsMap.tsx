@@ -1,5 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Document, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
@@ -20,7 +20,7 @@ interface DocumentsMapProps {
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
     setProjectSettings: (projectSettings: ProjectSettings) => void;
-    issueSearch: (q: Query) => void;
+    issueSearch: (q: string) => void;
 }
 
 

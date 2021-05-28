@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Query, SyncStatus } from 'idai-field-core';
+import { SyncStatus } from 'idai-field-core';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,7 +13,7 @@ interface SearchBarProps {
     projectSettings: ProjectSettings;
     syncStatus: SyncStatus;
     setProjectSettings: (settings: ProjectSettings) => void;
-    issueSearch: (q: Query) => void;
+    issueSearch: (q: string) => void;
     toggleDrawer: () => void
 }
 
@@ -34,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             <Input
                 placeholder="Search..."
                 style={ styles.input }
-                onChangeText={ (value: string) => issueSearch({ q: value }) }
+                onChangeText={ (value: string) => issueSearch(value) }
                 hideBorder
             />
             { renderRightIcons(projectSettings, setProjectSettings, syncStatus) }

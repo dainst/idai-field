@@ -1,18 +1,18 @@
-import { Document, Query } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSearch = (
     repository: DocumentRepository
-): [Document[], (q: Query) => void] => {
+): [Document[], (q: string) => void] => {
     
     const [documents, setDocuments] = useState<Document[]>([]);
-    const [currentQuery, setCurrentQuery] = useState<Query>({ q: '*' });
+    const [q, setQ] = useState<string>('*');
 
     const issueSearch = useCallback(
-        () => repository.find(currentQuery).then(result => setDocuments(result.documents)),
-        [repository, currentQuery]
+        () => repository.find({ q }).then(result => setDocuments(result.documents)),
+        [repository, q]
     );
 
     useEffect(() => { issueSearch(); }, [issueSearch]);
@@ -24,7 +24,7 @@ const useSearch = (
         return () => s.unsubscribe();
     }, [repository, issueSearch]);
 
-    return [documents, setCurrentQuery];
+    return [documents, setQ];
 
 };
 

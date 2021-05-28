@@ -1,6 +1,6 @@
 import { filter, flow, includedIn, is, map, remove } from 'tsfun';
-import {Category} from '../model';
-import {Forest,Named,Name,isTopLevelItemOrChildThereof,removeTrees,Tree,filterTrees} from '../tools';
+import { Category} from '../model';
+import { Forest, Named, Name, isTopLevelItemOrChildThereof, removeTrees, Tree, filterTrees } from '../tools';
 
 
 const TYPE_CATALOG = 'TypeCatalog';
@@ -9,13 +9,10 @@ const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
 /**
- * Outside of the configuration package, this module should not be accessed directly,
- * but instead via ProjectCategories (project-categories.ts) or ProjectConfiguration (project-configuration.ts).
- *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export /* package-private */ module ProjectCategories {
+export module ProjectCategories {
 
     export function isGeometryCategory(t: Forest<Named>, category: Name): boolean {
 

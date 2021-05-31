@@ -64,7 +64,7 @@ const findParentDocIds = (checkDoc: TransformedDocument, transformedGeoDocuments
     
     const toCheckGeoType = checkDoc.doc.resource.geometry.type as FieldGeometryType;
     const toCeckDocCoords = checkDoc.transformedCoordinates;
-    const parentArray: string[] = [];
+    const parentArray: {id: string, area: number}[] = [];
 
     for(const doc of transformedGeoDocuments){
 
@@ -73,8 +73,16 @@ const findParentDocIds = (checkDoc: TransformedDocument, transformedGeoDocuments
         if(geoType === 'Point' || geoType === 'MultiPoint' || geoType === 'LineString' || geoType === 'MultiLineString')
             continue;
 
-        const addParent = () => parentArray.push(doc.doc.resource.id);
         const coords = doc.transformedCoordinates;
+        const addParent = () => parentArray.push({
+            id: doc.doc.resource.id,
+            area: getGeometryArea(
+                {
+                    type: doc.doc.resource.geometry.type,
+                    coordinates: coords
+                }
+                ) });
+        
 
         switch(toCheckGeoType){
             case 'Point':
@@ -120,6 +128,11 @@ const findParentDocIds = (checkDoc: TransformedDocument, transformedGeoDocuments
         }
     }
 
-    return parentArray;
+    parentArray.sort((a,b) => {
+        if(a.area > b.area) return 1;
+        else if(a.area < b.area) return -1;
+        else return 0;
+    });
+    return parentArray.map(entry => entry.id);
 
 };

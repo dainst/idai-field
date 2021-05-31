@@ -80,13 +80,13 @@ describe('geometry-map', () => {
     });
 
     
-    it('should have si4 as child of t2',() => {
+    it('should have t2, si3 and si1 ordered by there area as parents of si4 ',() => {
         
         const parents = geoMap.get(si4Id)?.parents;
+        const expectedOrderedParents = [si3Id, si1Id,t2Id];
 
-        expect(parents?.includes(t2Id)).toBe(true);
-        expect(parents?.includes(si1Id)).toBe(true);
-        expect(parents?.length).toBe(2);
+        expect(parents?.length).toBe(expectedOrderedParents.length);
+        expect(parents).toEqual(expectedOrderedParents);
     });
 
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, flatten, to } from 'tsfun';
+import { clone, flatten, isEmpty, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
@@ -180,9 +180,38 @@ export class ConfigurationFieldComponent implements OnChanges {
     private updateCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
                                                      languageCode: string) {
 
-            // TODO Do not add if the same label is set in library/core configuration
+        if (newText === this.field[sectionName]?.[languageCode]
+            && newText !== this.customLanguageConfigurations[languageCode]
+                ?.categories?.[this.category.name]?.fields?.[this.field.name]?.[sectionName]) {
+            this.deleteFromCustomLanguageConfigurationSection(sectionName, languageCode);
+        } else {
             this.addToCustomLanguageConfigurationSection(sectionName, newText, languageCode);
+        }
     }
+
+
+    private deleteFromCustomLanguageConfigurationSection(sectionName: 'label'|'description', languageCode) {
+
+        if (!this.customLanguageConfigurations[languageCode]) return;
+        const languageConfiguration = this.customLanguageConfigurations[languageCode];
+
+        if (!languageConfiguration.categories) return;
+        if (!languageConfiguration.categories[this.category.name]) return;
+        const categoryConfiguration = languageConfiguration.categories[this.category.name];
+        
+        if (!categoryConfiguration.fields) return;
+        if (!categoryConfiguration.fields[this.field.name]) return;
+        const fieldConfiguration = categoryConfiguration.fields[this.field.name];
+
+        delete fieldConfiguration[sectionName];
+
+        if (isEmpty(fieldConfiguration)) delete categoryConfiguration.fields[this.field.name];
+        if (isEmpty(categoryConfiguration.fields)) delete categoryConfiguration.fields;
+        if (isEmpty(categoryConfiguration)) delete languageConfiguration.categories[this.category.name];
+        if (isEmpty(languageConfiguration.categories)) delete languageConfiguration.categories;
+        if (isEmpty(languageConfiguration)) delete this.customLanguageConfigurations[languageCode];
+    }
+
 
 
     private addToCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,

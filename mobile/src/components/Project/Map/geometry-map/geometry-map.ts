@@ -1,6 +1,6 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometryType } from 'idai-field-core';
-import { Matrix4 } from 'react-native-redash';
+import { identityMatrix4, Matrix4 } from 'react-native-redash';
 import {
     getGeometryArea, isLineStringInMultiPolygon,
     isLineStringInPolygon,
@@ -34,7 +34,10 @@ export const setupGeoMap = (
     geoDocuments: Document[] | undefined,
     transformationMatrix: Matrix4 | undefined): GeoMap | null=> {
     
-    if(!transformationMatrix || !geoDocuments || !geoDocuments.length) return null;
+    if(!transformationMatrix ||
+        !geoDocuments ||
+        !geoDocuments.length ||
+        JSON.stringify(transformationMatrix) === JSON.stringify(identityMatrix4)) return null;
 
     //transform geometries to screen cs
     const transformedGeos = transformDocumentsGeometry(transformationMatrix, geoDocuments);

@@ -24,11 +24,16 @@ jest.mock('../repositories/document-repository');
 describe('useMapData',() => {
 
     const MockedDocumentRepository = mocked(DocumentRepository, true);
+    let repository: typeof MockedDocumentRepository;
+
+    beforeAll(() => {
+        repository = new MockedDocumentRepository();
+    });
 
     // eslint-disable-next-line max-len
     const hook = () => renderHook(({ repository, viewPort, selectedDocIds }) => useMapData(repository, viewPort, selectedDocIds), {
         initialProps: {
-            repository: new MockedDocumentRepository(),
+            repository,
             viewPort: { x:0, y:0, width: 500, height: 12 },
             selectedDocIds: [bu1Id, si1Id]
         } });

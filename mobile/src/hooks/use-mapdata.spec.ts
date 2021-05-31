@@ -72,4 +72,21 @@ describe('useMapData',() => {
         expect(docCnt).toBe(docIds?.length);
         
     });
+
+
+    it('should update the selected Docs of GeoMap correctly', async () => {
+
+        const newSelectedDocs = [r1Id, si1Id];
+        
+        const { result, rerender, waitForNextUpdate } = hook();
+        rerender({ repository,viewPort,selectedDocIds: newSelectedDocs });
+        await waitForNextUpdate();
+
+        const [_docIds, geoMap, _transformMatrix] = result.current;
+        
+        geoMap?.forEach((value, key) => {
+            if(newSelectedDocs.includes(key)) expect(value.isSelected).toEqual(true);
+            else expect(value.isSelected).toBeFalsy();
+        });
+    });
 });

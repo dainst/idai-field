@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { PouchdbManager } from 'idai-field-core';
+import { Document, PouchdbManager } from 'idai-field-core';
+import { Observable } from 'rxjs';
+import { bu1 } from '../../test_data/test_docs/bu1';
 import { DocumentRepository } from '../repositories/document-repository';
 import useSearch from './use-search';
 
@@ -10,7 +12,8 @@ describe('useSearch', () => {
 
     let repository: DocumentRepository;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
+        
         repository = await DocumentRepository.init('test', [], new PouchdbManager(name => new PouchDB(name)));
     });
 
@@ -33,12 +36,35 @@ describe('useSearch', () => {
 
         const [_documents, setQ] = result.current;
 
-        act(() => {
+        await act(async () => {
             setQ('test');
         });
 
         expect(repository.find)
             .toHaveBeenLastCalledWith({ q: 'test', categories: categories, constraints: undefined });
+
+    });
+
+    it('should trigger find when remote changes are received', async () => {
+
+        let triggerChange: () => void;
+        repository.remoteChanged = jest.fn().mockImplementation(() => {
+            return new Observable<Document>(subscriber => {
+                triggerChange = () => subscriber.next(bu1);
+            });
+        });
+
+        const categories: string[] = [];
+        const { waitForNextUpdate } = renderHook(() => useSearch(repository, categories));
+
+        await waitForNextUpdate();
+
+        await act(async () => {
+            triggerChange();
+            triggerChange();
+        });
+
+        expect(repository.find).toHaveBeenCalledTimes(3);
 
     });
 

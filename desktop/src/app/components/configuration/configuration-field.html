@@ -14,7 +14,23 @@
         </span>
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
-        <div *ngIf="editable" class="btn-group right hide-buttons">
+        <div *ngIf="!parentField" class="btn-group right edit-buttons">
+            <button *ngIf="hideable && !hidden"
+                    class="btn btn-secondary hide-field-button"
+                    (click)="toggleHidden()"
+                    placement="left" container="body"
+                    ngbTooltip="Feld ausblenden"
+                    i18n-ngbTooltip="@@configuration.hideField">
+                <span class="mdi mdi-eye-off"></span>
+            </button>
+            <button *ngIf="hideable && hidden"
+                    class="btn btn-light show-field-button"
+                    (click)="toggleHidden()"
+                    placement="left" container="body"
+                    ngbTooltip="Feld einblenden"
+                    i18n-ngbTooltip="@@configuration.showField">
+                <span class="mdi mdi-eye"></span>
+            </button>
             <button *ngIf="!editing" class="btn btn-primary edit-field-button"
                     (click)="startEditing()"
                     placement="left" container="body"
@@ -28,24 +44,6 @@
                     ngbTooltip="Änderungen speichern"
                     i18n-ngbTooltip="@@configuration.saveChanges">
                 OK
-            </button>
-        </div>
-        <div *ngIf="hideable" class="btn-group right hide-buttons">
-            <button *ngIf="!hidden"
-                    class="btn btn-secondary hide-field-button"
-                    (click)="toggleHidden()"
-                    placement="left" container="body"
-                    ngbTooltip="Feld ausblenden"
-                    i18n-ngbTooltip="@@configuration.hideField">
-                <span class="mdi mdi-eye-off"></span>
-            </button>
-            <button *ngIf="hidden"
-                    class="btn btn-light show-field-button"
-                    (click)="toggleHidden()"
-                    placement="left" container="body"
-                    ngbTooltip="Feld einblenden"
-                    i18n-ngbTooltip="@@configuration.showField">
-                <span class="mdi mdi-eye"></span>
             </button>
         </div>
     </div>
@@ -65,8 +63,10 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                <span *ngIf="!editing">{{getInputTypeLabel()}}</span>
-                <select *ngIf="editing" (change)="setInputType($event.target.value)" class="form-control">
+                <span *ngIf="!editing || !isCustomField()">{{getInputTypeLabel()}}</span>
+                <select *ngIf="editing && !isCustomField()"
+                        (change)="setInputType($event.target.value)"
+                        class="form-control">
                     <option *ngFor="let inputType of getAvailableInputTypes()"
                             value="{{inputType.name}}"
                             [selected]="getInputType() === inputType.name">

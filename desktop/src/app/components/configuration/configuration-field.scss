@@ -29,10 +29,15 @@ configuration-field {
   .card-header {
     height: 55px;
 
-    .hide-buttons {
+    .edit-buttons {
       position: absolute;
       top: 8px;
       right: 8px;
+
+      .hide-field-button,
+      .show-field-button {
+        margin-right: 9px;
+      }
     }
   }
 

@@ -55,7 +55,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         if (!this.category || !this.field) return;
 
         this.parentField = this.isParentField();
-        this.editable = this.isEditable();
         this.hideable = this.isHideable();
         this.editing = false;
 
@@ -77,6 +76,8 @@ export class ConfigurationFieldComponent implements OnChanges {
         ValuelistUtil.getValueLabel(valuelist, valueId);
 
     public toggleHidden = () => this.onToggleHidden.emit();
+
+    public isCustomField = () => this.field.source === 'custom';
 
 
     public startEditing() {
@@ -157,6 +158,8 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private updateCustomFieldDefinition() {
         
+        if (!this.customFieldDefinition) return;
+
         this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
     }
 
@@ -246,15 +249,6 @@ export class ConfigurationFieldComponent implements OnChanges {
             .map(to('name'))
             .includes(this.field.name);
     }
-
-
-    private isEditable(): boolean {
-
-        return !this.parentField
-            && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
-            && this.field.source === 'custom';
-    }
-
 
     private isHideable(): boolean {
 

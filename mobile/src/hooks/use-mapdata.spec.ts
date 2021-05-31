@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { PouchdbManager } from 'idai-field-core';
 import { identityMatrix4 } from 'react-native-redash';
-import { mocked } from 'ts-jest/utils';
 import { bu1 } from '../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../test_data/test_docs/lineBuilding';
 import { multiPolyTrench } from '../../test_data/test_docs/multiPolyTrench';
@@ -19,24 +19,28 @@ const r1Id = r1.resource.id;
 const si1Id = si1.resource.id;
 
 jest.mock('../repositories/document-repository');
+jest.mock('idai-field-core');
 
 
 describe('useMapData',() => {
 
-    const MockedDocumentRepository = mocked(DocumentRepository, true);
-    let repository: typeof MockedDocumentRepository;
+    let repository: DocumentRepository;
 
-    beforeAll(() => {
-        repository = new MockedDocumentRepository();
+    beforeAll(async () => {
+        repository = await DocumentRepository.init('test', [], new PouchdbManager(name => new PouchDB(name)));
     });
 
-    // eslint-disable-next-line max-len
-    const hook = () => renderHook(({ repository, viewPort, selectedDocIds }) => useMapData(repository, viewPort, selectedDocIds), {
-        initialProps: {
-            repository,
-            viewPort: { x:0, y:0, width: 500, height: 12 },
-            selectedDocIds: [bu1Id, si1Id]
-        } });
+    const hook = () =>
+        renderHook(({ repository, viewPort, selectedDocIds }) =>
+            useMapData(repository, viewPort, selectedDocIds),
+            {
+                initialProps: {
+                    repository,
+                    viewPort: { x:0, y:0, width: 500, height: 12 },
+                    selectedDocIds: [bu1Id, si1Id]
+                }
+            }
+        );
 
 
     it('should setup the hook correctly',async () => {
@@ -65,4 +69,3 @@ describe('useMapData',() => {
         
     });
 });
-

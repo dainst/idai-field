@@ -5,20 +5,22 @@ import { identityMatrix4, Matrix4 } from 'react-native-redash';
 import {
     GeometryBoundings,
     getGeometryBoundings,
-    setupTransformationMatrix,
+    getMinMaxCoords, setupTransformationMatrix,
     ViewPort
 } from '../components/Project/Map/geo-svg';
+import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
 import { GeoMap, setupGeoMap } from '../components/Project/Map/geometry-map/geometry-map';
 import { DocumentRepository } from '../repositories/document-repository';
 import usePrevious from './use-previous';
 
 
-const useMapData = (repository: DocumentRepository, viewPort: ViewPort, selectedDocIds: string[]):
-    [string[] | undefined, GeoMap | null, Matrix4 | undefined] => {
+const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefined, selectedDocIds: string[]):
+    [string[] | undefined, GeoMap | null, Matrix4 | undefined, number[] | undefined] => {
     
     const [transformMatrix, setTransformMatrix] = useState<Matrix4>(identityMatrix4);
     const [geoDocuments, setGeoDocuments] = useState<Document[]>();
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
+    const [viewBox, setViewBox] = useState<number[]>();
 
     const [documentsGeoMap, setDocumentsGeoMap] = useState<GeoMap | null>(null);
     const [docIds, setDocIds] = useState<string[]>();
@@ -53,13 +55,12 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort, selected
 
     useEffect(() => {
 
-        setTransformMatrix(setupTransformationMatrix(geometryBoundings, viewPort));
+        if(viewPort) setTransformMatrix(setupTransformationMatrix(geometryBoundings, viewPort));
     },[viewPort, geometryBoundings]);
 
 
     useEffect(() => {
 
-        
         setDocumentsGeoMap(setupGeoMap(geoDocuments, transformMatrix));
 
     },[geoDocuments, transformMatrix]);
@@ -81,14 +82,35 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort, selected
         }
 
     }, [previousSelectedDocIds, selectedDocIds, documentsGeoMap, sortDocIdsByArea]);
-   
+    
+
+    useEffect(() => {
+        //compute viewBox
+
+        if(viewPort && documentsGeoMap){
+            if(!selectedDocIds.length) setViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
+            else {
+                const { minX, minY, maxX, maxY } = getMinMaxCoords(selectedDocIds.map(docId => ({
+                    type: documentsGeoMap.get(docId)!.doc.resource.geometry.type,
+                    coordinates: documentsGeoMap.get(docId)!.transformedCoords
+                })));
+                setViewBox([
+                    minX - viewBoxPaddingX,
+                    minY - viewBoxPaddingY,
+                    maxX - minX + 2 * viewBoxPaddingX,
+                    maxY - minY + 2 * viewBoxPaddingY]);
+            }
+        }
+    },[selectedDocIds, viewPort, documentsGeoMap]);
 
     return [
         docIds,
         documentsGeoMap,
-        transformMatrix
+        transformMatrix,
+        viewBox
     ];
     
 };
+
 
 export default useMapData;

@@ -3,6 +3,7 @@ import { lineBuilding } from '../../../../../test_data/test_docs/lineBuilding';
 import { multiPolyTrench } from '../../../../../test_data/test_docs/multiPolyTrench';
 import { r1 } from '../../../../../test_data/test_docs/r1';
 import { si1 } from '../../../../../test_data/test_docs/si1';
+import { si3 } from '../../../../../test_data/test_docs/si3';
 import { si4 } from '../../../../../test_data/test_docs/si4';
 import { t2 } from '../../../../../test_data/test_docs/t2';
 import { tf1 } from '../../../../../test_data/test_docs/tf1';
@@ -12,7 +13,7 @@ import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewpor
 import { GeoMapEntry, setupGeoMap } from './geometry-map';
 
 
-const geoDocuments = [bu1, lineBuilding, t2, multiPolyTrench, r1, tf1, si4, si1];
+const geoDocuments = [bu1, lineBuilding, t2, multiPolyTrench, r1, tf1, si4, si1, si3];
 const viewPort: ViewPort = { x: 0,y: 0, width: 752.941162109375, height: 1067.2940673828125 };
 let geoMap: Map<string, GeoMapEntry>;
 
@@ -24,6 +25,7 @@ const si4Id = si4.resource.id;
 const tf1Id = tf1.resource.id;
 const lineBuildingId = lineBuilding.resource.id;
 const si1Id = si1.resource.id;
+const si3Id = si3.resource.id;
 
 describe('geometry-map', () => {
 
@@ -57,7 +59,8 @@ describe('geometry-map', () => {
             [r1Id]: 2591.1655593290925,
             [si4Id]: 667.521673,
             [tf1Id]:  Math.PI * Math.pow(pointRadius,2),
-            [lineBuildingId]: 0
+            [lineBuildingId]: 0,
+            [si3Id]: 5312.58344,
         };
 
         

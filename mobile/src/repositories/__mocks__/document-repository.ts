@@ -1,4 +1,5 @@
-import { Category, Document, FindResult, Forest, PouchdbManager, Query } from 'idai-field-core';
+import { Document, FindResult, Query } from 'idai-field-core';
+import { Observable } from 'rxjs';
 import { bu1 } from '../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../test_data/test_docs/lineBuilding';
 import { multiPolyTrench } from '../../../test_data/test_docs/multiPolyTrench';
@@ -17,25 +18,24 @@ const ids = [bu1Id, lineBuildingId, multiPolyTrenchId, pointBuildingId, r1Id, si
 
 export class DocumentRepository {
 
-    public static async init(
-        _username: string,
-        _categories: Forest<Category>,
-        _pouchdbManager: PouchdbManager,
-    ) : Promise<DocumentRepository> {
+    public static async init() : Promise<DocumentRepository> {
 
         return new DocumentRepository();
     }
 
-    public async find(_query: Query): Promise<FindResult> {
+    find = jest.fn(async (_query: Query): Promise<FindResult> => {
         
         return {
             ids,
             totalCount: ids.length,
             documents: [bu1, lineBuilding, multiPolyTrench, pointBuilding, r1, si1]
         };
-    }
+    });
 
     public async get(_query: Query): Promise<Document> {
         return bu1;
     }
+
+    public remoteChanged = (): Observable<Document> => new Observable<Document>();
+    
 }

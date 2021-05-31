@@ -7,6 +7,7 @@ import { multiPolyTrench } from '../../test_data/test_docs/multiPolyTrench';
 import { pointBuilding } from '../../test_data/test_docs/pointBuilding';
 import { r1 } from '../../test_data/test_docs/r1';
 import { si1 } from '../../test_data/test_docs/si1';
+import { ViewPort } from '../components/Project/Map/geo-svg';
 import { DocumentRepository } from '../repositories/document-repository';
 import useMapData from './use-mapdata';
 
@@ -24,10 +25,13 @@ jest.mock('idai-field-core');
 
 describe('useMapData',() => {
 
+
     let repository: DocumentRepository;
+    let viewPort: ViewPort;
 
     beforeAll(async () => {
         repository = await DocumentRepository.init('test', [], new PouchdbManager(name => new PouchDB(name)));
+        viewPort = { x:0, y:0, width: 500, height: 12 };
     });
 
     const hook = () =>
@@ -36,7 +40,7 @@ describe('useMapData',() => {
             {
                 initialProps: {
                     repository,
-                    viewPort: { x:0, y:0, width: 500, height: 12 },
+                    viewPort,
                     selectedDocIds: [bu1Id, si1Id]
                 }
             }

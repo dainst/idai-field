@@ -7,7 +7,6 @@ type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 
 
 const useRepository = (
-    project: string,
     username: string,
     categories: Forest<Category>,
     pouchdbManager: PouchdbManager | undefined
@@ -19,15 +18,14 @@ const useRepository = (
 
         if (!pouchdbManager || !pouchdbManager.open || !categories) return;
         
-        setupRepository(project, username, categories, pouchdbManager, setRepository);
-    }, [project, username, categories, pouchdbManager, pouchdbManager?.open]);
+        setupRepository(username, categories, pouchdbManager, setRepository);
+    }, [username, categories, pouchdbManager, pouchdbManager?.open]);
 
     return repository;
 };
 
 
 const setupRepository = async (
-    project: string,
     username: string,
     categories: Forest<Category>,
     pouchdbManager: PouchdbManager,

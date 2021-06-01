@@ -14,6 +14,7 @@ import { GeoMap } from './geometry-map/geometry-map';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap from './SvgMap/SvgMap';
+
 interface MapProps {
     repository: DocumentRepository
     selectedDocumentIds: string[];
@@ -26,20 +27,11 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
-    const [isModalVisible, setModalVisible] = useState(false);
 
 
     const selectDocHandler = (doc: Document) => {
 
         setHighlightedDoc(doc);
-        setModalVisible(true);
-    };
-
-
-    const unSelectDocHandler = () => {
-
-        setModalVisible(false);
-        setHighlightedDoc(null);
     };
 
 
@@ -73,9 +65,7 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
                 }
             </View>
             <MapBottomDrawer
-                closeHandler={ unSelectDocHandler }
                 document={ highlightedDoc }
-                isVisible={ isModalVisible }
                 config={ config }
                 navigateToDocument={ navigateToDocument } />
         </View>

@@ -61,7 +61,6 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
                 { (docIds && documentsGeoMap && viewPort && transformMatrix && viewBox) &&
                     <SvgMap style={ styles.svg } viewPort={ viewPort }
-                        // eslint-disable-next-line max-len
                         viewBox={ viewBox.join(' ') }>
                         {docIds.map(docId =>
                             renderGeoSvgElement(

@@ -50,7 +50,7 @@ describe('applyLanguageConfigurations', () => {
         ];
 
         const languageConfigurations: LanguageConfigurations = {
-            default: {
+            complete: {
                 en: [{
                     categories: {
                         A: {
@@ -72,7 +72,7 @@ describe('applyLanguageConfigurations', () => {
                     }
                 }]
             },
-            custom: {}
+            default: {}
         };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
@@ -99,7 +99,7 @@ describe('applyLanguageConfigurations', () => {
         ];
 
         const languageConfigurations: LanguageConfigurations = {
-            default: {
+            complete: {
                 es: [{
                     categories: {
                         A: {
@@ -161,7 +161,7 @@ describe('applyLanguageConfigurations', () => {
                     }
                 }]
             },
-            custom: {}
+            default: {}
         };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
@@ -202,81 +202,87 @@ describe('applyLanguageConfigurations', () => {
             [{ name: 'isRecordedIn' }]
         ];
 
-        const languageConfigurations: LanguageConfigurations = {
-            default: {
-                de: [{
-                    categories: {
-                        A: {
-                            label: 'A Library',
-                            fields: {
-                                a: {
-                                    label: 'a Label Library',
-                                    description: 'a Beschreibung Library'
-                                }
-                            }
-                        }
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'Liegt in (Library)'
-                        }
-                    }
-                }, {
-                    categories: {
-                        A: {
-                            label: 'A Core',
-                            fields: {
-                                a: {
-                                    label: 'a Label Core',
-                                    description: 'a Beschreibung Core'
-                                }
-                            }
-                        },
-                        B: {
-                            label: 'B Core',
-                            fields: {
-                                b: {
-                                    label: 'b Label Core',
-                                    description: 'b Beschreibung Core'
-                                }
-                            }
-                        }
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'Liegt in (Core)'
-                        }
-                    }
-                }]
-            },
-            custom: {
-                de: {
-                    categories: {
-                        A: {
-                            label: 'A Custom',
-                            fields: {
-                                a: {
-                                    label: 'a Label Custom',
-                                    description: 'a Beschreibung Custom'
-                                }
-                            }
-                        },
-                        C: {
-                            label: 'C Custom',
-                            fields: {
-                                c: {
-                                    label: 'c Label Custom',
-                                    description: 'c Beschreibung Custom'
-                                }
-                            }
-                        },
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'Liegt in (Custom)'
+        const libraryConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Library',
+                    fields: {
+                        a: {
+                            label: 'a Label Library',
+                            description: 'a Beschreibung Library'
                         }
                     }
                 }
+            },
+            relations: {
+                isRecordedIn: {
+                    label: 'Liegt in (Library)'
+                }
+            }
+        };
+
+        const coreConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Core',
+                    fields: {
+                        a: {
+                            label: 'a Label Core',
+                            description: 'a Beschreibung Core'
+                        }
+                    }
+                },
+                B: {
+                    label: 'B Core',
+                    fields: {
+                        b: {
+                            label: 'b Label Core',
+                            description: 'b Beschreibung Core'
+                        }
+                    }
+                }
+            },
+            relations: {
+                isRecordedIn: {
+                    label: 'Liegt in (Core)'
+                }
+            }
+        };
+        
+        const customConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Custom',
+                    fields: {
+                        a: {
+                            label: 'a Label Custom',
+                            description: 'a Beschreibung Custom'
+                        }
+                    }
+                },
+                C: {
+                    label: 'C Custom',
+                    fields: {
+                        c: {
+                            label: 'c Label Custom',
+                            description: 'c Beschreibung Custom'
+                        }
+                    }
+                },
+            },
+            relations: {
+                isRecordedIn: {
+                    label: 'Liegt in (Custom)'
+                }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                de: [libraryConfiguration, coreConfiguration]
+            },
+            complete: {
+                de: [customConfiguration, libraryConfiguration, coreConfiguration]
             }
         };
 

@@ -1,4 +1,4 @@
-import { Map, map, set } from 'tsfun';
+import { clone, Map, map } from 'tsfun';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { FieldDefinition } from '../../model/field-definition';
@@ -100,9 +100,12 @@ export class ConfigLoader {
                 username
             ));
             customCategories = configurationDocument.resource.categories;
+            const defaultLanguageConfigurations = this.readDefaultLanguageConfigurations();
             languageConfigurations = {
-                custom: configurationDocument.resource.languages,
-                default: this.readDefaultLanguageConfigurations()
+                complete: this.getCompleteLanguageConfigurations(
+                    defaultLanguageConfigurations, configurationDocument.resource.languages
+                ),
+                default: defaultLanguageConfigurations
             };
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
@@ -195,6 +198,18 @@ export class ConfigLoader {
 
         if (!this.configReader.exists(path)) return undefined;
         return this.configReader.read(path);
+    }
+
+
+    private getCompleteLanguageConfigurations(defaultLanguageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+                                              customLanguageConfiguration: { [language: string]: LanguageConfiguration })
+            : { [language: string]: Array<LanguageConfiguration> } {
+
+        return Object.keys(customLanguageConfiguration).reduce((result, language) => {
+            if (!result[language]) result[language] = [];
+            result[language].unshift(customLanguageConfiguration[language]);
+            return result;
+        }, clone(defaultLanguageConfigurations));
     }
 
 

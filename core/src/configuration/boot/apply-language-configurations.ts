@@ -32,11 +32,11 @@ function applyFields(languageConfigurations: LanguageConfigurations, categories:
 
         for (const fieldName of Object.keys(category.fields)) {
             category.fields[fieldName].label = LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations),
+                languageConfigurations.complete,
                 'fields', fieldName, 'label'
             );
             category.fields[fieldName].description = LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations),
+                languageConfigurations.complete,
                 'fields', fieldName, 'description'
             );
             category.fields[fieldName].defaultLabel = LanguageConfiguration.getI18nString(
@@ -56,7 +56,7 @@ function applyRelations(languageConfigurations: LanguageConfigurations, relation
 
     for (const relation of relations) {
         relation.label = LanguageConfiguration.getI18nString(
-            LanguageConfigurations.getCombined(languageConfigurations),
+            languageConfigurations.complete,
             'relations', relation.name, 'label'
         );
         relation.defaultLabel = LanguageConfiguration.getI18nString(
@@ -72,7 +72,7 @@ function applyCategories(languageConfigurations: LanguageConfigurations, categor
     for (const categoryName of Object.keys(categories)) {
         const category = categories[categoryName];
         category.label = LanguageConfiguration.getI18nString(
-            LanguageConfigurations.getCombined(languageConfigurations),
+            languageConfigurations.complete,
             'categories', categoryName, 'label'
         );
         category.defaultLabel = LanguageConfiguration.getI18nString(
@@ -84,16 +84,16 @@ function applyCategories(languageConfigurations: LanguageConfigurations, categor
             const field = category.fields[fieldName];
 
             field.label = I18nString.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'commons', fieldName, 'label'
+                languageConfigurations.complete, 'commons', fieldName, 'label'
             ));
             field.label = I18nString.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'categoriesFields', fieldName, 'label', categoryName
+                languageConfigurations.complete, 'categoriesFields', fieldName, 'label', categoryName
             ));
             field.description = I18nString.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'commons', fieldName, 'description'
+                languageConfigurations.complete, 'commons', fieldName, 'description'
             ));
             field.description = I18nString.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'categoriesFields', fieldName, 'description', categoryName
+                languageConfigurations.complete, 'categoriesFields', fieldName, 'description', categoryName
             ));
             field.defaultLabel = I18nString.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
                 languageConfigurations.default, 'commons', fieldName, 'label'

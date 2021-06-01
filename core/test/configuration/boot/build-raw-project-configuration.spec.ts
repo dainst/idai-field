@@ -1205,7 +1205,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const languageConfigurations = {
-            default: {
+            complete: {
                 de: [{
                     groups: {
                         'stem': 'Stem',
@@ -1217,7 +1217,7 @@ describe('buildRawProjectConfiguration', () => {
                     }
                 }]
             },
-            custom: {}
+            default: {}
         };
 
         const result = buildRaw(
@@ -1250,7 +1250,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {}, orderConf
         ).map(Named.toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1276,7 +1276,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {}, orderConf
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1341,12 +1341,12 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const languageConfigurations = {
-            default: {
+            complete: {
                 en: [{
                     other: { geometry: 'Geometry' }
                 }]
             },
-            custom: {}
+            default: {}
         };
 
         const result = buildRaw(
@@ -1380,7 +1380,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const categoriesTree = buildRawProjectConfiguration(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }
         )[0];
 
         expect((Tree.access(categoriesTree, 0) as any).children[0].name).toBe('C');

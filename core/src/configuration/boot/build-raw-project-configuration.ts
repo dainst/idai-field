@@ -42,7 +42,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                              extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
-                                             languageConfigurations: LanguageConfigurations = { default: {}, custom: {} },
+                                             languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              searchConfiguration: any = {},
                                              orderConfiguration: any = {},
                                              validateFields: any = identity): RawProjectConfiguration {
@@ -115,7 +115,7 @@ function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
         if (!positionGroup) {
             positionGroup = Group.create(Groups.POSITION);
             positionGroup.label = LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'groups', 'position'
+                languageConfigurations.complete, 'groups', 'position'
             );
             category.groups.push(positionGroup);
         }
@@ -123,7 +123,7 @@ function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
         const geometryField: FieldDefinition = {
             name: 'geometry',
             label: LanguageConfiguration.getI18nString(
-                LanguageConfigurations.getCombined(languageConfigurations), 'other', 'geometry'
+                languageConfigurations.complete, 'other', 'geometry'
             ),
             defaultLabel: LanguageConfiguration.getI18nString(
                 languageConfigurations.default, 'other', 'geometry'
@@ -183,7 +183,7 @@ function setGroupLabels(languageConfigurations: LanguageConfigurations) {
                 return category.label;
             } else {
                 return LanguageConfiguration.getI18nString(
-                    LanguageConfigurations.getCombined(languageConfigurations), 'groups', name
+                    languageConfigurations.complete, 'groups', name
                 );
             }
         };

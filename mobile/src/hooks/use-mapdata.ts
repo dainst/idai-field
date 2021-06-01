@@ -15,7 +15,7 @@ import usePrevious from './use-previous';
 
 
 const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefined, selectedDocIds: string[]):
-    [string[] | undefined, GeoMap | null, Matrix4 | undefined, number[] | undefined] => {
+    [string[] | undefined, GeoMap | null, Matrix4 | undefined, number[] | undefined, (docId: string) => void ] => {
     
     const [transformMatrix, setTransformMatrix] = useState<Matrix4>(identityMatrix4);
     const [geoDocuments, setGeoDocuments] = useState<Document[]>();
@@ -42,6 +42,24 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
             });
         }
     },[documentsGeoMap]);
+
+
+    const focusMapOnDocumentIds = useCallback((docIds: string[]) => {
+
+        //compute and set viewBox
+        if(!documentsGeoMap) return;
+        
+        const { minX, minY, maxX, maxY } = getMinMaxCoords(docIds.map(docId => ({
+            type: documentsGeoMap.get(docId)!.doc.resource.geometry.type,
+            coordinates: documentsGeoMap.get(docId)!.transformedCoords
+        })));
+        setViewBox([
+            minX - viewBoxPaddingX,
+            minY - viewBoxPaddingY,
+            maxX - minX + 2 * viewBoxPaddingX,
+            maxY - minY + 2 * viewBoxPaddingY]);
+    },[documentsGeoMap]);
+
     
     useEffect(() => {
 
@@ -65,6 +83,7 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
 
     },[geoDocuments, transformMatrix]);
 
+
     useEffect(() => {
 
         //set previously selected docs as not selected
@@ -85,29 +104,30 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
     
 
     useEffect(() => {
-        //compute viewBox
 
-        if(viewPort && documentsGeoMap){
+        if(viewPort){
             if(!selectedDocIds.length) setViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
             else {
-                const { minX, minY, maxX, maxY } = getMinMaxCoords(selectedDocIds.map(docId => ({
-                    type: documentsGeoMap.get(docId)!.doc.resource.geometry.type,
-                    coordinates: documentsGeoMap.get(docId)!.transformedCoords
-                })));
-                setViewBox([
-                    minX - viewBoxPaddingX,
-                    minY - viewBoxPaddingY,
-                    maxX - minX + 2 * viewBoxPaddingX,
-                    maxY - minY + 2 * viewBoxPaddingY]);
+                focusMapOnDocumentIds(selectedDocIds);
             }
         }
-    },[selectedDocIds, viewPort, documentsGeoMap]);
+    },[selectedDocIds, viewPort, focusMapOnDocumentIds]);
+
+
+    const focusMapOnDocumentId = (docId: string): void => {
+        
+        if(!documentsGeoMap || !documentsGeoMap.has(docId)) return;
+        focusMapOnDocumentIds([docId]);
+
+    };
+    
 
     return [
         docIds,
         documentsGeoMap,
         transformMatrix,
-        viewBox
+        viewBox,
+        focusMapOnDocumentId
     ];
     
 };

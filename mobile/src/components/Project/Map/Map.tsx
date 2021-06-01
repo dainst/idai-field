@@ -44,7 +44,7 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
     const [
         docIds,
         documentsGeoMap,
-        transformMatrix, viewBox] = useMapData(repository,viewPort, selectedDocumentIds);
+        transformMatrix, viewBox, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds);
 
 
     return (
@@ -66,7 +66,8 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
             <MapBottomDrawer
                 document={ highlightedDoc }
                 config={ config }
-                navigateToDocument={ navigateToDocument } />
+                navigateToDocument={ navigateToDocument }
+                focusHandler={ focusMapOnDocument } />
         </View>
     );
 };

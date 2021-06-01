@@ -37,7 +37,6 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
 
-        console.log('LAyout Change');
         setViewPort(event.nativeEvent.layout);
     };
     

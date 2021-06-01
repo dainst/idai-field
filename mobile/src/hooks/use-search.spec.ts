@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { Document, PouchdbManager } from 'idai-field-core';
+import { Document, PouchdbManager, Query } from 'idai-field-core';
 import { Observable } from 'rxjs';
+import { assoc } from 'tsfun';
 import { bu1 } from '../../test_data/test_docs/bu1';
 import { DocumentRepository } from '../repositories/document-repository';
 import useSearch from './use-search';
@@ -19,29 +20,27 @@ describe('useSearch', () => {
 
     it('should trigger empty search when initialized', async () => {
 
-        const categories: string[] = [];
-        const { waitForNextUpdate } = renderHook(() => useSearch(repository, categories));
+        const query = { categories: [] };
+        const { waitForNextUpdate } = renderHook(() => useSearch(repository, query));
 
         await waitForNextUpdate();
 
-        expect(repository.find).toHaveBeenCalledWith({ q: '', categories, constraints: undefined });
+        expect(repository.find).toHaveBeenCalledWith({ categories: query.categories });
     });
 
     it('should trigger find when q is changed', async () => {
 
-        const categories: string[] = [];
-        const { result, waitForNextUpdate } = renderHook(() => useSearch(repository, categories));
+        let query: Query = { categories: [] };
+        const { waitForNextUpdate, rerender } = renderHook(() => useSearch(repository, query));
 
         await waitForNextUpdate();
 
-        const [_documents, setQ] = result.current;
-
         await act(async () => {
-            setQ('test');
+            query = assoc('q', 'test', query);
+            rerender();
         });
 
-        expect(repository.find)
-            .toHaveBeenLastCalledWith({ q: 'test', categories: categories, constraints: undefined });
+        expect(repository.find).toHaveBeenLastCalledWith({ q: 'test', categories: query.categories });
 
     });
 
@@ -54,8 +53,8 @@ describe('useSearch', () => {
             });
         });
 
-        const categories: string[] = [];
-        const { waitForNextUpdate } = renderHook(() => useSearch(repository, categories));
+        const query = { categories: [] };
+        const { waitForNextUpdate } = renderHook(() => useSearch(repository, query));
 
         await waitForNextUpdate();
 

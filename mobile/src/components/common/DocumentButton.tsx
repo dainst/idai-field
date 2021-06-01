@@ -35,13 +35,14 @@ const styles = StyleSheet.create({
         backgroundColor: colors['secondary'],
         padding: 10,
         borderRadius: 5,
+        flex: 1,
     },
     container: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     title: {
-        paddingLeft: 5,
+        paddingLeft: 15,
     }
 });

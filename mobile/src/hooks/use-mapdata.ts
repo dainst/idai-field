@@ -36,8 +36,8 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
 
         if(documentsGeoMap){
             return Array.from(documentsGeoMap?.keys()).sort((a,b) => {
-                if(documentsGeoMap!.get(a)!.area > documentsGeoMap!.get(b)!.area) return -1;
-                else if(documentsGeoMap!.get(a)!.area < documentsGeoMap!.get(b)!.area) return 1;
+                if(documentsGeoMap.get(a)!.area > documentsGeoMap.get(b)!.area) return -1;
+                else if(documentsGeoMap.get(a)!.area < documentsGeoMap.get(b)!.area) return 1;
                 else return 0;
             });
         }

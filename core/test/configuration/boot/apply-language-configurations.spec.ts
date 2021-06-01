@@ -172,6 +172,7 @@ describe('applyLanguageConfigurations', () => {
         expect(categories['B'].label.de).toEqual('B Deutsch');
         expect(categories['B'].label.en).toEqual('B Englisch');
         expect(categories['B'].label.es).toBeUndefined();
+
         expect(categories['A'].fields['a'].label.de).toEqual('a Deutsches Label');
         expect(categories['A'].fields['a'].label.en).toEqual('a Englisches Label');
         expect(categories['A'].fields['a'].label.es).toEqual('a Spanisches Label');
@@ -184,7 +185,124 @@ describe('applyLanguageConfigurations', () => {
         expect(categories['B'].fields['b'].description.de).toBeUndefined();
         expect(categories['B'].fields['b'].description.en).toEqual('b Englische Beschreibung');
         expect(categories['B'].fields['b'].description.es).toBeUndefined();
+
         expect(relations[0].label.de).toEqual('Liegt in (Deutsch)');
         expect(relations[0].label.en).toEqual('Liegt in (Englisch)');
+    });
+
+
+    it('apply default and custom language configurations', () => {
+
+        configuration = [
+            {
+                A: { fields: { a: {} } } as CategoryDefinition,
+                B: { fields: { b: {} } } as CategoryDefinition,
+                C: { fields: { c: {} } } as CategoryDefinition
+            },
+            [{ name: 'isRecordedIn' }]
+        ];
+
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                de: [{
+                    categories: {
+                        A: {
+                            label: 'A Library',
+                            fields: {
+                                a: {
+                                    label: 'a Label Library',
+                                    description: 'a Beschreibung Library'
+                                }
+                            }
+                        }
+                    },
+                    relations: {
+                        isRecordedIn: {
+                            label: 'Liegt in (Library)'
+                        }
+                    }
+                }, {
+                    categories: {
+                        A: {
+                            label: 'A Core',
+                            fields: {
+                                a: {
+                                    label: 'a Label Core',
+                                    description: 'a Beschreibung Core'
+                                }
+                            }
+                        },
+                        B: {
+                            label: 'B Core',
+                            fields: {
+                                b: {
+                                    label: 'b Label Core',
+                                    description: 'b Beschreibung Core'
+                                }
+                            }
+                        }
+                    },
+                    relations: {
+                        isRecordedIn: {
+                            label: 'Liegt in (Core)'
+                        }
+                    }
+                }]
+            },
+            custom: {
+                de: {
+                    categories: {
+                        A: {
+                            label: 'A Custom',
+                            fields: {
+                                a: {
+                                    label: 'a Label Custom',
+                                    description: 'a Beschreibung Custom'
+                                }
+                            }
+                        },
+                        C: {
+                            label: 'C Custom',
+                            fields: {
+                                c: {
+                                    label: 'c Label Custom',
+                                    description: 'c Beschreibung Custom'
+                                }
+                            }
+                        },
+                    },
+                    relations: {
+                        isRecordedIn: {
+                            label: 'Liegt in (Custom)'
+                        }
+                    }
+                }
+            }
+        };
+
+        const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
+
+        expect(categories['A'].label.de).toEqual('A Custom');
+        expect(categories['A'].defaultLabel.de).toEqual('A Library');
+        expect(categories['B'].label.de).toEqual('B Core');
+        expect(categories['B'].defaultLabel.de).toEqual('B Core');
+        expect(categories['C'].label.de).toEqual('C Custom');
+        expect(categories['C'].defaultLabel).toEqual({});
+        
+        expect(categories['A'].fields['a'].label.de).toEqual('a Label Custom');
+        expect(categories['A'].fields['a'].defaultLabel.de).toEqual('a Label Library');
+        expect(categories['A'].fields['a'].description.de).toEqual('a Beschreibung Custom');
+        expect(categories['A'].fields['a'].defaultDescription.de).toEqual('a Beschreibung Library');
+        expect(categories['B'].fields['b'].label.de).toEqual('b Label Core');
+        expect(categories['B'].fields['b'].defaultLabel.de).toEqual('b Label Core');
+        expect(categories['B'].fields['b'].description.de).toEqual('b Beschreibung Core');
+        expect(categories['B'].fields['b'].defaultDescription.de).toEqual('b Beschreibung Core');
+        expect(categories['C'].fields['c'].label.de).toEqual('c Label Custom');
+        expect(categories['C'].fields['c'].defaultLabel).toEqual({});
+        expect(categories['C'].fields['c'].description.de).toEqual('c Beschreibung Custom');
+        expect(categories['C'].fields['c'].defaultDescription).toEqual({});
+        
+        expect(relations[0].label.de).toEqual('Liegt in (Custom)');
+        expect(relations[0].defaultLabel.de).toEqual('Liegt in (Library)');
     });
 });

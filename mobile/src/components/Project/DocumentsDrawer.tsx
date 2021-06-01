@@ -38,6 +38,7 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
             /> }
             { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
                 <DocumentButton
+                    style={ styles.documentButton }
                     config={ config }
                     document={ document }
                     onPress={ () => onDocumentSelected(document) }
@@ -72,5 +73,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
+    },
+    documentButton: {
+        flex: 1,
     }
 });

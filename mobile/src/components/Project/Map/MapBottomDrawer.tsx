@@ -2,11 +2,10 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useMemo } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Button from '../../common/Button';
-import CategoryIcon from '../../common/CategoryIcon';
 import Column from '../../common/Column';
-import Heading from '../../common/Heading';
+import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
 
 interface MapBottomDrawerProps {
@@ -19,7 +18,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
     document, config, navigateToDocument }) => {
 
     const iconSize = 20;
-    const snapPoints = useMemo(() => ['5%','35%'], []);
+    const snapPoints = useMemo(() => ['5%','25%'], []);
 
     if(!document) return null;
 
@@ -29,14 +28,15 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
         <BottomSheet
             index={ 1 }
             snapPoints={ snapPoints }
-            style={ styles.modal }>
+            style={ styles.modal }
+            >
+                <DocumentButton
+                    document={ document }
+                    config={ config }
+                    onPress={ documentPressHandler }
+                    size={ 30 }
+                />
                 <Column style={ styles.container }>
-                    <TouchableOpacity onPress={ documentPressHandler }>
-                        <Row style={ styles.headingRow }>
-                            <CategoryIcon document={ document } config={ config } size={ 30 } />
-                            <Heading style={ styles.heading }>{document.resource.identifier}</Heading>
-                        </Row>
-                    </TouchableOpacity>
                     <Text>Short description: { document.resource.shortDescription }</Text>
                     <Row style={ styles.buttonGroup }>
                         <Button
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 10
+        paddingHorizontal: 15,
+        paddingVertical: 10,
     },
     headingRow: {
         alignItems: 'center',

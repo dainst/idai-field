@@ -45,6 +45,7 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                     size={ 25 }
                 />
                 <Button
+                    variant="transparent"
                     onPress={ () => onParentSelected(document) }
                     icon={ <Ionicons name="arrow-forward" size={ 18 } /> }
                 />

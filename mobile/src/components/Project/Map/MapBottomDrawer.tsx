@@ -12,17 +12,19 @@ interface MapBottomDrawerProps {
     document: Document | null;
     config: ProjectConfiguration;
     navigateToDocument: (docId: string) => void;
+    focusHandler: (docId: string) => void;
 }
 
 const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
-    document, config, navigateToDocument }) => {
+    document, config, navigateToDocument, focusHandler }) => {
 
     const iconSize = 20;
     const snapPoints = useMemo(() => ['5%','25%'], []);
 
     if(!document) return null;
 
-    const documentPressHandler = () => navigateToDocument(document.resource.id);
+    const docId = document.resource.id;
+    const documentPressHandler = () => navigateToDocument(docId);
     
     return (
         <BottomSheet
@@ -47,7 +49,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                         />
                         <Button
                             title="Focus"
-                            onPress={ () => {console.log('button');} }
+                            onPress={ () => focusHandler(docId) }
                             icon={ <MaterialIcons
                                 name="center-focus-strong"
                                 size={ iconSize }

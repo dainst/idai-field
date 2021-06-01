@@ -1,6 +1,9 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { ReactElement } from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import {
+    NativeSyntheticEvent, NativeTouchEvent, StyleSheet,
+    Text, TouchableOpacity, View, ViewStyle
+} from 'react-native';
 import CategoryIcon from './CategoryIcon';
 
 

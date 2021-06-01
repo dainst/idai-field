@@ -1,40 +1,33 @@
-import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
-import React, { ReactElement, useMemo, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Document, ProjectConfiguration } from 'idai-field-core';
+import React, { ReactElement, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import { Matrix4 } from 'react-native-redash';
-import { Circle, G } from 'react-native-svg';
+import { Circle } from 'react-native-svg';
+import useMapData from '../../../hooks/use-mapdata';
+import { DocumentRepository } from '../../../repositories/document-repository';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
-    GeoMultiPolygon, GeoPoint, GeoPolygon, getGeometryBoundings,
-    processTransform2d, setupTransformationMatrix,
-    sortDocumentByGeometryArea, transformDocumentsGeometry, TransformedDocument
+    GeoMultiPolygon, GeoPoint, GeoPolygon
 } from './geo-svg';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
+import { GeoMap } from './geometry-map/geometry-map';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap from './SvgMap/SvgMap';
-
 interface MapProps {
-    geoDocuments: Document[];
-    selectedGeoDocuments: Document[];
+    repository: DocumentRepository
+    selectedDocumentIds: string[];
     config: ProjectConfiguration;
     navigateToDocument: (docId: string) => void;
 }
 
 
-const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, navigateToDocument }) => {
+const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navigateToDocument }) => {
 
-    const geometryBoundings = useMemo(() => getGeometryBoundings(geoDocuments),[geoDocuments]);
-    const viewPort = useRef<ViewPort>();
-    const transformationMatrix = useMemo(() =>
-            setupTransformationMatrix(geometryBoundings,viewPort.current),[geometryBoundings,viewPort]);
-    const transformedGeoDocuments = useMemo(() => sortDocumentByGeometryArea(
-            transformDocumentsGeometry(transformationMatrix, geoDocuments)),
-        [transformationMatrix, geoDocuments]) ;
-
-    
+    const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const [isModalVisible, setModalVisible] = useState(false);
+
 
     const selectDocHandler = (doc: Document) => {
 
@@ -42,35 +35,40 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
         setModalVisible(true);
     };
 
+
     const unSelectDocHandler = () => {
 
         setModalVisible(false);
         setHighlightedDoc(null);
     };
 
+
     const handleLayoutChange = (event: LayoutChangeEvent) => {
 
-        viewPort.current = event.nativeEvent.layout;
+        console.log('LAyout Change');
+        setViewPort(event.nativeEvent.layout);
     };
+    
+
+    const [
+        docIds,
+        documentsGeoMap,
+        transformMatrix, viewBox] = useMapData(repository,viewPort, selectedDocumentIds);
 
 
     return (
         <View style={ { flex: 1 } }>
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
-                { transformedGeoDocuments && geometryBoundings && viewPort.current &&
-                    <SvgMap style={ styles.svg } viewPort={ viewPort.current }
+                { (docIds && documentsGeoMap && viewPort && transformMatrix && viewBox) &&
+                    <SvgMap style={ styles.svg } viewPort={ viewPort }
                         // eslint-disable-next-line max-len
-                        viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
-                        {transformedGeoDocuments.map(tDoc =>(
-                            <G key={ tDoc.doc._id }>
-                                {renderGeoSvgElement(
-                                    tDoc,
-                                    selectedGeoDocuments,
-                                    config,
-                                    selectDocHandler,
-                                    highlightedDoc)}
-                            </G>))
-                        }
+                        viewBox={ viewBox.join(' ') }>
+                        {docIds.map(docId =>
+                            renderGeoSvgElement(
+                                documentsGeoMap,
+                                config,
+                                selectDocHandler,
+                                docId))}
                     </SvgMap>
                 }
             </View>
@@ -96,26 +94,29 @@ const styles = StyleSheet.create({
 
 
 const renderGeoSvgElement = (
-        transformedDocument: TransformedDocument,
-        selectedDocuments: Document[],
+        geoMap: GeoMap,
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void,
-        highlightedDoc: Document | null): ReactElement => {
+        docId: string): ReactElement => {
     
-    const geometry: FieldGeometry = transformedDocument.doc.resource.geometry;
+
+    const doc = geoMap.get(docId)!.doc;
+    const geoType = doc.resource.geometry.type;
+
     const props = {
-        coordinates: transformedDocument.transformedCoordinates,
+        coordinates: geoMap.get(docId)!.transformedCoords,
+        key: docId,
         ...getDocumentFillOpacityPress(
-            transformedDocument.doc,
-            selectedDocuments,
-             config,
-             geometry.type,
-             onPressHandler.bind(this,transformedDocument.doc),
-             highlightedDoc),
+            doc,
+            geoMap,
+            onPressHandler,
+            config,
+            false,
+            geoMap.get(docId)!.isSelected),
     };
  
 
-    switch(geometry.type){
+    switch(geoType){
         case('Polygon'):
             return <GeoPolygon { ...props } />;
         case('MultiPolygon'):
@@ -129,25 +130,11 @@ const renderGeoSvgElement = (
         case('MultiPoint'):
             return <GeoMultiPoint { ...props } />;
         default:
-            console.error(`Unknown type: ${geometry.type}`);
+            console.error(`Unknown type: ${geoType}`);
             return <Circle />;
 
     }
 };
 
-
-const computeViewBox = (selectedDocuments: Document[], transformationMatrix: Matrix4, viewPort: ViewPort): number[] => {
-    
-    if(!selectedDocuments.length ) return [viewPort.x,viewPort.y,viewPort.width, viewPort.height];
-    const padding = 20;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { minX, minY, maxX, maxY } = getGeometryBoundings(selectedDocuments)!;
-    const [xMinVp, yMinVp] = processTransform2d(transformationMatrix,[minX, minY]);
-    const [xMaxVp, yMaxVp] = processTransform2d(transformationMatrix,[maxX, maxY]);
-
-    const viewBox = [xMinVp - padding, yMaxVp - padding, xMaxVp - xMinVp + 2 * padding, yMinVp - yMaxVp + 2 * padding];
-    return viewBox;
-
-};
 
 export default Map;

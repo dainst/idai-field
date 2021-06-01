@@ -8,6 +8,7 @@ import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { LanguageConfiguration } from '../model/language-configuration';
+import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { ProjectConfiguration } from '../project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
@@ -15,7 +16,7 @@ import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';
 
 
-const BUILT_IN_LANGUAGES = ['de', 'en', 'es', 'it'];
+const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'it'];
 
 
 /**
@@ -88,7 +89,7 @@ export class ConfigLoader {
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
         let customCategories;
-        let languageConfigurations: { [language: string]: Array<LanguageConfiguration> };
+        let languageConfigurations: LanguageConfigurations;
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
@@ -99,7 +100,10 @@ export class ConfigLoader {
                 username
             ));
             customCategories = configurationDocument.resource.categories;
-            languageConfigurations = this.readLanguageConfigurations(configurationDocument.resource.languages);
+            languageConfigurations = {
+                custom: configurationDocument.resource.languages,
+                default: this.readDefaultLanguageConfigurations()
+            };
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
@@ -172,26 +176,16 @@ export class ConfigLoader {
     }
 
 
-    public readLanguageConfigurations(customLanguageConfigurations: { [language: string]: LanguageConfiguration })
-            : { [language: string]: Array<LanguageConfiguration> } {
+    public readDefaultLanguageConfigurations(): { [language: string]: Array<LanguageConfiguration> } {
 
-        const languages: string[] = set(
-            Object.keys(customLanguageConfigurations).concat(BUILT_IN_LANGUAGES)
-        );
-
-        return languages.reduce((configurations, language) => {
+        return DEFAULT_LANGUAGES.reduce((configurations, language) => {
             configurations[language] = [];
-            if (customLanguageConfigurations[language]) {
-                configurations[language].push(customLanguageConfigurations[language]);
-            }
-            if (BUILT_IN_LANGUAGES.includes(language)) {
-                configurations[language].push(
-                    this.readLanguageConfiguration('/Library/Language.' + language + '.json')
-                );
-                configurations[language].push(
-                    this.readLanguageConfiguration('/Core/Language.' + language + '.json')
-                );
-            }
+            configurations[language].push(
+                this.readLanguageConfiguration('/Library/Language.' + language + '.json')
+            );
+            configurations[language].push(
+                this.readLanguageConfiguration('/Core/Language.' + language + '.json')
+            );
             return configurations;
         }, {});
     }

@@ -1205,16 +1205,19 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const languageConfigurations = {
-            de: [{
-                groups: {
-                    'stem': 'Stem',
-                    'parent': 'Parent'
-                },
-                categories: {
-                    'A': { label: 'A_' },
-                    'B': { label: 'B_' }
-                }
-            }]
+            default: {
+                de: [{
+                    groups: {
+                        'stem': 'Stem',
+                        'parent': 'Parent'
+                    },
+                    categories: {
+                        'A': { label: 'A_' },
+                        'B': { label: 'B_' }
+                    }
+                }]
+            },
+            custom: {}
         };
 
         const result = buildRaw(
@@ -1247,7 +1250,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }, {}, orderConf
         ).map(Named.toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1273,7 +1276,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }, {}, orderConf
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1338,9 +1341,12 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const languageConfigurations = {
-            en: [{
-                other: { geometry: 'Geometry' }
-            }]
+            default: {
+                en: [{
+                    other: { geometry: 'Geometry' }
+                }]
+            },
+            custom: {}
         };
 
         const result = buildRaw(
@@ -1374,7 +1380,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const categoriesTree = buildRawProjectConfiguration(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, custom: {} }
         )[0];
 
         expect((Tree.access(categoriesTree, 0) as any).children[0].name).toBe('C');

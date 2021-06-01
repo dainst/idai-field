@@ -10,9 +10,11 @@ export interface FieldDefinition {
     name: string;
     inputType: FieldDefinition.InputType;
     inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
-    label?: I18nString;
     group: string;
+    label?: I18nString;
     description?: I18nString;
+    defaultLabel?: I18nString;
+    defaultDescription?: I18nString;
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
     positionValues?: ValuelistDefinition;

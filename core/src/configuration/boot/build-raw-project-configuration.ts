@@ -1,13 +1,14 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, lookup, Map, map, Mapping, on, or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
     update, update as updateStruct, assoc } from 'tsfun';
-import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition, I18nString } from '../../model';
+import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { Forest,Tree,sortStructArray, Labeled, withDissoc } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
 import { LanguageConfiguration } from '../model/language-configuration';
+import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
 import { ProjectCategories } from '../project-categories';
@@ -41,7 +42,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                              extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
-                                             languageConfigurations: { [language: string]: Array<LanguageConfiguration> } = {},
+                                             languageConfigurations: LanguageConfigurations = { default: {}, custom: {} },
                                              searchConfiguration: any = {},
                                              orderConfiguration: any = {},
                                              validateFields: any = identity): RawProjectConfiguration {
@@ -77,7 +78,7 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 
 function processCategories(orderConfiguration: any,
                            validateFields: any,
-                           languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+                           languageConfigurations: LanguageConfigurations,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
 
@@ -99,12 +100,11 @@ function processCategories(orderConfiguration: any,
 }
 
 
-const setGeometriesInGroups = (languageConfigurations: { [language: string]: Array<LanguageConfiguration> }) =>
-    (categoriesTree: Forest<Category>) =>
-        Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
+const setGeometriesInGroups = (languageConfigurations: LanguageConfigurations) => (categoriesTree: Forest<Category>) =>
+    Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
 
 
-function adjustCategoryGeometry(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
                                 categoriesTree: Forest<Category>) {
 
     return (category: Category /* modified in place */): Category => {
@@ -114,13 +114,20 @@ function adjustCategoryGeometry(languageConfigurations: { [language: string]: Ar
         let positionGroup = category.groups.find(group => group.name === Groups.POSITION);
         if (!positionGroup) {
             positionGroup = Group.create(Groups.POSITION);
-            positionGroup.label = LanguageConfiguration.getI18nString(languageConfigurations, 'groups', 'position');
+            positionGroup.label = LanguageConfiguration.getI18nString(
+                LanguageConfigurations.getCombined(languageConfigurations), 'groups', 'position'
+            );
             category.groups.push(positionGroup);
         }
 
         const geometryField: FieldDefinition = {
             name: 'geometry',
-            label: LanguageConfiguration.getI18nString(languageConfigurations, 'other', 'geometry'),
+            label: LanguageConfiguration.getI18nString(
+                LanguageConfigurations.getCombined(languageConfigurations), 'other', 'geometry'
+            ),
+            defaultLabel: LanguageConfiguration.getI18nString(
+                languageConfigurations.default, 'other', 'geometry'
+            ),
             group: 'position',
             inputType: 'geometry',
             editable: true
@@ -162,7 +169,7 @@ const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
-function setGroupLabels(languageConfigurations: { [language: string]: Array<LanguageConfiguration> }) {
+function setGroupLabels(languageConfigurations: LanguageConfigurations) {
 
     return (category: Category) => {
 
@@ -175,7 +182,9 @@ function setGroupLabels(languageConfigurations: { [language: string]: Array<Lang
             } else if (name === Groups.CHILD) {
                 return category.label;
             } else {
-                return LanguageConfiguration.getI18nString(languageConfigurations, 'groups', name);
+                return LanguageConfiguration.getI18nString(
+                    LanguageConfigurations.getCombined(languageConfigurations), 'groups', name
+                );
             }
         };
 

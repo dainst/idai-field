@@ -1,6 +1,7 @@
 import { Map } from 'tsfun';
 import { applyLanguageConfigurations } from '../../../src/configuration/boot';
 import { LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { LanguageConfigurations } from '../../../src/configuration/model/language-configurations';
 import { CategoryDefinition } from '../../../src/model';
 
 
@@ -48,27 +49,30 @@ describe('applyLanguageConfigurations', () => {
             [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
         ];
 
-        const languageConfigurations = {
-            en: [{
-                categories: {
-                    A: {
-                        label: 'A_',
-                        fields: {
-                            a: {
-                                label: 'a_'
-                            },
-                            a1: {
-                                description: 'a1_desc'
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                en: [{
+                    categories: {
+                        A: {
+                            label: 'A_',
+                            fields: {
+                                a: {
+                                    label: 'a_'
+                                },
+                                a1: {
+                                    description: 'a1_desc'
+                                }
                             }
                         }
+                    },
+                    relations: {
+                        isRecordedIn: {
+                            label: 'isRecordedIn_'
+                        }
                     }
-                },
-                relations: {
-                    isRecordedIn: {
-                        label: 'isRecordedIn_'
-                    }
-                }
-            }]
+                }]
+            },
+            custom: {}
         };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
@@ -94,67 +98,70 @@ describe('applyLanguageConfigurations', () => {
             [{ name: 'isRecordedIn' }]
         ];
 
-        const languageConfigurations = {
-            es: [{
-                categories: {
-                    A: {
-                        fields: {
-                            a: {
-                                label: 'a Spanisches Label',
-                                description: 'a Spanische Beschreibung'
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                es: [{
+                    categories: {
+                        A: {
+                            fields: {
+                                a: {
+                                    label: 'a Spanisches Label',
+                                    description: 'a Spanische Beschreibung'
+                                }
                             }
                         }
                     }
-                }
-            }],
-            de: [{
-                categories: {
-                    A: {
-                        label: 'A Deutsch',
-                        fields: {
-                            a: {
-                                label: 'a Deutsches Label',
-                                description: 'a Deutsche Beschreibung'
+                }],
+                de: [{
+                    categories: {
+                        A: {
+                            label: 'A Deutsch',
+                            fields: {
+                                a: {
+                                    label: 'a Deutsches Label',
+                                    description: 'a Deutsche Beschreibung'
+                                }
+                            }
+                        },
+                        B: {
+                            label: 'B Deutsch'
+                        }
+                    },
+                    relations: {
+                        isRecordedIn: {
+                            label: 'Liegt in (Deutsch)'
+                        }
+                    }
+                }],
+                en: [{
+                    categories: {
+                        A: {
+                            label: 'A Englisch',
+                            fields: {
+                                a: {
+                                    label: 'a Englisches Label',
+                                    description: 'a Englische Beschreibung'
+                                }
+                            }
+                        },
+                        B: {
+                            label: 'B Englisch',
+                            fields: {
+                                b: {
+                                    label: 'b Englisches Label',
+                                    description: 'b Englische Beschreibung'
+                                }
                             }
                         }
                     },
-                    B: {
-                        label: 'B Deutsch'
-                    }
-                },
-                relations: {
-                    isRecordedIn: {
-                        label: 'Liegt in (Deutsch)'
-                    }
-                }
-            }],
-            en: [{
-                categories: {
-                    A: {
-                        label: 'A Englisch',
-                        fields: {
-                            a: {
-                                label: 'a Englisches Label',
-                                description: 'a Englische Beschreibung'
-                            }
-                        }
-                    },
-                    B: {
-                        label: 'B Englisch',
-                        fields: {
-                            b: {
-                                label: 'b Englisches Label',
-                                description: 'b Englische Beschreibung'
-                            }
+                    relations: {
+                        isRecordedIn: {
+                            label: 'Liegt in (Englisch)'
                         }
                     }
-                },
-                relations: {
-                    isRecordedIn: {
-                        label: 'Liegt in (Englisch)'
-                    }
-                }
-            }]
+                }]
+            },
+            custom: {}
         };
 
         const [categories, relations] = applyLanguageConfigurations(languageConfigurations)(configuration);

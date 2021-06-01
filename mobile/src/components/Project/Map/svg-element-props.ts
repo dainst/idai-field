@@ -18,7 +18,7 @@ export const getDocumentFillOpacityPress = (
     geoMap: GeoMap,
     onPressHandler: (doc: Document) => void,
     config: ProjectConfiguration,
-    isHighlighted?: boolean,
+    isHighlighted: boolean,
     isSelected?: boolean,): ElementProps => {
     
     const color = config.getColorForCategory(doc.resource.category);

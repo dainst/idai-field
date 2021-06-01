@@ -67,6 +67,7 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
                                 documentsGeoMap,
                                 config,
                                 selectDocHandler,
+                                highlightedDoc ? highlightedDoc.resource.id : '',
                                 docId))}
                     </SvgMap>
                 }
@@ -96,6 +97,7 @@ const renderGeoSvgElement = (
         geoMap: GeoMap,
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void,
+        highlightedDocId: string,
         docId: string): ReactElement => {
     
 
@@ -110,7 +112,7 @@ const renderGeoSvgElement = (
             geoMap,
             onPressHandler,
             config,
-            false,
+            highlightedDocId === docId,
             geoMap.get(docId)!.isSelected),
     };
  

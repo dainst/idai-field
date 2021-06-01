@@ -183,9 +183,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     private updateCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
                                                      languageCode: string) {
 
-        if (newText === this.field[sectionName]?.[languageCode]
-            && newText !== this.customLanguageConfigurations[languageCode]
-                ?.categories?.[this.category.name]?.fields?.[this.field.name]?.[sectionName]) {
+        if (newText === this.field[sectionName === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
             this.deleteFromCustomLanguageConfigurationSection(sectionName, languageCode);
         } else {
             this.addToCustomLanguageConfigurationSection(sectionName, newText, languageCode);
@@ -249,6 +247,7 @@ export class ConfigurationFieldComponent implements OnChanges {
             .map(to('name'))
             .includes(this.field.name);
     }
+
 
     private isHideable(): boolean {
 

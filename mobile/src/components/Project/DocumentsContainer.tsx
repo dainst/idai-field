@@ -2,8 +2,8 @@ import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/d
 import { RouteProp } from '@react-navigation/native';
 import { Document, ProjectCategories, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
 import React, { useEffect, useState } from 'react';
-import { useWindowDimensions } from 'react-native';
 import { dropRight, last } from 'tsfun';
+import useOrientation from '../../hooks/use-orientation';
 import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -59,7 +59,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     const [hierarchyPath, setHierarchyPath] = useState<Document[]>([]);
     
-    const dimensions = useWindowDimensions();
+    const orientation = useOrientation();
 
     useEffect(() => {
 
@@ -93,7 +93,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     return (
         <Drawer.Navigator
-            drawerType={ dimensions.width > 768 ? 'permanent' : 'front' }
+            drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             drawerContent={ ({ navigation }: { navigation: any }) => {
 

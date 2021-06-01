@@ -53,10 +53,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     );
     const [documents, issueSearch] = useSearch(repository, categories);
 
-    const [geoConstraints] = useState<Record<string,string>>({
-        'geometry:exist': 'KNOWN'
-    });
-    const [geoDocuments] = useSearch(repository, categories, geoConstraints);
     
     const dimensions = useWindowDimensions();
 
@@ -84,7 +80,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
-                    geoDocuments={ geoDocuments }
                     issueSearch={ issueSearch }
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }

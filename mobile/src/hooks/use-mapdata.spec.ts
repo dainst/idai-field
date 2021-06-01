@@ -8,6 +8,7 @@ import { pointBuilding } from '../../test_data/test_docs/pointBuilding';
 import { r1 } from '../../test_data/test_docs/r1';
 import { si1 } from '../../test_data/test_docs/si1';
 import { ViewPort } from '../components/Project/Map/geo-svg';
+import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
 import { DocumentRepository } from '../repositories/document-repository';
 import useMapData from './use-mapdata';
 
@@ -31,7 +32,7 @@ describe('useMapData',() => {
 
     beforeAll(async () => {
         repository = await DocumentRepository.init('test', [], new PouchdbManager(name => new PouchDB(name)));
-        viewPort = { x:0, y:0, width: 500, height: 12 };
+        viewPort = { x:0, y:0, width: 500, height: 1100 };
     });
 
     const hook = () =>
@@ -89,4 +90,39 @@ describe('useMapData',() => {
             else expect(value.isSelected).toBeFalsy();
         });
     });
+
+    
+    it('should define the viewBox correctly if no Docs are selected', async () => {
+
+        const selectedDocs:string[] = [];
+
+        const { result, rerender, waitForNextUpdate } = hook();
+        rerender({ repository,viewPort,selectedDocIds: selectedDocs });
+        await waitForNextUpdate();
+
+        const [_docIds, _geoMap, _transformMatrix, viewBox] = result.current;
+        expect(viewBox).toEqual([viewPort.x, viewPort.y, viewPort.width, viewPort.height]);
+
+       
+    });
+
+
+    it('should define the viewBox if all Docs are selected', async () => {
+
+        const allDocs = [bu1Id, lineBuildingId, multiPolyTrenchId, pointBuildingId, r1Id, si1Id];
+        const expectedViewBox = [-viewBoxPaddingX, -viewBoxPaddingY, 990, 1140];
+        
+        const { result, rerender, waitForNextUpdate } = hook();
+        rerender({ repository, viewPort, selectedDocIds: allDocs });
+        await waitForNextUpdate();
+
+        const [_docIds, _geoMap, _transformMatrix, viewBox] = result.current;
+        
+        expect(viewBox?.length).toBe(expectedViewBox.length);
+        viewBox?.forEach((value,i) => {
+            expect(value).toBeCloseTo(expectedViewBox[i],0);
+        });
+        
+    });
+
 });

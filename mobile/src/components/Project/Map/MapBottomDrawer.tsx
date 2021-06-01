@@ -1,71 +1,62 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Modal from 'react-native-modal';
+import React, { useMemo } from 'react';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Button from '../../common/Button';
 import CategoryIcon from '../../common/CategoryIcon';
+import Column from '../../common/Column';
 import Heading from '../../common/Heading';
 import Row from '../../common/Row';
 
 interface MapBottomDrawerProps {
     document: Document | null;
-    isVisible: boolean;
-    closeHandler: () => void;
     config: ProjectConfiguration;
     navigateToDocument: (docId: string) => void;
 }
 
 const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
-    document, isVisible, closeHandler, config, navigateToDocument }) => {
+    document, config, navigateToDocument }) => {
 
-    const animationDuration = 500;
     const iconSize = 20;
-
+    const snapPoints = useMemo(() => ['5%','35%'], []);
 
     if(!document) return null;
 
-    const documentPressHandler = () => {
-        closeHandler();
-        navigateToDocument(document.resource.id);
-    };
+    const documentPressHandler = () => navigateToDocument(document.resource.id);
     
     return (
-        <Modal
-            isVisible={ isVisible }
-            animationInTiming={ animationDuration }
-            animationOutTiming={ animationDuration }
-            onBackdropPress={ closeHandler }
-            backdropOpacity={ 0 }
+        <BottomSheet
+            index={ 1 }
+            snapPoints={ snapPoints }
             style={ styles.modal }>
-            <View style={ styles.container }>
-                <TouchableOpacity onPress={ documentPressHandler }>
-                    <Row style={ styles.headingRow }>
-                        <CategoryIcon document={ document } config={ config } size={ 30 } />
-                        <Heading style={ styles.heading }>{document.resource.identifier}</Heading>
+                <Column style={ styles.container }>
+                    <TouchableOpacity onPress={ documentPressHandler }>
+                        <Row style={ styles.headingRow }>
+                            <CategoryIcon document={ document } config={ config } size={ 30 } />
+                            <Heading style={ styles.heading }>{document.resource.identifier}</Heading>
+                        </Row>
+                    </TouchableOpacity>
+                    <Text>Short description: { document.resource.shortDescription }</Text>
+                    <Row style={ styles.buttonGroup }>
+                        <Button
+                            variant="success"
+                            title="Add Child"
+                            onPress={ () => {console.log('button');} }
+                            icon={ <Ionicons name="add" size={ iconSize } /> }
+                        />
+                        <Button
+                            title="Focus"
+                            onPress={ () => {console.log('button');} }
+                            icon={ <MaterialIcons
+                                name="center-focus-strong"
+                                size={ iconSize }
+                                color="#565350"
+                            /> }
+                        />
                     </Row>
-                </TouchableOpacity>
-                <Text>Short description: { document.resource.shortDescription }</Text>
-                <Row style={ styles.buttonGroup }>
-                    <Button
-                        variant="success"
-                        title="Add Child"
-                        onPress={ () => {console.log('button');} }
-                        icon={ <Ionicons name="add" size={ iconSize } /> }
-                    />
-                    <Button
-                        title="Focus"
-                        onPress={ () => {console.log('button');} }
-                        icon={ <MaterialIcons
-                            name="center-focus-strong"
-                            size={ iconSize }
-                            color="#565350"
-                        /> }
-                    />
-                </Row>
-            </View>
-        </Modal>
+                </Column>
+        </BottomSheet>
     );
 };
 

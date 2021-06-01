@@ -1,6 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useMemo } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -14,7 +14,6 @@ interface DocumentsMapProps {
     navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     repository: DocumentRepository;
     documents: Document[];
-    geoDocuments: Document[];
     selectedDocument?: Document;
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
@@ -28,7 +27,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     navigation,
     repository,
     documents,
-    geoDocuments,
     syncStatus,
     projectSettings,
     config,
@@ -53,13 +51,14 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
    const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
         
-
     return (
         <View style={ { flex: 1 } }>
             <View style={ styles.container }>
                 <Map
-                    selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
-                    geoDocuments={ geoDocuments }
+                    repository={ repository }
+                    selectedDocumentIds={ useMemo(() =>
+                        documents.filter(doc => doc?.resource.geometry)
+                        .map(doc => doc.resource.id),[documents]) }
                     config={ config }
                     navigateToDocument={ navigateToDocument } />
             </View>

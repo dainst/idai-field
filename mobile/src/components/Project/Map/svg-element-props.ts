@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { strokeWidth } from './geo-svg/constants';
+import { GeoMap } from './geometry-map/geometry-map';
 
 interface ElementProps {
     fill: string;
@@ -12,39 +14,46 @@ interface ElementProps {
 }
 
 export const getDocumentFillOpacityPress = (
-    document: Document,
-    selectedDocuments: Document[],
+    doc: Document,
+    geoMap: GeoMap,
+    onPressHandler: (doc: Document) => void,
     config: ProjectConfiguration,
-    geoType: FieldGeometryType,
-    onPressHandler: () => void,
-    highlightedDoc: Document | null): ElementProps => {
-
-     
-    const doc_id = document.resource.id;
-    const color = config.getColorForCategory(document.resource.category);
-
-
-    for( const doc of selectedDocuments) {
-        
-        if(doc.resource.id === doc_id){
-            return {
-                opacity: 0.5,
-                stroke: isHighlightedDoc(doc,highlightedDoc) ? 'white' : color,
-                fill: color,
-                strokeWidth: isHighlightedDoc(doc,highlightedDoc) ? 6 : strokeWidth,
-                onPress: onPressHandler
-             };
-        }
-
+    isHighlighted: boolean,
+    isSelected?: boolean,): ElementProps => {
+    
+    const color = config.getColorForCategory(doc.resource.category);
+    const geoType = doc.resource.geometry.type;
+    const opacity = 0.5;
+    if(isSelected){
+        return {
+            opacity,
+            stroke: isHighlighted ? 'white' : color,
+            fill: color,
+            strokeWidth: isHighlighted ? 6 : strokeWidth,
+            onPress: () => onPressHandler(doc)
+        };
+    } else {
+        const parentPressHandler = isParentSelected(geoMap, doc.resource.id);
+        return {
+            opacity,
+            fill: isGeoTypePoint(geoType) ? color : 'none',
+            stroke: color, strokeOpacity: 0.5, strokeWidth,
+            onPress: parentPressHandler ? () => onPressHandler(parentPressHandler) : undefined };
     }
-  
-    return {
-        opacity: 0.5,
-        fill: isGeoTypePoint(geoType) ? color : 'none',
-        stroke: color, strokeOpacity: 0.3, strokeWidth };
 };
 
-const isGeoTypePoint = (type: FieldGeometryType) => type === 'Point' || type === 'MultiPoint';
 
-const isHighlightedDoc = (doc: Document, highlightedDoc: Document | null) =>
-    highlightedDoc ? highlightedDoc._id === doc._id : false;
+const isParentSelected = (geoMap: GeoMap, docId: string) => {
+    
+    const parentIds = geoMap.get(docId)!.parents;
+    for(const parentId of parentIds){
+        const parentEntry = geoMap.get(parentId)!;
+        if(parentEntry.isSelected) {
+            return parentEntry.doc;
+        }
+    }
+    return null;
+};
+
+
+const isGeoTypePoint = (type: FieldGeometryType) => type === 'Point' || type === 'MultiPoint';

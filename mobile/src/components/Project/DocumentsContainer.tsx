@@ -1,8 +1,9 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectCategories, ProjectConfiguration, SyncStatus } from 'idai-field-core';
-import React, { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Document, ProjectCategories, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
+import React, { useEffect, useState } from 'react';
+import { dropRight, last } from 'tsfun';
+import useOrientation from '../../hooks/use-orientation';
 import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -48,13 +49,41 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     setProjectSettings
 }) => {
 
-    const [categories] = useState<string[]>(
-        ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest())
-    );
-    const [documents, issueSearch] = useSearch(repository, categories);
+    const [query, setQuery] = useState<Query>({
+        categories: ProjectCategories.getOperationCategoryNames(config.getCategoryForest()),
+        constraints: {}
+    });
+    const documents = useSearch(repository, query);
 
+    const [q, setQ] = useState<string>('');
+
+    const [hierarchyPath, setHierarchyPath] = useState<Document[]>([]);
     
-    const dimensions = useWindowDimensions();
+    const orientation = useOrientation();
+
+    useEffect(() => {
+
+        const operationCategories = ProjectCategories.getOperationCategoryNames(config.getCategoryForest());
+        const concreteCategories = ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest());
+        
+        if (q) {
+            setQuery({ q, categories: concreteCategories });
+        } else {
+            const currentParent = last(hierarchyPath);
+            if (currentParent) {
+                if (operationCategories.includes(currentParent.resource.category)) {
+                    setQuery({ constraints: {
+                        'isRecordedIn:contain': currentParent.resource.id,
+                        'liesWithin:exist': 'UNKNOWN'
+                    } });
+                } else {
+                    setQuery({ constraints: { 'liesWithin:contain': currentParent.resource.id } });
+                }
+            } else {
+                setQuery({ categories: operationCategories });
+            }
+        }
+    }, [config, q, hierarchyPath]);
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
@@ -64,23 +93,27 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     return (
         <Drawer.Navigator
-            drawerType={ dimensions.width > 768 ? 'permanent' : 'front' }
+            drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             drawerContent={ ({ navigation }: { navigation: any }) => {
 
                 return <DocumentsDrawer
                     documents={ documents }
                     config={ config }
+                    showHierarchyBackButton={ hierarchyPath.length > 0 }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
-                    onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') } />;
+                    onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
+                    onParentSelected={ doc => setHierarchyPath(old => [...old, doc]) }
+                    onHierarchyBack={ () => setHierarchyPath(old => dropRight(1, old)) }
+                />;
             } }
         >
             <Drawer.Screen name="DocumentsMap">
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
-                    issueSearch={ issueSearch }
+                    issueSearch={ setQ }
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }
                     config={ config }

@@ -1,7 +1,6 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { ReactElement } from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors } from '../../utils/colors';
+import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import CategoryIcon from './CategoryIcon';
 
 
@@ -9,15 +8,16 @@ interface DocumentButtonProps {
     config: ProjectConfiguration;
     document: Document;
     size: number;
+    style?: ViewStyle;
     onPress: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
 }
 
 
-const DocumentButton = ({ config, document, size, onPress }: DocumentButtonProps): ReactElement => {
+const DocumentButton = ({ config, document, size, style, onPress }: DocumentButtonProps): ReactElement => {
 
     return <TouchableOpacity
         onPress={ onPress }
-        style={ styles.button }
+        style={ [style, styles.button] }
         activeOpacity={ .9 }
     >
         <View style={ styles.container }>
@@ -32,16 +32,15 @@ export default DocumentButton;
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: colors['secondary'],
-        padding: 10,
-        borderRadius: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
     },
     container: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     title: {
-        paddingLeft: 5,
+        paddingLeft: 15,
     }
 });

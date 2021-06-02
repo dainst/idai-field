@@ -21,6 +21,8 @@
 
 <div class="input-group mb-2">
     <select class="form-control" [(ngModel)]="newTranslationLanguage">
+        <option value="" selected disabled hidden
+                i18n="@@configuration.multiLanguageInput.chooseLanguage">Sprache auswählen</option>
         <option *ngFor="let languageCode of unusedLanguages"
                 [value]="languageCode">{{getLanguageLabel(languageCode)}}</option>
     </select>

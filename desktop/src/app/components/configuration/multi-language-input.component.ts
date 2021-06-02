@@ -20,8 +20,8 @@ export class MultiLanguageInputComponent implements OnChanges {
     public usedLanguages: string[];
     public unusedLanguages: string[];
 
-    public newTranslationLanguage: string;
-    public newTranslationText: string;
+    public newTranslationLanguage: string = '';
+    public newTranslationText: string = '';
 
 
     public isDeleteButtonVisible = (languageCode: string) => !this.defaultTranslations[languageCode];
@@ -52,7 +52,8 @@ export class MultiLanguageInputComponent implements OnChanges {
 
     public isNewTranslationValid(): boolean {
 
-        return this.newTranslationLanguage !== undefined && this.newTranslationText !== undefined;
+        return this.newTranslationLanguage !== undefined && this.newTranslationLanguage.length > 0
+            && this.newTranslationText !== undefined && this.newTranslationText.length > 0;
     }
 
 
@@ -73,8 +74,8 @@ export class MultiLanguageInputComponent implements OnChanges {
 
     private reset() {
 
-        this.newTranslationLanguage = undefined;
-        this.newTranslationText = undefined;
+        this.newTranslationLanguage = '';
+        this.newTranslationText = '';
         this.usedLanguages = Object.keys(this.translations);
         this.unusedLanguages = subtract(this.usedLanguages)(Object.keys(this.languages));
     }

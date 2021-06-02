@@ -1,55 +1,25 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import Button from '../common/Button';
-import DocumentButton from '../common/DocumentButton';
 import Row from '../common/Row';
+import DocumentsList, { DocumentsListProps } from './DocumentsList';
 
-interface DocumentsDrawerProps {
-    documents: Document[];
-    config: ProjectConfiguration;
-    showHierarchyBackButton: boolean;
-    onDocumentSelected: (document: Document) => void;
+interface DocumentsDrawerProps extends DocumentsListProps {
     onHomeButtonPressed: () => void;
     onSettingsButtonPressed: () => void;
-    onParentSelected: (document: Document) => void;
-    onHierarchyBack: () => void;
 }
 
 
 const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
-    documents,
-    config,
-    showHierarchyBackButton = false,
-    onDocumentSelected,
     onHomeButtonPressed,
     onSettingsButtonPressed,
-    onParentSelected,
-    onHierarchyBack,
+    ...listProps
 }) => {
 
     return <>
         <DrawerContentScrollView>
-            { showHierarchyBackButton && <Button
-                onPress={ onHierarchyBack }
-                icon={ <Ionicons name="arrow-back" size={ 18 } /> }
-            /> }
-            { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
-                <DocumentButton
-                    style={ styles.documentButton }
-                    config={ config }
-                    document={ document }
-                    onPress={ () => onDocumentSelected(document) }
-                    size={ 25 }
-                />
-                <Button
-                    variant="transparent"
-                    onPress={ () => onParentSelected(document) }
-                    icon={ <Ionicons name="arrow-forward" size={ 18 } /> }
-                />
-            </Row>)}
+            <DocumentsList { ...listProps } />
         </DrawerContentScrollView>
         <Row>
             <Button
@@ -67,15 +37,3 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
 };
 
 export default DocumentsDrawer;
-
-
-const styles = StyleSheet.create({
-    row: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-    },
-    documentButton: {
-        flex: 1,
-    }
-});

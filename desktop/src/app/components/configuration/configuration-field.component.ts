@@ -161,30 +161,28 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private updateCustomLanguageConfigurations() {
 
-        Object.keys(this.editableLabel).forEach(languageCode => {
-            this.updateCustomLanguageConfigurationSection(
-                'label', this.editableLabel[languageCode], languageCode
-            );
-        });
-
-        Object.keys(this.editableDescription).forEach(languageCode => {
-            this.updateCustomLanguageConfigurationSection(
-                'description', this.editableDescription[languageCode], languageCode
-            );
-        });
-
-        Object.keys(this.customLanguageConfigurations)
-            .filter(languageCode => !this.editableLabel[languageCode])
-            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection('label', languageCode));
-
-        Object.keys(this.customLanguageConfigurations)
-            .filter(languageCode => !this.editableDescription[languageCode])
-            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection('description', languageCode));
+        this.updateCustomLanguageConfigurationSection('label', this.editableLabel);
+        this.updateCustomLanguageConfigurationSection('description', this.editableDescription);
     }
 
 
-    private updateCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
-                                                     languageCode: string) {
+    private updateCustomLanguageConfigurationSection(section: 'label'|'description',
+                                                     editableI18nString: I18nString) {
+
+        Object.keys(editableI18nString).forEach(languageCode => {
+            this.handleNewTextInCustomLanguageConfigurationSection(
+                section, editableI18nString[languageCode], languageCode
+            );
+        });
+
+        Object.keys(this.customLanguageConfigurations)
+            .filter(languageCode => !editableI18nString[languageCode])
+            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection(section, languageCode));
+    }
+
+
+    private handleNewTextInCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
+                                                              languageCode: string) {
 
         if (newText === this.field[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
             this.deleteFromCustomLanguageConfigurationSection(section, languageCode);

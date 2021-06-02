@@ -1,37 +1,42 @@
 import { Ionicons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { ProjectConfiguration } from 'core/src/configuration/project-configuration';
 import { Document } from 'idai-field-core';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import Button from '../common/Button';
 import DocumentButton from '../common/DocumentButton';
 import Row from '../common/Row';
+import { DocumentsDrawerStackParamList } from './DocumentsDrawer';
+
+
+type DocumentsListNavigationProp = StackNavigationProp<DocumentsDrawerStackParamList, 'DocumentsList'>;
 
 
 export interface DocumentsListProps {
     documents: Document[];
     config: ProjectConfiguration;
-    showHierarchyBackButton: boolean;
+    navigation: DocumentsListNavigationProp;
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
-    onHierarchyBack: () => void;
 }
 
 
 const DocumentsList: React.FC<DocumentsListProps> = ({
     documents,
     config,
-    showHierarchyBackButton = false,
+    navigation,
     onDocumentSelected,
     onParentSelected,
-    onHierarchyBack,
 }) => {
 
-    return <>
-        { showHierarchyBackButton && <Button
-            onPress={ onHierarchyBack }
-            icon={ <Ionicons name="arrow-back" size={ 18 } /> }
-        /> }
+    const onDrillDown = (document: Document) => {
+
+        navigation.push('DocumentsList');
+        onParentSelected(document);
+    };
+
+    return <ScrollView>
         { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
             <DocumentButton
                 style={ styles.documentButton }
@@ -42,11 +47,11 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
             />
             <Button
                 variant="transparent"
-                onPress={ () => onParentSelected(document) }
-                icon={ <Ionicons name="arrow-forward" size={ 18 } /> }
+                onPress={ () => onDrillDown(document) }
+                icon={ <Ionicons name="chevron-forward" size={ 18 } /> }
             />
         </Row>)}
-    </>;
+    </ScrollView>;
 };
 
 export default DocumentsList;

@@ -98,9 +98,10 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             drawerContent={ ({ navigation }: { navigation: any }) => {
 
                 return <DocumentsDrawer
+                    navigation={ navigation }
                     documents={ documents }
                     config={ config }
-                    showHierarchyBackButton={ hierarchyPath.length > 0 }
+                    currentParent={ last(hierarchyPath) }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }

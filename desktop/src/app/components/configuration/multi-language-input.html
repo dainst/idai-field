@@ -8,8 +8,13 @@
                 <input [(ngModel)]="translations[languageCode]" type="text" class="form-control">    
             </div>
         </div>
-        <button class="btn btn-danger" type="button" (click)="deleteTranslation(languageCode)">
+        <button *ngIf="isDeleteButtonVisible(languageCode)" class="btn btn-danger" type="button"
+                (click)="deleteTranslation(languageCode)">
             <span class="mdi mdi-delete"></span>
+        </button>
+        <button *ngIf="isRestoreButtonVisible(languageCode)" class="btn btn-primary" type="button"
+                (click)="restoreDefaultTranslation(languageCode)">
+            <span class="mdi mdi-restore"></span>
         </button>
     </div>
 </div>

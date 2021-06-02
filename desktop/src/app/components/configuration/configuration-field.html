@@ -53,11 +53,13 @@
         <div *ngIf="editing">
             <div>
                 <b>Feldbezeichnung</b>
-                <multi-language-input [translations]="editableLabel"></multi-language-input>
+                <multi-language-input [translations]="editableLabel"
+                    [defaultTranslations]="field.defaultLabel"></multi-language-input>
             </div>
             <div>
                 <b>Beschreibung</b>
-                <multi-language-input [translations]="editableDescription"></multi-language-input>
+                <multi-language-input [translations]="editableDescription"
+                    [defaultTranslations]="field.defaultDescription"></multi-language-input>
             </div>
         </div>
         <ul class="list-group list-group-flush">

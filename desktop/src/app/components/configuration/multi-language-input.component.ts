@@ -14,6 +14,7 @@ import { Language, LanguagesUtil } from '../../core/util/languages-util';
 export class MultiLanguageInputComponent implements OnChanges {
     
     @Input() translations: I18nString;
+    @Input() defaultTranslations: I18nString;
 
     public languages: { [languageCode: string]: Language };
     public usedLanguages: string[];
@@ -21,6 +22,12 @@ export class MultiLanguageInputComponent implements OnChanges {
 
     public newTranslationLanguage: string;
     public newTranslationText: string;
+
+
+    public isDeleteButtonVisible = (languageCode: string) => !this.defaultTranslations[languageCode];
+
+    public isRestoreButtonVisible = (languageCode: string) => this.defaultTranslations[languageCode]
+        && this.translations[languageCode] !== this.defaultTranslations[languageCode];
 
 
     ngOnChanges() {
@@ -55,6 +62,12 @@ export class MultiLanguageInputComponent implements OnChanges {
 
         this.translations[this.newTranslationLanguage] = this.newTranslationText;
         this.reset();
+    }
+
+
+    public restoreDefaultTranslation(languageCode: string) {
+
+        this.translations[languageCode] = this.defaultTranslations[languageCode];
     }
 
 

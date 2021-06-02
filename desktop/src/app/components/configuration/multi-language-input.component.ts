@@ -4,12 +4,6 @@ import { I18nString } from 'idai-field-core';
 import { Language, LanguagesUtil } from '../../core/util/languages-util';
 
 
-type Translation = {
-    language: string;
-    text: string;
-};
-
-
 @Component({
     selector: 'multi-language-input',
     templateUrl: './multi-language-input.html'

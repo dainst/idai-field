@@ -27,6 +27,7 @@ export interface GeoMapEntry {
     isSelected?: boolean;
 }
 
+
 export type GeoMap = Map<string, GeoMapEntry>;
 
 
@@ -135,4 +136,42 @@ const findParentDocIds = (checkDoc: TransformedDocument, transformedGeoDocuments
     });
     return parentArray.map(entry => entry.id);
 
+};
+
+export const setGeoMapEntry = <T extends keyof GeoMapEntry>(
+            geoMap: GeoMap | undefined,
+            key: string, entry: T,
+            value: GeoMapEntry[T]): void => {
+
+    if(!geoMap) return;
+    const mapEntry = geoMap.get(key);
+    if(mapEntry) geoMap.set(key,{ ...mapEntry, [entry]: value });
+};
+
+
+export const getGeoMapArea = (geoMap: GeoMap | undefined, key: string): GeoMapEntry['area'] =>
+    getGeoMapEntry(geoMap, key, 'area') || 0;
+
+
+export const getGeoMapCoords = (geoMap: GeoMap | undefined, key: string): GeoMapEntry['transformedCoords'] =>
+    getGeoMapEntry(geoMap, key,'transformedCoords') || [];
+
+
+export const getGeoMapIsSelected = (geoMap: GeoMap | undefined, key: string): GeoMapEntry['isSelected'] =>
+    getGeoMapEntry(geoMap, key, 'isSelected');
+
+
+export const getGeoMapDoc = (geoMap: GeoMap, key: string): GeoMapEntry['doc'] | undefined =>
+    getGeoMapEntry(geoMap, key, 'doc');
+
+
+export const getGeoMapParents = (geoMap: GeoMap, key: string): GeoMapEntry['parents'] =>
+    getGeoMapEntry(geoMap,key, 'parents') || [];
+
+
+const getGeoMapEntry = <T extends keyof GeoMapEntry>(geoMap: GeoMap | undefined, key: string, entry: T) => {
+    
+    if(!geoMap) return;
+        const mapEntry = geoMap.get(key);
+        if(mapEntry) return mapEntry[entry];
 };

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Document, Query } from 'idai-field-core';
+import { Document, FieldGeometry, Query } from 'idai-field-core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { identityMatrix4, Matrix4 } from 'react-native-redash';
 import {
@@ -9,7 +8,12 @@ import {
     ViewPort
 } from '../components/Project/Map/geo-svg';
 import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
-import { GeoMap, setupGeoMap } from '../components/Project/Map/geometry-map/geometry-map';
+import {
+    GeoMap,
+    getGeoMapArea, getGeoMapCoords,
+    getGeoMapDoc,
+    setGeoMapEntry, setupGeoMap
+} from '../components/Project/Map/geometry-map/geometry-map';
 import { DocumentRepository } from '../repositories/document-repository';
 import usePrevious from './use-previous';
 
@@ -35,9 +39,11 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
     const sortDocIdsByArea = useCallback(() => {
 
         if(documentsGeoMap){
-            return Array.from(documentsGeoMap?.keys()).sort((a,b) => {
-                if(documentsGeoMap.get(a)!.area > documentsGeoMap.get(b)!.area) return -1;
-                else if(documentsGeoMap.get(a)!.area < documentsGeoMap.get(b)!.area) return 1;
+            return Array.from(documentsGeoMap.keys()).sort((docAId,docBId) => {
+                const areaA = getGeoMapArea(documentsGeoMap, docAId);
+                const areaB = getGeoMapArea(documentsGeoMap, docBId);
+                if(areaA > areaB) return -1;
+                else if(areaA < areaB) return 1;
                 else return 0;
             });
         }
@@ -48,11 +54,17 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
 
         //compute and set viewBox
         if(!documentsGeoMap) return;
+        const fieldGeometries = docIds.map(docId => {
+            const doc = getGeoMapDoc(documentsGeoMap, docId);
+            if(doc)
+                return {
+                    type: doc.resource.geometry.type,
+                    coordinates: getGeoMapCoords(documentsGeoMap,docId)
+                } as FieldGeometry;
+            return null;
+        }).filter(doc => doc !== null) as FieldGeometry[];
         
-        const { minX, minY, maxX, maxY } = getMinMaxCoords(docIds.map(docId => ({
-            type: documentsGeoMap.get(docId)!.doc.resource.geometry.type,
-            coordinates: documentsGeoMap.get(docId)!.transformedCoords
-        })));
+        const { minX, minY, maxX, maxY } = getMinMaxCoords(fieldGeometries);
         setViewBox([
             minX - viewBoxPaddingX,
             minY - viewBoxPaddingY,
@@ -89,14 +101,9 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
         //set previously selected docs as not selected
         if(documentsGeoMap){
             if(previousSelectedDocIds){
-                for(const id of previousSelectedDocIds){
-                    documentsGeoMap.get(id)!.isSelected = false;
-                }
+                previousSelectedDocIds.forEach(id => setGeoMapEntry(documentsGeoMap,id,'isSelected',false));
             }
-
-            for(const id of selectedDocIds){
-                documentsGeoMap.get(id)!.isSelected = true;
-            }
+            selectedDocIds.forEach(id => setGeoMapEntry(documentsGeoMap,id,'isSelected',true));
             setDocIds(sortDocIdsByArea());
         }
 

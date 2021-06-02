@@ -7,7 +7,6 @@ import { GeoMultiPoint } from './GeoMultiPoint';
 
 
 const props: GeoElementsCommonProps = {
-    csTransformFunction: (pos) => [pos[0], pos[1]],
     coordinates: [[2,2],[1,3],[5,8],[14,4],[7,3]],
 };
 

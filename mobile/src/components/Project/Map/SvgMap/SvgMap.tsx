@@ -131,11 +131,11 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     return (
         <Animated.View style={ props.style } { ...panResponder.panHandlers }>
             <AnimatedSvg>
-            <AG
-                x={ Animated.add(left, zoom) }
-                y={ Animated.add(top, zoom) }
-                scale={ zoom }>
-                    {props.children}
+                <AG
+                    x={ Animated.add(left, zoom) }
+                    y={ Animated.add(top, zoom) }
+                    scale={ zoom }>
+                        {props.children}
                 </AG>
             </AnimatedSvg>
         </Animated.View>

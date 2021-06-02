@@ -27,6 +27,7 @@ export interface GeoMapEntry {
     isSelected?: boolean;
 }
 
+
 export type GeoMap = Map<string, GeoMapEntry>;
 
 

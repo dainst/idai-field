@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { SyncStatus } from 'idai-field-core';
 import React from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useOrientation from '../../hooks/use-orientation';
 import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -25,12 +26,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
     toggleDrawer
 }) => {
 
-    const dimensions = useWindowDimensions();
+    const orientation = useOrientation();
     const insets = useSafeAreaInsets();
 
     return (
         <Row style={ [styles.container, { marginTop: insets.top + 5 }] }>
-            { dimensions.width <= 768 && renderLeftIcons(toggleDrawer) }
+            { orientation === 'portrait' && renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
                 style={ styles.input }

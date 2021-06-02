@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { strokeWidth } from './geo-svg/constants';
-import { GeoMap } from './geometry-map/geometry-map';
+import { GeoMap, getGeoMapParents } from './geometry-map/geometry-map';
 
 interface ElementProps {
     fill: string;
@@ -45,10 +44,10 @@ export const getDocumentFillOpacityPress = (
 
 const isParentSelected = (geoMap: GeoMap, docId: string) => {
     
-    const parentIds = geoMap.get(docId)!.parents;
+    const parentIds = getGeoMapParents(geoMap, docId);
     for(const parentId of parentIds){
-        const parentEntry = geoMap.get(parentId)!;
-        if(parentEntry.isSelected) {
+        const parentEntry = geoMap.get(parentId);
+        if(parentEntry && parentEntry.isSelected) {
             return parentEntry.doc;
         }
     }

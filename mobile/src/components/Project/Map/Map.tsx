@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
@@ -9,7 +8,7 @@ import {
     GeoMultiPolygon, GeoPoint, GeoPolygon
 } from './geo-svg';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
-import { GeoMap } from './geometry-map/geometry-map';
+import { GeoMap, getGeoMapCoords, getGeoMapDoc, getGeoMapIsSelected } from './geometry-map/geometry-map';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap from './SvgMap/SvgMap';
@@ -90,38 +89,37 @@ const renderGeoSvgElement = (
         docId: string) => {
     
 
-    const doc = geoMap.get(docId)!.doc;
-    const geoType = doc.resource.geometry.type;
+    const doc = getGeoMapDoc(geoMap, docId);
+    if(doc){
+        const geoType = doc.resource.geometry.type;
 
-    const props = {
-        coordinates: geoMap.get(docId)!.transformedCoords,
-        key: docId,
-        ...getDocumentFillOpacityPress(
-            doc,
-            geoMap,
-            onPressHandler,
-            config,
-            highlightedDocId === docId,
-            geoMap.get(docId)!.isSelected),
-    };
- 
-
-    switch(geoType){
-        case('Polygon'):
-            return <GeoPolygon { ...props } />;
-        case('MultiPolygon'):
-            return <GeoMultiPolygon { ...props } />;
-        case('LineString'):
-            return <GeoLineString { ...props } />;
-        case('MultiLineString'):
-            return <GeoMultiLineString { ...props } />;
-        case('Point'):
-            return <GeoPoint { ...props } />;
-        case('MultiPoint'):
-            return <GeoMultiPoint { ...props } />;
-        default:
-            console.error(`Unknown type: ${geoType}`);
-
+        const props = {
+            coordinates: getGeoMapCoords(geoMap,docId),
+            key: docId,
+            ...getDocumentFillOpacityPress(
+                doc,
+                geoMap,
+                onPressHandler,
+                config,
+                highlightedDocId === docId,
+                getGeoMapIsSelected(geoMap, docId)) };
+    
+        switch(geoType){
+            case('Polygon'):
+                return <GeoPolygon { ...props } />;
+            case('MultiPolygon'):
+                return <GeoMultiPolygon { ...props } />;
+            case('LineString'):
+                return <GeoLineString { ...props } />;
+            case('MultiLineString'):
+                return <GeoMultiLineString { ...props } />;
+            case('Point'):
+                return <GeoPoint { ...props } />;
+            case('MultiPoint'):
+                return <GeoMultiPoint { ...props } />;
+            default:
+                console.error(`Unknown type: ${geoType}`);
+            }
     }
 };
 

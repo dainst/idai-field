@@ -67,7 +67,7 @@
                 <select *ngIf="editing && !isCustomField()"
                         (change)="setInputType($event.target.value)"
                         class="form-control">
-                    <option *ngFor="let inputType of getAvailableInputTypes()"
+                    <option *ngFor="let inputType of availableInputTypes"
                             value="{{inputType.name}}"
                             [selected]="getInputType() === inputType.name">
                         {{inputType.label}}

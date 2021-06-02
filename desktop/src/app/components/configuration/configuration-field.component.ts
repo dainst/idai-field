@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, flatten, isEmpty, to } from 'tsfun';
+import { clone, flatten, isEmpty, set, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
@@ -141,11 +141,13 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private createEditableI18nString(type: 'label'|'description'): I18nString {
 
+        const defaultType = type === 'label' ? 'defaultLabel' : 'defaultDescription';
+
         return Object.keys(this.customLanguageConfigurations).reduce((result: I18nString, languageCode: string) => {
             const translation = this.getFromCustomLanguageConfiguration(languageCode, type);
             if (translation) result[languageCode] = translation;
             return result;
-        }, this.field[type] ? clone(this.field[type]) : {});
+        }, this.field[defaultType] ? clone(this.field[defaultType]) : {});
     }
 
 
@@ -250,11 +252,17 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private getUpdatedFieldDefinition(): FieldDefinition {
 
-        return Object.keys(this.customLanguageConfigurations).reduce((field, languageCode) => {
+        const languages: string[] = set(
+            Object.keys(this.customLanguageConfigurations)
+             .concat(Object.keys(this.field.label))
+             .concat(Object.keys(this.field.description))
+        );
+
+        return languages.reduce((field, languageCode) => {
             const label: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'label');
             const description: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'description');
-            if (label) field.label[languageCode] = label;
-            if (description) field.description[languageCode] = description;
+            field.label[languageCode] = label ?? field.defaultLabel[languageCode];
+            field.description[languageCode] = description ?? field.defaultDescription[languageCode];
             return field;
         }, clone(this.field));
     }

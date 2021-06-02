@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { subtract } from 'tsfun';
 import { I18nString } from 'idai-field-core';
 import { Language, LanguagesUtil } from '../../core/util/languages-util';
 
@@ -21,6 +22,7 @@ export class MultiLanguageInputComponent implements OnChanges {
     @Input() translations: I18nString;
 
     public languages: { [languageCode: string]: Language };
+    public usedLanguages: string[];
     public unusedLanguages: string[];
 
     public newTranslationLanguage: string;
@@ -37,12 +39,6 @@ export class MultiLanguageInputComponent implements OnChanges {
     public getLanguageLabel(languageCode: string): string {
 
         return this.languages[languageCode].label;
-    }
-
-
-    public getTranslationLanguages(): string[] {
-
-        return Object.keys(this.translations);
     }
 
 
@@ -72,8 +68,7 @@ export class MultiLanguageInputComponent implements OnChanges {
 
         this.newTranslationLanguage = undefined;
         this.newTranslationText = undefined;
-        this.unusedLanguages = Object.keys(
-            LanguagesUtil.getUnselectedLanguages(this.languages, Object.keys(this.translations))
-        );
+        this.usedLanguages = Object.keys(this.translations);
+        this.unusedLanguages = subtract(this.usedLanguages)(Object.keys(this.languages));
     }
 }

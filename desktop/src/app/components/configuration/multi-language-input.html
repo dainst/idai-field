@@ -1,10 +1,10 @@
 <div *ngFor="let languageCode of usedLanguages">
     <div class="input-group mb-2">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
+        <div class="row align-items-center">
+            <div class="col-md-2">
                 <label class="col-form-label">{{getLanguageLabel(languageCode)}}</label>
             </div>
-            <div class="col-auto">
+            <div class="col-md-10">
                 <input [(ngModel)]="translations[languageCode]" type="text" class="form-control">    
             </div>
         </div>

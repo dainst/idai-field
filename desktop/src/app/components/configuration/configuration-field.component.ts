@@ -146,9 +146,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     private createEditableI18nString(type: 'label'|'description'): I18nString {
 
         return Object.keys(this.customLanguageConfigurations).reduce((result: I18nString, languageCode: string) => {
-            const translation = this.customLanguageConfigurations[languageCode]
-                ?.categories?.[this.category.name]
-                ?.fields?.[this.field.name]?.[type];
+            const translation = this.getFromCustomLanguageConfiguration(languageCode, type);
             if (translation) result[languageCode] = translation;
             return result;
         }, this.field[type] ? clone(this.field[type]) : {});

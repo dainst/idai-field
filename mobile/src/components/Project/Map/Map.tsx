@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import { Circle } from 'react-native-svg';
 import useMapData from '../../../hooks/use-mapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
 import {
@@ -88,7 +87,7 @@ const renderGeoSvgElement = (
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void,
         highlightedDocId: string,
-        docId: string): ReactElement => {
+        docId: string) => {
     
 
     const doc = geoMap.get(docId)!.doc;
@@ -122,7 +121,6 @@ const renderGeoSvgElement = (
             return <GeoMultiPoint { ...props } />;
         default:
             console.error(`Unknown type: ${geoType}`);
-            return <Circle />;
 
     }
 };

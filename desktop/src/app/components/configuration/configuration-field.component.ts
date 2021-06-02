@@ -170,6 +170,14 @@ export class ConfigurationFieldComponent implements OnChanges {
                 'description', this.editableDescription[languageCode], languageCode
             );
         });
+
+        Object.keys(this.customLanguageConfigurations)
+            .filter(languageCode => !this.editableLabel[languageCode])
+            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection('label', languageCode));
+
+        Object.keys(this.customLanguageConfigurations)
+            .filter(languageCode => !this.editableDescription[languageCode])
+            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection('description', languageCode));
     }
 
 

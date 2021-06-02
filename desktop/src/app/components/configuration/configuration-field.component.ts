@@ -58,9 +58,7 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.hideable = this.isHideable();
         this.editing = false;
 
-        const { label, description } = LabelUtil.getLabelAndDescription(this.field);
-        this.label = label;
-        this.description = description;
+        this.updateLabelAndDescription();
 
         this.customFieldDefinitionClone = this.customFieldDefinition
             ? clone(this.customFieldDefinition)
@@ -92,6 +90,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
         this.updateCustomFieldDefinition();
         this.updateCustomLanguageConfigurations();
+        this.updateLabelAndDescription();
         this.editing = false;
     }
 
@@ -180,18 +179,18 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
-    private updateCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
+    private updateCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
                                                      languageCode: string) {
 
-        if (newText === this.field[sectionName === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
-            this.deleteFromCustomLanguageConfigurationSection(sectionName, languageCode);
+        if (newText === this.field[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
+            this.deleteFromCustomLanguageConfigurationSection(section, languageCode);
         } else {
-            this.addToCustomLanguageConfigurationSection(sectionName, newText, languageCode);
+            this.addToCustomLanguageConfigurationSection(section, newText, languageCode);
         }
     }
 
 
-    private deleteFromCustomLanguageConfigurationSection(sectionName: 'label'|'description', languageCode) {
+    private deleteFromCustomLanguageConfigurationSection(section: 'label'|'description', languageCode) {
 
         if (!this.customLanguageConfigurations[languageCode]) return;
         const languageConfiguration = this.customLanguageConfigurations[languageCode];
@@ -204,7 +203,7 @@ export class ConfigurationFieldComponent implements OnChanges {
         if (!categoryConfiguration.fields[this.field.name]) return;
         const fieldConfiguration = categoryConfiguration.fields[this.field.name];
 
-        delete fieldConfiguration[sectionName];
+        delete fieldConfiguration[section];
 
         if (isEmpty(fieldConfiguration)) delete categoryConfiguration.fields[this.field.name];
         if (isEmpty(categoryConfiguration.fields)) delete categoryConfiguration.fields;
@@ -215,7 +214,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
 
 
-    private addToCustomLanguageConfigurationSection(sectionName: 'label'|'description', newText: string,
+    private addToCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
                                                     languageCode: string) {
 
         if (!this.customLanguageConfigurations[languageCode]) {
@@ -235,7 +234,36 @@ export class ConfigurationFieldComponent implements OnChanges {
         }
         const fieldConfiguration = categoryConfiguration.fields[this.field.name];
         
-        fieldConfiguration[sectionName] = newText;
+        fieldConfiguration[section] = newText;
+    }
+
+
+    private updateLabelAndDescription() {
+
+        const { label, description } = LabelUtil.getLabelAndDescription(this.getUpdatedFieldDefinition());
+        this.label = label;
+        this.description = description;
+    }
+
+
+    private getUpdatedFieldDefinition(): FieldDefinition {
+
+        return Object.keys(this.customLanguageConfigurations).reduce((field, languageCode) => {
+            const label: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'label');
+            const description: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'description');
+            if (label) field.label[languageCode] = label;
+            if (description) field.description[languageCode] = description;
+            return field;
+        }, clone(this.field));
+    }
+
+
+    private getFromCustomLanguageConfiguration(languageCode: string,
+                                               section: 'label'|'description'): string|undefined {
+
+        return this.customLanguageConfigurations[languageCode]
+            ?.categories?.[this.category.name]
+            ?.fields?.[this.field.name]?.[section];
     }
                                     
 

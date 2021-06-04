@@ -1,6 +1,6 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import React, { useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Animated, LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-mapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
 import {
@@ -11,7 +11,7 @@ import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport
 import { GeoMap, getGeoMapCoords, getGeoMapDoc, getGeoMapIsSelected } from './geometry-map/geometry-map';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';
-import SvgMap from './SvgMap/SvgMap';
+import SvgMap, { SvgMapObject } from './SvgMap/SvgMap';
 
 interface MapProps {
     repository: DocumentRepository
@@ -25,6 +25,8 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
+    const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
+    const svgMapRef = useRef<SvgMapObject>(null);
 
 
     const selectDocHandler = (doc: Document) => {
@@ -39,25 +41,29 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
     };
     
 
+    const updateZoom = (value: Animated.Value) => {
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        zoom.setValue((value as any)._value);
+    };
+
     const [
         docIds,
         documentsGeoMap,
-        transformMatrix, viewBox, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds);
+        transformMatrix, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds, svgMapRef);
 
 
     return (
         <View style={ { flex: 1 } }>
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
-                { (docIds && documentsGeoMap && viewPort && transformMatrix && viewBox) &&
-                    <SvgMap style={ styles.svg } viewPort={ viewPort }
-                        viewBox={ viewBox.join(' ') }>
+                { (docIds && documentsGeoMap && viewPort && transformMatrix) &&
+                    <SvgMap style={ styles.svg } viewPort={ viewPort } updatedZoom={ updateZoom } ref={ svgMapRef }>
                         {docIds.map(docId =>
                             renderGeoSvgElement(
                                 documentsGeoMap,
                                 config,
                                 selectDocHandler,
                                 highlightedDoc ? highlightedDoc.resource.id : '',
-                                docId))}
+                                docId, zoom))}
                     </SvgMap>
                 }
             </View>
@@ -86,7 +92,8 @@ const renderGeoSvgElement = (
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void,
         highlightedDocId: string,
-        docId: string) => {
+        docId: string,
+        zoom: Animated.Value) => {
     
 
     const doc = getGeoMapDoc(geoMap, docId);
@@ -96,6 +103,7 @@ const renderGeoSvgElement = (
         const props = {
             coordinates: getGeoMapCoords(geoMap,docId),
             key: docId,
+            zoom: zoom,
             ...getDocumentFillOpacityPress(
                 doc,
                 geoMap,

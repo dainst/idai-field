@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 import { ProjectConfiguration } from 'core/src/configuration/project-configuration';
 import { Document } from 'idai-field-core';
 import React from 'react';
@@ -10,34 +10,28 @@ import Row from '../common/Row';
 import { DocumentsDrawerStackParamList } from './DocumentsDrawer';
 
 
-type DocumentsListNavigationProp = StackNavigationProp<DocumentsDrawerStackParamList, 'DocumentsList'>;
-
-
-export interface DocumentsListProps {
-    documents: Document[];
+interface DocumentsListProps {
     config: ProjectConfiguration;
-    navigation: DocumentsListNavigationProp;
+    route: RouteProp<DocumentsDrawerStackParamList, 'DocumentsList'>;
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
 }
 
 
 const DocumentsList: React.FC<DocumentsListProps> = ({
-    documents,
     config,
-    navigation,
+    route,
     onDocumentSelected,
     onParentSelected,
 }) => {
 
     const onDrillDown = (document: Document) => {
 
-        navigation.push('DocumentsList');
         onParentSelected(document);
     };
 
     return <ScrollView>
-        { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
+        { route.params.documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
             <DocumentButton
                 style={ styles.documentButton }
                 config={ config }

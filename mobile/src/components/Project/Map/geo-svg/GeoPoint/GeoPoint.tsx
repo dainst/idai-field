@@ -1,7 +1,7 @@
 import { Position } from 'geojson';
 import React from 'react';
-import { Circle, CircleProps } from 'react-native-svg';
-import { GeoElementsCommonProps } from '../common-props';
+import { CircleProps } from 'react-native-svg';
+import { ACircle, correctStrokeZooming, GeoElementsCommonProps } from '../common-props';
 import { pointRadius } from '../constants';
 
 interface GeoPointProps extends CircleProps, GeoElementsCommonProps {}
@@ -11,11 +11,11 @@ export const GeoPoint: React.FC<GeoPointProps> = (props) => {
     const [x, y] = props.coordinates as Position;
 
     return (
-        <Circle
+        <ACircle
             { ...props }
             cx={ x }
             cy={ y }
-            r={ pointRadius }
-            vectorEffect="non-scaling-stroke" />
+            strokeWidth={ correctStrokeZooming(props.zoom, props.strokeWidth) }
+            r={ pointRadius } />
     );
 };

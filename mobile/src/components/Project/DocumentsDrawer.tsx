@@ -1,21 +1,26 @@
 import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Document } from 'idai-field-core';
-import React from 'react';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { Document, ProjectConfiguration } from 'idai-field-core';
+import React, { Ref } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from '../common/Button';
 import Row from '../common/Row';
-import DocumentsList, { DocumentsListProps } from './DocumentsList';
+import DocumentsList from './DocumentsList';
 
 
 export type DocumentsDrawerStackParamList = {
-    DocumentsList: undefined
+    DocumentsList: { documents: Document[] };
 };
 
 
-interface DocumentsDrawerProps extends DocumentsListProps {
+interface DocumentsDrawerProps {
+    documents: Document[];
     currentParent?: Document;
+    config: ProjectConfiguration;
+    hierarchyNavigationRef: Ref<NavigationContainerRef>,
+    onDocumentSelected: (document: Document) => void;
+    onParentSelected: (document: Document) => void;
     onHomeButtonPressed: () => void;
     onSettingsButtonPressed: () => void;
     onHierarchyBack: () => void;
@@ -26,16 +31,20 @@ const Stack = createStackNavigator<DocumentsDrawerStackParamList>();
 
 
 const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
+    documents,
     currentParent,
+    hierarchyNavigationRef,
     onHomeButtonPressed,
     onSettingsButtonPressed,
     onHierarchyBack,
     ...listProps
 }) => {
 
+    if (documents.length === 0 && !currentParent) return null;
+
     return <>
         <View style={ styles.listContainer }>
-            <NavigationContainer independent={ true }>
+            <NavigationContainer independent={ true } ref={ hierarchyNavigationRef }>
                 <Stack.Navigator>
                     <Stack.Screen name="DocumentsList"
                         options={ {
@@ -46,15 +55,14 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                                 ? <Button
                                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                                     variant="transparent"
-                                    onPress={ () => {
-                                        onHierarchyBack();
-                                        props.onPress?.();
-                                    } }
+                                    onPress={ () => onHierarchyBack() }
                                 />
-                                : null
+                                : null,
+                            ...TransitionPresets.SlideFromRightIOS
                         } }
+                        initialParams={ { documents } }
                     >
-                        {({ navigation }) => <DocumentsList { ...listProps } navigation={ navigation } /> }
+                        { props => <DocumentsList { ...listProps } { ...props } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

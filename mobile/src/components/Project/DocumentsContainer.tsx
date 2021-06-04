@@ -1,10 +1,10 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
-import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectCategories, ProjectConfiguration, Query, SyncStatus } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
-import { dropRight, last } from 'tsfun';
+import { NavigationContainerRef, RouteProp, StackActions } from '@react-navigation/native';
+import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import React, { useEffect, useRef, useState } from 'react';
+import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
-import useSearch from '../../hooks/use-search';
+import useProjectData from '../../hooks/use-project-data';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentDetails from './DocumentDetails';
@@ -32,7 +32,7 @@ interface DocumentsContainerProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
-    languages: string[],
+    languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
 
@@ -49,46 +49,40 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     setProjectSettings
 }) => {
 
-    const [query, setQuery] = useState<Query>({
-        categories: ProjectCategories.getOperationCategoryNames(config.getCategoryForest()),
-        constraints: {}
-    });
-    const documents = useSearch(repository, query);
-
     const [q, setQ] = useState<string>('');
-
-    const [hierarchyPath, setHierarchyPath] = useState<Document[]>([]);
-    
     const orientation = useOrientation();
+    const { documents, hierarchyPath, pushToHierarchy, popFromHierarchy } = useProjectData(config, repository, q);
+    const [hierarchyBack, setHierarchyBack] = useState<boolean>(false);
 
-    useEffect(() => {
-
-        const operationCategories = ProjectCategories.getOperationCategoryNames(config.getCategoryForest());
-        const concreteCategories = ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest());
-        
-        if (q) {
-            setQuery({ q, categories: concreteCategories });
-        } else {
-            const currentParent = last(hierarchyPath);
-            if (currentParent) {
-                if (operationCategories.includes(currentParent.resource.category)) {
-                    setQuery({ constraints: {
-                        'isRecordedIn:contain': currentParent.resource.id,
-                        'liesWithin:exist': 'UNKNOWN'
-                    } });
-                } else {
-                    setQuery({ constraints: { 'liesWithin:contain': currentParent.resource.id } });
-                }
-            } else {
-                setQuery({ categories: operationCategories });
-            }
-        }
-    }, [config, q, hierarchyPath]);
+    const hierarchyNavigationRef = useRef<NavigationContainerRef>(null);
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
         navigation.closeDrawer();
         navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
+    };
+
+    useEffect(() => {
+
+        if (!hierarchyBack) {
+            hierarchyNavigationRef.current?.dispatch(StackActions.push('DocumentsList', documents));
+        } else if (hierarchyNavigationRef.current?.canGoBack()) {
+            hierarchyNavigationRef.current.goBack();
+        }
+    // necessary in order to prevent calling the effect when hierarchyBack changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [documents]);
+
+    const onParentSelected = (doc: Document) => {
+
+        setHierarchyBack(false);
+        pushToHierarchy(doc);
+    };
+
+    const onHierarchyBack = () => {
+
+        setHierarchyBack(true);
+        popFromHierarchy();
     };
 
     return (
@@ -98,15 +92,15 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             drawerContent={ ({ navigation }: { navigation: any }) => {
 
                 return <DocumentsDrawer
-                    navigation={ navigation }
+                    hierarchyNavigationRef={ hierarchyNavigationRef }
                     documents={ documents }
                     config={ config }
                     currentParent={ last(hierarchyPath) }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
-                    onParentSelected={ doc => setHierarchyPath(old => [...old, doc]) }
-                    onHierarchyBack={ () => setHierarchyPath(old => dropRight(1, old)) }
+                    onParentSelected={ onParentSelected }
+                    onHierarchyBack={ onHierarchyBack }
                 />;
             } }
         >

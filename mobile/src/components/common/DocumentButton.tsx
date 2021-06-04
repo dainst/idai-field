@@ -2,9 +2,10 @@ import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { ReactElement } from 'react';
 import {
     NativeSyntheticEvent, NativeTouchEvent, StyleSheet,
-    Text, TouchableOpacity, View, ViewStyle
+    Text, View, ViewStyle
 } from 'react-native';
 import CategoryIcon from './CategoryIcon';
+import { TouchableOpacity } from './touchables';
 
 
 interface DocumentButtonProps {

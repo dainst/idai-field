@@ -92,7 +92,7 @@ describe('useMapData',() => {
     });
 
     
-    it('should define the viewBox correctly if no Docs are selected', async () => {
+    xit('should define the viewBox correctly if no Docs are selected', async () => {
 
         const selectedDocs:string[] = [];
 
@@ -107,7 +107,7 @@ describe('useMapData',() => {
     });
 
 
-    it('should define the viewBox if all Docs are selected', async () => {
+    xit('should define the viewBox if all Docs are selected', async () => {
 
         const allDocs = [bu1Id, lineBuildingId, multiPolyTrenchId, pointBuildingId, r1Id, si1Id];
         const expectedViewBox = [-viewBoxPaddingX, -viewBoxPaddingY, 990, 1140];

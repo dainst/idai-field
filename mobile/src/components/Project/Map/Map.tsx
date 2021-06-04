@@ -11,7 +11,7 @@ import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport
 import { GeoMap, getGeoMapCoords, getGeoMapDoc, getGeoMapIsSelected } from './geometry-map/geometry-map';
 import MapBottomDrawer from './MapBottomDrawer';
 import { getDocumentFillOpacityPress } from './svg-element-props';
-import SvgMap from './SvgMap/SvgMap';
+import SvgMap, { SvgMapObject } from './SvgMap/SvgMap';
 
 interface MapProps {
     repository: DocumentRepository
@@ -26,6 +26,7 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
+    const svgMapRef = useRef<SvgMapObject>(null);
 
 
     const selectDocHandler = (doc: Document) => {
@@ -48,15 +49,14 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
     const [
         docIds,
         documentsGeoMap,
-        transformMatrix, viewBox, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds);
+        transformMatrix, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds, svgMapRef);
 
 
     return (
         <View style={ { flex: 1 } }>
             <View onLayout={ handleLayoutChange } style={ styles.mapContainer }>
-                { (docIds && documentsGeoMap && viewPort && transformMatrix && viewBox) &&
-                    <SvgMap style={ styles.svg } viewPort={ viewPort }
-                        viewBox={ viewBox.join(' ') } updatedZoom={ updateZoom }>
+                { (docIds && documentsGeoMap && viewPort && transformMatrix) &&
+                    <SvgMap style={ styles.svg } viewPort={ viewPort } updatedZoom={ updateZoom } ref={ svgMapRef }>
                         {docIds.map(docId =>
                             renderGeoSvgElement(
                                 documentsGeoMap,

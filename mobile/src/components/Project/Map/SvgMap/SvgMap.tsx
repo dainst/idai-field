@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { forwardRef, Ref, RefAttributes, useCallback, useImperativeHandle, useRef } from 'react';
 import {
     Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
@@ -17,13 +17,17 @@ interface Coordinate {
     y: number;
 }
 
+export interface SvgMapObject {
+    transformByViewBox: (viewBox: ViewBox) => void;
+}
+
 interface SvgMapProps extends SvgProps {
     viewPort: ViewPort;
     updatedZoom: (zoom: Animated.Value) => void;
 }
 
 
-const SvgMap: React.FC<SvgMapProps> = ( props ) => {
+const SvgMap: React.FC<SvgMapProps & RefAttributes<SvgMapObject>> = forwardRef(( props, ref: Ref<SvgMapObject> ) => {
 
     //absolute positions
     const left = useRef<Animated.Value>(new Animated.Value(0)).current;
@@ -80,19 +84,15 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     const updateZoom = useCallback((updatedZoom: number) => {
         zoom.setValue(updatedZoom);
         props.updatedZoom(zoom);}, [zoom,props]);
-    
 
-    useEffect(() => {
-        
-        const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(
-                                                props.viewPort,
-                                                viewBoxStringToArray(props.viewBox));
-        const transforms = getViewPortTransform(aspect_vb, aspect_vp);
+    const transformByViewBox = (viewBox: ViewBox) => {
+
+        const transforms = getTransformFromViewBoxAndViewPort(props.viewPort, viewBox);
         left.setValue(transforms.translateX );
         top.setValue(transforms.translateY);
         updateZoom(transforms.scaleX);
-        
-    },[left, props.viewBox, props.viewPort, top, zoom, updateZoom]);
+    };
+    useImperativeHandle(ref, () => ({ transformByViewBox }));
     
     
     const touchHandler = (x: number, y: number): void => {
@@ -148,11 +148,14 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
             </AnimatedSvg>
         </Animated.View>
     );
+});
+
+
+const getTransformFromViewBoxAndViewPort = (viewPort: ViewPort, viewBox: ViewBox ) => {
+    const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(viewPort,viewBox);
+    return getViewPortTransform(aspect_vb, aspect_vp);
 };
 
 
-const viewBoxStringToArray = (viewBox: string | undefined): ViewBox =>
-    (viewBox ? viewBox : '0 0 100 100').split(' ').map((num :string)=> parseFloat(num)) as ViewBox;
-
-    
+SvgMap.displayName = 'SvgMap';
 export default SvgMap;

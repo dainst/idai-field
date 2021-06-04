@@ -8,23 +8,28 @@ import {
     ViewPort
 } from '../components/Project/Map/geo-svg';
 import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
+import { ViewBox } from '../components/Project/Map/geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import {
     GeoMap,
     getGeoMapArea, getGeoMapCoords,
     getGeoMapDoc,
     setGeoMapEntry, setupGeoMap
 } from '../components/Project/Map/geometry-map/geometry-map';
+import { SvgMapObject } from '../components/Project/Map/SvgMap/SvgMap';
 import { DocumentRepository } from '../repositories/document-repository';
 import usePrevious from './use-previous';
 
 
-const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefined, selectedDocIds: string[]):
-    [string[] | undefined, GeoMap | null, Matrix4 | undefined, number[] | undefined, (docId: string) => void ] => {
+const useMapData = (
+    repository: DocumentRepository,
+    viewPort: ViewPort | undefined,
+    selectedDocIds: string[],
+    svgMapRef?: React.RefObject<SvgMapObject>):
+        [string[] | undefined, GeoMap | null, Matrix4 | undefined, (docId: string) => void ] => {
     
     const [transformMatrix, setTransformMatrix] = useState<Matrix4>(identityMatrix4);
     const [geoDocuments, setGeoDocuments] = useState<Document[]>();
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
-    const [viewBox, setViewBox] = useState<number[]>();
 
     const [documentsGeoMap, setDocumentsGeoMap] = useState<GeoMap | null>(null);
     const [docIds, setDocIds] = useState<string[]>();
@@ -49,6 +54,12 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
         }
     },[documentsGeoMap]);
 
+    const updateViewBox = useCallback((viewBox: ViewBox) => {
+
+        if(svgMapRef && svgMapRef.current)
+            svgMapRef.current.transformByViewBox(viewBox);
+    },[svgMapRef]);
+
 
     const focusMapOnDocumentIds = useCallback((docIds: string[]) => {
 
@@ -65,14 +76,15 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
         }).filter(doc => doc !== null) as FieldGeometry[];
         
         const { minX, minY, maxX, maxY } = getMinMaxCoords(fieldGeometries);
-        setViewBox([
+        updateViewBox([
             minX - viewBoxPaddingX,
             minY - viewBoxPaddingY,
             maxX - minX + 2 * viewBoxPaddingX,
             maxY - minY + 2 * viewBoxPaddingY]);
-    },[documentsGeoMap]);
+        
+    },[documentsGeoMap, updateViewBox]);
+   
 
-    
     useEffect(() => {
 
         repository.find(searchQuery)
@@ -113,12 +125,12 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
     useEffect(() => {
 
         if(viewPort){
-            if(!selectedDocIds.length) setViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
+            if(!selectedDocIds.length) updateViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
             else {
                 focusMapOnDocumentIds(selectedDocIds);
             }
         }
-    },[selectedDocIds, viewPort, focusMapOnDocumentIds]);
+    },[selectedDocIds, viewPort, focusMapOnDocumentIds, updateViewBox]);
 
 
     const focusMapOnDocumentId = (docId: string): void => {
@@ -133,7 +145,6 @@ const useMapData = (repository: DocumentRepository, viewPort: ViewPort | undefin
         docIds,
         documentsGeoMap,
         transformMatrix,
-        viewBox,
         focusMapOnDocumentId
     ];
     

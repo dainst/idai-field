@@ -40,7 +40,7 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
     ...listProps
 }) => {
 
-    if (documents.length === 0) return null;
+    if (documents.length === 0 && !currentParent) return null;
 
     return <>
         <View style={ styles.listContainer }>

@@ -17,6 +17,9 @@
       "fields": {
         "coordinateReferenceSystem": {
           "label": "Koordinatenbezugssystem"
+        },
+        "shortName": {
+          "label": "Kurzbezeichnung"
         }
       }
     },

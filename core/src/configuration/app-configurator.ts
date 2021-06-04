@@ -128,6 +128,9 @@ export class AppConfigurator {
                     inputType: FieldDefinition.InputType.INPUT,
                     editable: false
                 },
+                shortName: {
+                    inputType: FieldDefinition.InputType.INPUT
+                },
                 coordinateReferenceSystem: {
                     inputType: FieldDefinition.InputType.DROPDOWN
                 },

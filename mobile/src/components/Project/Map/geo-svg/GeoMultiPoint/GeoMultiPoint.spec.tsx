@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
+import { Animated } from 'react-native';
 import { GeoElementsCommonProps } from '../common-props';
 import { GeoPoint } from '../GeoPoint/GeoPoint';
 import { GeoMultiPoint } from './GeoMultiPoint';
@@ -8,6 +10,7 @@ import { GeoMultiPoint } from './GeoMultiPoint';
 
 const props: GeoElementsCommonProps = {
     coordinates: [[2,2],[1,3],[5,8],[14,4],[7,3]],
+    zoom: new Animated.Value(1)
 };
 
 configure({ adapter: new Adapter() });

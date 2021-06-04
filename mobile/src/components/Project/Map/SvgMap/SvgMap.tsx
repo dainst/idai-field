@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
     Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
@@ -19,6 +19,7 @@ interface Coordinate {
 
 interface SvgMapProps extends SvgProps {
     viewPort: ViewPort;
+    updatedZoom: (zoom: Animated.Value) => void;
 }
 
 
@@ -75,6 +76,12 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
         }
     })).current;
 
+    
+    const updateZoom = useCallback((updatedZoom: number) => {
+        zoom.setValue(updatedZoom);
+        props.updatedZoom(zoom);}, [zoom,props]);
+    
+
     useEffect(() => {
         
         const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(
@@ -83,9 +90,9 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
         const transforms = getViewPortTransform(aspect_vb, aspect_vp);
         left.setValue(transforms.translateX );
         top.setValue(transforms.translateY);
-        zoom.setValue (transforms.scaleX);
+        updateZoom(transforms.scaleX);
         
-    },[left, props.viewBox, props.viewPort, top, zoom]);
+    },[left, props.viewBox, props.viewPort, top, zoom, updateZoom]);
     
     
     const touchHandler = (x: number, y: number): void => {
@@ -123,11 +130,12 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
 
             left.setValue( (initialLeft.current + dx - x) * touchZoom + x);
             top.setValue ( (initialTop.current + dy - y) * touchZoom + y);
-            zoom.setValue ( initialZoom.current * touchZoom);
+            updateZoom(initialZoom.current * touchZoom);
+            
         }
     };
 
-    
+
     return (
         <Animated.View style={ props.style } { ...panResponder.panHandlers }>
             <AnimatedSvg>
@@ -142,7 +150,9 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     );
 };
 
+
 const viewBoxStringToArray = (viewBox: string | undefined): ViewBox =>
     (viewBox ? viewBox : '0 0 100 100').split(' ').map((num :string)=> parseFloat(num)) as ViewBox;
 
+    
 export default SvgMap;

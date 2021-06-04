@@ -14,7 +14,6 @@ export const GeoMultiPoint: React.FC<GeoMultiPointProps> = (props) => {
                     { ...props }
                     key={ point.toString() }
                     coordinates={ point }
-                    csTransformFunction={ props.csTransformFunction }
                 />
             ))}
         </>

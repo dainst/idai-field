@@ -1,8 +1,8 @@
 import { Position } from 'geojson';
 import React from 'react';
-import { CommonPathProps, Path } from 'react-native-svg';
+import { CommonPathProps } from 'react-native-svg';
 import { lineStringToPath } from '../geojson-path/geojson-svg-path';
-import { GeoElementsCommonProps } from './common-props';
+import { APath, correctStrokeZooming, GeoElementsCommonProps } from './common-props';
 import { strokeWidth } from './constants';
 
 interface GeoLineStringProps extends CommonPathProps, GeoElementsCommonProps {}
@@ -10,11 +10,10 @@ interface GeoLineStringProps extends CommonPathProps, GeoElementsCommonProps {}
 export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
 
     return (
-        <Path
+        <APath
             { ...props }
             fill="none"
-            strokeWidth={ strokeWidth }
-            vectorEffect="non-scaling-stroke"
+            strokeWidth={ correctStrokeZooming(props.zoom, strokeWidth) }
             d={ lineStringToPath(props.coordinates as Position[]) } />
     );
 };

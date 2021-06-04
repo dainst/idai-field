@@ -1,16 +1,16 @@
 import { Position } from 'geojson';
 import React from 'react';
-import { CommonPathProps, Path } from 'react-native-svg';
+import { CommonPathProps } from 'react-native-svg';
 import { multiPolygonToPath } from '../geojson-path/geojson-svg-path';
-import { GeoElementsCommonProps } from './common-props';
+import { APath, correctStrokeZooming, GeoElementsCommonProps } from './common-props';
 
 interface GeoMultiPolygonProps extends CommonPathProps, GeoElementsCommonProps {}
 
 export const GeoMultiPolygon: React.FC<GeoMultiPolygonProps> = (props) => {
     
     return (
-        <Path
+        <APath
             { ...props }
-            vectorEffect="non-scaling-stroke"
+            strokeWidth={ correctStrokeZooming(props.zoom, props.strokeWidth) }
             d={ multiPolygonToPath(props.coordinates as Position[][][]) } />);
 };

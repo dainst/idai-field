@@ -8,6 +8,7 @@ import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Row from '../common/Row';
+import ScanBarcodeButton from './ScanBarcodeButton';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {
@@ -15,7 +16,8 @@ interface SearchBarProps {
     syncStatus: SyncStatus;
     setProjectSettings: (settings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
-    toggleDrawer: () => void
+    toggleDrawer: () => void;
+    onBarCodeScanned: (data: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -23,7 +25,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
     syncStatus,
     setProjectSettings,
     issueSearch,
-    toggleDrawer
+    toggleDrawer,
+    onBarCodeScanned,
 }) => {
 
     const orientation = useOrientation();
@@ -38,7 +41,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onChangeText={ (value: string) => issueSearch(value) }
                 hideBorder
             />
-            { renderRightIcons(projectSettings, setProjectSettings, syncStatus) }
+            { renderRightIcons(projectSettings, setProjectSettings, syncStatus, onBarCodeScanned) }
         </Row>
     );
 };
@@ -55,9 +58,11 @@ const renderLeftIcons = (onPress: () => void) =>
 const renderRightIcons = (
     projectSettings: ProjectSettings,
     setProjectSettings: (settings: ProjectSettings) => void,
-    syncStatus: SyncStatus
+    syncStatus: SyncStatus,
+    onBarCodeScanned: (data: string) => void,
 ) =>
     <>
+        <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         <SyncSettingsButton
             settings={ projectSettings }
             setSettings={ setProjectSettings }

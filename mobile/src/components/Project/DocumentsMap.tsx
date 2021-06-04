@@ -6,7 +6,6 @@ import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
-import ScanBarcodeButton from './ScanBarcodeButton';
 import SearchBar from './SearchBar';
 
 
@@ -62,8 +61,14 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     config={ config }
                     navigateToDocument={ navigateToDocument } />
             </View>
-            <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
-            <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
+            <SearchBar { ...{
+                issueSearch,
+                projectSettings,
+                setProjectSettings,
+                syncStatus,
+                toggleDrawer,
+                onBarCodeScanned
+            } } />
         </View>
     );
 };

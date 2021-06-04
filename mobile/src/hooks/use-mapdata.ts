@@ -126,9 +126,7 @@ const useMapData = (
 
         if(viewPort){
             if(!selectedDocIds.length) updateViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
-            else {
-                focusMapOnDocumentIds(selectedDocIds);
-            }
+            else focusMapOnDocumentIds(selectedDocIds);
         }
     },[selectedDocIds, viewPort, focusMapOnDocumentIds, updateViewBox]);
 

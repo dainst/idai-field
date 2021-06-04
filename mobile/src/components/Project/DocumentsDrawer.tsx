@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { Ref } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -57,7 +57,8 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                                     variant="transparent"
                                     onPress={ () => onHierarchyBack() }
                                 />
-                                : null
+                                : null,
+                            ...TransitionPresets.SlideFromRightIOS
                         } }
                         initialParams={ { documents } }
                     >

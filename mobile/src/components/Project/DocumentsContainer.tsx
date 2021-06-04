@@ -1,7 +1,7 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
-import { RouteProp } from '@react-navigation/native';
+import { NavigationContainerRef, RouteProp, StackActions } from '@react-navigation/native';
 import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
 import useProjectData from '../../hooks/use-project-data';
@@ -32,7 +32,7 @@ interface DocumentsContainerProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
-    languages: string[],
+    languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
 
@@ -52,11 +52,37 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     const [q, setQ] = useState<string>('');
     const orientation = useOrientation();
     const { documents, hierarchyPath, pushToHierarchy, popFromHierarchy } = useProjectData(config, repository, q);
+    const [hierarchyBack, setHierarchyBack] = useState<boolean>(false);
+
+    const hierarchyNavigationRef = useRef<NavigationContainerRef>(null);
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
         navigation.closeDrawer();
         navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
+    };
+
+    useEffect(() => {
+
+        if (!hierarchyBack) {
+            hierarchyNavigationRef.current?.dispatch(StackActions.push('DocumentsList', documents));
+        } else if (hierarchyNavigationRef.current?.canGoBack()) {
+            hierarchyNavigationRef.current.goBack();
+        }
+    // necessary in order to prevent calling the effect when hierarchyBack changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [documents]);
+
+    const onParentSelected = (doc: Document) => {
+
+        setHierarchyBack(false);
+        pushToHierarchy(doc);
+    };
+
+    const onHierarchyBack = () => {
+
+        setHierarchyBack(true);
+        popFromHierarchy();
     };
 
     return (
@@ -66,15 +92,15 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             drawerContent={ ({ navigation }: { navigation: any }) => {
 
                 return <DocumentsDrawer
-                    navigation={ navigation }
+                    hierarchyNavigationRef={ hierarchyNavigationRef }
                     documents={ documents }
                     config={ config }
                     currentParent={ last(hierarchyPath) }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
-                    onParentSelected={ pushToHierarchy }
-                    onHierarchyBack={ popFromHierarchy }
+                    onParentSelected={ onParentSelected }
+                    onHierarchyBack={ onHierarchyBack }
                 />;
             } }
         >

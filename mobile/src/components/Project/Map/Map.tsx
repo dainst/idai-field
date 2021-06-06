@@ -46,10 +46,8 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
         zoom.setValue((value as any)._value);
     };
 
-    const [
-        docIds,
-        documentsGeoMap,
-        transformMatrix, focusMapOnDocument] = useMapData(repository,viewPort, selectedDocumentIds, svgMapRef);
+    const [docIds,documentsGeoMap,transformMatrix, focusMapOnDocument] = useMapData(
+        repository,viewPort, selectedDocumentIds, svgMapRef);
 
 
     return (

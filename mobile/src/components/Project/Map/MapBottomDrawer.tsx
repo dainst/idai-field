@@ -12,11 +12,12 @@ interface MapBottomDrawerProps {
     document: Document | null;
     config: ProjectConfiguration;
     navigateToDocument: (docId: string) => void;
+    addDocument: (parentDocId: string) => void;
     focusHandler: (docId: string) => void;
 }
 
 const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
-    document, config, navigateToDocument, focusHandler }) => {
+    document, config, navigateToDocument, addDocument, focusHandler }) => {
 
     const iconSize = 20;
     const snapPoints = useMemo(() => ['5%','25%'], []);
@@ -25,6 +26,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
 
     const docId = document.resource.id;
     const documentPressHandler = () => navigateToDocument(docId);
+    const addChildPressHandler = () => addDocument(docId);
     
     return (
         <BottomSheet
@@ -44,7 +46,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                         <Button
                             variant="success"
                             title="Add Child"
-                            onPress={ () => {console.log('button');} }
+                            onPress={ addChildPressHandler }
                             icon={ <Ionicons name="add" size={ iconSize } /> }
                         />
                         <Button

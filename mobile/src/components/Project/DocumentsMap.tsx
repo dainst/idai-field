@@ -49,6 +49,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     }, [repository, navigation]);
 
    const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
+   const addDocument = (parentDocId: string) => navigation.navigate('DocumentAdd',{ parentDocId });
         
     return (
         <View style={ { flex: 1 } }>
@@ -59,7 +60,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                         documents.filter(doc => doc?.resource.geometry)
                         .map(doc => doc.resource.id),[documents]) }
                     config={ config }
-                    navigateToDocument={ navigateToDocument } />
+                    navigateToDocument={ navigateToDocument }
+                    addDocument={ addDocument } />
             </View>
             <SearchBar { ...{
                 issueSearch,

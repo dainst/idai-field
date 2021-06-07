@@ -62,7 +62,7 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                         } }
                         initialParams={ { documents } }
                     >
-                        { props => <DocumentsList { ...listProps } { ...props } /> }
+                        { ({ route }) => <DocumentsList { ...listProps } route={ route } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

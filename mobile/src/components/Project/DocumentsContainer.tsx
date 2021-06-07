@@ -105,7 +105,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             } }
         >
             <Drawer.Screen name="DocumentsMap">
-                { (props) => <DocumentsMap { ...props }
+                { ({ navigation }) => <DocumentsMap
+                    navigation={ navigation }
                     repository={ repository }
                     documents={ documents }
                     issueSearch={ setQ }
@@ -115,9 +116,10 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     setProjectSettings={ setProjectSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentDetails">
-                { (props) => <DocumentDetails { ...props }
+                { ({ navigation, route }) => <DocumentDetails
+                    navigation={ navigation }
                     config={ config }
-                    docId={ props.route.params.docId }
+                    docId={ route.params.docId }
                     repository={ repository }
                     languages={ languages }
                 /> }

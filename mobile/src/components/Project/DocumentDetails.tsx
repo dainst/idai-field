@@ -8,6 +8,7 @@ import {
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useDocument from '../../hooks/use-document';
 import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
 import Button from '../common/Button';
@@ -33,14 +34,9 @@ interface DocumentDetailsProps {
 
 const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, docId, navigation, languages }) => {
 
-    const [doc, setDoc] = useState<Document>();
+    const doc = useDocument(repository, docId);
     const [groups, setGroups] = useState<FieldsViewGroup[]>();
-
-    useEffect(() => {
-
-        repository.get(docId).then(setDoc);
-    }, [repository, docId]);
-
+    
     useEffect(() => {
 
         if (!doc) return;

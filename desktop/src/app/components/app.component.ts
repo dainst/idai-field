@@ -120,6 +120,9 @@ export class AppComponent {
             'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
         );
         this.utilTranslations.addTranslation(
+            'doi', this.i18n({ id: 'util.literature.doi', value: 'DOI' })
+        );
+        this.utilTranslations.addTranslation(
             'page', this.i18n({ id: 'util.literature.page', value: 'Seite' })
         );
         this.utilTranslations.addTranslation(

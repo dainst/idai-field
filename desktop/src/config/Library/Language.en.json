@@ -247,6 +247,9 @@
         "projectSupervisor": {
           "label": "Supervisor",
           "description": "Person in charge of the project"
+        },
+        "bibliographicReferences": {
+          "label": "Bibliography"
         }
       }
     },

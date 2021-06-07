@@ -256,6 +256,9 @@
       },
       "projectSupervisor": {
         "inputType": "input"
+      },
+      "bibliographicReferences": {
+        "inputType" : "literature"
       }
     }
   },

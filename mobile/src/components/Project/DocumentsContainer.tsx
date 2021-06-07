@@ -64,7 +64,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     useEffect(() => {
 
-        if (!hierarchyBack) {
+        if (!hierarchyBack && hierarchyPath.length > 0) {
             hierarchyNavigationRef.current?.dispatch(StackActions.push('DocumentsList', documents));
         } else if (hierarchyNavigationRef.current?.canGoBack()) {
             hierarchyNavigationRef.current.goBack();

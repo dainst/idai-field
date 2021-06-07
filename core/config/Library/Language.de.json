@@ -278,6 +278,9 @@
         "projectSupervisor": {
           "label": "Leiterin/Leiter",
           "description": "Leitende Person des Projekts"
+        },
+        "bibliographicReferences": {
+          "label": "Bibliographie"
         }
       }
     },

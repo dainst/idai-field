@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FieldDocument, ImageDocument, Relations, moveInArray, Datastore } from 'idai-field-core';
+import { FieldDocument, ImageDocument, Relations, Inplace, Datastore } from 'idai-field-core';
 import { Document, RelationsManager } from 'idai-field-core';
 import * as tsfun from 'tsfun';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
@@ -172,8 +172,8 @@ export class LayerManager {
 
         const relations: string[] = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER];
 
-        moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
-        moveInArray(relations, originalIndex, targetIndex);
+        Inplace.moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
+        Inplace.moveInArray(relations, originalIndex, targetIndex);
     }
 
 
@@ -185,7 +185,7 @@ export class LayerManager {
         while (i--) {
             try {
                 await this.datastore.get(newActiveLayersIds[i])
-            } catch (_) {
+            } catch {
                 newActiveLayersIds.splice(i, 1);
                 this.viewFacade.setActiveLayersIds(newActiveLayersIds);
             }

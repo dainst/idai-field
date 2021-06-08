@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, Relations, setOn } from 'idai-field-core';
+import { Category, FieldDefinition, Relations, Inplace } from 'idai-field-core';
 import { Dating, Dimension, Resource } from 'idai-field-core';
 import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
@@ -136,7 +136,7 @@ function convertNumber(container: any, path: Path, type: 'int'|'float') {
 
     const converted = type === 'int' ? parseInt(value) : parseFloat(value);
     if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, value, path];
-    setOn(container, path)(converted);
+    Inplace.setOn(container, path)(converted);
 }
 
 
@@ -149,5 +149,5 @@ function convertBoolean(container: any, path: Path) {
     const val = to(path, undefined)(container);
     if (!val) return;
     if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
-    setOn(container, path)(val === 'true');
+    Inplace.setOn(container, path)(val === 'true');
 }

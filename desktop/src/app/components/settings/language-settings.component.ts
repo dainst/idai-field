@@ -2,7 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { moveInArray } from 'idai-field-core';
+import { Inplace } from 'idai-field-core';
 import { MenuContext, MenuService } from '../menu-service';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
 import { Language, LanguagesUtil } from '../../core/util/languages-util';
@@ -39,7 +39,7 @@ export class LanguageSettingsComponent {
 
     public onDrop(event: CdkDragDrop<string[], any>) {
 
-        moveInArray(this.selectedLanguages, event.previousIndex, event.currentIndex);
+        Inplace.moveInArray(this.selectedLanguages, event.previousIndex, event.currentIndex);
     }
 
 
@@ -65,12 +65,12 @@ export class LanguageSettingsComponent {
     private getAvailableLanguages(): { [languageCode: string]: Language } {
 
         const availableLanguages: { [languageCode: string]: Language } = LanguagesUtil.getAvailableLanguages();
-        
+
         availableLanguages['it'].info = this.i18n({
             id: 'settings.languageInfo.it',
             value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de'
         });
-        
+
         return availableLanguages;
-    } 
+    }
 }

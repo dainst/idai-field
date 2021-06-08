@@ -1,4 +1,4 @@
-import { takeOrMake } from '../../../src/tools/utils';
+import { Inplace } from '../../../src/tools/inplace';
 
 
 describe('takeOrMake', () => {
@@ -6,7 +6,7 @@ describe('takeOrMake', () => {
     it('takeOrMake makes', () => {
 
         const obj: any = { };
-        takeOrMake(obj, ['a','b','c'], []);
+        Inplace.takeOrMake(obj, ['a','b','c'], []);
         expect(obj['a']['b']['c']).toEqual([]);
     });
 
@@ -14,7 +14,7 @@ describe('takeOrMake', () => {
     it('takeOrMake takes', () => {
 
         const obj: any = {a:{ b: { c: 'a'}}};
-        takeOrMake(obj, ['a','b','c'], []);
+        Inplace.takeOrMake(obj, ['a','b','c'], []);
         expect(obj['a']['b']['c']).toEqual('a')
     });
 });

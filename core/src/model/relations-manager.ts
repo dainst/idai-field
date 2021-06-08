@@ -82,7 +82,7 @@ export class RelationsManager {
 
         if (options?.antecendants) {
             // any of these can be removed after implementing corresponding behaviour, if needed
-            if (isArray(ids_)) throw 'multiple ids not allowed with descendants option';
+            if (isArray(ids_)) throw 'multiple ids not allowed with antecendants option';
             if (options.descendants) throw 'do not use descendants with antecendants option';
             if (options.toplevel) throw 'do not use toplevel with antecendants option';
         }

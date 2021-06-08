@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import useDocument from '../../hooks/use-document';
@@ -12,6 +13,7 @@ import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
 interface DocumentAddProps {
+    config: ProjectConfiguration;
     repository: DocumentRepository;
     parentDocId: string;
     navigation: DocumentAddNav;

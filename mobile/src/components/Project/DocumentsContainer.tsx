@@ -130,6 +130,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
                     parentDocId={ route.params.parentDocId }
+                    config={ config }
                     repository={ repository }
                 /> }
             </Drawer.Screen>

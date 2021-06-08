@@ -16,6 +16,7 @@ export type ContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-pol
 })
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ContextMenuComponent implements OnChanges {
 
@@ -60,11 +61,11 @@ export class ContextMenuComponent implements OnChanges {
     }
 
 
-    // TODO implement properly
     public isEditImagesOptionAvailable(): boolean {
 
-        return true;
+        return this.contextMenu.documents.length === 1 && !this.isReadonly();
     }
+
 
     public isEditOptionAvailable(): boolean {
 

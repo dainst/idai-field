@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { to, on, is, isnt, or, any, compose, map, Predicate, includedIn, and, not, flatten } from 'tsfun';
-import { FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition, Datastore,
-    ConfigurationDocument, Relations, ProjectConfiguration, CustomCategoryDefinition, LabelUtil } from 'idai-field-core';
+import { to, flatten } from 'tsfun';
+import { FieldResource, Category, Datastore,
+    ConfigurationDocument, ProjectConfiguration } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { reload } from '../../core/common/reload';
+import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
-const locale: string = typeof window !== 'undefined'
-  ? window.require('@electron/remote').getGlobal('config').locale
-  : 'de';
 
 export const OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
@@ -30,7 +28,6 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public toplevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
-    public selectedGroup: string;
     public customConfigurationDocument: ConfigurationDocument;
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
@@ -50,9 +47,6 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public getLabel = (object: Category|Group) => LabelUtil.getLabel(object);
-
-
     async ngOnInit() {
 
         this.customConfigurationDocument = await this.datastore.get(
@@ -61,9 +55,6 @@ export class ProjectConfigurationComponent implements OnInit {
         ) as ConfigurationDocument;
         this.permanentlyHiddenFields = this.getPermanentlyHiddenFields(this.projectConfiguration.getCategoriesArray());
     }
-
-
-    public getCategoryDescription = (category: Category) => category.description?.[locale];
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -91,90 +82,7 @@ export class ProjectConfigurationComponent implements OnInit {
     public selectCategory(category: Category) {
 
         this.selectedCategory = category;
-        this.selectedGroup = this.getGroups(category)[0].name;
     }
-
-
-    public getGroups(category: Category): Array<Group> {
-
-        return category.groups.filter(
-            or(
-                (_: Group) => _.fields.length > 0,
-                (_: Group) => _.relations.length > 0
-            )
-        );
-    }
-
-
-    public getFields(category: Category): Array<FieldDefinition> {
-
-        return category.groups
-            .find(on(Named.NAME, is(this.selectedGroup)))!
-            .fields
-            .filter(
-                and(
-                    on(FieldDefinition.NAME, not(includedIn(this.permanentlyHiddenFields[category.name]))),
-                    or(
-                        () => this.showHiddenFields,
-                        not(this.isHidden(category))
-                    )
-                )
-            );
-    }
-
-
-    public isHidden = (category: Category) => (field: FieldDefinition): boolean => {
-
-        const customCategoryDefinition: CustomCategoryDefinition
-            = this.customConfigurationDocument.resource.categories[category.libraryId ?? category.name];
-
-        const parentCustomCategoryDefinition = category.parentCategory
-            ? this.customConfigurationDocument.resource
-                .categories[category.parentCategory.libraryId ?? category.parentCategory.libraryId]
-            : undefined;
-
-        return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
-            (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
-    }
-
-
-    public toggleHidden(category: Category, field: FieldDefinition) {
-
-        const customCategoryDefinition: CustomCategoryDefinition
-            = this.customConfigurationDocument.resource.categories[category.libraryId];
-        
-        if (this.isHidden(category)(field)) {
-            customCategoryDefinition.hidden
-                = customCategoryDefinition.hidden.filter(name => name !== field.name);
-        } else {
-            if (!customCategoryDefinition.hidden) customCategoryDefinition.hidden = [];
-            customCategoryDefinition.hidden.push(field.name);
-        }
-    }
-
-
-    public getCustomFieldDefinition(category: Category, field: FieldDefinition) {
-
-        return this.customConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name]
-            .fields[field.name];
-    }
-
-
-    public getRelations(category: Category): Array<RelationDefinition> {
-
-        return category.groups
-            .find(on(Named.NAME, is(this.selectedGroup)))!
-            .relations
-            .filter(on(Named.NAME, isnt(Relations.Type.INSTANCEOF)));
-    }
-
-
-    public hasCustomFields: Predicate<Group> = compose(
-        to<Array<FieldDefinition>>(Group.FIELDS),
-        map(_ => _.source),
-        any(is(FieldDefinition.Source.CUSTOM))
-    );
 
 
     private getPermanentlyHiddenFields(categories: Array<Category>): { [categoryName: string]: string[] } {
@@ -183,7 +91,9 @@ export class ProjectConfigurationComponent implements OnInit {
             result[category.name] = flatten(category.groups.map(to('fields')))
                 .filter(field => !field.visible
                     && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                    && (!category.libraryId || !this.isHidden(category)(field)))
+                    && (!category.libraryId || !ConfigurationUtil.isHidden(
+                        category, this.customConfigurationDocument
+                    )(field)))
                 .map(to('name'));
             return result;
         }, {})

@@ -1,0 +1,62 @@
+<div class="row" [class.custom-category]="!category.libraryId">
+    <div class="col header header-left d-flex">
+        <category-icon size="41" category="{{category.name}}"></category-icon>
+        <h5>
+            <span *ngIf="!category.libraryId"
+                class="mdi mdi-alert-circle-outline"
+                ngbTooltip="Projektspezifisches Formular"
+                i18n-ngbTooltip="@@config.form.custom"
+                placement="right">
+            </span>
+            {{getLabel(category)}}
+        </h5>
+    </div>
+    <div class="col header header-right text-right">
+        <span *ngIf="category.name">
+            <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
+            <code>{{category.name}}</code>
+        </span>
+        &nbsp;
+        <span *ngIf="category.libraryId">
+            <strong i18n="@@config.libraryId">Formular</strong>:
+            <code>{{category.libraryId}}</code>
+        </span>
+    </div>
+</div>
+<div *ngIf="getCategoryDescription()" class="row subheader">
+    <div class="col">
+        {{getCategoryDescription()}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2 groups">
+        <ul class="nav nav-pills flex-column">
+            <li *ngFor="let group of getGroups()" class="nav flex-column">
+                <a class="nav-link group-button"
+                        [class.active]="selectedGroup === group.name"
+                        (click)="selectedGroup = group.name">
+                    {{getLabel(group)}}
+                    <span *ngIf="hasCustomFields(group)"> *</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-10 content" [class.shortened]="getCategoryDescription()">
+        <div *ngFor="let field of getFields()">
+            <configuration-field [field]="field"
+                                 [customFieldDefinition]="getCustomFieldDefinition(field)"
+                                 [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
+                                 [category]="category"
+                                 [hidden]="isHidden(field)"
+                                 (onToggleHidden)="toggleHidden(field)">
+            </configuration-field>
+        </div>
+        <div *ngFor="let relation of getRelations()">
+            <configuration-relation [relation]="relation"
+                                    [category]="category">
+            </configuration-relation>
+        </div>
+    </div>
+</div>

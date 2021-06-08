@@ -7,6 +7,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
 import { ConfigurationRelationComponent } from './configuration-relation.component';
 import { MultiLanguageInputComponent } from './multi-language-input.component';
+import { ConfigurationCategoryComponent } from './configuration-category.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MultiLanguageInputComponent } from './multi-language-input.component';
     ],
     declarations: [
         ProjectConfigurationComponent,
+        ConfigurationCategoryComponent,
         ConfigurationFieldComponent,
         ConfigurationRelationComponent,
         MultiLanguageInputComponent

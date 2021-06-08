@@ -32,68 +32,10 @@
             </div>
 
             <div class="col-10">
-                <div class="row" [class.custom-category]="!selectedCategory.libraryId">
-                    <div class="col header header-left d-flex">
-                        <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
-                        <h5>
-                            <span *ngIf="!selectedCategory.libraryId"
-                                class="mdi mdi-alert-circle-outline"
-                                ngbTooltip="Projektspezifisches Formular"
-                                i18n-ngbTooltip="@@config.form.custom"
-                                placement="right">
-                            </span>
-                            {{getLabel(selectedCategory)}}
-                        </h5>
-                    </div>
-                    <div class="col header header-right text-right">
-                        <span *ngIf="selectedCategory.name">
-                            <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
-                            <code>{{selectedCategory.name}}</code>
-                        </span>
-                        &nbsp;
-                        <span *ngIf="selectedCategory.libraryId">
-                            <strong i18n="@@config.libraryId">Formular</strong>:
-                            <code>{{selectedCategory.libraryId}}</code>
-                        </span>
-                    </div>
-                </div>
-                <div *ngIf="getCategoryDescription(selectedCategory)" class="row subheader">
-                    <div class="col">
-                        {{getCategoryDescription(selectedCategory)}}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2 groups">
-                        <ul class="nav nav-pills flex-column">
-                            <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
-                                <a class="nav-link group-button"
-                                        [class.active]="selectedGroup === group.name"
-                                        (click)="selectedGroup = group.name">
-                                    {{getLabel(group)}}
-                                    <span *ngIf="hasCustomFields(group)"> *</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-10 content" [class.shortened]="getCategoryDescription(selectedCategory)">
-                        <div *ngFor="let field of getFields(selectedCategory)">
-                            <configuration-field [field]="field"
-                                                 [customFieldDefinition]="getCustomFieldDefinition(selectedCategory, field)"
-                                                 [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
-                                                 [category]="selectedCategory"
-                                                 [hidden]="isHidden(selectedCategory)(field)"
-                                                 (onToggleHidden)="toggleHidden(selectedCategory, field)">
-                            </configuration-field>
-                        </div>
-                        <div *ngFor="let relation of getRelations(selectedCategory)">
-                            <configuration-relation [relation]="relation"
-                                                    [category]="selectedCategory">
-                            </configuration-relation>
-                        </div>
-                    </div>
-                </div>
+                <configuration-category [category]="selectedCategory"
+                                        [customConfigurationDocument]="customConfigurationDocument"
+                                        [showHiddenFields]="showHiddenFields"
+                                        [permanentlyHiddenFields]="permanentlyHiddenFields"></configuration-category>
             </div>
         </div>
     </div>

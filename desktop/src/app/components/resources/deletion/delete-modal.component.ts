@@ -22,7 +22,7 @@ export class DeleteModalComponent {
     public confirmDeletionIdentifier: string;
 
     public relatedImagesCount: number;
-    public deleteRelatedImages: boolean;
+    public deleteRelatedImages: boolean = true;
 
     constructor(public activeModal: NgbActiveModal) {}
 

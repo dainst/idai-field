@@ -21,6 +21,7 @@ import { SettingsService } from '../../../../src/app/core/settings/settings-serv
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
 import PouchDB =  require('pouchdb-node');
+import {StateSerializer} from '../../../../src/app/core/common/state-serializer';
 
 const fs = require('fs');
 
@@ -74,7 +75,25 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 }
 
 
-export async function createApp(projectName = 'testdb') {
+export interface App {
+
+    remoteChangesStream: ChangesStream,
+    viewFacade: ViewFacade,
+    documentHolder: DocumentHolder,
+    datastore: Datastore,
+    settingsService: SettingsService,
+    settingsProvider: SettingsProvider,
+    resourcesStateManager: ResourcesStateManager,
+    stateSerializer: StateSerializer,
+    tabManager: TabManager,
+    imageOverviewFacade: ImageOverviewFacade,
+    relationsManager: RelationsManager,
+    imagestore: Imagestore,
+    imageRelationsManager: ImageRelationsManager
+}
+
+
+export async function createApp(projectName = 'testdb'): Promise<App> {
 
     const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
     const pouchdbServer = new PouchdbServer();

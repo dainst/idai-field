@@ -1,14 +1,14 @@
 import { doc, FieldDocument, ImageDocument, Document } from 'idai-field-core';
 import { flatten } from 'tsfun';
 import { makeDocumentsLookup } from '../../../../../src/app/core/import/import/utils';
-import { createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';
+import { App, createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';
 
 /**
  * @author Daniel de Oliveira
  */
 describe('subsystem/relations-manager',() => {
 
-    let app;
+    let app: App;
     let helpers;
 
     beforeEach(async done => {
@@ -79,9 +79,25 @@ describe('subsystem/relations-manager',() => {
             ['t1', 'Type']
         ]);
 
-        const results = makeDocumentsLookup(await app.relationsManager.get('tc1', { descendants: true }));
-        expect(results['tc1'].resource.id).toBe('tc1');
-        expect(results['t1'].resource.id).toBe('t1');
+        const results = await app.relationsManager.get('tc1', { descendants: true });
+        const lookup = makeDocumentsLookup(results);
+        expect(lookup['tc1'].resource.id).toBe('tc1');
+        expect(lookup['t1'].resource.id).toBe('t1');
+        done();
+    });
+
+
+    it('get - include antescendants', async done => {
+
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+
+        const results = await app.relationsManager.get('t1', { antecendants: true });
+        const lookup = makeDocumentsLookup(results);
+        expect(lookup['tc1'].resource.id).toBe('tc1');
+        expect(lookup['t1'].resource.id).toBe('t1');
         done();
     });
 
@@ -185,15 +201,15 @@ describe('subsystem/relations-manager',() => {
         t2.resource.relations = { isBefore: ['t1'], isRecordedIn: [] };
 
         await app.datastore.create(t1, 'test');
-        t2 = await app.datastore.create(t2, 'test');
+        t2 = await app.datastore.create(t2, 'test') as any;
 
         const t2old = Document.clone(t2);
         t2.resource.relations['isBefore'] = [];
         t2.resource.identifier = 'identifiert2new';
 
         await app.relationsManager.update(t2, t2old);
-        t1 = await app.datastore.get('t1');
-        t2 = await app.datastore.get('t2');
+        t1 = await app.datastore.get('t1') as any;
+        t2 = await app.datastore.get('t2') as any;
 
         expect(t2.resource.relations.isBefore).toEqual([]);
         expect(t1.resource.relations.isAfter).toEqual([]);

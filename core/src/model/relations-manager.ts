@@ -1,4 +1,8 @@
 
+import {
+    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
+    undefinedOrEmpty
+} from 'tsfun';
 import { Document } from './document';
 import { DatastoreErrors } from '../datastore/datastore-errors'
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
@@ -8,13 +12,10 @@ import { NewDocument } from './new-document';
 import { ProjectConfiguration } from '../configuration/project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import {Query } from './query'
-
-import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
-    undefinedOrEmpty
-} from 'tsfun';
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 import {Name} from '../tools';
+import {RelationsUtil} from '../configuration';
+import {Resource} from './resource';
 
 
 
@@ -67,14 +68,30 @@ export class RelationsManager {
     }
 
 
+    /**
+     * Gets one or more documents, possibly with documents connected via hierarchical relations.
+     * 
+     * @throws DatastoreErrors
+     */
     public async get(id: ResourceId): Promise<Document>;
     public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
     public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
+    public async get(id: ResourceId, options: { antecendants: true }): Promise<Array<Document>>
     public async get(ids: Array<ResourceId>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
-    public async get(ids_: any, options?: { descendants: true, toplevel?: false }): Promise<any> {
+    public async get(ids_: any, options?: { descendants?: true, toplevel?: false, antecendants?: true }): Promise<any> {
+
+        if (options?.antecendants) {
+            // any of these can be removed after implementing corresponding behaviour, if needed
+            if (isArray(ids_)) throw 'multiple ids not allowed with descendants option';
+            if (options.descendants) throw 'do not use descendants with antecendants option';
+            if (options.toplevel) throw 'do not use toplevel with antecendants option';
+        }
 
         const ids = isArray(ids_) ? ids_ : [ids_];
-        const returnSingleItem = !isArray(ids_) && options?.descendants !== true;
+        const returnSingleItem = 
+            !isArray(ids_) 
+            && options?.descendants !== true 
+            && options?.antecendants !== true;
 
         try {
             const documents = [];
@@ -82,11 +99,15 @@ export class RelationsManager {
                 const document = await this.datastore.get(id);
                 documents.push(document);
                 if (options?.descendants === true) documents.push(...(await this.getDescendants(document)));
+                if (options?.antecendants === true) documents.push(...(await this.getAntecendants(document)));
             }
-            if (returnSingleItem) return documents [0];
+            if (returnSingleItem) return documents[0];
             if (options?.toplevel !== false) return documents;
 
-            return documents.filter(on(['resource', 'relations', Relations.Hierarchy.LIESWITHIN], isNot(undefinedOrEmpty)));
+            return documents
+                .filter(
+                    on([Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.LIESWITHIN], 
+                       isNot(undefinedOrEmpty)));
 
         } catch {
             if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;
@@ -255,5 +276,27 @@ export class RelationsManager {
             results.push(...(await this.findDescendants(document) as FindResult).documents);
         }
         return results;
+    }
+
+
+    private async getAntecendants(document: Document): Promise<Array<Document>> {
+
+        const documents: Array<Document> = [];
+
+        let current = document;
+        while (Document.hasRelations(current, Relations.Hierarchy.LIESWITHIN)
+               || Document.hasRelations(current, Relations.Hierarchy.RECORDEDIN)) {
+
+            const parent = await this.datastore.get(
+                Document.hasRelations(current, Relations.Hierarchy.LIESWITHIN)
+                    ? current.resource.relations[Relations.Hierarchy.LIESWITHIN][0]
+                    : current.resource.relations[Relations.Hierarchy.RECORDEDIN][0]
+            );
+
+            documents.push(parent);
+            current = parent;
+        }
+
+        return documents;
     }
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
-import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager } from 'idai-field-core';
 import { curry, filter, flatten, flow, is, Map, map, remove, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from 'idai-field-core';
@@ -68,6 +68,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private imagestore: Imagestore,
+                private relationsManager: RelationsManager,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
                 private tabManager: TabManager,
@@ -156,6 +157,8 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-images':
                 await this.viewModalLauncher.openImageViewModal(document, 'edit');
+                this.loadImages(await this.relationsManager.get(
+                    document.resource.id, { antecendants: true }) as Array<FieldDocument>, true);
                 break;
         }
     }
@@ -164,6 +167,8 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async openImageViewModal(document: Document) {
 
         await this.viewModalLauncher.openImageViewModal(document, 'view');
+        this.loadImages(await this.relationsManager.get(
+            document.resource.id, { antecendants: true }) as Array<FieldDocument>, true);
     }
 
 

@@ -27,7 +27,7 @@ export class ImageCategoryPickerModalComponent {
     }
 
 
-    public getImageCategoryLabel = () => LabelUtil.getLabel(this.imageCategory);
+    public getImageCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
 
 
     public onKeyDown(event: KeyboardEvent) {

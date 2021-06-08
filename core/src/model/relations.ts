@@ -141,5 +141,5 @@ export namespace Relations {
     }
 
 
-    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !arrayEqual(l[key])(r[key]);
+    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !arrayEqual(l[key], r[key]);
 }

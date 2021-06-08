@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { and, any, compose, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named, RelationDefinition, Relations } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
@@ -26,9 +26,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public selectedGroup: string;
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
 
-        this.selectedGroup = this.getGroups()[0].name;
+        if (changes['category']) this.selectedGroup = this.getGroups()[0].name;
     }
 
     

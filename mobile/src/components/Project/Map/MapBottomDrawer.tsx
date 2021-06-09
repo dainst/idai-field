@@ -31,7 +31,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
 }) => {
 
     const iconSize = 20;
-    const snapPoints = useMemo(() => ['5%','25%'], []);
+    const snapPoints = useMemo(() => [50, '25%', '50%'], []);
 
     if(!document) return null;
 
@@ -44,39 +44,40 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
             index={ 1 }
             snapPoints={ snapPoints }
             style={ styles.modal }
-            >
+        >
+            <Row style={ styles.buttonGroup }>
                 <DocumentButton
                     document={ document }
                     config={ config }
                     onPress={ documentPressHandler }
                     size={ 30 }
+                    style={ styles.docButton }
                 />
-                <Column style={ styles.container }>
-                    <DocumentDetails
-                        docId={ docId }
-                        config={ config }
-                        repository={ repository }
-                        languages={ languages }
-                        navigateToDocument={ navigateToDocument }
-                    />
-                    <Row style={ styles.buttonGroup }>
-                        <Button
-                            variant="success"
-                            title="Add Child"
-                            onPress={ addChildPressHandler }
-                            icon={ <Ionicons name="add" size={ iconSize } /> }
-                        />
-                        <Button
-                            title="Focus"
-                            onPress={ () => focusHandler(docId) }
-                            icon={ <MaterialIcons
-                                name="center-focus-strong"
-                                size={ iconSize }
-                                color="#565350"
-                            /> }
-                        />
-                    </Row>
-                </Column>
+                <Button
+                    variant="success"
+                    title="Add Child"
+                    onPress={ addChildPressHandler }
+                    icon={ <Ionicons name="add" size={ iconSize } /> }
+                />
+                <Button
+                    title="Focus"
+                    onPress={ () => focusHandler(docId) }
+                    icon={ <MaterialIcons
+                        name="center-focus-strong"
+                        size={ iconSize }
+                        color="#565350"
+                    /> }
+                />
+            </Row>
+            <Column style={ styles.container }>
+                <DocumentDetails
+                    docId={ docId }
+                    config={ config }
+                    repository={ repository }
+                    languages={ languages }
+                    navigateToDocument={ navigateToDocument }
+                />
+            </Column>
         </BottomSheet>
     );
 };
@@ -102,7 +103,13 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     buttonGroup: {
-        marginTop: 5,
+        margin: 5,
+        marginTop: 0,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    docButton: {
+        flex: 1,
     }
 });
 

@@ -1,4 +1,4 @@
-import { Inplace } from "../../src/tools";
+import { Inplace } from '../../src/tools';
 
 
 /**
@@ -7,6 +7,7 @@ import { Inplace } from "../../src/tools";
 describe('Inplace', () => {
 
     it('remove from path and delete empty objects', () => {
+
         const object = {
             subObject1: {
                 subObject1a: {
@@ -26,6 +27,7 @@ describe('Inplace', () => {
 
 
     it('remove from path and remove empty objects from array', () => {
+
         const object = {
             subObject: {
                 array: [

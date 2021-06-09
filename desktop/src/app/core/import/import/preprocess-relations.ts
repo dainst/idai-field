@@ -28,7 +28,7 @@ export function complementInverseRelationsBetweenImportDocs(context: ImportConte
                                                             documents: Array<Document> /*inplace*/) {
 
     if (!options.useIdentifiersInRelations) return;
-    const identifierLookup = makeLookup(['resource','identifier'])(documents);
+    const identifierLookup = makeLookup(['resource','identifier'], documents);
 
     for (const document of documents) {
         const identifier = document.resource.identifier;

@@ -37,7 +37,7 @@ export module Named {
      */
     export function arrayToMap<A extends Named>(as: Array<A>): Map<A> {
 
-        return makeLookup(Named.NAME)(as);
+        return makeLookup(Named.NAME, as);
     }
 
 

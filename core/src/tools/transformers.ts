@@ -6,17 +6,22 @@ import {assocReduce} from './assoc-reduce';
 // @author Sebastian Cuy
 
 
-// TODO add uncurried version
 /**
  * path: 'd.e'
  * as: [{ d: { e: 17 }}, { d: { e: 19 }}]
  * ->
  * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
  */
-export function makeLookup(path: Path) {
+export function makeLookup(path: Path): <A>(as: Array<A>) => Map<A>
+export function makeLookup<A>(path: Path, as: Array<A>): Map<A>
+export function makeLookup(path, as?) {
 
-    return <A>(as: Array<A>): Map<A> =>
+    const $ = <A>(as: Array<A>): Map<A> =>
         assocReduce((a: A) => [to(path)(a), a], {})(as);
+
+    return as !== undefined
+        ? $(as)
+        : $;
 }
 
 

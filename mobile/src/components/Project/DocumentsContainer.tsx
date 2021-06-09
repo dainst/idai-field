@@ -53,7 +53,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     const [q, setQ] = useState<string>('');
     const orientation = useOrientation();
-    const { documents, hierarchyPath, pushToHierarchy, popFromHierarchy } = useProjectData(config, repository, q);
+    const { documents, hierarchyPath,
+            pushToHierarchy, popFromHierarchy, isInOverview } = useProjectData(config, repository, q);
     const [hierarchyBack, setHierarchyBack] = useState<boolean>(false);
 
     const hierarchyNavigationRef = useRef<NavigationContainerRef>(null);
@@ -66,7 +67,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
     useEffect(() => {
 
-        if (!hierarchyBack && hierarchyPath.length > 0) {
+        if (!hierarchyBack && !isInOverview()) {
             hierarchyNavigationRef.current?.dispatch(StackActions.push('DocumentsList', documents));
         } else if (hierarchyNavigationRef.current?.canGoBack()) {
             hierarchyNavigationRef.current.goBack();

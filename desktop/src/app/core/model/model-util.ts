@@ -7,17 +7,6 @@ import { FieldResource, ResourceId, Document, Resource } from 'idai-field-core';
  */
 export module ModelUtil {
 
-    export type Label = string;
-
-
-    export function getDocumentLabel(document: Document): string { // TODO move to Document
-
-        return (document.resource.shortDescription)
-            ? document.resource.shortDescription + ' (' + document.resource.identifier + ')'
-            : document.resource.identifier;
-    }
-
-
     export function getRelationTargetId(document: Document,
                                         relationName: string,
                                         index: number): ResourceId|undefined {
@@ -35,9 +24,4 @@ export module ModelUtil {
 
         return resource.relations['isDepictedIn'][0];
     }
-
-
-    export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id === r.resource.id);
-
-    export const hasId = (doc: Document) => doc.resource.id !== undefined; // TODO this could be done with a NewDocument typeguard
 }

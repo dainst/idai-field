@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty, on, is, map} from 'tsfun';
-import {Datastore, FeatureDocument, FieldDocument} from 'idai-field-core';
-import {ModelUtil} from '../../core/model/model-util';
+import {isEmpty, on, is} from 'tsfun';
+import {Datastore, FeatureDocument, FieldDocument, Document} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 import {Loading} from '../widgets/loading';
@@ -65,7 +64,7 @@ export class MatrixViewComponent implements OnInit {
                 private menuService: MenuService) {}
 
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+    public getDocumentLabel = (document: any) => Document.getLabel(document);
 
     public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
 

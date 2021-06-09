@@ -1,5 +1,5 @@
 import { isEmpty } from 'tsfun';
-import { Category, FieldDefinition, I18nString, LanguageConfiguration } from 'idai-field-core';
+import { Category, FieldDefinition, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -91,23 +91,9 @@ export module LanguageConfigurationUtil {
                                                      languageCode: string, categoryName: string,
                                                      fieldName: string) {
 
-        if (!customLanguageConfigurations[languageCode]) {
-            customLanguageConfigurations[languageCode] = {};
-        }
-        const languageConfiguration = customLanguageConfigurations[languageCode];
-        
-        if (!languageConfiguration.categories) languageConfiguration.categories = {};
-        if (!languageConfiguration.categories[categoryName]) {
-            languageConfiguration.categories[categoryName] = {};
-        }
-        const categoryConfiguration = languageConfiguration.categories[categoryName];
-
-        if (!categoryConfiguration.fields) categoryConfiguration.fields = {};
-        if (!categoryConfiguration.fields[fieldName]) {
-            categoryConfiguration.fields[fieldName] = {};
-        }
-        const fieldConfiguration = categoryConfiguration.fields[fieldName];
-        
-        fieldConfiguration[section] = newText;
+        Inplace.setOn(
+            customLanguageConfigurations,
+            [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+        );
     }
 }

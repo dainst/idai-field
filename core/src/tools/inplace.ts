@@ -1,4 +1,4 @@
-import {isNumber, isString, to, Path} from 'tsfun';
+import { isNumber, isString, to, Path } from 'tsfun';
 
 
 /**
@@ -8,7 +8,7 @@ export namespace Inplace {
 
     export function setOn(object: any, path_: Path) {
 
-        return (val: any): void => _setOn(object, isString(path_)||isNumber(path_)?[path_]:path_, val);
+        return (val: any): void => _setOn(object, isString(path_) || isNumber(path_) ? [path_] : path_, val);
     }
     
     

@@ -19,6 +19,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },
@@ -44,6 +45,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },
@@ -72,6 +74,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },
@@ -94,6 +97,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id2',
             resource: {
                 id: 'id2',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },
@@ -113,6 +117,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id2',
             resource: {
                 id: 'id2',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },

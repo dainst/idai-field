@@ -11,6 +11,7 @@ describe('Document', () => {
         const d: Document = {
             _id: '1',
             resource: {
+                identifier: '',
                 category: 'a',
                 id: '1',
                 relations: {}

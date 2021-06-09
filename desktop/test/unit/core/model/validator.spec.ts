@@ -55,6 +55,7 @@ describe('Validator', () => {
         const doc = {
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'T',
                 mandatory: 'm',
                 relations: {
@@ -72,7 +73,7 @@ describe('Validator', () => {
 
         const find = () => Promise.resolve({ documents: [] } as FindResult);
 
-        const doc = { resource: { id: '1', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
+        const doc = { resource: { id: '1', identifier: '', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
 
         try {
             await new Validator(projectConfiguration, find)

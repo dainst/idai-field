@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { to, flatten } from 'tsfun';
 import { FieldResource, Category, Datastore,
-    ConfigurationDocument, ProjectConfiguration } from 'idai-field-core';
+    ConfigurationDocument, ProjectConfiguration, Resource } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
@@ -11,7 +11,7 @@ import { reload } from '../../core/common/reload';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
 
-export const OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
+export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
 @Component({

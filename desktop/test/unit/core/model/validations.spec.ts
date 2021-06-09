@@ -400,6 +400,7 @@ describe('Validations', () => {
         const correctDocument1 = {
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'T',
                 beginningDate: '01.01.2020',
                 endDate: '01.01.2020',
@@ -410,6 +411,7 @@ describe('Validations', () => {
         const correctDocument2 = {
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'T',
                 beginningDate: '01.01.2020',
                 endDate: '02.01.2020',
@@ -420,6 +422,7 @@ describe('Validations', () => {
         const incorrectDocument = {
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'T',
                 beginningDate: '01.01.2020',
                 endDate: '31.12.2019',

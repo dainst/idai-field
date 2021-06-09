@@ -89,8 +89,8 @@ export module CSVExport {
             fieldNames.splice(indexOfShortDescription, 1);
             fieldNames.unshift(FieldResource.SHORTDESCRIPTION);
         }
-        fieldNames = fieldNames.filter(isnt(FieldResource.IDENTIFIER));
-        fieldNames.unshift(FieldResource.IDENTIFIER);
+        fieldNames = fieldNames.filter(isnt(Resource.IDENTIFIER));
+        fieldNames.unshift(Resource.IDENTIFIER);
 
         return fieldNames;
     }

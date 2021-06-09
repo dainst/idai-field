@@ -1,5 +1,5 @@
 import {ConfigurationErrors, makeCategoryForest} from '../../../src/configuration/boot';
-import {Category, FieldDefinition, FieldResource, Groups} from '../../../src/model';
+import {Category, FieldDefinition, FieldResource, Groups, Resource} from '../../../src/model';
 import {Named, Tree} from '../../../src/tools';
 
 
@@ -98,7 +98,7 @@ describe('makeCategoriesForest', () => {
                         group: Groups.STEM
                     },
                     {
-                        name: FieldResource.IDENTIFIER,
+                        name: Resource.IDENTIFIER,
                         inputType: FieldDefinition.InputType.INPUT,
                         group: Groups.STEM
                     }
@@ -108,7 +108,7 @@ describe('makeCategoriesForest', () => {
 
         const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(confDef)));
 
-        expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
+        expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(Resource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
     });
 

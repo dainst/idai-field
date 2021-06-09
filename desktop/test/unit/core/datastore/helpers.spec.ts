@@ -12,6 +12,7 @@ describe('helpers', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 ind: 1,
                 category: 'Object',
                 relations: {}
@@ -24,6 +25,7 @@ describe('helpers', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 ind: 2,
                 category: 'Object',
                 relations: {}
@@ -36,6 +38,7 @@ describe('helpers', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 ind: 3,
                 category: 'Object',
                 relations: {}

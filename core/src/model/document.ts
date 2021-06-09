@@ -7,6 +7,13 @@ import { ObjectUtils } from '../tools/object-utils';
 export type RevisionId = string;
 export type DocumentId = string;
 
+
+/**
+ * Document =
+ *   | FieldDocument         // resources which can possibly have geometries
+ *   | ImageDocument         
+ *   | ConfigurationDocument 
+ */
 export interface Document extends NewDocument {
 
     _id: DocumentId;

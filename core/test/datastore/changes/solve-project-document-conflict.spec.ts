@@ -13,6 +13,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 aField: 'aValue',
                 relations: {}
@@ -26,6 +27,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 aField: 'aValue',
                 relations: {}
@@ -50,6 +52,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             }
@@ -62,6 +65,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 aField: 'aValue',
                 relations: {}
@@ -87,6 +91,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 aField: 'aValue',
                 relations: {}
@@ -100,6 +105,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             },
@@ -123,6 +129,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 staff: ['a'],
                 relations: {}
@@ -138,6 +145,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     'aField': 'aValue',
                     relations: {}
@@ -149,6 +157,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     staff: ['b'],
                     relations: {}
@@ -160,6 +169,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     staff: ['c'],
                     relations: {}
@@ -188,6 +198,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 campaigns: ['1'],
                 relations: {}
@@ -202,6 +213,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     campaigns: ['2'],
                     relations: {}
@@ -213,6 +225,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     aField: 'aValue',
                     relations: { }
@@ -224,6 +237,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     campaigns: ['3'],
                     relations: { }
@@ -252,6 +266,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 relations: {}
             }
@@ -265,6 +280,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     relations: {}
                 }
@@ -275,6 +291,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     relations: {}
                 }
@@ -285,6 +302,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     relations: {}
                 }
@@ -311,6 +329,7 @@ describe('solveProjectDocumentConflict', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 aField: 'aValue',
                 relations: {}
@@ -325,6 +344,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     campaigns: ['1', '3'],
                     aField: 'aValue2',
@@ -337,6 +357,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     campaigns: ['1', '2'],
                     category: 'Object',
                     aField: 'aValue2',
@@ -349,6 +370,7 @@ describe('solveProjectDocumentConflict', () => {
                 modified: [],
                 resource: {
                     id: '1',
+                    identifier: '',
                     category: 'Object',
                     campaigns: ['2', '3'],
                     aField: 'aValue3',

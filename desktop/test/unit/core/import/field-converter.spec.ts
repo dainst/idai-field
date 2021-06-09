@@ -15,6 +15,7 @@ describe('FieldConverter', () => {
             modified: [],
             resource: {
                 id: '1',
+                identifier: '',
                 category: 'Object',
                 relations: {},
                 dimensionHeight: [{

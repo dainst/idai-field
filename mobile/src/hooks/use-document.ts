@@ -8,7 +8,10 @@ const useDocument = (repository: DocumentRepository, docId: string): Document | 
 
     useEffect(() => {
 
-        repository.get(docId).then(setDoc);
+        repository.get(docId)
+            .then(setDoc)
+            .catch(_e => setDoc(undefined));
+
     }, [repository, docId]);
 
     return doc;

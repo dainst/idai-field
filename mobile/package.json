@@ -2,6 +2,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "start:clear": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -11,7 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",
-    "@gorhom/bottom-sheet": "^2",
+    "@gorhom/bottom-sheet": "^3.6.5",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-picker/picker": "1.9.2",
     "@react-navigation/bottom-tabs": "^5.11.9",
@@ -45,9 +46,9 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-gesture-handler": "~1.8.0",
+    "react-native-gesture-handler": "~1.10.3",
     "react-native-modal": "^11.10.0",
-    "react-native-reanimated": "~1.13.0",
+    "react-native-reanimated": "^2.2.0",
     "react-native-redash": "^16.0.11",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",

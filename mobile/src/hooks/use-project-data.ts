@@ -10,6 +10,7 @@ interface ProjectData {
     hierarchyPath: Document[];
     pushToHierarchy: (doc: Document) => void;
     popFromHierarchy: () => void;
+    isInOverview: () => boolean;
 }
 
 
@@ -28,6 +29,7 @@ const useProjectData = (
 
     const pushToHierarchy = (doc: Document) => setHierarchyPath(old => [...old, doc]);
     const popFromHierarchy = () => setHierarchyPath(old => dropRight(1, old));
+    const isInOverview = () => !hierarchyPath.length;
 
     useEffect(() => {
 
@@ -58,6 +60,7 @@ const useProjectData = (
         hierarchyPath,
         pushToHierarchy,
         popFromHierarchy,
+        isInOverview
     };
 };
 

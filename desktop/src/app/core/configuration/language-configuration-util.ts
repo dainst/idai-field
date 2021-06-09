@@ -1,4 +1,3 @@
-import { isEmpty } from 'tsfun';
 import { Category, FieldDefinition, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
 
 
@@ -64,26 +63,11 @@ export module LanguageConfigurationUtil {
                                                           section: 'label'|'description', languageCode: string,
                                                           categoryName: string, fieldName: string) {
 
-        if (!customLanguageConfigurations[languageCode]) return;
-        const languageConfiguration = customLanguageConfigurations[languageCode];
-
-        if (!languageConfiguration.categories) return;
-        if (!languageConfiguration.categories[categoryName]) return;
-        const categoryConfiguration = languageConfiguration.categories[categoryName];
-        
-        if (!categoryConfiguration.fields) return;
-        if (!categoryConfiguration.fields[fieldName]) return;
-        const fieldConfiguration = categoryConfiguration.fields[fieldName];
-
-        delete fieldConfiguration[section];
-
-        if (isEmpty(fieldConfiguration)) delete categoryConfiguration.fields[fieldName];
-        if (isEmpty(categoryConfiguration.fields)) delete categoryConfiguration.fields;
-        if (isEmpty(categoryConfiguration)) delete languageConfiguration.categories[categoryName];
-        if (isEmpty(languageConfiguration.categories)) delete languageConfiguration.categories;
-        if (isEmpty(languageConfiguration)) delete customLanguageConfigurations[languageCode];
+        Inplace.removeFrom(
+            customLanguageConfigurations,
+            [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+        );
     }
-
 
 
     function addToCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,

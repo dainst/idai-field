@@ -14,7 +14,6 @@ import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import {Query } from './query'
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 import {Name} from '../tools';
-import {RelationsUtil} from '../configuration';
 import {Resource} from './resource';
 
 
@@ -57,7 +56,7 @@ export class RelationsManager {
      * @throws msgWithParams
      */
     public async update(document: NewDocument|Document,
-                        oldVersion: Document = document as Document,
+                        oldVersion: Document = document as Document, // side effect: modified in place. for reasons of how the document cache behaves
                         revisionsToSquash: Document[] = []): Promise<Document> {
 
         const persistedDocument = await this.updateWithConnections(

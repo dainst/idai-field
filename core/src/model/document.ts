@@ -10,9 +10,15 @@ export type DocumentId = string;
 
 /**
  * Document =
- *   | FieldDocument         // resources which can possibly have geometries
- *   | ImageDocument         
- *   | ConfigurationDocument 
+ *   | FieldDocument             // Category: Inscriptions, Operations, Finds, Features, Types, TypeCatalogs, 
+ *                               // !Project, !Images, !Configuration
+ *     | [ConcreteFieldDocument] // Resources which can possibly have geometries + Inscriptions, which do not have geometries
+ *         | FeatureDocument     // Category: Feature and subtypes
+ *     | [AbstractFieldDocument] // Category: Type/TypeCatalog
+ *   | ImageDocument             // Category: Image and subtypes
+ *   | ConfigurationDocument
+ * 
+ * Names with [] denote Document types which we currently do not have a concrete interface for but exist logically.
  */
 export interface Document extends NewDocument {
 

@@ -9,6 +9,9 @@ const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
 /**
+ * For naming of document types (for example "ConcreteField"-XYZ, "Image"-XYZ)
+ * see document.ts
+ * 
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */

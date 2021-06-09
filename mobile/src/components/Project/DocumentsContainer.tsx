@@ -8,7 +8,6 @@ import useProjectData from '../../hooks/use-project-data';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentAdd from './DocumentAdd';
-import DocumentDetails from './DocumentDetails';
 import DocumentsDrawer from './DocumentsDrawer';
 import DocumentsMap from './DocumentsMap';
 
@@ -116,16 +115,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }
                     config={ config }
-                    setProjectSettings={ setProjectSettings } /> }
-            </Drawer.Screen>
-            <Drawer.Screen name="DocumentDetails">
-                { ({ navigation, route }) => <DocumentDetails
-                    navigation={ navigation }
-                    config={ config }
-                    docId={ route.params.docId }
-                    repository={ repository }
                     languages={ languages }
-                /> }
+                    setProjectSettings={ setProjectSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd

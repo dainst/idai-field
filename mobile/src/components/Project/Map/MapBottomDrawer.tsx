@@ -2,22 +2,33 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useMemo } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { DocumentRepository } from '../../../repositories/document-repository';
 import Button from '../../common/Button';
 import Column from '../../common/Column';
 import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
+import DocumentDetails from '../DocumentDetails';
 
 interface MapBottomDrawerProps {
     document: Document | null;
     config: ProjectConfiguration;
+    repository: DocumentRepository;
+    languages: string[];
     navigateToDocument: (docId: string) => void;
     addDocument: (parentDocId: string) => void;
     focusHandler: (docId: string) => void;
 }
 
 const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
-    document, config, navigateToDocument, addDocument, focusHandler }) => {
+    document,
+    config,
+    repository,
+    languages,
+    navigateToDocument,
+    addDocument,
+    focusHandler
+}) => {
 
     const iconSize = 20;
     const snapPoints = useMemo(() => ['5%','25%'], []);
@@ -41,7 +52,13 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                     size={ 30 }
                 />
                 <Column style={ styles.container }>
-                    <Text>Short description: { document.resource.shortDescription }</Text>
+                    <DocumentDetails
+                        docId={ docId }
+                        config={ config }
+                        repository={ repository }
+                        languages={ languages }
+                        navigateToDocument={ navigateToDocument }
+                    />
                     <Row style={ styles.buttonGroup }>
                         <Button
                             variant="success"
@@ -72,10 +89,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
         backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        paddingHorizontal: 10,
+        paddingBottom: 10,
     },
     headingRow: {
         alignItems: 'center',
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     buttonGroup: {
-        marginTop: 'auto'
+        marginTop: 5,
     }
 });
 

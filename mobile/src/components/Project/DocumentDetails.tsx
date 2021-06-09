@@ -1,38 +1,33 @@
 /* eslint-disable react/display-name */
-import { Ionicons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation, FieldsViewUtil, LabelUtil,
     ProjectConfiguration
 } from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import useDocument from '../../hooks/use-document';
 import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
-import Button from '../common/Button';
-import CategoryIcon from '../common/CategoryIcon';
 import Column from '../common/Column';
 import DocumentButton from '../common/DocumentButton';
-import Heading from '../common/Heading';
-import TitleBar from '../common/TitleBar';
-import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
-
-
-type DocumentDetailsNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentDetails'>;
 
 
 interface DocumentDetailsProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     docId: string;
-    navigation: DocumentDetailsNav;
     languages: string[];
+    navigateToDocument: (docId: string) => void;
 }
 
 
-const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, docId, navigation, languages }) => {
+const DrawerContent: React.FC<DocumentDetailsProps> = ({
+    config,
+    repository,
+    docId,
+    languages,
+    navigateToDocument,
+}) => {
 
     const doc = useDocument(repository, docId);
     const [groups, setGroups] = useState<FieldsViewGroup[]>();
@@ -47,37 +42,14 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ config, repository, doc
 
     if (!doc || !groups) return null;
 
-    return (
-        <SafeAreaView style={ { flex: 1 } }>
-            <TitleBar
-                title={ <>
-                    <CategoryIcon
-                        size={ 30 }
-                        config={ config }
-                        document={ doc }
-                    />
-                    <Heading style={ styles.heading }>{ doc.resource.identifier }</Heading>
-                </> }
-                left={ <Button
-                    variant="transparent"
-                    onPress={ () => navigation.navigate('DocumentsMap') }
-                    icon={ <Ionicons name="chevron-back" size={ 18 } /> }
-                /> }
-                right={ <Button
-                    variant="transparent"
-                    onPress={ () => { return; } }
-                    icon={ <Ionicons name="pencil" size={ 18 } /> } /> }
-            />
-            <ScrollView style={ styles.container }>
-                { groups.map(renderGroup(navigation, config, languages)) }
-            </ScrollView>
-        </SafeAreaView>
-    );
+    return <ScrollView style={ styles.container }>
+        { groups.map(renderGroup(navigateToDocument, config, languages)) }
+    </ScrollView>;
 };
 
 
 const renderGroup = (
-    nav: DocumentDetailsNav,
+    navigateToDocument: (docId: string) => void,
     config: ProjectConfiguration,
     languages: string[]
 ) =>
@@ -85,7 +57,7 @@ const renderGroup = (
         <View key={ group.name }>
             <Text style={ styles.groupLabel }>{ LabelUtil.getLabel(group, languages) }</Text>
             { group.fields.map(renderField(languages)) }
-            { group.relations.map(renderRelation(nav, config)) }
+            { group.relations.map(renderRelation(navigateToDocument, config)) }
         </View>;
 
 
@@ -119,18 +91,19 @@ const renderObjectValue = (value: unknown, field: FieldsViewField, languages: st
     </Text>;
 
 
-const renderRelation = (nav: DocumentDetailsNav, config: ProjectConfiguration) => (relation: FieldsViewRelation) =>
-    <Column style={ styles.fieldColumn } key={ relation.label }>
-        <Text style={ styles.fieldLabel }>{ relation.label }</Text>
-        { relation.targets.map(renderRelationTarget(nav, config)) }
-    </Column>;
+const renderRelation = (navigateToDocument: (docId: string) => void, config: ProjectConfiguration) =>
+    (relation: FieldsViewRelation) =>
+        <Column style={ styles.fieldColumn } key={ relation.label }>
+            <Text style={ styles.fieldLabel }>{ relation.label }</Text>
+            { relation.targets.map(renderRelationTarget(navigateToDocument, config)) }
+        </Column>;
 
 
-const renderRelationTarget = (nav: DocumentDetailsNav, config: ProjectConfiguration) =>
+const renderRelationTarget = (navigateToDocument: (docId: string) => void, config: ProjectConfiguration) =>
     (target: Document) =>
         <DocumentButton
             key={ target.resource.id }
-            onPress={ () => nav.navigate('DocumentDetails', { docId: target.resource.id }) }
+            onPress={ () => navigateToDocument(target.resource.id) }
             config={ config }
             document={ target }
             size={ 20 }
@@ -142,9 +115,6 @@ const getTranslation = (_languages: string[]) =>
 
 
 const styles = StyleSheet.create({
-    heading: {
-        marginLeft: 10,
-    },
     container: {
         padding: 10,
         flex: 1,

@@ -17,6 +17,7 @@ interface DocumentsMapProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
+    languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
 }
@@ -29,6 +30,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     syncStatus,
     projectSettings,
     config,
+    languages,
     setProjectSettings,
     issueSearch
 }): ReactElement => {
@@ -60,6 +62,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                         documents.filter(doc => doc?.resource.geometry)
                         .map(doc => doc.resource.id),[documents]) }
                     config={ config }
+                    languages={ languages }
                     navigateToDocument={ navigateToDocument }
                     addDocument={ addDocument } />
             </View>

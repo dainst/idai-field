@@ -17,12 +17,20 @@ interface MapProps {
     repository: DocumentRepository
     selectedDocumentIds: string[];
     config: ProjectConfiguration;
+    languages: string[];
     navigateToDocument: (docId: string) => void;
     addDocument: (parentDocId: string) => void;
 }
 
 
-const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navigateToDocument, addDocument }) => {
+const Map: React.FC<MapProps> = ({
+    repository,
+    selectedDocumentIds,
+    config,
+    languages,
+    navigateToDocument,
+    addDocument
+}) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
@@ -69,6 +77,8 @@ const Map: React.FC<MapProps> = ({ repository, selectedDocumentIds, config, navi
             <MapBottomDrawer
                 document={ highlightedDoc }
                 config={ config }
+                repository={ repository }
+                languages={ languages }
                 navigateToDocument={ navigateToDocument }
                 addDocument={ addDocument }
                 focusHandler={ focusMapOnDocument } />

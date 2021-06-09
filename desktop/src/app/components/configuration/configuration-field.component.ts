@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, flatten, isEmpty, set, to } from 'tsfun';
+import { clone, flatten, set, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
+import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 
 const locale: string = typeof window !== 'undefined'
     ? window.require('@electron/remote').getGlobal('config').locale
@@ -109,7 +110,9 @@ export class ConfigurationFieldComponent implements OnChanges {
     public finishEditing() {
 
         this.updateCustomFieldDefinition();
-        this.updateCustomLanguageConfigurations();
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            this.customLanguageConfigurations, this.editableLabel, this.editableDescription, this.category, this.field
+        );
         this.updateLabelAndDescription();
         this.editing = false;
     }
@@ -156,87 +159,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         if (!this.customFieldDefinition) return;
 
         this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
-    }
-
-
-    private updateCustomLanguageConfigurations() {
-
-        this.updateCustomLanguageConfigurationSection('label', this.editableLabel);
-        this.updateCustomLanguageConfigurationSection('description', this.editableDescription);
-    }
-
-
-    private updateCustomLanguageConfigurationSection(section: 'label'|'description',
-                                                     editableI18nString: I18nString) {
-
-        Object.keys(editableI18nString).forEach(languageCode => {
-            this.handleNewTextInCustomLanguageConfigurationSection(
-                section, editableI18nString[languageCode], languageCode
-            );
-        });
-
-        Object.keys(this.customLanguageConfigurations)
-            .filter(languageCode => !editableI18nString[languageCode])
-            .forEach(languageCode => this.deleteFromCustomLanguageConfigurationSection(section, languageCode));
-    }
-
-
-    private handleNewTextInCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
-                                                              languageCode: string) {
-
-        if (newText === this.field[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
-            this.deleteFromCustomLanguageConfigurationSection(section, languageCode);
-        } else {
-            this.addToCustomLanguageConfigurationSection(section, newText, languageCode);
-        }
-    }
-
-
-    private deleteFromCustomLanguageConfigurationSection(section: 'label'|'description', languageCode) {
-
-        if (!this.customLanguageConfigurations[languageCode]) return;
-        const languageConfiguration = this.customLanguageConfigurations[languageCode];
-
-        if (!languageConfiguration.categories) return;
-        if (!languageConfiguration.categories[this.category.name]) return;
-        const categoryConfiguration = languageConfiguration.categories[this.category.name];
-        
-        if (!categoryConfiguration.fields) return;
-        if (!categoryConfiguration.fields[this.field.name]) return;
-        const fieldConfiguration = categoryConfiguration.fields[this.field.name];
-
-        delete fieldConfiguration[section];
-
-        if (isEmpty(fieldConfiguration)) delete categoryConfiguration.fields[this.field.name];
-        if (isEmpty(categoryConfiguration.fields)) delete categoryConfiguration.fields;
-        if (isEmpty(categoryConfiguration)) delete languageConfiguration.categories[this.category.name];
-        if (isEmpty(languageConfiguration.categories)) delete languageConfiguration.categories;
-        if (isEmpty(languageConfiguration)) delete this.customLanguageConfigurations[languageCode];
-    }
-
-
-
-    private addToCustomLanguageConfigurationSection(section: 'label'|'description', newText: string,
-                                                    languageCode: string) {
-
-        if (!this.customLanguageConfigurations[languageCode]) {
-            this.customLanguageConfigurations[languageCode] = {};
-        }
-        const languageConfiguration = this.customLanguageConfigurations[languageCode];
-        
-        if (!languageConfiguration.categories) languageConfiguration.categories = {};
-        if (!languageConfiguration.categories[this.category.name]) {
-            languageConfiguration.categories[this.category.name] = {};
-        }
-        const categoryConfiguration = languageConfiguration.categories[this.category.name];
-
-        if (!categoryConfiguration.fields) categoryConfiguration.fields = {};
-        if (!categoryConfiguration.fields[this.field.name]) {
-            categoryConfiguration.fields[this.field.name] = {};
-        }
-        const fieldConfiguration = categoryConfiguration.fields[this.field.name];
-        
-        fieldConfiguration[section] = newText;
     }
 
 

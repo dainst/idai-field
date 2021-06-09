@@ -6,6 +6,19 @@ import { Inplace } from '../../src/tools';
  */
 describe('Inplace', () => {
 
+    it('set on path', () => {
+
+        const object = { 
+            subObject: { a: '1' }
+        };
+
+        Inplace.setOn(object, ['subObject', 'b', 'test'])('2');
+
+        expect(object.subObject.a).toBe('1');
+        expect(object.subObject['b']['test']).toBe('2');
+    });
+
+
     it('remove from path and delete empty objects', () => {
 
         const object = {
@@ -17,7 +30,7 @@ describe('Inplace', () => {
             subObject2: {
                 subObject2a: { test: '1' }
             }
-        }
+        };
 
         Inplace.removeFrom(object, ['subObject1', 'subObject1a', 'subObject1a1', 'test']);
         
@@ -35,7 +48,7 @@ describe('Inplace', () => {
                     { test: '2' }
                 ]
             }
-        }
+        };
 
         Inplace.removeFrom(object, ['subObject', 'array', 1, 'test']);
         

@@ -10,7 +10,6 @@ import { Imagestore } from '../../core/images/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';
 import { JavaToolExecutor } from '../../core/java/java-tool-executor';
 import { ImageRelationsManager } from '../../core/model/image-relations-manager';
-import { ModelUtil } from '../../core/model/model-util';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { ExtensionUtil } from '../../core/util/extension-util';
@@ -69,7 +68,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+    public getDocumentLabel = (document: any) => Document.getLabel(document);
 
     public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
 

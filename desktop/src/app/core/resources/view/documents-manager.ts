@@ -1,4 +1,4 @@
-import { ChangesStream, Datastore, Document, FieldDocument, FindResult, ObserverUtil, Query, Resource } from 'idai-field-core';
+import { ChangesStream, Datastore, Document, FieldDocument, FindResult, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -6,8 +6,6 @@ import { Loading } from '../../../components/widgets/loading';
 import { ModelUtil } from '../../model/model-util';
 import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
-import hasId = ModelUtil.hasId;
-import hasEqualId = ModelUtil.hasEqualId;
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';
@@ -155,8 +153,8 @@ export class DocumentsManager {
 
     public removeNewDocument() {
 
-        if (this.documents.find(document => !hasId(document))) {
-            this.documents = this.documents.filter(hasId);
+        if (this.documents.find(document => !NewDocument.hasId(document))) {
+            this.documents = this.documents.filter(NewDocument.hasId);
         }
     }
 
@@ -274,7 +272,7 @@ export class DocumentsManager {
 
     private async isDocumentInList(document: FieldDocument): Promise<boolean> {
 
-        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(document)) !== undefined;
+        return (await this.createUpdatedDocumentList()).documents.find(Document.hasEqualId(document)) !== undefined;
     }
 
 
@@ -293,7 +291,7 @@ export class DocumentsManager {
 
         await this.populateDocumentList();
 
-        if (!this.documents.find(hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) {
+        if (!this.documents.find(Document.hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) {
             this.deselect();
         }
     }
@@ -303,7 +301,7 @@ export class DocumentsManager {
 
         if (!this.documents) return;
 
-        if (this.documents.find(hasEqualId(changedDocument))) {
+        if (this.documents.find(Document.hasEqualId(changedDocument))) {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
@@ -339,7 +337,7 @@ export class DocumentsManager {
 
     private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document): Promise<boolean> {
 
-        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect)) !== undefined;
+        return (await this.createUpdatedDocumentList()).documents.find(Document.hasEqualId(documentToSelect)) !== undefined;
     }
 
 

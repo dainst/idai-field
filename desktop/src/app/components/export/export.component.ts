@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, FieldDocument, Query, ProjectCategories, ProjectConfiguration,
-    RelationsManager, 
+    RelationsManager, Document,
     LabelUtil} from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
@@ -13,7 +13,6 @@ import { GeoJsonExporter } from '../../core/export/geojson-exporter';
 import { ShapefileExporter } from '../../core/export/shapefile-exporter';
 import { JavaToolExecutor } from '../../core/java/java-tool-executor';
 import { ImageRelationsManager } from '../../core/model/image-relations-manager';
-import { ModelUtil } from '../../core/model/model-util';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
@@ -65,7 +64,7 @@ export class ExportComponent implements OnInit {
                 private imageRelationsManager: ImageRelationsManager) {}
 
 
-    public getDocumentLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
+    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
 
     public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
 

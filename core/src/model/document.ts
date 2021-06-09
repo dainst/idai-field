@@ -78,6 +78,14 @@ export module Document {
     }
 
 
+    export function getLabel(document: Document): string {
+
+        return (document.resource.shortDescription)
+            ? document.resource.shortDescription + ' (' + document.resource.identifier + ')'
+            : document.resource.identifier;
+    }
+
+
     export function removeFields<D extends Document>(fields: Array<string>) {
 
         return (document: D): D => {
@@ -129,4 +137,7 @@ export module Document {
             keys
         );
     }
+
+
+    export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l !== undefined && l.resource.id === r.resource.id);
 }

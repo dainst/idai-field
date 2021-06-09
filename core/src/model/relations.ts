@@ -128,7 +128,7 @@ export namespace Relations {
     }
 
 
-    export const equivalent = (r1: Relations) => (r2: Relations) => objectEqual(sameset as any, r1)(r2);
+    export const equivalent = (r1: Relations) => (r2: Relations) => objectEqual(sameset, r1, r2);
 
 
     function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {

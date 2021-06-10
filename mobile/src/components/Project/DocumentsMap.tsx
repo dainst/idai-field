@@ -1,4 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RouteProp } from '@react-navigation/native';
 import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback, useMemo } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
@@ -10,6 +11,7 @@ import SearchBar from './SearchBar';
 
 
 interface DocumentsMapProps {
+    route: RouteProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     repository: DocumentRepository;
     documents: Document[];
@@ -24,6 +26,7 @@ interface DocumentsMapProps {
 
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
+    route,
     navigation,
     repository,
     documents,
@@ -63,6 +66,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                         .map(doc => doc.resource.id),[documents]) }
                     config={ config }
                     languages={ languages }
+                    highlightedDocId={ route.params?.highlightedDocId }
                     navigateToDocument={ navigateToDocument }
                     addDocument={ addDocument } />
             </View>

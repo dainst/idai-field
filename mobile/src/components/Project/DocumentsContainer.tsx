@@ -13,7 +13,7 @@ import DocumentsMap from './DocumentsMap';
 
 
 export type DocumentsContainerDrawerParamList = {
-    DocumentsMap: undefined;
+    DocumentsMap: { highlightedDocId?: string };
     DocumentDetails: { docId: string };
     DocumentAdd: { parentDocId: string };
 };
@@ -61,7 +61,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
         navigation.closeDrawer();
-        navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
+        navigation.navigate('DocumentsMap', { highlightedDocId: doc.resource.id } );
     };
 
     useEffect(() => {
@@ -107,7 +107,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             } }
         >
             <Drawer.Screen name="DocumentsMap">
-                { ({ navigation }) => <DocumentsMap
+                { ({ navigation, route }) => <DocumentsMap
+                    route={ route }
                     navigation={ navigation }
                     repository={ repository }
                     documents={ documents }

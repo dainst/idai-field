@@ -1,5 +1,5 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-mapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
@@ -18,6 +18,7 @@ interface MapProps {
     selectedDocumentIds: string[];
     config: ProjectConfiguration;
     languages: string[];
+    highlightedDocId?: string;
     navigateToDocument: (docId: string) => void;
     addDocument: (parentDocId: string) => void;
 }
@@ -28,6 +29,7 @@ const Map: React.FC<MapProps> = ({
     selectedDocumentIds,
     config,
     languages,
+    highlightedDocId,
     navigateToDocument,
     addDocument
 }) => {
@@ -36,12 +38,6 @@ const Map: React.FC<MapProps> = ({
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
     const svgMapRef = useRef<SvgMapObject>(null);
-
-
-    const selectDocHandler = (doc: Document) => {
-
-        setHighlightedDoc(doc);
-    };
 
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
@@ -55,8 +51,15 @@ const Map: React.FC<MapProps> = ({
         zoom.setValue((value as any)._value);
     };
 
-    const [docIds,documentsGeoMap,transformMatrix, focusMapOnDocument] = useMapData(
-        repository,viewPort, selectedDocumentIds, svgMapRef);
+    const [docIds, documentsGeoMap, transformMatrix, focusMapOnDocument] = useMapData(
+        repository, viewPort, selectedDocumentIds, svgMapRef);
+
+    useEffect(() => {
+
+        if (!highlightedDocId) return;
+
+        repository.get(highlightedDocId).then(setHighlightedDoc);
+    }, [highlightedDocId, repository]);
 
 
     return (
@@ -68,7 +71,7 @@ const Map: React.FC<MapProps> = ({
                             renderGeoSvgElement(
                                 documentsGeoMap,
                                 config,
-                                selectDocHandler,
+                                setHighlightedDoc,
                                 highlightedDoc ? highlightedDoc.resource.id : '',
                                 docId, zoom))}
                     </SvgMap>

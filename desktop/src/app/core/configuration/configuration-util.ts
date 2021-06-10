@@ -1,4 +1,4 @@
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition } from 'idai-field-core';
+import { CustomCategoryDefinition, FieldDefinition } from 'idai-field-core';
 
 
 /**
@@ -6,16 +6,9 @@ import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinit
  */
 export module ConfigurationUtil {
 
-    export const isHidden = (category: Category, customConfigurationDocument: ConfigurationDocument) =>
+    export const isHidden = (customCategoryDefinition: CustomCategoryDefinition,
+                             parentCustomCategoryDefinition: CustomCategoryDefinition) =>
             (field: FieldDefinition): boolean => {
-
-        const customCategoryDefinition: CustomCategoryDefinition
-            = customConfigurationDocument.resource.categories[category.libraryId ?? category.name];
-
-        const parentCustomCategoryDefinition = category.parentCategory
-            ? customConfigurationDocument.resource
-                .categories[category.parentCategory.libraryId ?? category.parentCategory.libraryId]
-            : undefined;
 
         return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
             (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);

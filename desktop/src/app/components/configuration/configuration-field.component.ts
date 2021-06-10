@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, flatten, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
-import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
+import { OVERRIDE_VISIBLE_FIELDS } from './configuration-category.component';
 import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 
 const locale: string = typeof window !== 'undefined'

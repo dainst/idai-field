@@ -10,7 +10,6 @@ export module ConfigurationUtil {
                              parentCustomCategoryDefinition: CustomCategoryDefinition) =>
             (field: FieldDefinition): boolean => {
 
-
         return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
             (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }

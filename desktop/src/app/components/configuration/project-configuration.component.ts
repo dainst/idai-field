@@ -86,7 +86,8 @@ export class ProjectConfigurationComponent implements OnInit {
     public getParentCustomCategoryDefinition(category: Category): CustomCategoryDefinition|undefined {
 
         return category.parentCategory
-            ? this.customConfigurationDocument.resource.categories[category.parentCategory.name]
+            ? this.customConfigurationDocument.resource
+                .categories[category.parentCategory.libraryId ?? category.parentCategory.name]
             : undefined;
     }
 }

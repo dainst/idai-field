@@ -1,9 +1,9 @@
-import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, detach, map, update, reduce, clone} from 'tsfun';
-import {Category,CategoryDefinition,Groups,FieldDefinition,Group} from '../../model';
-import {Forest,Named,Tree} from '../../tools';
-import {linkParentAndChildInstances} from '../category-forest';
-import {ConfigurationErrors} from './configuration-errors';
+import { cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
+    separate, detach, map, update, reduce, clone } from 'tsfun';
+import { Category, CategoryDefinition, Groups, FieldDefinition, Group } from '../../model';
+import { Forest, Named, Tree } from '../../tools';
+import { linkParentAndChildInstances } from '../category-forest';
+import { ConfigurationErrors } from './configuration-errors';
 
 
 const TEMP_FIELDS = 'fields';
@@ -99,6 +99,8 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     category.name = definition.name;
     category.label = definition.label;
     category.description = definition.description;
+    category.defaultLabel = definition.defaultLabel;
+    category.defaultDescription = definition.defaultDescription;
     category.groups = [];
     category.isAbstract = definition.abstract || false;
     category.color = definition.color ?? Category.generateColorForCategory(definition.name);

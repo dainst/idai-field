@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, flatten, set, to } from 'tsfun';
+import { clone, flatten, to } from 'tsfun';
 import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
@@ -101,8 +101,12 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public startEditing() {
 
-        this.editableLabel = this.createEditableI18nString('label');
-        this.editableDescription = this.createEditableI18nString('description');
+        this.editableLabel = LanguageConfigurationUtil.createEditableI18nString(
+            this.customLanguageConfigurations, 'label', this.category, this.field
+        );
+        this.editableDescription = LanguageConfigurationUtil.createEditableI18nString(
+            this.customLanguageConfigurations, 'description', this.category, this.field
+        );
         this.editing = true;
     }
 
@@ -142,18 +146,6 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
-    private createEditableI18nString(type: 'label'|'description'): I18nString {
-
-        const defaultType = type === 'label' ? 'defaultLabel' : 'defaultDescription';
-
-        return Object.keys(this.customLanguageConfigurations).reduce((result: I18nString, languageCode: string) => {
-            const translation = this.getFromCustomLanguageConfiguration(languageCode, type);
-            if (translation) result[languageCode] = translation;
-            return result;
-        }, this.field[defaultType] ? clone(this.field[defaultType]) : {});
-    }
-
-
     private updateCustomFieldDefinition() {
         
         if (!this.customFieldDefinition) return;
@@ -164,36 +156,13 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = LabelUtil.getLabelAndDescription(this.getUpdatedFieldDefinition());
+        const { label, description } = LabelUtil.getLabelAndDescription(
+            LanguageConfigurationUtil.getUpdatedDefinition(
+                this.customLanguageConfigurations, this.category, this.field
+            )
+        );
         this.label = label;
         this.description = description;
-    }
-
-
-    private getUpdatedFieldDefinition(): FieldDefinition {
-
-        const languages: string[] = set(
-            Object.keys(this.customLanguageConfigurations)
-             .concat(Object.keys(this.field.label))
-             .concat(Object.keys(this.field.description))
-        );
-
-        return languages.reduce((field, languageCode) => {
-            const label: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'label');
-            const description: string|undefined = this.getFromCustomLanguageConfiguration(languageCode, 'description');
-            field.label[languageCode] = label ?? field.defaultLabel[languageCode];
-            field.description[languageCode] = description ?? field.defaultDescription[languageCode];
-            return field;
-        }, clone(this.field));
-    }
-
-
-    private getFromCustomLanguageConfiguration(languageCode: string,
-                                               section: 'label'|'description'): string|undefined {
-
-        return this.customLanguageConfigurations[languageCode]
-            ?.categories?.[this.category.name]
-            ?.fields?.[this.field.name]?.[section];
     }
                                     
 

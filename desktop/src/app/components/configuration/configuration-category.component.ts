@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { and, any, compose, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named, RelationDefinition, Relations } from 'idai-field-core';
+import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, I18nString,
+    LabelUtil, LanguageConfiguration, Named, RelationDefinition, Relations } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 
 const locale: string = typeof window !== 'undefined'
     ? window.require('@electron/remote').getGlobal('config').locale
@@ -19,23 +21,29 @@ const locale: string = typeof window !== 'undefined'
 export class ConfigurationCategoryComponent implements OnChanges {
 
     @Input() category: Category;
-    @Input() customConfigurationDocument: ConfigurationDocument;
+    @Input() customConfigurationDocument: ConfigurationDocument; // TODO Remove this
+    @Input() customLanguageConfigurations: { [language: string]: LanguageConfiguration };
     @Input() showHiddenFields: boolean = true;
     @Input() permanentlyHiddenFields: { [categoryName: string]: string[] };
 
     public selectedGroup: string;
+    public editing: boolean = false;
 
+    public label: string;
+    public description: string;
+
+    public editableLabel: I18nString;
+    public editableDescription: I18nString;
+    
 
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes['category']) this.selectedGroup = this.getGroups()[0].name;
+        this.updateLabelAndDescription();
     }
 
     
-    public getLabel = (object: Category|Group) => LabelUtil.getLabel(object);
-
-
-    public getCategoryDescription = () => this.category.description?.[locale];
+    public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
 
     public isHidden = (field: FieldDefinition) =>
@@ -106,5 +114,37 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .relations
             .filter(on(Named.NAME, isnt(Relations.Type.INSTANCEOF)));
+    }
+
+
+    public startEditing() {
+
+        this.editableLabel = LanguageConfigurationUtil.createEditableI18nString(
+            this.customLanguageConfigurations, 'label', this.category
+        );
+        this.editableDescription = LanguageConfigurationUtil.createEditableI18nString(
+            this.customLanguageConfigurations, 'description', this.category
+        );
+        this.editing = true;
+    }
+
+
+    public finishEditing() {
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            this.customLanguageConfigurations, this.editableLabel, this.editableDescription, this.category
+        );
+        this.updateLabelAndDescription();
+        this.editing = false;
+    }
+
+
+    private updateLabelAndDescription() {
+
+        const { label, description } = LabelUtil.getLabelAndDescription(
+            LanguageConfigurationUtil.getUpdatedDefinition(this.customLanguageConfigurations, this.category)
+        );
+        this.label = label;
+        this.description = description;
     }
 }

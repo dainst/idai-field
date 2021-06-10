@@ -1,3 +1,6 @@
+import { I18nString } from './i18n-string';
+
+
 /**
  * CategoryDefinition, as used in ProjectConfiguration
  *
@@ -6,8 +9,10 @@
 export interface CategoryDefinition {
 
     name: string;
-    label?: string;
-    description: { [language: string]: string };
+    label?: I18nString;
+    description?: I18nString;
+    defaultLabel?: I18nString;
+    defaultDescription?: I18nString;
     abstract?: boolean;
 
     /**

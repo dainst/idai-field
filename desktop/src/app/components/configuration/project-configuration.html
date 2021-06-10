@@ -34,6 +34,7 @@
             <div class="col-10">
                 <configuration-category [category]="selectedCategory"
                                         [customConfigurationDocument]="customConfigurationDocument"
+                                        [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
                                         [showHiddenFields]="showHiddenFields"
                                         [permanentlyHiddenFields]="permanentlyHiddenFields"></configuration-category>
             </div>

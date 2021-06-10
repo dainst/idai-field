@@ -8,7 +8,7 @@
                 i18n-ngbTooltip="@@config.form.custom"
                 placement="right">
             </span>
-            {{getLabel(category)}}
+            {{label}}
         </h5>
     </div>
     <div class="col header header-right text-right">
@@ -21,33 +21,58 @@
             <strong i18n="@@config.libraryId">Formular</strong>:
             <code>{{category.libraryId}}</code>
         </span>
+        <button *ngIf="!editing" class="btn btn-primary edit-field-button"
+                (click)="startEditing()"
+                placement="left" container="body"
+                ngbTooltip="Kateogorie bearbeiten"
+                i18n-ngbTooltip="@@configuration.editCategory">
+            <span class="mdi mdi-pencil"></span>
+        </button>
+        <button *ngIf="editing" class="btn btn-primary edit-field-button"
+                (click)="finishEditing()"
+                placement="left" container="body"
+                ngbTooltip="Änderungen speichern"
+                i18n-ngbTooltip="@@configuration.saveChanges">
+            OK
+        </button>
     </div>
 </div>
-<div *ngIf="getCategoryDescription()" class="row subheader">
-    <div class="col">
-        {{getCategoryDescription()}}
+<div *ngIf="description" class="row subheader">
+    <div class="col">{{description}}</div>
+</div>
+
+<div *ngIf="editing">
+    <div>
+        <b>Kategoriebezeichnung</b>
+        <multi-language-input [translations]="editableLabel"
+            [defaultTranslations]="category.defaultLabel"></multi-language-input>
+    </div>
+    <div>
+        <b>Beschreibung</b>
+        <multi-language-input [translations]="editableDescription"
+            [defaultTranslations]="category.defaultDescription"></multi-language-input>
     </div>
 </div>
 
-<div class="row">
+<div *ngIf="!editing" class="row">
     <div class="col-2 groups">
         <ul class="nav nav-pills flex-column">
             <li *ngFor="let group of getGroups()" class="nav flex-column">
                 <a class="nav-link group-button"
                         [class.active]="selectedGroup === group.name"
                         (click)="selectedGroup = group.name">
-                    {{getLabel(group)}}
+                    {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>
             </li>
         </ul>
     </div>
 
-    <div class="col-10 content" [class.shortened]="getCategoryDescription()">
+    <div class="col-10 content" [class.shortened]="description">
         <div *ngFor="let field of getFields()">
             <configuration-field [field]="field"
                                  [customFieldDefinition]="getCustomFieldDefinition(field)"
-                                 [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
+                                 [customLanguageConfigurations]="customLanguageConfigurations"
                                  [category]="category"
                                  [hidden]="isHidden(field)"
                                  (onToggleHidden)="toggleHidden(field)">

@@ -12,7 +12,9 @@ export interface Category extends Named {
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
     label: I18nString;
-    description: { [language: string]: string };
+    description: I18nString;
+    defaultLabel?: I18nString;
+    defaultDescription?: I18nString;
     color: string|undefined;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;

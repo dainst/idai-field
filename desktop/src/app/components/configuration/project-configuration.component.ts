@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { to, flatten } from 'tsfun';
-import { FieldResource, Category, Datastore,
-    ConfigurationDocument, ProjectConfiguration, Resource } from 'idai-field-core';
+import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, CustomCategoryDefinition } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { reload } from '../../core/common/reload';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
-
-
-export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
 @Component({
@@ -31,7 +25,6 @@ export class ProjectConfigurationComponent implements OnInit {
     public customConfigurationDocument: ConfigurationDocument;
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
-    public permanentlyHiddenFields: { [categoryName: string]: string[] };
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -53,7 +46,6 @@ export class ProjectConfigurationComponent implements OnInit {
             'configuration',
             { skipCache: true }
         ) as ConfigurationDocument;
-        this.permanentlyHiddenFields = this.getPermanentlyHiddenFields(this.projectConfiguration.getCategoriesArray());
     }
 
 
@@ -85,17 +77,16 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    private getPermanentlyHiddenFields(categories: Array<Category>): { [categoryName: string]: string[] } {
+    public getCustomCategoryDefinition(category: Category): CustomCategoryDefinition|undefined {
 
-        return categories.reduce((result, category) => {
-            result[category.name] = flatten(category.groups.map(to('fields')))
-                .filter(field => !field.visible
-                    && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                    && (!category.libraryId || !ConfigurationUtil.isHidden(
-                        category, this.customConfigurationDocument
-                    )(field)))
-                .map(to('name'));
-            return result;
-        }, {})
+        return this.customConfigurationDocument.resource.categories[category.libraryId ?? category.name];
+    }
+
+    
+    public getParentCustomCategoryDefinition(category: Category): CustomCategoryDefinition|undefined {
+
+        return category.parentCategory
+            ? this.customConfigurationDocument.resource.categories[category.parentCategory.name]
+            : undefined;
     }
 }

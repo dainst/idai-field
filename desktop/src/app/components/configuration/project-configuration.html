@@ -34,10 +34,10 @@
 
             <div class="col-10">
                 <configuration-category [category]="selectedCategory"
-                                        [customConfigurationDocument]="customConfigurationDocument"
+                                        [customCategoryDefinition]="getCustomCategoryDefinition(selectedCategory)"
+                                        [parentCustomCategoryDefinition]="getParentCustomCategoryDefinition(selectedCategory)"
                                         [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
-                                        [showHiddenFields]="showHiddenFields"
-                                        [permanentlyHiddenFields]="permanentlyHiddenFields"></configuration-category>
+                                        [showHiddenFields]="showHiddenFields"></configuration-category>
             </div>
         </div>
     </div>

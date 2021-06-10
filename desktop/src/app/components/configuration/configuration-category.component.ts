@@ -1,13 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { and, any, compose, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, I18nString,
-    LabelUtil, LanguageConfiguration, Named, RelationDefinition, Relations } from 'idai-field-core';
+import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
+import { Category, CustomCategoryDefinition, CustomFieldDefinition, FieldDefinition, FieldResource, Group, I18nString,
+    LabelUtil, LanguageConfiguration, Named, RelationDefinition, Relations, Resource } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 
-const locale: string = typeof window !== 'undefined'
-    ? window.require('@electron/remote').getGlobal('config').locale
-    : 'de';
+
+export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
 @Component({
@@ -21,10 +20,10 @@ const locale: string = typeof window !== 'undefined'
 export class ConfigurationCategoryComponent implements OnChanges {
 
     @Input() category: Category;
-    @Input() customConfigurationDocument: ConfigurationDocument; // TODO Remove this
+    @Input() customCategoryDefinition: CustomCategoryDefinition|undefined;
+    @Input() parentCustomCategoryDefinition: CustomCategoryDefinition|undefined;
     @Input() customLanguageConfigurations: { [language: string]: LanguageConfiguration };
     @Input() showHiddenFields: boolean = true;
-    @Input() permanentlyHiddenFields: { [categoryName: string]: string[] };
 
     public selectedGroup: string;
     public editing: boolean = false;
@@ -34,11 +33,17 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public editableLabel: I18nString;
     public editableDescription: I18nString;
+
+    private permanentlyHiddenFields: string[];
     
 
     ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['category']) this.selectedGroup = this.getGroups()[0].name;
+        if (changes['category']) {
+            this.selectedGroup = this.getGroups()[0].name;
+            this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();
+        }
+
         this.updateLabelAndDescription();
         this.editing = false;
     }
@@ -48,7 +53,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     public isHidden = (field: FieldDefinition) =>
-        ConfigurationUtil.isHidden(this.category, this.customConfigurationDocument)(field);
+        ConfigurationUtil.isHidden(this.customCategoryDefinition, this.parentCustomCategoryDefinition)(field);
 
 
     public getGroups(): Array<Group> {
@@ -76,10 +81,12 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .fields
             .filter(
                 and(
-                    on(FieldDefinition.NAME, not(includedIn(this.permanentlyHiddenFields[this.category.name]))),
+                    on(FieldDefinition.NAME, not(includedIn(this.permanentlyHiddenFields))),
                     or(
                         () => this.showHiddenFields,
-                        not(ConfigurationUtil.isHidden(this.category, this.customConfigurationDocument))
+                        not(ConfigurationUtil.isHidden(
+                            this.customCategoryDefinition, this.parentCustomCategoryDefinition
+                        ))
                     )
                 )
             );
@@ -87,25 +94,20 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     public toggleHidden(field: FieldDefinition) {
-
-        const customCategoryDefinition: CustomCategoryDefinition
-            = this.customConfigurationDocument.resource.categories[this.category.libraryId];
         
-        if (ConfigurationUtil.isHidden(this.category, this.customConfigurationDocument)(field)) {
-            customCategoryDefinition.hidden
-                = customCategoryDefinition.hidden.filter(name => name !== field.name);
+        if (ConfigurationUtil.isHidden(this.customCategoryDefinition, this.parentCustomCategoryDefinition)(field)) {
+            this.customCategoryDefinition.hidden
+                = this.customCategoryDefinition.hidden.filter(name => name !== field.name);
         } else {
-            if (!customCategoryDefinition.hidden) customCategoryDefinition.hidden = [];
-            customCategoryDefinition.hidden.push(field.name);
+            if (!this.customCategoryDefinition.hidden) this.customCategoryDefinition.hidden = [];
+            this.customCategoryDefinition.hidden.push(field.name);
         }
     }
 
 
-    public getCustomFieldDefinition(field: FieldDefinition) {
+    public getCustomFieldDefinition(field: FieldDefinition): CustomFieldDefinition|undefined {
 
-        return this.customConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name]
-            .fields[field.name];
+        return this.customCategoryDefinition.fields[field.name];
     }
 
 
@@ -147,5 +149,17 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
         this.label = label;
         this.description = description;
+    }
+
+
+    private getPermanentlyHiddenFields(): string[] {
+
+        return flatten(this.category.groups.map(to('fields')))
+            .filter(field => !field.visible
+                && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
+                && (!this.category.libraryId || !ConfigurationUtil.isHidden(
+                    this.customCategoryDefinition, this.parentCustomCategoryDefinition
+                )(field)))
+            .map(to('name'));
     }
 }

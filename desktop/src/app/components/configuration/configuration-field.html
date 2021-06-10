@@ -52,12 +52,12 @@
         <p *ngIf="description && !editing" class="card-text">{{description}}</p>
         <div *ngIf="editing">
             <div>
-                <b>Feldbezeichnung</b>
+                <b i18n="@@configuration.fieldLabel">Feldbezeichnung</b>
                 <multi-language-input [translations]="editableLabel"
                     [defaultTranslations]="field.defaultLabel"></multi-language-input>
             </div>
             <div>
-                <b>Beschreibung</b>
+                <b i18n="@@configuration.description">Beschreibung</b>
                 <multi-language-input [translations]="editableDescription"
                     [defaultTranslations]="field.defaultDescription"></multi-language-input>
             </div>

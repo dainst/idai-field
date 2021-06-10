@@ -31,14 +31,14 @@
                     i18n-ngbTooltip="@@configuration.showField">
                 <span class="mdi mdi-eye"></span>
             </button>
-            <button *ngIf="!editing" class="btn btn-primary edit-field-button"
+            <button *ngIf="!editing" class="btn btn-primary"
                     (click)="startEditing()"
                     placement="left" container="body"
                     ngbTooltip="Feld bearbeiten"
                     i18n-ngbTooltip="@@configuration.editField">
                 <span class="mdi mdi-pencil"></span>
             </button>
-            <button *ngIf="editing" class="btn btn-primary edit-field-button"
+            <button *ngIf="editing" class="btn btn-primary"
                     (click)="finishEditing()"
                     placement="left" container="body"
                     ngbTooltip="Änderungen speichern"

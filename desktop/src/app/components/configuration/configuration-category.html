@@ -21,14 +21,14 @@
             <strong i18n="@@config.libraryId">Formular</strong>:
             <code>{{category.libraryId}}</code>
         </span>
-        <button *ngIf="!editing" class="btn btn-primary edit-field-button"
+        <button *ngIf="!editing" class="btn btn-primary"
                 (click)="startEditing()"
                 placement="left" container="body"
                 ngbTooltip="Kateogorie bearbeiten"
                 i18n-ngbTooltip="@@configuration.editCategory">
             <span class="mdi mdi-pencil"></span>
         </button>
-        <button *ngIf="editing" class="btn btn-primary edit-field-button"
+        <button *ngIf="editing" class="btn btn-primary"
                 (click)="finishEditing()"
                 placement="left" container="body"
                 ngbTooltip="Änderungen speichern"

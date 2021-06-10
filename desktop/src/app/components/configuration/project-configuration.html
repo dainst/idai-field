@@ -28,6 +28,7 @@
                                  [selectedCategories]="[selectedCategory.name]"
                                  [allowPickingAbstractCategories]="true"
                                  [highlightCustomCategories]="true"
+                                 [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
                                  (onCategoryPicked)="selectCategory($event)"></category-picker>
             </div>
 

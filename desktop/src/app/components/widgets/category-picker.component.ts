@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { on, any, is, compose, map, to, Predicate } from 'tsfun';
-import { Named, FieldDefinition, Category, LabelUtil } from 'idai-field-core';
+import { Named, FieldDefinition, Category, LabelUtil, LanguageConfiguration } from 'idai-field-core';
+import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 
 
 @Component({
@@ -17,14 +18,11 @@ export class CategoryPickerComponent implements OnChanges {
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
+    @Input() customLanguageConfigurations: { [languageCode: string]: LanguageConfiguration };
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
 
-
     public categories: Array<Category> = [];
-
-
-    public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
 
 
     ngOnChanges() {
@@ -35,6 +33,16 @@ export class CategoryPickerComponent implements OnChanges {
             this.categories.push(category);
             if (category.children) this.categories = this.categories.concat(category.children);
         });
+    }
+
+
+    public getCategoryLabel(category: Category): string {
+
+        return LabelUtil.getLabel(
+            this.customLanguageConfigurations
+                ? LanguageConfigurationUtil.getUpdatedDefinition(this.customLanguageConfigurations, category)
+                : category
+        );
     }
 
 

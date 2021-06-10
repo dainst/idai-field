@@ -40,6 +40,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         if (changes['category']) this.selectedGroup = this.getGroups()[0].name;
         this.updateLabelAndDescription();
+        this.editing = false;
     }
 
     

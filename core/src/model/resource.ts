@@ -1,4 +1,4 @@
-import {set, isNot, tripleEqual, sameset} from 'tsfun';
+import {set, sameset, isnt} from 'tsfun';
 import { ObjectUtils } from '../tools/object-utils';
 import {NewResource} from './new-resource';
 
@@ -48,7 +48,7 @@ export module Resource {
     function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
 
         return Object.keys(resource1)
-            .filter(isNot(tripleEqual('relations')))
+            .filter(isnt('relations'))
             .reduce(
                 concatIf(notCompareInBoth(resource1, resource2)),
                 [] as string[]

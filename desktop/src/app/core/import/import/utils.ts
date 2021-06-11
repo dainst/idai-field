@@ -1,5 +1,5 @@
 import { Document, Lookup, Relations } from 'idai-field-core';
-import { aMap, arrayEqual, on, to, undefinedOrEmpty, union } from 'tsfun';
+import { aMap, same, on, undefinedOrEmpty, union } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportErrors as E } from './import-errors';
 import { Id, Identifier } from './types';
@@ -14,12 +14,12 @@ export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = ma
 
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
-    const documentRecordedIn = to(['resource','relations',RECORDED_IN], undefined)(document);
-    const targetDocumentRecordedIn = to(['resource','relations',RECORDED_IN], undefined)(targetDocument);
+    const documentRecordedIn = document.resource.relations[RECORDED_IN]
+    const targetDocumentRecordedIn = targetDocument.resource.relations[RECORDED_IN]
 
     if (!undefinedOrEmpty(documentRecordedIn)
         && !undefinedOrEmpty(targetDocumentRecordedIn)
-        && !arrayEqual(targetDocumentRecordedIn, documentRecordedIn)) {
+        && !same(targetDocumentRecordedIn, documentRecordedIn)) {
 
         throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
     }

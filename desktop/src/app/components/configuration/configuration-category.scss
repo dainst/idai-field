@@ -1,14 +1,110 @@
 configuration-category {
-    .header-right {
-        padding-top: 8px;
-        padding-right: 8px;
+  .header {
+    border-bottom: 1px solid #ccc;
+    background-color: #e7e7e7;
+
+    &.header-left {
+      padding: 7px;
     }
 
-    .category-editor {
-        background-color: #eee;
+    &.header-right {
+      padding-top: 8px;
+      padding-right: 8px;
     }
 
-    .edit-category-button {
-        margin-left: 12px;
+    h5 {
+      max-width: 450px;
+      margin: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+  }
+
+  .subheader {
+    height: 56px;
+    padding: 1rem;
+    background-color: #eee;
+    overflow-y: auto;
+  }
+
+  .custom-category .header {
+    background-color: $custom-highlight-color;
+  }
+
+  .groups {
+    padding-top: 1rem;
+    padding-left: 15px;
+    width: 240px;
+
+    ul {
+      width: 100%;
+
+      .nav {
+        width: 100%;
+
+        .group-button {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  
+  .content {
+    padding-top: 1rem;
+    height: calc(100vh - 154px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px;
+
+    &.shortened {
+      height: calc(100vh - 210px);
+    }
+
+    .card {
+      margin-bottom: 10px;
+
+      .value-col {
+          height: 1.69rem;
+      }
+
+      .card-header {
+        height: 55px;
+
+        .category-icon {
+          position: relative;
+          top: 2px;
+          left: -6px;
+          margin-right: 2px;
+        }
+
+        b,
+        code,
+        .mdi-alert-circle-outline {
+          position: relative;
+          top: 4px;
+        }
+    
+        &.parent-element {
+          b,
+          code,
+          .mdi-alert-circle-outline {
+            position: relative;
+            top: -2px;
+          }
+        }
+      }
+    }
+  }
+
+  .category-editor {
+    background-color: #eee;
+  }
+
+  .edit-category-button {
+    margin-left: 12px;
+  }
 }

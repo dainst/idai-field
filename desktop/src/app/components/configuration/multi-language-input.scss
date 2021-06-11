@@ -1,24 +1,24 @@
 multi-language-input {
-    .row {
-        width: calc(100% - 17px);
+  .row {
+    width: calc(100% - 17px);
 
-        .col-form-label {
-            position: relative;
-            top: 4px;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .col-md-10 {
-            padding-left: 0;
-        }
+    .col-form-label {
+      position: relative;
+      top: 4px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+    
+    .col-md-10 {
+      padding-left: 0;
+    }
+  }
 
-    .btn-danger {
-        position: relative;
-        top: 4px;
-        height: 38px;
-    }
+  .btn-danger {
+    position: relative;
+    top: 4px;
+    height: 38px;
+  }
 }

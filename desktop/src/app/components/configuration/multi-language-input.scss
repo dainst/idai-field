@@ -1,24 +1,32 @@
 multi-language-input {
-  .row {
-    width: calc(100% - 17px);
+  .input-group {
+    width: 100%;
+
+    .language-label,
+    .language-select {
+      width: 200px !important;
+      height: 38px !important;
+    }
+
+    .language-input {
+      width: calc(100% - 242px);
+    }
 
     .col-form-label {
-      position: relative;
-      top: 4px;
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    
-    .col-md-10 {
-      padding-left: 0;
-    }
   }
 
-  .btn-danger {
+  .btn {
     position: relative;
-    top: 4px;
+    right: 1px;
     height: 38px;
+  }
+
+  select {
+    flex: unset !important;
   }
 }

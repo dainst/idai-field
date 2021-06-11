@@ -43,12 +43,12 @@
 
 <div *ngIf="editing" class="row category-editor content">
     <div class="col">
-        <div>
+        <div class="language-editor-section">
             <b i18n="@@configuration.categoryLabel">Kategoriebezeichnung</b>
             <multi-language-input [translations]="editableLabel"
                 [defaultTranslations]="category.defaultLabel"></multi-language-input>
         </div>
-        <div>
+        <div class="language-editor-section">
             <b i18n="@@configuration.description">Beschreibung</b>
             <multi-language-input [translations]="editableDescription"
                 [defaultTranslations]="category.defaultDescription"></multi-language-input>

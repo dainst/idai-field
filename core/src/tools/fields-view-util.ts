@@ -1,6 +1,6 @@
-import { aFlow, aMap, and, assoc, compose, empty, equal, filter, Filter, flatten, flow, includedIn,
+import { aFlow, aMap, and, assoc, compose, empty, filter, Filter, flatten, flow, includedIn,
     is, isArray, isDefined, isNot, isObject, isString, L, lookup, map, Map, Mapping, on, or, pairWith,
-    Predicate, R, to, undefinedOrEmpty } from 'tsfun';
+    Predicate, R, to, undefinedOrEmpty, isnt } from 'tsfun';
 import { LabelUtil } from './label-util';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
@@ -85,8 +85,8 @@ export module FieldsViewUtil {
             on(Named.NAME,
                 and(
                     isNot(includedIn(Relations.Hierarchy.ALL)),
-                    isNot(equal(Relations.Image.ISDEPICTEDIN)),
-                    isNot(equal(Relations.Image.HASMAPLAYER)),
+                    isnt(Relations.Image.ISDEPICTEDIN),
+                    isnt(Relations.Image.HASMAPLAYER),
                     compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )

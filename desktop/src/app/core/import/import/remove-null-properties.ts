@@ -1,5 +1,5 @@
-import {defined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, copy, Map, isObject,
-    and, isString, keysValues} from 'tsfun';
+import {isDefined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, copy, Map, isObject,
+    and, isString, keysValues, not} from 'tsfun';
 import {ImportErrors} from './import-errors';
 
 
@@ -30,7 +30,7 @@ export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Arra
         }
     });
 
-    if (isArray(struct_)) struct_ = dropRightWhile(isNot(defined))(struct_);
+    if (isArray(struct_)) struct_ = dropRightWhile(not(isDefined))(struct_);
     return isEmpty(struct_)
         ? undefined
         : struct_;

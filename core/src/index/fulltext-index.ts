@@ -1,4 +1,4 @@
-import {flatMap, flow, filter, empty, isNot, isEmpty, map, forEach, lookup} from 'tsfun';
+import {flatMap, flow, filter, isEmpty, map, forEach, lookup, not} from 'tsfun';
 import {Document} from '../model/document';
 import {Resource} from '../model/resource';
 import {ResultSets} from './result-sets';
@@ -74,7 +74,7 @@ export module FulltextIndex {
 
         const resultSets = s
             .split(tokenizationPattern)
-            .filter(isNot(empty))
+            .filter(not(isEmpty))
             .reduce(getFromIndex(index, categories), ResultSets.make());
 
         return ResultSets.collapse(resultSets) as Array<Resource.Id>;

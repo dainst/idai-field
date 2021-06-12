@@ -1,4 +1,4 @@
-import {empty, isNot, on, subtract} from 'tsfun';
+import {isEmpty, not, on, subtract} from 'tsfun';
 import {RelationDefinition} from '../../model/relation-definition';
 import {Named} from '../../tools/named';
 
@@ -24,7 +24,7 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
                     relation.domain = subtract(extraRelation.domain)(relation.domain)
                 });
             relations = relations
-                .filter(isNot(on(RelationDefinition.DOMAIN, empty)));
+                .filter(not(on(RelationDefinition.DOMAIN, isEmpty)));
 
             relations.splice(0,0, extraRelation);
 
@@ -71,7 +71,7 @@ function expandOnEmpty(categories: any,
 
     const extraRelation: any = extraRelation_;
 
-    if (isNot(empty)(extraRelation[itemSet])) return;
+    if (not(isEmpty)(extraRelation[itemSet])) return;
 
     let opposite = RelationDefinition.RANGE;
     if (itemSet === RelationDefinition.RANGE) opposite = RelationDefinition.DOMAIN;

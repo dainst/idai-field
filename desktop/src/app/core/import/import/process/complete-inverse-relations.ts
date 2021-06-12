@@ -3,7 +3,7 @@ import {
 } from 'idai-field-core';
 import { Document, Relations } from 'idai-field-core';
 import {
-    empty,
+    isEmpty,
     filter,
     flow,
     forEach,
@@ -16,7 +16,7 @@ import {
     pairWith,
     throws,
     to,
-    undefinedOrEmpty
+    not
 } from 'tsfun';
 import { InverseRelationsMap } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
@@ -154,9 +154,9 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
 
     forbiddenRelations
         .map(lookup(document.resource.relations))
-        .filter(isNot(undefinedOrEmpty))
+        .filter(not(isUndefinedOrEmpty))
         .map(intersect(relationTargets))
-        .filter(isNot(empty))
+        .filter(not(isEmpty))
         .forEach(throws([E.BAD_INTERRELATION, document.resource.identifier]));
 }
 

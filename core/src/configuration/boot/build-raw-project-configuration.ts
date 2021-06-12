@@ -1,6 +1,6 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    keysValues, lookup, Map, map, Mapping, on, or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
-    update, update as updateStruct, assoc } from 'tsfun';
+    keysValues, lookup, Map, map, Mapping, on, or, Pair, pairWith, prune, reduce, subtract,
+    update, update as updateStruct, assoc, isUndefinedOrEmpty, not } from 'tsfun';
 import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { Forest,Tree,sortStructArray, Labeled, withDissoc } from '../../tools';
@@ -236,7 +236,7 @@ function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelis
 
     return map(
         cond(
-            on(TransientCategoryDefinition.FIELDS, isNot(undefinedOrEmpty)),
+            on(TransientCategoryDefinition.FIELDS, not(isUndefinedOrEmpty)),
             assoc(TransientCategoryDefinition.FIELDS,
                 map(
                     cond(

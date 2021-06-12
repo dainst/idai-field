@@ -1,6 +1,6 @@
-import { aFlow, aMap, and, assoc, compose, empty, filter, Filter, flatten, flow, includedIn,
+import { aFlow, aMap, and, assoc, compose, isEmpty, filter, Filter, flatten, flow, includedIn,
     is, isArray, isDefined, isNot, isObject, isString, L, lookup, map, Map, Mapping, on, or, pairWith,
-    Predicate, R, to, undefinedOrEmpty, isnt } from 'tsfun';
+    Predicate, R, to, isUndefinedOrEmpty, isnt, not } from 'tsfun';
 import { LabelUtil } from './label-util';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
@@ -87,7 +87,7 @@ export module FieldsViewUtil {
                     isNot(includedIn(Relations.Hierarchy.ALL)),
                     isnt(Relations.Image.ISDEPICTEDIN),
                     isnt(Relations.Image.HASMAPLAYER),
-                    compose(lookup(resource.relations), isNot(undefinedOrEmpty))
+                    compose(lookup(resource.relations), not(isUndefinedOrEmpty))
                 )
             )
         );
@@ -102,8 +102,8 @@ export module FieldsViewUtil {
 
 
     export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(
-        on(FieldsViewGroup.FIELDS, isNot(empty)),
-        on(FieldsViewGroup.RELATIONS, isNot(empty))
+        on(FieldsViewGroup.FIELDS, not(isEmpty)),
+        on(FieldsViewGroup.RELATIONS, not(isEmpty))
     );
 
 

@@ -1,5 +1,5 @@
 import { Document, Datastore, Relations, Lookup, ON_RESOURCE_ID, RelationsManager } from 'idai-field-core';
-import { aMap, isArray, clone, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
+import { aMap, isArray, clone, isNot, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { makeDocumentsLookup } from './utils';
@@ -201,7 +201,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
     const removedDocuments = subtract(ON_RESOURCE_ID, importDocuments)(existingDocuments);
     const problems = [];
     for (const removedDocument of removedDocuments) {
-        if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[Relations.Type.HASINSTANCE])) {
+        if (!isUndefinedOrEmpty(removedDocument.resource.relations[Relations.Type.HASINSTANCE])) {
             problems.push(removedDocument.resource.identifier);
         }
     }
@@ -288,8 +288,8 @@ function assertRelationsValid(documents: Array<Document>) {
 
     for (const document of documents) {
         if (document.resource.category === 'TypeCatalog') {
-            if (isNot(undefinedOrEmpty)(document.resource.relations[Relations.Hierarchy.LIESWITHIN])
-                || isNot(undefinedOrEmpty)(document.resource.relations[Relations.Image.DEPICTS])) {
+            if (!isUndefinedOrEmpty(document.resource.relations[Relations.Hierarchy.LIESWITHIN])
+                || !isUndefinedOrEmpty(document.resource.relations[Relations.Image.DEPICTS])) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
         }

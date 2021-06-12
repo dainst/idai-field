@@ -1,4 +1,4 @@
-import { empty, filter, flow, includedIn, is, isNot, Map, map, on, Pair } from 'tsfun';
+import { filter, flow, includedIn, is, isEmpty, isNot, Map, map, not, on, Pair } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../model';
 import { Forest, isTopLevelItemOrChildThereof, LabelUtil, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
@@ -227,6 +227,6 @@ export class ProjectConfiguration {
             Category.getFields(this.getCategory(categoryName)),
             filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
-            isNot(empty));
+            not(isEmpty));
     }
 }

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
     ProjectConfiguration, Query, Relations, Resource, ValuelistUtil } from 'idai-field-core';
-import { empty, flow, includedIn, is, isNot, left, map, Mapping, on, Pair, pairWith, prune, right, to,
-    undefinedOrEmpty } from 'tsfun';
+import { isEmpty, flow, includedIn, is, isNot, left, map, Mapping, on, Pair, pairWith, prune, right, to,
+    isUndefinedOrEmpty } from 'tsfun';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
 
@@ -221,13 +221,13 @@ export class TypeRelationPickerComponent {
             },
             constraints: {}
         };
-        if (isNot(undefinedOrEmpty)(resource.relations[Relations.Type.INSTANCEOF])) {
+        if (!isUndefinedOrEmpty(resource.relations[Relations.Type.INSTANCEOF])) {
             (query.constraints as any)['id:match'] = {
                 value: resource.relations[Relations.Type.INSTANCEOF],
                 subtract: true
             };
         }
-        if (isNot(empty)(selectedCatalogs)) {
+        if (!isEmpty(selectedCatalogs)) {
             (query.constraints as any)['liesWithin:contain'] = {
                 value: selectedCatalogs.map(to(Resource.ID)),
                 searchRecursively: true

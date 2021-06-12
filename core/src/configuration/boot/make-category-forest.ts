@@ -1,5 +1,5 @@
-import { cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, detach, map, update, reduce, clone } from 'tsfun';
+import { cond, isDefined, flow, Map, Mapping, on, isUndefined, copy,
+    separate, detach, map, update, reduce, clone, not } from 'tsfun';
 import { Category, CategoryDefinition, Groups, FieldDefinition, Group } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -16,7 +16,7 @@ const TEMP_FIELDS = 'fields';
 export function makeCategoryForest(categories: any): Forest<Category> {
 
     const [parentDefs, childDefs] =
-        separate<CategoryDefinition>(on(CategoryDefinition.PARENT, isNot(defined)), categories);
+        separate<CategoryDefinition>(on(CategoryDefinition.PARENT, not(isDefined)), categories);
 
     const parentCategories = flow(
         parentDefs,

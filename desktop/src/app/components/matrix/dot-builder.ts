@@ -1,5 +1,5 @@
 import {Document} from 'idai-field-core';
-import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy, is} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not} from 'tsfun';
 import {Edges} from './edges-builder';
 import {ProjectConfiguration} from 'idai-field-core';
 
@@ -115,7 +115,7 @@ export module DotBuilder {
 
         return targetIds
             .map(findIdentifierIn(documents))
-            .filter(isNot(empty))
+            .filter(not(isEmpty))
     }
 
 
@@ -126,7 +126,7 @@ export module DotBuilder {
 
             const documentEdges: Edges = edges[document.resource.id];
 
-            if (isEmpty(documentEdges.aboveIds) || isNot(empty)(documentEdges.belowIds)) return false;
+            if (isEmpty(documentEdges.aboveIds) || !isEmpty(documentEdges.belowIds)) return false;
 
             processedDocuments.push(document.resource.id);
 
@@ -261,7 +261,7 @@ export module DotBuilder {
         return isDefined(
                 Object
                     .values(edges)
-                    .find(isNot(on('sameRankIds', empty)))
+                    .find(not(on('sameRankIds', isEmpty)))
             );
     }
 }

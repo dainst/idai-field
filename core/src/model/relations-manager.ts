@@ -1,7 +1,6 @@
 
 import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
-    undefinedOrEmpty
+    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to, not
 } from 'tsfun';
 import { Document } from './document';
 import { DatastoreErrors } from '../datastore/datastore-errors'
@@ -106,7 +105,7 @@ export class RelationsManager {
             return documents
                 .filter(
                     on([Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.LIESWITHIN], 
-                       isNot(undefinedOrEmpty)));
+                       not(isUndefinedOrEmpty)));
 
         } catch {
             if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;

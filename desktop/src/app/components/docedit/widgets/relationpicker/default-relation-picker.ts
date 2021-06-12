@@ -1,6 +1,6 @@
 import { Datastore, RelationDefinition } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
-import { isNot, undefinedOrEmpty } from 'tsfun';
+import { isNot, isUndefinedOrEmpty } from 'tsfun';
 import { getSuggestions } from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
 import { RelationPicker } from './relation-picker';
 
@@ -23,7 +23,7 @@ export class DefaultRelationPicker extends RelationPicker {
 
         const relationTargetIdentifier: string = this.getRelationTargetIdentifier();
 
-        if (isNot(undefinedOrEmpty)(relationTargetIdentifier)) {
+        if (!isUndefinedOrEmpty(relationTargetIdentifier)) {
             try {
                 this.selectedTarget = await this.datastore.get(relationTargetIdentifier);
             } catch (err) {

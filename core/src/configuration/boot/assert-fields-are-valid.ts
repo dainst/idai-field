@@ -1,5 +1,5 @@
-import {cond, empty, flow, includedIn, isNot, on,
-    isDefined, filter, and, Map, remove, keysValues, forEach, map, values} from 'tsfun';
+import {cond, isEmpty, flow, includedIn, isNot, on,
+    isDefined, filter, and, Map, remove, keysValues, forEach, map, values, not} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {LibraryFieldDefinition} from '../model/library-category-definition';
 import {CustomFieldDefinition} from '../model/custom-category-definition';
@@ -45,7 +45,7 @@ function assertFieldKeysAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomF
         throw [ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, source, keys[0]]
     }
 
-    const throwIllegalFieldPropertyIfNotEmpty = cond(isNot(empty), throwIllegalFieldProperty);
+    const throwIllegalFieldPropertyIfNotEmpty = cond(not(isEmpty), throwIllegalFieldProperty);
 
     flow(
         fields,

@@ -1,6 +1,6 @@
 import {Document} from 'idai-field-core';
 import {Get, Id, IdMap} from '../types';
-import {Either, isNot, isUndefinedOrEmpty, sameset, undefinedOrEmpty} from 'tsfun';
+import {Either, isUndefinedOrEmpty, sameset} from 'tsfun';
 import {Relations} from 'idai-field-core';
 import LIESWITHIN = Relations.Hierarchy.LIESWITHIN;
 import RECORDEDIN = Relations.Hierarchy.RECORDEDIN;
@@ -30,7 +30,7 @@ export async function inferRecordedIns(documents: Array<Document>,
         if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
 
         const target = liesWithinTargetInImport[1] as Document;
-        if (isNot(undefinedOrEmpty)((target.resource.relations[LIESWITHIN]))) return determineRecordedInValueFor(target);
+        if (!isUndefinedOrEmpty((target.resource.relations[LIESWITHIN]))) return determineRecordedInValueFor(target);
     }
 
 

@@ -1,11 +1,11 @@
 import {
     and,
-    empty,
+    isEmpty,
     isDefined,
-    isNot,
     on,
     to,
-    undefinedOrEmpty
+    isUndefinedOrEmpty,
+    not
 } from 'tsfun';
 import {Document, NewDocument, Relations} from 'idai-field-core';
 import {ImportValidator} from './import-validator';
@@ -114,7 +114,7 @@ function makeAssertNoRecordedInMismatch(operationId: Id) {
 
         const relations = document.resource.relations;
         if (operationId
-            && isNot(undefinedOrEmpty)(relations[RECORDEDIN])
+            && !isUndefinedOrEmpty(relations[RECORDEDIN])
             && relations[RECORDEDIN][0] !== compare
             && isDefined(compare)) {
             throw [E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
@@ -136,7 +136,7 @@ async function replaceTopLevelLiesWithins(documents: Array<Document>, operationC
     const relationsForDocumentsWhereLiesWithinIsDefined: Array<Relations> = documents
         .map(to(['resource','relations']))
         .filter(isDefined)
-        .filter(on(LIESWITHIN, and(isDefined, isNot(empty))));
+        .filter(on(LIESWITHIN, and(isDefined, not(isEmpty))));
 
     for (let relations of relationsForDocumentsWhereLiesWithinIsDefined) {
 

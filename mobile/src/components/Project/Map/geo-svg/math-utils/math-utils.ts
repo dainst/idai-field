@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import * as d3 from 'd3-polygon';
 import { Position } from 'geojson';
 import { FieldGeometry } from 'idai-field-core';
 import { pointRadius } from '../constants';

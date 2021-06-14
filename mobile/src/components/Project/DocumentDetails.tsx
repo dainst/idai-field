@@ -17,7 +17,6 @@ interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
     languages: string[];
-    navigateToDocument: (docId: string) => void;
 }
 
 
@@ -26,7 +25,6 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
     repository,
     docId,
     languages,
-    navigateToDocument,
 }) => {
 
     const doc = useDocument(repository, docId);
@@ -43,21 +41,17 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
     if (!doc || !groups) return null;
 
     return <ScrollView style={ styles.container }>
-        { groups.map(renderGroup(navigateToDocument, config, languages)) }
+        { groups.map(renderGroup( config, languages)) }
     </ScrollView>;
 };
 
 
-const renderGroup = (
-    navigateToDocument: (docId: string) => void,
-    config: ProjectConfiguration,
-    languages: string[]
-) =>
+const renderGroup = (config: ProjectConfiguration,languages: string[]) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
             <Text style={ styles.groupLabel }>{ LabelUtil.getLabel(group, languages) }</Text>
             { group.fields.map(renderField(languages)) }
-            { group.relations.map(renderRelation(navigateToDocument, config)) }
+            { group.relations.map(renderRelation( config)) }
         </View>;
 
 
@@ -91,19 +85,19 @@ const renderObjectValue = (value: unknown, field: FieldsViewField, languages: st
     </Text>;
 
 
-const renderRelation = (navigateToDocument: (docId: string) => void, config: ProjectConfiguration) =>
+const renderRelation = (config: ProjectConfiguration) =>
     (relation: FieldsViewRelation) =>
         <Column style={ styles.fieldColumn } key={ relation.label }>
             <Text style={ styles.fieldLabel }>{ relation.label }</Text>
-            { relation.targets.map(renderRelationTarget(navigateToDocument, config)) }
+            { relation.targets.map(renderRelationTarget( config)) }
         </Column>;
 
 
-const renderRelationTarget = (navigateToDocument: (docId: string) => void, config: ProjectConfiguration) =>
+const renderRelationTarget = (config: ProjectConfiguration) =>
     (target: Document) =>
         <DocumentButton
             key={ target.resource.id }
-            onPress={ () => navigateToDocument(target.resource.id) }
+            disabled={ true }
             config={ config }
             document={ target }
             size={ 20 }

@@ -53,7 +53,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             ));
     }, [repository, navigation]);
 
-   const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
    const addDocument = (parentDocId: string) => navigation.navigate('DocumentAdd',{ parentDocId });
         
     return (
@@ -75,7 +74,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     config={ config }
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
-                    navigateToDocument={ navigateToDocument }
                     addDocument={ addDocument } />
             </View>
         </View>

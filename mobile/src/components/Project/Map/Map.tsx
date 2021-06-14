@@ -19,7 +19,6 @@ interface MapProps {
     config: ProjectConfiguration;
     languages: string[];
     highlightedDocId?: string;
-    navigateToDocument: (docId: string) => void;
     addDocument: (parentDocId: string) => void;
 }
 
@@ -30,7 +29,6 @@ const Map: React.FC<MapProps> = ({
     config,
     languages,
     highlightedDocId,
-    navigateToDocument,
     addDocument
 }) => {
 
@@ -82,7 +80,6 @@ const Map: React.FC<MapProps> = ({
                 config={ config }
                 repository={ repository }
                 languages={ languages }
-                navigateToDocument={ navigateToDocument }
                 addDocument={ addDocument }
                 focusHandler={ focusMapOnDocument } />
         </View>

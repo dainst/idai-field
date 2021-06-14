@@ -14,7 +14,6 @@ interface MapBottomSheetProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     languages: string[];
-    navigateToDocument: (docId: string) => void;
     addDocument: (parentDocId: string) => void;
     focusHandler: (docId: string) => void;
 }
@@ -24,7 +23,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     config,
     repository,
     languages,
-    navigateToDocument,
     addDocument,
     focusHandler
 }) => {
@@ -35,7 +33,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     if(!document) return null;
 
     const docId = document.resource.id;
-    const documentPressHandler = () => navigateToDocument(docId);
     const addChildPressHandler = () => addDocument(docId);
     
     return (
@@ -44,7 +41,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                 <DocumentButton
                     document={ document }
                     config={ config }
-                    onPress={ documentPressHandler }
+                    disabled={ true }
                     size={ 30 }
                     style={ styles.docButton }
                 />
@@ -72,7 +69,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     config={ config }
                     repository={ repository }
                     languages={ languages }
-                    navigateToDocument={ navigateToDocument }
                 />
             </Column>
         </BottomSheet>

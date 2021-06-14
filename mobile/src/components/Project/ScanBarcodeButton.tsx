@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     fab: {
-        position: 'absolute',
         bottom: 15,
         right: 15,
         height: 50,

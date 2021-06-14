@@ -2,10 +2,9 @@ import Color from 'color';
 import React, { ReactElement, ReactNode } from 'react';
 import {
     NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle,
-    View, ViewStyle
+    TouchableOpacity, View, ViewStyle
 } from 'react-native';
 import { colors, textColors } from '../../utils/colors';
-import { TouchableOpacity } from './touchables';
 
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'transparent';
 

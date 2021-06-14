@@ -43,26 +43,16 @@ export module LanguageConfigurationUtil {
     export function getUpdatedDefinition(customLanguageConfigurations: CustomLanguageConfigurations,
                                          category: Category, field?: FieldDefinition): FieldDefinition|Category {
         
-        const definition = field ?? category;
         const clonedDefinition = field ? clone(field) : cloneCategory(category);
 
-        const languages: string[] = set(
-            Object.keys(customLanguageConfigurations)
-             .concat(Object.keys(definition.label))
-             .concat(Object.keys(definition.description))
+        clonedDefinition.label = mergeCustomAndDefaultTranslations(
+            customLanguageConfigurations, 'label', category, field
+        );
+        clonedDefinition.description = mergeCustomAndDefaultTranslations(
+            customLanguageConfigurations, 'description', category, field
         );
 
-        return languages.reduce((result, languageCode) => {
-            const label: string|undefined = getFromCustomLanguageConfiguration(
-                customLanguageConfigurations, languageCode, 'label', category, field
-            );
-            const description: string|undefined = getFromCustomLanguageConfiguration(
-                customLanguageConfigurations, languageCode, 'description', category, field
-            );
-            result.label[languageCode] = label ?? result.defaultLabel[languageCode];
-            result.description[languageCode] = description ?? result.defaultDescription[languageCode];
-            return result;
-        }, clonedDefinition);
+        return clonedDefinition;
     }
 
 

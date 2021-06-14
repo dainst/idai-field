@@ -122,10 +122,10 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public startEditing() {
 
-        this.editableLabel = LanguageConfigurationUtil.createEditableI18nString(
+        this.editableLabel = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             this.customLanguageConfigurations, 'label', this.category
         );
-        this.editableDescription = LanguageConfigurationUtil.createEditableI18nString(
+        this.editableDescription = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             this.customLanguageConfigurations, 'description', this.category
         );
         this.editing = true;

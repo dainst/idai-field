@@ -101,10 +101,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public startEditing() {
 
-        this.editableLabel = LanguageConfigurationUtil.createEditableI18nString(
+        this.editableLabel = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             this.customLanguageConfigurations, 'label', this.category, this.field
         );
-        this.editableDescription = LanguageConfigurationUtil.createEditableI18nString(
+        this.editableDescription = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             this.customLanguageConfigurations, 'description', this.category, this.field
         );
         this.editing = true;

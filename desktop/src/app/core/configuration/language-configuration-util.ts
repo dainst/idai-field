@@ -23,9 +23,9 @@ export module LanguageConfigurationUtil {
     }
 
 
-    export function createEditableI18nString(customLanguageConfigurations: CustomLanguageConfigurations,
-                                             type: 'label'|'description',
-                                             category: Category, field?: FieldDefinition): I18nString {
+    export function mergeCustomAndDefaultTranslations(customLanguageConfigurations: CustomLanguageConfigurations,
+                                                      type: 'label'|'description',
+                                                      category: Category, field?: FieldDefinition): I18nString {
 
         const definition = field ?? category;
         const defaultType = type === 'label' ? 'defaultLabel' : 'defaultDescription';

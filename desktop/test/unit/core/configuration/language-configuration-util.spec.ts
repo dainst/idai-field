@@ -298,7 +298,7 @@ import { CustomLanguageConfigurations,
     });
 
 
-    it('Create editable I18nString for field', () => {
+    it('Merge custom and default translations for field', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
             de: {
@@ -327,14 +327,14 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const label: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+        const label: I18nString = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             customLanguageConfigurations,
             'label',
             category,
             field
         );
 
-        const description: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+        const description: I18nString = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             customLanguageConfigurations,
             'description',
             category,
@@ -350,7 +350,7 @@ import { CustomLanguageConfigurations,
     });
 
 
-    it('Create editable I18nString for category', () => {
+    it('Merge custom and default translations for category', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
             de: {
@@ -371,13 +371,13 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const label: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+        const label: I18nString = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             customLanguageConfigurations,
             'label',
             category
         );
 
-        const description: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+        const description: I18nString = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
             customLanguageConfigurations,
             'description',
             category

@@ -9,7 +9,7 @@ import {
 } from './geo-svg';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { GeoMap, getGeoMapCoords, getGeoMapDoc, getGeoMapIsSelected } from './geometry-map/geometry-map';
-import MapBottomDrawer from './MapBottomDrawer';
+import MapBottomSheet from './MapBottomSheet';
 import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap, { SvgMapObject } from './SvgMap/SvgMap';
 
@@ -77,7 +77,7 @@ const Map: React.FC<MapProps> = ({
                     </SvgMap>
                 }
             </View>
-            <MapBottomDrawer
+            <MapBottomSheet
                 document={ highlightedDoc }
                 config={ config }
                 repository={ repository }

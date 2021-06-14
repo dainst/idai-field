@@ -9,7 +9,7 @@ import Column from '../../common/Column';
 import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
 import DocumentDetails from '../DocumentDetails';
-interface MapBottomDrawerProps {
+interface MapBottomSheetProps {
     document: Document | null;
     config: ProjectConfiguration;
     repository: DocumentRepository;
@@ -19,7 +19,7 @@ interface MapBottomDrawerProps {
     focusHandler: (docId: string) => void;
 }
 
-const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
+const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
     config,
     repository,
@@ -49,12 +49,14 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                     style={ styles.docButton }
                 />
                 <Button
+                    style={ styles.button }
                     variant="success"
                     title="Add Child"
                     onPress={ addChildPressHandler }
                     icon={ <Ionicons name="add" size={ iconSize } /> }
                 />
                 <Button
+                    style={ styles.button }
                     title="Focus"
                     onPress={ () => focusHandler(docId) }
                     icon={ <MaterialIcons
@@ -105,7 +107,10 @@ const styles = StyleSheet.create({
     },
     docButton: {
         flex: 1,
+    },
+    button: {
+        margin: 2.5,
     }
 });
 
-export default MapBottomDrawer;
+export default MapBottomSheet;

@@ -12,16 +12,20 @@ interface DocumentButtonProps {
     document: Document;
     size: number;
     style?: ViewStyle;
-    onPress: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
+    onPress?: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
+    disabled?: boolean
 }
 
 
-const DocumentButton = ({ config, document, size, style, onPress }: DocumentButtonProps): ReactElement => {
+const DocumentButton = ({
+    config, document, size,
+    style, onPress, disabled = false }: DocumentButtonProps): ReactElement => {
 
     return <TouchableOpacity
         onPress={ onPress }
         style={ [style, styles.button] }
         activeOpacity={ .9 }
+        disabled={ disabled }
     >
         <View style={ styles.container }>
             <CategoryIcon config={ config } document={ document } size={ size } />

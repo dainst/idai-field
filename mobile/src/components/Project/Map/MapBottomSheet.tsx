@@ -56,7 +56,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     icon={ <Ionicons name="add" size={ iconSize } /> }
                 />
                 <Button
-                    style={ styles.button }
+                    style={ [styles.button, styles.focusBtn] }
                     title="Focus"
                     onPress={ () => focusHandler(docId) }
                     icon={ <MaterialIcons
@@ -100,16 +100,20 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     buttonGroup: {
-        margin: 5,
         marginTop: 0,
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     docButton: {
         flex: 1,
     },
     button: {
-        margin: 2.5,
+        marginRight: 10,
+    },
+    focusBtn: {
+        borderWidth: 1,
+        borderColor: 'black',
     }
 });
 

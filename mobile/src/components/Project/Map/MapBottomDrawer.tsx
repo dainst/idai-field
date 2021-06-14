@@ -1,15 +1,14 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import BottomSheet from '@gorhom/bottom-sheet';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { DocumentRepository } from '../../../repositories/document-repository';
+import BottomSheet from '../../common/BottomSheet';
 import Button from '../../common/Button';
 import Column from '../../common/Column';
 import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
 import DocumentDetails from '../DocumentDetails';
-
 interface MapBottomDrawerProps {
     document: Document | null;
     config: ProjectConfiguration;
@@ -31,7 +30,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
 }) => {
 
     const iconSize = 20;
-    const snapPoints = useMemo(() => [50, '25%', '50%'], []);
+    const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
 
     if(!document) return null;
 
@@ -40,11 +39,7 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
     const addChildPressHandler = () => addDocument(docId);
     
     return (
-        <BottomSheet
-            index={ 1 }
-            snapPoints={ snapPoints }
-            style={ styles.modal }
-        >
+        <BottomSheet snapPointsFromTop={ snapPoints }>
             <Row style={ styles.buttonGroup }>
                 <DocumentButton
                     document={ document }

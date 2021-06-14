@@ -58,6 +58,14 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         
     return (
         <View style={ { flex: 1 } }>
+            <SearchBar { ...{
+                issueSearch,
+                projectSettings,
+                setProjectSettings,
+                syncStatus,
+                toggleDrawer,
+                onBarCodeScanned
+            } } />
             <View style={ styles.container }>
                 <Map
                     repository={ repository }
@@ -70,14 +78,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     navigateToDocument={ navigateToDocument }
                     addDocument={ addDocument } />
             </View>
-            <SearchBar { ...{
-                issueSearch,
-                projectSettings,
-                setProjectSettings,
-                syncStatus,
-                toggleDrawer,
-                onBarCodeScanned
-            } } />
         </View>
     );
 };

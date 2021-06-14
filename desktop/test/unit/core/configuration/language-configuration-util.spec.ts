@@ -100,6 +100,44 @@ import { CustomLanguageConfigurations,
     });
 
 
+    it('Add new translations to custom language configurations for category', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Neues Label',
+            en: 'New label'
+        };
+
+        const editedDescription: I18nString = {
+            de: 'Neue Beschreibung',
+            en: 'New description'
+        };
+
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.label).toBe('Neues Label');
+        expect(customLanguageConfigurations.de.categories.testCategory.description).toBe('Neue Beschreibung');
+        expect(customLanguageConfigurations.en.categories.testCategory.label).toBe('New label');
+        expect(customLanguageConfigurations.en.categories.testCategory.description).toBe('New description');
+    });
+
+
     it('Remove deleted translations from custom language configurations for field', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
@@ -151,6 +189,46 @@ import { CustomLanguageConfigurations,
     });
 
 
+    it('Remove deleted translations from custom language configurations for category', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            },
+            en: {
+                categories: {
+                    testCategory: {
+                        label: 'Old label',
+                        description: 'Old description'
+                    }
+                }
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Altes Label'
+        };
+
+        const editedDescription: I18nString = {};
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.label).toBe('Altes Label');
+        expect(customLanguageConfigurations.de.categories.testCategory.description).toBeUndefined();
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
     it('Remove translations equal to default translation from custom language configurations for field', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
@@ -182,6 +260,38 @@ import { CustomLanguageConfigurations,
             editedDescription,
             category,
             field
+        );
+
+        expect(customLanguageConfigurations.de).toBeUndefined();
+    });
+
+
+    it('Remove translations equal to default translation from custom language configurations for category', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Test-Kategorie'
+        };
+
+        const editedDescription: I18nString = {
+            de: 'Beschreibungstext der Kategorie'
+        };
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category
         );
 
         expect(customLanguageConfigurations.de).toBeUndefined();

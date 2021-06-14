@@ -21,7 +21,7 @@ interface DocumentDetailsProps {
 }
 
 
-const DrawerContent: React.FC<DocumentDetailsProps> = ({
+const DocumentDetails: React.FC<DocumentDetailsProps> = ({
     config,
     repository,
     docId,
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default DrawerContent;
+export default DocumentDetails;

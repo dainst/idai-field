@@ -296,4 +296,98 @@ import { CustomLanguageConfigurations,
 
         expect(customLanguageConfigurations.de).toBeUndefined();
     });
+
+
+    it('Create editable I18nString for field', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Angepasstes Label',
+                                description: 'Angepasste Beschreibung'
+                            }
+                        }
+                    }
+                }
+            },
+            es: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Etiqueta personalizada',
+                                description: 'Descripción ajustada'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const label: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+            customLanguageConfigurations,
+            'label',
+            category,
+            field
+        );
+
+        const description: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+            customLanguageConfigurations,
+            'description',
+            category,
+            field
+        );
+
+        expect(label.de).toBe('Angepasstes Label');
+        expect(label.en).toBe('Test field');
+        expect(label.es).toBe('Etiqueta personalizada');
+        expect(description.de).toBe('Angepasste Beschreibung');
+        expect(description.en).toBe('Field description text');
+        expect(description.es).toBe('Descripción ajustada');
+    });
+
+
+    it('Create editable I18nString for category', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {   
+                        label: 'Angepasstes Label',
+                        description: 'Angepasste Beschreibung'
+                    }
+                }
+            },
+            es: {
+                categories: {
+                    testCategory: {
+                        label: 'Etiqueta personalizada',
+                        description: 'Descripción ajustada'
+                    }
+                }
+            }
+        };
+
+        const label: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+            customLanguageConfigurations,
+            'label',
+            category
+        );
+
+        const description: I18nString = LanguageConfigurationUtil.createEditableI18nString(
+            customLanguageConfigurations,
+            'description',
+            category
+        );
+
+        expect(label.de).toBe('Angepasstes Label');
+        expect(label.en).toBe('Test category');
+        expect(label.es).toBe('Etiqueta personalizada');
+        expect(description.de).toBe('Angepasste Beschreibung');
+        expect(description.en).toBe('Category description text');
+        expect(description.es).toBe('Descripción ajustada');
+    });
 });

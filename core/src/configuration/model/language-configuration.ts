@@ -15,6 +15,7 @@ export interface LanguageConfiguration {
 export interface CategoryLanguageDefinition {
 
     label?: string;
+    description?: string;
     fields?: { [fieldName: string]: FieldLanguageDefinition };
 }
 

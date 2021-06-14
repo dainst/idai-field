@@ -344,6 +344,7 @@ import { CustomLanguageConfigurations,
         expect(label.de).toBe('Angepasstes Label');
         expect(label.en).toBe('Test field');
         expect(label.es).toBe('Etiqueta personalizada');
+
         expect(description.de).toBe('Angepasste Beschreibung');
         expect(description.en).toBe('Field description text');
         expect(description.es).toBe('Descripción ajustada');
@@ -386,8 +387,74 @@ import { CustomLanguageConfigurations,
         expect(label.de).toBe('Angepasstes Label');
         expect(label.en).toBe('Test category');
         expect(label.es).toBe('Etiqueta personalizada');
+
         expect(description.de).toBe('Angepasste Beschreibung');
         expect(description.en).toBe('Category description text');
         expect(description.es).toBe('Descripción ajustada');
+    });
+
+
+    it('Get updated field definition', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Neues Label',
+                                description: 'Neue Beschreibung'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const updatedField: FieldDefinition = LanguageConfigurationUtil.getUpdatedDefinition(
+            customLanguageConfigurations,
+            category,
+            field
+        ) as FieldDefinition;
+
+        expect(updatedField.label.de).toBe('Neues Label');
+        expect(updatedField.defaultLabel.de).toBe('Test-Feld');
+        expect(updatedField.description.de).toBe('Neue Beschreibung');
+        expect(updatedField.defaultDescription.de).toBe('Beschreibungstext des Feldes');
+
+        expect(updatedField.label.en).toBe('Test field');
+        expect(updatedField.defaultLabel.en).toBe('Test field');
+        expect(updatedField.description.en).toBe('Field description text');
+        expect(updatedField.defaultDescription.en).toBe('Field description text');
+    });
+
+
+    it('Get updated category definition', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        label: 'Neues Label',
+                        description: 'Neue Beschreibung'
+                    }
+                }
+            }
+        };
+
+        const updatedCategory: Category = LanguageConfigurationUtil.getUpdatedDefinition(
+            customLanguageConfigurations,
+            category
+        ) as Category;
+
+        expect(updatedCategory.label.de).toBe('Neues Label');
+        expect(updatedCategory.defaultLabel.de).toBe('Test-Kategorie');
+        expect(updatedCategory.description.de).toBe('Neue Beschreibung');
+        expect(updatedCategory.defaultDescription.de).toBe('Beschreibungstext der Kategorie');
+
+        expect(updatedCategory.label.en).toBe('Test category');
+        expect(updatedCategory.defaultLabel.en).toBe('Test category');
+        expect(updatedCategory.description.en).toBe('Category description text');
+        expect(updatedCategory.defaultDescription.en).toBe('Category description text');
     });
 });

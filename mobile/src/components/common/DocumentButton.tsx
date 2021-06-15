@@ -28,7 +28,7 @@ const DocumentButton = ({
         disabled={ disabled }
     >
         <View style={ styles.container }>
-            <CategoryIcon config={ config } document={ document } size={ size } />
+            <CategoryIcon config={ config } category={ document.resource.category } size={ size } />
             <Text style={ styles.title }>{ document.resource.identifier }</Text>
         </View>
     </TouchableOpacity>;

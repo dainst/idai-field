@@ -1,65 +1,59 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import BottomSheet from '@gorhom/bottom-sheet';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { DocumentRepository } from '../../../repositories/document-repository';
+import BottomSheet from '../../common/BottomSheet';
 import Button from '../../common/Button';
 import Column from '../../common/Column';
 import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
 import DocumentDetails from '../DocumentDetails';
-
-interface MapBottomDrawerProps {
+interface MapBottomSheetProps {
     document: Document | null;
     config: ProjectConfiguration;
     repository: DocumentRepository;
     languages: string[];
-    navigateToDocument: (docId: string) => void;
-    addDocument: (parentDocId: string) => void;
+    addDocument: (parentDoc: Document) => void;
     focusHandler: (docId: string) => void;
 }
 
-const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
+const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
     config,
     repository,
     languages,
-    navigateToDocument,
     addDocument,
     focusHandler
 }) => {
 
     const iconSize = 20;
-    const snapPoints = useMemo(() => [50, '25%', '50%'], []);
+    const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
 
     if(!document) return null;
 
     const docId = document.resource.id;
-    const documentPressHandler = () => navigateToDocument(docId);
-    const addChildPressHandler = () => addDocument(docId);
+    const addChildPressHandler = () => addDocument(document);
     
     return (
-        <BottomSheet
-            index={ 1 }
-            snapPoints={ snapPoints }
-            style={ styles.modal }
-        >
+        <BottomSheet snapPointsFromTop={ snapPoints }>
             <Row style={ styles.buttonGroup }>
                 <DocumentButton
                     document={ document }
                     config={ config }
-                    onPress={ documentPressHandler }
+                    disabled={ true }
                     size={ 30 }
                     style={ styles.docButton }
                 />
                 <Button
+                    style={ styles.button }
                     variant="success"
                     title="Add Child"
                     onPress={ addChildPressHandler }
                     icon={ <Ionicons name="add" size={ iconSize } /> }
                 />
                 <Button
+                    style={ [styles.button, styles.focusBtn] }
                     title="Focus"
                     onPress={ () => focusHandler(docId) }
                     icon={ <MaterialIcons
@@ -75,7 +69,6 @@ const MapBottomDrawer: React.FC<MapBottomDrawerProps> = ({
                     config={ config }
                     repository={ repository }
                     languages={ languages }
-                    navigateToDocument={ navigateToDocument }
                 />
             </Column>
         </BottomSheet>
@@ -103,14 +96,21 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     buttonGroup: {
-        margin: 5,
         marginTop: 0,
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     docButton: {
         flex: 1,
+    },
+    button: {
+        marginRight: 10,
+    },
+    focusBtn: {
+        borderWidth: 1,
+        borderColor: 'black',
     }
 });
 
-export default MapBottomDrawer;
+export default MapBottomSheet;

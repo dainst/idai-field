@@ -1,50 +1,18 @@
-import { Document, ProjectConfiguration } from 'idai-field-core';
-import React, { ReactElement } from 'react';
-import {
-    NativeSyntheticEvent, NativeTouchEvent, StyleSheet,
-    Text, View, ViewStyle
-} from 'react-native';
-import CategoryIcon from './CategoryIcon';
-import { TouchableOpacity } from './touchables';
+import { Document } from 'idai-field-core';
+import React from 'react';
+import IconButton, { IconButtonBaseProps } from './IconButton';
 
-
-interface DocumentButtonProps {
-    config: ProjectConfiguration;
+interface DocumentButtonProps extends IconButtonBaseProps{
     document: Document;
-    size: number;
-    style?: ViewStyle;
-    onPress: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
 }
 
 
-const DocumentButton = ({ config, document, size, style, onPress }: DocumentButtonProps): ReactElement => {
+const DocumentButton: React.FC<DocumentButtonProps> = ({ document, ...btnProps }) => {
 
-    return <TouchableOpacity
-        onPress={ onPress }
-        style={ [style, styles.button] }
-        activeOpacity={ .9 }
-    >
-        <View style={ styles.container }>
-            <CategoryIcon config={ config } document={ document } size={ size } />
-            <Text style={ styles.title }>{ document.resource.identifier }</Text>
-        </View>
-    </TouchableOpacity>;
+    return <IconButton
+                text={ document.resource.identifier }
+                category={ document.resource.category }
+                { ...btnProps } />;
 };
 
 export default DocumentButton;
-
-
-const styles = StyleSheet.create({
-    button: {
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-    },
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    title: {
-        paddingLeft: 15,
-    }
-});

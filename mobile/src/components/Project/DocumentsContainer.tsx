@@ -15,7 +15,7 @@ import DocumentsMap from './DocumentsMap';
 export type DocumentsContainerDrawerParamList = {
     DocumentsMap: { highlightedDocId?: string };
     DocumentDetails: { docId: string };
-    DocumentAdd: { parentDocId: string };
+    DocumentAdd: { parentDoc: Document };
 };
 
 
@@ -122,9 +122,10 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
-                    parentDocId={ route.params.parentDocId }
                     config={ config }
                     repository={ repository }
+                    isInOverview={ isInOverview }
+                    parentDoc={ route.params.parentDoc }
                 /> }
             </Drawer.Screen>
         </Drawer.Navigator>

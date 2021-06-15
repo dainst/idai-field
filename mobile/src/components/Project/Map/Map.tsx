@@ -9,7 +9,7 @@ import {
 } from './geo-svg';
 import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { GeoMap, getGeoMapCoords, getGeoMapDoc, getGeoMapIsSelected } from './geometry-map/geometry-map';
-import MapBottomDrawer from './MapBottomDrawer';
+import MapBottomSheet from './MapBottomSheet';
 import { getDocumentFillOpacityPress } from './svg-element-props';
 import SvgMap, { SvgMapObject } from './SvgMap/SvgMap';
 
@@ -19,8 +19,7 @@ interface MapProps {
     config: ProjectConfiguration;
     languages: string[];
     highlightedDocId?: string;
-    navigateToDocument: (docId: string) => void;
-    addDocument: (parentDocId: string) => void;
+    addDocument: (parentDoc: Document) => void;
 }
 
 
@@ -30,7 +29,6 @@ const Map: React.FC<MapProps> = ({
     config,
     languages,
     highlightedDocId,
-    navigateToDocument,
     addDocument
 }) => {
 
@@ -77,12 +75,11 @@ const Map: React.FC<MapProps> = ({
                     </SvgMap>
                 }
             </View>
-            <MapBottomDrawer
+            <MapBottomSheet
                 document={ highlightedDoc }
                 config={ config }
                 repository={ repository }
                 languages={ languages }
-                navigateToDocument={ navigateToDocument }
                 addDocument={ addDocument }
                 focusHandler={ focusMapOnDocument } />
         </View>

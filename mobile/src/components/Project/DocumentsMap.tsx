@@ -53,11 +53,18 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             ));
     }, [repository, navigation]);
 
-   const navigateToDocument = (docId: string) => navigation.navigate('DocumentDetails', { docId });
-   const addDocument = (parentDocId: string) => navigation.navigate('DocumentAdd',{ parentDocId });
+   const addDocument = (parentDoc: Document) => navigation.navigate('DocumentAdd',{ parentDoc });
         
     return (
         <View style={ { flex: 1 } }>
+            <SearchBar { ...{
+                issueSearch,
+                projectSettings,
+                setProjectSettings,
+                syncStatus,
+                toggleDrawer,
+                onBarCodeScanned
+            } } />
             <View style={ styles.container }>
                 <Map
                     repository={ repository }
@@ -67,17 +74,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     config={ config }
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
-                    navigateToDocument={ navigateToDocument }
                     addDocument={ addDocument } />
             </View>
-            <SearchBar { ...{
-                issueSearch,
-                projectSettings,
-                setProjectSettings,
-                syncStatus,
-                toggleDrawer,
-                onBarCodeScanned
-            } } />
         </View>
     );
 };

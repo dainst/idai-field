@@ -86,7 +86,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         setHierarchyBack(true);
         popFromHierarchy();
     };
-    console.log( hierarchyPath[0]?.resource.identifier);
+
     return (
         <Drawer.Navigator
             drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }

@@ -13,7 +13,7 @@ const loadConfiguration = async (
 
     const customConfigName = getConfigurationName(project);
     const configurator = new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbmanager));
-    return await configurator.go(customConfigName, languages, username);
+    return await configurator.go(customConfigName, username);
 };
 
 export default loadConfiguration;

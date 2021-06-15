@@ -534,7 +534,7 @@ export class AppConfigurator {
 
 
     public async go(customConfigurationName: string|undefined,
-                    languages: string[], username: string): Promise<ProjectConfiguration> {
+                    username: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
                 || customConfigurationName === 'Bourgou') {

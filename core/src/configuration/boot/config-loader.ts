@@ -39,7 +39,8 @@ export class ConfigLoader {
 
 
     public async go(commonFields: { [fieldName: string]: any },
-                    builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
+                    builtinCategories: Map<BuiltinCategoryDefinition>,
+                    relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
                     username: string): Promise<ProjectConfiguration> {

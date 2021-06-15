@@ -92,7 +92,6 @@ export class SettingsService {
         try {
             return this.appConfigurator.go(
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                this.settingsProvider.getSettings().languages,
                 this.settingsProvider.getSettings().username
             );
         } catch (msgsWithParams) {

@@ -1,4 +1,4 @@
-import { FieldDefinition, Groups, RelationDefinition } from '../model';
+import { ConfigurationDocument, FieldDefinition, Groups, RelationDefinition } from '../model';
 import { ConfigLoader } from './boot/config-loader';
 import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
 import { ProjectConfiguration } from './project-configuration';
@@ -533,8 +533,24 @@ export class AppConfigurator {
     constructor(private configLoader: ConfigLoader) {}
 
 
-    public async go(customConfigurationName: string|undefined,
-                    username: string): Promise<ProjectConfiguration> {
+    public async go(username: string, customConfigurationName: string|undefined,
+                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
+
+        this.addProjectSpecificBuiltinConfiguration(customConfigurationName);
+
+        return this.configLoader.go(
+            COMMON_FIELDS,
+            this.builtinCategories,
+            this.defaultRelations,
+            this.defaultFields,
+            username,
+            customConfigurationName,
+            customConfigurationDocument
+        );
+    }
+
+    
+    private addProjectSpecificBuiltinConfiguration(customConfigurationName: string) {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
                 || customConfigurationName === 'Bourgou') {
@@ -545,7 +561,6 @@ export class AppConfigurator {
                 fields: {}
             };
         }
-
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Bourgou') {
 
@@ -568,7 +583,6 @@ export class AppConfigurator {
                 range: ['Survey']
             });
         }
-
 
         if (customConfigurationName === 'Pergamon') {
 
@@ -747,15 +761,5 @@ export class AppConfigurator {
                 group: Groups.STEM
             };
         }
-
-
-        return this.configLoader.go(
-            COMMON_FIELDS,
-            this.builtinCategories,
-            this.defaultRelations,
-            this.defaultFields,
-            customConfigurationName,
-            username
-        );
     }
 }

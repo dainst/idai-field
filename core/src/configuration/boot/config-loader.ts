@@ -42,8 +42,9 @@ export class ConfigLoader {
                     builtinCategories: Map<BuiltinCategoryDefinition>,
                     relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
-                    customConfigurationName: string|undefined,
-                    username: string): Promise<ProjectConfiguration> {
+                    username: string,
+                    customConfigurationName?: string|undefined,
+                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
@@ -60,8 +61,9 @@ export class ConfigLoader {
             builtinCategories,
             relations,
             extraFields,
+            username,
             customConfigurationName,
-            username);
+            customConfigurationDocument);
     }
 
 
@@ -82,8 +84,9 @@ export class ConfigLoader {
                                     builtinCategories: Map<BuiltinCategoryDefinition>,
                                     relations: Array<RelationDefinition>,
                                     extraFields: { [fieldName: string]: FieldDefinition },
-                                    customConfigurationName: string|undefined,
-                                    username: string): Promise<ProjectConfiguration> {
+                                    username: string,
+                                    customConfigurationName?: string|undefined,
+                                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         const orderConfigurationPath = '/Order.json';
         const searchConfigurationPath = '/Search.json';
@@ -96,7 +99,7 @@ export class ConfigLoader {
         let orderConfiguration: any;
 
         try {
-            const configurationDocument = (await this.loadCustomConfiguration(
+            const configurationDocument = customConfigurationDocument ?? (await this.loadCustomConfiguration(
                 customConfigurationName ?? 'Default',
                 username
             ));

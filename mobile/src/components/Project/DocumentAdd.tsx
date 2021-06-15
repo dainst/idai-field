@@ -2,12 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Category, Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
+import CategoryButton from '../common/CategoryButton';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
+
+const ICON_SIZE = 30;
 
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
@@ -62,15 +65,39 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
             />
-            <View style={ { margin: 5 } }>
-                <Text>Categories to Add</Text>
-                {categories.map(cat => (
-                    <Text key={ cat.name }>{cat.name}</Text>
+            <View style={ styles.categories }>
+                {categories.map(category => (
+                    <View key={ category.name } >
+                        <CategoryButton
+                            config={ config } size={ ICON_SIZE }
+                            style={ { margin: 5 } }
+                            category={ category.name } />
+                        {renderCategoryChilds(category, config)}
+                    </View>
                 ))}
             </View>
         </SafeAreaView>
     );
 };
+
+const renderCategoryChilds = (category: Category, config: ProjectConfiguration) => {
+    return <View style={ categoryChildStyles.container }>
+        {category.children.map(category => (
+            <CategoryButton
+                key={ category.name }
+                config={ config } size={ ICON_SIZE }
+                category={ category.name }
+                style={ { margin: 2.5 } }
+            />
+        ))}
+    </View>;
+};
+
+const categoryChildStyles = StyleSheet.create({
+    container: {
+        marginLeft:20
+    }
+});
 
 
 const styles = StyleSheet.create({
@@ -80,6 +107,9 @@ const styles = StyleSheet.create({
     },
     heading: {
         marginLeft: 10,
+    },
+    categories: {
+        margin: 10
     }
 });
 

@@ -14,7 +14,7 @@ interface MapBottomSheetProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     languages: string[];
-    addDocument: (parentDocId: string) => void;
+    addDocument: (liesWithin: Document) => void;
     focusHandler: (docId: string) => void;
 }
 
@@ -33,7 +33,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     if(!document) return null;
 
     const docId = document.resource.id;
-    const addChildPressHandler = () => addDocument(docId);
+    const addChildPressHandler = () => addDocument(document);
     
     return (
         <BottomSheet snapPointsFromTop={ snapPoints }>

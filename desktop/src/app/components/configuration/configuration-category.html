@@ -71,19 +71,27 @@
     </div>
 
     <div class="col-10 content" [class.shortened]="description">
-        <div *ngFor="let field of getFields()">
-            <configuration-field [field]="field"
-                                 [customFieldDefinition]="getCustomFieldDefinition(field)"
-                                 [customLanguageConfigurations]="customLanguageConfigurations"
-                                 [category]="category"
-                                 [hidden]="isHidden(field)"
-                                 (onToggleHidden)="toggleHidden(field)">
-            </configuration-field>
+        <div class="fields-container">
+            <div *ngFor="let field of getFields()">
+                <configuration-field [field]="field"
+                                    [customFieldDefinition]="getCustomFieldDefinition(field)"
+                                    [customLanguageConfigurations]="customLanguageConfigurations"
+                                    [category]="category"
+                                    [hidden]="isHidden(field)"
+                                    (onToggleHidden)="toggleHidden(field)">
+                </configuration-field>
+            </div>
+            <div *ngFor="let relation of getRelations()">
+                <configuration-relation [relation]="relation"
+                                        [category]="category">
+                </configuration-relation>
+            </div>
         </div>
-        <div *ngFor="let relation of getRelations()">
-            <configuration-relation [relation]="relation"
-                                    [category]="category">
-            </configuration-relation>
+        <div id="add-field-button" class="circular-button green-button"
+            (click)="addField()"
+            ngbTooltip="Feld hinzufügen"
+            i18n-ngbTooltip="@@configuration.addField">
+            <span class="mdi mdi-plus"></span>
         </div>
     </div>
 </div>

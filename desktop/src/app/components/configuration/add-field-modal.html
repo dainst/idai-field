@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.addField">Feld hinzufügen</h5>
+</div>
+
+<div class="modal-body">
+    <input type="text" id="field-name" class="form-control" [(ngModel)]="fieldName">
+</div>
+
+<div class="modal-footer">
+    <div id="create-field-button"
+         class="btn btn-success"
+         (click)="createField()">
+        <span i18n="@@configuration.createField">Neues Feld anlegen</span>
+    </div>
+    <div id="cancel-add-field-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

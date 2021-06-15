@@ -1,9 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, CustomFieldDefinition, FieldDefinition, FieldResource, Group, I18nString,
     LabelUtil, LanguageConfiguration, Named, RelationDefinition, Relations, Resource } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
+import { MenuContext, MenuService } from '../menu-service';
+import { AddFieldModalComponent } from './add-field-modal.component';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -35,6 +38,10 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public editableDescription: I18nString;
 
     private permanentlyHiddenFields: string[];
+
+
+    constructor(private menuService: MenuService,
+                private modalService: NgbModal) {}
     
 
     ngOnChanges(changes: SimpleChanges) {
@@ -139,6 +146,28 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
         this.updateLabelAndDescription();
         this.editing = false;
+    }
+
+
+    public async addField() {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(AddFieldModalComponent);
+
+        try {
+            this.createNewField(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    private createNewField(fieldName: string) {
+
+        // TODO Implement
     }
 
 

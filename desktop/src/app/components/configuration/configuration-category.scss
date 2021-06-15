@@ -56,12 +56,16 @@ configuration-category {
   .content {
     padding-top: 1rem;
     height: calc(100vh - 154px);
-    overflow-y: auto;
-    overflow-x: hidden;
     padding: 15px;
 
     &.shortened {
       height: calc(100vh - 210px);
+    }
+
+    .fields-container {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .card {
@@ -106,5 +110,11 @@ configuration-category {
 
   .edit-category-button {
     margin-left: 12px;
+  }
+
+  #add-field-button {
+    left: 50%;
+    transform: translate(-20px, -30px);
+    z-index: 1001;
   }
 }

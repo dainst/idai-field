@@ -15,7 +15,7 @@ import DocumentsMap from './DocumentsMap';
 export type DocumentsContainerDrawerParamList = {
     DocumentsMap: { highlightedDocId?: string };
     DocumentDetails: { docId: string };
-    DocumentAdd: { liesWithin: Document };
+    DocumentAdd: { parentDoc: Document };
 };
 
 
@@ -86,7 +86,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         setHierarchyBack(true);
         popFromHierarchy();
     };
-
+    console.log( hierarchyPath[0]?.resource.identifier);
     return (
         <Drawer.Navigator
             drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }
@@ -122,9 +122,10 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
-                    liesWithin={ route.params.liesWithin }
                     config={ config }
                     repository={ repository }
+                    isInOverview={ isInOverview }
+                    parentDoc={ route.params.parentDoc }
                 /> }
             </Drawer.Screen>
         </Drawer.Navigator>

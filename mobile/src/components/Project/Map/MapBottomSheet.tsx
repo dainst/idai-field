@@ -14,7 +14,7 @@ interface MapBottomSheetProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     languages: string[];
-    addDocument: (liesWithin: Document) => void;
+    addDocument: (parentDoc: Document) => void;
     focusHandler: (docId: string) => void;
 }
 

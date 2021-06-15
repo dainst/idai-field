@@ -53,7 +53,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             ));
     }, [repository, navigation]);
 
-   const addDocument = (liesWithin: Document) => navigation.navigate('DocumentAdd',{ liesWithin });
+   const addDocument = (parentDoc: Document) => navigation.navigate('DocumentAdd',{ parentDoc });
         
     return (
         <View style={ { flex: 1 } }>

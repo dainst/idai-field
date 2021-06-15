@@ -19,7 +19,7 @@ interface MapProps {
     config: ProjectConfiguration;
     languages: string[];
     highlightedDocId?: string;
-    addDocument: (liesWithin: Document) => void;
+    addDocument: (parentDoc: Document) => void;
 }
 
 

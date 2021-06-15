@@ -72,6 +72,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         padding: 10,

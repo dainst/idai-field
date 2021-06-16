@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.addField">
+        Feld <code>{{field.name}}</code> bearbeiten
+    </h5>
+
+    <button id="save-button" class="btn btn-primary"
+            [ngClass]="{ 'disabled': saving }"
+            (click)="saving || save()">
+        <span class="mdi mdi-content-save"></span>
+        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <button *ngIf="hideable && !hidden"
+            class="btn btn-secondary hide-field-button"
+            (click)="toggleHidden()"
+            placement="left" container="body"
+            ngbTooltip="Feld ausblenden"
+            i18n-ngbTooltip="@@configuration.hideField">
+        <span class="mdi mdi-eye-off"></span>
+    </button>
+    <button *ngIf="hideable && hidden"
+            class="btn btn-light show-field-button"
+            (click)="toggleHidden()"
+            placement="left" container="body"
+            ngbTooltip="Feld einblenden"
+            i18n-ngbTooltip="@@configuration.showField">
+        <span class="mdi mdi-eye"></span>
+    </button>
+    <div class="language-editor-section">
+        <b i18n="@@configuration.fieldLabel">Feldbezeichnung</b>
+        <multi-language-input [translations]="editableLabel"
+            [defaultTranslations]="field.defaultLabel"></multi-language-input>
+    </div>
+    <div class="language-editor-section">
+        <b i18n="@@configuration.description">Beschreibung</b>
+        <multi-language-input [translations]="editableDescription"
+            [defaultTranslations]="field.defaultDescription"></multi-language-input>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+            <select (change)="setInputType($event.target.value)"
+                    class="form-control">
+                <option *ngFor="let inputType of availableInputTypes"
+                        value="{{inputType.name}}"
+                        [selected]="getInputType() === inputType.name">
+                    {{inputType.label}}
+                </option>
+            </select>
+        </li>
+    </ul>
+</div>

@@ -23,13 +23,13 @@ export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefin
  */
 export class ProjectConfiguration {
 
-    private readonly categoriesArray: Array<Category>;
-    private readonly categoryForest: Forest<Category>;
-    private readonly relations: Array<RelationDefinition>;
+    private categoriesArray: Array<Category>;
+    private categoryForest: Forest<Category>;
+    private relations: Array<RelationDefinition>;
 
     // internal use only, we deliberately don't provide accessor for this any longer
     // use getCategory, getCategoryForest, getCategoriesArray instead
-    private readonly categoriesMap: Map<Category>;
+    private categoriesMap: Map<Category>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
@@ -38,6 +38,15 @@ export class ProjectConfiguration {
         this.categoriesArray = Tree.flatten<Category>(categories) || [];
         this.relations = relations || [];
         this.categoriesMap = Named.arrayToMap(this.categoriesArray);
+    }
+
+
+    public update(newProjectConfiguration: ProjectConfiguration) {
+
+        this.categoriesArray = newProjectConfiguration.categoriesArray;
+        this.categoryForest = newProjectConfiguration.categoryForest;
+        this.relations = newProjectConfiguration.relations;
+        this.categoriesMap = newProjectConfiguration.categoriesMap;
     }
 
 

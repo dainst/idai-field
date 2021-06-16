@@ -1,17 +1,20 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, flatten, to } from 'tsfun';
-import { Category, CustomFieldDefinition, FieldDefinition, I18nString, LabelUtil, LanguageConfiguration, ValuelistDefinition,
-    ValuelistUtil } from 'idai-field-core';
-import { OVERRIDE_VISIBLE_FIELDS } from './configuration-category.component';
-import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { flatten, to } from 'tsfun';
+import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
+    ValuelistUtil, Document, LabelUtil } from 'idai-field-core';
+import { MenuContext, MenuService } from '../menu-service';
+import { FieldEditorModalComponent } from './field-editor-modal.component';
+import { ConfigurationChange } from '../../core/configuration/configuration-change';
+
 
 const locale: string = typeof window !== 'undefined'
     ? window.require('@electron/remote').getGlobal('config').locale
     : 'de';
 
 
-type InputType = {
+export type InputType = {
     name: string;
     label: string;
 };
@@ -29,23 +32,18 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     @Input() category: Category;
     @Input() field: FieldDefinition;
-    @Input() customFieldDefinition: CustomFieldDefinition | undefined;
-    @Input() customLanguageConfigurations: { [language: string]: LanguageConfiguration };
+    @Input() customConfigurationDocument: ConfigurationDocument;
     @Input() hidden: boolean;
 
-    @Output() onToggleHidden: EventEmitter<void> = new EventEmitter();
+    @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
 
     public parentField: boolean = false;
     public customFieldDefinitionClone: CustomFieldDefinition | undefined;
     public editable: boolean = false;
-    public hideable: boolean = false;
-    public editing: boolean = false;
 
     public label: string;
     public description: string;
 
-    public editableLabel: I18nString;
-    public editableDescription: I18nString;
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }) },
@@ -68,7 +66,9 @@ export class ConfigurationFieldComponent implements OnChanges {
     ];
 
 
-    constructor(private i18n: I18n) {}
+    constructor(private modalService: NgbModal,
+                private menuService: MenuService,
+                private i18n: I18n) {}
 
 
     ngOnChanges() {
@@ -76,14 +76,7 @@ export class ConfigurationFieldComponent implements OnChanges {
         if (!this.category || !this.field) return;
 
         this.parentField = this.isParentField();
-        this.hideable = this.isHideable();
-        this.editing = false;
-
         this.updateLabelAndDescription();
-
-        this.customFieldDefinitionClone = this.customFieldDefinition
-            ? clone(this.customFieldDefinition)
-            : undefined;
     }
 
 
@@ -94,77 +87,55 @@ export class ConfigurationFieldComponent implements OnChanges {
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
         ValuelistUtil.getValueLabel(valuelist, valueId);
 
-    public toggleHidden = () => this.onToggleHidden.emit();
+    public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
 
     public isCustomField = () => this.field.source === 'custom';
 
 
-    public startEditing() {
+    public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 
-        this.editableLabel = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.customLanguageConfigurations, 'label', this.category, this.field
-        );
-        this.editableDescription = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.customLanguageConfigurations, 'description', this.category, this.field
-        );
-        this.editing = true;
+        return this.customConfigurationDocument.resource
+            .categories[this.category.libraryId ?? this.category.name]
+            .fields[this.field.name];
     }
 
 
-    public finishEditing() {
+    public async edit() {
 
-        this.updateCustomFieldDefinition();
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            this.customLanguageConfigurations, this.editableLabel, this.editableDescription, this.category, this.field
-        );
-        this.updateLabelAndDescription();
-        this.editing = false;
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(FieldEditorModalComponent);
+        modalReference.componentInstance.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.field = this.field;
+        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
+        modalReference.componentInstance.initialize();
+
+        try {
+            this.onEdited.emit(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 
     public getInputTypeLabel(): string {
 
-        return this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).label;
-    }
-
-
-    public getInputType() {
-
-        return this.customFieldDefinition
-            ? this.editing
-                ? this.customFieldDefinitionClone.inputType
-                : this.customFieldDefinition.inputType
-            : this.field.inputType;
-    }
-
-
-    public setInputType(newInputType: string) {
-
-        if (!this.customFieldDefinitionClone) throw 'Custom field definition is missing!';
-
-        this.customFieldDefinitionClone.inputType = newInputType;
-    }
-
-
-    private updateCustomFieldDefinition() {
-        
-        if (!this.customFieldDefinition) return;
-
-        this.customFieldDefinition.inputType = this.customFieldDefinitionClone.inputType;
+        return this.availableInputTypes
+            .find(inputType => inputType.name === this.field.inputType)
+            .label;
     }
 
 
     private updateLabelAndDescription() {
 
-        const { label, description } = LabelUtil.getLabelAndDescription(
-            LanguageConfigurationUtil.getUpdatedDefinition(
-                this.customLanguageConfigurations, this.category, this.field
-            )
-        );
+        const { label, description } = LabelUtil.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
     }
-                                    
+
 
     private isParentField(): boolean {
 
@@ -173,13 +144,5 @@ export class ConfigurationFieldComponent implements OnChanges {
         return flatten(this.category.parentCategory.groups.map(to('fields')))
             .map(to('name'))
             .includes(this.field.name);
-    }
-
-
-    private isHideable(): boolean {
-
-        return !this.parentField
-            && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
-            && this.field.source !== 'custom';
     }
 }

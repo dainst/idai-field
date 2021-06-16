@@ -13,18 +13,12 @@
                         <span class="mdi mdi-eye"></span>
                     </button>
                 </div>
-                <button id="save-button" class="btn btn-primary"
-                        [ngClass]="{ 'disabled': saving }"
-                        (click)="saving || save()">
-                    <span class="mdi mdi-content-save"></span>
-                    <span class="button-label" i18n="@@buttons.save">Speichern</span>
-                </button>
             </div>
         </div>
         <div class="row">
             <div class="col-2 sidebar">
-                <category-picker *ngIf="toplevelCategoriesArray"
-                                 [toplevelCategoriesArray]="toplevelCategoriesArray"
+                <category-picker *ngIf="topLevelCategoriesArray"
+                                 [toplevelCategoriesArray]="topLevelCategoriesArray"
                                  [selectedCategories]="[selectedCategory.name]"
                                  [allowPickingAbstractCategories]="true"
                                  [highlightCustomCategories]="true"
@@ -34,10 +28,9 @@
 
             <div class="col-10">
                 <configuration-category [category]="selectedCategory"
-                                        [customCategoryDefinition]="getCustomCategoryDefinition(selectedCategory)"
-                                        [parentCustomCategoryDefinition]="getParentCustomCategoryDefinition(selectedCategory)"
-                                        [customLanguageConfigurations]="customConfigurationDocument.resource.languages"
-                                        [showHiddenFields]="showHiddenFields"></configuration-category>
+                                        [customConfigurationDocument]="customConfigurationDocument"
+                                        [showHiddenFields]="showHiddenFields"
+                                        (onEdited)="saveChanges($event)"></configuration-category>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ import { CustomCategoryDefinition, FieldDefinition } from 'idai-field-core';
 export module ConfigurationUtil {
 
     export const isHidden = (customCategoryDefinition: CustomCategoryDefinition,
-                             parentCustomCategoryDefinition: CustomCategoryDefinition) =>
+                             parentCustomCategoryDefinition?: CustomCategoryDefinition) =>
             (field: FieldDefinition): boolean => {
 
         return (customCategoryDefinition.hidden ?? []).includes(field.name) || 

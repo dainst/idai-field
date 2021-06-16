@@ -9,6 +9,7 @@ import { ConfigurationRelationComponent } from './configuration-relation.compone
 import { MultiLanguageInputComponent } from './multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
 import { AddFieldModalComponent } from './add-field-modal.component';
+import { FieldEditorModalComponent } from './field-editor-modal.component';
 
 
 @NgModule({
@@ -24,14 +25,16 @@ import { AddFieldModalComponent } from './add-field-modal.component';
         ConfigurationFieldComponent,
         ConfigurationRelationComponent,
         MultiLanguageInputComponent,
-        AddFieldModalComponent
+        AddFieldModalComponent,
+        FieldEditorModalComponent,
     ],
     exports: [
         ProjectConfigurationComponent
     ],
     entryComponents: [
         ProjectConfigurationComponent,
-        AddFieldModalComponent
+        AddFieldModalComponent,
+        FieldEditorModalComponent
     ]
 })
 

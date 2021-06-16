@@ -74,11 +74,10 @@
         <div class="fields-container">
             <div *ngFor="let field of getFields()">
                 <configuration-field [field]="field"
-                                    [customFieldDefinition]="getCustomFieldDefinition(field)"
-                                    [customLanguageConfigurations]="customLanguageConfigurations"
-                                    [category]="category"
-                                    [hidden]="isHidden(field)"
-                                    (onToggleHidden)="toggleHidden(field)">
+                                     [customConfigurationDocument]="customConfigurationDocument"
+                                     [category]="category"
+                                     [hidden]="isHidden(field)"
+                                     (onEdited)="onEdited.emit($event)">
                 </configuration-field>
             </div>
             <div *ngFor="let relation of getRelations()">

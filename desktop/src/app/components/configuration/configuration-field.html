@@ -15,66 +15,22 @@
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
         <div *ngIf="!parentField" class="btn-group right edit-buttons">
-            <button *ngIf="hideable && !hidden"
-                    class="btn btn-secondary hide-field-button"
-                    (click)="toggleHidden()"
-                    placement="left" container="body"
-                    ngbTooltip="Feld ausblenden"
-                    i18n-ngbTooltip="@@configuration.hideField">
-                <span class="mdi mdi-eye-off"></span>
-            </button>
-            <button *ngIf="hideable && hidden"
-                    class="btn btn-light show-field-button"
-                    (click)="toggleHidden()"
-                    placement="left" container="body"
-                    ngbTooltip="Feld einblenden"
-                    i18n-ngbTooltip="@@configuration.showField">
-                <span class="mdi mdi-eye"></span>
-            </button>
-            <button *ngIf="!editing" class="btn btn-primary"
-                    (click)="startEditing()"
+            <button class="btn btn-primary"
+                    (click)="edit()"
                     placement="left" container="body"
                     ngbTooltip="Feld bearbeiten"
                     i18n-ngbTooltip="@@configuration.editField">
                 <span class="mdi mdi-pencil"></span>
             </button>
-            <button *ngIf="editing" class="btn btn-primary"
-                    (click)="finishEditing()"
-                    placement="left" container="body"
-                    ngbTooltip="Änderungen speichern"
-                    i18n-ngbTooltip="@@configuration.saveChanges">
-                OK
-            </button>
         </div>
     </div>
 
     <div *ngIf="!parentField" class="card-body">
-        <p *ngIf="description && !editing" class="card-text">{{description}}</p>
-        <div *ngIf="editing">
-            <div class="language-editor-section">
-                <b i18n="@@configuration.fieldLabel">Feldbezeichnung</b>
-                <multi-language-input [translations]="editableLabel"
-                    [defaultTranslations]="field.defaultLabel"></multi-language-input>
-            </div>
-            <div class="language-editor-section">
-                <b i18n="@@configuration.description">Beschreibung</b>
-                <multi-language-input [translations]="editableDescription"
-                    [defaultTranslations]="field.defaultDescription"></multi-language-input>
-            </div>
-        </div>
+        <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                <span *ngIf="!editing || !isCustomField()">{{getInputTypeLabel()}}</span>
-                <select *ngIf="editing && !isCustomField()"
-                        (change)="setInputType($event.target.value)"
-                        class="form-control">
-                    <option *ngFor="let inputType of availableInputTypes"
-                            value="{{inputType.name}}"
-                            [selected]="getInputType() === inputType.name">
-                        {{inputType.label}}
-                    </option>
-                </select>
+                <span>{{getInputTypeLabel()}}</span>
             </li>
 
             <li *ngIf="field.valuelist" class="list-group-item">

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, CustomCategoryDefinition } from 'idai-field-core';
+import { Category, Datastore, ConfigurationDocument, ProjectConfiguration } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
-import { reload } from '../../core/common/reload';
+import { ConfigurationChange } from '../../core/configuration/configuration-change';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { reload } from '../../core/common/reload';
  */
 export class ProjectConfigurationComponent implements OnInit {
 
-    public toplevelCategoriesArray: Array<Category>;
+    public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
     public customConfigurationDocument: ConfigurationDocument;
     public saving: boolean = false;
@@ -32,15 +32,13 @@ export class ProjectConfigurationComponent implements OnInit {
                 private menuService: MenuService,
                 private datastore: Datastore,
                 private messages: Messages,
-                private settingsProvider: SettingsProvider) {
-
-        this.toplevelCategoriesArray = projectConfiguration.getCategoriesArray()
-            .filter(category => !category.parentCategory);
-        this.selectCategory(this.toplevelCategoriesArray[0]);
-    }
+                private settingsProvider: SettingsProvider) {}
 
 
     async ngOnInit() {
+
+        this.loadCategories();
+        this.selectCategory(this.topLevelCategoriesArray[0]);
 
         this.customConfigurationDocument = await this.datastore.get(
             'configuration',
@@ -57,17 +55,21 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async save() {
+    public async saveChanges(configurationChange: ConfigurationChange) {
 
         try {
-            await this.datastore.update(
-                this.customConfigurationDocument,
+            this.customConfigurationDocument = await this.datastore.update(
+                configurationChange.newCustomConfigurationDocument,
                 this.settingsProvider.getSettings().username
-            );
-            reload();
+            ) as ConfigurationDocument;
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
+            return;
         }
+
+        this.projectConfiguration.update(configurationChange.newProjectConfiguration);
+        this.loadCategories();
+        this.selectCategory(this.topLevelCategoriesArray[0]);
     }
 
 
@@ -77,17 +79,9 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public getCustomCategoryDefinition(category: Category): CustomCategoryDefinition|undefined {
+    private loadCategories() {
 
-        return this.customConfigurationDocument.resource.categories[category.libraryId ?? category.name];
-    }
-
-    
-    public getParentCustomCategoryDefinition(category: Category): CustomCategoryDefinition|undefined {
-
-        return category.parentCategory
-            ? this.customConfigurationDocument.resource
-                .categories[category.parentCategory.libraryId ?? category.parentCategory.name]
-            : undefined;
+        this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
+            .filter(category => !category.parentCategory);
     }
 }

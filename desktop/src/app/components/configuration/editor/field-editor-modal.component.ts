@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'tsfun';
 import { AppConfigurator, CustomCategoryDefinition } from 'idai-field-core';
-import { InputType } from './configuration-field.component';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
-import { OVERRIDE_VISIBLE_FIELDS } from './configuration-category.component';
-import { SettingsProvider } from '../../core/settings/settings-provider';
+import { InputType } from '../configuration-field.component';
+import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
+import { OVERRIDE_VISIBLE_FIELDS } from '../configuration-category.component';
+import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 
 

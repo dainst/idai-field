@@ -5,7 +5,7 @@ import { flatten, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
     ValuelistUtil, Document, LabelUtil } from 'idai-field-core';
 import { MenuContext, MenuService } from '../menu-service';
-import { FieldEditorModalComponent } from './field-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 
 

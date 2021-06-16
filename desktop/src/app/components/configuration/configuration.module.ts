@@ -9,8 +9,8 @@ import { ConfigurationRelationComponent } from './configuration-relation.compone
 import { MultiLanguageInputComponent } from './multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
 import { AddFieldModalComponent } from './add-field-modal.component';
-import { FieldEditorModalComponent } from './field-editor-modal.component';
-import { CategoryEditorModalComponent } from './category-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
+import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 
 
 @NgModule({

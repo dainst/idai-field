@@ -8,7 +8,7 @@ import { LanguageConfigurationUtil } from '../../core/configuration/language-con
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { CategoryEditorModalComponent } from './category-editor-modal.component';
+import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];

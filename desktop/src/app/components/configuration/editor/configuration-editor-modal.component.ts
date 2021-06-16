@@ -1,8 +1,8 @@
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition,
     getConfigurationName, I18nString, ProjectConfiguration, Document } from 'idai-field-core';
-import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
-import { SettingsProvider } from '../../core/settings/settings-provider';
+import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
+import { SettingsProvider } from '../../../core/settings/settings-provider';
 
 
 /**

@@ -37,7 +37,6 @@ import { EmptyValuelistInfoComponent } from './core/forms/widgets/empty-valuelis
 import { OutliersComponent } from './core/forms/widgets/outliers.component';
 import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
-import { EditSaveDialogComponent } from './dialog/edit-save-dialog.component';
 import { DoceditComponent } from './docedit.component';
 import { DoceditConflictsTabComponent } from './tabs/docedit-conflicts-tab.component';
 import { CategorySwitcherButtonComponent } from './widgets/category-switcher-button.component';
@@ -79,7 +78,6 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         DuplicateModalComponent,
         DeleteModalComponent,
         DoceditComponent,
-        EditSaveDialogComponent,
         DoceditConflictsTabComponent,
         CategorySwitcherButtonComponent,
         ImagePickerComponent,
@@ -108,7 +106,6 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         LiteratureComponent
     ],
     exports: [
-        EditSaveDialogComponent,
         DoceditComponent
     ],
     entryComponents: [
@@ -117,8 +114,7 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         TypeRelationPickerComponent,
         ImagePickerComponent,
         DuplicateModalComponent,
-        DeleteModalComponent,
-        EditSaveDialogComponent
+        DeleteModalComponent
     ]
 })
 

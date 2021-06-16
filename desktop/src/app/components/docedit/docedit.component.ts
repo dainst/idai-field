@@ -12,7 +12,7 @@ import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
 import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
-import { EditSaveDialogComponent } from './dialog/edit-save-dialog.component';
+import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
 
 
@@ -250,6 +250,9 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false }
             );
+            modalRef.componentInstance.changeMessage = this.i18n({
+                id: 'docedit.saveModal.resourceChanged', value: 'Die Ressource wurde geändert.'
+            });
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
 
             const result: string = await modalRef.result;

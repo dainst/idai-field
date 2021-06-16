@@ -1,12 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Category, Document, ProjectConfiguration } from 'idai-field-core';
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Category, Document, Group, ProjectConfiguration } from 'idai-field-core';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
+import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
+import Column from '../common/Column';
 import Heading from '../common/Heading';
+import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
@@ -23,6 +26,7 @@ interface DocumentAddProps {
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation ,parentDoc, category }) => {
     
+    const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
     
     return (
         <SafeAreaView style={ styles.container }>
@@ -41,13 +45,25 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
             />
-            <View style={ styles.formContainer }>
-                {config.getFieldDefinitions(category.name).map(val => <Text key={ val.name }>
-                    {val.group} - {val.name} - {val.inputType}</Text>)}
-            </View>
+            <Row style={ styles.formContainer }>
+                <Column style={ styles.groupColumn }>
+                    {category.groups.map(group => (
+                        <TouchableOpacity
+                            key={ group.name } style={ styles.groupBtn }
+                            onPress={ () => setActiveGroup(group) }>
+                            <Text style={ styleGroupText(group, activeGroup) }>{group.name}</Text>
+                        </TouchableOpacity>))}
+                </Column>
+                <Column>
+                    {activeGroup.fields.map(fieldDef => <Text key={ fieldDef.name }>{fieldDef.name}</Text>)}
+                </Column>
+            </Row>
         </SafeAreaView>
     );
 };
+
+const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
+    group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
 
 
 const styles = StyleSheet.create({
@@ -59,7 +75,28 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     formContainer: {
-        margin: 10
+        margin: 20,
+        justifyContent: 'flex-start'
+    },
+    groupColumn: {
+        backgroundColor: '#DDDDDD',
+        width: '30%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        marginRight: 50,
+        paddingHorizontal: 30,
+        paddingVertical: 10
+    },
+    groupBtn: {
+        margin: 1,
+    },
+    groupText: {
+        color: colors.primary,
+        fontSize: 20,
+        textTransform: 'capitalize',
+    },
+    groupTextActive: {
+        color: colors.secondary
     }
 });
 

@@ -41,7 +41,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
             />
-            <View style={ { margin: 10 } }>
+            <View style={ styles.formContainer }>
                 {config.getFieldDefinitions(category.name).map(val => <Text key={ val.name }>
                     {val.group} - {val.name} - {val.inputType}</Text>)}
             </View>
@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
     heading: {
         marginLeft: 10,
     },
+    formContainer: {
+        margin: 10
+    }
 });
 
 export default DocumentAdd;

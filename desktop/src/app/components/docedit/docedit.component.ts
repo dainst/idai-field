@@ -216,9 +216,9 @@ export class DoceditComponent {
         if (this.menuService.getContext() === MenuContext.DOCEDIT && !this.escapeKeyPressed) {
             if (event.srcElement) (event.srcElement as HTMLElement).blur();
             await this.cancel();
+        } else {
+            this.escapeKeyPressed = true;
         }
-
-        this.escapeKeyPressed = true;
     }
 
 

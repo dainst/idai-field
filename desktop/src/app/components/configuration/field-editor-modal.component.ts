@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'tsfun';
-import { AppConfigurator, Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition,
-    getConfigurationName, I18nString, ProjectConfiguration, Document } from 'idai-field-core';
-import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
+import { AppConfigurator, CustomCategoryDefinition } from 'idai-field-core';
 import { InputType } from './configuration-field.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { OVERRIDE_VISIBLE_FIELDS } from './configuration-category.component';
 import { SettingsProvider } from '../../core/settings/settings-provider';
+import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 
 
 @Component({
@@ -16,34 +15,19 @@ import { SettingsProvider } from '../../core/settings/settings-provider';
 /**
  * @author Thomas Kleinke
  */
-export class FieldEditorModalComponent {
+export class FieldEditorModalComponent extends ConfigurationEditorModalComponent {
 
-    public clonedConfigurationDocument: ConfigurationDocument;
-    public category: Category;
-    public field: FieldDefinition;
     public availableInputTypes: Array<InputType>;
 
     public hideable: boolean;
     public hidden: boolean;
 
-    public editableLabel: I18nString;
-    public editableDescription: I18nString;
 
-    public saving: boolean;
-
-
-    constructor(public activeModal: NgbActiveModal,
-                private appConfigurator: AppConfigurator,
-                private settingsProvider: SettingsProvider) {}
-
-
-    public getCustomLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
-
-
-    public getCustomCategoryDefinition(): CustomCategoryDefinition {
-
-        return this.clonedConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name];
+    constructor(activeModal: NgbActiveModal,
+                appConfigurator: AppConfigurator,
+                settingsProvider: SettingsProvider) {
+        
+        super(activeModal, appConfigurator, settingsProvider);
     }
 
 
@@ -53,54 +37,23 @@ export class FieldEditorModalComponent {
             this.getCustomCategoryDefinition().fields[this.field.name] = {};
         }
 
-        this.editableLabel = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getCustomLanguageConfigurations(), 'label', this.category, this.field
-        );
-        this.editableDescription = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getCustomLanguageConfigurations(), 'description', this.category, this.field
-        );
-
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
-        this.saving = false;
+
+        super.initialize();
     }
 
 
     public async save() {
 
-        this.saving = true;
-
         if (isEmpty(this.getCustomCategoryDefinition().fields[this.field.name])) {
             delete this.getCustomCategoryDefinition().fields[this.field.name];
         }
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            this.getCustomLanguageConfigurations(), this.editableLabel, this.editableDescription, this.category, this.field
-        );
-
-        try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(this.clonedConfigurationDocument)
-            );
-            this.activeModal.close({ 
-                newProjectConfiguration,
-                newCustomConfigurationDocument: this.clonedConfigurationDocument
-            });
-        } catch (err) {
-            // TODO Error handling
-            console.error(err);
-        }
+        super.save();
     }
 
 
-    public cancel() {
-
-        this.activeModal.dismiss('cancel');
-    }
-
-    
     public getInputType() {
 
         return this.getCustomCategoryDefinition().fields[this.field.name].inputType

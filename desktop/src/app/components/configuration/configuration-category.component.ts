@@ -2,12 +2,13 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, FieldResource, Group, I18nString,
-    LabelUtil, Named, RelationDefinition, Relations, Resource } from 'idai-field-core';
+    LabelUtil, Named, RelationDefinition, Relations, Resource, Document } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
+import { CategoryEditorModalComponent } from './category-editor-modal.component';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -30,13 +31,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
 
     public selectedGroup: string;
-    public editing: boolean = false;
 
     public label: string;
     public description: string;
-
-    public editableLabel: I18nString;
-    public editableDescription: I18nString;
 
     private permanentlyHiddenFields: string[];
 
@@ -53,7 +50,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
         }
 
         this.updateLabelAndDescription();
-        this.editing = false;
     }
 
     
@@ -126,25 +122,22 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public startEditing() {
+    public async edit() {
 
-        this.editableLabel = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getCustomLanguageConfigurations(), 'label', this.category
-        );
-        this.editableDescription = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getCustomLanguageConfigurations(), 'description', this.category
-        );
-        this.editing = true;
-    }
+        this.menuService.setContext(MenuContext.MODAL);
 
+        const modalReference: NgbModalRef = this.modalService.open(CategoryEditorModalComponent);
+        modalReference.componentInstance.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.initialize();
 
-    public finishEditing() {
-
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            this.getCustomLanguageConfigurations(), this.editableLabel, this.editableDescription, this.category
-        );
-        this.updateLabelAndDescription();
-        this.editing = false;
+        try {
+            this.onEdited.emit(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 

@@ -21,19 +21,12 @@
             <strong i18n="@@config.libraryId">Formular</strong>:
             <code>{{category.libraryId}}</code>
         </span>
-        <button *ngIf="!editing" class="btn btn-primary edit-category-button"
-                (click)="startEditing()"
+        <button class="btn btn-primary edit-category-button"
+                (click)="edit()"
                 placement="left" container="body"
                 ngbTooltip="Kateogorie bearbeiten"
                 i18n-ngbTooltip="@@configuration.editCategory">
             <span class="mdi mdi-pencil"></span>
-        </button>
-        <button *ngIf="editing" class="btn btn-primary edit-category-button"
-                (click)="finishEditing()"
-                placement="left" container="body"
-                ngbTooltip="Änderungen speichern"
-                i18n-ngbTooltip="@@configuration.saveChanges">
-            OK
         </button>
     </div>
 </div>
@@ -41,22 +34,7 @@
     <div class="col">{{description}}</div>
 </div>
 
-<div *ngIf="editing" class="row category-editor content">
-    <div class="col">
-        <div class="language-editor-section">
-            <b i18n="@@configuration.categoryLabel">Kategoriebezeichnung</b>
-            <multi-language-input [translations]="editableLabel"
-                [defaultTranslations]="category.defaultLabel"></multi-language-input>
-        </div>
-        <div class="language-editor-section">
-            <b i18n="@@configuration.description">Beschreibung</b>
-            <multi-language-input [translations]="editableDescription"
-                [defaultTranslations]="category.defaultDescription"></multi-language-input>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="!editing" class="row">
+<div class="row">
     <div class="col-2 groups">
         <ul class="nav nav-pills flex-column">
             <li *ngFor="let group of getGroups()" class="nav flex-column">

@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.editCategory">
+        Kategorie <code>{{category.name}}</code> bearbeiten
+    </h5>
+
+    <button id="save-button" class="btn btn-primary"
+            [ngClass]="{ 'disabled': saving }"
+            (click)="saving || save()">
+        <span class="mdi mdi-content-save"></span>
+        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <div class="language-editor-section">
+        <b i18n="@@configuration.categoryLabel">Kategoriebezeichnung</b>
+        <multi-language-input [translations]="editableLabel"
+            [defaultTranslations]="category.defaultLabel"></multi-language-input>
+    </div>
+    <div class="language-editor-section">
+        <b i18n="@@configuration.description">Beschreibung</b>
+        <multi-language-input [translations]="editableDescription"
+            [defaultTranslations]="category.defaultDescription"></multi-language-input>
+    </div>
+</div>

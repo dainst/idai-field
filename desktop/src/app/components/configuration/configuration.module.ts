@@ -10,6 +10,7 @@ import { MultiLanguageInputComponent } from './multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { FieldEditorModalComponent } from './field-editor-modal.component';
+import { CategoryEditorModalComponent } from './category-editor-modal.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { FieldEditorModalComponent } from './field-editor-modal.component';
         MultiLanguageInputComponent,
         AddFieldModalComponent,
         FieldEditorModalComponent,
+        CategoryEditorModalComponent
     ],
     exports: [
         ProjectConfigurationComponent
@@ -34,7 +36,8 @@ import { FieldEditorModalComponent } from './field-editor-modal.component';
     entryComponents: [
         ProjectConfigurationComponent,
         AddFieldModalComponent,
-        FieldEditorModalComponent
+        FieldEditorModalComponent,
+        CategoryEditorModalComponent
     ]
 })
 

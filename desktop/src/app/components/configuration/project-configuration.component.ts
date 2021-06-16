@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, Datastore, ConfigurationDocument, ProjectConfiguration } from 'idai-field-core';
+import { Category, Datastore, ConfigurationDocument, ProjectConfiguration,  } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
@@ -69,7 +69,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.projectConfiguration.update(configurationChange.newProjectConfiguration);
         this.loadCategories();
-        this.selectCategory(this.topLevelCategoriesArray[0]);
+        this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
     }
 
 

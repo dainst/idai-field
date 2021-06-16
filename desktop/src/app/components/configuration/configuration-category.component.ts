@@ -45,7 +45,10 @@ export class ConfigurationCategoryComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes['category']) {
-            this.selectedGroup = this.getGroups()[0].name;
+            if (!changes['category'].previousValue
+                    || changes['category'].currentValue.name !== changes['category'].previousValue.name) {
+                this.selectedGroup = this.getGroups()[0].name;
+            }
             this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();
         }
 

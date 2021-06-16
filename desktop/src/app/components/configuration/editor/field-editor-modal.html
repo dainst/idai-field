@@ -2,12 +2,16 @@
     <h5 class="modal-title" i18n="@@configuration.editSpecificField">
         Feld <code>{{field.name}}</code> bearbeiten
     </h5>
-
     <button id="save-button" class="btn btn-primary"
             [ngClass]="{ 'disabled': saving }"
             (click)="saving || save()">
         <span class="mdi mdi-content-save"></span>
         <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    </button>
+    <button class="btn btn-primary"
+            [class.disabled]="saving"
+            (click)="saving || cancel()">
+        <span class="mdi mdi-close"></span>
     </button>
 </div>
 

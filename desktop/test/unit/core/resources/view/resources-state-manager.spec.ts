@@ -26,7 +26,7 @@ describe('ResourcesStateManager', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['get']);
         mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategoryTreelist'])
+        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategoryForest'])
 
         mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
         mockIndexFacade.getCount.and.callFake(getCount);

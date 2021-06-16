@@ -1,10 +1,10 @@
-import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
-    removeTrees} from '../../src/tools/named-forest';
-import {Named} from '../../src/tools/named';
-import {Tree, Forest} from '../../src/tools/forest';
+import { filterTrees, findInNamedForest, isTopLevelItemOrChildThereof,
+    removeTrees } from '../../src/tools/named-forest';
+import { Named } from '../../src/tools/named';
+import { Tree, Forest } from '../../src/tools/forest';
 
 
-describe('NamedTreelist', () => {
+describe('NamedForest', () => {
 
     function threeLevels(): any {
 
@@ -30,10 +30,10 @@ describe('NamedTreelist', () => {
         ])
     }
 
-    it('findInNamedTreelist', () => {
+    it('findInNamedForest', () => {
 
         const t = threeLevels();
-        const result = findInNamedTreeList('C1', t);
+        const result = findInNamedForest('C1', t);
 
         expect(result.name).toBe('C1');
     });
@@ -41,22 +41,22 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof', () => {
 
-        const categoryTreelist: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Tree.buildForest([
             [
-                {name: 'Image'},
+                { name: 'Image' },
                 [
                     [
-                        {name: 'Drawing'},
+                        { name: 'Drawing' },
                         []
                     ]
                 ]
             ],
             [
-                {name: 'Operation'},
+                { name: 'Operation' },
                 []
             ],
             [
-                {name: 'Inscription'},
+                { name: 'Inscription' },
                 []
             ],
             [
@@ -64,96 +64,96 @@ describe('NamedTreelist', () => {
                 []
             ],
             [
-                {name: 'TypeCatalog'},
+                { name: 'TypeCatalog' },
                 []
             ]
         ]);
 
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Image', 'Image')).toBeTruthy();
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Drawing', 'Image')).toBeTruthy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Image', 'Image')).toBeTruthy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Drawing', 'Image')).toBeTruthy();
 
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Image', 'Operation')).toBeFalsy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Image', 'Operation')).toBeFalsy();
 
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Drawing', 'Imag')).toBeFalsy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Drawing', 'Imag')).toBeFalsy();
     });
 
 
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
-        const categoryTreelist: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Tree.buildForest([
             [
-                {name: 'Image'},
+                { name: 'Image' },
                 [
                     [
-                        {name: 'Drawing'},
+                        { name: 'Drawing' },
                         []
                     ]
                 ]
             ],
             [
-                {name: 'Operation'},
+                { name: 'Operation' },
                 []
             ],
             [
-                {name: 'Inscription'},
+                { name: 'Inscription' },
                 []
             ],
             [
-                {name: 'Type'},
+                { name: 'Type' },
                 []
             ],
             [
-                {name: 'TypeCatalog'},
+                { name: 'TypeCatalog' },
                 []
             ],
         ]);
 
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Operation', 'Image', 'Type')).toBeFalsy();
-        expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Drawing', 'Type', 'Image')).toBeTruthy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Operation', 'Image', 'Type')).toBeFalsy();
+        expect(isTopLevelItemOrChildThereof(categoryForest, 'Drawing', 'Type', 'Image')).toBeTruthy();
     });
 
 
     it('removeTrees', () => {
 
-        const categoryTreelist: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Tree.buildForest([
             [
-                {name: 'Image'},
+                { name: 'Image' },
                 [
                     [
-                        {name: 'Drawing'},
+                        { name: 'Drawing' },
                         []
                     ]
                 ]
             ],
             [
-                {name: 'Operation'},
+                { name: 'Operation' },
                 []
             ],
             [
-                {name: 'Inscription'},
+                { name: 'Inscription' },
                 []
             ]
         ]);
 
-        const result0 = removeTrees(categoryTreelist, 'Operation', 'Inscription');
+        const result0 = removeTrees(categoryForest, 'Operation', 'Inscription');
 
         expect(result0.length).toBe(1);
         expect(Tree.access(result0, 0).name).toBe('Image');
         expect(Tree.access(result0, 0, 0).name).toBe('Drawing');
 
-        const result1 = removeTrees('Operation', 'Inscription')(categoryTreelist);
+        const result1 = removeTrees('Operation', 'Inscription')(categoryForest);
 
         expect(result1.length).toBe(1);
         expect(Tree.access(result1, 0).name).toBe('Image');
         expect(Tree.access(result1, 0, 0).name).toBe('Drawing');
 
-        const result2 = removeTrees('Image')(categoryTreelist);
+        const result2 = removeTrees('Image')(categoryForest);
 
         expect(result2.length).toBe(2);
         expect(Tree.access(result2, 0).name).toBe('Operation');
         expect(Tree.access(result2, 1).name).toBe('Inscription');
 
-        const result3 = removeTrees(categoryTreelist, 'Image');
+        const result3 = removeTrees(categoryForest, 'Image');
 
         expect(result3.length).toBe(2);
         expect(Tree.access(result3, 0).name).toBe('Operation');
@@ -169,44 +169,44 @@ describe('NamedTreelist', () => {
 
     it('filterTrees', () => {
 
-        const categoryTreelist: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Tree.buildForest([
             [
-                {name: 'Image'},
+                { name: 'Image' },
                 [
                     [
-                        {name: 'Drawing'},
+                        {name: 'Drawing' },
                         []
                     ]
                 ]
             ],
             [
-                {name: 'Operation'},
+                { name: 'Operation' },
                 []
             ],
             [
-                {name: 'Inscription'},
+                { name: 'Inscription' },
                 []
             ]
         ]);
 
-        const result0 = filterTrees(categoryTreelist, 'Operation');
+        const result0 = filterTrees(categoryForest, 'Operation');
 
         expect(result0.length).toBe(1);
         expect(Tree.access(result0, 0).name).toBe('Operation');
 
-        const result1 = filterTrees(categoryTreelist, 'Operation', 'Inscription');
+        const result1 = filterTrees(categoryForest, 'Operation', 'Inscription');
 
         expect(result1.length).toBe(2);
         expect(Tree.access(result1, 0).name).toBe('Operation');
         expect(Tree.access(result1, 1).name).toBe('Inscription');
 
-        const result2 = filterTrees('Operation', 'Inscription')(categoryTreelist);
+        const result2 = filterTrees('Operation', 'Inscription')(categoryForest);
 
         expect(result2.length).toBe(2);
         expect(Tree.access(result2, 0).name).toBe('Operation');
         expect(Tree.access(result2, 1).name).toBe('Inscription');
 
-        const result3 = filterTrees('Operation')(categoryTreelist);
+        const result3 = filterTrees('Operation')(categoryForest);
 
         expect(result3.length).toBe(1);
         expect(Tree.access(result3, 0).name).toBe('Operation');

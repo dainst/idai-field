@@ -25,9 +25,9 @@ export type Tree<T = any> = {
 export type Forest<T = any> = Array<Tree<T>>;
 
 
-// ArrayTree and ArrayTreeList data structures //////
+// ArrayTree and ArrayForest data structures //////
 //
-// In contrast to our Tree and TreeList data structures
+// In contrast to our Tree and Forest data structures
 // this structure does not allow for distinguishing trees and
 // tree lists on the javascript level by virtue of them being either
 // objects or arrays.
@@ -53,8 +53,8 @@ export module Tree {
 
     // Implementation note:
     // Technically it would be no problem to have only a function mapTree
-    // (making mapTreeList superfluous) which maps both Tree and TreeList.
-    // But the two argument list version would then return Mapping<Tree|TreeList>
+    // (making mapForest superfluous) which maps both Tree and Forest.
+    // But the two argument list version would then return Mapping<Tree|Forest>
     // which would then lead to the problem that we needed to disambiguate typewise
     // in flows, which we want to avoid  (same consideration which in tsfun led
     // to having various packages containing various functions versions).
@@ -63,11 +63,11 @@ export module Tree {
     export function mapList<A,B>(f: Mapping<A,B>): Mapping<Forest<A>,Forest<B>>;
     export function mapList(...args: any[]): any {
 
-        const $ = (f: any) => (treeList: any) => {
+        const $ = (f: any) => (forest: any) => {
 
             const replacement = [];
-            for (let { item: t, trees: tree} of treeList) {
-                replacement.push({ item: f(t), trees: mapList(f, tree)});
+            for (let { item: t, trees: tree } of forest) {
+                replacement.push({ item: f(t), trees: mapList(f, tree) });
             }
             return replacement;
         };
@@ -121,10 +121,10 @@ export module Tree {
             const segment = first(path);
             if (segment === undefined) return t.item;
             else if (isNumber(segment)) return _accessTree(t.trees[segment], rest(path));
-            return _accessTreelist(t.trees, path);
+            return _accessForest(t.trees, path);
         }
 
-        function _accessTreelist<T>(t: Forest<T>, path: number[]) {
+        function _accessForest<T>(t: Forest<T>, path: number[]) {
 
             const segment = first(path);
             if (!isNumber(segment)) return t[0] as any;
@@ -133,7 +133,7 @@ export module Tree {
 
         return (isObject(t)
             ? _accessTree
-            : _accessTreelist as any)(t as Tree<T>, path);
+            : _accessForest as any)(t as Tree<T>, path);
     }
 
 

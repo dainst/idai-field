@@ -66,7 +66,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('mapTreelist', () => {
+    it('mapForest', () => {
 
         const t: Forest<number> = Tree.buildForest(
             [
@@ -91,7 +91,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('mapTreelists', () => {
+    it('mapForests', () => {
 
         const t: Forest<number> = Tree.buildForest(
             [
@@ -173,7 +173,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('findInTreelist', () => {
+    it('findInForest', () => {
 
         const t: Forest<any> = Tree.buildForest<any>(
             [
@@ -192,7 +192,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('findInTreelist - tree', () => {
+    it('findInForest - tree', () => {
 
         const t: Tree = Tree.build([
             17,
@@ -209,7 +209,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('findInTreelist with Predicate', () => {
+    it('findInForest with Predicate', () => {
 
         const a = { a: 3 };
 
@@ -227,7 +227,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('findInTreelist with Comparator', () => {
+    it('findInForest with Comparator', () => {
 
         const a = { a: 3 };
         const t: Forest = Tree.buildForest<any>(
@@ -251,7 +251,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('accessTreelist - first level', () => {
+    it('accessForest - first level', () => {
 
         expect(Tree.access(Tree.buildForest(
             [
@@ -265,7 +265,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('accessTreelist - second level', () => {
+    it('accessForest - second level', () => {
 
         expect(Tree.access(Tree.buildForest(
             [
@@ -284,7 +284,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('accessTreelist - tree', () => {
+    it('accessForest - tree', () => {
 
         expect(Tree.access(Tree.build(
 
@@ -303,7 +303,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('accessTreelist - tree - deeper and wider', () => {
+    it('accessForest - tree - deeper and wider', () => {
 
         expect(Tree.access(Tree.build(
 
@@ -331,7 +331,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('accessTreelist - tree - root', () => {
+    it('accessForest - tree - root', () => {
 
         expect(Tree.access(Tree.build(
 
@@ -348,7 +348,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('zipTreeListWith', () => {
+    it('zipForestWith', () => {
 
         const tl1 = Tree.buildForest([[3, []]]);
         const tl2 = Tree.buildForest([[76, []]]);
@@ -361,7 +361,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('zipTreeListWith - recursive', () => {
+    it('zipForestWith - recursive', () => {
 
         const tl1 = Tree.buildForest([[3, [[5, []]]]]);
         const tl2 = Tree.buildForest([[76, [[7, []]]]]);
@@ -374,7 +374,7 @@ describe('Forest|Tree', () => {
     });
 
 
-    it('zipTreeListWith - no zipper, recursive', () => {
+    it('zipForestWith - no zipper, recursive', () => {
 
         const tl1 = Tree.buildForest([[3, [[5, []]]]]);
         const tl2 = Tree.buildForest([[76, [[7, []]]]]);

@@ -1,10 +1,11 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
-import React, { ReactElement, useCallback, useMemo } from 'react';
+import { Category, Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
+import AddModal from './AddModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
 import SearchBar from './SearchBar';
@@ -22,6 +23,7 @@ interface DocumentsMapProps {
     languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
+    isInOverview: () => boolean;
 }
 
 
@@ -35,8 +37,12 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     config,
     languages,
     setProjectSettings,
-    issueSearch
+    issueSearch,
+    isInOverview
 }): ReactElement => {
+
+    const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+    const [highlightedDoc, setHighlightedDoc] = useState<Document>();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
@@ -53,10 +59,28 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             ));
     }, [repository, navigation]);
 
-   const addDocument = (parentDoc: Document) => navigation.navigate('DocumentAdd',{ parentDoc });
+    const handleAddDocument = (parentDoc: Document) => {
+       setHighlightedDoc(parentDoc);
+       setIsAddModalOpen(true);
+    };
+
+    const closeAddModal = () => setIsAddModalOpen(false);
+
+    const navigateAddCategory = (category: Category, parentDoc: Document | undefined) => {
+        closeAddModal();
+        if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, category });
+    };
+
         
     return (
         <View style={ { flex: 1 } }>
+            {isAddModalOpen && <AddModal
+                onClose={ closeAddModal }
+                parentDoc={ highlightedDoc }
+                config={ config }
+                onAddCategory={ navigateAddCategory }
+                isInOverview={ isInOverview }
+            />}
             <SearchBar { ...{
                 issueSearch,
                 projectSettings,
@@ -74,7 +98,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     config={ config }
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
-                    addDocument={ addDocument } />
+                    addDocument={ handleAddDocument } />
             </View>
         </View>
     );

@@ -1,0 +1,27 @@
+.configuration-editor-modal-header {
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  user-select: none;
+  background-color: $modal-header-background-color;
+
+  .modal-title {
+    position: relative;
+    top: 5px;
+    left: 9px;
+  }
+}
+
+.configuration-editor-modal-body {
+  height: calc(100vh - 110px);
+  overflow-y: auto;
+  background-color: #eee;
+
+  .configuration-editor-section-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .configuration-editor-section {
+    margin-bottom: 25px;
+  }
+}

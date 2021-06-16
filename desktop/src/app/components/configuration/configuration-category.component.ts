@@ -129,7 +129,10 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(CategoryEditorModalComponent);
+        const modalReference: NgbModalRef = this.modalService.open(
+            CategoryEditorModalComponent,
+            { size: 'lg', backdrop: 'static' }
+        );
         modalReference.componentInstance.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.initialize();

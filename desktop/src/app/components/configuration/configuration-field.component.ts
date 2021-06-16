@@ -104,7 +104,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(FieldEditorModalComponent);
+        const modalReference: NgbModalRef = this.modalService.open(
+            FieldEditorModalComponent,
+            { size: 'lg', backdrop: 'static' }
+        );
         modalReference.componentInstance.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.field = this.field;

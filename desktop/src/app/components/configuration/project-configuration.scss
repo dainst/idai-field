@@ -1,6 +1,7 @@
 @import './configuration-category.scss';
 @import './configuration-field';
 @import './multi-language-input';
+@import './editor/configuration-editor-modal';
 
 .project-configuration {
   .sidebar {
@@ -28,9 +29,5 @@
       position: absolute;
       right: 5px;
     }
-  }
-
-  .language-editor-section {
-    margin-bottom: 25px;
   }
 }

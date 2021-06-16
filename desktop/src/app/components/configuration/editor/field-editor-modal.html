@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 class="modal-title" i18n="@@configuration.editSpecificField">
         Feld <code>{{field.name}}</code> bearbeiten
     </h5>
@@ -11,7 +11,7 @@
     </button>
 </div>
 
-<div class="modal-body">
+<div class="modal-body configuration-editor-modal-body">
     <button *ngIf="hideable && !hidden"
             class="btn btn-secondary hide-field-button"
             (click)="toggleHidden()"
@@ -28,27 +28,31 @@
             i18n-ngbTooltip="@@configuration.showField">
         <span class="mdi mdi-eye"></span>
     </button>
-    <div class="language-editor-section">
-        <b i18n="@@configuration.fieldLabel">Feldbezeichnung</b>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
+            Feldbezeichnung
+        </div>
         <multi-language-input [translations]="editableLabel"
             [defaultTranslations]="field.defaultLabel"></multi-language-input>
     </div>
-    <div class="language-editor-section">
-        <b i18n="@@configuration.description">Beschreibung</b>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.description">
+            Beschreibung
+        </div>
         <multi-language-input [translations]="editableDescription"
             [defaultTranslations]="field.defaultDescription"></multi-language-input>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-            <select (change)="setInputType($event.target.value)"
-                    class="form-control">
-                <option *ngFor="let inputType of availableInputTypes"
-                        value="{{inputType.name}}"
-                        [selected]="getInputType() === inputType.name">
-                    {{inputType.label}}
-                </option>
-            </select>
-        </li>
-    </ul>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.field.inputType">
+            Eingabetyp
+        </div>
+        <select (change)="setInputType($event.target.value)"
+                class="form-control">
+            <option *ngFor="let inputType of availableInputTypes"
+                    value="{{inputType.name}}"
+                    [selected]="getInputType() === inputType.name">
+                {{inputType.label}}
+            </option>
+        </select>
+    </div>
 </div>

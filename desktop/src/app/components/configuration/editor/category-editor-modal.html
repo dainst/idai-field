@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 class="modal-title" i18n="@@configuration.editSpecificCategory">
         Kategorie <code>{{category.name}}</code> bearbeiten
     </h5>
@@ -11,14 +11,18 @@
     </button>
 </div>
 
-<div class="modal-body">
-    <div class="language-editor-section">
-        <b i18n="@@configuration.categoryLabel">Kategoriebezeichnung</b>
+<div class="modal-body configuration-editor-modal-body">
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.categoryLabel">
+            Kategoriebezeichnung
+        </div>
         <multi-language-input [translations]="editableLabel"
             [defaultTranslations]="category.defaultLabel"></multi-language-input>
     </div>
-    <div class="language-editor-section">
-        <b i18n="@@configuration.description">Beschreibung</b>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.description">
+            Beschreibung
+        </div>
         <multi-language-input [translations]="editableDescription"
             [defaultTranslations]="category.defaultDescription"></multi-language-input>
     </div>

@@ -2,9 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Category, Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
+import CategoryIcon from '../common/CategoryIcon';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
@@ -22,13 +23,17 @@ interface DocumentAddProps {
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation ,parentDoc, category }) => {
     
+    
     return (
         <SafeAreaView style={ styles.container }>
             <TitleBar
                 title={
-                    <Heading style={ styles.heading }>
-                        Add {category.name} to { parentDoc.resource.identifier }
-                    </Heading>
+                    <>
+                        <CategoryIcon category={ category.name } config={ config } size={ 25 } />
+                        <Heading style={ styles.heading }>
+                            Add {category.name} to { parentDoc.resource.identifier }
+                        </Heading>
+                    </>
                 }
                 left={ <Button
                     variant="transparent"
@@ -36,6 +41,10 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
             />
+            <View style={ { margin: 10 } }>
+                {config.getFieldDefinitions(category.name).map(val => <Text key={ val.name }>
+                    {val.group} - {val.name} - {val.inputType}</Text>)}
+            </View>
         </SafeAreaView>
     );
 };

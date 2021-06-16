@@ -1,9 +1,9 @@
-import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
+import { drop, identity, includedIn, is, isArray, isNot, on, take } from 'tsfun';
 import { Named, Name } from './named';
 import { Tree, Forest } from './forest';
 
 
-export function findInNamedTreeList<N extends Named>(match: Name, t: Forest<N>): N|undefined {
+export function findInNamedForest<N extends Named>(match: Name, t: Forest<N>): N|undefined {
 
     const result: any = Tree.find(t, Named.onName(is(match)));
     return result ? result.item : undefined;
@@ -32,7 +32,7 @@ export function isTopLevelItemOrChildThereof(t: Forest<Named>,
                                              ...moreFirstLevelItems: Name[]): boolean {
 
     const filtered = filterTrees(t, firstLevelItem, ...moreFirstLevelItems);
-    return findInNamedTreeList(match, filtered) !== undefined;
+    return findInNamedForest(match, filtered) !== undefined;
 }
 
 

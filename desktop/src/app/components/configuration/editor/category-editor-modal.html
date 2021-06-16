@@ -3,8 +3,8 @@
         Kategorie <code>{{category.name}}</code> bearbeiten
     </h5>
     <button id="save-button" class="btn btn-success"
-            [ngClass]="{ 'disabled': saving }"
-            (click)="saving || save()">
+            [ngClass]="{ 'disabled': saving || !isChanged() }"
+            (click)="saving || !isChanged() || save()">
         <span class="mdi mdi-content-save"></span>
         <span class="button-label" i18n="@@buttons.save">Speichern</span>
     </button>
@@ -20,14 +20,14 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.categoryLabel">
             Kategoriebezeichnung
         </div>
-        <multi-language-input [translations]="editableLabel"
+        <multi-language-input [translations]="clonedLabel"
             [defaultTranslations]="category.defaultLabel"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
-        <multi-language-input [translations]="editableDescription"
+        <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="category.defaultDescription"></multi-language-input>
     </div>
 </div>

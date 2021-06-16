@@ -102,13 +102,13 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public async edit() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
         const modalReference: NgbModalRef = this.modalService.open(
             FieldEditorModalComponent,
-            { size: 'lg', backdrop: 'static' }
+            { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.field = this.field;
         modalReference.componentInstance.availableInputTypes = this.availableInputTypes;

@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { isEmpty } from 'tsfun';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { equal, isEmpty } from 'tsfun';
 import { AppConfigurator, CustomCategoryDefinition } from 'idai-field-core';
 import { InputType } from '../configuration-field.component';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 import { OVERRIDE_VISIBLE_FIELDS } from '../configuration-category.component';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
+import { MenuService } from '../../menu-service';
 
 
 @Component({
-    templateUrl: './field-editor-modal.html'
+    templateUrl: './field-editor-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -22,32 +28,39 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hideable: boolean;
     public hidden: boolean;
 
+    protected changeMessage = this.i18n({
+        id: 'docedit.saveModal.fieldChanged', value: 'Das Feld wurde geändert.'
+    });
+
 
     constructor(activeModal: NgbActiveModal,
                 appConfigurator: AppConfigurator,
-                settingsProvider: SettingsProvider) {
+                settingsProvider: SettingsProvider,
+                modalService: NgbModal,
+                menuService: MenuService,
+                private i18n: I18n) {
         
-        super(activeModal, appConfigurator, settingsProvider);
+        super(activeModal, appConfigurator, settingsProvider, modalService, menuService);
     }
 
 
     public initialize() {
 
-        if (!this.getCustomCategoryDefinition().fields[this.field.name]) {
-            this.getCustomCategoryDefinition().fields[this.field.name] = {};
+        super.initialize();
+
+        if (!this.getClonedCategoryDefinition().fields[this.field.name]) {
+            this.getClonedCategoryDefinition().fields[this.field.name] = {};
         }
 
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
-
-        super.initialize();
     }
 
 
     public async save() {
 
-        if (isEmpty(this.getCustomCategoryDefinition().fields[this.field.name])) {
-            delete this.getCustomCategoryDefinition().fields[this.field.name];
+        if (isEmpty(this.getClonedCategoryDefinition().fields[this.field.name])) {
+            delete this.getClonedCategoryDefinition().fields[this.field.name];
         }
 
         super.save();
@@ -56,20 +69,20 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getInputType() {
 
-        return this.getCustomCategoryDefinition().fields[this.field.name].inputType
+        return this.getClonedCategoryDefinition().fields[this.field.name].inputType
             ?? this.field.inputType;
     }
 
 
     public setInputType(newInputType: string) {
 
-        this.getCustomCategoryDefinition().fields[this.field.name].inputType = newInputType;
+        this.getClonedCategoryDefinition().fields[this.field.name].inputType = newInputType;
     }
 
 
     public toggleHidden() {
 
-        const customCategoryDefinition: CustomCategoryDefinition = this.getCustomCategoryDefinition();
+        const customCategoryDefinition: CustomCategoryDefinition = this.getClonedCategoryDefinition();
 
         if (this.hidden) {
             customCategoryDefinition.hidden
@@ -83,6 +96,16 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public isChanged(): boolean {
+
+        return (!(isEmpty(this.getClonedCategoryDefinition().fields[this.field.name])
+                     && !this.getCustomCategoryDefinition().fields[this.field.name]) 
+                && !equal(this.customConfigurationDocument.resource)(this.clonedConfigurationDocument.resource))
+            || !equal(this.label)(this.clonedLabel)
+            || !equal(this.description)(this.clonedDescription);
+    }
+
+
     private isHideable(): boolean {
 
         return !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
@@ -92,6 +115,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isHidden(): boolean {
 
-        return ConfigurationUtil.isHidden(this.getCustomCategoryDefinition())(this.field);
+        return ConfigurationUtil.isHidden(this.getClonedCategoryDefinition())(this.field);
     }
 }

@@ -1,22 +1,45 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppConfigurator } from 'idai-field-core';
+import { equal } from 'tsfun';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
+import { MenuService } from '../../menu-service';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 
 
 @Component({
-    templateUrl: './category-editor-modal.html'
+    templateUrl: './category-editor-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
+    }
 })
 /**
  * @author Thomas Kleinke
  */
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    protected changeMessage = this.i18n({
+        id: 'docedit.saveModal.categoryChanged', value: 'Die Kategorie wurde geändert.'
+    });
+
+
     constructor(activeModal: NgbActiveModal,
                 appConfigurator: AppConfigurator,
-                settingsProvider: SettingsProvider) {
+                settingsProvider: SettingsProvider,
+                modalService: NgbModal,
+                menuService: MenuService,
+                private i18n: I18n) {
         
-        super(activeModal, appConfigurator, settingsProvider);
+        super(activeModal, appConfigurator, settingsProvider, modalService, menuService);
+    }
+
+
+    public isChanged(): boolean {
+
+        return !equal(this.customConfigurationDocument.resource)(this.clonedConfigurationDocument.resource)
+            || !equal(this.label)(this.clonedLabel)
+            || !equal(this.description)(this.clonedDescription);
     }
 }

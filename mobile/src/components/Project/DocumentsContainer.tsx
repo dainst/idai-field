@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainerRef, RouteProp, StackActions } from '@react-navigation/native';
-import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import { Category, Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React, { useEffect, useRef, useState } from 'react';
 import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
@@ -15,7 +15,7 @@ import DocumentsMap from './DocumentsMap';
 export type DocumentsContainerDrawerParamList = {
     DocumentsMap: { highlightedDocId?: string };
     DocumentDetails: { docId: string };
-    DocumentAdd: { parentDoc: Document };
+    DocumentAdd: { parentDoc: Document, category: Category };
 };
 
 
@@ -117,15 +117,16 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     projectSettings={ projectSettings }
                     config={ config }
                     languages={ languages }
-                    setProjectSettings={ setProjectSettings } /> }
+                    setProjectSettings={ setProjectSettings }
+                    isInOverview={ isInOverview } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
                     config={ config }
                     repository={ repository }
-                    isInOverview={ isInOverview }
                     parentDoc={ route.params.parentDoc }
+                    category={ route.params.category }
                 /> }
             </Drawer.Screen>
         </Drawer.Navigator>

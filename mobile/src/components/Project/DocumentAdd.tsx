@@ -1,16 +1,18 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Category, Document, ProjectConfiguration } from 'idai-field-core';
-import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Category, Document, Group, ProjectConfiguration } from 'idai-field-core';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
+import { colors } from '../../utils/colors';
 import Button from '../common/Button';
-import CategoryButton from '../common/CategoryButton';
+import CategoryIcon from '../common/CategoryIcon';
+import Column from '../common/Column';
 import Heading from '../common/Heading';
+import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
-const ICON_SIZE = 30;
 
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
@@ -18,46 +20,24 @@ interface DocumentAddProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     navigation: DocumentAddNav;
-    isInOverview: () => boolean;
     parentDoc: Document;
+    category: Category;
 }
 
-const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation, isInOverview ,parentDoc }) => {
+const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation ,parentDoc, category }) => {
     
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
     
-
-    const isAllowedCategory = useCallback( (category: Category) => {
-
-        if(category.name === 'Image') return false;
-        if(isInOverview()){
-            if (!config.isAllowedRelationDomainCategory(
-                category.name, parentDoc.resource.category, 'isRecordedIn')) return false;
-            return !category.mustLieWithin;
-        } else {
-            return config.isAllowedRelationDomainCategory(category.name, parentDoc.resource.category, 'liesWithin');
-        }
-        
-    },[config, isInOverview, parentDoc]);
-
-    
-    useEffect(() => {
-        const categories: Category[] = [];
-        config.getCategoriesArray().forEach(category => {
-            if(isAllowedCategory(category) && (!category.parentCategory || !isAllowedCategory(category.parentCategory)))
-                categories.push(category);
-        });
-        setCategories(categories);
-    },[isAllowedCategory, isInOverview, config]);
-
-
     return (
         <SafeAreaView style={ styles.container }>
             <TitleBar
                 title={
-                    <Heading style={ styles.heading }>
-                        Add child to { parentDoc.resource.identifier }
-                    </Heading>
+                    <>
+                        <CategoryIcon category={ category.name } config={ config } size={ 25 } />
+                        <Heading style={ styles.heading }>
+                            Add {category.name} to { parentDoc.resource.identifier }
+                        </Heading>
+                    </>
                 }
                 left={ <Button
                     variant="transparent"
@@ -65,39 +45,25 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
             />
-            <View style={ styles.categories }>
-                {categories.map(category => (
-                    <View key={ category.name } >
-                        <CategoryButton
-                            config={ config } size={ ICON_SIZE }
-                            style={ { margin: 5 } }
-                            category={ category.name } />
-                        {renderCategoryChilds(category, config)}
-                    </View>
-                ))}
-            </View>
+            <Row style={ styles.formContainer }>
+                <Column style={ styles.groupColumn }>
+                    {category.groups.map(group => (
+                        <TouchableOpacity
+                            key={ group.name } style={ styles.groupBtn }
+                            onPress={ () => setActiveGroup(group) }>
+                            <Text style={ styleGroupText(group, activeGroup) }>{group.name}</Text>
+                        </TouchableOpacity>))}
+                </Column>
+                <Column>
+                    {activeGroup.fields.map(fieldDef => <Text key={ fieldDef.name }>{fieldDef.name}</Text>)}
+                </Column>
+            </Row>
         </SafeAreaView>
     );
 };
 
-const renderCategoryChilds = (category: Category, config: ProjectConfiguration) => {
-    return <View style={ categoryChildStyles.container }>
-        {category.children.map(category => (
-            <CategoryButton
-                key={ category.name }
-                config={ config } size={ ICON_SIZE }
-                category={ category.name }
-                style={ { margin: 2.5 } }
-            />
-        ))}
-    </View>;
-};
-
-const categoryChildStyles = StyleSheet.create({
-    container: {
-        marginLeft:20
-    }
-});
+const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
+    group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
 
 
 const styles = StyleSheet.create({
@@ -108,8 +74,29 @@ const styles = StyleSheet.create({
     heading: {
         marginLeft: 10,
     },
-    categories: {
-        margin: 10
+    formContainer: {
+        margin: 20,
+        justifyContent: 'flex-start'
+    },
+    groupColumn: {
+        backgroundColor: '#DDDDDD',
+        width: '30%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        marginRight: 50,
+        paddingHorizontal: 30,
+        paddingVertical: 10
+    },
+    groupBtn: {
+        margin: 1,
+    },
+    groupText: {
+        color: colors.primary,
+        fontSize: 20,
+        textTransform: 'capitalize',
+    },
+    groupTextActive: {
+        color: colors.secondary
     }
 });
 

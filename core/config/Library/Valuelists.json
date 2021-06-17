@@ -55150,5 +55150,425 @@
         "Tuffstein",
         "Sonstiges"
      ]
+  },
+  "Feature-unitCategory-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "layer": {
+        "labels": {
+          "en": "Layer"
+        }
+      },
+      "wall": {
+        "labels": {
+          "en": "Wall"
+        }
+      },
+      "fill": {
+        "labels": {
+          "en": "Fill"
+        }
+      },
+      "oven": {
+        "labels": {
+          "en": "Oven"
+        }
+      },
+      "midden": {
+        "labels": {
+          "en": "Midden"
+        }
+      },
+      "pit": {
+        "labels": {
+          "en": "Pit"
+        }
+      },
+      "construction/building pit": {
+        "labels": {
+          "en": "Construction/Building pit"
+        }
+      },
+      "fire pit": {
+        "labels": {
+          "en": "Fire pit"
+        }
+      },
+      "fluvial sediment": {
+        "labels": {
+          "en": "Fluvial sediment"
+        }
+      },
+      "modern debris": {
+        "labels": {
+          "en": "Modern debris"
+        }
+      },
+      "pavement": {
+        "labels": {
+          "en": "Pavement"
+        }
+      },
+      "installation": {
+        "labels": {
+          "en": "Installation"
+        }
+      },
+      "storage facility": {
+        "labels": {
+          "en": "Storage facility"
+        }
+      },
+      "pedestal": {
+        "labels": {
+          "en": "Pedestal"
+        }
+      },
+      "staircase": {
+        "labels": {
+          "en": "Staircase"
+        }
+      },
+      "other": {
+        "labels": {
+          "en": "other"
+        }
+      }
+    },
+    "order": [
+      "layer",
+      "wall",
+      "fill",
+      "oven",
+      "midden",
+      "pit",
+      "construction/building pit",
+      "fire pit",
+      "fluvial sediment",
+      "modern debris",
+      "pavement",
+      "installation",
+      "storage facility",
+      "pedestal",
+      "staircase",
+      "other"
+    ]
+  },
+  "Feature-consistency-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "loose": {
+        "labels": {
+          "en": "Loose"
+        }
+      },
+      "friable": {
+        "labels": {
+          "en": "Friable"
+        }
+      },
+      "compact": {
+        "labels": {
+          "en": "Compact"
+        }
+      },
+      "hard": {
+        "labels": {
+          "en": "Hard"
+        }
+      },
+      "other": {
+        "labels": {
+          "en": "Other"
+        }
+      }
+    },
+    "order": ["loose", "friable", "compact", "hard", "other"]
+  },
+  "Find-deliberatlyDestroyed-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "yes": {
+        "labels": {
+          "en": "yes"
+        }
+      },
+      "no": {
+        "labels": {
+          "en": "no"
+        }
+      },
+      "unclear": {
+        "labels": {
+          "en": "unclear"
+        }
+      }
+    },
+    "order": ["yes", "no", "unclear"]
+  },
+  "Find-objectType-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "statue": {
+        "labels": {
+          "en": "statue"
+        }
+      },
+      "relief": {
+        "labels": {
+          "en": "relief"
+        }
+      },
+      "bead": {
+        "labels": {
+          "en": "bead"
+        }
+      },
+      "tool": {
+        "labels": {
+          "en": "tool"
+        }
+      },
+      "unidentified": {
+        "labels": {
+          "en": "unidentified"
+        }
+      },
+      "scarab": {
+        "labels": {
+          "en": "scarab"
+        }
+      },
+      "vessel": {
+        "labels": {
+          "en": "vessel"
+        }
+      },
+      "architectural element": {
+        "labels": {
+          "en": "architectural element"
+        }
+      },
+      "domestic objects": {
+        "labels": {
+          "en": "domestic objects"
+        }
+      },
+      "ornaments": {
+        "labels": {
+          "en": "ornaments"
+        }
+      },
+      "ushabti": {
+        "labels": {
+          "en": "ushabti"
+        }
+      },
+      "stela": {
+        "labels": {
+          "en": "stela"
+        }
+      },
+      "model for sculpture": {
+        "labels": {
+          "en": "model for sculpture"
+        }
+      },
+      "coin": {
+        "labels": {
+          "en": "coin"
+        }
+      },
+      "lamp": {
+        "labels": {
+          "en": "lamp"
+        }
+      },
+      "figurine": {
+        "labels": {
+          "en": "figurine"
+        }
+      },
+      "scribel palette": {
+        "labels": {
+          "en": "scribel palette"
+        }
+      },
+      "game board": {
+        "labels": {
+          "en": "game board"
+        }
+      },
+      "naos": {
+        "labels": {
+          "en": "naos"
+        }
+      },
+      "temple inventory": {
+        "labels": {
+          "en": "temple inventory"
+        }
+      },
+      "cosmetic tool": {
+        "labels": {
+          "en": "cosmetic tool"
+        }
+      },
+      "offering table": {
+        "labels": {
+          "en": "offering table"
+        }
+      },
+      "sphinx": {
+        "labels": {
+          "en": "sphinx"
+        }
+      },
+      "lithic": {
+        "labels": {
+          "en": "lithic"
+        }
+      },
+      "seal": {
+        "labels": {
+          "en": "seal"
+        }
+      },
+      "firedog": {
+        "labels": {
+          "en": "firedog"
+        }
+      },
+      "modern artifacts": {
+        "labels": {
+          "en": "modern artifacts"
+        }
+      },
+      "plastic bag": {
+        "labels": {
+          "en": "plastic bag"
+        }
+      },
+      "obelisk": {
+        "labels": {
+          "en": "obelisk"
+        }
+      },
+      "oven elements": {
+        "labels": {
+          "en": "oven elements"
+        }
+      },
+      "ingot": {
+        "labels": {
+          "en": "ingot"
+        }
+      },
+      "inlay": {
+        "labels": {
+          "en": "inlay"
+        }
+      },
+      "application": {
+        "labels": {
+          "en": "application"
+        }
+      },
+      "coffin": {
+        "labels": {
+          "en": "coffin"
+        }
+      }
+    },
+    "order": [
+      "statue",
+      "relief",
+      "bead",
+      "tool",
+      "unidentified",
+      "scarab",
+      "vessel",
+      "architectural element",
+      "domestic objects",
+      "ornaments",
+      "ushabti",
+      "stela",
+      "model for sculpture",
+      "coin",
+      "lamp",
+      "figurine",
+      "scribel palette",
+      "game board",
+      "naos",
+      "temple inventory",
+      "cosmetic tool",
+      "offering table",
+      "sphinx",
+      "lithic",
+      "seal",
+      "firedog",
+      "modern artifacts",
+      "plastic bag",
+      "obelisk",
+      "oven elements",
+      "ingot",
+      "inlay",
+      "application",
+      "coffin"
+    ]
+  },
+  "Find-tracesOfBurning-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "none": {
+        "labels": {
+          "en": "none"
+        }
+      },
+      "slightly": {
+        "labels": {
+          "en": "slightly"
+        }
+      },
+      "strong": {
+        "labels": {
+          "en": "strong"
+        }
+      }
+    },
+    "order": ["none", "slightly", "strong"]
+  },
+  "Find-currentLocation-heliopolis-project": {
+    "createdBy": "Heliopolis Project",
+    "creationDate": "04-05-2021",
+    "description": {},
+    "values": {
+      "storeroom": {
+        "labels": {
+          "en": "storeroom"
+        }
+      },
+      "museum": {
+        "labels": {
+          "en": "museum"
+        }
+      },
+      "other": {
+        "labels": {
+          "en": "other"
+        }
+      }
+    },
+    "order": ["storeroom", "museum", "other"]
   }
 }

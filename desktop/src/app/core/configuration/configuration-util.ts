@@ -1,4 +1,7 @@
-import { CustomCategoryDefinition, FieldDefinition } from 'idai-field-core';
+import { CustomCategoryDefinition, FieldDefinition, FieldResource, Resource } from 'idai-field-core';
+
+
+export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
 /**

@@ -1,18 +1,15 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, FieldResource, Group, I18nString,
-    LabelUtil, Named, RelationDefinition, Relations, Resource } from 'idai-field-core';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
+    RelationDefinition, Relations } from 'idai-field-core';
+import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './project-configuration.component';
-
-
-export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
 @Component({

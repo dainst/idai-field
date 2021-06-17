@@ -49,9 +49,8 @@
             [defaultTranslations]="field.defaultDescription" [disabled]="hidden"></multi-language-input>
     </div>
     <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.field.inputType">
-            Eingabetyp
-        </div>
+        <div class="configuration-editor-section-title"
+            i18n="@@configuration.field.inputType">Eingabetyp</div>
         <select (change)="setInputType($event.target.value)" [disabled]="hidden"
                 class="form-control">
             <option *ngFor="let inputType of availableInputTypes"

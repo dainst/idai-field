@@ -1,4 +1,3 @@
-import { clone, set } from 'tsfun';
 import { Category, FieldDefinition, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
 
 
@@ -20,71 +19,6 @@ export module LanguageConfigurationUtil {
         updateCustomLanguageConfigurationSection(
             customLanguageConfigurations, 'description', editedDescription, category, field
         );
-    }
-
-
-    export function mergeCustomAndDefaultTranslations(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                      type: 'label'|'description',
-                                                      category: Category, field?: FieldDefinition): I18nString {
-
-        const definition = field ?? category;
-        const defaultType = type === 'label' ? 'defaultLabel' : 'defaultDescription';
-
-        return Object.keys(customLanguageConfigurations).reduce((result: I18nString, languageCode: string) => {
-            const translation = getFromCustomLanguageConfiguration(
-                customLanguageConfigurations, languageCode, type, category, field
-            );
-            if (translation) result[languageCode] = translation;
-            return result;
-        }, definition[defaultType] ? clone(definition[defaultType]) : {});
-    }
-
-
-    export function getUpdatedDefinition(customLanguageConfigurations: CustomLanguageConfigurations,
-                                         category: Category, field?: FieldDefinition): FieldDefinition|Category {
-        
-        const clonedDefinition = field ? clone(field) : cloneCategory(category);
-
-        clonedDefinition.label = mergeCustomAndDefaultTranslations(
-            customLanguageConfigurations, 'label', category, field
-        );
-        clonedDefinition.description = mergeCustomAndDefaultTranslations(
-            customLanguageConfigurations, 'description', category, field
-        );
-
-        return clonedDefinition;
-    }
-
-
-    function cloneCategory(category: Category): Category {
-
-        const children = category.children;
-        const parentCategory = category.parentCategory;
-
-        delete category.children;
-        delete category.parentCategory;
-
-        const clonedCategory = clone(category);
-
-        category.children = children;
-        category.parentCategory = parentCategory;
-
-        return clonedCategory;
-    }
-
-
-    function getFromCustomLanguageConfiguration(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                languageCode: string, section: 'label'|'description',
-                                                category: Category, field?: FieldDefinition): string|undefined {
-
-        return field
-            ? customLanguageConfigurations[languageCode]
-                ?.categories?.[category.name]
-                ?.fields?.[field.name]
-                ?.[section]
-            : customLanguageConfigurations[languageCode]
-                ?.categories?.[category.name]
-                ?.[section];
     }
 
 

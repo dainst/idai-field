@@ -171,9 +171,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = LabelUtil.getLabelAndDescription(
-            LanguageConfigurationUtil.getUpdatedDefinition(this.getCustomLanguageConfigurations(), this.category)
-        );
+        const { label, description } = LabelUtil.getLabelAndDescription(this.category);
         this.label = label;
         this.description = description;
     }

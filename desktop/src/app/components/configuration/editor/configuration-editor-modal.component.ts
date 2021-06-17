@@ -76,12 +76,8 @@ export abstract class ConfigurationEditorModalComponent {
 
         this.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
 
-        this.label = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getClonedLanguageConfigurations(), 'label', this.category, this.field
-        );
-        this.description = LanguageConfigurationUtil.mergeCustomAndDefaultTranslations(
-            this.getClonedLanguageConfigurations(), 'description', this.category, this.field
-        );
+        this.label = this.field ? this.field.label : this.category.label;
+        this.description = this.field ? this.field.description :this.category.description;
 
         this.clonedLabel = clone(this.label);
         this.clonedDescription = clone(this.description);

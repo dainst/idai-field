@@ -46,7 +46,7 @@
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="field.defaultDescription"></multi-language-input>
     </div>
-    <div class="configuration-editor-section">
+    <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.field.inputType">
             Eingabetyp
         </div>

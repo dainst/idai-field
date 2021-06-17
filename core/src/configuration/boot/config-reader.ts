@@ -9,6 +9,7 @@ import configCampidoglio from '../../../config/Config-Campidoglio.json';
 import configCastiglione from '../../../config/Config-Castiglione.json';
 import configDefault from '../../../config/Config-Default.json';
 import configGadara from '../../../config/Config-Gadara.json';
+import configHeliopolis from '../../../config/Config-Heliopolis.json';
 import configKalapodi from '../../../config/Config-Kalapodi.json';
 import configKarthagoCircus from '../../../config/Config-KarthagoCircus.json';
 import configKephissostal from '../../../config/Config-Kephissostal.json';
@@ -40,6 +41,7 @@ import languageDefault_de from '../../../config/Language-Default.de.json';
 import languageDefault_en from '../../../config/Language-Default.en.json';
 import languageGadara_de from '../../../config/Language-Gadara.de.json';
 import languageGadara_en from '../../../config/Language-Gadara.en.json';
+import languageHeliopolis_en from '../../../config/Language-Heliopolis.en.json';
 import languageKalapodi_de from '../../../config/Language-Kalapodi.de.json';
 import languageKephissostal_de from '../../../config/Language-Kephissostal.de.json';
 import languageMeninx_de from '../../../config/Language-Meninx.de.json';
@@ -88,6 +90,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Campidoglio.json': configCampidoglio,
     '/Config-Castiglione.json': configCastiglione,
     '/Config-Gadara.json': configGadara,
+    '/Config-Heliopolis.json': configHeliopolis,
     '/Config-Kalapodi.json': configKalapodi,
     '/Config-KarthagoCircus.json': configKarthagoCircus,
     '/Config-Kephissostal.json': configKephissostal,
@@ -113,6 +116,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Castiglione': { en: languageCastiglione_en },
     'Default': { de: languageDefault_de, en: languageDefault_en },
     'Gadara': { de: languageGadara_de, en: languageGadara_en },
+    'Heliopolis': { en: languageHeliopolis_en },
     'Kalapodi': { de: languageKalapodi_de },
     'Kephissostal': { de: languageKephissostal_de },
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },

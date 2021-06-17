@@ -36,14 +36,14 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
             Feldbezeichnung
         </div>
-        <multi-language-input [translations]="label"
+        <multi-language-input [translations]="clonedLabel"
             [defaultTranslations]="field.defaultLabel"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
-        <multi-language-input [translations]="description"
+        <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="field.defaultDescription"></multi-language-input>
     </div>
     <div class="configuration-editor-section">

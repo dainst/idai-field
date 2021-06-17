@@ -15,6 +15,7 @@ export class MultiLanguageInputComponent implements OnChanges {
     
     @Input() translations: I18nString;
     @Input() defaultTranslations: I18nString;
+    @Input() disabled: boolean = false;
 
     public languages: { [languageCode: string]: Language };
     public usedLanguages: string[];

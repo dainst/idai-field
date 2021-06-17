@@ -39,20 +39,20 @@
             Feldbezeichnung
         </div>
         <multi-language-input [translations]="clonedLabel"
-            [defaultTranslations]="field.defaultLabel"></multi-language-input>
+            [defaultTranslations]="field.defaultLabel" [disabled]="hidden"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
-            [defaultTranslations]="field.defaultDescription"></multi-language-input>
+            [defaultTranslations]="field.defaultDescription" [disabled]="hidden"></multi-language-input>
     </div>
     <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.field.inputType">
             Eingabetyp
         </div>
-        <select (change)="setInputType($event.target.value)"
+        <select (change)="setInputType($event.target.value)" [disabled]="hidden"
                 class="form-control">
             <option *ngFor="let inputType of availableInputTypes"
                     value="{{inputType.name}}"

@@ -79,7 +79,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
 
         this.label = this.field ? this.field.label : this.category.label;
-        this.description = this.field ? this.field.description :this.category.description;
+        this.description = this.field ? this.field.description : this.category.description;
 
         this.clonedLabel = clone(this.label);
         this.clonedDescription = clone(this.description);

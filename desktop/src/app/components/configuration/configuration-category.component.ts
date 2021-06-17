@@ -2,13 +2,14 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, FieldResource, Group, I18nString,
-    LabelUtil, Named, RelationDefinition, Relations, Resource, Document } from 'idai-field-core';
+    LabelUtil, Named, RelationDefinition, Relations, Resource } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
-import { LanguageConfigurationUtil } from '../../core/configuration/language-configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
+import { InputType } from './project-configuration.component';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -27,6 +28,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() category: Category;
     @Input() customConfigurationDocument: ConfigurationDocument;
     @Input() showHiddenFields: boolean = true;
+    @Input() availableInputTypes: Array<InputType>;
 
     @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
 
@@ -154,7 +156,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const modalReference: NgbModalRef = this.modalService.open(AddFieldModalComponent);
 
         try {
-            this.createNewField(await modalReference.result);
+            await this.createNewField(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -163,9 +165,36 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    private createNewField(fieldName: string) {
+    private async createNewField(fieldName: string) {
 
-        // TODO Implement
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            FieldEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.field = {
+            name: fieldName,
+            inputType: 'input',
+            label: {},
+            defaultLabel: {},
+            description: {},
+            defaultDescription: {},
+            source: 'custom'
+        };
+        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
+        modalReference.componentInstance.newField = true;
+        modalReference.componentInstance.initialize();
+
+        try {
+            this.onEdited.emit(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 

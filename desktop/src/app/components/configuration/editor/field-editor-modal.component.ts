@@ -3,13 +3,13 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
 import { AppConfigurator, CustomCategoryDefinition } from 'idai-field-core';
-import { InputType } from '../configuration-field.component';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 import { OVERRIDE_VISIBLE_FIELDS } from '../configuration-category.component';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
+import { InputType } from '../project-configuration.component';
 
 
 @Component({
@@ -28,6 +28,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public hideable: boolean;
     public hidden: boolean;
+    public newField: boolean = false;
 
     protected changeMessage = this.i18n({
         id: 'docedit.saveModal.fieldChanged', value: 'Das Feld wurde geändert.'
@@ -50,7 +51,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         super.initialize();
 
-        if (!this.getClonedCategoryDefinition().fields[this.field.name]) {
+        if (this.newField) {
+            this.getClonedCategoryDefinition().fields[this.field.name] = {
+                inputType: 'input'
+            };
+        } else if (!this.getClonedCategoryDefinition().fields[this.field.name]) {
             this.getClonedCategoryDefinition().fields[this.field.name] = {};
         }
 

@@ -1,0 +1,247 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": ["area", "spatialLocation", "processor", "supervisor"],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": ["gazId", "siteClassification", "dating", "placeName", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": ["dimensionVerticalExtent", "trenchComment", "diary"],
+    "fields": {
+      "squareNumber": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Feature:default": {
+    "color": "green",
+    "hidden": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "diary", "description", "area", "period", "diaryAbstract"],
+    "commons": ["campaign", "processor", "date", "dating", "dimensionVerticalExtent", "period", "spatialLocation"],
+    "fields": {
+      "unitNumber": {
+        "inputType": "input"
+      },
+      "areaNumber": {
+        "inputType": "input"
+      },
+      "squareNumber": {
+        "inputType": "input"
+      },
+      "unitCategory": {
+        "inputType": "radio"
+      },
+      "categoryOther": {
+        "inputType": "input"
+      },
+      "shortDescription": {
+        "inputType": "text"
+      },
+      "remarks": {
+        "inputType": "text"
+      },
+      "colour": {
+        "inputType": "input"
+      },
+      "consistency": {
+        "inputType": "radio"
+      },
+      "consistencyOther": {
+        "inputType": "input"
+      },
+      "finds": {
+        "inputType": "text"
+      },
+      "unitsheetAuthorDateFilename": {
+        "inputType": "input"
+      },
+      "featureDrawingAuthorDateFilename": {
+        "inputType": "input"
+      },
+      "sectionsDrawingDescriptionAuthorDateFilename": {
+        "inputType": "input"
+      },
+      "photosAuthorDateFilenames": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "unitCategory": "Feature-unitCategory-heliopolis-project",
+      "consistency": "Feature-consistency-heliopolis-project"
+    }
+  },
+  "Find:default": {
+    "color": "red",
+    "hidden": ["storagePlace", "period", "hasRestoration", "catalogueNumber", "amount", "description", "condition", "conditionAmount", "conditionPercent", "conditionComment", "weight", "storageInventoryNumber", "comparison", "bibliography"],
+    "commons": ["dating", "literature", "date", "processor", "campaign", "period", "dimensionHeight", "dimensionDiameter", "dimensionWidth", "dimensionLength", "spatialLocation"],
+    "fields": {
+      "findNumber": {
+        "inputType":"input"
+      },
+      "findNumberOld1": {
+        "inputType":"input"
+      },
+      "findNumberOld2": {
+        "inputType":"input"
+      },
+      "objectType": {
+        "inputType":"radio"
+      },
+      "objectTypeOther": {
+        "inputType": "input"
+      },
+      "material": {
+        "inputType":"input"
+      },
+      "materialColour": {
+        "inputType":"input"
+      },
+      "drawingsAuthorDateFilenameOriginalfolder": {
+        "inputType":"text"
+      },
+      "vectorfileAuthorFilename": {
+        "inputType":"input"
+      },
+      "photosAuthorFilenames": {
+        "inputType":"text"
+      },
+      "model3DAuthorFolder": {
+        "inputType":"input"
+      },
+      "scannedFindsheetAuthorFilenameOriginalfolder": {
+        "inputType":"input"
+      },
+      "findDescription": {
+        "inputType": "text"
+      },
+      "inscriptionHieroglyphicSigns": {
+        "inputType":"text"
+      },
+      "inscriptionTransliteration": {
+        "inputType":"text"
+      },
+      "inscriptionTranslation": {
+        "inputType":"text"
+      },
+      "colourPigmentsPreserved": {
+        "inputType":"input"
+      },
+      "preservation": {
+        "inputType": "radio"
+      },
+      "preservationAmount": {
+        "inputType": "radio"
+      },
+      "tracesOfBurning": {
+        "inputType": "radio"
+      },
+      "deliberatlyDestroyed": {
+        "inputType": "radio"
+      },
+      "jointTo": {
+        "inputType":"input"
+      },
+      "remarks": {
+        "inputType": "text"
+      },
+      "currentLocation": {
+        "inputType":"radio"
+      },
+      "currentLocationOther": {
+        "inputType": "input"
+      },
+      "currentLocationName": {
+        "inputType": "input"
+      },
+      "lastSeen": {
+        "inputType": "date"
+      },
+      "bibliography": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "objectType": "Find-objectType-heliopolis-project",
+      "preservation": "Building-condition-default",
+      "preservationAmount": "Building-conditionAmount-default",
+      "tracesOfBurning": "Find-tracesOfBurning-heliopolis-project",
+      "deliberatlyDestroyed": "Find-deliberatlyDestroyed-heliopolis-project",
+      "currentLocation": "Find-currentLocation-heliopolis-project"
+    }
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {
+      "photoAuthor": {
+        "inputType": "input"
+      },
+      "photoDate": {
+        "inputType": "date"
+      },
+      "photoFilename": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {
+      "drawingAuthor": {
+        "inputType": "input"
+      },
+      "drawingDate": {
+        "inputType": "date"
+      },
+      "drawingScanFilename": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Unitsheet": {
+    "parent": "Image",
+    "hidden": [],
+    "fields": {
+      "unitsheetAuthor": {
+        "inputType": "input"
+      },
+      "unitsheetDate": {
+        "inputType": "date"
+      },
+      "unitsheetScanFilename": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Findsheet": {
+    "parent": "Image",
+    "hidden": [],
+    "fields": {
+      "findsheetAuthor": {
+        "inputType": "input"
+      },
+      "findsheetDate": {
+        "inputType": "date"
+      },
+      "findsheetScanFilename": {
+        "inputType": "input"
+      }
+    }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

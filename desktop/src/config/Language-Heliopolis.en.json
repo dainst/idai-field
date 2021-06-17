@@ -1,0 +1,208 @@
+{
+  "categories": {
+    "Place": {
+      "label": "Area"
+    },
+    "Trench": {
+      "label": "Square",
+      "fields": {
+        "squareNumber": {
+          "label": "Square Number"
+        }
+      }
+    },
+    "Feature": {
+      "label": "Unit",
+      "fields": {
+        "unitNumber": {
+          "label": "Unit Number"
+        },
+        "areaNumber": {
+          "label": "Area Number"
+        },
+        "squareNumber": {
+          "label": "Square Number"
+        },
+        "unitCategory": {
+          "label": "Category"
+        },
+        "categoryOther": {
+          "label": "Other category"
+        },
+        "shortDescription": {
+          "label": "Short description"
+        },
+        "remarks": {
+          "label": "Remarks"
+        },
+        "colour": {
+          "label": "Colour"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "consistencyOther": {
+          "label": "Other consistency"
+        },
+        "finds": {
+          "label": "Finds"
+        },
+        "unitsheetAuthorDateFilename": {
+          "label": "Unitsheet Author|Date|Filename"
+        },
+        "featureDrawingAuthorDateFilename": {
+          "label": "Feature Drawing Author|Date|Filename"
+        },
+        "sectionsDrawingDescriptionAuthorDateFilename": {
+          "label": "Sections Drawing Description|Author|Date|Filename"
+        },
+        "photosAuthorDateFilenames": {
+          "label": "List of Photos Author|Date|Filename"
+        }
+      }
+    },
+    "Find": {
+      "label": "Find",
+      "fields": {
+        "findNumber": {
+          "label": "Find Number"
+        },
+        "findNumberOld1": {
+          "label": "Find Number Old 1"
+        },
+        "findNumberOld2": {
+          "label": "Find Number Old 2"
+        },
+        "objectType": {
+          "label": "Object Type"
+        },
+        "objectTypeOther": {
+          "label": "Other Object Type"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "materialColour": {
+          "label": "Material Colour"
+        },
+        "drawingsAuthorDateFilenameOriginalfolder": {
+          "label": "List of Drawings Author|Date|Filename|Originalfolder"
+        },
+        "vectorfileAuthorFilename": {
+          "label": "Vectorfile Author|Filename"
+        },
+        "photosAuthorFilenames": {
+          "label": "List of Photos Author|Filename"
+        },
+        "model3DAuthorFolder": {
+          "label": "Documentation 3D Model Author|Folder"
+        },
+        "scannedFindsheetAuthorFilenameOriginalfolder": {
+          "label": "Scanned Findsheet Author|Filename|Originalfolder"
+        },
+        "findDescription": {
+          "label": "Description"
+        },
+        "inscriptionHieroglyphicSigns": {
+          "label": "Inscription Hieroglyphic Signs"
+        },
+        "inscriptionTransliteration": {
+          "label": "Inscription Transliteration"
+        },
+        "inscriptionTranslation": {
+          "label": "Inscription Translation"
+        },
+        "colourPigmentsPreserved": {
+          "label": "Colour (= colour pigments preserved)"
+        },
+        "preservation": {
+          "label": "State of preservation"
+        },
+        "preservationAmount": {
+          "label": "Preservation amount"
+        },
+        "tracesOfBurning": {
+          "label": "Traces of burning"
+        },
+        "deliberatlyDestroyed": {
+          "label": "Deliberatly destroyed"
+        },
+        "jointTo": {
+          "label": "Joint to"
+        },
+        "remarks": {
+          "label": "Remarks"
+        },
+        "currentLocation": {
+          "label": "Current Location"
+        },
+        "currentLocationOther": {
+          "label": "Other location"
+        },
+        "currentLocationName": {
+          "label": "Location name"
+        },
+        "lastSeen": {
+          "label": "Last seen"
+        },
+        "bibliography": {
+          "label": "Bibliography"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "photoAuthor": {
+          "label": "Author"
+        },
+        "photoDate": {
+          "label": "Date"
+        },
+        "photoFilename": {
+          "label": "Filename"
+        }
+      }
+    },
+    "Drawing": {
+      "fields": {
+        "drawingAuthor": {
+          "label": "Author"
+        },
+        "drawingDate": {
+          "label": "Date"
+        },
+        "drawingFilename": {
+          "label": "Filename"
+        }
+      }
+    },
+    "Unitsheet": {
+      "label": "Unitsheet",
+      "fields": {
+        "unitsheetAuthor": {
+          "label": "Author"
+        },
+        "unitsheetDate": {
+          "label": "Date"
+        },
+        "unitsheetScanFilename": {
+          "label": "Filename"
+        }
+      }
+    },
+    "Findsheet": {
+      "label": "Findsheet",
+      "fields": {
+        "findsheetAuthor": {
+          "label": "Author"
+        },
+        "findsheetDate": {
+          "label": "Date"
+        },
+        "findsheetScanFilename": {
+          "label": "Filename"
+        }
+      }
+    }
+  }
+}

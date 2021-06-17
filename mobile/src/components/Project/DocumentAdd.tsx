@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Category, Document, FieldDefinition, Group, ProjectConfiguration } from 'idai-field-core';
 import React, { useState } from 'react';
@@ -44,6 +44,12 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     onPress={ () => navigation.navigate('DocumentsMap',{}) }
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
+                right={ <Button
+                    variant="success"
+                    onPress={ () => console.log('Save') }
+                    title="Save"
+                    icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
+                /> }
             />
             <Row style={ styles.formContainer }>
                 <Column style={ styles.groupColumn }>
@@ -73,7 +79,7 @@ const shouldShow = (field: FieldDefinition)=> field !== undefined && field.edita
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        padding: 20,
         flex: 1
     },
     heading: {

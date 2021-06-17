@@ -5,6 +5,7 @@ import { clone } from 'tsfun';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { MenuContext, MenuService } from '../../menu-service';
+import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 
 
@@ -33,7 +34,8 @@ export abstract class ConfigurationEditorModalComponent {
                 private appConfigurator: AppConfigurator,
                 private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
-                private menuService: MenuService) {}
+                private menuService: MenuService,
+                private messages: Messages) {}
 
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
@@ -104,9 +106,10 @@ export abstract class ConfigurationEditorModalComponent {
                 newProjectConfiguration,
                 newCustomConfigurationDocument: this.clonedConfigurationDocument
             });
-        } catch (err) {
-            // TODO Error handling
-            console.error(err);
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+            this.saving = false;
         }
     }
 

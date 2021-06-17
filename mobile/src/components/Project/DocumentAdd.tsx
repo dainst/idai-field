@@ -1,18 +1,22 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Category, Document, FieldDefinition, Group, ProjectConfiguration } from 'idai-field-core';
-import React, { useState } from 'react';
+import {
+    Category, Document, FieldDefinition,
+    Group, NewResource, ProjectConfiguration, Relations
+} from 'idai-field-core';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
+import { isUndefinedOrEmpty } from 'tsfun';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
 import Column from '../common/Column';
+import EditFormField from '../common/forms/EditFormField';
 import Heading from '../common/Heading';
 import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
-
 
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
@@ -27,6 +31,31 @@ interface DocumentAddProps {
 const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation ,parentDoc, category }) => {
     
     const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
+    const [newResource, setNewResource] = useState<NewResource>();
+    const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
+
+   
+    useEffect(() => {
+
+        setNewResource({
+                identifier: '',
+                relations: createRelations(parentDoc),
+                category: category.name
+        });
+
+    },[parentDoc, category]);
+
+    
+    useEffect(() => {
+
+        if(newResource?.identifier) setSaveBtnEnabled(true);
+        else setSaveBtnEnabled(false);
+    },[newResource]);
+
+    
+    const updateResource = (key: string, value: any) =>
+        setNewResource(oldResource => oldResource && { ...oldResource, [key]: value });
+    
     
     return (
         <SafeAreaView style={ styles.container }>
@@ -48,6 +77,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     variant="success"
                     onPress={ () => console.log('Save') }
                     title="Save"
+                    isDisabled={ !saveBtnEnabled }
                     icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
                 /> }
             />
@@ -60,9 +90,13 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                             <Text style={ styleGroupText(group, activeGroup) }>{group.name}</Text>
                         </TouchableOpacity>))}
                 </Column>
-                <Column>
+                <Column style={ styles.fieldColumn }>
                     {activeGroup.fields.map(fieldDef =>
-                        shouldShow(fieldDef) && <Text key={ fieldDef.name }>{fieldDef.name}</Text>)}
+                        (shouldShow(fieldDef) && newResource) &&
+                            <EditFormField
+                                setFunction={ updateResource }
+                                fieldDefinition={ fieldDef }
+                                resource={ newResource } />)}
                 </Column>
             </Row>
         </SafeAreaView>
@@ -114,7 +148,26 @@ const styles = StyleSheet.create({
         color: colors.secondary,
         backgroundColor: colors.primary,
         borderRadius: 2,
+    },
+    fieldColumn: {
+        flex: 1
     }
 });
+
+
+const createRelations = (parentDoc: Document): Relations => {
+
+    const parentDocIsOperation = () => isUndefinedOrEmpty(parentDoc.resource.relations.isRecordedIn);
+    const relations: Relations = { isRecordedIn:[] };
+    
+    if(parentDocIsOperation()){
+        relations['isRecordedIn'] = [parentDoc.resource.id];
+    } else {
+        relations['isRecordedIn'] = [ parentDoc.resource.relations.isRecordedIn[0]];
+        relations['liesWithin'] = [parentDoc.resource.id];
+    }
+    return relations;
+};
+
 
 export default DocumentAdd;

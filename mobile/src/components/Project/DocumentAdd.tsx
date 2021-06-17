@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Category, Document, Group, ProjectConfiguration } from 'idai-field-core';
+import { Category, Document, FieldDefinition, Group, ProjectConfiguration } from 'idai-field-core';
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -55,7 +55,8 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                         </TouchableOpacity>))}
                 </Column>
                 <Column>
-                    {activeGroup.fields.map(fieldDef => <Text key={ fieldDef.name }>{fieldDef.name}</Text>)}
+                    {activeGroup.fields.map(fieldDef =>
+                        shouldShow(fieldDef) && <Text key={ fieldDef.name }>{fieldDef.name}</Text>)}
                 </Column>
             </Row>
         </SafeAreaView>
@@ -65,6 +66,9 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
 
 const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
     group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
+
+
+const shouldShow = (field: FieldDefinition)=> field !== undefined && field.editable === true;
 
 
 const styles = StyleSheet.create({

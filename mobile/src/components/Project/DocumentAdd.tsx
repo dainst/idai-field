@@ -81,13 +81,14 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         margin: 20,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        flex: 1
     },
     groupColumn: {
         backgroundColor: '#DDDDDD',
         width: '30%',
-        height: '60%',
-        justifyContent: 'center',
+        height: '50%',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         marginRight: 50,
         paddingHorizontal: 30,
@@ -95,14 +96,18 @@ const styles = StyleSheet.create({
     },
     groupBtn: {
         margin: 1,
+        width: '100%'
     },
     groupText: {
         color: colors.primary,
         fontSize: 20,
         textTransform: 'capitalize',
+        padding: 2,
     },
     groupTextActive: {
-        color: colors.secondary
+        color: colors.secondary,
+        backgroundColor: colors.primary,
+        borderRadius: 2,
     }
 });
 

@@ -16,22 +16,24 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body">
-    <button *ngIf="hideable && !hidden"
-            class="btn btn-secondary hide-field-button"
-            (click)="toggleHidden()"
-            placement="left" container="body"
-            ngbTooltip="Feld ausblenden"
-            i18n-ngbTooltip="@@configuration.hideField">
-        <span class="mdi mdi-eye-off"></span>
-    </button>
-    <button *ngIf="hideable && hidden"
-            class="btn btn-light show-field-button"
-            (click)="toggleHidden()"
-            placement="left" container="body"
-            ngbTooltip="Feld einblenden"
-            i18n-ngbTooltip="@@configuration.showField">
-        <span class="mdi mdi-eye"></span>
-    </button>
+    <div *ngIf="hideable" class="configuration-editor-section form-group">
+        <div class="configuration-editor-section-title" i18n="@@configuration.visibility">
+            Sichtbarkeit
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <span i18n="@@configuration.showField">Feld anzeigen</span>
+            </div>
+            <div class="col-auto">
+                <label class="switch">
+                    <input type="checkbox"
+                        [checked]="!hidden"
+                        (change)="toggleHidden()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
             Feldbezeichnung

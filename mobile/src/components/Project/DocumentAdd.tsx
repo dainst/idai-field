@@ -111,6 +111,21 @@ const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
 const shouldShow = (field: FieldDefinition)=> field !== undefined && field.editable === true;
 
 
+const createRelations = (parentDoc: Document): Relations => {
+
+    const parentDocIsOperation = () => isUndefinedOrEmpty(parentDoc.resource.relations.isRecordedIn);
+    const relations: Relations = { isRecordedIn:[] };
+    
+    if(parentDocIsOperation()){
+        relations['isRecordedIn'] = [parentDoc.resource.id];
+    } else {
+        relations['isRecordedIn'] = [ parentDoc.resource.relations.isRecordedIn[0]];
+        relations['liesWithin'] = [parentDoc.resource.id];
+    }
+    return relations;
+};
+
+
 const styles = StyleSheet.create({
     container: {
         padding: 20,
@@ -153,21 +168,6 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
-
-
-const createRelations = (parentDoc: Document): Relations => {
-
-    const parentDocIsOperation = () => isUndefinedOrEmpty(parentDoc.resource.relations.isRecordedIn);
-    const relations: Relations = { isRecordedIn:[] };
-    
-    if(parentDocIsOperation()){
-        relations['isRecordedIn'] = [parentDoc.resource.id];
-    } else {
-        relations['isRecordedIn'] = [ parentDoc.resource.relations.isRecordedIn[0]];
-        relations['liesWithin'] = [parentDoc.resource.id];
-    }
-    return relations;
-};
 
 
 export default DocumentAdd;

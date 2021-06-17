@@ -59,8 +59,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        if (isEmpty(this.getClonedCategoryDefinition().fields[this.field.name])
-                || this.getClonedCategoryDefinition().fields[this.field.name].inputType === this.field.inputType) {
+        if (isEmpty(this.getClonedCategoryDefinition().fields[this.field.name])) {
             delete this.getClonedCategoryDefinition().fields[this.field.name];
         }
 
@@ -99,7 +98,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isChanged(): boolean {
 
-        return (!equal(this.field.inputType)(this.getClonedCategoryDefinition().fields[this.field.name]?.inputType))
+        return (!equal(this.getCustomCategoryDefinition().fields[this.field.name]?.inputType)
+                (this.getClonedCategoryDefinition().fields[this.field.name]?.inputType))
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
     }

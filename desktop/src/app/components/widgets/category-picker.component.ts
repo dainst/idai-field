@@ -18,7 +18,6 @@ export class CategoryPickerComponent implements OnChanges {
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
-    @Input() customLanguageConfigurations: { [languageCode: string]: LanguageConfiguration };
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
 
@@ -36,14 +35,7 @@ export class CategoryPickerComponent implements OnChanges {
     }
 
 
-    public getCategoryLabel(category: Category): string {
-
-        return LabelUtil.getLabel(
-            this.customLanguageConfigurations
-                ? LanguageConfigurationUtil.getUpdatedDefinition(this.customLanguageConfigurations, category)
-                : category
-        );
-    }
+    public getCategoryLabel = (category: Category): string => LabelUtil.getLabel(category);
 
 
     public pickCategory(category: Category) {

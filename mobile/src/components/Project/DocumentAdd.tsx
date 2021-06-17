@@ -62,6 +62,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
     );
 };
 
+
 const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
     group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
 
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
     groupColumn: {
         backgroundColor: '#DDDDDD',
         width: '30%',
+        height: '60%',
         justifyContent: 'center',
         alignItems: 'flex-start',
         marginRight: 50,

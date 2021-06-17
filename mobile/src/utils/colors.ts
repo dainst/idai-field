@@ -3,7 +3,8 @@ export const colors = {
     primary: '#5572a1',
     success: '#32a852',
     danger: '#dc3545',
-    transparent: 'transparent'
+    transparent: 'transparent',
+    lightgray: '#DDDDDD'
 };
 
 export const textColors = {

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     groupColumn: {
-        backgroundColor: '#DDDDDD',
+        backgroundColor: colors.lightgray,
         width: '30%',
         height: '50%',
         justifyContent: 'flex-start',

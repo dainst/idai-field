@@ -874,15 +874,15 @@
         <target state="final">Project-specific form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editCategory" datatype="html">
         <source>Kategorie bearbeiten</source>
-        <target state="translated">Edit category</target>
+        <target state="final">Edit category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -890,7 +890,7 @@
         <target state="final">Input type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-relation.component.ts</context>
@@ -898,38 +898,38 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.fieldLabel" datatype="html">
-        <source>Feldbezeichnung</source>
+        <source> Feldbezeichnung </source>
         <target state="final">Field label</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.hideField" datatype="html">
-        <source>Feld ausblenden</source>
-        <target state="final">Hide field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.visibility" datatype="html">
+        <source> Sichtbarkeit </source>
+        <target state="final"> Visibility </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.showField" datatype="html">
-        <source>Feld einblenden</source>
+        <source>Feld anzeigen</source>
         <target state="final">Show field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
         <source>Einzeiliger Text</source>
         <target state="final">Single line text</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -937,7 +937,7 @@
         <source>Positive Ganzzahl</source>
         <target state="final">Positive whole number</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -945,7 +945,7 @@
         <source>Kommazahl</source>
         <target state="final">Decimal number</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -953,7 +953,7 @@
         <source>Positive Kommazahl</source>
         <target state="final">Positive decimal number</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -961,7 +961,7 @@
         <source>Einzeiliger Text mit Mehrfachauswahl</source>
         <target state="final">Single line text with multiple selection</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -969,7 +969,7 @@
         <source>Mehrzeiliger Text</source>
         <target state="final">Multiline text</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -977,7 +977,7 @@
         <source>Dropdown-Liste</source>
         <target state="final">Dropdown list</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -985,7 +985,7 @@
         <source>Dropdown-Liste (Bereich)</source>
         <target state="final">Dropdown list (range)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -993,7 +993,7 @@
         <source>Radiobutton</source>
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1001,7 +1001,7 @@
         <source>Ja / Nein</source>
         <target state="final">Yes / No</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1009,7 +1009,7 @@
         <source>Checkboxen</source>
         <target state="final">Checkboxes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1017,7 +1017,7 @@
         <source>Datierungsangabe</source>
         <target state="final">Dating</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1025,7 +1025,7 @@
         <source>Datum</source>
         <target state="final">Date</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1033,7 +1033,7 @@
         <source>Maßangabe</source>
         <target state="final">Dimension</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1041,7 +1041,7 @@
         <source>Literaturangabe</source>
         <target state="final">Bibliographic reference</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1049,7 +1049,7 @@
         <source>Geometrie</source>
         <target state="final">Geometry</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1057,7 +1057,7 @@
         <source>Typenauswahl</source>
         <target state="final">Type selection</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1066,7 +1066,7 @@
         <target state="final">Show hidden fields</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
@@ -1079,18 +1079,18 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificCategory" datatype="html">
         <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="new"> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </target>
+        <target state="final"> Edit category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
         <source>Sprache auswählen</source>
         <target state="final">Choose language</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/multi-language-input.component.ts</context>
-          <context context-type="linenumber">42,56</context>
+          <context context-type="sourcefile">src/app/components/configuration/editor/multi-language-input.component.ts</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
@@ -1461,10 +1461,6 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/dialog/edit-save-dialog.component.ts</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
@@ -1500,21 +1496,9 @@
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.saveModal.header" datatype="html">
-        <source>Speichern?</source>
-        <target state="final">Save?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/dialog/edit-save-dialog.component.ts</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.saveModal.question" datatype="html">
-        <source>Die Ressource wurde geändert. Möchten Sie die Änderungen speichern?</source>
-        <target state="final">The resource has been changed. Do you want to save the changes?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/dialog/edit-save-dialog.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.save" datatype="html">
@@ -1526,11 +1510,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/dialog/edit-save-dialog.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
@@ -1540,13 +1520,17 @@
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">111</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
         <source>Änderungen verwerfen</source>
         <target state="final">Discard changes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/dialog/edit-save-dialog.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
@@ -1881,6 +1865,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.header" datatype="html">
+        <source>Speichern?</source>
+        <target state="final">Save?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.question" datatype="html">
+        <source>Möchten Sie die Änderungen speichern?</source>
+        <target state="final">Do you want to save the changes?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.depictsRelationsView.depictedResources" datatype="html">
@@ -2275,7 +2275,7 @@
         <target state="final">All categories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.resultsInOtherContexts" datatype="html">
@@ -3804,12 +3804,28 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.saveModal.categoryChanged" datatype="html">
+        <source>Die Kategorie wurde geändert.</source>
+        <target state="final">The category has been changed.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.saveModal.fieldChanged" datatype="html">
+        <source>Das Feld wurde geändert.</source>
+        <target state="final">The field has been changed.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="config.source.custom" datatype="html">
         <source>Projektspezifisches Feld</source>
         <target state="final">Project-specific field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editField" datatype="html">
@@ -3817,7 +3833,7 @@
         <target state="final">Edit field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.conflicts" datatype="html">
@@ -3831,6 +3847,14 @@
       <trans-unit id="docedit.parentLabel.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.saveModal.resourceChanged" datatype="html">
+        <source>Die Ressource wurde geändert.</source>
+        <target state="final">The resource has been changed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5381,7 +5405,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.libraryId" datatype="html">
@@ -5389,23 +5413,23 @@
         <target state="final">Form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoryLabel" datatype="html">
-        <source>Kategoriebezeichnung</source>
+        <source> Kategoriebezeichnung </source>
         <target state="final">Category label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
-        <source>Beschreibung</source>
+        <source> Beschreibung </source>
         <target state="final">Description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
@@ -5417,7 +5441,7 @@
         <target state="final"> Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
     </body>

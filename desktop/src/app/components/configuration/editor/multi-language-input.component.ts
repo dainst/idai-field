@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { subtract } from 'tsfun';
 import { I18nString } from 'idai-field-core';
-import { Language, LanguagesUtil } from '../../core/util/languages-util';
+import { Language, LanguagesUtil } from '../../../core/util/languages-util';
 
 
 @Component({

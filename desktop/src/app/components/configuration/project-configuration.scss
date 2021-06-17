@@ -1,7 +1,7 @@
-@import './configuration-category.scss';
+@import './configuration-category';
 @import './configuration-field';
-@import './multi-language-input';
 @import './editor/configuration-editor-modal';
+@import './editor/multi-language-input';
 
 .project-configuration {
   .sidebar {

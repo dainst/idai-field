@@ -36,7 +36,7 @@
       "hidden": [],
       "fields":{},
       "valuelists":{
-        "period" :" periods-gadara"
+        "period" :" periods-Gadara"
       }
    },
    "BuildingPart:default":{
@@ -72,8 +72,8 @@
             }
           },
        "valuelists":{
-            "period":"periods-gadara",
-            "amountDescription":"Find-amountDescription-gadara",
+            "period":"periods-Gadara",
+            "amountDescription":"Find-amountDescription-Gadara",
             "samples":"Find-sample-Gadara",
             "sampleStatus":"Find-samplePl-Gadara",
             "storagePlace":"Find-Store-Gadara"
@@ -95,7 +95,7 @@
        "dimensionHeight"
      ],
      "valuelists": {
-       "period":"periods-gadara"
+       "period":"periods-Gadara"
 
      },
      "fields": {
@@ -117,7 +117,7 @@
       "hidden":[],
       "fields":{},
       "valuelists":{
-         "period":"periods-gadara"
+         "period":"periods-Gadara"
       }
    },
    "RoomCeiling:default":{
@@ -139,7 +139,7 @@
       "hidden":[],
       "fields":{},
       "valuelists":{
-         "period":"periods-gadara"
+         "period":"periods-Gadara"
       }
    },
    "Image:default":{
@@ -154,16 +154,16 @@
          }
       },
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "transparency":"glass-transparency-gadara",
-         "vesselFormSpecific":"glass-vesselFormSpecific-gadara",
-         "vesselpart":"Pottery-vesselpart-gadara",
-         "color":"Pottery-coatColor-gadara",
-         "vesselForm":"glass-vesselForm-gadara",
-         "formDescription":"glass-formDescription-gadara",
-         "objectType":"glass-objectType-gadara",
-         "decorationTechnique":"glass-decorationTechnique-gadara",
-         "manufacturingMethod":"glass-manufacturingMethod-gadara"
+         "provenance":"provenance-Gadara",
+         "transparency":"glass-transparency-Gadara",
+         "vesselFormSpecific":"glass-vesselFormSpecific-Gadara",
+         "vesselpart":"Pottery-vesselpart-Gadara",
+         "color":"Pottery-coatColor-Gadara",
+         "vesselForm":"glass-vesselForm-Gadara",
+         "formDescription":"glass-formDescription-Gadara",
+         "objectType":"glass-objectType-Gadara",
+         "decorationTechnique":"glass-decorationTechnique-Gadara",
+         "manufacturingMethod":"glass-manufacturingMethod-Gadara"
       }
    },
    "Mollusk:default":{
@@ -176,13 +176,13 @@
      ],
       "fields":{},
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "formDescription":"glass-formDescription-gadara",
-         "vesselForm":"glass-vesselForm-gadara",
-         "objectType":"Metal-objectType-gadara",
-         "decorationTechnique":"Metal-decorationTechnique-gadara",
-         "manufacturingMethod":"Metal-manufacturingMethod-gadara",
-         "metalMaterial":"Coin-metalMaterial-gadara"
+         "provenance":"provenance-Gadara",
+         "formDescription":"glass-formDescription-Gadara",
+         "vesselForm":"glass-vesselForm-Gadara",
+         "objectType":"Metal-objectType-Gadara",
+         "decorationTechnique":"Metal-decorationTechnique-Gadara",
+         "manufacturingMethod":"Metal-manufacturingMethod-Gadara",
+         "metalMaterial":"Coin-metalMaterial-Gadara"
       }
    },
    "Brick:default":{
@@ -199,14 +199,14 @@
       "valuelists":  {
          "brickForm":"Brick-brickForm-Gadara",
          "brickUsage":"Brick-brickUsage-Gadara",
-         "decorationTechnique":"Brick-decorationTechnique-gadara",
-         "manufacturing":"Brick-manufacturing-gadara",
-         "clayColorOutside":"Pottery-coatColor-gadara",
-         "surfaceTreatment":"Pottery-coatTpe-gadara",
-         "provenance":"provenance-gadara",
-         "formDescription":"glass-formDescription-gadara",
-         "manufacturingMethod":"Brick-manufacturingMethod-gadara",
-         "temper":"Brick-temper-gadara"
+         "decorationTechnique":"Brick-decorationTechnique-Gadara",
+         "manufacturing":"Brick-manufacturing-Gadara",
+         "clayColorOutside":"Pottery-coatColor-Gadara",
+         "surfaceTreatment":"Pottery-coatTpe-Gadara",
+         "provenance":"provenance-Gadara",
+         "formDescription":"glass-formDescription-Gadara",
+         "manufacturingMethod":"Brick-manufacturingMethod-Gadara",
+         "temper":"Brick-temper-Gadara"
       }
    },
    "Burial:default":{
@@ -233,14 +233,14 @@
          }
       },
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "surfaceCondition":"Terracotta-surfaceCondition-gadara",
-         "paintColor":"Pottery-coatColor-gadara",
-         "color":"Pottery-coatColor-gadara",
-         "decorationTechnique":"Wood-decorationTechnique-gadara",
-         "objectType":"Wood-objectType-gadara",
-         "manufacturingMethod":"Wood-manufacturingMethod-gadara",
-         "typeOfWood":"Wood-typeOfWood-gadara"
+         "provenance":"provenance-Gadara",
+         "surfaceCondition":"Terracotta-surfaceCondition-Gadara",
+         "paintColor":"Pottery-coatColor-Gadara",
+         "color":"Pottery-coatColor-Gadara",
+         "decorationTechnique":"Wood-decorationTechnique-Gadara",
+         "objectType":"Wood-objectType-Gadara",
+         "manufacturingMethod":"Wood-manufacturingMethod-Gadara",
+         "typeOfWood":"Wood-typeOfWood-Gadara"
       }
     },
    "Architecture":{
@@ -452,20 +452,20 @@
          }
       },
       "valuelists":{
-         "vesselpart":"Pottery-vesselpart-gadara",
-         "materialType":"Pottery-materialType-gadara",
-         "specificType":"Pottery-specificType-gadara",
-         "potteryTypeSpecific":"Pottery-potteryTypeSpecific-gadara",
-         "coatColorInside":"Pottery-coatColor-gadara",
-         "coatColorOutside":"Pottery-coatColor-gadara",
-         "coatInsideType":"Pottery-coatTpe-gadara",
-         "coatOutsideType":"Pottery-coatTpe-gadara",
-         "decorationTechnique":"Brick-decorationTechnique-gadara",
-         "clayColorOutside":"Pottery-coatColor-gadara",
-         "clayColorBreak":"Pottery-coatColor-gadara",
-         "temperAmount":"Pottery-temperAmount-gadara",
-         "temperParticles":"Pottery-temperParticles-gadara",
-         "temper":"Brick-temper-gadara"
+         "vesselpart":"Pottery-vesselpart-Gadara",
+         "materialType":"Pottery-materialType-Gadara",
+         "specificType":"Pottery-specificType-Gadara",
+         "potteryTypeSpecific":"Pottery-potteryTypeSpecific-Gadara",
+         "coatColorInside":"Pottery-coatColor-Gadara",
+         "coatColorOutside":"Pottery-coatColor-Gadara",
+         "coatInsideType":"Pottery-coatTpe-Gadara",
+         "coatOutsideType":"Pottery-coatTpe-Gadara",
+         "decorationTechnique":"Brick-decorationTechnique-Gadara",
+         "clayColorOutside":"Pottery-coatColor-Gadara",
+         "clayColorBreak":"Pottery-coatColor-Gadara",
+         "temperAmount":"Pottery-temperAmount-Gadara",
+         "temperParticles":"Pottery-temperParticles-Gadara",
+         "temper":"Brick-temper-Gadara"
       }
    },
    "Grave": {
@@ -585,11 +585,11 @@
          }
       },
       "valuelists":{
-         "sex":"Bone-sex-gadara",
-         "boneClassification":"Bone-boneClassification-gadara",
-         "boneType":"Bone-boneType-gadara",
-         "objectType":"Bone-objectType-gadara",
-         "species":"Bone-species-gadara"
+         "sex":"Bone-sex-Gadara",
+         "boneClassification":"Bone-boneClassification-Gadara",
+         "boneType":"Bone-boneType-Gadara",
+         "objectType":"Bone-objectType-Gadara",
+         "species":"Bone-species-Gadara"
       }
    },
    "Terracotta:default":{
@@ -614,21 +614,21 @@
          }
       },
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "potteryTypeSpecific":"Pottery-potteryTypeSpecific-gadara",
-         "coatInsideType":"Pottery-coatTpe-gadara",
-         "coatOutsideType":"Pottery-coatTpe-gadara",
-         "formDescription":"glass-formDescription-gadara",
-         "clayColorOutside":"Pottery-coatColor-gadara",
-         "clayColorInside":"Pottery-coatColor-gadara",
-         "clayColorBreak":"Pottery-coatColor-gadara",
-         "temperAmount":"Pottery-temperAmount-gadara",
-         "temperParticles":"Pottery-temperParticles-gadara",
-         "temper":"Brick-temper-gadara",
-         "decorationTechnique":"Brick-decorationTechnique-gadara",
-         "manufacturingMethod":"Brick-manufacturingMethod-gadara",
-         "objectType":"Terracotta-objectType-gadara",
-         "surfaceCondition":"Terracotta-surfaceCondition-gadara"
+         "provenance":"provenance-Gadara",
+         "potteryTypeSpecific":"Pottery-potteryTypeSpecific-Gadara",
+         "coatInsideType":"Pottery-coatTpe-Gadara",
+         "coatOutsideType":"Pottery-coatTpe-Gadara",
+         "formDescription":"glass-formDescription-Gadara",
+         "clayColorOutside":"Pottery-coatColor-Gadara",
+         "clayColorInside":"Pottery-coatColor-Gadara",
+         "clayColorBreak":"Pottery-coatColor-Gadara",
+         "temperAmount":"Pottery-temperAmount-Gadara",
+         "temperParticles":"Pottery-temperParticles-Gadara",
+         "temper":"Brick-temper-Gadara",
+         "decorationTechnique":"Brick-decorationTechnique-Gadara",
+         "manufacturingMethod":"Brick-manufacturingMethod-Gadara",
+         "objectType":"Terracotta-objectType-Gadara",
+         "surfaceCondition":"Terracotta-surfaceCondition-Gadara"
       }
    },
    "Photo:default":{
@@ -649,14 +649,14 @@
          }
       },
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "formDescription":"glass-formDescription-gadara",
-         "architectureElement":"Stone-architectureElement-gadara",
-         "objectType":"Stone-objectType-gadara",
-         "temperAmount":"Pottery-temperAmount-gadara",
-         "color":"Pottery-coatColor-gadara",
+         "provenance":"provenance-Gadara",
+         "formDescription":"glass-formDescription-Gadara",
+         "architectureElement":"Stone-architectureElement-Gadara",
+         "objectType":"Stone-objectType-Gadara",
+         "temperAmount":"Pottery-temperAmount-Gadara",
+         "color":"Pottery-coatColor-Gadara",
          "treatment":"Stone-treatment-Gadara",
-         "material":"Stone-material-gadara"
+         "material":"Stone-material-Gadara"
       }
    },
    "Coin:default":{
@@ -666,10 +666,10 @@
      ],
       "fields":{},
       "valuelists":{
-         "provenance":"provenance-gadara",
-         "metalMaterial":"Coin-metalMaterial-gadara",
-         "mintingRuler":"Coin-mintingRuler-gadara",
-         "stampPositioning":"Coin-stampPositioning-gadara"
+         "provenance":"provenance-Gadara",
+         "metalMaterial":"Coin-metalMaterial-Gadara",
+         "mintingRuler":"Coin-mintingRuler-Gadara",
+         "stampPositioning":"Coin-stampPositioning-Gadara"
       }
    },
    "PlasterFragment:default":{
@@ -694,10 +694,10 @@
       "valuelists":{
          "decoration":"plasterDecoration-Gadara",
          "plasterType":"plasterType-Gadara",
-         "color":"Pottery-coatColor-gadara",
-         "plasterComponents":"Brick-temper-gadara",
-         "temperAmount":"Pottery-temperAmount-gadara",
-         "temperParticles":"Pottery-temperParticles-gadara"
+         "color":"Pottery-coatColor-Gadara",
+         "plasterComponents":"Brick-temper-Gadara",
+         "temperAmount":"Pottery-temperAmount-Gadara",
+         "temperParticles":"Pottery-temperParticles-Gadara"
       }
    },
    "Excavation:default":{

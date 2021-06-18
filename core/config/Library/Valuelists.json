@@ -1122,7 +1122,7 @@
       "Rezent"
     ]
   },
-  "periods-gadara":{
+  "periods-Gadara":{
      "creationDate":"24-12-2019",
      "createdBy":"Heike Möller, Hanna Hamel DAI, 2019",
      "description":{
@@ -6199,7 +6199,7 @@
       }
     }
   },
-  "Pottery-materialType-gadara":{
+  "Pottery-materialType-Gadara":{
      "creationDate":"2019",
      "createdBy":"Heike Möller, Hanna Hamel; DAI",
      "description":"Grobe Kategorisierung der Keramik. Einteilung wie Typenkatalog - siehe Typenkatalog Gadara",
@@ -6552,7 +6552,7 @@
       }
     }
   },
-  "Pottery-specificType-gadara":{
+  "Pottery-specificType-Gadara":{
      "creationDate":"24-12-2019",
      "createdBy":"Heike Möller, Hanna Hamel DAI 2019",
      "description":{
@@ -20002,7 +20002,7 @@
       }
     }
   },
-  "Pottery-potteryTypeSpecific-gadara":{
+  "Pottery-potteryTypeSpecific-Gadara":{
      "createdBy":"Heike Möller, Hanna Hamel; DAI",
      "creationDate":"",
      "description":{
@@ -26297,7 +26297,7 @@
       }
     }
   },
-  "Pottery-vesselpart-gadara":{
+  "Pottery-vesselpart-Gadara":{
      "createdBy":"Heike Möller, Hanna Hamel DAI 2019",
      "creationDate":"24-12-2019",
      "description":"Bestimmung des erhaltenen Gefäßteils, fehlt als default-Liste",
@@ -27126,7 +27126,68 @@
         }
      }
   },
-  "Pottery-coatColor-gadara":{
+  "Pottery-coatTpe-Gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel",
+     "creationDate":"24-12-2019",
+     "description":"Oberflächenbehandlungen, die häufig auf Keramik anzutreffen sind.",
+     "values":{
+        "Unbehandelt":{
+           "labels":{
+              "de":"unbehandelt",
+              "en":"untreated",
+              "fr":"non traitée"
+           }
+        },
+        "Überzug":{
+           "labels":{
+              "de":"Überzug",
+              "en":"slip",
+              "fr":"engobe"
+           }
+        },
+        "Poliert":{
+           "labels":{
+              "de":"poliert",
+              "en":"polished",
+              "fr":"polie"
+           }
+        },
+        "Geglättet":{
+           "labels":{
+              "de":"geglättet",
+              "en":"smoothed",
+              "fr":"lissée"
+           }
+        },
+        "Glasiert":{
+           "labels":{
+              "de":"glasiert",
+              "en":"glazed",
+              "fr":"glaçurée"
+           }
+        },
+        "Bemalung":{
+           "labels":{
+              "de":"bemalt",
+              "en":"painted",
+              "fr":"peinte"
+           }
+        },
+        "Verstrichen":{
+           "labels":{
+              "de":"nass verstrichen",
+              "en":"wet coated"
+           }
+        },
+        "nicht erhalten":{
+           "labels":{
+              "de":"nicht erhalten",
+              "en":"not preserved"
+           }
+        }
+     }
+  },
+  "Pottery-coatColor-Gadara":{
      "createdBy":"Heike Möller, Hanna Hamel",
      "creationDate":"24-12-2019",
      "description":"Farben wie default mit englischen Übersetzungen",
@@ -30086,7 +30147,7 @@
       }
     }
   },
-  "Find-amountDescription-gadara":{
+  "Find-amountDescription-Gadara":{
      "createdBy":"Heike Möller, Hanna Hamel",
      "creationDate":"24-12-2019",
      "description":{
@@ -48170,7 +48231,7 @@
          }
       }
    },
-   "provenance-gadara":{
+   "provenance-Gadara":{
       "createdBy":"Hanna Hamel",
       "description":"Gegenüber der default-Liste gekürzte Version mit einer Auswahl der für Gadara relevanten Regionen. Einheitliche Schreibweise der Regionen, also Länder- oder Regionsname ohne -isch",
       "creationDate":"21.01.2021",
@@ -48273,7 +48334,7 @@
          }
       }
    },
-   "glass-transparency-gadara":{
+   "glass-transparency-Gadara":{
       "creationDate":"06.10.2020",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48307,7 +48368,7 @@
          }
       }
    },
-   "glass-formDescription-gadara":{
+   "glass-formDescription-Gadara":{
       "creationDate":"22.01.2021",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48425,7 +48486,7 @@
          }
       }
    },
-   "glass-vesselFormSpecific-gadara":{
+   "glass-vesselFormSpecific-Gadara":{
       "creationDate":"06.10.2020",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48514,7 +48575,7 @@
          "Kragenschale"
       ]
    },
-   "glass-vesselForm-gadara":{
+   "glass-vesselForm-Gadara":{
       "creationDate":"07.10.2020",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48603,7 +48664,7 @@
          "Unbestimmt"
       ]
    },
-   "glass-objectType-gadara":{
+   "glass-objectType-Gadara":{
       "creationDate":"27.01.2021",
       "createdBy":"Hanna Hamel",
       "description":"Gegenüber der default-Werteliste gekürzte und ins englische übersetzte Version",
@@ -48688,7 +48749,7 @@
          }
       }
    },
-   "glass-decorationTechnique-gadara":{
+   "glass-decorationTechnique-Gadara":{
       "creationDate":"27.01.2021",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48758,7 +48819,7 @@
          }
       }
    },
-   "glass-manufacturingMethod-gadara":{
+   "glass-manufacturingMethod-Gadara":{
       "creationDate":"27.01.2021",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -48792,7 +48853,7 @@
          }
       }
    },
-   "Brick-temper-gadara":{
+   "Brick-temper-Gadara":{
       "creationDate":"29.01.2021",
       "createdBy":"Hanna Hamel",
       "description":"wie default, aber mit englischer Übersetzung",
@@ -48883,7 +48944,7 @@
          }
       }
    },
-   "Brick-manufacturingMethod-gadara":{
+   "Brick-manufacturingMethod-Gadara":{
       "creationDate":"29.01.2021",
       "createdBy":"Hanna Hamel",
       "description":"wie default Liste, aber mit englischer Übersetzung",
@@ -48920,7 +48981,7 @@
          }
       }
    },
-   "Brick-decorationTechnique-gadara":{
+   "Brick-decorationTechnique-Gadara":{
       "creationDate":"08.10.2020",
       "createdBy":"Hanna Hamel",
       "description":"Häufige Verzierungstypen auf Ziegeln oder Keramik ohne Oberflächenbehandlungen, welche gesondert erfasst werden. In der default-Werteliste werden beide Kategorien zusammen erfasst.",
@@ -49146,7 +49207,7 @@
          "ohne erkennbare Form"
       ]
    },
-   "Brick-manufacturing-gadara":{
+   "Brick-manufacturing-Gadara":{
       "creationDate":"08.10.2020",
       "createdBy":"Hanna Hamel",
       "description":{
@@ -49193,7 +49254,7 @@
          "Sekundär gebrannt"
       ]
    },
-   "Wood-typeOfWood-gadara":{
+   "Wood-typeOfWood-Gadara":{
       "creationDate":"23.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"Für das östliche Mittelmeer angepasste Werteliste.",
@@ -49308,7 +49369,7 @@
          }
       }
    },
-   "Wood-decorationTechnique-gadara":{
+   "Wood-decorationTechnique-Gadara":{
       "creationDate":"23.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"Vereinfachte und übersetzte default-Liste",
@@ -49345,7 +49406,7 @@
          }
       }
    },
-   "Wood-objectType-gadara":{
+   "Wood-objectType-Gadara":{
       "creationDate":"23.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"vereinfachte und übersetzte default-Liste",
@@ -49424,7 +49485,7 @@
          }
       }
    },
-   "Wood-manufacturingMethod-gadara":{
+   "Wood-manufacturingMethod-Gadara":{
       "creationDate":"23.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"übersetzte default-Liste",
@@ -49491,7 +49552,7 @@
          }
       }
    },
-   "Pottery-temperAmount-gadara":{
+   "Pottery-temperAmount-Gadara":{
       "creationDate":"28.01.2021",
       "createdBy":"Hanna Hamel",
       "description":"Wie default. Englische Übersetzung und Sortierung",
@@ -49549,7 +49610,7 @@
          "nicht erkennbar"
       ]
    },
-   "Pottery-temperParticles-gadara":{
+   "Pottery-temperParticles-Gadara":{
       "creationDate":"28.01.2021",
       "createdBy":"Hanna Hamel",
       "description":"Übersetzung und Sortierung, sonst wie default",
@@ -49600,7 +49661,7 @@
          "sehr grob"
       ]
    },
-   "Bone-species-gadara":{
+   "Bone-species-Gadara":{
       "creationDate":"08.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"Anlage der im Orient häufigen Tierarten, sollte von Spezialisten angepasst/überarbeitet werden.",
@@ -49697,7 +49758,7 @@
          }
       }
    },
-   "Bone-boneType-gadara":{
+   "Bone-boneType-Gadara":{
       "creationDate":"08.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"angepasst default-Liste mit englischer Übersetzung. Zahn hinzugefügt",
@@ -49740,7 +49801,7 @@
          }
       }
    },
-   "Bone-objectType-gadara":{
+   "Bone-objectType-Gadara":{
       "creationDate":"08.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"leicht angepasste Variante der default-Liste mit englischen Übersetzungen",
@@ -49831,7 +49892,7 @@
          }
       }
    },
-   "Bone-sex-gadara":{
+   "Bone-sex-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"08.02.2021",
       "description":"wie 'bone-sex-Meninx' aber mit englischer Übersetzung",
@@ -49856,7 +49917,7 @@
          }
       }
    },
-   "Bone-boneClassification-gadara":{
+   "Bone-boneClassification-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"08.02.2021",
       "description":{
@@ -50106,7 +50167,7 @@
          }
       }
    },
-   "Terracotta-objectType-gadara":{
+   "Terracotta-objectType-Gadara":{
       "creationDate":"18.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"Die gängisten Typen von Tonfunden, bei denen es sich nicht um Gefäßkeramik handelt",
@@ -50155,7 +50216,7 @@
          }
       }
    },
-   "Terracotta-surfaceCondition-gadara":{
+   "Terracotta-surfaceCondition-Gadara":{
       "creationDate":"23.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"leicht angepasste default-Liste mit englischer Übersetzung",
@@ -50216,7 +50277,7 @@
          }
       }
    },
-   "Stone-material-gadara":{
+   "Stone-material-Gadara":{
       "creationDate":"17.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"gekürzte und übersetzte default-Liste",
@@ -50265,7 +50326,7 @@
          }
       }
    },
-   "Stone-objectType-gadara":{
+   "Stone-objectType-Gadara":{
       "creationDate":"02.10.2020",
       "createdBy":"Hanna Hamel",
       "description":"gekürzte und übersetzte default-Liste",
@@ -50386,7 +50447,7 @@
          }
       }
    },
-   "Stone-architectureElement-gadara":{
+   "Stone-architectureElement-Gadara":{
       "creationDate":"02.10.2020",
       "createdBy":"Hanna Hamel",
       "description":"gekürzte und übersetzte default-Liste",
@@ -50534,7 +50595,7 @@
          "Poliert"
       ]
    },
-   "Coin-metalMaterial-gadara":{
+   "Coin-metalMaterial-Gadara":{
       "creationDate":"19.02.2021",
       "createdBy":"Hanna Hamel",
       "description":"gekürzte und ins englische übersetzte default-Liste",
@@ -50589,7 +50650,7 @@
          }
       }
    },
-   "Coin-mintingRuler-gadara":{
+   "Coin-mintingRuler-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"19.02.2021",
       "description":"Liste der römischen Kaiser bis ins 5. Jh. n. Chr. Sortiert nach Regierungszeit.",
@@ -50906,7 +50967,7 @@
          "Marcian (FLAVIVS MARCIANVS)"
       ]
    },
-   "Metal-decorationTechnique-gadara":{
+   "Metal-decorationTechnique-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"18.02.2021",
       "description":"gekürzte und übersetzte default-Liste.",
@@ -50949,7 +51010,7 @@
          }
       }
    },
-   "Metal-objectType-gadara":{
+   "Metal-objectType-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"18.02.2021",
       "description":"gekürzte und übersetzte default-Liste",
@@ -51160,7 +51221,7 @@
          }
       }
    },
-   "Metal-manufacturingMethod-gadara":{
+   "Metal-manufacturingMethod-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"19.02.2021",
       "description":"Ins englische übertragene default-Liste. Vereinheitlichung der Begriffe im Deutschen.",
@@ -51425,7 +51486,7 @@
          "unbestimmbar"
       ]
    },
-  "Coin-stampPositioning-gadara":{
+   "Coin-stampPositioning-Gadara":{
       "createdBy":"Hanna Hamel",
       "creationDate":"19.02.2021",
       "description":"wie default-Liste, mit Übersetzung",
@@ -51534,6 +51595,8 @@
       "UTM35N"
     ]
   },
+
+
   "Survey-researchMethod-milet": {
     "creationDate": "02-02-2021",
     "createdBy": "Lisa Steinmann (Milet)",

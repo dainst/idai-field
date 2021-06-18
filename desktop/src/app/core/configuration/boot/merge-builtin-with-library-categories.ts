@@ -54,4 +54,6 @@ function merge(target: any, source: any) {
         }
         if (!alreadyPresentInTarget) target[sourceFieldName] = source[sourceFieldName];
     }
+
+    if (source.libraryId) target.libraryId = source.libraryId;
 }

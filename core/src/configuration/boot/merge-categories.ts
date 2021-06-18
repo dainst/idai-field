@@ -27,7 +27,7 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
             (mergedCategories);
 
         }, clone(selectableCategories));
-    }
+    };
 }
 
 
@@ -78,6 +78,8 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
             target[CustomCategoryDefinition.VALUELISTS][k] = v;
         });
     }
+
+    if (source.color) target.color = source.color;
 
     return flow(
         source,

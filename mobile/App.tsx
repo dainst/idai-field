@@ -4,6 +4,8 @@ import AppLoading from 'expo-app-loading';
 import React, { ReactElement, useCallback } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
+import { Toast } from './src/components/common/Toast/Toast';
+import { ToastProvider } from './src/components/common/Toast/ToastProvider';
 import HomeScreen from './src/components/Home/HomeScreen';
 import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
@@ -53,31 +55,34 @@ export default function App(): ReactElement {
     if (preferences) {
         return (
             <SafeAreaProvider>
-                <NavigationContainer>
-                    <Stack.Navigator
-                        initialRouteName={ preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
-                        screenOptions={ { headerShown: false } }
-                    >
-                        <Stack.Screen name="HomeScreen">
-                            { ({ navigation }) => <HomeScreen
-                                preferences={ preferences }
-                                setCurrentProject={ setCurrentProject }
-                                deleteProject={ deleteProject }
-                                navigate={ (screen: string) => navigation.navigate(screen) }
-                            /> }
-                        </Stack.Screen>
-                        <Stack.Screen name="ProjectScreen">
-                            { () => preferences.currentProject && <ProjectScreen
-                                currentProject={ preferences.currentProject }
-                                preferences={ preferences }
-                                setProjectSettings={ setProjectSettings }
-                            /> }
-                        </Stack.Screen>
-                        <Stack.Screen name="SettingsScreen">
-                            { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
-                        </Stack.Screen>
-                    </Stack.Navigator>
-                </NavigationContainer>
+                <ToastProvider>
+                    <NavigationContainer>
+                        <Stack.Navigator
+                            initialRouteName={ preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
+                            screenOptions={ { headerShown: false } }
+                        >
+                            <Stack.Screen name="HomeScreen">
+                                { ({ navigation }) => <HomeScreen
+                                    preferences={ preferences }
+                                    setCurrentProject={ setCurrentProject }
+                                    deleteProject={ deleteProject }
+                                    navigate={ (screen: string) => navigation.navigate(screen) }
+                                /> }
+                            </Stack.Screen>
+                            <Stack.Screen name="ProjectScreen">
+                                { () => preferences.currentProject && <ProjectScreen
+                                    currentProject={ preferences.currentProject }
+                                    preferences={ preferences }
+                                    setProjectSettings={ setProjectSettings }
+                                /> }
+                            </Stack.Screen>
+                            <Stack.Screen name="SettingsScreen">
+                                { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
+                            </Stack.Screen>
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                    <Toast />
+                </ToastProvider>
             </SafeAreaProvider>
         );
     } else {

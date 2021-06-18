@@ -276,19 +276,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
@@ -304,19 +304,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
@@ -746,7 +746,7 @@
         <target state="final">Categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">325</context>
+          <context context-type="linenumber">326</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -1446,11 +1446,11 @@
         <target state="final">Criteri di ricerca</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
@@ -1458,11 +1458,11 @@
         <target state="final">Seleziona campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
@@ -1470,35 +1470,35 @@
         <target state="final">Termine di ricerca</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
@@ -1506,11 +1506,11 @@
         <target state="final">Qualsiasi valore</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
@@ -1518,11 +1518,11 @@
         <target state="final">Nessun valore</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
@@ -1530,11 +1530,11 @@
         <target state="final">Inserisci termine di ricerca</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.anyValue" datatype="html">
@@ -1542,19 +1542,19 @@
         <target state="final">- Qualsiasi valore -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
@@ -1562,19 +1562,19 @@
         <target state="final">- Nessun valore -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
@@ -2453,7 +2453,7 @@
         <target state="final">Non impostato</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -2469,7 +2469,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -2490,7 +2490,7 @@
                         Geometria del tipo <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -2524,7 +2524,7 @@
         <target state="final">Cambia categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/category-switcher-button.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
@@ -2588,7 +2588,7 @@
         <target state="final">Aggiungi...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
@@ -2596,12 +2596,20 @@
         <target state="final">Citazione bibliografica secondo le linee guida del DAI:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
         <source>Zenon-ID:</source>
         <target state="final">Zenon-ID:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.literature.doi" datatype="html">
+        <source>DOI:</source>
+        <target state="final">DOI:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">108</context>
@@ -2745,7 +2753,7 @@
         <target state="final">Nessun criterio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">
@@ -2785,7 +2793,7 @@
         <target state="final">Misurato con</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -3086,7 +3094,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
@@ -3126,7 +3134,7 @@
         <target state="final">Crea matrix dalla selezione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -3265,6 +3273,14 @@
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
         <target state="final">Zenon-ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.literature.doi" datatype="html">
+        <source>DOI</source>
+        <target state="final">DOI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>

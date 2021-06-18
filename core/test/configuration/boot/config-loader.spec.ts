@@ -634,4 +634,52 @@ describe('ConfigLoader', () => {
 
         done();
     });
+
+
+    it('set libraryId', async done => {
+
+        Object.assign(libraryCategories, {
+            'A:0': {
+                categoryName: 'A',
+                commons: [],
+                valuelists: {},
+                fields: {},
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        });
+
+        applyConfig(
+            {
+                'A:0': { fields: {} },
+                B: { fields: {} },
+                C: { parent: 'A', fields: {} }
+            },
+            {}, {}, {}
+        );
+
+        let pconf;
+        try {
+            pconf = await configLoader.go(
+                {},
+                {
+                    A: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
+                    B: { fields: {} }
+                },
+                [],
+                {},
+                undefined,
+                'User'
+            );
+        } catch(err) {
+            fail(err);
+        }
+
+        expect(pconf.getCategory('A').libraryId).toBe('A:0');
+        expect(pconf.getCategory('B').libraryId).toBe('B');
+        expect(pconf.getCategory('C').libraryId).toBeUndefined();
+        
+        done();
+    });
 });

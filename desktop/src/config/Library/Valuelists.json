@@ -27065,68 +27065,7 @@
       }
     }
   },
-  "Pottery-coatTpe-gadara":{
-     "createdBy":"Heike Möller, Hanna Hamel",
-     "creationDate":"24-12-2019",
-     "description":"Oberflächenbehandlungen, die häufig auf Keramik anzutreffen sind.",
-     "values":{
-        "Unbehandelt":{
-           "labels":{
-              "de":"unbehandelt",
-              "en":"untreated",
-              "fr":"non traitée"
-           }
-        },
-        "Überzug":{
-           "labels":{
-              "de":"Überzug",
-              "en":"slip",
-              "fr":"engobe"
-           }
-        },
-        "Poliert":{
-           "labels":{
-              "de":"poliert",
-              "en":"polished",
-              "fr":"polie"
-           }
-        },
-        "Geglättet":{
-           "labels":{
-              "de":"geglättet",
-              "en":"smoothed",
-              "fr":"lissée"
-           }
-        },
-        "Glasiert":{
-           "labels":{
-              "de":"glasiert",
-              "en":"glazed",
-              "fr":"glaçurée"
-           }
-        },
-        "Bemalung":{
-           "labels":{
-              "de":"bemalt",
-              "en":"painted",
-              "fr":"peinte"
-           }
-        },
-        "Verstrichen":{
-           "labels":{
-              "de":"nass verstrichen",
-              "en":"wet coated"
-           }
-        },
-        "nicht erhalten":{
-           "labels":{
-              "de":"nicht erhalten",
-              "en":"not preserved"
-           }
-        }
-     }
-  },
-  "Pottery-coatTpe-Gadara":{
+  "Pottery-coatType-gadara":{
      "createdBy":"Heike Möller, Hanna Hamel",
      "creationDate":"24-12-2019",
      "description":"Oberflächenbehandlungen, die häufig auf Keramik anzutreffen sind.",

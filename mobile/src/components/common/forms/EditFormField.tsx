@@ -11,7 +11,7 @@ interface EditFormFieldProps extends FormBaseProps {
 const EditFormField: React.FC<EditFormFieldProps> = ({ fieldDefinition, ...baseProps }) => {
 
     return (
-    <View key={ fieldDefinition.name } >
+    <View >
         {renderInputField(baseProps, fieldDefinition)}
     </View>);
 };

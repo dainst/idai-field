@@ -98,6 +98,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                     {activeGroup.fields.map(fieldDef =>
                         (shouldShow(fieldDef) && newResource) &&
                             <EditFormField
+                                key={ fieldDef.name }
                                 setFunction={ updateResource }
                                 fieldDefinition={ fieldDef }
                                 resource={ newResource } />)}

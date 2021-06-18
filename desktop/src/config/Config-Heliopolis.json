@@ -19,7 +19,7 @@
       }
     }
   },
-  "Feature:default": {
+  "Feature": {
     "color": "green",
     "hidden": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "diary", "description", "area", "period", "diaryAbstract"],
     "commons": ["campaign", "processor", "date", "dating", "dimensionVerticalExtent", "period", "spatialLocation"],
@@ -75,7 +75,7 @@
       "consistency": "Feature-consistency-heliopolis-project"
     }
   },
-  "Find:default": {
+  "Find": {
     "color": "red",
     "hidden": ["storagePlace", "period", "hasRestoration", "catalogueNumber", "amount", "description", "condition", "conditionAmount", "conditionPercent", "conditionComment", "weight", "storageInventoryNumber", "comparison", "bibliography"],
     "commons": ["dating", "literature", "date", "processor", "campaign", "period", "dimensionHeight", "dimensionDiameter", "dimensionWidth", "dimensionLength", "spatialLocation"],

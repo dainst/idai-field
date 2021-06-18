@@ -2,7 +2,8 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Category, Document, FieldDefinition,
-    Group, NewResource, ProjectConfiguration, Relations
+    Group, LabelUtil,
+    NewResource, ProjectConfiguration, Relations
 } from 'idai-field-core';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
@@ -24,11 +25,12 @@ interface DocumentAddProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     navigation: DocumentAddNav;
+    languages: string[];
     parentDoc: Document;
     category: Category;
 }
 
-const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation ,parentDoc, category }) => {
+const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation,languages, parentDoc, category }) => {
     
     const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
     const [newResource, setNewResource] = useState<NewResource>();
@@ -87,7 +89,9 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                         <TouchableOpacity
                             key={ group.name } style={ styles.groupBtn }
                             onPress={ () => setActiveGroup(group) }>
-                            <Text style={ styleGroupText(group, activeGroup) }>{group.name}</Text>
+                            <Text style={ styleGroupText(group, activeGroup) }>
+                                {LabelUtil.getLabel(group, languages)}
+                            </Text>
                         </TouchableOpacity>))}
                 </Column>
                 <Column style={ styles.fieldColumn }>

@@ -125,6 +125,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     navigation={ navigation }
                     config={ config }
                     repository={ repository }
+                    languages={ languages }
                     parentDoc={ route.params.parentDoc }
                     category={ route.params.category }
                 /> }

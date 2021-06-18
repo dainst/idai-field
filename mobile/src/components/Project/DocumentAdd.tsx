@@ -1,5 +1,6 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { NewDocument } from 'core/dist';
 import {
     Category, Document, FieldDefinition,
     Group, LabelUtil,
@@ -8,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
+import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
@@ -17,6 +19,7 @@ import EditFormField from '../common/forms/EditFormField';
 import Heading from '../common/Heading';
 import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
+import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
@@ -35,7 +38,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
     const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
-
+    const { showToast } = useToast();
    
     useEffect(() => {
 
@@ -55,8 +58,28 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
     },[newResource]);
 
     
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateResource = (key: string, value: any) =>
         setNewResource(oldResource => oldResource && { ...oldResource, [key]: value });
+
+    
+    const saveButtonHandler = () => {
+        
+        if(newResource){
+            const newDocument: NewDocument = {
+                resource: newResource
+            };
+            repository.create(newDocument,'mkihm')
+                .then(doc => {
+                    showToast(ToastType.Success,`Created ${doc.resource.identifier}`);
+                    navigation.navigate('DocumentsMap',{ highlightedDocId: doc.resource.id });
+                })
+                .catch(_err => {
+                    showToast(ToastType.Error,'Could not create resource!');
+                    console.log(_err);
+                });
+        }
+    };
     
     
     return (
@@ -77,7 +100,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                 /> }
                 right={ <Button
                     variant="success"
-                    onPress={ () => console.log('Save') }
+                    onPress={ saveButtonHandler }
                     title="Save"
                     isDisabled={ !saveBtnEnabled }
                     icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }

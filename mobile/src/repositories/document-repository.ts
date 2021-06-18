@@ -4,7 +4,7 @@ import {
     CategoryConverter, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache, FindResult,
     Forest,
-    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, Query, SyncProcess, Tree
+    IdGenerator, Indexer, IndexFacade, NewDocument, PouchdbDatastore, PouchdbManager, Query, SyncProcess, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -33,7 +33,7 @@ export class DocumentRepository {
         this.pouchdbManager.destroyDb(project);
 
 
-    public create = (doc: Document, username: string): Promise<Document> =>
+    public create = (doc: Document | NewDocument, username: string): Promise<Document> =>
         this.datastore.create(doc, username);
 
     

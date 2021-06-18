@@ -1393,6 +1393,51 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow overwriting color', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            A: {
+                fields: {}
+            },
+            B: {
+                fields: {}
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A:0': {
+                categoryName: 'A',
+                commons: [],
+                valuelists: {},
+                fields: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                color: 'blue'
+            }
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            'A:0': {
+                fields: {},
+                color: 'red'
+            },
+            B: {
+                fields: {},
+                color: 'red'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories, libraryCategories, customCategories,
+            {}, {}, {}
+        );
+
+        expect(result['A'].color).toBe('red');
+        expect(result['B'].color).toBe('red');
+    });
+
+
     // err cases
 
     /*xit('critical change of input type', () => {

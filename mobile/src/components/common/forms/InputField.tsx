@@ -4,11 +4,8 @@ import { colors } from '../../../utils/colors';
 import { FieldsBaseProps } from './common-props';
 import FieldTitle from './FieldTitle';
 
-interface InputFieldProps extends FieldsBaseProps {
-    name: string
-}
 
-const InputField: React.FC<InputFieldProps> = ({ setFunction, name, resource }) => {
+const InputField: React.FC<FieldsBaseProps> = ({ setFunction, name, resource }) => {
 
     const [value, setValue] = useState<string>(resource[name]);
 

@@ -2,6 +2,7 @@ import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import AppLoading from 'expo-app-loading';
 import React, { ReactElement, useCallback } from 'react';
+import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Toast } from './src/components/common/Toast/Toast';

@@ -24,6 +24,7 @@ export const PROJECT_MAPPING = {
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
+    'heliopolis-project': { prefix: 'Heliopolis', label: 'Heliopolis' },
     'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
     'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },

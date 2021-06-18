@@ -1256,8 +1256,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
-        <source>Nutzername oder Passwort falsch.</source>
-        <target state="final">Nome utente o password errati.</target>
+        <source>Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</source>
+        <target state="translated">Nome utente o password errati.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">27</context>

@@ -1,6 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Category, Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
@@ -66,9 +66,9 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const closeAddModal = () => setIsAddModalOpen(false);
 
-    const navigateAddCategory = (category: Category, parentDoc: Document | undefined) => {
+    const navigateAddCategory = (categoryName: string, parentDoc: Document | undefined) => {
         closeAddModal();
-        if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, category });
+        if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, categoryName });
     };
 
         

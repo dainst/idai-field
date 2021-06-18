@@ -30,25 +30,27 @@ interface DocumentAddProps {
     navigation: DocumentAddNav;
     languages: string[];
     parentDoc: Document;
-    category: Category;
+    categoryName: string;
 }
 
-const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation,languages, parentDoc, category }) => {
+const DocumentAdd: React.FC<DocumentAddProps> = ({
+        config, repository, navigation, languages, parentDoc, categoryName }) => {
     
-    const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
+    const [category, setCategory] = useState<Category>();
+    const [activeGroup, setActiveGroup] = useState<Group>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
     const { showToast } = useToast();
    
     useEffect(() => {
-
+        
         setNewResource({
                 identifier: '',
                 relations: createRelations(parentDoc),
-                category: category.name
+                category: categoryName
         });
 
-    },[parentDoc, category]);
+    },[parentDoc, category, categoryName]);
 
     
     useEffect(() => {
@@ -57,6 +59,12 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
         else setSaveBtnEnabled(false);
     },[newResource]);
 
+    useEffect(() => {
+        
+        const category = config.getCategory(categoryName);
+        setCategory(category);
+        if(category) setActiveGroup(category?.groups[0]);
+    },[config, categoryName]);
     
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateResource = (key: string, value: any) =>
@@ -80,6 +88,9 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
                 });
         }
     };
+    
+
+    if(!category || !activeGroup) return null;
     
     
     return (

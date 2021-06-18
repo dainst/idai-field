@@ -11,7 +11,7 @@ import TitleBar from '../common/TitleBar';
 const ICON_SIZE = 30;
 
 interface AddModalProps {
-    onAddCategory: (category: Category, parentDoc: Document | undefined) => void;
+    onAddCategory: (categoryName: string, parentDoc: Document | undefined) => void;
     onClose: () => void;
     config: ProjectConfiguration;
     isInOverview: () => boolean;
@@ -54,7 +54,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
             category={ category.name }
             style={ style }
             key={ key }
-            onPress={ () => props.onAddCategory(category, props.parentDoc) } />);
+            onPress={ () => props.onAddCategory(category.name, props.parentDoc) } />);
 
 
     const renderCategoryChilds = (category: Category) => (

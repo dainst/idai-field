@@ -39,7 +39,7 @@
     <ng-template #tipAuthenticationError>
         <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
         <p>
-            <span i18n="@@navbar.taskbar.synchronization.error.authentication">Nutzername oder Passwort falsch.</span>
+            <span i18n="@@navbar.taskbar.synchronization.error.authentication">Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</span>
         </p>
     </ng-template>
     <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'AUTHENTICATION_ERROR'"

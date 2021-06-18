@@ -9,11 +9,11 @@ export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORT
  */
 export module ConfigurationUtil {
 
-    export const isHidden = (customCategoryDefinition: CustomCategoryDefinition,
+    export const isHidden = (customCategoryDefinition?: CustomCategoryDefinition,
                              parentCustomCategoryDefinition?: CustomCategoryDefinition) =>
             (field: FieldDefinition): boolean => {
 
-        return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
+        return (customCategoryDefinition?.hidden ?? []).includes(field.name) || 
             (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }
 }

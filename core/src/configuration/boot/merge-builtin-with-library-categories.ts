@@ -1,10 +1,10 @@
-import {clone, keysValues, Map} from 'tsfun';
-import {ObjectUtils} from '../../tools/object-utils';
-import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
-import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
-import {ConfigurationErrors} from './configuration-errors';
-import {mergeFields} from './merge-fields';
+import { clone, keysValues, Map } from 'tsfun';
+import { ObjectUtils } from '../../tools/object-utils';
+import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
+import { ConfigurationErrors } from './configuration-errors';
+import { mergeFields } from './merge-fields';
 
 
 export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<BuiltinCategoryDefinition>,
@@ -54,4 +54,6 @@ function merge(target: any, source: any) {
         }
         if (!alreadyPresentInTarget) target[sourceFieldName] = source[sourceFieldName];
     }
+
+    if (source.libraryId) target.libraryId = source.libraryId;
 }

@@ -48,6 +48,7 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
+        builtinCategories = addKeyAsProp('libraryId')(builtinCategories) as Map<BuiltinCategoryDefinition>;
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories();
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(

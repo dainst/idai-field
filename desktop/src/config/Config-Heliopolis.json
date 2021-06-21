@@ -4,7 +4,7 @@
     "fields": {}
   },
   "Operation:default": {
-    "hidden": ["area", "spatialLocation", "processor", "supervisor"],
+    "hidden": ["area", "spatialLocation", "processor", "supervisor", "diaryAbstract"],
     "fields": {}
   },
   "Place:default": {
@@ -19,10 +19,10 @@
       }
     }
   },
-  "Feature": {
+  "Feature:default": {
     "color": "green",
-    "hidden": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "diary", "description", "area", "period", "diaryAbstract"],
-    "commons": ["campaign", "processor", "date", "dating", "dimensionVerticalExtent", "period", "spatialLocation"],
+    "hidden": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "diary", "description", "area", "beginningDate", "endDate", "dimensionWidth", "dimensionLength", "period"],
+    "commons": ["date", "dating", "spatialLocation", "literature"],
     "fields": {
       "unitNumber": {
         "inputType": "input"
@@ -75,10 +75,10 @@
       "consistency": "Feature-consistency-heliopolis-project"
     }
   },
-  "Find": {
+  "Find:default": {
     "color": "red",
-    "hidden": ["storagePlace", "period", "hasRestoration", "catalogueNumber", "amount", "description", "condition", "conditionAmount", "conditionPercent", "conditionComment", "weight", "storageInventoryNumber", "comparison", "bibliography"],
-    "commons": ["dating", "literature", "date", "processor", "campaign", "period", "dimensionHeight", "dimensionDiameter", "dimensionWidth", "dimensionLength", "spatialLocation"],
+    "hidden": ["description", "period", "dimensionPerimeter", "amount", "catalogueNumber", "bibliography", "comparison", "conditionComment", "conditionPercent", "hasRestoration", "storageInventoryNumber", "weight", "condition", "conditionAmount", "storagePlace"],
+    "commons": ["literature"],
     "fields": {
       "findNumber": {
         "inputType":"input"
@@ -160,9 +160,6 @@
       },
       "lastSeen": {
         "inputType": "date"
-      },
-      "bibliography": {
-        "inputType": "text"
       }
     },
     "valuelists": {

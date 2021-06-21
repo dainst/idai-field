@@ -38,7 +38,6 @@ const Map: React.FC<MapProps> = ({
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
     const svgMapRef = useRef<SvgMapObject>(null);
-    //console.log(selectedDocumentIds);
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
 

@@ -133,11 +133,24 @@ const useMapData = (
 
     const focusMapOnDocumentId = (docId: string): void => {
         
-        if(!documentsGeoMap || !documentsGeoMap.has(docId)) return;
-        focusMapOnDocumentIds([docId]);
+        if(!documentsGeoMap) return;
+
+        if(!documentsGeoMap.has(docId)) focusOnParentDoc(docId);
+        else focusMapOnDocumentIds([docId]);
 
     };
     
+    const focusOnParentDoc = (docId: string) => {
+        
+        repository.get(docId).then(doc => {
+            const liesWithin = doc.resource.relations?.liesWithin ? doc.resource.relations?.liesWithin[0] : null;
+            const isRecordedIn = doc.resource.relations?.isRecordedIn ? doc.resource.relations?.isRecordedIn[0] : null;
+            if(liesWithin) return focusMapOnDocumentId(liesWithin);
+            else if(isRecordedIn) return focusMapOnDocumentId(isRecordedIn);
+            else return;
+            
+        }).catch(err => console.log('Error get Document',err));
+    };
 
     return [
         docIds,

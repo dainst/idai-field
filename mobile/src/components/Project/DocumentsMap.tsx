@@ -24,6 +24,7 @@ interface DocumentsMapProps {
     setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
     isInOverview: () => boolean;
+    selectDocument: (doc: Document) => void;
 }
 
 
@@ -38,7 +39,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     languages,
     setProjectSettings,
     issueSearch,
-    isInOverview
+    isInOverview,
+    selectDocument
 }): ReactElement => {
 
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
@@ -98,7 +100,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     config={ config }
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
-                    addDocument={ handleAddDocument } />
+                    addDocument={ handleAddDocument }
+                    selectDocument={ selectDocument } />
             </View>
         </View>
     );

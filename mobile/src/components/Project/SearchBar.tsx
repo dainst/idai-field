@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { SyncStatus } from 'idai-field-core';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useOrientation from '../../hooks/use-orientation';
@@ -32,13 +32,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const orientation = useOrientation();
     const insets = useSafeAreaInsets();
 
+    const [q, setQ] = useState<string>('');
+
     return (
         <Row style={ [styles.container, { marginTop: insets.top + 5 }] }>
             { orientation === 'portrait' && renderLeftIcons(toggleDrawer) }
             <Input
                 placeholder="Search..."
                 style={ styles.input }
-                onChangeText={ (value: string) => issueSearch(value) }
+                onChangeText={ setQ }
+                onEndEditing={ () => issueSearch(q) }
                 hideBorder
             />
             { renderRightIcons(projectSettings, setProjectSettings, syncStatus, onBarCodeScanned) }

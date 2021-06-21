@@ -87,6 +87,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         popFromHierarchy();
     };
 
+    const handleSelectDocument = (doc: Document) => onParentSelected(doc);
+
     return (
         <Drawer.Navigator
             drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }
@@ -118,7 +120,8 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     config={ config }
                     languages={ languages }
                     setProjectSettings={ setProjectSettings }
-                    isInOverview={ isInOverview } /> }
+                    isInOverview={ isInOverview }
+                    selectDocument={ handleSelectDocument } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd

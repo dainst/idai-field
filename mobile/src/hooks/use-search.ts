@@ -11,7 +11,9 @@ const useSearch = (
     const [documents, setDocuments] = useState<Document[]>([]);
 
     const issueSearch = useCallback(
-        () => repository.find(query).then(result => setDocuments(result.documents)),
+        () => repository.find(query)
+            .then(result => setDocuments(result.documents))
+            .catch(err => console.log('Document not found. Error:',err)),
         [repository, query]
     );
 

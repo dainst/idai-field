@@ -20,6 +20,7 @@ interface MapProps {
     languages: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
+    selectDocument: (doc: Document) => void;
 }
 
 
@@ -29,14 +30,15 @@ const Map: React.FC<MapProps> = ({
     config,
     languages,
     highlightedDocId,
-    addDocument
+    addDocument,
+    selectDocument
 }) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document | null>(null);
     const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
     const svgMapRef = useRef<SvgMapObject>(null);
-
+    //console.log(selectedDocumentIds);
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
 
@@ -70,6 +72,7 @@ const Map: React.FC<MapProps> = ({
                                 documentsGeoMap,
                                 config,
                                 setHighlightedDoc,
+                                selectDocument,
                                 highlightedDoc ? highlightedDoc.resource.id : '',
                                 docId, zoom))}
                     </SvgMap>
@@ -101,6 +104,7 @@ const renderGeoSvgElement = (
         geoMap: GeoMap,
         config: ProjectConfiguration,
         onPressHandler: (doc: Document) => void,
+        onLongPressHandler: (doc: Document) => void,
         highlightedDocId: string,
         docId: string,
         zoom: Animated.Value) => {
@@ -118,6 +122,7 @@ const renderGeoSvgElement = (
                 doc,
                 geoMap,
                 onPressHandler,
+                onLongPressHandler,
                 config,
                 highlightedDocId === docId,
                 getGeoMapIsSelected(geoMap, docId)) };

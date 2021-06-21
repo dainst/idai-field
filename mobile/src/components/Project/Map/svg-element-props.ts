@@ -7,6 +7,7 @@ interface ElementProps {
     opacity: number;
     strokeWidth: number;
     onPress?: () => void;
+    onLongPress?: () => void;
     stroke?: string;
     strokeDasharray?: number[];
     strokeOpacity?: number;
@@ -16,6 +17,7 @@ export const getDocumentFillOpacityPress = (
     doc: Document,
     geoMap: GeoMap,
     onPressHandler: (doc: Document) => void,
+    onLongPressHandler: (doc: Document) => void,
     config: ProjectConfiguration,
     isHighlighted: boolean,
     isSelected?: boolean,): ElementProps => {
@@ -29,16 +31,25 @@ export const getDocumentFillOpacityPress = (
             stroke: isHighlighted ? 'white' : color,
             fill: color,
             strokeWidth: isHighlighted ? 6 : strokeWidth,
-            onPress: () => onPressHandler(doc)
+            onPress: () => onPressHandler(doc),
+            onLongPress: () => onLongPressHandler(doc)
         };
     } else {
-        const parentPressHandler = isParentSelected(geoMap, doc.resource.id);
         return {
             opacity,
             fill: isGeoTypePoint(geoType) ? color : 'none',
             stroke: color, strokeOpacity: 0.5, strokeWidth,
-            onPress: parentPressHandler ? () => onPressHandler(parentPressHandler) : undefined };
+            onPress: propagateParentPressHandler(geoMap, onPressHandler, doc),
+            onLongPress: propagateParentPressHandler(geoMap, onLongPressHandler, doc),
+        };
     }
+};
+
+
+const propagateParentPressHandler = (geoMap: GeoMap, pressHandler: (doc: Document) => void, doc: Document) => {
+    const parentPressHandler = isParentSelected(geoMap, doc.resource.id);
+    if(parentPressHandler) return () => pressHandler(parentPressHandler);
+    else return;
 };
 
 

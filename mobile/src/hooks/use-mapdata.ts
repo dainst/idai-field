@@ -91,7 +91,7 @@ const useMapData = (
             .then(result => {
                 setGeoDocuments(result.documents);
                 setGeometryBoundings(getGeometryBoundings(result.documents));
-            });
+            }).catch(err => console.log('Document not found. Error:',err));
     },[searchQuery, repository]);
 
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import {
     HandlerStateChangeEvent,
     PanGestureHandler,
@@ -14,11 +14,11 @@ interface BottomSheetProps {
 
 const USE_NATIVE_DRIVER = true;
 const HEADER_HEIGHT = 10;
-const windowHeight = Dimensions.get('window').height;
 
 
 const BottomSheet: React.FC<BottomSheetProps> = (props) => {
 
+    const [windowHeight, setWindowHeight] = useState<number>(Dimensions.get('window').height);
     const SNAP_POINTS_FROM_TOP = props.snapPointsFromTop.map(value => value * windowHeight);
     const START = SNAP_POINTS_FROM_TOP[0];
     const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1];
@@ -97,8 +97,11 @@ const BottomSheet: React.FC<BottomSheetProps> = (props) => {
     };
     
 
+    const handleLayoutChange = (_event: LayoutChangeEvent) => setWindowHeight( Dimensions.get('window').height);
+
+
     return (
-        <View style={ StyleSheet.absoluteFillObject } pointerEvents="box-none">
+        <View style={ StyleSheet.absoluteFillObject } pointerEvents="box-none" onLayout={ handleLayoutChange }>
             <Animated.View
                 style={ [
                     StyleSheet.absoluteFillObject,

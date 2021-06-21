@@ -69,17 +69,17 @@ export class ProjectConfigurationComponent {
 
         return category.groups.filter(
             or(
-                (_: Group) => _.fields.length > 0,
-                (_: Group) => _.relations.length > 0
+                (group: Group) => this.getVisibleFields(this.selectedCategory, group.name).length > 0,
+                (group: Group) => group.relations.length > 0
             )
         );
     }
 
 
-    public getVisibleFields(category: Category): Array<FieldDefinition> {
+    public getVisibleFields(category: Category, groupName: string): Array<FieldDefinition> {
 
         return category.groups
-            .find(on(Named.NAME, is(this.selectedGroup)))!
+            .find(on(Named.NAME, is(groupName)))!
             .fields
             .filter(
                 or(

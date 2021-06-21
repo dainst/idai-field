@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="col-10 content" [class.shortened]="getCategoryDescription(selectedCategory)">
-                        <div *ngFor="let field of getVisibleFields(selectedCategory)"
+                        <div *ngFor="let field of getVisibleFields(selectedCategory, selectedGroup)"
                                 class="card"
                                 [class.bg-warning]="field.source === 'custom'">
 

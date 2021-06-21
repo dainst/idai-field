@@ -3917,31 +3917,36 @@
       "sehr gut": {
         "labels": {
           "de": "sehr gut",
-          "it": "molto buono"
+          "it": "molto buono",
+          "en": "very good"
         }
       },
       "gut": {
         "labels": {
           "de": "gut",
-          "it": "buono"
+          "it": "buono",
+          "en": "good"
         }
       },
       "mittel": {
         "labels": {
           "de": "mittel",
-          "it": "medio"
+          "it": "medio",
+          "en": "medium"
         }
       },
       "schlecht": {
         "labels": {
           "de": "schlecht",
-          "it": "cattivo"
+          "it": "cattivo",
+          "en": "bad"
         }
       },
       "sehr schlecht": {
         "labels": {
           "de": "sehr schlecht",
-          "it": "pessimo"
+          "it": "pessimo",
+          "en": "very bad"
         }
       }
     },
@@ -3961,19 +3966,22 @@
       "Fragmentarisch": {
         "labels": {
           "de": "Fragmentarisch",
-          "it": "frammentario"
+          "it": "frammentario",
+          "en": "fragmentary"
         }
       },
       "Vollständig": {
         "labels": {
           "de": "Vollständig",
-          "it": "intero"
+          "it": "intero",
+          "en": "complete"
         }
       },
       "Vollständig zerstört": {
         "labels": {
           "de": "Vollständig zerstört",
-          "it": "completamente distrutto"
+          "it": "completamente distrutto",
+          "en": "completely destroyed"
         }
       }
     },

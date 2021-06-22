@@ -235,8 +235,8 @@
           "description": "Indirizzo e-mail del progetto o della persona di contatto"
         },
         "contactPerson": {
-          "label": "persona di contatto",
-          "description": "persona di contatto del progetto"
+          "label": "Persona di contatto",
+          "description": "Persona di contatto del progetto"
         },
         "epsgId": {
           "label": "Codice-EPSG",

@@ -67,7 +67,7 @@ const useMapData = (
         if(!documentsGeoMap) return;
         const fieldGeometries = docIds.map(docId => {
             const doc = getGeoMapDoc(documentsGeoMap, docId);
-            if(doc)
+            if(doc && doc.resource.geometry)
                 return {
                     type: doc.resource.geometry.type,
                     coordinates: getGeoMapCoords(documentsGeoMap,docId)
@@ -75,6 +75,7 @@ const useMapData = (
             return null;
         }).filter(doc => doc !== null) as FieldGeometry[];
         
+        if(!fieldGeometries.length) return;
         const { minX, minY, maxX, maxY } = getMinMaxCoords(fieldGeometries);
         updateViewBox([
             minX - viewBoxPaddingX,

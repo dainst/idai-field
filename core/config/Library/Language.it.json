@@ -263,7 +263,7 @@
           "description": "Inserimento come numero decimale, sono possibili valori negativi"
         },
         "license": {
-          "label": "Licenza"
+          "label": "Informazioni sulla licenza"
         },
         "projectURI": {
           "label": "URL del progetto",
@@ -278,6 +278,9 @@
         "projectSupervisor": {
           "label": "Supervisore",
           "description": "Responsabile del progetto"
+        },
+        "bibliographicReferences": {
+          "label": "Bibliografia"
         }
       }
     },

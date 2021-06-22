@@ -1,9 +1,10 @@
 import { Subscription } from 'core/node_modules/rxjs';
 import { PouchdbManager, SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
+import { ToastType } from '../components/common/Toast/ToastProvider';
 import { ProjectSettings } from '../models/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
-
+import useToast from './use-toast';
 
 const useSync = (
     project: string,
@@ -12,6 +13,7 @@ const useSync = (
     pouchdbManager?: PouchdbManager): SyncStatus => {
     
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
+    const { showToast } = useToast();
 
     useEffect(() => {
 
@@ -20,7 +22,7 @@ const useSync = (
             return;
         }
 
-        const setupSyncPromise = setupSync(repository, project, projectSettings, setStatus);
+        const setupSyncPromise = setupSync(repository, project, projectSettings, setStatus, showToast);
         return () => {
             setupSyncPromise.then(setupSyncResult => {
                 if (setupSyncResult) {
@@ -30,6 +32,7 @@ const useSync = (
                 }
             });
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pouchdbManager, pouchdbManager?.open, repository, project, projectSettings]);
 
     if (!repository) return SyncStatus.Offline;
@@ -42,7 +45,8 @@ const setupSync = async (
     repository: DocumentRepository,
     project: string,
     { url, password, connected } : ProjectSettings,
-    setStatus: (status: SyncStatus) => void
+    setStatus: (status: SyncStatus) => void,
+    showToast: (type: ToastType, message: string, duration?: number | undefined) => void,
 ): Promise<[SyncProcess, Subscription] | undefined> => {
 
     if (connected && url) {
@@ -51,6 +55,7 @@ const setupSync = async (
         const subscription = syncProcess.observer.subscribe({
             next: setStatus,
             error: err => {
+                showToast(ToastType.Error,`Error while syncing ${err}`);
                 console.error('Error while syncing', err);
                 setStatus(err);
             }

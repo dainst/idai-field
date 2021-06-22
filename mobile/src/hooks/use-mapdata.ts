@@ -1,5 +1,5 @@
 import { Document, FieldGeometry, Query } from 'idai-field-core';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { identityMatrix4, Matrix4 } from 'react-native-redash';
 import {
     GeometryBoundings,
@@ -19,6 +19,10 @@ import { SvgMapObject } from '../components/Project/Map/SvgMap/SvgMap';
 import { DocumentRepository } from '../repositories/document-repository';
 import usePrevious from './use-previous';
 
+const searchQuery: Query = {
+    q: '*',
+    constraints: { 'geometry:exist': 'KNOWN' }
+};
 
 const useMapData = (
     repository: DocumentRepository,
@@ -34,10 +38,6 @@ const useMapData = (
     const [documentsGeoMap, setDocumentsGeoMap] = useState<GeoMap | null>(null);
     const [docIds, setDocIds] = useState<string[]>();
 
-    const searchQuery: Query = useMemo(() => ({
-        q: '*',
-        constraints: { 'geometry:exist': 'KNOWN' }
-    }),[]);
 
     const previousSelectedDocIds = usePrevious(selectedDocIds);
 
@@ -83,6 +83,29 @@ const useMapData = (
             maxY - minY + 2 * viewBoxPaddingY]);
         
     },[documentsGeoMap, updateViewBox]);
+
+
+    const focusMapOnDocumentId = (docId: string): void => {
+        
+        if(!documentsGeoMap) return;
+
+        if(!documentsGeoMap.has(docId)) focusOnParentDoc(docId);
+        else focusMapOnDocumentIds([docId]);
+
+    };
+    
+    
+    const focusOnParentDoc = (docId: string) => {
+        
+        repository.get(docId).then(doc => {
+            const liesWithin = doc.resource.relations?.liesWithin ? doc.resource.relations?.liesWithin[0] : null;
+            const isRecordedIn = doc.resource.relations?.isRecordedIn ? doc.resource.relations?.isRecordedIn[0] : null;
+            if(liesWithin) return focusMapOnDocumentId(liesWithin);
+            else if(isRecordedIn) return focusMapOnDocumentId(isRecordedIn);
+            else return;
+            
+        }).catch(err => console.log('Document not found. Error:',err));
+    };
    
 
     useEffect(() => {
@@ -92,7 +115,7 @@ const useMapData = (
                 setGeoDocuments(result.documents);
                 setGeometryBoundings(getGeometryBoundings(result.documents));
             }).catch(err => console.log('Document not found. Error:',err));
-    },[searchQuery, repository]);
+    },[ repository]);
 
 
     useEffect(() => {
@@ -129,28 +152,7 @@ const useMapData = (
             else focusMapOnDocumentIds(selectedDocIds);
         }
     },[selectedDocIds, viewPort, focusMapOnDocumentIds, updateViewBox]);
-
-
-    const focusMapOnDocumentId = (docId: string): void => {
-        
-        if(!documentsGeoMap) return;
-
-        if(!documentsGeoMap.has(docId)) focusOnParentDoc(docId);
-        else focusMapOnDocumentIds([docId]);
-
-    };
     
-    const focusOnParentDoc = (docId: string) => {
-        
-        repository.get(docId).then(doc => {
-            const liesWithin = doc.resource.relations?.liesWithin ? doc.resource.relations?.liesWithin[0] : null;
-            const isRecordedIn = doc.resource.relations?.isRecordedIn ? doc.resource.relations?.isRecordedIn[0] : null;
-            if(liesWithin) return focusMapOnDocumentId(liesWithin);
-            else if(isRecordedIn) return focusMapOnDocumentId(isRecordedIn);
-            else return;
-            
-        }).catch(err => console.log('Error get Document',err));
-    };
 
     return [
         docIds,

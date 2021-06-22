@@ -17,6 +17,9 @@
       "fields": {
         "coordinateReferenceSystem": {
           "label": "Sistema di riferimento delle coordinate"
+        },
+        "shortName": {
+          "label": "Nome abbreviato del progetto"
         }
       }
     },

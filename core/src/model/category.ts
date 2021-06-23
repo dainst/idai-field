@@ -19,6 +19,7 @@ export interface Category extends Named {
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
     libraryId?: string;
+    userDefinedSubcategoriesAllowed?: boolean
 }
 
 

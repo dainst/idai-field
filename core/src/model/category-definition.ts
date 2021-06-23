@@ -16,14 +16,14 @@ export interface CategoryDefinition {
     abstract?: boolean;
 
     /**
-     * @see BuiltinTypeDefinition
+     * @see BuiltinCategoryDefinition
      */
     mustLieWithin?: true,
-
     fields?: any;
     parent?: string;
     color?: string;
     libraryId?: string;
+    userDefinedSubcategoriesAllowed?: boolean
 }
 
 

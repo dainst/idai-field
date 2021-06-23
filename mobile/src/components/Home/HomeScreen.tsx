@@ -3,19 +3,21 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Preferences } from '../../models/preferences';
+import { Preferences, ProjectSettings } from '../../models/preferences';
 import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';
 import Column from '../common/Column';
 import Row from '../common/Row';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
+import LoadProjectModal from './LoadProjectModal';
 
 
 interface HomeScreenProps {
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
+    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
 }
 
@@ -23,6 +25,7 @@ interface HomeScreenProps {
 const HomeScreen: React.FC<HomeScreenProps> = ({
     preferences,
     setCurrentProject,
+    setProjectSettings,
     deleteProject,
     navigate,
 }) => {
@@ -30,6 +33,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+    const [isLoadModalOpen, setIsLoadModalOpen] = useState<boolean>(false);
 
 
     useEffect(() => setSelectedProject(preferences.recentProjects[0]), [preferences.recentProjects]);
@@ -51,6 +55,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         if (selectedProject === project) setSelectedProject(preferences.recentProjects[0]);
     }, [selectedProject, setSelectedProject, deleteProject, preferences.recentProjects]);
 
+    const loadProject = useCallback((project: string, url: string, password: string) => {
+
+        if(!project) return;
+
+        setSelectedProject(project);
+        setCurrentProject(project);
+        setProjectSettings(project, { url, password, connected: true });
+        navigate('LoadingScreen');
+    },[navigate, setCurrentProject,setProjectSettings]);
 
     return <>
         { isProjectModalOpen && <CreateProjectModal
@@ -61,6 +74,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             project={ selectedProject }
             onProjectDeleted={ onDeleteProject }
             onClose={ () => setIsDeleteModalOpen(false) }
+        /> }
+        { isLoadModalOpen && <LoadProjectModal
+            onClose={ () => setIsLoadModalOpen(false) }
+            onProjectLoad={ loadProject }
         /> }
         <SafeAreaView style={ styles.container } testID="home-screen">
             <Row style={ styles.topRow }>
@@ -91,6 +108,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     title="Create new project"
                     variant="success"
                     style={ styles.bottomRowButton }
+                />
+                <Button
+                    icon={ <Ionicons name="cloud-download-outline" size={ 16 } /> }
+                    onPress={ () => setIsLoadModalOpen(true) }
+                    title="Load project"
+                    style={ styles.bottomRowButton }
+                    variant="mellow"
                 />
                 <Button
                     icon={ <Ionicons name="folder-open" size={ 16 } /> }

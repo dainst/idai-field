@@ -8,6 +8,7 @@ import { enableScreens } from 'react-native-screens';
 import { Toast } from './src/components/common/Toast/Toast';
 import { ToastProvider } from './src/components/common/Toast/ToastProvider';
 import HomeScreen from './src/components/Home/HomeScreen';
+import LoadingScreen from './src/components/Loading/LoadingScreen';
 import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
 import usePouchdbManager from './src/hooks/use-pouchdb-manager';
@@ -18,6 +19,7 @@ export type AppStackParamList = {
     HomeScreen: undefined;
     ProjectScreen: undefined;
     SettingsScreen: undefined;
+    LoadingScreen: undefined;
 };
 
 
@@ -66,6 +68,7 @@ export default function App(): ReactElement {
                                 { ({ navigation }) => <HomeScreen
                                     preferences={ preferences }
                                     setCurrentProject={ setCurrentProject }
+                                    setProjectSettings={ setProjectSettings }
                                     deleteProject={ deleteProject }
                                     navigate={ (screen: string) => navigation.navigate(screen) }
                                 /> }
@@ -79,6 +82,15 @@ export default function App(): ReactElement {
                             </Stack.Screen>
                             <Stack.Screen name="SettingsScreen">
                                 { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
+                            </Stack.Screen>
+                            <Stack.Screen name="LoadingScreen">
+                                { ({ navigation }) => preferences.currentProject && <LoadingScreen
+                                    currentProject={ preferences.currentProject }
+                                    preferences={ preferences }
+                                    removeProject={ removeProject }
+                                    setProjectSettings={ setProjectSettings }
+                                    navigation={ navigation }
+                                /> }
                             </Stack.Screen>
                         </Stack.Navigator>
                     </NavigationContainer>

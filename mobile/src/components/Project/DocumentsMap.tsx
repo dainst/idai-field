@@ -94,9 +94,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             <View style={ styles.container }>
                 <Map
                     repository={ repository }
-                    selectedDocumentIds={ useMemo(() =>
-                        documents.filter(doc => doc?.resource.geometry)
-                        .map(doc => doc.resource.id),[documents]) }
+                    selectedDocumentIds={ useMemo(() => documents.map(doc => doc.resource.id),[documents]) }
                     config={ config }
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }

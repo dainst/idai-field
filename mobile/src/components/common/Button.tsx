@@ -4,9 +4,9 @@ import {
     NativeSyntheticEvent, NativeTouchEvent, StyleProp, StyleSheet, Text, TextStyle,
     TouchableOpacity, View, ViewStyle
 } from 'react-native';
-import { colors, textColors } from '../../utils/colors';
+import { colors, Colors, textColors } from '../../utils/colors';
 
-type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'transparent';
+type ButtonVariant = keyof Colors;
 
 
 interface ButtonProps {

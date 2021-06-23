@@ -27,7 +27,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public hideable: boolean;
     public hidden: boolean;
-    public newField: boolean = false;
 
     protected changeMessage = this.i18n({
         id: 'docedit.saveModal.fieldChanged', value: 'Das Feld wurde geändert.'
@@ -50,7 +49,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         super.initialize();
 
-        if (this.newField) {
+        if (this.new) {
             this.getClonedCategoryDefinition().fields[this.field.name] = {
                 inputType: 'input'
             };

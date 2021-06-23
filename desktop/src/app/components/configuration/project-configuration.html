@@ -18,11 +18,13 @@
         <div class="row">
             <div class="col-2 sidebar">
                 <category-picker *ngIf="topLevelCategoriesArray"
-                                 [toplevelCategoriesArray]="topLevelCategoriesArray"
-                                 [selectedCategories]="[selectedCategory.name]"
-                                 [allowPickingAbstractCategories]="true"
-                                 [highlightCustomCategories]="true"
-                                 (onCategoryPicked)="selectCategory($event)"></category-picker>
+                                [toplevelCategoriesArray]="topLevelCategoriesArray"
+                                [selectedCategories]="[selectedCategory.name]"
+                                [allowPickingAbstractCategories]="true"
+                                [highlightCustomCategories]="true"
+                                [showCreateButtons]="true"
+                                (onCategoryPicked)="selectCategory($event)"
+                                (onCreateSubcategory)="addSubcategory($event)"></category-picker>
             </div>
 
             <div class="col-10">

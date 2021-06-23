@@ -17,6 +17,7 @@ export abstract class ConfigurationEditorModalComponent {
     public customConfigurationDocument: ConfigurationDocument;
     public category: Category;
     public field: FieldDefinition|undefined;
+    public new: boolean = false;
 
     public label: I18nString;
     public description: I18nString;

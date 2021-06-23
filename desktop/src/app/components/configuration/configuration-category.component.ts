@@ -182,7 +182,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             source: 'custom'
         };
         modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
-        modalReference.componentInstance.newField = true;
+        modalReference.componentInstance.new = true;
         modalReference.componentInstance.initialize();
 
         try {

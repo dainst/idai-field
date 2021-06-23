@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration,  } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
@@ -6,7 +8,8 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { I18n } from '@ngx-translate/i18n-polyfill';
+import { AddCategoryModalComponent } from './add-category-modal.component';
+import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 
 
 export type InputType = {
@@ -60,6 +63,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 private datastore: Datastore,
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
+                private modalService: NgbModal,
                 private i18n: I18n) {}
 
 
@@ -105,6 +109,54 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.selectedCategory = category;
     }
+
+
+    public async addSubcategory(parentCategory: Category) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
+
+        try {
+            await this.createNewSubcategory(parentCategory, await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    private async createNewSubcategory(parentCategory: Category, categoryName: string) {
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            CategoryEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = {
+            name: categoryName,
+            label: {},
+            defaultLabel: {},
+            description: {},
+            defaultDescription: {},
+            parentCategory: parentCategory
+        };
+        modalReference.componentInstance.new = true;
+        modalReference.componentInstance.initialize();
+
+        try {
+            const result = await modalReference.result;
+            await this.saveChanges(result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
 
 
     private loadCategories() {

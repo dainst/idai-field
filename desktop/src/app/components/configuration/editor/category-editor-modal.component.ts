@@ -38,6 +38,20 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public initialize() {
+
+        super.initialize();
+
+        if (this.new) {
+            this.clonedConfigurationDocument.resource.categories[this.category.name] = {
+                color: '#000',
+                parent: this.category.parentCategory.name,
+                fields: {}
+            }
+        }
+    }
+
+
     public isChanged(): boolean {
 
         return !equal(this.label)(this.clonedLabel)

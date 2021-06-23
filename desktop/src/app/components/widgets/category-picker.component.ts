@@ -17,8 +17,10 @@ export class CategoryPickerComponent implements OnChanges {
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
+    @Input() showCreateButtons: boolean = false;
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
+    @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
 
     public categories: Array<Category> = [];
 
@@ -35,6 +37,9 @@ export class CategoryPickerComponent implements OnChanges {
 
 
     public getCategoryLabel = (category: Category): string => LabelUtil.getLabel(category);
+
+    public isCreateButtonVisible = (category: Category): boolean =>
+        this.showCreateButtons && category.userDefinedSubcategoriesAllowed;
 
 
     public pickCategory(category: Category) {

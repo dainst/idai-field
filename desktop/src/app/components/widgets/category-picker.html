@@ -13,14 +13,22 @@
             'child-category': isChildCategory(category),
             'parent-selected': isParentSelected(category),
             'custom-category': highlightCustomCategories && isCustomCategory(category)
-        }"
-        (click)="pickCategory(category)">
-        <div id="choose-category-option-{{getCategoryId(category)}}" class="category-item">
+        }">
+        <div id="choose-category-option-{{getCategoryId(category)}}"
+             class="category-item" [class.short-category-item]="isCreateButtonVisible(category)"
+             (click)="pickCategory(category)">
             <category-icon [category]="category.name" size="30"></category-icon>
             <div class="category-label">
                 {{getCategoryLabel(category)}}
                 <span *ngIf="highlightCustomCategories && hasCustomFields(category)"> *</span>
             </div>
         </div>
+        <button *ngIf="isCreateButtonVisible(category)"
+                class="btn-link add-subcategory-button"
+                (click)="onCreateSubcategory.emit(category)"
+                ngbTooltip="Unterkategorie hinzufügen"
+                i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory">
+            <span class="mdi mdi-plus-circle text-success"></span>
+        </button>
     </li>
 </ul>

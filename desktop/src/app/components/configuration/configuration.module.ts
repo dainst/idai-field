@@ -11,6 +11,7 @@ import { ConfigurationCategoryComponent } from './configuration-category.compone
 import { AddFieldModalComponent } from './add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { AddCategoryModalComponent } from './add-category-modal.component';
 
 
 @NgModule({
@@ -22,11 +23,12 @@ import { CategoryEditorModalComponent } from './editor/category-editor-modal.com
     ],
     declarations: [
         ProjectConfigurationComponent,
-        ConfigurationCategoryComponent,
         ConfigurationFieldComponent,
+        ConfigurationCategoryComponent,
         ConfigurationRelationComponent,
         MultiLanguageInputComponent,
         AddFieldModalComponent,
+        AddCategoryModalComponent,
         FieldEditorModalComponent,
         CategoryEditorModalComponent
     ],
@@ -36,6 +38,7 @@ import { CategoryEditorModalComponent } from './editor/category-editor-modal.com
     entryComponents: [
         ProjectConfigurationComponent,
         AddFieldModalComponent,
+        AddCategoryModalComponent,
         FieldEditorModalComponent,
         CategoryEditorModalComponent
     ]

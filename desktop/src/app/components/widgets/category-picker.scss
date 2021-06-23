@@ -23,7 +23,8 @@
     }
 
     .category-item:hover,
-    &.selected-category .category-item {
+    &.selected-category .category-item,
+    .add-subcategory-button:hover {
       background-color: $list-item-hover-color !important;
     }
 
@@ -81,5 +82,9 @@
     background-color: transparent;
     border: 0;
     height: 100%;
+    
+    &:hover {
+      cursor: default;
+    }
   }
 }

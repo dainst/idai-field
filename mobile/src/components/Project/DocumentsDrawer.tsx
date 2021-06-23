@@ -40,46 +40,47 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
     ...listProps
 }) => {
 
-    if (documents.length === 0 && !currentParent) return null;
 
-    return <>
-        <View style={ styles.listContainer }>
-            <NavigationContainer independent={ true } ref={ hierarchyNavigationRef }>
-                <Stack.Navigator>
-                    <Stack.Screen name="DocumentsList"
-                        options={ {
-                            title: currentParent?.resource.identifier || 'Operations',
-                            // eslint-disable-next-line react/display-name
-                            headerLeft: (props) =>
-                                props.canGoBack
-                                ? <Button
-                                    icon={ <Ionicons name="chevron-back" size={ 18 } /> }
-                                    variant="transparent"
-                                    onPress={ () => onHierarchyBack() }
-                                />
-                                : null,
-                            ...TransitionPresets.SlideFromRightIOS
-                        } }
-                        initialParams={ { documents } }
-                    >
-                        { ({ route }) => <DocumentsList { ...listProps } route={ route } /> }
-                    </Stack.Screen>
-                </Stack.Navigator>
-            </NavigationContainer>
-        </View>
-        <Row>
-            <Button
-                style={ { flex:1 } }
-                onPress={ onHomeButtonPressed }
-                icon={ <Ionicons name="home" size={ 18 } /> }
-            />
-            <Button
-                style={ { flex:1 } }
-                onPress={ onSettingsButtonPressed }
-                icon={ <Ionicons name="settings" size={ 18 } /> }
-            />
-        </Row>
-    </>;
+    return <View style={ { flex: 1, flexDirection: 'column-reverse' } }>
+                <Row style={ { alignItems: 'flex-end' } }>
+                    <Button
+                        style={ { flex:1 } }
+                        onPress={ onHomeButtonPressed }
+                        icon={ <Ionicons name="home" size={ 18 } /> }
+                    />
+                    <Button
+                        style={ { flex:1 } }
+                        onPress={ onSettingsButtonPressed }
+                        icon={ <Ionicons name="settings" size={ 18 } /> }
+                    />
+                </Row>
+                {(documents.length > 0 || currentParent) &&
+                    <View style={ styles.listContainer }>
+                        <NavigationContainer independent={ true } ref={ hierarchyNavigationRef }>
+                            <Stack.Navigator>
+                                <Stack.Screen name="DocumentsList"
+                                    options={ {
+                                        title: currentParent?.resource.identifier || 'Operations',
+                                        // eslint-disable-next-line react/display-name
+                                        headerLeft: (props) =>
+                                            props.canGoBack
+                                            ? <Button
+                                                icon={ <Ionicons name="chevron-back" size={ 18 } /> }
+                                                variant="transparent"
+                                                onPress={ () => onHierarchyBack() }
+                                            />
+                                            : null,
+                                        ...TransitionPresets.SlideFromRightIOS
+                                    } }
+                                    initialParams={ { documents } }
+                                >
+                                    { ({ route }) => <DocumentsList { ...listProps } route={ route } /> }
+                                </Stack.Screen>
+                            </Stack.Navigator>
+                        </NavigationContainer>
+                    </View>
+                }
+            </View>;
 };
 
 export default DocumentsDrawer;

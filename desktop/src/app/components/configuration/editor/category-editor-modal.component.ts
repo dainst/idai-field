@@ -54,7 +54,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isChanged(): boolean {
 
-        return !equal(this.label)(this.clonedLabel)
+        return this.new
+            || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
     }
 }

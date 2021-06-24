@@ -103,7 +103,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isChanged(): boolean {
 
-        return this.getCustomCategoryDefinition().fields[this.field.name]?.inputType !==
+        return this.new
+            || this.getCustomCategoryDefinition().fields[this.field.name]?.inputType !==
                 this.getClonedCategoryDefinition().fields[this.field.name]?.inputType
             || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
             || !equal(this.label)(this.clonedLabel)

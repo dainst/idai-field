@@ -15,6 +15,7 @@ interface MapBottomSheetProps {
     repository: DocumentRepository;
     languages: string[];
     addDocument: (parentDoc: Document) => void;
+    removeDocument: (doc: Document) => void;
     focusHandler: (docId: string) => void;
 }
 
@@ -24,6 +25,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     repository,
     languages,
     addDocument,
+    removeDocument,
     focusHandler
 }) => {
 
@@ -44,6 +46,12 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     disabled={ true }
                     size={ 30 }
                     style={ styles.docButton }
+                />
+                <Button
+                    style={ styles.button }
+                    variant="danger"
+                    onPress={ () => removeDocument(document) }
+                    icon={ <Ionicons name="trash" size={ 16 } /> }
                 />
                 <Button
                     style={ styles.button }

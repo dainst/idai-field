@@ -20,6 +20,7 @@ interface MapProps {
     languages: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
+    deleteDocument: (doc: Document) => void;
     selectDocument: (doc: Document) => void;
 }
 
@@ -31,6 +32,7 @@ const Map: React.FC<MapProps> = ({
     languages,
     highlightedDocId,
     addDocument,
+    deleteDocument,
     selectDocument
 }) => {
 
@@ -83,6 +85,7 @@ const Map: React.FC<MapProps> = ({
                 repository={ repository }
                 languages={ languages }
                 addDocument={ addDocument }
+                deleteDocument={ deleteDocument }
                 focusHandler={ focusMapOnDocument } />
         </View>
     );

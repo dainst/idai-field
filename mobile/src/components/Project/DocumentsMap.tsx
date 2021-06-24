@@ -6,6 +6,7 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import AddModal from './AddModal';
+import DeleteModal from './DeleteModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
 import SearchBar from './SearchBar';
@@ -44,6 +45,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 }): ReactElement => {
 
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+    const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
@@ -68,6 +70,13 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const closeAddModal = () => setIsAddModalOpen(false);
 
+    const deleteDocument = (doc: Document) => {
+        setHighlightedDoc(doc);
+        setIsDeleteModelOpen(true);
+    };
+
+    const closeDeleteModal = () => setIsDeleteModelOpen(false);
+
     const navigateAddCategory = (categoryName: string, parentDoc: Document | undefined) => {
         closeAddModal();
         if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, categoryName });
@@ -83,6 +92,11 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 onAddCategory={ navigateAddCategory }
                 isInOverview={ isInOverview }
             />}
+            { isDeleteModelOpen && <DeleteModal
+                onClose={ closeDeleteModal }
+                repository={ repository }
+                doc={ highlightedDoc }
+                />}
             <SearchBar { ...{
                 issueSearch,
                 projectSettings,
@@ -99,6 +113,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
                     addDocument={ handleAddDocument }
+                    deleteDocument={ deleteDocument }
                     selectDocument={ selectDocument } />
             </View>
         </View>

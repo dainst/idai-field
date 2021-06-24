@@ -15,7 +15,8 @@ export interface Category extends Named {
     description: I18nString;
     defaultLabel?: I18nString;
     defaultDescription?: I18nString;
-    color: string|undefined;
+    color?: string;
+    defaultColor?: string;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
     libraryId?: string;

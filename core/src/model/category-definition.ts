@@ -22,6 +22,7 @@ export interface CategoryDefinition {
     fields?: any;
     parent?: string;
     color?: string;
+    defaultColor?: string;
     libraryId?: string;
     userDefinedSubcategoriesAllowed?: boolean
 }

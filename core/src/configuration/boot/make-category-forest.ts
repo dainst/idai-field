@@ -104,6 +104,7 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     category.groups = [];
     category.isAbstract = definition.abstract || false;
     category.color = definition.color ?? Category.generateColorForCategory(definition.name);
+    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.name);
     category.children = [];
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;

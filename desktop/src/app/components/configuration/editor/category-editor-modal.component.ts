@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator } from 'idai-field-core';
 import { equal } from 'tsfun';
+import { AppConfigurator } from 'idai-field-core';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
@@ -48,7 +48,21 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 parent: this.category.parentCategory.name,
                 fields: {}
             }
+        } else {
+            if (!this.getClonedCategoryDefinition().color) {
+                this.getClonedCategoryDefinition().color = this.category.color;
+            }
         }
+    }
+
+
+    public async save() {
+
+        if (this.getClonedCategoryDefinition().color === this.category.defaultColor) {
+            delete this.getClonedCategoryDefinition().color;
+        }
+
+        super.save();
     }
 
 
@@ -56,6 +70,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return this.new
             || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description)(this.clonedDescription);
+            || !equal(this.description)(this.clonedDescription)
+            || this.getClonedCategoryDefinition().color !== this.category.color;
     }
 }

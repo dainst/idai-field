@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { ProjectConfigurationComponent } from './project-configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
@@ -19,7 +20,8 @@ import { AddCategoryModalComponent } from './add-category-modal.component';
         BrowserModule,
         FormsModule,
         NgbModule,
-        WidgetsModule
+        WidgetsModule,
+        ColorPickerModule
     ],
     declarations: [
         ProjectConfigurationComponent,

@@ -1434,7 +1434,9 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].color).toBe('red');
+        expect(result['A'].defaultColor).toBe('blue');
         expect(result['B'].color).toBe('red');
+        expect(result['B'].defaultColor).toBe('#000042');   // Auto-generated color
     });
 
 

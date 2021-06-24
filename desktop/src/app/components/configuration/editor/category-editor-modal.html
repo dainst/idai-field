@@ -30,4 +30,12 @@
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="category.defaultDescription"></multi-language-input>
     </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.color">
+            Farbe
+        </div>
+        <input [(colorPicker)]="getClonedCategoryDefinition().color"
+               [style.background]="getClonedCategoryDefinition().color"
+               [cpAlphaChannel]="'disabled'">
+    </div>
 </div>

@@ -43,6 +43,12 @@ const DeleteModal: React.FC<DeleteModalProps> = (props) => {
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
                             onPress={ props.onClose }
                         /> }
+                        right={ <Button
+                            title={ 'Delete' }
+                            variant={ 'danger' }
+                            onPress={ onDelete }
+                            isDisabled={ docValue !== identifier }
+                        /> }
                     />
                     <View style={ styles.form }>
                         <Text>This will delete resource {identifier} and all associated data</Text>

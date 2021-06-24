@@ -5,6 +5,7 @@ import { Modal, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import Button from '../common/Button';
 import Card from '../common/Card';
 import CategoryButton from '../common/CategoryButton';
+import CategoryIcon from '../common/CategoryIcon';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 
@@ -72,9 +73,14 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                 <Card style={ styles.card }>
                     <TitleBar
                         title={
-                            <Heading style={ styles.heading }>
-                                Add child to { props.parentDoc?.resource.identifier }
-                            </Heading>
+                            <>
+                                <CategoryIcon
+                                    category={ props.parentDoc.resource.category }
+                                    config={ props.config } size={ 25 } />
+                                <Heading style={ styles.heading }>
+                                    Add child to { props.parentDoc?.resource.identifier }
+                                </Heading>
+                            </>
                         }
                         left={ <Button
                             title="Cancel"
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
     card: {
         padding: 10,
         height: '60%',
-        width: '50%',
+        width: '60%',
         opacity: 0.9
     },
     heading: {

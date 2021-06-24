@@ -1,0 +1,22 @@
+.configuration-editor-modal-body {
+    #category-color {
+        width: 50px;
+        height: 50px;
+    }
+
+    .color-picker {
+        .saturation-lightness {
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .hue {
+            cursor: default;
+        }
+
+        .arrow::before,
+        .arrow::after {
+            opacity: 0;
+        }
+    }
+}

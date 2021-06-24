@@ -34,8 +34,9 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
         </div>
-        <input [(colorPicker)]="getClonedCategoryDefinition().color"
-               [style.background]="getClonedCategoryDefinition().color"
-               [cpAlphaChannel]="'disabled'">
+        <div id="category-color"
+             [(colorPicker)]="getClonedCategoryDefinition().color"
+             [style.background]="getClonedCategoryDefinition().color"
+             [cpAlphaChannel]="'disabled'"></div>
     </div>
 </div>

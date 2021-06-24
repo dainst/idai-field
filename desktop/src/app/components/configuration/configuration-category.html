@@ -1,6 +1,6 @@
 <div class="row" [class.custom-category]="!category.libraryId">
     <div class="col header header-left d-flex">
-        <category-icon size="41" category="{{category.name}}"></category-icon>
+        <category-icon size="41" [category]="category"></category-icon>
         <h5>
             <span *ngIf="!category.libraryId"
                 class="mdi mdi-alert-circle-outline"

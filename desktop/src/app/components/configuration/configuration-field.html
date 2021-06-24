@@ -5,7 +5,7 @@
     <div class="card-header" [class.parent-element]="parentField">
         <category-icon *ngIf="parentField"
             [size]="28"
-            [category]="category.parentCategory.name"></category-icon>
+            [category]="category.parentCategory"></category-icon>
         <span *ngIf="field.source === 'custom'"
             class="mdi mdi-alert-circle-outline"
             ngbTooltip="Projektspezifisches Feld"

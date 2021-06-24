@@ -2,7 +2,7 @@
     <div class="card-header" [class.parent-element]="parentRelation">
         <category-icon *ngIf="parentRelation"
             [size]="28"
-            [category]="category.parentCategory.name"></category-icon>
+            [category]="category.parentCategory"></category-icon>
         <b *ngIf="getLabel()">{{getLabel()}}</b>
         <code> {{relation.name}}</code>
     </div>

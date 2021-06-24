@@ -26,6 +26,7 @@
         <button *ngIf="isCreateButtonVisible(category)"
                 class="btn-link add-subcategory-button"
                 (click)="onCreateSubcategory.emit(category)"
+                container="body"
                 ngbTooltip="Unterkategorie hinzufügen"
                 i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory">
             <span class="mdi mdi-plus-circle text-success"></span>

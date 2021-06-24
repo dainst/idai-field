@@ -21,6 +21,8 @@ import { ConfigurationEditorModalComponent } from './configuration-editor-modal.
  */
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    private currentColor: string;
+
     protected changeMessage = this.i18n({
         id: 'docedit.saveModal.categoryChanged', value: 'Die Kategorie wurde geändert.'
     });
@@ -42,6 +44,10 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         super.initialize();
 
+        this.currentColor = this.category.color
+            ? CategoryEditorModalComponent.getHexColor(this.category.color)
+            : '#000';
+
         if (this.new) {
             this.clonedConfigurationDocument.resource.categories[this.category.name] = {
                 color: '#000',
@@ -50,7 +56,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             }
         } else {
             if (!this.getClonedCategoryDefinition().color) {
-                this.getClonedCategoryDefinition().color = this.category.color;
+                this.getClonedCategoryDefinition().color = this.currentColor;
             }
         }
     }
@@ -58,7 +64,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public async save() {
 
-        if (this.getClonedCategoryDefinition().color === this.category.defaultColor) {
+        if (this.getClonedCategoryDefinition().color ===
+                CategoryEditorModalComponent.getHexColor(this.category.defaultColor)) {
             delete this.getClonedCategoryDefinition().color;
         }
 
@@ -71,6 +78,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
-            || this.getClonedCategoryDefinition().color !== this.category.color;
+            || this.getClonedCategoryDefinition().color !== this.currentColor;
+    }
+
+
+    private static getHexColor(color: string): string {
+
+        const canvasContext = document.createElement('canvas').getContext('2d');
+        canvasContext.fillStyle = color;
+        
+        return canvasContext.fillStyle;
     }
 }

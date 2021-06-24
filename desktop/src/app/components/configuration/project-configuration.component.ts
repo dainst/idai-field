@@ -158,7 +158,6 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-
     private loadCategories() {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()

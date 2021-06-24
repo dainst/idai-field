@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
 import { FieldsBaseProps } from './common-props';
@@ -7,7 +7,11 @@ import FieldTitle from './FieldTitle';
 
 const InputField: React.FC<FieldsBaseProps> = ({ setFunction, name, resource }) => {
 
-    const [value, setValue] = useState<string>(resource[name]);
+    const [value, setValue] = useState<string>('');
+
+    useEffect(() => {
+        setValue(resource[name]);
+    },[resource, name]);
 
     return (
         <View style={ styles.container }>

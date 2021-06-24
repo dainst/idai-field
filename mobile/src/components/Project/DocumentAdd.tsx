@@ -6,7 +6,7 @@ import {
     Group, LabelUtil,
     NewResource, ProjectConfiguration, Relations
 } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import useToast from '../../hooks/use-toast';
@@ -41,16 +41,17 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
     const { showToast } = useToast();
-   
-    useEffect(() => {
-        
-        setNewResource({
-                identifier: '',
-                relations: createRelations(parentDoc),
-                category: categoryName
-        });
 
-    },[parentDoc, category, categoryName]);
+
+    const setResourceToDefault = useCallback(() =>
+        setNewResource({
+            identifier: '',
+            relations: createRelations(parentDoc),
+            category: categoryName
+        }),[parentDoc, categoryName]);
+   
+        
+    useEffect(() => setResourceToDefault,[setResourceToDefault, category]);
 
     
     useEffect(() => {
@@ -80,6 +81,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
             repository.create(newDocument,'mkihm')
                 .then(doc => {
                     showToast(ToastType.Success,`Created ${doc.resource.identifier}`);
+                    setResourceToDefault();
                     navigation.navigate('DocumentsMap',{ highlightedDocId: doc.resource.id });
                 })
                 .catch(_err => {

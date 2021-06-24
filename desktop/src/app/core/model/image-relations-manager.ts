@@ -62,7 +62,7 @@ export class ImageRelationsManager {
      *
      * @param documents
      */
-    public async remove(...documents: Array<Document|ImageDocument>) {
+    public async remove(documents: Array<Document|ImageDocument>) {
 
         if (this.imagestore.getPath() === undefined) {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
@@ -76,7 +76,10 @@ export class ImageRelationsManager {
             const docsInclDescendants =
                 (await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false })).concat([document]);
             documentsToBeDeleted.push(...docsInclDescendants);
-            await this.relationsManager.remove(document, { descendants: true });
+            await this.relationsManager.remove(
+                document,
+                { descendants: true, descendantsToKeep: nonImageDocuments.filter(doc => doc !== document) }
+            );
         }
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));

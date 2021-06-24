@@ -15,7 +15,8 @@ interface RemoveModalProps {
     repository: DocumentRepository;
     config: ProjectConfiguration
     doc: Document | undefined;
-    onClose: () => void
+    onClose: () => void;
+    onRemoveDocument: () => void;
 }
 
 const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
@@ -28,6 +29,7 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
             const identifier = props.doc.resource.identifier;
             props.repository.remove(props.doc).then(() => {
                 showToast(ToastType.Info, `Removed ${identifier}`);
+                props.onRemoveDocument();
             }).catch(err => showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`));
             props.onClose();
         }

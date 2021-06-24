@@ -77,6 +77,11 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const closeDeleteModal = () => setIsDeleteModelOpen(false);
 
+    const onRemoveDocument = () => {
+        if(highlightedDoc?.resource.relations.isRecordedIn)
+            navigation.navigate('DocumentsMap',{ highlightedDocId: highlightedDoc.resource.relations.isRecordedIn[0] });
+    };
+
     const navigateAddCategory = (categoryName: string, parentDoc: Document | undefined) => {
         closeAddModal();
         if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, categoryName });
@@ -94,6 +99,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             />}
             { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
+                onRemoveDocument={ onRemoveDocument }
                 repository={ repository }
                 config={ config }
                 doc={ highlightedDoc }

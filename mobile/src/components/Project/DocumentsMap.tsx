@@ -6,7 +6,7 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import AddModal from './AddModal';
-import DeleteModal from './DeleteModal';
+import DocumentRemoveModal from './DocumentRemoveModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
 import SearchBar from './SearchBar';
@@ -70,7 +70,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const closeAddModal = () => setIsAddModalOpen(false);
 
-    const deleteDocument = (doc: Document) => {
+    const openRemoveDocument = (doc: Document) => {
         setHighlightedDoc(doc);
         setIsDeleteModelOpen(true);
     };
@@ -92,7 +92,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 onAddCategory={ navigateAddCategory }
                 isInOverview={ isInOverview }
             />}
-            { isDeleteModelOpen && <DeleteModal
+            { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
                 repository={ repository }
                 config={ config }
@@ -114,7 +114,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
                     addDocument={ handleAddDocument }
-                    deleteDocument={ deleteDocument }
+                    removeDocument={ openRemoveDocument }
                     selectDocument={ selectDocument } />
             </View>
         </View>

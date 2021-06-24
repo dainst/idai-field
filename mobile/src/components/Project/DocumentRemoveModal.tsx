@@ -11,14 +11,14 @@ import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
 import { ToastType } from '../common/Toast/ToastProvider';
-interface DeleteModalProps {
+interface RemoveModalProps {
     repository: DocumentRepository;
     config: ProjectConfiguration
     doc: Document | undefined;
     onClose: () => void
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = (props) => {
+const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
     
     const [docValue, setDocValue] = useState<string>('');
     const { showToast } = useToast();
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DeleteModal;
+export default DocumentRemoveModal;

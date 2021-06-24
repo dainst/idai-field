@@ -1,16 +1,18 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Document } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
 import Card from '../common/Card';
+import CategoryIcon from '../common/CategoryIcon';
 import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
 
 interface DeleteModalProps {
     repository: DocumentRepository;
+    config: ProjectConfiguration
     doc: Document | undefined;
     onClose: () => void
 }
@@ -28,7 +30,13 @@ const DeleteModal: React.FC<DeleteModalProps> = (props) => {
             <View style={ styles.container }>
                 <Card style={ styles.card }>
                     <TitleBar
-                        title={ <Heading>Remove {identifier}</Heading> }
+                        title={
+                            <>
+                                <CategoryIcon
+                                    category={ props.doc.resource.category }
+                                    config={ props.config } size={ 25 } />
+                                <Heading style={ styles.heading }>Remove {identifier}</Heading>
+                            </> }
                         left={ <Button
                             title="Cancel"
                             variant="transparent"
@@ -61,6 +69,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginTop: 200,
         alignItems: 'center'
+    },
+    heading: {
+        marginLeft: 10,
     },
     card: {
         padding: 10,

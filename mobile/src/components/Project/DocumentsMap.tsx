@@ -95,6 +95,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             { isDeleteModelOpen && <DeleteModal
                 onClose={ closeDeleteModal }
                 repository={ repository }
+                config={ config }
                 doc={ highlightedDoc }
                 />}
             <SearchBar { ...{

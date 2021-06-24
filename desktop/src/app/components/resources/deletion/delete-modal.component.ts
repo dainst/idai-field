@@ -121,7 +121,7 @@ export class DeleteModalComponent {
 
         if (!this.checkConfirmDeletionIdentifier()) return;
 
-        this.activeModal.close(this.deleteRelatedImages);
+        this.activeModal.close(this.showDeleteImagesOption() && this.deleteRelatedImages);
     }
 
 

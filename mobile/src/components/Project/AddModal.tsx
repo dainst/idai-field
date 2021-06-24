@@ -68,35 +68,30 @@ const AddModal: React.FC<AddModalProps> = (props) => {
     return (
         <Modal onRequestClose={ props.onClose } animationType="fade"
             transparent visible={ true }>
-            <View style={ {
-                flex:1,
-                flexDirection: 'column',
-                marginTop: 200,
-                alignItems: 'center'
-            } }>
-            <Card style={ styles.container }>
-                <TitleBar
-                    title={
-                        <Heading style={ styles.heading }>
-                            Add child to { props.parentDoc?.resource.identifier }
-                        </Heading>
-                    }
-                    left={ <Button
-                        title="Cancel"
-                        variant="transparent"
-                        icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                        onPress={ props.onClose }
-                    /> }
-                />
-                <ScrollView style={ styles.categories }>
-                    {categories.map(category => (
-                        <View key={ category.name } >
-                            {renderButton(category,{ margin: 5 })}
-                            {renderCategoryChilds(category)}
-                        </View>
-                    ))}
-                </ScrollView>
-            </Card>
+            <View style={ styles.container }>
+                <Card style={ styles.card }>
+                    <TitleBar
+                        title={
+                            <Heading style={ styles.heading }>
+                                Add child to { props.parentDoc?.resource.identifier }
+                            </Heading>
+                        }
+                        left={ <Button
+                            title="Cancel"
+                            variant="transparent"
+                            icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                            onPress={ props.onClose }
+                        /> }
+                    />
+                    <ScrollView style={ styles.categories }>
+                        {categories.map(category => (
+                            <View key={ category.name } >
+                                {renderButton(category,{ margin: 5 })}
+                                {renderCategoryChilds(category)}
+                            </View>
+                        ))}
+                    </ScrollView>
+                </Card>
             </View>
             
         </Modal>
@@ -113,6 +108,12 @@ const categoryChildStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
+        flexDirection: 'column',
+        marginTop: 200,
+        alignItems: 'center'
+    },
+    card: {
         padding: 10,
         height: '60%',
         width: '50%',

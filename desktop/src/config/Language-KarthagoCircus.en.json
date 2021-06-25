@@ -1,0 +1,555 @@
+{
+      "categories": {
+        "Trench": {
+            "label": "Sondage",
+            "fields":{
+              "trenchComment": {
+                "label": "Trench comment"
+              }
+            }
+        },
+        "Operation": {
+          "fields":{
+            "diaryAbstract": {
+              "label": "Diary abstract"
+            }
+          }
+        },
+        "Survey": {
+          "fields": {
+            "researchMethod": {
+              "label": "Research Method"
+            }
+          }
+        },
+        "Building": {
+          "label": "Bâtiment",
+          "fields":{
+            "conditionComment": {
+              "label": "Condition comment"
+            },
+            "hasRestoration": {
+              "label": "Restoration"
+            },
+            "condition": {
+              "label":"Condition"
+            },
+            "conditionAmount":{
+              "label": "Preservation assessment"
+            },
+            "context": {
+              "label": "Context"
+            },
+            "material": {
+              "label": "Material"
+            },
+            "buildingResearchHistory": {
+              "label": "Research history"
+            },
+            "buildingCategory": {
+              "label": "Building category"
+            },
+            "buildingCategorySpecific": {
+              "label": "Building category (specific)"
+            },
+            "buildingTechnique": {
+              "label": "Building technique"
+            },
+            "buildingType": {
+              "label": "Building type"
+            }
+        }
+      },
+        "Feature":{
+          "label": "Unité stratigraphique",
+            "fields": {
+                "natural": {
+                    "label": "Natural"
+                },
+                "hasDisturbance": {
+                    "label": "Disturbance"
+                },
+                "distinctionCriteria": {
+                    "label": "Distinguishing criteria"
+                },
+                "differentFromOne": {
+                    "label": "Different from SU – 1"
+                },
+                "differentFromTwo": {
+                    "label": "Different from SU – 2"
+                },
+                "justificationOne": {
+                    "label": "Justification – 1"
+                },
+                "justificationTwo": {
+                    "label": "Justification – 2"
+                },
+                "stratigraphicReliability": {
+                    "label": "Stratigraphic reliability"
+                },
+                "photogrammetry": {
+                    "label": "Photogrammetry"
+                },
+                "photographed": {
+                    "label": "Photographed"
+                },
+                "heights": {
+                    "label": "Heights"
+                },
+                "sample": {
+                    "label": "Sample"
+                },
+                "color": {
+                    "label": "Color"
+                },
+                "featureForm": {
+                    "label": "Form"
+                },
+                "featureBorders": {
+                    "label": "Borders"
+                },
+                "comparison": {
+                    "label": "Comparison"
+                }
+            }
+        },
+        "Architecture": {
+            "label": "USM",
+            "fields": {
+                "decoration": {
+                    "label": "Decoration"
+                },
+                "conjoinedWith": {
+                    "label": "Conjoined with"
+                },
+                "interpretation": {
+                    "label": "Interpretation"
+                },
+                "bibliography": {
+                    "label": "Bibliography"
+                  },
+                  "conditionComment": {
+                    "label": "Condition comment"
+                  },
+                  "constructionDetailsDescription": {
+                    "label": "Description of construction details"
+                  },
+                  "descriptionOfBuildingTechnique": {
+                    "label": "Description of building technique"
+                  },
+                  "hasGrouting": {
+                    "label": "Grouting"
+                  },
+                  "layerAmount": {
+                    "label": "Number of layers"
+                  },
+                  "layerHeight": {
+                    "label": "Layer height"
+                  },
+                  "materialCharacteristic": {
+                    "label": "Material characteristic"
+                  },
+                  "materialForm": {
+                    "label": "Material form"
+                  },
+                  "muralCrown": {
+                    "label": "Mural crown"
+                  },
+                  "blockProcessing": {
+                    "label": "Block processing"
+                  },
+                  "blockTreatment": {
+                    "label": "Block treatment"
+                  },
+                  "brickwork": {
+                    "label": "Brickwork"
+                  },
+                  "condition": {
+                    "label": "Condition"
+                  },
+                  "conditionAmount": {
+                    "label": "Preservation assessment"
+                  },
+                  "construction": {
+                    "label": "Construction"
+                  },
+                  "mortarBinder": {
+                    "label": "Mortar Binder"
+                  },
+                  "mortarColor": {
+                    "label": "Mortar Colour"
+                  },
+                  "mortarConsistency": {
+                    "label": "Mortar Consistency"
+                  },
+                  "wallClassification": {
+                    "label": "Wall Classification"
+                  },
+                  "wallType": {
+                    "label": "Wall Type"
+                  },
+                  "buildingTechnique":{
+                    "label": "Building technique"
+                  },
+                  "walling":{
+                    "label":"Walling"
+                  }
+                }
+        },
+        "Layer": {
+            "label": "US+",
+            "fields":{
+                "consistency": {
+                    "label": "Consistency"
+                },
+                "soilType": {
+                    "label": "Soil type"
+                },
+                "geologicalComponents": {
+                    "label": "Geological components"
+                },
+                "organicComponents": {
+                    "label": "Organic components"
+                },
+                "artificialComponents": {
+                      "label": "Artificial components"
+                },
+                "specialFinds": {
+                    "label": "Special finds"
+                },
+                "complete": {
+                    "label": "Complete"
+                },
+                "layerClassification": {
+                    "label": "Layer classification"
+                },
+                "interpretation": {
+                    "label": "Interpretation"
+                }
+            }
+        },
+        "Negative": {
+            "label": "US-",
+            "fields":{
+                "modeOfFormation": {
+                    "label": "Mode of formation"
+                },
+                "otherClassification": {
+                    "label": "Classification"
+                },
+                "interpretation":{
+                    "label": "Interpretation"
+                }
+            }
+        },
+        "Floor": {
+            "label": "USR sol",
+            "fields": {
+                "interpretation": {
+                    "label": "Interpretation"
+                },
+                "mortarColor": {
+                    "label": "Mortar Colour"
+                },
+                "mortarConsistency": {
+                    "label": "Mortar Consistency"
+                },
+                "conditionComment": {
+                    "label": "Condition comment"
+                },
+                "conditionAmount": {
+                    "label": "Preservation assessment"
+                },
+                "consistency": {
+                    "label": "Consistency"
+                },
+                "floorClassification": {
+                    "label": "Floor classification"
+                },
+                "layerClassification": {
+                    "label": "Layer classification"
+                },
+                "mortarBinder": {
+                    "label": "Mortar Binder"
+                },
+                "condition": {
+                    "label": "Condition"
+                }
+            }
+        },
+        "WallCladding": {
+            "label": "USR mural",
+            "fields": {
+                "conditionComment": {
+                    "label": "Condition comment"
+                  },
+                  "constructionDetailsDescription": {
+                    "label": "Description of construction details"
+                  },
+                  "markDescription": {
+                    "label": "Mark description"
+                  },
+                  "hasPlasterDecoration": {
+                    "label": "Plaster decoration"
+                  },
+                  "plasterOlder": {
+                    "label": "Older plaster"
+                  },
+                  "surfaceDecoration": {
+                    "label": "Surface decoration"
+                  },
+                  "wallConstructionTechnique": {
+                    "label": "Wall construction technique"
+                  },
+                  "blockTreatment": {
+                    "label": "Block treatment"
+                  },
+                  "buildingTechnique": {
+                    "label": "Building technique"
+                  },
+                  "condition": {
+                    "label": "Condition"
+                  },
+                  "conditionAmount": {
+                    "label": "Preservation assessment"
+                  },
+                  "constructionDetails": {
+                    "label": "Construction details"
+                  },
+                  "jointsCondition": {
+                    "label": "Joints condition"
+                  },
+                  "jointsType": {
+                    "label": "Joints type"
+                  },
+                  "mark": {
+                    "label": "Mark"
+                  },
+                  "plasterComponents": {
+                    "label": "Plaster components"
+                  },
+                  "wallOrientation": {
+                    "label": "Wall orientation"
+                  },
+                  "roomSide": {
+                    "label": "Room side"
+                  },
+                  "wallSide": {
+                    "label": "Wall side"
+                  },
+                  "interpretation": {
+                    "label": "Interpretation"
+                  }
+            }
+        },
+        "Find": {
+          "label": "Trouvaille",
+          "fields": {
+            "amount": {
+              "label": "Total number"
+            },
+            "bibliography": { 
+              "label": "Bibliography"        
+            },
+            "catalogueNumber": {
+             "label": "Catalogue number"
+            },
+            "comparison": {
+              "label": "Comparison"
+            },
+            "conditionComment": {
+              "label": "Condition comment"
+            },
+            "conditionPercent": {
+              "label": "Condition in percent"
+            },
+            "hasRestoration": {
+             "label": "Restoration"
+            },
+            "storageInventoryNumber": {
+              "label": "Inventory Number"
+            },
+            "weight": {
+             "label": "Weight (g)"
+            },
+            "condition": {
+              "label": "Condition"
+            },
+            "conditionAmount": {
+              "label": "Preservation assessment"
+            },
+            "storagePlace": {
+             "label": "Storage place"
+              },
+            "photographed": {
+              "label": "Photographed"
+            },
+            "drawn": {
+              "label": "Drawn"
+            }
+          }
+        },
+      "Inscription:default": {
+        "label": "Inscription"
+      },
+      "Glass": {
+        "label": "Verre"
+      },
+      "Mollusk": {
+        "label": "Mollusque"
+      },
+      "Brick": {
+        "label": "Brique"
+      },
+      "Wood": {
+        "label": "Bois"
+      },
+       "Pottery": {
+        "label": "Céramique"
+      },
+      "Metal": {
+        "label": "Métal"
+      },
+      "Bone": {
+        "label": "Os"
+      },
+      "Terracotta": {
+        "label": "Terre cuite"
+      },
+      "Stone": {
+        "label": "Pierre"
+      },
+      "Coin": {
+        "label": "Monnaie"
+      },
+      "PlasterFragment": {
+        "label": "Enduit/mortier",
+        "fields": {
+          "plasterComponents": {
+            "label": "Plaster components"
+          },
+          "color": {
+            "label": "Plaster color"
+          },
+          "mortarColor":{
+            "label": "Mortar Colour"
+          }, 
+          "mortarConsistency":{
+            "label":"Mortar Consistency"
+          },
+          "mortarBinder":{
+            "label":"Mortar Binder"
+          },
+          "composition": {
+            "label": "Composition"
+          },
+          "hasDecoration":{
+            "label":"Decoration"
+          }
+        }
+      },
+      "Sample": {
+        "label": "Échantillon",
+        "fields": {
+           "isotopicSignature": {
+             "label": "δ13C AMS (‰)"
+           },
+           "calibration-1":{
+             "label": "Cal 1-σ"
+           },
+           "calibration-2": {
+             "label": "Cal 2-σ"
+           },
+           "carbonLevel" : {
+             "label": "Carbon level"
+           },
+           "sampleMaterial":{
+             "label": "Material"
+           },
+           "labNumber": {
+             "label": "Laboratory number"
+           },
+           "weight": {
+             "label": "Weight (g)"
+           },
+           "sampleType": {
+             "label": "Sample type"
+           }
+        }
+      }
+      },
+      "commons": {
+        "processor": {
+            "label": "Processor"
+        },
+        "diary": {
+            "label": "Diary"
+        },
+        "beginningDate": {
+            "label": "Beginning date"
+        },
+        "endDate": {
+            "label": "End date"
+        },
+        "campaign": {
+            "label": "Campaign"
+        },
+        "supervisor": {
+            "label": "Trench director"
+        },
+        "description": {
+            "label": "Description"
+        },
+        "spatialLocation": {
+          "label": "Spatial location"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "dimensionPerimeter": {
+          "label": "Perimeter"
+        },
+        "dimensionDiameter": {
+          "label": "Diameter"
+        },
+        "dimensionThickness": {
+          "label": "Thickness"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionOther": {
+          "label": "Other"
+        },
+        "date": {
+          "label": "Date"
+        },
+        "area": {
+          "label": "Area (m²)"
+        },
+        "orientation": {
+          "label": "Orientation"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "draughtsmen": {
+          "label": "Creator"
+        },
+        "literature": {
+          "label": "Literature reference"
+        }
+      }
+    }

@@ -66,6 +66,13 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                 />
                 <Button
                     style={ styles.button }
+                    variant="primary"
+                    title="Edit"
+                    onPress={ () => console.log('Edit btn') }
+                    icon={ <Ionicons name="create-outline" size={ iconSize } /> }
+                />
+                <Button
+                    style={ styles.button }
                     variant="danger"
                     onPress={ () => removeDocument(document) }
                     icon={ <Ionicons name="trash" size={ 16 } /> }

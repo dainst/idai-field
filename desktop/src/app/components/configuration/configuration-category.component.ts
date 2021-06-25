@@ -10,6 +10,7 @@ import { ConfigurationChange } from '../../core/configuration/configuration-chan
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './project-configuration.component';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -142,6 +143,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 

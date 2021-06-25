@@ -10,6 +10,7 @@ import { MessagesConversion } from '../docedit/messages-conversion';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { AddCategoryModalComponent } from './add-category-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 export type InputType = {
@@ -123,6 +124,7 @@ export class ProjectConfigurationComponent implements OnInit {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -154,6 +156,7 @@ export class ProjectConfigurationComponent implements OnInit {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 

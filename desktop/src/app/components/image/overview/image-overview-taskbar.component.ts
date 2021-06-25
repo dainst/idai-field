@@ -1,17 +1,18 @@
-import {Component, Input} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {LinkModalComponent} from './link-modal.component';
-import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {DeleteModalComponent} from './deletion/delete-modal.component';
-import {ImageOverviewComponent} from './image-overview.component';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {M} from '../../messages/m';
-import {Messages} from '../../messages/messages';
-import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
-import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
+import { Component, Input } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument } from 'idai-field-core';
+import { LinkModalComponent } from './link-modal.component';
+import { RemoveLinkModalComponent } from './remove-link-modal.component';
+import { ImageOverviewFacade } from '../../../core/images/overview/view/imageoverview-facade';
+import { DeleteModalComponent } from './deletion/delete-modal.component';
+import { ImageOverviewComponent } from './image-overview.component';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { M } from '../../messages/m';
+import { Messages } from '../../messages/messages';
+import { MenuContext, MenuService } from '../../menu-service';
+import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../core/model/image-relations-manager';
+import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class ImageOverviewTaskbarComponent {
             // LinkModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -93,6 +95,7 @@ export class ImageOverviewTaskbarComponent {
             // DeleteModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -111,6 +114,7 @@ export class ImageOverviewTaskbarComponent {
             // RemoveLinkModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 

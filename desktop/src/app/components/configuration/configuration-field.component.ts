@@ -8,6 +8,7 @@ import { MenuContext, MenuService } from '../menu-service';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { InputType } from './project-configuration.component';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 const locale: string = typeof window !== 'undefined'
@@ -95,6 +96,7 @@ export class ConfigurationFieldComponent implements OnChanges {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 

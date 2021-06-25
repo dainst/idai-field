@@ -48,10 +48,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     style={ styles.docButton }
                 />
                 <Button
-                    style={ styles.button }
-                    variant="danger"
-                    onPress={ () => removeDocument(document) }
-                    icon={ <Ionicons name="trash" size={ 16 } /> }
+                    style={ [styles.button, styles.focusBtn] }
+                    title="Focus"
+                    onPress={ () => focusHandler(docId) }
+                    icon={ <MaterialIcons
+                        name="center-focus-strong"
+                        size={ iconSize }
+                        color="#565350"
+                    /> }
                 />
                 <Button
                     style={ styles.button }
@@ -61,14 +65,17 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     icon={ <Ionicons name="add" size={ iconSize } /> }
                 />
                 <Button
-                    style={ [styles.button, styles.focusBtn] }
-                    title="Focus"
-                    onPress={ () => focusHandler(docId) }
-                    icon={ <MaterialIcons
-                        name="center-focus-strong"
-                        size={ iconSize }
-                        color="#565350"
-                    /> }
+                    style={ styles.button }
+                    variant="primary"
+                    title="Edit"
+                    onPress={ () => console.log('Edit btn') }
+                    icon={ <Ionicons name="create-outline" size={ iconSize } /> }
+                />
+                <Button
+                    style={ styles.button }
+                    variant="danger"
+                    onPress={ () => removeDocument(document) }
+                    icon={ <Ionicons name="trash" size={ 16 } /> }
                 />
             </Row>
             <Column style={ styles.container }>

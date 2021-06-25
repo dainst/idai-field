@@ -1,16 +1,17 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, RelationsManager, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
+import useToast from '../../hooks/use-toast';
 import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
+import { ToastType } from '../common/Toast/ToastProvider';
 import AddModal from './AddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
 import SearchBar from './SearchBar';
-
 
 interface DocumentsMapProps {
     route: RouteProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
@@ -21,6 +22,7 @@ interface DocumentsMapProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
+    relationsManager: RelationsManager;
     languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
@@ -37,6 +39,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     syncStatus,
     projectSettings,
     config,
+    relationsManager,
     languages,
     setProjectSettings,
     issueSearch,
@@ -47,6 +50,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
     const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
+    const { showToast } = useToast();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
@@ -77,9 +81,19 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const closeDeleteModal = () => setIsDeleteModelOpen(false);
 
-    const onRemoveDocument = () => {
-        if(highlightedDoc?.resource.relations.isRecordedIn)
-            navigation.navigate('DocumentsMap',{ highlightedDocId: highlightedDoc.resource.relations.isRecordedIn[0] });
+    const onRemoveDocument = (doc: Document | undefined) => {
+        if(doc){
+            const isRecordedIn = doc.resource.relations.isRecordedIn ? doc.resource.relations.isRecordedIn[0] : '';
+            const identifier = doc.resource.identifier;
+
+            relationsManager.remove(doc, { descendants: true })
+                .then(() => {
+                    setIsDeleteModelOpen(false);
+                    showToast(ToastType.Info, `Removed ${identifier}`);
+                    navigation.navigate('DocumentsMap', isRecordedIn ? { highlightedDocId: isRecordedIn } : {});
+                })
+                .catch(err => showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`));
+        }
     };
 
     const navigateAddCategory = (categoryName: string, parentDoc: Document | undefined) => {
@@ -87,7 +101,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         if(parentDoc) navigation.navigate('DocumentAdd',{ parentDoc, categoryName });
     };
 
-        
+ 
     return (
         <View style={ { flex: 1 } }>
             {isAddModalOpen && <AddModal
@@ -100,7 +114,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
                 onRemoveDocument={ onRemoveDocument }
-                repository={ repository }
                 config={ config }
                 doc={ highlightedDoc }
                 />}

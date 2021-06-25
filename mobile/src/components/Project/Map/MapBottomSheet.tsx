@@ -48,13 +48,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     style={ styles.docButton }
                 />
                 <Button
-                    style={ styles.button }
-                    variant="success"
-                    title="Add Child"
-                    onPress={ addChildPressHandler }
-                    icon={ <Ionicons name="add" size={ iconSize } /> }
-                />
-                <Button
                     style={ [styles.button, styles.focusBtn] }
                     title="Focus"
                     onPress={ () => focusHandler(docId) }
@@ -63,6 +56,13 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                         size={ iconSize }
                         color="#565350"
                     /> }
+                />
+                <Button
+                    style={ styles.button }
+                    variant="success"
+                    title="Add Child"
+                    onPress={ addChildPressHandler }
+                    icon={ <Ionicons name="add" size={ iconSize } /> }
                 />
                 <Button
                     style={ styles.button }

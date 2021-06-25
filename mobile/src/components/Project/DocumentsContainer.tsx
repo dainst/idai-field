@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainerRef, RouteProp, StackActions } from '@react-navigation/native';
-import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, RelationsManager, SyncStatus } from 'idai-field-core';
 import React, { useEffect, useRef, useState } from 'react';
 import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
@@ -33,6 +33,7 @@ interface DocumentsContainerProps {
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
+    relationsManager: RelationsManager;
     languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
@@ -46,6 +47,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     syncStatus,
     projectSettings,
     config,
+    relationsManager,
     languages,
     setProjectSettings
 }) => {
@@ -118,6 +120,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }
                     config={ config }
+                    relationsManager={ relationsManager }
                     languages={ languages }
                     setProjectSettings={ setProjectSettings }
                     isInOverview={ isInOverview }

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbManager from '../../hooks/use-pouchdb-manager';
+import useRelationsManager from '../../hooks/use-relations-manager';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import { Preferences, ProjectSettings } from '../../models/preferences';
@@ -37,16 +38,23 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ currentProject, preferenc
         repository,
         pouchdbManager,
     );
+    
+    const relationsManager = useRelationsManager(
+        repository?.datastore,
+        config,
+        preferences.username
+    );
 
     const setCurrentProjectSettings = useCallback(settings => {
         setProjectSettings(currentProject, settings);
     }, [currentProject, setProjectSettings]);
 
-    return (repository && config)
+    return (repository && config && relationsManager)
         ? <DocumentsContainer
             projectSettings={ preferences.projects[currentProject] }
             setProjectSettings={ setCurrentProjectSettings }
             config={ config }
+            relationsManager={ relationsManager }
             repository={ repository }
             syncStatus={ syncStatus }
             languages={ preferences.languages }

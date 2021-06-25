@@ -49,12 +49,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                 />
                 <Button
                     style={ styles.button }
-                    variant="danger"
-                    onPress={ () => removeDocument(document) }
-                    icon={ <Ionicons name="trash" size={ 16 } /> }
-                />
-                <Button
-                    style={ styles.button }
                     variant="success"
                     title="Add Child"
                     onPress={ addChildPressHandler }
@@ -69,6 +63,12 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                         size={ iconSize }
                         color="#565350"
                     /> }
+                />
+                <Button
+                    style={ styles.button }
+                    variant="danger"
+                    onPress={ () => removeDocument(document) }
+                    icon={ <Ionicons name="trash" size={ 16 } /> }
                 />
             </Row>
             <Column style={ styles.container }>

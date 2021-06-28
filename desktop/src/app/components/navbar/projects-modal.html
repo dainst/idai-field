@@ -19,6 +19,11 @@
                 <span class="mdi mdi-pencil mdi-18px"></span>
             </div>
 
+            <div id="edit-project-images-button" class="circular-button"
+                 (click)="editProjectImages()">
+                <span class="mdi mdi-image-edit mdi-18px"></span>
+            </div>
+
             <div id="delete-project-button" class="circular-button red-button"
                  [ngbPopover]="deleteProjectMenu" #deletePopover="ngbPopover"
                  triggers="manual" [placement]="'bottom'" [autoClose]="false"

@@ -456,11 +456,11 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["shortDescription"]
+        "fields": ["shortName", "shortDescription"]
       },
       {
         "name": "parent",
-        "fields": ["shortName", "description", "institution", "projectSupervisor", "contactPerson",
+        "fields": ["description", "institution", "projectSupervisor", "contactPerson",
           "contactMail", "staff", "campaigns", "projectURI", "externalReference", "bibliographicReferences",
           "license", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"]
       }

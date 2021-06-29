@@ -5,7 +5,10 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Tab} from '../../core/tabs/tab';
 import {TabUtil} from '../../core/tabs/tab-util';
 import {ViewFacade} from '../../core/resources/view/view-facade';
-import {RoutingService} from '../routing-service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {SettingsProvider} from '../../core/settings/settings-provider';
+import {MenuContext, MenuService} from '../menu-service';
+import {ProjectsModalComponent} from './projects-modal.component';
 
 
 @Component({
@@ -31,7 +34,9 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private routingService: RoutingService,
+                private settingsProvider: SettingsProvider,
+                private menuService: MenuService,
+                private modalService: NgbModal,
                 private i18n: I18n) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
@@ -138,7 +143,19 @@ export class NavbarComponent implements DoCheck {
 
     public async openProjectsModal(openConflictResolver: boolean = false) {
 
-        await this.routingService.openProjectsModal(openConflictResolver);
+        this.menuService.setContext(MenuContext.PROJECTS);
+
+        const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
+        ref.componentInstance.selectedProject = this.settingsProvider.getSettings().selectedProject;
+        ref.componentInstance.openConflictResolver = openConflictResolver;
+
+        try {
+            await ref.result;
+        } catch(err) {
+            // Projects modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 

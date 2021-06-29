@@ -29,7 +29,8 @@ describe('ProjectsModalComponent', () => {
             messages,
             new StateSerializer(),
             undefined,
-            menuService
+            menuService,
+            undefined,
         );
     });
 

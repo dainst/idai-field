@@ -12,6 +12,7 @@ import { MenuContext, MenuService } from '../menu-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
+import {ViewModalLauncher} from '../resources/service/view-modal-launcher';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -48,7 +49,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
                 private datastore: Datastore,
-                private menuService: MenuService) {
+                private menuService: MenuService,
+                private viewModalLauncher: ViewModalLauncher) {
     }
 
 
@@ -162,6 +164,12 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
         }
 
         this.menuService.setContext(MenuContext.PROJECTS);
+    }
+
+
+    public async editProjectImages() {
+
+        this.viewModalLauncher.openImageViewModal(await this.datastore.get('project'), 'edit');
     }
 
 

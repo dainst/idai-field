@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { ConfigLoader, ConfigurationDefinition, ConfigurationErrors } from '../../../src/configuration/boot';
 import { CustomCategoryDefinition } from '../../../src/configuration/model';
-import { Category } from '../../../src/model';
+import { Category, Groups } from '../../../src/model';
 import { Named } from '../../../src/tools';
 
 
@@ -18,14 +18,12 @@ describe('ConfigLoader', () => {
 
     function applyConfig(customFieldsConfiguration = {},
                          languageConfiguration = {},
-                         customLanguageConfiguration = {},
-                         orderConfiguration = {}) {
+                         customLanguageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
             languageConfiguration,
-            {}, {}, {}, {}, {}, {}, {}, {}, {},
-            orderConfiguration
+            {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
 
@@ -73,13 +71,13 @@ describe('ConfigLoader', () => {
                     B: { label: 'B_', fields: { processor: { label: 'Bearbeiter/Bearbeiterin', description: 'abc' }} },
                 }, relations: {},
             },
-            {},
-            {});
+            {}
+        );
 
         let pconf;
         try {
             pconf = await configLoader.go(
-                { processor : { inputType: 'input', group: 'stem' }},
+                { processor : { inputType: 'input' }},
                 { 'A': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [],
                 {},
@@ -118,13 +116,13 @@ describe('ConfigLoader', () => {
                 categories: {},
                 relations: {}
             },
-            {},
-            {});
+            {}
+        );
 
         let pconf;
         try {
             pconf = await configLoader.go(
-                { processor: { inputType: 'input', group: 'stem' } },
+                { processor: { inputType: 'input' } },
                 { 'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true } },
                 [],
                 {},
@@ -164,8 +162,8 @@ describe('ConfigLoader', () => {
                 'D': { fields: {} }
                 },
             {},
-            {},
-            {});
+            {}
+        );
 
         let pconf;
 
@@ -261,8 +259,8 @@ describe('ConfigLoader', () => {
                 categories: {
                     B: { label: 'B__' }
                 }
-            },
-            {});
+            }
+        );
 
         let pconf;
         try {
@@ -330,8 +328,8 @@ describe('ConfigLoader', () => {
         applyConfig(
             customCategories,
             {},
-            {},
-            {});
+            {}
+        );
 
         let pconf;
         try {
@@ -365,11 +363,16 @@ describe('ConfigLoader', () => {
                 commons: [],
                 valuelists: {},
                 fields: { fieldA1: { inputType: 'unsignedInt' } },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1'] }
+                ],
                 creationDate: '',
                 createdBy: '',
                 description: {}
             }
         });
+
+        // TODO Define groups as soon as it's possible for custom categories
 
         const customCategories: Map<CustomCategoryDefinition> = {
             'B:0': {
@@ -382,8 +385,8 @@ describe('ConfigLoader', () => {
         applyConfig(
             customCategories,
             {},
-            {},
-            {});
+            {}
+        );
 
         let pconf;
         try {
@@ -392,7 +395,7 @@ describe('ConfigLoader', () => {
                 undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0'].groups[1].fields.find(field => field.name == 'fieldC1')
+            expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0'].groups[0].fields.find(field => field.name == 'fieldC1')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -418,7 +421,6 @@ describe('ConfigLoader', () => {
 
         applyConfig(
             customFieldsConfiguration,
-            {},
             {},
             {}
         );
@@ -463,7 +465,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('apply order configuration', async done => {
+    it('apply groups configuration', async done => {
 
         Object.assign(libraryCategories, {
             'B': {
@@ -475,9 +477,13 @@ describe('ConfigLoader', () => {
                     fieldB2: { inputType: 'input' },
                     fieldB3: { inputType: 'input' },
                     fieldB1: { inputType: 'input' }
-                    },
-                creationDate: '', createdBy: '', description: {}
                 },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] },
+                    { name: Groups.PARENT, fields: ['fieldB3'] }
+                ],
+                creationDate: '', createdBy: '', description: {}
+            },
             'C': {
                 categoryName: 'C',
                 commons: [],
@@ -486,9 +492,13 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldC1: { inputType: 'input' },
                     fieldC2: { inputType: 'input' }
-                    },
-                creationDate: '', createdBy: '', description: {}
                 },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldC1'] },
+                    { name: Groups.PARENT, fields: ['fieldC2'] }
+                ],
+                creationDate: '', createdBy: '', description: {}
+            },
             'A': {
                 categoryName: 'A',
                 commons: [],
@@ -497,7 +507,12 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldA2: { inputType: 'input' },
                     fieldA1: { inputType: 'input' }
-                    },
+                },
+                groups: [
+                    // Ignore fields defined in groups but not in fields configuration
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2', 'fieldA3'] },
+                    { name: Groups.PARENT, fields: ['fieldA4', 'fieldA5'] }
+                ],
                 creationDate: '', createdBy: '', description: {}
             }
         });
@@ -505,38 +520,38 @@ describe('ConfigLoader', () => {
         applyConfig(
             { 'A': { fields: {} }, 'B': { fields: {} }, 'C': { fields: {} }, 'Parent': { fields: {} } },
             {}, {},
-             {
-                categories: ['A', 'B', 'C'],
-                fields: {
-                    'A': ['fieldA1', 'fieldA2'],
-                    'B': ['fieldB1', 'fieldB2', 'fieldB3'],
-                    'C': ['fieldC1', 'fieldC2'],
-
-                    // Ignore fields defined in Order.json but not in configuration silently
-                    'D': ['fieldD1', 'fieldD2']
-                }
-            });
+        );
 
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},
+                { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [], {},
-                 undefined, 'User'
+                undefined, 'User'
             );
 
             const result = Named.arrayToMap<Category>(pconf.getCategoriesArray());
 
             expect(result['A'].name).toEqual('A');
+            expect(result['A'].groups[0].name).toBe(Groups.STEM);
+            expect(result['A'].groups[0].fields.length).toBe(2);
             expect(result['A'].groups[0].fields[0].name).toEqual('fieldA1');
             expect(result['A'].groups[0].fields[1].name).toEqual('fieldA2');
             expect(result['B'].name).toEqual('B');
+            expect(result['B'].groups[0].name).toBe(Groups.STEM);
+            expect(result['B'].groups[0].fields.length).toBe(2);
             expect(result['B'].groups[0].fields[0].name).toEqual('fieldB1');
             expect(result['B'].groups[0].fields[1].name).toEqual('fieldB2');
-            expect(result['B'].groups[0].fields[2].name).toEqual('fieldB3');
+            expect(result['B'].groups[1].name).toBe(Groups.PARENT);
+            expect(result['B'].groups[1].fields.length).toBe(1);
+            expect(result['B'].groups[1].fields[0].name).toEqual('fieldB3');
             expect(result['C'].name).toEqual('C');
+            expect(result['C'].groups[0].name).toBe(Groups.STEM);
+            expect(result['C'].groups[0].fields.length).toBe(1);
             expect(result['C'].groups[0].fields[0].name).toEqual('fieldC1');
-            expect(result['C'].groups[0].fields[1].name).toEqual('fieldC2');
+            expect(result['C'].groups[1].name).toBe(Groups.PARENT);
+            expect(result['C'].groups[1].fields.length).toBe(1);
+            expect(result['C'].groups[1].fields[0].name).toEqual('fieldC2');
         } catch(err) {
             fail(err);
         }
@@ -545,8 +560,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('add categories and fields only once even if they are mentioned multiple times in order configuration',
-            async done => {
+    it('add fields only once even if they are mentioned multiple times in groups configuration', async done => {
 
         Object.assign(libraryCategories, {
             A: {
@@ -557,18 +571,17 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldA2: { inputType: 'input' },
                     fieldA1: { inputType: 'input' }
-                    },
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2', 'fieldA1']}
+                ],
                 creationDate: '', createdBy: '', description: {}
             }
         });
 
         applyConfig({ A: { fields: {} }, Parent: { fields: {} } },
-            {}, {}, {
-                categories: ['A', 'A'],
-                fields: {
-                    A: ['fieldA1', 'fieldA2', 'fieldA1']
-                }
-            });
+            {}, {}
+        );
 
         let pconf;
         try {
@@ -578,7 +591,7 @@ describe('ConfigLoader', () => {
             );
 
             expect(pconf.getCategoriesArray().length).toBe(2);
-            expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);  // fieldA1, fieldA2
+            expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
             expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('fieldA1');
             expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('fieldA2');
         } catch(err) {
@@ -609,8 +622,8 @@ describe('ConfigLoader', () => {
             },
             {
                 'A': ['fieldA2']
-            },
-            {});
+            }
+        );
 
         let pconf;
         try {
@@ -656,7 +669,7 @@ describe('ConfigLoader', () => {
                 B: { fields: {} },
                 C: { parent: 'A', fields: {} }
             },
-            {}, {}, {}
+            {}, {}
         );
 
         let pconf;

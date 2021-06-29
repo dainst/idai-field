@@ -25,6 +25,7 @@ describe('applyLanguageConfigurations', () => {
             creationDate: '',
             color: 'white',
             valuelists: {},
+            groups: [],
             fields: {
                 'aField': {}
             }

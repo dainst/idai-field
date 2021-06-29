@@ -1,7 +1,8 @@
-import {Map} from 'tsfun';
-import {Assertions, ConfigurationErrors} from '../../../src/configuration/boot';
-import {BuiltinCategoryDefinition, CustomCategoryDefinition, LibraryCategoryDefinition} from '../../../src/configuration/model';
-import {FieldDefinition} from '../../../src/model';
+import { Map } from 'tsfun';
+import { Assertions, ConfigurationErrors } from '../../../src/configuration/boot';
+import { BuiltinCategoryDefinition, CustomCategoryDefinition,
+    LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { FieldDefinition } from '../../../src/model';
 
 
 describe('Assertions', () => {
@@ -24,6 +25,7 @@ describe('Assertions', () => {
                fields: {},
                valuelists: {'aCommon': 'cde' /* not allowed */},
                commons: ['aCommon'],
+               groups: [],
                description: {},
                createdBy: '',
                creationDate: ''

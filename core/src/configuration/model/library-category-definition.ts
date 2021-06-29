@@ -1,6 +1,6 @@
 import { Map } from 'tsfun';
-import {Valuelists} from '../../model/valuelist-definition';
-import {Name} from '../../tools';
+import { Valuelists } from '../../model/valuelist-definition';
+import { Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';
 import { BaseCategoryDefinition, BaseFieldDefinition } from './base-category-definition';
@@ -24,6 +24,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
     createdBy: string,
     creationDate: string;
     fields: Map<LibraryFieldDefinition>;
+    groups: Array<LibraryGroupDefinition>;
 }
 
 
@@ -31,6 +32,13 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
     inputType?: string;
     positionValuelistId?: string;
+}
+
+
+export interface LibraryGroupDefinition {
+
+    name: string;
+    fields: string[];
 }
 
 

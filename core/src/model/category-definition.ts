@@ -24,7 +24,15 @@ export interface CategoryDefinition {
     color?: string;
     defaultColor?: string;
     libraryId?: string;
-    userDefinedSubcategoriesAllowed?: boolean
+    userDefinedSubcategoriesAllowed?: boolean;
+    groups: Array<GroupDefinition>;
+}
+
+
+export interface GroupDefinition {
+
+    name: string;
+    fields: string[];
 }
 
 

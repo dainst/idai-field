@@ -13,107 +13,86 @@ export class BuiltInConfiguration {
     public commonFields = {
         period: {
             inputType: FieldDefinition.InputType.DROPDOWNRANGE,
-            group: Groups.TIME
         },
         dating: {
             inputType: FieldDefinition.InputType.DATING,
-            group: Groups.TIME
         },
         diary: {
             inputType: FieldDefinition.InputType.INPUT,
-            group: Groups.STEM
         },
         area: {
             inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
-            group: Groups.DIMENSION
         },
         dimensionLength: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionWidth: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionHeight: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionDiameter: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionPerimeter: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionThickness: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
             inputTypeOptions: { validation: { permissive: true }},
-            group: Groups.POSITION,
             positionValuelistId: 'position-values-edge-default'
         },
         dimensionOther: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         beginningDate: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
         },
         endDate: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
         },
         supervisor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Groups.STEM
         },
         processor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Groups.STEM
         },
         campaign: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
-            group: Groups.STEM
         },
         draughtsmen: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Groups.STEM
         },
         description: {
             inputType: FieldDefinition.InputType.TEXT
         },
         date: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
         },
         spatialLocation: {
             inputType: FieldDefinition.InputType.INPUT,
-            group: Groups.POSITION
         },
         provenance: {
             inputType: FieldDefinition.InputType.DROPDOWN,
         },
         orientation: {
             inputType: FieldDefinition.InputType.DROPDOWN,
-            group: Groups.POSITION
         },
         literature: {
             inputType: FieldDefinition.InputType.LITERATURE
@@ -208,11 +187,9 @@ export class BuiltInConfiguration {
             fields: {
                 period: {
                     inputType: FieldDefinition.InputType.DROPDOWNRANGE,
-                    group: Groups.TIME
                 },
                 dating: {
                     inputType: FieldDefinition.InputType.DATING,
-                    group: Groups.TIME
                 }
             }
         },
@@ -222,7 +199,6 @@ export class BuiltInConfiguration {
             fields: {
                 instanceOf: {
                     inputType: 'instanceOf',
-                    group: Groups.IDENTIFICATION
                 }
             }
         },
@@ -236,7 +212,6 @@ export class BuiltInConfiguration {
                 criterion: {
                     inputType: FieldDefinition.InputType.DROPDOWN,
                     constraintIndexed: true,
-                    group: Groups.IDENTIFICATION
                 }
             }
         },
@@ -284,25 +259,21 @@ export class BuiltInConfiguration {
         id: {
             editable: false,
             visible: false,
-            group: Groups.STEM,
             source: 'builtin'
         } as FieldDefinition,
         category: {
             visible: false,
             editable: false,
-            group: Groups.STEM,
             source: 'builtin'
         } as FieldDefinition,
         shortDescription: {
             visible: false,
             editable: true,
-            group: Groups.STEM
         } as FieldDefinition,
         identifier: {
             visible: false,
             editable: true,
             mandatory: true,
-            group: Groups.STEM
         } as FieldDefinition
     };
 
@@ -652,7 +623,6 @@ export class BuiltInConfiguration {
                 fields: {
                     gazId: {
                     inputType: FieldDefinition.InputType.UNSIGNEDINT,
-                    group: Groups.POSITION
                     }
                 }
             };
@@ -663,11 +633,9 @@ export class BuiltInConfiguration {
                 fields: {
                     instanceOf: {
                         inputType: 'instanceOf',
-                        group: Groups.IDENTIFICATION
                     },
                     diameterPercentage: {
                         inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
-                        group: Groups.DIMENSION
                     },
                 }
             };
@@ -737,7 +705,7 @@ export class BuiltInConfiguration {
                 editable: true,
                 mandatory: false,
                 inputType: 'text',
-                group: Groups.TIME
+                group: Groups.TIME  // TODO Remove
             };
 
             (this.builtInFields as any)['notes'] = {
@@ -745,7 +713,7 @@ export class BuiltInConfiguration {
                 editable: true,
                 mandatory: false,
                 inputType: 'text',
-                group: Groups.STEM
+                group: Groups.STEM  // TODO Remove
             };
         }
     }

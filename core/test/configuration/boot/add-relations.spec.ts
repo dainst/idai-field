@@ -24,6 +24,7 @@ describe('addRelations', () => {
             creationDate: '',
             color: 'white',
             valuelists: {},
+            groups: [],
             fields: {
                 'aField': {}
             }

@@ -1,5 +1,5 @@
-import {Map} from 'tsfun';
-import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
+import { Map } from 'tsfun';
+import { BaseFieldDefinition, BaseCategoryDefinition } from './base-category-definition';
 
 
 /**
@@ -26,7 +26,6 @@ export interface BuiltinCategoryDefinition extends BaseCategoryDefinition {
 
 export interface BuiltinFieldDefinition extends BaseFieldDefinition {
 
-    group?: string;
     valuelistFromProjectField?: string;
     allowOnlyValuesOfParent?: boolean;
 }

@@ -1,7 +1,7 @@
-import {Map} from 'tsfun';
-import {mergeCategories} from '../../../src/configuration/boot';
-import {CustomCategoryDefinition, TransientCategoryDefinition} from '../../../src/configuration/model';
-import {FieldDefinition} from '../../../src/model';
+import { Map } from 'tsfun';
+import { mergeCategories } from '../../../src/configuration/boot';
+import { CustomCategoryDefinition, TransientCategoryDefinition } from '../../../src/configuration/model';
+import { FieldDefinition } from '../../../src/model';
 
 
 describe('mergeCategories', () => {
@@ -20,7 +20,8 @@ describe('mergeCategories', () => {
                     f1: {
                         inputType: FieldDefinition.InputType.INPUT
                     }
-                }
+                },
+                groups: []
             }
         };
 
@@ -54,7 +55,8 @@ describe('mergeCategories', () => {
                     f1: {
                         inputType: FieldDefinition.InputType.INPUT
                     }
-                }
+                },
+                groups: []
             }
         };
 
@@ -89,7 +91,8 @@ describe('mergeCategories', () => {
                     f1: {
                         inputType: FieldDefinition.InputType.INPUT
                     }
-                }
+                },
+                groups: []
             }
         };
 

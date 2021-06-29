@@ -10,7 +10,7 @@ export interface FieldDefinition {
     name: string;
     inputType: FieldDefinition.InputType;
     inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
-    group: string;
+    group?: string; // TODO Remove
     label?: I18nString;
     description?: I18nString;
     defaultLabel?: I18nString;

@@ -89,7 +89,6 @@ export class ConfigLoader {
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
-        const orderConfigurationPath = '/Order.json';
         const searchConfigurationPath = '/Search.json';
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
@@ -97,7 +96,6 @@ export class ConfigLoader {
         let languageConfigurations: LanguageConfigurations;
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
-        let orderConfiguration: any;
 
         try {
             const configurationDocument = customConfigurationDocument ?? (await this.loadCustomConfiguration(
@@ -114,7 +112,6 @@ export class ConfigLoader {
             };
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
-            orderConfiguration = this.configReader.read(orderConfigurationPath);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -134,7 +131,6 @@ export class ConfigLoader {
                     relations,
                     languageConfigurations,
                     searchConfiguration,
-                    orderConfiguration,
                     (categories: any) => {
                         const fieldValidationErrors =
                             ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
@@ -169,6 +165,7 @@ export class ConfigLoader {
 
     private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
                                                      rev?: string): Promise<ConfigurationDocument> {
+        
         const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = this.configReader.getCustomLanguageConfigurations(customConfigurationName);
         const configuration: ConfigurationDocument

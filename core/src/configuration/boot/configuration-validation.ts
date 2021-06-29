@@ -1,5 +1,5 @@
-import {RelationDefinition,CategoryDefinition,ValuelistDefinition} from '../../model';
-import {ConfigurationErrors} from './configuration-errors';
+import { RelationDefinition,CategoryDefinition,ValuelistDefinition } from '../../model';
+import { ConfigurationErrors } from './configuration-errors';
 
 
 /**
@@ -62,25 +62,24 @@ export module ConfigurationValidation {
         let msgs = [] as any;
 
         for (let category of categories) {
-            for (let fieldDef of category.fields) {
-                if (!fieldDef.hasOwnProperty('name'))
-                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)]);
-                if (!fieldDef.hasOwnProperty('inputType'))
-                    fieldDef.inputType = 'input';
-                if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
-                    && !fieldDef.valuelistFromProjectField
-                    && !isValidValuelist(fieldDef.valuelist)) {
+            for (let fieldName of Object.keys(category.fields)) {
+                const fieldDefinition = category.fields[fieldName];
+                if (!fieldDefinition.hasOwnProperty('inputType'))
+                fieldDefinition.inputType = 'input';
+                if (VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
+                    && !fieldDefinition.valuelistFromProjectField
+                    && !isValidValuelist(fieldDefinition.valuelist)) {
                     msgs.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST,
-                        fieldDef.name,
+                        fieldName,
                         category.name
                     ]);
                 }
-                if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
-                    && !isValidValuelist(fieldDef.positionValues)) {
+                if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
+                    && !isValidValuelist(fieldDefinition.positionValues)) {
                     msgs.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
-                        fieldDef.name,
+                        fieldName,
                         category.name
                     ]);
                 }

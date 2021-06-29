@@ -1,12 +1,12 @@
-import { cond, isDefined, flow, Map, Mapping, on, isUndefined, copy,
-    separate, detach, map, update, reduce, clone, not } from 'tsfun';
-import { Category, CategoryDefinition, Groups, FieldDefinition, Group } from '../../model';
+import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
+import { Category, CategoryDefinition, FieldDefinition, Group } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { ConfigurationErrors } from './configuration-errors';
 
 
 const TEMP_FIELDS = 'fields';
+const TEMP_GROUPS = 'tempGroups';
 
 /**
  * @author Thomas Kleinke
@@ -21,7 +21,6 @@ export function makeCategoryForest(categories: any): Forest<Category> {
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         Named.mapToNamedArray as any,
         map(category => ({ item: category, trees: []}))
     );
@@ -29,8 +28,9 @@ export function makeCategoryForest(categories: any): Forest<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories as any),
-        Tree.mapList(fillGroups),
+        Tree.mapList(createGroups),
         Tree.mapList(detach(TEMP_FIELDS)),
+        Tree.mapList(detach(TEMP_GROUPS)),
         linkParentAndChildInstances
     );
 }
@@ -39,30 +39,30 @@ export function makeCategoryForest(categories: any): Forest<Category> {
 export const generateEmptyList = () => []; // to make sure getting a new instance every time this is called
 
 
-/**
- * Creates the groups array for each category.
- */
-function fillGroups(category: Category) {
+function createGroups(category: Category): Category {
 
-    category.groups = flow(
-        (category as any)[TEMP_FIELDS],
-        makeGroupsMap,
-        map(sortGroupFields) as any
-    );
+    category.groups = category[TEMP_GROUPS].map(groupDefinition => {
+        const group = Group.create(groupDefinition.name);
+        group.fields = set(groupDefinition.fields)
+            .map(fieldName => category[TEMP_FIELDS][fieldName])
+            .filter(field => field !== undefined)
+        return group;
+    });
 
-    return category;
-}
-
-
-function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
-
-    const groups: Map<Group> = {};
-    for (let field of fields) {
-        if (!groups[field.group]) groups[field.group] = Group.create(field.group);
-        groups[field.group].fields = groups[field.group].fields.concat(field);
+    let stemGroup: Group = category.groups.find(group => group.name === 'stem');
+    if (!stemGroup) {
+        stemGroup = Group.create('stem');
+        category.groups.unshift(stemGroup);
     }
 
-    return groups;
+    const fieldsInGroups: string[] = flatten(1, category[TEMP_GROUPS].map(group => group.fields));
+    const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
+        .filter(fieldName => !fieldsInGroups.includes(fieldName))
+        .map(fieldName => category[TEMP_FIELDS][fieldName]);
+
+    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups);
+
+    return category;
 }
 
 
@@ -77,19 +77,9 @@ function addChildCategory(categoryTree: Forest<Category>,
     const childCategory = buildCategoryFromDefinition(childDefinition);
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
-    trees.push({ item: childCategory, trees: []});
+    trees.push({ item: childCategory, trees: [] });
     return categoryTree;
 }
-
-
-function sortGroupFields(group: Group): Group {
-
-    const clonedGroup: Group = clone(group);
-    clonedGroup.fields = sortGroups(clonedGroup.fields, clonedGroup.name);
-
-    return clonedGroup;
-}
-
 
 
 function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
@@ -109,7 +99,11 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;
 
-    category[TEMP_FIELDS] = definition.fields || [];
+    category[TEMP_FIELDS] = definition.fields || {};
+    Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
+
+    category[TEMP_GROUPS] = definition.groups || [];
+
     return category as Category;
 }
 
@@ -117,12 +111,12 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
 function makeChildFields(category: Category, child: Category): Array<FieldDefinition> {
 
     try {
-        const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
-        return getCombinedFields((category as any)['fields'], childFields);
-    } catch (e) {
-        e.push(category.name);
-        e.push(child.name);
-        throw [e];
+        const childFields = child[TEMP_FIELDS];
+        return getCombinedFields(category[TEMP_FIELDS], childFields);
+    } catch (errWithParams) {
+        errWithParams.push(category.name);
+        errWithParams.push(child.name)
+        throw [errWithParams];
     }
 }
 
@@ -132,66 +126,18 @@ function getCombinedFields(parentFields: Array<FieldDefinition>,
 
     const fields = clone(parentFields);
 
-    childFields.forEach(childField => {
-        const field: FieldDefinition|undefined
-            = fields.find(field => field.name === childField.name);
-
-        if (field) {
-            if (field.name !== 'campaign') {
+    Object.keys(childFields).forEach(fieldName => {
+        if (fields[fieldName]) {
+            if (fieldName !== 'campaign') {
                 throw [
                     ConfigurationErrors.TRIED_TO_OVERWRITE_PARENT_FIELD,
-                    field.name
+                    fieldName
                 ];
             }
         } else {
-            fields.push(childField);
+            fields[fieldName] = childFields[fieldName];
         }
     });
 
     return fields;
-}
-
-
-function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
-
-    return map(
-        cond(
-            on(FieldDefinition.GROUP, isUndefined),
-            update(FieldDefinition.GROUP, name)
-        )
-    ) as any;
-}
-
-
-function sortGroups(fields: Array<FieldDefinition>, groupName: string): Array<FieldDefinition> {
-
-    const copiedFields = copy(fields);
-
-    switch(groupName) {
-        case 'stem':
-            sortGroup(copiedFields, [
-                'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
-                'diary', 'date', 'beginningDate', 'endDate'
-            ]);
-            break;
-        case 'dimension':
-            sortGroup(copiedFields, [
-                'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-                'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
-            ]);
-            break;
-    }
-
-    return copiedFields;
-}
-
-
-/**
- * Fields not defined via 'order' are not considered
- */
-function sortGroup(fields: Array<FieldDefinition>, order: string[]) {
-
-    fields.sort((field1: FieldDefinition, field2: FieldDefinition) => {
-        return order.indexOf(field1.name) > order.indexOf(field2.name) ? 1 : -1;
-    });
 }

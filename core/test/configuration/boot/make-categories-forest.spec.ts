@@ -1,6 +1,6 @@
-import {ConfigurationErrors, makeCategoryForest} from '../../../src/configuration/boot';
-import {Category, FieldDefinition, FieldResource, Groups, Resource} from '../../../src/model';
-import {Named, Tree} from '../../../src/tools';
+import { ConfigurationErrors, makeCategoryForest } from '../../../src/configuration/boot';
+import { Category, FieldDefinition, FieldResource, Groups, Resource } from '../../../src/model';
+import { Named, Tree } from '../../../src/tools';
 
 
 /**
@@ -18,11 +18,17 @@ describe('makeCategoriesForest', () => {
                 name: A,
                 parent: P,
                 description: { 'de': '' },
-                fields: [{ name: 'a', inputType: FieldDefinition.InputType.INPUT }]
+                fields: { a: { inputType: FieldDefinition.InputType.INPUT } },
+                groups: [
+                    { name: Groups.STEM, fields: ['a'] }
+                ]
             }, P: {
                 name: P,
                 description: { 'de': '' },
-                fields: [{ name: 'p', inputType: FieldDefinition.InputType.INPUT }]
+                fields: { p: { inputType: FieldDefinition.InputType.INPUT } },
+                groups: [
+                    { name: Groups.STEM, fields: ['p'] }
+                ]
             }
         };
 
@@ -37,16 +43,10 @@ describe('makeCategoriesForest', () => {
         expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
         expect(categoryA.name).toEqual(A);
         expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
-
-        const sortedFields = Category.getFields(categoryA).sort(Named.byName);
-
-        expect(sortedFields[0].group).toBe(Groups.CHILD);
-        expect(sortedFields[1].group).toBe(Groups.PARENT);
-        expect(Category.getFields(categoriesMap[P])[0].group).toBe(Groups.PARENT);
     });
 
 
-    it('set all children in parent category', () => {
+   it('set all children in parent category', () => {
 
         const A = 'A';
         const B = 'B';
@@ -57,16 +57,16 @@ describe('makeCategoriesForest', () => {
                 name: A,
                 parent: P,
                 description: { 'de': '' },
-                fields: []
+                fields: {}
             }, B: {
                 name: B,
                 parent: P,
                 description: { 'de': '' },
-                fields: []
+                fields: {}
             }, P: {
                 name: P,
                 description: { 'de': '' },
-                fields: []
+                fields: {}
             }
         };
 
@@ -83,33 +83,33 @@ describe('makeCategoriesForest', () => {
     });
 
 
-    it('sortFields', () => {
+    it('sort fields in groups', () => {
 
         const T = 'T';
 
         const confDef = {
             T: {
                 name: T,
-                description: {'de': ''},
-                fields: [
-                    {
-                        name: FieldResource.SHORTDESCRIPTION,
+                description: { 'de': '' },
+                fields: {
+                    shortDescription: {
                         inputType: FieldDefinition.InputType.INPUT,
-                        group: Groups.STEM
                     },
-                    {
-                        name: Resource.IDENTIFIER,
-                        inputType: FieldDefinition.InputType.INPUT,
-                        group: Groups.STEM
+                    identifier: {
+                        inputType: FieldDefinition.InputType.INPUT
                     }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['identifier', 'shortDescription'] }
                 ]
             }
         };
 
         const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(confDef)));
 
-        expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(Resource.IDENTIFIER);
-        expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
+        expect(categoriesMap[T].groups[0].name).toEqual(Groups.STEM);
+        expect(categoriesMap[T].groups[0].fields[0].name).toEqual(Resource.IDENTIFIER);
+        expect(categoriesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
     });
 
 
@@ -119,24 +119,22 @@ describe('makeCategoriesForest', () => {
 
         const firstLevelCategory = {
             name: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
+            fields: {
+                fieldA: {
                     label: 'Field A',
                     inputType: 'text'
                 }
-            ]
+            }
         };
 
         const secondLevelCategory = {
             name: 'SecondLevelCategory',
             parent: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
+            fields: {
+                fieldA: {
                     label: 'Field A1'
                 }
-            ]
+            }
         };
 
         expect(

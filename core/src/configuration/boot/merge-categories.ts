@@ -1,10 +1,10 @@
-import {includedIn, isNot, isnt, Map, pairWith, union,
-    flow, filter, clone, assoc, keysValues, map, forEach, lookup} from 'tsfun';
-import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
-import {checkFieldCategoryChanges} from './check-field-category-changes';
-import {mergeFields} from './merge-fields';
-import {ConfigurationErrors} from './configuration-errors';
+import { includedIn, isNot, isnt, Map, pairWith, union,
+    flow, filter, clone, assoc, keysValues, map, forEach, lookup } from 'tsfun';
+import { CustomCategoryDefinition } from '../model/custom-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
+import { checkFieldCategoryChanges } from './check-field-category-changes';
+import { mergeFields } from './merge-fields';
+import { ConfigurationErrors } from './configuration-errors';
 
 
 /**

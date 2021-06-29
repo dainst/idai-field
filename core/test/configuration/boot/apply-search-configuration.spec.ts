@@ -1,7 +1,7 @@
-import {Map} from 'tsfun';
-import {applySearchConfiguration} from '../../../src/configuration/boot';
-import {LibraryCategoryDefinition} from '../../../src/configuration/model';
-import {CategoryDefinition} from '../../../src/model';
+import { Map } from 'tsfun';
+import { applySearchConfiguration } from '../../../src/configuration/boot';
+import { LibraryCategoryDefinition } from '../../../src/configuration/model';
+import { CategoryDefinition } from '../../../src/model';
 
 
 /**
@@ -24,6 +24,7 @@ describe('applySearchConfiguration', () => {
             creationDate: '',
             color: 'white',
             valuelists: {},
+            groups: [],
             fields: {
                 'aField': {}
             }

@@ -1,4 +1,4 @@
-import { Map, left, to } from 'tsfun';
+import { Map, left } from 'tsfun';
 import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
 import { BuiltinCategoryDefinition, CustomCategoryDefinition,
     LibraryCategoryDefinition } from '../../../src/configuration/model';
@@ -96,6 +96,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 commons: ['aCommonField', 'bCommonField'],
                 valuelists: {},
+                groups: [],
                 fields: {
                     field3: { inputType: 'input' },
                     field4: { inputType: 'input' }
@@ -167,6 +168,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelists-id-1' },
+                groups: [],
                 creationDate: '', createdBy: '', description: {}, fields: {}, categoryName: 'A'}
         };
         const commonFields = { aCommon: { group: 'stem', inputType: 'dropdown' }};
@@ -208,6 +210,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 commons: [],
                 fields: {},
+                groups: [],
                 description: {},
                 createdBy: '',
                 creationDate: ''
@@ -271,6 +274,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} },
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -307,6 +311,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: {},
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -316,6 +321,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: {},
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -351,6 +357,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 commons: [],
                 fields: {},
+                groups: [],
                 valuelists: {},
                 createdBy: '',
                 creationDate: '',
@@ -384,6 +391,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'text' } },
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -393,6 +401,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'input' } },
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -422,6 +431,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'B',
                 parent: 'A',
                 fields: {},
+                groups: [],
                 commons: [],
                 createdBy: '',
                 valuelists: {},
@@ -457,6 +467,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 commons: [],
                 fields: { aCommon: { inputType: 'input' } },
+                groups: [],
                 createdBy: '',
                 valuelists: {},
                 creationDate: '',
@@ -538,7 +549,8 @@ describe('buildRawProjectConfiguration', () => {
             'A:0': {
                 categoryName: 'A',
                 commons: ['aCommon'],
-                fields: { },
+                fields: {},
+                groups: [],
                 valuelists: {},
                 createdBy: '',
                 creationDate: '',
@@ -596,7 +608,8 @@ describe('buildRawProjectConfiguration', () => {
             'A:0': {
                 categoryName: 'A',
                 commons: ['aCommon'],
-                fields: { },
+                fields: {},
+                groups: [],
                 valuelists: {},
                 createdBy: '',
                 creationDate: '',
@@ -636,7 +649,8 @@ describe('buildRawProjectConfiguration', () => {
             'A:0': {
                 categoryName: 'A',
                 commons: ['aCommon'],
-                fields: { },
+                fields: {},
+                groups: [],
                 valuelists: {},
                 createdBy: '',
                 creationDate: '',
@@ -670,6 +684,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'invalid' } },
+                groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -732,6 +747,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} } as any,
+                groups: [],
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -762,6 +778,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} } as any,
+                groups: [],
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -791,6 +808,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { bField: {} } as any,
+                groups: [],
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -821,6 +839,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'input' } } as any,
+                groups: [],
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -849,6 +868,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: { aField: { group: 'a' } } as any,
+                groups: [],
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -914,6 +934,7 @@ describe('buildRawProjectConfiguration', () => {
                     a2: { inputType: 'input' },
                     a3: { inputType: 'input' }
                 },
+                groups: [],
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -982,6 +1003,7 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'B',
                 commons: [],
                 fields: {},
+                groups: [],
                 createdBy: '',
                 valuelists: {},
                 creationDate: '',
@@ -1029,7 +1051,7 @@ describe('buildRawProjectConfiguration', () => {
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: InputType.TEXT, group: Groups.STEM }
+                    field1: { inputType: InputType.TEXT }
                 }
             }
         };
@@ -1043,6 +1065,10 @@ describe('buildRawProjectConfiguration', () => {
                     field1: {},
                     field2: { inputType: InputType.TEXT }
                 },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] },
+                    { name: Groups.PARENT, fields: ['field2'] }
+                ],
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -1056,8 +1082,9 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM);
+        expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });
 
 
@@ -1066,7 +1093,7 @@ describe('buildRawProjectConfiguration', () => {
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: 'text', group: 'stem' }
+                    field1: { inputType: 'text' }
                 }
             }
         };
@@ -1077,6 +1104,7 @@ describe('buildRawProjectConfiguration', () => {
                     field1: {},
                     field2: { inputType: 'text' }
                 }
+                // TODO Set group as soon as it is allowed in custom categories
             }
         };
 
@@ -1086,8 +1114,7 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
-        expect(result['A'].groups[0].fields[0].group).toBe('stem');
-        expect(result['A'].groups[1].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
     });
 
 
@@ -1096,7 +1123,7 @@ describe('buildRawProjectConfiguration', () => {
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: InputType.TEXT, group: Groups.STEM }
+                    field1: { inputType: InputType.TEXT }
                 }
             }
         };
@@ -1109,6 +1136,10 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {
                     field2: { inputType: InputType.TEXT }
                 },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] },
+                    { name: Groups.PARENT, fields: ['field2', 'field3'] }
+                ],
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -1130,8 +1161,10 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
         expect(result['A'].groups[1].fields[1].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });
 
 
@@ -1144,7 +1177,7 @@ describe('buildRawProjectConfiguration', () => {
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: FieldDefinition.InputType.TEXT, group: Groups.STEM }
+                    field1: { inputType: FieldDefinition.InputType.TEXT }
                 }
             }
         };
@@ -1157,6 +1190,10 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {
                     field2: { inputType: FieldDefinition.InputType.TEXT }
                 },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] },
+                    { name: Groups.PARENT, fields: ['aCommon', 'field2', 'field3'] },
+                ],
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -1177,23 +1214,24 @@ describe('buildRawProjectConfiguration', () => {
             {}, {}
         );
 
-        result['A'].groups[1].fields.sort(Named.byName);
-
         expect(result['A'].groups[0].fields[0].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].source).toBe(FieldDefinition.Source.COMMON);
         expect(result['A'].groups[1].fields[1].source).toBe(FieldDefinition.Source.LIBRARY);
         expect(result['A'].groups[1].fields[2].source).toBe(FieldDefinition.Source.CUSTOM);
+        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });
 
 
-    it('set group labels', () => {
+    // TODO Reactivate as soon as groups can be set in builtIn categories
+    /*it('set group labels', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
-                    field1: { inputType: FieldDefinition.InputType.TEXT, group: Groups.STEM },
+                    field1: { inputType: FieldDefinition.InputType.TEXT },
                     field2: { inputType: FieldDefinition.InputType.TEXT }
                 }
             }
@@ -1359,7 +1397,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(parentGroup.fields[0].label.en).toEqual('Geometry');
         expect(childGroup.fields[0].name).toEqual('geometry');
         expect(childGroup.fields[0].label.en).toEqual('Geometry');
-    });
+    });*/
 
 
     it('link parent and child instances', () => {
@@ -1410,6 +1448,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: [],
                 valuelists: {},
                 fields: {},
+                groups: [],
                 creationDate: '',
                 createdBy: '',
                 description: {},

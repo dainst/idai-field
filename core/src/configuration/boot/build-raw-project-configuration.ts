@@ -1,9 +1,9 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    keysValues, lookup, Map, map, Mapping, on, or, Pair, pairWith, prune, reduce, subtract,
+    keysValues, Map, map, Mapping, on, or, Pair, pairWith, reduce, subtract,
     update, update as updateStruct, assoc, isUndefinedOrEmpty, not } from 'tsfun';
 import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
-import { Forest,Tree,sortStructArray, Labeled, withDissoc } from '../../tools';
+import { Forest,Tree, Labeled, withDissoc } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
@@ -26,7 +26,7 @@ import { hideFields } from './hide-fields';
 import { makeCategoryForest } from './make-category-forest';
 import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
 import { mergeCategories } from './merge-categories';
-import { orderFields } from './order-fields';
+
 
 const CATEGORIES = 0;
 
@@ -44,7 +44,6 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              relations: Array<RelationDefinition> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              searchConfiguration: any = {},
-                                             orderConfiguration: any = {},
                                              validateFields: any = identity): RawProjectConfiguration {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
@@ -66,8 +65,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         prepareRawProjectConfiguration,
         addRelations(relations),
         applyLanguageConfigurations(languageConfigurations),
-        updateStruct(CATEGORIES, processCategories(
-            orderConfiguration, validateFields, languageConfigurations, searchConfiguration, relations)
+        updateStruct(CATEGORIES,
+            processCategories(validateFields, languageConfigurations, searchConfiguration, relations)
         )
     );
 }
@@ -76,27 +75,32 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefinition>) => [configuration, [] /* relations */];
 
 
-function processCategories(orderConfiguration: any,
-                           validateFields: any,
+function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
 
-    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
-
     return compose(
+        setCategoryNames,
         applySearchConfiguration(searchConfiguration),
-        addExtraFieldsOrder(orderConfiguration),
-        orderFields(orderConfiguration),
         validateFields,
         makeCategoryForest,
         Tree.mapList(putRelationsIntoGroups(relations)),
-        Tree.mapList(sortCategoryGroups),
         Tree.mapList(setGroupLabels(languageConfigurations)),
         setGeometriesInGroups(languageConfigurations),
-        orderCategories(orderConfiguration?.categories),
+        // TODO Order categories
         linkParentAndChildInstances
     );
+}
+
+
+function setCategoryNames(categories: Map<CategoryDefinition>): Map<CategoryDefinition> {
+
+    Object.keys(categories).forEach(categoryName => {
+        categories[categoryName].name = categoryName;
+    });
+
+    return categories;
 }
 
 
@@ -128,7 +132,6 @@ function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
             defaultLabel: LanguageConfiguration.getI18nString(
                 languageConfigurations.default, 'other', 'geometry'
             ),
-            group: 'position',
             inputType: 'geometry',
             editable: true
         };
@@ -149,24 +152,16 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
             const groupName: string|undefined = Groups.getGroupNameForRelation(relation.name);
             if (!groupName) continue;
 
-            let group = (category.groups as any)[groupName];
+            let group = category.groups.find(group => group.name === groupName);
             if (!group) {
                 group = Group.create(groupName);
-                (category.groups as any)[groupName] = group;
+                category.groups.push(group);
             }
             group.relations.push(relation);
         }
         return category;
     }
 }
-
-
-const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
-    flow(defaultOrder, map(lookup(groups)), prune);
-
-
-const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<Category>): Forest<Category> =>
-    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
 function setGroupLabels(languageConfigurations: LanguageConfigurations) {
@@ -194,23 +189,6 @@ function setGroupLabels(languageConfigurations: LanguageConfigurations) {
                 map(pairWith(groupLabel)),
                 map(([group, label]: Pair<Group, string>) => assoc(Labeled.LABEL, label)(group as any))))(category);
     };
-}
-
-
-function addExtraFieldsOrder(orderConfiguration: any) {
-
-    return (categories: any) => {
-
-        if (!orderConfiguration.fields) orderConfiguration.fields = {};
-
-        Object.keys(categories).forEach(categoryName => {
-            if (!orderConfiguration.fields[categoryName]) orderConfiguration.fields[categoryName] = [];
-            orderConfiguration.fields[categoryName]
-                = [].concat(orderConfiguration.fields[categoryName]);
-        });
-
-        return categories;
-    }
 }
 
 

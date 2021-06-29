@@ -364,7 +364,6 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
             name: dropdownRangeField.name + '.endValue',
-            group: dropdownRangeField.group,
             label: dropdownRangeField.label,
             inputType: 'dropdownRange',
             valuelist: dropdownRangeField.valuelist,

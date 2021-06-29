@@ -23,8 +23,7 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
         {
             name: 'depicts',
             inputType: 'default',
-            constraintIndexed: true,
-            group: ''
+            constraintIndexed: true
         }
     ];
 

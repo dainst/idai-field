@@ -64,16 +64,14 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             this.defaultFields.push({
                 name: 'geometry',
                 inputType: 'default',
-                constraintIndexed: true,
-                group: ''
+                constraintIndexed: true
             });
         }
 
         this.defaultFields.push({
             name: 'isDepictedIn',
             inputType: 'default',
-            constraintIndexed: true,
-            group: ''
+            constraintIndexed: true
         });
     }
 

@@ -8,9 +8,10 @@ describe('InverseRelationsMap', () => {
        const inverseRelationsMap: InverseRelationsMap
            = makeInverseRelationsMap(
                [
-                   { name: 'a', inverse: 'b', domain: [], range: [] },
-                   { name: 'c', domain: [], range: [] }
-                   ]);
+                   { name: 'a', inverse: 'b', domain: [], range: [], editable: false },
+                   { name: 'c', domain: [], range: [], editable: false }
+                ]
+            );
 
        expect(inverseRelationsMap).toEqual({
            a: 'b',

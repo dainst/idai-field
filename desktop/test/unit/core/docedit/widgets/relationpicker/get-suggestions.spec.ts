@@ -26,7 +26,8 @@ describe('getSuggestions', () => {
         const relationDefinition: RelationDefinition = {
             name: 'relation',
             domain: [],
-            range: ['RangeCategory1', 'RangeCategory2']
+            range: ['RangeCategory1', 'RangeCategory2'],
+            editable: false
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition, 'input');
@@ -59,7 +60,8 @@ describe('getSuggestions', () => {
             name: 'relation',
             inverse: 'inverse',
             domain: [],
-            range: ['RangeCategory']
+            range: ['RangeCategory'],
+            editable: false
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
@@ -93,7 +95,8 @@ describe('getSuggestions', () => {
             name: 'relation',
             domain: [],
             range: ['RangeCategory'],
-            sameMainCategoryResource: true
+            sameMainCategoryResource: true,
+            editable: false
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
@@ -126,7 +129,8 @@ describe('getSuggestions', () => {
             name: 'relation',
             domain: [],
             range: ['RangeCategory'],
-            sameMainCategoryResource: true
+            sameMainCategoryResource: true,
+            editable: false
         };
 
         try {

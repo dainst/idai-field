@@ -180,11 +180,13 @@ describe('ConfigLoader', () => {
                     {
                         name: 'connection',
                         domain: ['C'],
-                        range: ['D']
+                        range: ['D'],
+                        editable: false
                     }, {
                         name: 'connection',
                         domain: ['A:inherit'],
-                        range: ['B:inherit']
+                        range: ['B:inherit'],
+                        editable: false
                     }],
                 {},
                 undefined,
@@ -221,7 +223,7 @@ describe('ConfigLoader', () => {
                     B: { fields: {}, groups: [] },
                     T: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
                 },
-                [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
+                [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false, editable: false }], {},
                 undefined, 'User');
         } catch(err) {
             fail(err);
@@ -273,8 +275,8 @@ describe('ConfigLoader', () => {
                     B: { fields: {}, groups: [] }
                 },
                 [
-                    { name: 'r1', domain: ['A'], range: ['B'] },
-                    { name: 'r2', domain: ['A'], range: ['B'] }
+                    { name: 'r1', domain: ['A'], range: ['B'], editable: false },
+                    { name: 'r2', domain: ['A'], range: ['B'], editable: false }
                 ],
                 {},
                 undefined, 'User'

@@ -86,10 +86,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
 
-        if (groupName === Groups.STEM) return [];
-
         return (this.groups.find(group => group.name === groupName) as any).relations
-            .filter(relation => relation.name !== Relations.Type.INSTANCEOF);
+            .filter(relation => relation.editable);
     }
 
 

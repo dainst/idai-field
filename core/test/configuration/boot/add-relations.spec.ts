@@ -30,11 +30,10 @@ describe('addRelations', () => {
             }
         } as LibraryCategoryDefinition;
 
-        configuration =
-            [{
-                'T1': t1
-            } as Map<LibraryCategoryDefinition>
-            ,[]];
+        configuration = [
+            { 'T1': t1 } as Map<LibraryCategoryDefinition>,
+            []
+        ];
     });
 
 
@@ -43,7 +42,8 @@ describe('addRelations', () => {
         const extraRelation: RelationDefinition = {
             name: 'R',
             domain: ['domainA'],
-            range : ['rangeA']
+            range : ['rangeA'],
+            editable: false
         };
         configuration.relations = [];
 
@@ -59,13 +59,15 @@ describe('addRelations', () => {
         const r1: RelationDefinition = {
             name: 'R',
             domain: ['domainA', 'domainB', 'domainC'],
-            range : ['rangeA']
+            range : ['rangeA'],
+            editable: false
         };
 
         const r2: RelationDefinition = {
             name: 'R',
             domain: ['domainB', 'domainC'],
-            range : ['rangeB']
+            range : ['rangeB'],
+            editable: false
         };
 
         configuration = [{ T1: t1 }, []];
@@ -85,13 +87,15 @@ describe('addRelations', () => {
         const r1: RelationDefinition = {
             name: 'R',
             domain: ['T1:inherit'],
-            range : ['rangeA']
+            range : ['rangeA'],
+            editable: false
         };
 
         const r2: RelationDefinition = {
             name: 'R',
             domain: ['T1:inherit'],
-            range : ['rangeA', 'rangeB', 'rangeC']
+            range: ['rangeA', 'rangeB', 'rangeC'],
+            editable: false
         };
 
         configuration = [{ T1: t1 }, []];
@@ -110,7 +114,8 @@ describe('addRelations', () => {
         const r: RelationDefinition = {
             name: 'R',
             domain: ['T2', 'T3'],
-            range: []
+            range: [],
+            editable: false
         };
 
         configuration.relations = [];
@@ -127,7 +132,8 @@ describe('addRelations', () => {
         const r: RelationDefinition = {
             name: 'R',
             domain: [],
-            range: ['T2', 'T3']
+            range: ['T2', 'T3'],
+            editable: false
         };
 
         configuration.relations = [];
@@ -143,7 +149,8 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T3' ],
-            range: [ 'T1:inherit' ]
+            range: [ 'T1:inherit' ],
+            editable: false
         };
 
         configuration[1] = [];
@@ -159,12 +166,13 @@ describe('addRelations', () => {
     });
 
 
-    it('should replace domain :inherit with all subcategories', function() {
+    it('should replace domain :inherit with all subcategories', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            domain: [ 'T1:inherit' ],
-            range: [ 'T3' ]
+            domain: ['T1:inherit'],
+            range: ['T3'],
+            editable: false
         };
 
         configuration[1] = [];
@@ -181,12 +189,13 @@ describe('addRelations', () => {
 
 
     // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
-    it('should exclude the category and subcategories when using :inherit and total range', function() {
+    it('should exclude the category and subcategories when using :inherit and total range', () => {
 
         const r: RelationDefinition = {
             name: 'R',
-            domain: [ 'T1:inherit' ],
-            range: []
+            domain: ['T1:inherit'],
+            range: [],
+            editable: false
         };
 
         configuration[1] = [];

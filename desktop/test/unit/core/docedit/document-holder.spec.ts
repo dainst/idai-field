@@ -1,7 +1,6 @@
-import {Document} from 'idai-field-core';
-import {M} from '../../../../src/app/components/messages/m';
-import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
-import {Tree, ProjectConfiguration} from 'idai-field-core';
+import { Document, Tree, ProjectConfiguration } from 'idai-field-core';
+import { M } from '../../../../src/app/components/messages/m';
+import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 
 
 /**
@@ -42,26 +41,30 @@ describe('DocumentHolder', () => {
                         ]
                     }]
                 }, []]
-            ] as any)
-            ,[
+            ] as any),
+            [
                 {
                     name: 'isFoundOn',
                     inverse: 'bears',
                     domain: ['Trench'],
-                    range: ['Find']
+                    range: ['Find'],
+                    editable: false
                 },
                 {
                     name: 'isFoundOn2',
                     inverse: 'bears',
                     domain: ['Trench'],
-                    range: ['Find']
+                    range: ['Find'],
+                    editable: false
                 },
                 {
                     name: 'isRecordedIn',
                     domain: ['Find'],
-                    range: ['Trench']
+                    range: ['Trench'],
+                    editable: false
                 }
-            ]]);
+            ]
+        ]);
 
         defaultDocument = {
             _id: '1',

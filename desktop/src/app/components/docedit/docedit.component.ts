@@ -107,7 +107,7 @@ export class DoceditComponent {
 
     public changeCategory(newCategory: string) {
 
-        const {invalidFields, invalidRelations} = this.documentHolder.changeCategories(newCategory);
+        const { invalidFields, invalidRelations } = this.documentHolder.changeCategories(newCategory);
         this.showCategoryChangeFieldsWarning(invalidFields);
         this.showCategoryChangeRelationsWarning(invalidRelations);
         this.updateFieldDefinitions();

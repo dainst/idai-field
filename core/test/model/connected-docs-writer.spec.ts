@@ -16,18 +16,21 @@ describe('ConnectedDocsWriter', () => {
                 name: 'BelongsTo',
                 inverse: 'Contains',
                 domain: [],
-                range: []
+                range: [],
+                editable: false
             },
             {
                 name: 'Contains',
                 inverse: 'BelongsTo',
                 domain: [],
-                range: []
+                range: [],
+                editable: false
             },
             {
                 name: 'isRecordedIn',
                 domain: [],
-                range: []
+                range: [],
+                editable: false
             }]]);
 
     let mockDatastore;

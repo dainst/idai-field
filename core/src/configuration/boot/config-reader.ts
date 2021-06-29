@@ -63,7 +63,6 @@ import libraryLanguageEn from '../../../config/Library/Language.en.json';
 import libraryLanguageEs from '../../../config/Library/Language.es.json';
 import libraryLanguageIt from '../../../config/Library/Language.it.json';
 import libraryValuelists from '../../../config/Library/Valuelists.json';
-import order from '../../../config/Order.json';
 import search from '../../../config/Search.json';
 import { LanguageConfiguration } from '../model';
 
@@ -80,7 +79,6 @@ const PATH_MAP: Record<string, any> = {
     '/Library/Language.it.json': libraryLanguageIt,
     '/Library/Valuelists.json': libraryValuelists,
     '/Config-Default.json': configDefault,
-    '/Order.json': order,
     '/Search.json': search,
     '/Config-AbbirCella.json': configAbbirCella,
     '/Config-AlUla.json': configAlUla,

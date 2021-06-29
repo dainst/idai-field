@@ -106,7 +106,8 @@ export class BuiltInConfiguration {
             fields: {
                 identifier: {
                     inputType: FieldDefinition.InputType.INPUT,
-                    editable: false
+                    editable: false,
+                    visible: false
                 },
                 shortName: {
                     inputType: FieldDefinition.InputType.INPUT

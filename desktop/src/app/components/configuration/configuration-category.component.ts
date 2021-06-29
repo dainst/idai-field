@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
-    RelationDefinition, Relations } from 'idai-field-core';
+    RelationDefinition, Relations, Resource } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
@@ -207,7 +207,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private getPermanentlyHiddenFields(): string[] {
 
-        return flatten(this.category.groups.map(to('fields')))
+        const result: string[] = flatten(this.category.groups.map(to('fields')))
             .filter(field => !field.visible
                 && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
                 && (!this.category.libraryId || !ConfigurationUtil.isHidden(
@@ -215,5 +215,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     this.getParentCustomCategoryDefinition()
                 )(field)))
             .map(to('name'));
+
+        if (this.category.name === 'Project') result.push(Resource.IDENTIFIER);
+
+        return result;
     }
 }

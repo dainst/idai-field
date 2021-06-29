@@ -121,7 +121,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         return this.category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .relations
-            .filter(on(Named.NAME, isnt(Relations.Type.INSTANCEOF)));
+            .filter(on('editable', is(true)));
     }
 
 

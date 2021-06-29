@@ -4,7 +4,6 @@ import { isBoolean } from 'tsfun';
 import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups,
      LabelUtil, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
-import { RoutingService } from '../../routing-service';
 
 
 @Component({
@@ -33,7 +32,6 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                routingService: RoutingService, // TODO unused
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations) {}
             

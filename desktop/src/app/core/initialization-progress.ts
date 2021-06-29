@@ -61,6 +61,8 @@ export class InitializationProgress {
 
     public async setError(errorMsgKey: string, msgsWithParams?: any[]) {
 
+        console.error(msgsWithParams);
+
         this.error = true;
 
         InitializationProgress.setElementClasses(

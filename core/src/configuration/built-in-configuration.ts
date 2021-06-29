@@ -406,7 +406,7 @@ export class BuiltInConfiguration {
             source: 'builtin'
         } as FieldDefinition,
         shortDescription: {
-            visible: false,
+            visible: true,
             editable: true,
         } as FieldDefinition,
         identifier: {

@@ -96,8 +96,7 @@ export module FieldsViewUtil {
 
     export const isVisibleField: Predicate<FieldDefinition> = or(
         on(FieldDefinition.VISIBLE, is(true)),
-        on(Named.NAME, is(Resource.CATEGORY)),
-        on(Named.NAME, is(FieldResource.SHORTDESCRIPTION))
+        on(Named.NAME, is(Resource.CATEGORY))
     );
 
 

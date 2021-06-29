@@ -1,10 +1,10 @@
 import { Map } from 'tsfun';
-import { mergeCategories } from '../../../src/configuration/boot';
+import { mergeWithCustomCategories } from '../../../src/configuration/boot';
 import { CustomCategoryDefinition, TransientCategoryDefinition } from '../../../src/configuration/model';
 import { FieldDefinition } from '../../../src/model';
 
 
-describe('mergeCategories', () => {
+describe('mergeWithCustomCategories', () => {
 
     it('extend category directly - inherit a field and add a field', () => {
 
@@ -35,7 +35,7 @@ describe('mergeCategories', () => {
             }
         };
 
-        const result = mergeCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
         expect(result['A:default'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
     });
@@ -71,7 +71,7 @@ describe('mergeCategories', () => {
             }
         };
 
-        const result = mergeCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
         expect(result['A:child'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
     });
@@ -103,7 +103,7 @@ describe('mergeCategories', () => {
             }
         };
 
-        const result = mergeCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].commons).toEqual(['a', 'b']);
     });
 });

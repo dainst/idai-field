@@ -25,7 +25,7 @@ import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
 import { hideFields } from './hide-fields';
 import { makeCategoryForest } from './make-category-forest';
 import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
-import { mergeCategories } from './merge-categories';
+import { mergeWithCustomCategories } from './merge-with-custom-categories';
 
 
 const CATEGORIES = 0;
@@ -54,7 +54,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         mergeBuiltInWithLibraryCategories(builtInCategories, libraryCategories),
         Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
         Assertions.assertNoDuplicationInSelection(customCategories),
-        mergeCategories(customCategories, Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
+        mergeWithCustomCategories(customCategories, Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
         eraseUnusedCategories(Object.keys(customCategories)),
         replaceCommonFields(commonFields),
         insertValuelistIds,

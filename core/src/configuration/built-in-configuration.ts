@@ -434,14 +434,14 @@ export class BuiltInConfiguration {
         {
             name: 'hasMapLayer',
             inverse: 'isMapLayerOf',
-            domain: [],
+            domain: ['Operation:inherit'],
             range: ['Image:inherit']
         },
         {
             name: 'isMapLayerOf',
             inverse: 'hasMapLayer',
             domain: ['Image:inherit'],
-            range: []
+            range: ['Operation:inherit']
         },
         {
             name: 'isAfter',

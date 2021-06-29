@@ -18,6 +18,11 @@ import { ConfigurationValidation } from './configuration-validation';
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'it'];
 
+type CustomConfiguration = {
+    categories: { [formName: string]: CustomCategoryDefinition },
+    order: string[]
+};
+
 
 /**
  * Lets clients subscribe for the app
@@ -94,6 +99,7 @@ export class ConfigLoader {
 
         let customCategories;
         let languageConfigurations: LanguageConfigurations;
+        let categoriesOrder: string[];
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
 
@@ -110,6 +116,7 @@ export class ConfigLoader {
                 ),
                 default: defaultLanguageConfigurations
             };
+            categoriesOrder = configurationDocument.resource.order;
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
         } catch (msgWithParams) {
@@ -131,6 +138,7 @@ export class ConfigLoader {
                     relations,
                     languageConfigurations,
                     searchConfiguration,
+                    categoriesOrder,
                     (categories: any) => {
                         const fieldValidationErrors =
                             ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
@@ -166,10 +174,10 @@ export class ConfigLoader {
     private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
                                                      rev?: string): Promise<ConfigurationDocument> {
         
-        const categories = await this.configReader.read('/Config-' + customConfigurationName + '.json');
+        const customConfiguration = await this.configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = this.configReader.getCustomLanguageConfigurations(customConfigurationName);
         const configuration: ConfigurationDocument
-            = ConfigLoader.createConfigurationDocument(categories, languageConfigurations, username, rev);
+            = ConfigLoader.createConfigurationDocument(customConfiguration, languageConfigurations, username, rev);
         try {
             await this.pouchdbManager.getDb().put(configuration);
             return configuration;
@@ -224,7 +232,7 @@ export class ConfigLoader {
     }
     
 
-    private static createConfigurationDocument(categories: { [formName: string]: CustomCategoryDefinition },
+    private static createConfigurationDocument(customConfiguration: CustomConfiguration,
                                                languageConfigurations: { [language: string]: LanguageConfiguration },
                                                username: string, rev?: string): ConfigurationDocument {
 
@@ -240,7 +248,8 @@ export class ConfigLoader {
                 identifier: 'Configuration',
                 category: 'Configuration',
                 relations: {},
-                categories: categories,
+                categories: customConfiguration.categories,
+                order: customConfiguration.order,
                 languages: languageConfigurations
             }
         };

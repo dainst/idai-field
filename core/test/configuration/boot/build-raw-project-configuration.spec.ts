@@ -1,4 +1,4 @@
-import { Map, left } from 'tsfun';
+import { Map, left, to } from 'tsfun';
 import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
 import { BuiltinCategoryDefinition, CustomCategoryDefinition,
     LibraryCategoryDefinition } from '../../../src/configuration/model';
@@ -1296,13 +1296,12 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    // TODO Reactivate as soon as categories order can be configured again
-    /*it('apply categories order', () => {
+    it('apply categories order', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            B: { fields: {} },
-            A: { fields: {} },
-            C: { fields: {} },
+            B: { fields: {}, groups: [] },
+            A: { fields: {}, groups: [] },
+            C: { fields: {}, groups: [] },
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
@@ -1311,10 +1310,11 @@ describe('buildRawProjectConfiguration', () => {
             C: { fields: {} }
         };
 
-        const orderConf = { categories: ['C', 'A'] };
+        const orderConfiguration = ['C', 'A'];
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {},
+            orderConfiguration
         ).map(Named.toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1324,10 +1324,10 @@ describe('buildRawProjectConfiguration', () => {
     it('apply categories order to children', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            B: { fields: {}, parent: 'D' },
-            A: { fields: {}, parent: 'D' },
-            C: { fields: {}, parent: 'D' },
-            D: { fields: {} }
+            B: { fields: {}, groups: [], parent: 'D' },
+            A: { fields: {}, groups: [], parent: 'D' },
+            C: { fields: {}, groups: [], parent: 'D' },
+            D: { fields: {}, groups: [] }
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
@@ -1337,14 +1337,15 @@ describe('buildRawProjectConfiguration', () => {
             D: { fields: {} }
         };
 
-        const orderConf = { categories: ['C', 'A'] };
+        const orderConfiguration = ['C', 'A'];
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {},
+            orderConfiguration
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
-    });*/
+    });
 
 
     it('put relations into groups', () => {

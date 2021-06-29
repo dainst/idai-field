@@ -1,420 +1,422 @@
 {
-  "Project:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Operation:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Survey:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "SurveyUnit:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Area:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Place:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Trench:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Building:default": {
-    "valuelists": {
-      "period": "periods-boha-1"
+  "categories": {
+    "Project:default": {
+      "fields": {},
+      "hidden": []
     },
-    "fields": {},
-    "hidden": []
-  },
-  "BuildingPart:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Find:default": {
-    "hidden": [
-      "catalogueNumber"
-    ],
-    "valuelists": {
-      "period": "periods-boha-1",
-      "drawn": "Find-drawn-Boha",
-      "photographed": "Find-drawn-Boha",
-      "sketched": "Find-drawn-Boha",
-      "hasRestoration": "Find-drawn-Boha",
-      "storagePlace": "Find-storagePlace-Boha"
+    "Operation:default": {
+      "fields": {},
+      "hidden": []
     },
-    "fields": {
-      "drawn": {
-        "inputType": "radio"
-      },
-      "photographed": {
-        "inputType": "radio"
-      },
-      "sketched": {
-        "inputType": "radio"
-      },
-      "storageInventoryNumberAdditional": {
-        "inputType": "input"
-      },
-      "hasRestoration": {
-        "inputType": "radio"
-      },
-      "storagePlace": {
-        "inputType": "radio"
-      }
-    }
-  },
-  "Feature:default": {
-    "hidden": [],
-    "valuelists": {
-      "period": "periods-boha-1",
-      "stratigraphicReliability": "Feature-stratigraphicReliability-Boha",
-      "color": "Feature-color-Boha"
+    "Survey:default": {
+      "fields": {},
+      "hidden": []
     },
-    "fields": {
-      "stratigraphicReliability": {
-        "inputType": "radio"
+    "SurveyUnit:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Area:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Place:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Trench:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Building:default": {
+      "valuelists": {
+        "period": "periods-boha-1"
       },
-      "color": {
-        "inputType": "checkboxes"
-      }
-    }
-  },
-  "Room:default": {
-    "fields": {},
-    "valuelists": {
-      "period": "periods-boha-1"
+      "fields": {},
+      "hidden": []
     },
-    "hidden": []
-  },
-  "RoomCeiling:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomFloor:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomWall:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Inscription:default": {
-    "hidden": [
-      "conditionAmount"
-    ],
-    "valuelists": {
-      "period": "periods-boha-1",
-      "objectType": "Inscription-objectType-Boha"
+    "BuildingPart:default": {
+      "fields": {},
+      "hidden": []
     },
-    "fields": {
-      "objectType": {
-        "inputType": "checkboxes"
-      }
-    }
-  },
-  "Image:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Glass:default": {
-    "hidden": [],
-    "fields": {
-      "color": {
-        "inputType": "checkboxes"
+    "Find:default": {
+      "hidden": [
+        "catalogueNumber"
+      ],
+      "valuelists": {
+        "period": "periods-boha-1",
+        "drawn": "Find-drawn-Boha",
+        "photographed": "Find-drawn-Boha",
+        "sketched": "Find-drawn-Boha",
+        "hasRestoration": "Find-drawn-Boha",
+        "storagePlace": "Find-storagePlace-Boha"
+      },
+      "fields": {
+        "drawn": {
+          "inputType": "radio"
+        },
+        "photographed": {
+          "inputType": "radio"
+        },
+        "sketched": {
+          "inputType": "radio"
+        },
+        "storageInventoryNumberAdditional": {
+          "inputType": "input"
+        },
+        "hasRestoration": {
+          "inputType": "radio"
+        },
+        "storagePlace": {
+          "inputType": "radio"
+        }
       }
     },
-    "valuelists": {
-      "color": "colors-boha-1"
-    }
-  },
-  "Mollusk:default": {
-    "hidden": [],
-    "fields": {
-      "treatment": {
-        "inputType": "input"
+    "Feature:default": {
+      "hidden": [],
+      "valuelists": {
+        "period": "periods-boha-1",
+        "stratigraphicReliability": "Feature-stratigraphicReliability-Boha",
+        "color": "Feature-color-Boha"
       },
-      "classification": {
-        "inputType": "input"
-      }
-    }
-  },
-  "Brick:default": {
-    "hidden": [],
-    "fields": {
-      "brickForm": {
-        "inputType": "checkboxes"
-      },
-      "specificType": {
-        "inputType": "dropdown"
-      },
-      "brickUsage": {
-        "inputType": "radio"
-      },
-      "manufacturingMethod": {
-        "inputType": "radio"
+      "fields": {
+        "stratigraphicReliability": {
+          "inputType": "radio"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       }
     },
-    "valuelists": {
-      "brickForm": "Brick-brickForm-Boha",
-      "specificType": "Brick-specificType-Boha",
-      "brickUsage": "Brick-brickUsage-Boha",
-      "manufacturingMethod": "Brick-manufacturingMethod-Boha"
-    }
-  },
-  "Burial:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Wood:default": {
-    "hidden": [],
-    "fields": {
-      "objectType": {
-        "inputType": "dropdown"
+    "Room:default": {
+      "fields": {},
+      "valuelists": {
+        "period": "periods-boha-1"
+      },
+      "hidden": []
+    },
+    "RoomCeiling:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomFloor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "hidden": [
+        "conditionAmount"
+      ],
+      "valuelists": {
+        "period": "periods-boha-1",
+        "objectType": "Inscription-objectType-Boha"
+      },
+      "fields": {
+        "objectType": {
+          "inputType": "checkboxes"
+        }
       }
     },
-    "valuelists": {
-      "objectType": "Wood-objectType-Boha"
-    }
-  },
-  "Architecture:default": {
-    "hidden": [
-      "brickwork",
-      "conditionAmount"
-    ],
-    "fields": {
-      "construction": {
-        "inputType": "dropdown"
+    "Image:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Glass:default": {
+      "hidden": [],
+      "fields": {
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "wallClassification": {
-        "inputType": "dropdown"
-      },
-      "wallType": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "color": "colors-boha-1"
       }
     },
-    "valuelists": {
-      "architectureClassification": "Architecture-architectureClassification-Boha",
-      "construction": "Architecture-construction-Boha",
-      "wallClassification": "Architecture-wallClassification-Boha",
-      "wallType": "Architecture-wallType-Boha"
-    }
-  },
-  "Layer:default": {
-    "hidden": [],
-    "fields": {
-      "layerClassification": {
-        "inputType": "dropdown"
-      },
-      "distinguishingCriteria": {
-        "inputType": "checkboxes"
-      },
-      "consistency": {
-        "inputType": "checkboxes"
-      },
-      "soilType": {
-        "inputType": "dropdown"
+    "Mollusk:default": {
+      "hidden": [],
+      "fields": {
+        "treatment": {
+          "inputType": "input"
+        },
+        "classification": {
+          "inputType": "input"
+        }
       }
     },
-    "valuelists": {
-      "layerClassification": "Layer-layerClassification-Boha",
-      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-      "consistency": "Layer-consistency-Boha",
-      "soilType": "Layer-soilType-Boha"
-    }
-  },
-  "Floor:default": {
-    "hidden": [
-      "conditionAmount"
-    ],
-    "fields": {
-      "distinguishingCriteria": {
-        "inputType": "checkboxes"
+    "Brick:default": {
+      "hidden": [],
+      "fields": {
+        "brickForm": {
+          "inputType": "checkboxes"
+        },
+        "specificType": {
+          "inputType": "dropdown"
+        },
+        "brickUsage": {
+          "inputType": "radio"
+        },
+        "manufacturingMethod": {
+          "inputType": "radio"
+        }
       },
-      "floorClassification": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "brickForm": "Brick-brickForm-Boha",
+        "specificType": "Brick-specificType-Boha",
+        "brickUsage": "Brick-brickUsage-Boha",
+        "manufacturingMethod": "Brick-manufacturingMethod-Boha"
       }
     },
-    "valuelists": {
-      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-      "floorClassification": "Floor-floorClassification-Boha"
-    }
-  },
-  "Pottery:default": {
-    "hidden": [],
-    "fields": {
-      "clayColorBreak": {
-        "inputType": "checkboxes"
+    "Burial:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Wood:default": {
+      "hidden": [],
+      "fields": {
+        "objectType": {
+          "inputType": "dropdown"
+        }
       },
-      "clayColorInside": {
-        "inputType": "checkboxes"
-      },
-      "clayColorOutside": {
-        "inputType": "checkboxes"
-      },
-      "specificType": {
-        "inputType": "radio"
-      },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "vesselForm": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "objectType": "Wood-objectType-Boha"
       }
     },
-    "valuelists": {
-      "clayColorBreak": "colors-boha-1",
-      "clayColorInside": "colors-boha-1",
-      "clayColorOutside": "colors-boha-1",
-      "specificType": "Pottery-specificType-Boha",
-      "objectType": "Pottery-objectType-Boha",
-      "vesselForm": "Pottery-vesselForm-Boha"
-    }
-  },
-  "Grave:default": {
-    "fields": {},
-    "hidden": [
-      "distinguishingCriteria",
-      "specificType",
-      "tombBuilding",
-      "conditionAmount"
-    ]
-  },
-  "Bone:default": {
-    "hidden": [],
-    "fields": {
-      "boneClassification": {
-        "inputType": "dropdown"
+    "Architecture:default": {
+      "hidden": [
+        "brickwork",
+        "conditionAmount"
+      ],
+      "fields": {
+        "construction": {
+          "inputType": "dropdown"
+        },
+        "wallClassification": {
+          "inputType": "dropdown"
+        },
+        "wallType": {
+          "inputType": "dropdown"
+        }
       },
-      "treatment": {
-        "inputType": "input"
+      "valuelists": {
+        "architectureClassification": "Architecture-architectureClassification-Boha",
+        "construction": "Architecture-construction-Boha",
+        "wallClassification": "Architecture-wallClassification-Boha",
+        "wallType": "Architecture-wallType-Boha"
       }
     },
-    "valuelists": {
-      "boneClassification": "Bone-boneClassification-Boha"
-    }
-  },
-  "Terracotta:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Photo:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Drawing:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Stone:default": {
-    "hidden": [
-      "workmanship"
-    ],
-    "fields": {
-      "color": {
-        "inputType": "checkboxes"
+    "Layer:default": {
+      "hidden": [],
+      "fields": {
+        "layerClassification": {
+          "inputType": "dropdown"
+        },
+        "distinguishingCriteria": {
+          "inputType": "checkboxes"
+        },
+        "consistency": {
+          "inputType": "checkboxes"
+        },
+        "soilType": {
+          "inputType": "dropdown"
+        }
       },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "architectureElement": {
-        "inputType": "dropdown"
-      },
-      "origin": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "layerClassification": "Layer-layerClassification-Boha",
+        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+        "consistency": "Layer-consistency-Boha",
+        "soilType": "Layer-soilType-Boha"
       }
     },
-    "valuelists": {
-      "color": "colors-boha-1",
-      "objectType": "Stone-objectType-Boha",
-      "architectureElement": "Stone-architectureElement-Boha",
-      "origin": "Stone-origin-Boha"
-    }
-  },
-  "Coin:default": {
-    "hidden": [],
-    "fields": {
-      "mintingRuler": {
-        "inputType": "dropdown"
+    "Floor:default": {
+      "hidden": [
+        "conditionAmount"
+      ],
+      "fields": {
+        "distinguishingCriteria": {
+          "inputType": "checkboxes"
+        },
+        "floorClassification": {
+          "inputType": "dropdown"
+        }
       },
-      "mint": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+        "floorClassification": "Floor-floorClassification-Boha"
       }
     },
-    "valuelists": {
-      "mintingRuler": "Coin-mintingRuler-Boha",
-      "mint": "Coin-mint-Boha"
-    }
-  },
-  "PlasterFragment:default": {
-    "hidden": [],
-    "fields": {
-      "color": {
-        "inputType": "checkboxes"
+    "Pottery:default": {
+      "hidden": [],
+      "fields": {
+        "clayColorBreak": {
+          "inputType": "checkboxes"
+        },
+        "clayColorInside": {
+          "inputType": "checkboxes"
+        },
+        "clayColorOutside": {
+          "inputType": "checkboxes"
+        },
+        "specificType": {
+          "inputType": "radio"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "vesselForm": {
+          "inputType": "dropdown"
+        }
       },
-      "decorationColor": {
-        "inputType": "input"
-      },
-      "decorationDescription": {
-        "inputType": "input"
+      "valuelists": {
+        "clayColorBreak": "colors-boha-1",
+        "clayColorInside": "colors-boha-1",
+        "clayColorOutside": "colors-boha-1",
+        "specificType": "Pottery-specificType-Boha",
+        "objectType": "Pottery-objectType-Boha",
+        "vesselForm": "Pottery-vesselForm-Boha"
       }
     },
-    "valuelists": {
-      "color": "colors-boha-1"
-    }
-  },
-  "Sample:default": {
-    "hidden": [],
-    "fields": {
-      "soilType": {
-        "inputType": "dropdown"
+    "Grave:default": {
+      "fields": {},
+      "hidden": [
+        "distinguishingCriteria",
+        "specificType",
+        "tombBuilding",
+        "conditionAmount"
+      ]
+    },
+    "Bone:default": {
+      "hidden": [],
+      "fields": {
+        "boneClassification": {
+          "inputType": "dropdown"
+        },
+        "treatment": {
+          "inputType": "input"
+        }
       },
-      "comment": {
-        "inputType": "input"
-      },
-      "drawn": {
-        "inputType": "radio"
-      },
-      "photographed": {
-        "inputType": "radio"
-      },
-      "sketched": {
-        "inputType": "radio"
-      },
-      "hasRestoration": {
-        "inputType": "radio"
+      "valuelists": {
+        "boneClassification": "Bone-boneClassification-Boha"
       }
     },
-    "valuelists": {
-      "sampleType": "SampleBoha-sampleType-Boha",
-      "soilType": "Layer-soilType-Boha",
-      "drawn": "Find-drawn-Boha",
-      "photographed": "Find-drawn-Boha",
-      "sketched": "Find-drawn-Boha",
-      "hasRestoration": "Find-drawn-Boha"
+    "Terracotta:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Photo:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Drawing:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Stone:default": {
+      "hidden": [
+        "workmanship"
+      ],
+      "fields": {
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "architectureElement": {
+          "inputType": "dropdown"
+        },
+        "origin": {
+          "inputType": "dropdown"
+        }
+      },
+      "valuelists": {
+        "color": "colors-boha-1",
+        "objectType": "Stone-objectType-Boha",
+        "architectureElement": "Stone-architectureElement-Boha",
+        "origin": "Stone-origin-Boha"
+      }
+    },
+    "Coin:default": {
+      "hidden": [],
+      "fields": {
+        "mintingRuler": {
+          "inputType": "dropdown"
+        },
+        "mint": {
+          "inputType": "dropdown"
+        }
+      },
+      "valuelists": {
+        "mintingRuler": "Coin-mintingRuler-Boha",
+        "mint": "Coin-mint-Boha"
+      }
+    },
+    "PlasterFragment:default": {
+      "hidden": [],
+      "fields": {
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "decorationColor": {
+          "inputType": "input"
+        },
+        "decorationDescription": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "color": "colors-boha-1"
+      }
+    },
+    "Sample:default": {
+      "hidden": [],
+      "fields": {
+        "soilType": {
+          "inputType": "dropdown"
+        },
+        "comment": {
+          "inputType": "input"
+        },
+        "drawn": {
+          "inputType": "radio"
+        },
+        "photographed": {
+          "inputType": "radio"
+        },
+        "sketched": {
+          "inputType": "radio"
+        },
+        "hasRestoration": {
+          "inputType": "radio"
+        }
+      },
+      "valuelists": {
+        "sampleType": "SampleBoha-sampleType-Boha",
+        "soilType": "Layer-soilType-Boha",
+        "drawn": "Find-drawn-Boha",
+        "photographed": "Find-drawn-Boha",
+        "sketched": "Find-drawn-Boha",
+        "hasRestoration": "Find-drawn-Boha"
+      }
+    },
+    "Excavation:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Metal:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
     }
-  },
-  "Excavation:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Metal:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
-  }
+}
 }

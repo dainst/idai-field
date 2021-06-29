@@ -3,7 +3,7 @@ import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn,
     update, update as updateStruct, assoc, isUndefinedOrEmpty, not } from 'tsfun';
 import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
-import { Forest,Tree, Labeled, withDissoc } from '../../tools';
+import { Forest,Tree, Labeled, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
@@ -44,6 +44,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              relations: Array<RelationDefinition> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              searchConfiguration: any = {},
+                                             categoriesOrder: string[] = [],
                                              validateFields: any = identity): RawProjectConfiguration {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
@@ -66,7 +67,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         addRelations(relations),
         applyLanguageConfigurations(languageConfigurations),
         updateStruct(CATEGORIES,
-            processCategories(validateFields, languageConfigurations, searchConfiguration, relations)
+            processCategories(validateFields, languageConfigurations, searchConfiguration, categoriesOrder, relations)
         )
     );
 }
@@ -78,6 +79,7 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
                            searchConfiguration: any,
+                           categoriesOrder: string[],
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
 
     return compose(
@@ -88,7 +90,7 @@ function processCategories(validateFields: any,
         Tree.mapList(putRelationsIntoGroups(relations)),
         Tree.mapList(setGroupLabels(languageConfigurations)),
         setGeometriesInGroups(languageConfigurations),
-        // TODO Order categories
+        orderCategories(categoriesOrder),
         linkParentAndChildInstances
     );
 }
@@ -162,6 +164,10 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
         return category;
     }
 }
+
+
+const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<Category>): Forest<Category> =>
+    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
 function setGroupLabels(languageConfigurations: LanguageConfigurations) {

@@ -1,71 +1,73 @@
 {
-  "Project:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Place:default": {
-    "hidden": [
-      "buildingHistory",
-      "buildingResearchHistory",
-      "excavationHistory",
-      "findSituation",
-      "findspotClassification"
-    ],
-    "color": "#5572A1",
-    "commons": [
-      "dating",
-      "description"
-    ],
-    "valuelists": {
-      "siteClassification": "Place-siteClassification-SudanHeritage",
-      "periodSudanHeritage": "period-SudanHeritage"
+  "categories": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
     },
-    "fields": {
-      "placeName": {
-        "inputType": "input"
+    "Place:default": {
+      "hidden": [
+        "buildingHistory",
+        "buildingResearchHistory",
+        "excavationHistory",
+        "findSituation",
+        "findspotClassification"
+      ],
+      "color": "#5572A1",
+      "commons": [
+        "dating",
+        "description"
+      ],
+      "valuelists": {
+        "siteClassification": "Place-siteClassification-SudanHeritage",
+        "periodSudanHeritage": "period-SudanHeritage"
       },
-      "placeNameOriginalLanguage": {
-        "inputType": "input"
-      },
-      "periodSudanHeritage": {
-        "inputType": "checkboxes"
-      },
-      "researchHistory": {
-        "inputType": "text"
-      },
-      "modernIntervention": {
-        "inputType": "input"
-      },
-      "siteClassification": {
-        "inputType": "checkboxes"
-      },
-      "stateOfPreservation": {
-        "inputType": "text"
-      },
-      "conservationMeasures": {
-        "inputType": "text"
-      },
-      "objectCirculation": {
-        "inputType": "text"
-      },
-      "staffInCharge": {
-        "inputType": "text"
-      },
-      "securityMeasures": {
-        "inputType": "text"
+      "fields": {
+        "placeName": {
+          "inputType": "input"
+        },
+        "placeNameOriginalLanguage": {
+          "inputType": "input"
+        },
+        "periodSudanHeritage": {
+          "inputType": "checkboxes"
+        },
+        "researchHistory": {
+          "inputType": "text"
+        },
+        "modernIntervention": {
+          "inputType": "input"
+        },
+        "siteClassification": {
+          "inputType": "checkboxes"
+        },
+        "stateOfPreservation": {
+          "inputType": "text"
+        },
+        "conservationMeasures": {
+          "inputType": "text"
+        },
+        "objectCirculation": {
+          "inputType": "text"
+        },
+        "staffInCharge": {
+          "inputType": "text"
+        },
+        "securityMeasures": {
+          "inputType": "text"
+        }
       }
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
     }
-  },
-  "Image:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
   }
 }

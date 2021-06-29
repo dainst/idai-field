@@ -1,545 +1,547 @@
 {
-  "Project:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Operation:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Place:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Trench:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Find:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Feature:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Inscription:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Image:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Photo:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Drawing:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Pottery:default": {
-    "fields": {
-      "hasCoat": {
-        "inputType": "boolean"
+  "categories": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Operation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Place:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Find:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Feature:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Pottery:default": {
+      "fields": {
+        "hasCoat": {
+          "inputType": "boolean"
+        },
+        "decorationDescription": {
+          "inputType": "input"
+        },
+        "vesselpart": {
+          "inputType": "checkboxes"
+        },
+        "Firing": {
+          "inputType": "checkboxes"
+        },
+        "clayColorInside": {
+          "inputType": "checkboxes"
+        },
+        "clayColorOutside": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "checkboxes"
+        },
+        "temper": {
+          "inputType": "checkboxes"
+        },
+        "temperAmount": {
+          "inputType": "radio"
+        },
+        "temperParticles": {
+          "inputType": "radio"
+        },
+        "temperTypeClay": {
+          "inputType": "input"
+        },
+        "coatOutsideType": {
+          "inputType": "checkboxes"
+        },
+        "FormComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "FormComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "DecorationComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "ApplicationComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "Drawing": {
+          "inputType": "boolean"
+        },
+        "vesselForm": {
+          "inputType": "dropdown"
+        }
       },
-      "decorationDescription": {
-        "inputType": "input"
-      },
-      "vesselpart": {
-        "inputType": "checkboxes"
-      },
-      "Firing": {
-        "inputType": "checkboxes"
-      },
-      "clayColorInside": {
-        "inputType": "checkboxes"
-      },
-      "clayColorOutside": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "checkboxes"
-      },
-      "temper": {
-        "inputType": "checkboxes"
-      },
-      "temperAmount": {
-        "inputType": "radio"
-      },
-      "temperParticles": {
-        "inputType": "radio"
-      },
-      "temperTypeClay": {
-        "inputType": "input"
-      },
-      "coatOutsideType": {
-        "inputType": "checkboxes"
-      },
-      "FormComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "FormComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "DecorationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "DecorationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "ApplicationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "ApplicationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "Drawing": {
-        "inputType": "boolean"
-      },
-      "vesselForm": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "vesselpart": "Pottery-vesselpart-Uruk",
+        "Firing": "Pottery-Firing-Uruk",
+        "condition": "Pottery-condition-Uruk",
+        "clayColorInside": "Pottery-clayColorInside-Uruk",
+        "clayColorOutside": "Pottery-clayColorInside-Uruk",
+        "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+        "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
+        "temper": "Pottery-temper-Uruk",
+        "temperAmount": "Pottery-temperAmount-Uruk",
+        "temperParticles": "Pottery-temperParticles-Uruk",
+        "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+        "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "vesselForm": "Pottery-vesselForm-Uruk"
       }
     },
-    "valuelists": {
-      "vesselpart": "Pottery-vesselpart-Uruk",
-      "Firing": "Pottery-Firing-Uruk",
-      "condition": "Pottery-condition-Uruk",
-      "clayColorInside": "Pottery-clayColorInside-Uruk",
-      "clayColorOutside": "Pottery-clayColorInside-Uruk",
-      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
-      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
-      "temper": "Pottery-temper-Uruk",
-      "temperAmount": "Pottery-temperAmount-Uruk",
-      "temperParticles": "Pottery-temperParticles-Uruk",
-      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "vesselForm": "Pottery-vesselForm-Uruk"
-    }
-  },
-  "Terracotta:default": {
-    "color": "#FF6600",
-    "fields": {
-      "clayColorBreak": {
-        "inputType": "checkboxes"
+    "Terracotta:default": {
+      "color": "#FF6600",
+      "fields": {
+        "clayColorBreak": {
+          "inputType": "checkboxes"
+        },
+        "clayColorInside": {
+          "inputType": "checkboxes"
+        },
+        "clayColorOutside": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "dropdown"
+        },
+        "Firing": {
+          "inputType": "checkboxes"
+        },
+        "temper": {
+          "inputType": "checkboxes"
+        },
+        "temperAmount": {
+          "inputType": "radio"
+        },
+        "temperParticles": {
+          "inputType": "radio"
+        },
+        "TerracottaType": {
+          "inputType": "dropdown"
+        },
+        "TerracottaTypeSpecific": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "checkboxes"
+        }
       },
-      "clayColorInside": {
-        "inputType": "checkboxes"
-      },
-      "clayColorOutside": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "Firing": {
-        "inputType": "checkboxes"
-      },
-      "temper": {
-        "inputType": "checkboxes"
-      },
-      "temperAmount": {
-        "inputType": "radio"
-      },
-      "temperParticles": {
-        "inputType": "radio"
-      },
-      "TerracottaType": {
-        "inputType": "dropdown"
-      },
-      "TerracottaTypeSpecific": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "clayColorBreak": "Pottery-clayColorInside-Uruk",
+        "clayColorInside": "Pottery-clayColorInside-Uruk",
+        "clayColorOutside": "Pottery-clayColorInside-Uruk",
+        "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+        "condition": "Pottery-condition-Uruk",
+        "Firing": "Pottery-Firing-Uruk",
+        "temper": "Pottery-temper-Uruk",
+        "temperAmount": "Pottery-temperAmount-Uruk",
+        "temperParticles": "Pottery-temperParticles-Uruk",
+        "TerracottaType": "Terracotta-TerracottaType-Uruk",
+        "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-Uruk",
+        "manufacturingMethod": "Pottery-manufacturingMethod-Uruk"
       }
     },
-    "valuelists": {
-      "clayColorBreak": "Pottery-clayColorInside-Uruk",
-      "clayColorInside": "Pottery-clayColorInside-Uruk",
-      "clayColorOutside": "Pottery-clayColorInside-Uruk",
-      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
-      "condition": "Pottery-condition-Uruk",
-      "Firing": "Pottery-Firing-Uruk",
-      "temper": "Pottery-temper-Uruk",
-      "temperAmount": "Pottery-temperAmount-Uruk",
-      "temperParticles": "Pottery-temperParticles-Uruk",
-      "TerracottaType": "Terracotta-TerracottaType-Uruk",
-      "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-Uruk",
-      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk"
-    }
-  },
-  "KnappingWasteProduct": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "KnappingWasteProduct": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "OrientationPossible": {
+          "inputType": "boolean"
+        },
+        "CorticalSurface": {
+          "inputType": "checkboxes"
+        },
+        "PlaceOperationalSequence": {
+          "inputType": "dropdown"
+        },
+        "TechnicalMarks": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "OrientationPossible": {
-        "inputType": "boolean"
-      },
-      "CorticalSurface": {
-        "inputType": "checkboxes"
-      },
-      "PlaceOperationalSequence": {
-        "inputType": "dropdown"
-      },
-      "TechnicalMarks": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "KnappingWasteProduct-material-Uruk",
+        "CorticalSurface": "KnappingWasteProduct-CorticalSurface-Uruk",
+        "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-Uruk",
+        "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "KnappingWasteProduct-material-Uruk",
-      "CorticalSurface": "KnappingWasteProduct-CorticalSurface-Uruk",
-      "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-Uruk",
-      "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "KnappedCore": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "KnappedCore": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "CorticalSurface": {
+          "inputType": "checkboxes"
+        },
+        "ForceOnKnappingPlatform": {
+          "inputType": "checkboxes"
+        },
+        "KnappingPlatformFeatures": {
+          "inputType": "checkboxes"
+        },
+        "SecondaryKnappingPlatforms": {
+          "inputType": "checkboxes"
+        },
+        "dimensionLengthOfDebitageSurfaces": {
+          "inputType": "dimension"
+        },
+        "dimensionWidthOfDebitageSurfaces": {
+          "inputType": "dimension"
+        },
+        "AmountOfDebitageSurfaces": {
+          "inputType": "unsignedInt"
+        },
+        "TechnicalMarks": {
+          "inputType": "checkboxes"
+        },
+        "TypicalCoreForms": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "CorticalSurface": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "KnappingWasteProduct-material-Uruk",
+        "CorticalSurface": "KnappedCore-CorticalSurface-Uruk",
+        "ForceOnKnappingPlatform": "KnappedCore-ForceOnKnappingPlatform-Uruk",
+        "KnappingPlatformFeatures": "KnappedCore-KnappingPlatformFeatures-Uruk",
+        "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-Uruk",
+        "TechnicalMarks": "KnappedCore-TechnicalMarks-Uruk",
+        "TypicalCoreForms": "KnappedCore-TypicalCoreForms-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       },
-      "ForceOnKnappingPlatform": {
-        "inputType": "checkboxes"
-      },
-      "KnappingPlatformFeatures": {
-        "inputType": "checkboxes"
-      },
-      "SecondaryKnappingPlatforms": {
-        "inputType": "checkboxes"
-      },
-      "dimensionLengthOfDebitageSurfaces": {
-        "inputType": "dimension"
-      },
-      "dimensionWidthOfDebitageSurfaces": {
-        "inputType": "dimension"
-      },
-      "AmountOfDebitageSurfaces": {
-        "inputType": "unsignedInt"
-      },
-      "TechnicalMarks": {
-        "inputType": "checkboxes"
-      },
-      "TypicalCoreForms": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "positionValuelists": {
+        "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
+        "dimensionWidthOfDebitageSurfaces": "position-values-expansion-default"
       }
     },
-    "valuelists": {
-      "material": "KnappingWasteProduct-material-Uruk",
-      "CorticalSurface": "KnappedCore-CorticalSurface-Uruk",
-      "ForceOnKnappingPlatform": "KnappedCore-ForceOnKnappingPlatform-Uruk",
-      "KnappingPlatformFeatures": "KnappedCore-KnappingPlatformFeatures-Uruk",
-      "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-Uruk",
-      "TechnicalMarks": "KnappedCore-TechnicalMarks-Uruk",
-      "TypicalCoreForms": "KnappedCore-TypicalCoreForms-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    },
-    "positionValuelists": {
-      "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
-      "dimensionWidthOfDebitageSurfaces": "position-values-expansion-default"
-    }
-  },
-  "FragmentOfDrill": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentOfDrill": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "TypeOfDrill": {
+          "inputType": "dropdown"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "dimensionPreservedLengthOfDrillingaxis": {
+          "inputType": "dimension"
+        },
+        "dimensionWidthOfDrillfragment": {
+          "inputType": "dimension"
+        },
+        "AmountOfDrillinbitsOntheTool": {
+          "inputType": "unsignedInt"
+        },
+        "TracesOfUse": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "TypeOfDrill": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "material": "FragmentOfDrill-material-Uruk",
+        "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-Uruk",
+        "ProductionMethod": "FragmentOfDrill-ProductionMethod-Uruk",
+        "TracesOfUse": "FragmentOfDrill-TracesOfUse-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "dimensionPreservedLengthOfDrillingaxis": {
-        "inputType": "dimension"
-      },
-      "dimensionWidthOfDrillfragment": {
-        "inputType": "dimension"
-      },
-      "AmountOfDrillinbitsOntheTool": {
-        "inputType": "unsignedInt"
-      },
-      "TracesOfUse": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "positionValuelists": {
+        "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-Uruk",
+        "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentOfDrill-material-Uruk",
-      "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-Uruk",
-      "ProductionMethod": "FragmentOfDrill-ProductionMethod-Uruk",
-      "TracesOfUse": "FragmentOfDrill-TracesOfUse-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    },
-    "positionValuelists": {
-      "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-Uruk",
-      "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-Uruk"
-    }
-  },
-  "FragmentOfCuttingtool": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentOfCuttingtool": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "TypeOfCutter": {
+          "inputType": "dropdown"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "TracesOfUse": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "TypeOfCutter": {
-        "inputType": "dropdown"
-      },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "TracesOfUse": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentOfCuttingtool-material-Uruk",
+        "TypeOfCutter": "FragmentOfCuttingtool-TypeOfCutter-Uruk",
+        "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
+        "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentOfCuttingtool-material-Uruk",
-      "TypeOfCutter": "FragmentOfCuttingtool-TypeOfCutter-Uruk",
-      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
-      "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "FragmentOfHammertool": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentOfHammertool": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "TracesOfUse": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "TracesOfUse": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentOfCuttingtool-material-Uruk",
+        "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
+        "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentOfCuttingtool-material-Uruk",
-      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
-      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "FragmentOfChopper": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentOfChopper": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "TracesOfUse": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "TracesOfUse": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentOfCuttingtool-material-Uruk",
+        "ProductionMethod": "FragmentOfChopper-ProductionMethod-Uruk",
+        "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentOfCuttingtool-material-Uruk",
-      "ProductionMethod": "FragmentOfChopper-ProductionMethod-Uruk",
-      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "FragmentofCoating": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentofCoating": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "ContactMaterial": {
+          "inputType": "checkboxes"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "TracesOfUse": {
+          "inputType": "input"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "ContactMaterial": {
-        "inputType": "checkboxes"
-      },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "TracesOfUse": {
-        "inputType": "input"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentofCoating-material-Uruk",
+        "ContactMaterial": "FragmentofCoating-ContactMaterial-Uruk",
+        "ProductionMethod": "FragmentofCoating-ProductionMethod-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentofCoating-material-Uruk",
-      "ContactMaterial": "FragmentofCoating-ContactMaterial-Uruk",
-      "ProductionMethod": "FragmentofCoating-ProductionMethod-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "RawMaterial": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "RawMaterial": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "RawMaterial-material-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "RawMaterial-material-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "FragmentofStonevessel": {
-    "parent": "Find",
-    "fields": {
-      "decorationDescription": {
-        "inputType": "input"
+    "FragmentofStonevessel": {
+      "parent": "Find",
+      "fields": {
+        "decorationDescription": {
+          "inputType": "input"
+        },
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "vesselpart": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "dropdown"
+        },
+        "ProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "coatOutsideType": {
+          "inputType": "checkboxes"
+        },
+        "FormComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "FormComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "DecorationComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "ApplicationComparisonCompendia": {
+          "inputType": "dropdown"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "inputType": "input"
+        },
+        "Drawing": {
+          "inputType": "boolean"
+        },
+        "vesselForm": {
+          "inputType": "dropdown"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "material": {
-        "inputType": "checkboxes"
-      },
-      "vesselpart": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "ProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "coatOutsideType": {
-        "inputType": "checkboxes"
-      },
-      "FormComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "FormComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "DecorationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "DecorationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "ApplicationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "ApplicationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "Drawing": {
-        "inputType": "boolean"
-      },
-      "vesselForm": {
-        "inputType": "dropdown"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentofStonevessel-material-Uruk",
+        "vesselpart": "Pottery-vesselpart-Uruk",
+        "condition": "Pottery-condition-Uruk",
+        "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+        "ProductionMethod": "FragmentofStonevessel-ProductionMethod-Uruk",
+        "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+        "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+        "vesselForm": "Pottery-vesselForm-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentofStonevessel-material-Uruk",
-      "vesselpart": "Pottery-vesselpart-Uruk",
-      "condition": "Pottery-condition-Uruk",
-      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
-      "ProductionMethod": "FragmentofStonevessel-ProductionMethod-Uruk",
-      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-      "vesselForm": "Pottery-vesselForm-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "FragmentOfBead": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "material": {
-        "inputType": "checkboxes"
+    "FragmentOfBead": {
+      "color": "#5c5c8a",
+      "parent": "Find",
+      "fields": {
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "ShapeofBead": {
+          "inputType": "dropdown"
+        },
+        "KnappingProductionMethod": {
+          "inputType": "checkboxes"
+        },
+        "TracesofPerforationProductionMethodSideA": {
+          "inputType": "checkboxes"
+        },
+        "TracesofPerforationProductionMethodSideB": {
+          "inputType": "checkboxes"
+        },
+        "TracesofPerforationProductionMethodBreakingedge": {
+          "inputType": "checkboxes"
+        },
+        "TracesOfUse": {
+          "inputType": "checkboxes"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        }
       },
-      "ShapeofBead": {
-        "inputType": "dropdown"
-      },
-      "KnappingProductionMethod": {
-        "inputType": "checkboxes"
-      },
-      "TracesofPerforationProductionMethodSideA": {
-        "inputType": "checkboxes"
-      },
-      "TracesofPerforationProductionMethodSideB": {
-        "inputType": "checkboxes"
-      },
-      "TracesofPerforationProductionMethodBreakingedge": {
-        "inputType": "checkboxes"
-      },
-      "TracesOfUse": {
-        "inputType": "checkboxes"
-      },
-      "color": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "material": "FragmentOfCuttingtool-material-Uruk",
+        "ShapeofBead": "FragmentOfBead-ShapeofBead-Uruk",
+        "KnappingProductionMethod": "FragmentOfBead-KnappingProductionMethod-Uruk",
+        "TracesofPerforationProductionMethodSideA": "FragmentOfBead-TracesofPerforationProductionMethodSideA-Uruk",
+        "TracesofPerforationProductionMethodSideB": "FragmentOfBead-TracesofPerforationProductionMethodSideB-Uruk",
+        "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-Uruk",
+        "TracesOfUse": "FragmentOfBead-TracesOfUse-Uruk",
+        "color": "KnappingWasteProduct-color-Uruk"
       }
     },
-    "valuelists": {
-      "material": "FragmentOfCuttingtool-material-Uruk",
-      "ShapeofBead": "FragmentOfBead-ShapeofBead-Uruk",
-      "KnappingProductionMethod": "FragmentOfBead-KnappingProductionMethod-Uruk",
-      "TracesofPerforationProductionMethodSideA": "FragmentOfBead-TracesofPerforationProductionMethodSideA-Uruk",
-      "TracesofPerforationProductionMethodSideB": "FragmentOfBead-TracesofPerforationProductionMethodSideB-Uruk",
-      "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-Uruk",
-      "TracesOfUse": "FragmentOfBead-TracesOfUse-Uruk",
-      "color": "KnappingWasteProduct-color-Uruk"
-    }
-  },
-  "Mollusk": {
-    "color": "#ff99ff",
-    "parent": "Find",
-    "fields": {
-      "classification": {
-        "inputType": "radio"
+    "Mollusk": {
+      "color": "#ff99ff",
+      "parent": "Find",
+      "fields": {
+        "classification": {
+          "inputType": "radio"
+        }
+      },
+      "valuelists": {
+        "classification": "Mollusk-classification-Uruk"
       }
     },
-    "valuelists": {
-      "classification": "Mollusk-classification-Uruk"
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
     }
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
   }
 }

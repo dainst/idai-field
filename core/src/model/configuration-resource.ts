@@ -7,4 +7,5 @@ export interface ConfigurationResource extends Resource {
 
     categories: { [formName: string]: CustomCategoryDefinition };
     languages: { [language: string]: LanguageConfiguration };
+    order: string[];
 }

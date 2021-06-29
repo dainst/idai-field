@@ -1,1253 +1,1255 @@
 {
-  "Project:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Operation:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Survey:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "SurveyUnit:default": {
-    "hidden": [],
-    "fields": {
-      "hasFinds": {
-        "inputType": "boolean"
-      }
-    }
-  },
-  "Place:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Area:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Trench:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Building:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "BuildingPart:default": {
-    "hidden": [],
-    "commons": [
-      "area",
-      "beginningDate",
-      "endDate",
-      "dating",
-      "description",
-      "processor",
-      "dimensionLength",
-      "dimensionVerticalExtent",
-      "dimensionWidth",
-      "spatialLocation"
-    ],
-    "valuelists": {
-      "orientation": "orientation-default-1",
-      "color": "colors-default-1",
-      "featureBorders": "Feature-featureBorders-default",
-      "featureForm": "Feature-featureForm-default",
-      "blockProcessing": "Architecture-blockProcessing-default",
-      "blockTreatment": "Architecture-blockTreatment-default",
-      "brickwork": "Architecture-brickwork-default",
-      "condition": "Wall_surface-condition-Meninx",
-      "conditionAmount": "Building-conditionAmount-default",
-      "construction": "Architecture-construction-default",
-      "mark": "Architecture-mark-default",
-      "mortarBinder": "Architecture-mortarBinder-default",
-      "mortarColor": "colors-default-2",
-      "mortarConsistency": "Architecture-mortarConsistency-default",
-      "wallClassification": "Architecture-wallClassification-default"
+  "categories": {
+    "Project:default": {
+      "fields": {},
+      "hidden": []
     },
-    "fields": {
-      "comparison": {
-        "inputType": "text"
-      },
-      "hasDisturbance": {
-        "inputType": "boolean"
-      },
-      "featureAmount": {
-        "inputType": "input"
-      },
-      "color": {
-        "inputType": "checkboxes"
-      },
-      "featureBorders": {
-        "inputType": "checkboxes"
-      },
-      "featureForm": {
-        "inputType": "checkboxes"
-      },
-      "bibliography": {
-        "inputType": "text"
-      },
-      "conditionComment": {
-        "inputType": "input"
-      },
-      "constructionDetailsDescription": {
-        "inputType": "input"
-      },
-      "descriptionOfBuildingTechnique": {
-        "inputType": "input"
-      },
-      "findingPlace": {
-        "inputType": "input"
-      },
-      "hasGrouting": {
-        "inputType": "boolean"
-      },
-      "layerAmount": {
-        "inputType": "unsignedInt"
-      },
-      "layerHeight": {
-        "inputType": "unsignedFloat"
-      },
-      "markDescription": {
-        "inputType": "input"
-      },
-      "materialCharacteristic": {
-        "inputType": "input"
-      },
-      "materialForm": {
-        "inputType": "input"
-      },
-      "muralCrown": {
-        "inputType": "input"
-      },
-      "publicationDatingFinds": {
-        "inputType": "text"
-      },
-      "publicationDatingScientific": {
-        "inputType": "text"
-      },
-      "publicationDatingStratigraphy": {
-        "inputType": "text"
-      },
-      "publicationRemark": {
-        "inputType": "input"
-      },
-      "blockProcessing": {
-        "inputType": "checkboxes"
-      },
-      "blockTreatment": {
-        "inputType": "radio"
-      },
-      "brickwork": {
-        "inputType": "checkboxes"
-      },
-      "condition": {
-        "inputType": "dropdown"
-      },
-      "conditionAmount": {
-        "inputType": "dropdown"
-      },
-      "construction": {
-        "inputType": "dropdown"
-      },
-      "mark": {
-        "inputType": "dropdown"
-      },
-      "mortarBinder": {
-        "inputType": "radio"
-      },
-      "mortarColor": {
-        "inputType": "dropdown"
-      },
-      "mortarConsistency": {
-        "inputType": "radio"
-      },
-      "wallClassification": {
-        "inputType": "dropdown"
-      }
-    }
-  },
-  "Find:default": {
-    "hidden": [
-      "condition",
-      "storageInventoryNumber",
-      "catalogueNumber"
-    ],
-    "fields": {
-      "specialStatus": {
-        "inputType": "checkboxes"
-      },
-      "deviatingStoragePlace": {
-        "inputType": "input"
-      },
-      "hasRestoration": {
-        "inputType": "radio"
-      },
-      "conditionAmount": {
-        "inputType": "radio"
-      },
-      "storagePlace": {
-        "inputType": "radio"
+    "Operation:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Survey:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "SurveyUnit:default": {
+      "hidden": [],
+      "fields": {
+        "hasFinds": {
+          "inputType": "boolean"
+        }
       }
     },
-    "valuelists": {
-      "specialStatus": "Find-specialStatus-Pergamon",
-      "hasRestoration": "Find-hasRestoration-Pergamon",
-      "conditionAmount": "Find-conditionAmount-Pergamon",
-      "storagePlace": "Find-storagePlace-Pergamon"
-    }
-  },
-  "Feature:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Room:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "RoomCeiling:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomFloor:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomWall:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Inscription:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Image:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Glass:default": {
-    "hidden": [
-      "vesselForm",
-      "vesselFormSpecific",
-      "formDescription",
-      "color"
-    ],
-    "fields": {
-      "colorOutside": {
-        "inputType": "input"
+    "Place:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Area:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Trench:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Building:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "BuildingPart:default": {
+      "hidden": [],
+      "commons": [
+        "area",
+        "beginningDate",
+        "endDate",
+        "dating",
+        "description",
+        "processor",
+        "dimensionLength",
+        "dimensionVerticalExtent",
+        "dimensionWidth",
+        "spatialLocation"
+      ],
+      "valuelists": {
+        "orientation": "orientation-default-1",
+        "color": "colors-default-1",
+        "featureBorders": "Feature-featureBorders-default",
+        "featureForm": "Feature-featureForm-default",
+        "blockProcessing": "Architecture-blockProcessing-default",
+        "blockTreatment": "Architecture-blockTreatment-default",
+        "brickwork": "Architecture-brickwork-default",
+        "condition": "Wall_surface-condition-Meninx",
+        "conditionAmount": "Building-conditionAmount-default",
+        "construction": "Architecture-construction-default",
+        "mark": "Architecture-mark-default",
+        "mortarBinder": "Architecture-mortarBinder-default",
+        "mortarColor": "colors-default-2",
+        "mortarConsistency": "Architecture-mortarConsistency-default",
+        "wallClassification": "Architecture-wallClassification-default"
       },
-      "colorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorInsideMunsell": {
-        "inputType": "input"
-      },
-      "surfaceCondition": {
-        "inputType": "radio"
-      },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "dropdown"
-      },
-      "transparency": {
-        "inputType": "radio"
-      },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
+      "fields": {
+        "comparison": {
+          "inputType": "text"
+        },
+        "hasDisturbance": {
+          "inputType": "boolean"
+        },
+        "featureAmount": {
+          "inputType": "input"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "featureBorders": {
+          "inputType": "checkboxes"
+        },
+        "featureForm": {
+          "inputType": "checkboxes"
+        },
+        "bibliography": {
+          "inputType": "text"
+        },
+        "conditionComment": {
+          "inputType": "input"
+        },
+        "constructionDetailsDescription": {
+          "inputType": "input"
+        },
+        "descriptionOfBuildingTechnique": {
+          "inputType": "input"
+        },
+        "findingPlace": {
+          "inputType": "input"
+        },
+        "hasGrouting": {
+          "inputType": "boolean"
+        },
+        "layerAmount": {
+          "inputType": "unsignedInt"
+        },
+        "layerHeight": {
+          "inputType": "unsignedFloat"
+        },
+        "markDescription": {
+          "inputType": "input"
+        },
+        "materialCharacteristic": {
+          "inputType": "input"
+        },
+        "materialForm": {
+          "inputType": "input"
+        },
+        "muralCrown": {
+          "inputType": "input"
+        },
+        "publicationDatingFinds": {
+          "inputType": "text"
+        },
+        "publicationDatingScientific": {
+          "inputType": "text"
+        },
+        "publicationDatingStratigraphy": {
+          "inputType": "text"
+        },
+        "publicationRemark": {
+          "inputType": "input"
+        },
+        "blockProcessing": {
+          "inputType": "checkboxes"
+        },
+        "blockTreatment": {
+          "inputType": "radio"
+        },
+        "brickwork": {
+          "inputType": "checkboxes"
+        },
+        "condition": {
+          "inputType": "dropdown"
+        },
+        "conditionAmount": {
+          "inputType": "dropdown"
+        },
+        "construction": {
+          "inputType": "dropdown"
+        },
+        "mark": {
+          "inputType": "dropdown"
+        },
+        "mortarBinder": {
+          "inputType": "radio"
+        },
+        "mortarColor": {
+          "inputType": "dropdown"
+        },
+        "mortarConsistency": {
+          "inputType": "radio"
+        },
+        "wallClassification": {
+          "inputType": "dropdown"
+        }
       }
     },
-    "valuelists": {
-      "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
-      "objectType": "Glass-objectType-Pergamon",
-      "form": "Glass-form-Pergamon",
-      "manufacturingMethod": "Glass-manufacturingMethod-Pergamon",
-      "transparency": "Glass-transparency-Pergamon",
-      "decorationTechnique": "Glass-decorationTechnique-Pergamon"
-    }
-  },
-  "Metal:default": {
-    "hidden": [],
-    "fields": {
-      "objectType": {
-        "inputType": "dropdown"
+    "Find:default": {
+      "hidden": [
+        "condition",
+        "storageInventoryNumber",
+        "catalogueNumber"
+      ],
+      "fields": {
+        "specialStatus": {
+          "inputType": "checkboxes"
+        },
+        "deviatingStoragePlace": {
+          "inputType": "input"
+        },
+        "hasRestoration": {
+          "inputType": "radio"
+        },
+        "conditionAmount": {
+          "inputType": "radio"
+        },
+        "storagePlace": {
+          "inputType": "radio"
+        }
       },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "colorOutside": {
-        "inputType": "input"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorBreak": {
-        "inputType": "input"
-      },
-      "manufacturingMethod": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
-      },
-      "paintColor": {
-        "inputType": "input"
-      },
-      "paintColorMunsell": {
-        "inputType": "input"
-      },
-      "paintCondition": {
-        "inputType": "dropdown"
-      },
-      "depictedBeing": {
-        "inputType": "dropdown"
-      },
-      "depictedBeingSpecific": {
-        "inputType": "input"
-      },
-      "depictedBeingSex": {
-        "inputType": "radio"
-      },
-      "depictedBeingAge": {
-        "inputType": "radio"
-      },
-      "depictedBeingFormat": {
-        "inputType": "radio"
-      },
-      "artist": {
-        "inputType": "input"
-      },
-      "depictedBeingClothing": {
-        "inputType": "radio"
+      "valuelists": {
+        "specialStatus": "Find-specialStatus-Pergamon",
+        "hasRestoration": "Find-hasRestoration-Pergamon",
+        "conditionAmount": "Find-conditionAmount-Pergamon",
+        "storagePlace": "Find-storagePlace-Pergamon"
       }
     },
-    "valuelists": {
-      "objectType": "Metal-objectType-Pergamon",
-      "form": "Metal-form-Pergamon",
-      "manufacturingMethod": "Metal-manufacturingMethod-Pergamon",
-      "decorationTechnique": "Metal-decorationTechnique-Pergamon",
-      "paintCondition": "Wood-paintCondition-default",
-      "depictedBeing": "Terracotta-depictedBeing-Pergamon",
-      "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
-      "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
-      "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
-      "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-    }
-  },
-  "Mollusk:default": {
-    "hidden": [],
-    "fields": {
-      "classification": {
-        "inputType": "radio"
+    "Feature:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Room:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "RoomCeiling:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomFloor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Image:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Glass:default": {
+      "hidden": [
+        "vesselForm",
+        "vesselFormSpecific",
+        "formDescription",
+        "color"
+      ],
+      "fields": {
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorInsideMunsell": {
+          "inputType": "input"
+        },
+        "surfaceCondition": {
+          "inputType": "radio"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "dropdown"
+        },
+        "transparency": {
+          "inputType": "radio"
+        },
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        }
       },
-      "treatment": {
-        "inputType": "radio"
-      },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "input"
+      "valuelists": {
+        "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
+        "objectType": "Glass-objectType-Pergamon",
+        "form": "Glass-form-Pergamon",
+        "manufacturingMethod": "Glass-manufacturingMethod-Pergamon",
+        "transparency": "Glass-transparency-Pergamon",
+        "decorationTechnique": "Glass-decorationTechnique-Pergamon"
       }
     },
-    "valuelists": {
-      "classification": "Mollusk-classification-Pergamon",
-      "treatment": "Mollusk-treatment-Pergamon",
-      "objectType": "Mollusk-objectType-Pergamon",
-      "form": "Mollusk-form-Pergamon"
-    }
-  },
-  "Brick:default": {
-    "hidden": [
-      "brickForm",
-      "clayColorInside",
-      "clayColorOutside",
-      "specificType"
-    ],
-    "fields": {
-      "formDescription": {
-        "inputType": "dropdown"
+    "Metal:default": {
+      "hidden": [],
+      "fields": {
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorBreak": {
+          "inputType": "input"
+        },
+        "manufacturingMethod": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        },
+        "paintColor": {
+          "inputType": "input"
+        },
+        "paintColorMunsell": {
+          "inputType": "input"
+        },
+        "paintCondition": {
+          "inputType": "dropdown"
+        },
+        "depictedBeing": {
+          "inputType": "dropdown"
+        },
+        "depictedBeingSpecific": {
+          "inputType": "input"
+        },
+        "depictedBeingSex": {
+          "inputType": "radio"
+        },
+        "depictedBeingAge": {
+          "inputType": "radio"
+        },
+        "depictedBeingFormat": {
+          "inputType": "radio"
+        },
+        "artist": {
+          "inputType": "input"
+        },
+        "depictedBeingClothing": {
+          "inputType": "radio"
+        }
       },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "radio"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorOutside": {
-        "inputType": "input"
-      },
-      "colorBreak": {
-        "inputType": "input"
-      },
-      "colorBreakMunsell": {
-        "inputType": "input"
-      },
-      "colorInsideMunsell": {
-        "inputType": "input"
-      },
-      "colorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "surfaceCondition": {
-        "inputType": "radio"
-      },
-      "manufacturing": {
-        "inputType": "input"
-      },
-      "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "coatQuality": {
-        "inputType": "checkboxes"
-      },
-      "coatCondition": {
-        "inputType": "dropdown"
-      },
-      "coatColorInside": {
-        "inputType": "input"
-      },
-      "coatColorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "coatColorOutside": {
-        "inputType": "input"
-      },
-      "coatColorInsideMunsell": {
-        "inputType": "input"
-      },
-      "temper": {
-        "inputType": "text"
+      "valuelists": {
+        "objectType": "Metal-objectType-Pergamon",
+        "form": "Metal-form-Pergamon",
+        "manufacturingMethod": "Metal-manufacturingMethod-Pergamon",
+        "decorationTechnique": "Metal-decorationTechnique-Pergamon",
+        "paintCondition": "Wood-paintCondition-default",
+        "depictedBeing": "Terracotta-depictedBeing-Pergamon",
+        "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
+        "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
+        "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
+        "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
       }
     },
-    "valuelists": {
-      "formDescription": "Brick-formDescription-Pergamon",
-      "objectType": "Brick-objectType-Pergamon",
-      "manufacturingMethod": "Brick-manufacturingMethod-Pergamon",
-      "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
-      "decorationTechnique": "Brick-decorationTechnique-Pergamon",
-      "coatQuality": "Pottery-coatQuality-Pergamon",
-      "coatCondition": "Wood-paintCondition-default"
-    }
-  },
-  "Burial:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Wood:default": {
-    "hidden": [
-      "color",
-      "catalogueNumber"
-    ],
-    "fields": {
-      "objectType": {
-        "inputType": "dropdown"
+    "Mollusk:default": {
+      "hidden": [],
+      "fields": {
+        "classification": {
+          "inputType": "radio"
+        },
+        "treatment": {
+          "inputType": "radio"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "input"
+        }
       },
-      "depictedBeing": {
-        "inputType": "dropdown"
-      },
-      "depictedBeingSpecific": {
-        "inputType": "input"
-      },
-      "depictedBeingSex": {
-        "inputType": "radio"
-      },
-      "depictedBeingAge": {
-        "inputType": "radio"
-      },
-      "depictedBeingFormat": {
-        "inputType": "radio"
-      },
-      "artist": {
-        "inputType": "input"
-      },
-      "depictedBeingClothing": {
-        "inputType": "radio"
+      "valuelists": {
+        "classification": "Mollusk-classification-Pergamon",
+        "treatment": "Mollusk-treatment-Pergamon",
+        "objectType": "Mollusk-objectType-Pergamon",
+        "form": "Mollusk-form-Pergamon"
       }
     },
-    "valuelists": {
-      "objectType": "Wood-objectType-Pergamon",
-      "depictedBeing": "Terracotta-depictedBeing-Pergamon",
-      "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
-      "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
-      "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
-      "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-    }
-  },
-  "Architecture:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Layer:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Floor:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Pottery:default": {
-    "hidden": [
-      "amountSherdsLip",
-      "amountSherdsPedestal",
-      "amountSherdsRimBase",
-      "amountSherdsRimShoulder",
-      "amountSherdsShoulder",
-      "clayColorOutside",
-      "clayColorInside",
-      "clayColorBreak",
-      "clayColorBreakMunsell",
-      "clayColorInsideMunsell",
-      "clayColorOutsideMunsell",
-      "temperAmount",
-      "temperParticles",
-      "objectType",
-      "coatInside",
-      "coatInsideType",
-      "coatOutside",
-      "coatOutsideType",
-      "temperTypeClay",
-      "formDescription",
-      "usage",
-      "hasCoat",
-      "amountSherdsPercent",
-      "usage"
-    ],
-    "fields": {
-      "isImport": {
-        "inputType": "radio"
+    "Brick:default": {
+      "hidden": [
+        "brickForm",
+        "clayColorInside",
+        "clayColorOutside",
+        "specificType"
+      ],
+      "fields": {
+        "formDescription": {
+          "inputType": "dropdown"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "radio"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorBreak": {
+          "inputType": "input"
+        },
+        "colorBreakMunsell": {
+          "inputType": "input"
+        },
+        "colorInsideMunsell": {
+          "inputType": "input"
+        },
+        "colorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "surfaceCondition": {
+          "inputType": "radio"
+        },
+        "manufacturing": {
+          "inputType": "input"
+        },
+        "decorationTechnique": {
+          "inputType": "dropdown"
+        },
+        "coatQuality": {
+          "inputType": "checkboxes"
+        },
+        "coatCondition": {
+          "inputType": "dropdown"
+        },
+        "coatColorInside": {
+          "inputType": "input"
+        },
+        "coatColorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "coatColorOutside": {
+          "inputType": "input"
+        },
+        "coatColorInsideMunsell": {
+          "inputType": "input"
+        },
+        "temper": {
+          "inputType": "text"
+        }
       },
-      "isMisfired": {
-        "inputType": "boolean"
-      },
-      "materialType": {
-        "inputType": "dropdown"
-      },
-      "specificType": {
-        "inputType": "dropdown"
-      },
-      "vesselForm": {
-        "inputType": "dropdown"
-      },
-      "manufacturing": {
-        "inputType": "input"
-      },
-      "vesselFormSpecific": {
-        "inputType": "input"
-      },
-      "conditionPercentRim": {
-        "inputType": "input"
-      },
-      "conditionPercentBase": {
-        "inputType": "input"
-      },
-      "conditionpercentVessel": {
-        "inputType": "input"
-      },
-      "manufacturingMethod": {
-        "inputType": "radio"
-      },
-      "manufacturingDescription": {
-        "inputType": "input"
-      },
-      "colorOutside": {
-        "inputType": "input"
-      },
-      "colorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorInsideMunsell": {
-        "inputType": "input"
-      },
-      "colorBreak": {
-        "inputType": "input"
-      },
-      "colorBreakMunsell": {
-        "inputType": "input"
-      },
-      "temper": {
-        "inputType": "text"
-      },
-      "porosity": {
-        "inputType": "dropdown"
-      },
-      "coatCondition": {
-        "inputType": "dropdown"
-      },
-      "clayHardness": {
-        "inputType": "radio"
-      },
-      "fragmentSize": {
-        "inputType": "radio"
-      },
-      "breakStructure": {
-        "inputType": "radio"
-      },
-      "breakEdge": {
-        "inputType": "dropdown"
-      },
-      "sintering": {
-        "inputType": "input"
-      },
-      "surfaceCondition": {
-        "inputType": "radio"
-      },
-      "coatType": {
-        "inputType": "dropdown"
-      },
-      "coatQuality": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "radio"
-      },
-      "coatColorOutside": {
-        "inputType": "input"
-      },
-      "coatColorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "coatColorInside": {
-        "inputType": "input"
-      },
-      "coatColorInsideMunsell": {
-        "inputType": "input"
-      },
-      "decorationPlacement": {
-        "inputType": "checkboxes"
-      },
-      "paintColorOutside": {
-        "inputType": "input"
-      },
-      "paintColorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "paintColorInside": {
-        "inputType": "input"
-      },
-      "paintColorInsideMunsell": {
-        "inputType": "input"
-      },
-      "paintCondition": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "formDescription": "Brick-formDescription-Pergamon",
+        "objectType": "Brick-objectType-Pergamon",
+        "manufacturingMethod": "Brick-manufacturingMethod-Pergamon",
+        "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
+        "decorationTechnique": "Brick-decorationTechnique-Pergamon",
+        "coatQuality": "Pottery-coatQuality-Pergamon",
+        "coatCondition": "Wood-paintCondition-default"
       }
     },
-    "valuelists": {
-      "isImport": "Pottery-isImport-Pergamon",
-      "materialType": "Pottery-materialType-Pergamon",
-      "specificType": "Pottery-specificType-Pergamon",
-      "vesselForm": "Pottery-vesselForm-Pergamon",
-      "manufacturingMethod": "Pottery-manufacturingMethod-Pergamon",
-      "porosity": "Pottery-porosity-Pergamon",
-      "coatCondition": "Wood-paintCondition-default",
-      "clayHardness": "Pottery-clayHardness-Pergamon",
-      "fragmentSize": "Pottery-fragmentSize-Pergamon",
-      "breakStructure": "Pottery-breakStructure-Pergamon",
-      "breakEdge": "Pottery-breakEdge-Pergamon",
-      "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
-      "coatType": "Pottery-coatType-Pergamon",
-      "coatQuality": "Pottery-coatQuality-Pergamon",
-      "decorationTechnique": "Pottery-decorationTechnique-Pergamon",
-      "decorationPlacement": "Pottery-decorationPlacement-Pergamon",
-      "paintCondition": "Wood-paintCondition-default"
-    }
-  },
-  "Grave:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Bone:default": {
-    "hidden": [
-      "boneClassification",
-      "burningGrade"
-    ],
-    "fields": {
-      "treatment": {
-        "inputType": "radio"
+    "Burial:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Wood:default": {
+      "hidden": [
+        "color",
+        "catalogueNumber"
+      ],
+      "fields": {
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "depictedBeing": {
+          "inputType": "dropdown"
+        },
+        "depictedBeingSpecific": {
+          "inputType": "input"
+        },
+        "depictedBeingSex": {
+          "inputType": "radio"
+        },
+        "depictedBeingAge": {
+          "inputType": "radio"
+        },
+        "depictedBeingFormat": {
+          "inputType": "radio"
+        },
+        "artist": {
+          "inputType": "input"
+        },
+        "depictedBeingClothing": {
+          "inputType": "radio"
+        }
       },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "input"
-      },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "objectType": "Wood-objectType-Pergamon",
+        "depictedBeing": "Terracotta-depictedBeing-Pergamon",
+        "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
+        "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
+        "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
+        "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
       }
     },
-    "valuelists": {
-      "treatment": "Mollusk-treatment-Pergamon",
-      "objectType": "Bone-objectType-Pergamon",
-      "form": "Bone-form-Pergamon",
-      "decorationTechnique": "Bone-decorationTechnique-Pergamon"
-    }
-  },
-  "Terracotta:default": {
-    "hidden": [
-      "vesselForm",
-      "formDescription",
-      "vesselFormSpecific",
-      "temperAmount",
-      "temperParticles",
-      "clayStructure",
-      "clayColorBreak",
-      "clayColorInside",
-      "clayColorOutside"
-    ],
-    "fields": {
-      "manufacturing": {
-        "inputType": "input"
+    "Architecture:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Layer:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Floor:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Pottery:default": {
+      "hidden": [
+        "amountSherdsLip",
+        "amountSherdsPedestal",
+        "amountSherdsRimBase",
+        "amountSherdsRimShoulder",
+        "amountSherdsShoulder",
+        "clayColorOutside",
+        "clayColorInside",
+        "clayColorBreak",
+        "clayColorBreakMunsell",
+        "clayColorInsideMunsell",
+        "clayColorOutsideMunsell",
+        "temperAmount",
+        "temperParticles",
+        "objectType",
+        "coatInside",
+        "coatInsideType",
+        "coatOutside",
+        "coatOutsideType",
+        "temperTypeClay",
+        "formDescription",
+        "usage",
+        "hasCoat",
+        "amountSherdsPercent",
+        "usage"
+      ],
+      "fields": {
+        "isImport": {
+          "inputType": "radio"
+        },
+        "isMisfired": {
+          "inputType": "boolean"
+        },
+        "materialType": {
+          "inputType": "dropdown"
+        },
+        "specificType": {
+          "inputType": "dropdown"
+        },
+        "vesselForm": {
+          "inputType": "dropdown"
+        },
+        "manufacturing": {
+          "inputType": "input"
+        },
+        "vesselFormSpecific": {
+          "inputType": "input"
+        },
+        "conditionPercentRim": {
+          "inputType": "input"
+        },
+        "conditionPercentBase": {
+          "inputType": "input"
+        },
+        "conditionpercentVessel": {
+          "inputType": "input"
+        },
+        "manufacturingMethod": {
+          "inputType": "radio"
+        },
+        "manufacturingDescription": {
+          "inputType": "input"
+        },
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorInsideMunsell": {
+          "inputType": "input"
+        },
+        "colorBreak": {
+          "inputType": "input"
+        },
+        "colorBreakMunsell": {
+          "inputType": "input"
+        },
+        "temper": {
+          "inputType": "text"
+        },
+        "porosity": {
+          "inputType": "dropdown"
+        },
+        "coatCondition": {
+          "inputType": "dropdown"
+        },
+        "clayHardness": {
+          "inputType": "radio"
+        },
+        "fragmentSize": {
+          "inputType": "radio"
+        },
+        "breakStructure": {
+          "inputType": "radio"
+        },
+        "breakEdge": {
+          "inputType": "dropdown"
+        },
+        "sintering": {
+          "inputType": "input"
+        },
+        "surfaceCondition": {
+          "inputType": "radio"
+        },
+        "coatType": {
+          "inputType": "dropdown"
+        },
+        "coatQuality": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "radio"
+        },
+        "coatColorOutside": {
+          "inputType": "input"
+        },
+        "coatColorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "coatColorInside": {
+          "inputType": "input"
+        },
+        "coatColorInsideMunsell": {
+          "inputType": "input"
+        },
+        "decorationPlacement": {
+          "inputType": "checkboxes"
+        },
+        "paintColorOutside": {
+          "inputType": "input"
+        },
+        "paintColorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "paintColorInside": {
+          "inputType": "input"
+        },
+        "paintColorInsideMunsell": {
+          "inputType": "input"
+        },
+        "paintCondition": {
+          "inputType": "dropdown"
+        }
       },
-      "colorOutside": {
-        "inputType": "input"
-      },
-      "colorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorInsideMunsell": {
-        "inputType": "input"
-      },
-      "colorBreak": {
-        "inputType": "input"
-      },
-      "colorBreakMunsell": {
-        "inputType": "input"
-      },
-      "coatColorInside": {
-        "inputType": "input"
-      },
-      "coatColorInsideMunsell": {
-        "inputType": "input"
-      },
-      "coatColorOutside": {
-        "inputType": "input"
-      },
-      "coatColorOutsideMunsell": {
-        "inputType": "input"
-      },
-      "paintColor": {
-        "inputType": "input"
-      },
-      "paintColorMunsell": {
-        "inputType": "input"
-      },
-      "surfaceCondition": {
-        "inputType": "radio"
-      },
-      "coatQuality": {
-        "inputType": "checkboxes"
-      },
-      "coatCondition": {
-        "inputType": "dropdown"
-      },
-      "paintCondition": {
-        "inputType": "dropdown"
-      },
-      "objectType": {
-        "inputType": "dropdown"
-      },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "radio"
-      },
-      "decorationDescription": {
-        "inputType": "input"
-      },
-      "depictedBeing": {
-        "inputType": "dropdown"
-      },
-      "depictedBeingSpecific": {
-        "inputType": "input"
-      },
-      "depictedBeingSex": {
-        "inputType": "radio"
-      },
-      "depictedBeingAge": {
-        "inputType": "radio"
-      },
-      "depictedBeingFormat": {
-        "inputType": "radio"
-      },
-      "artist": {
-        "inputType": "input"
-      },
-      "depictedBeingClothing": {
-        "inputType": "radio"
-      },
-      "temper": {
-        "inputType": "text"
+      "valuelists": {
+        "isImport": "Pottery-isImport-Pergamon",
+        "materialType": "Pottery-materialType-Pergamon",
+        "specificType": "Pottery-specificType-Pergamon",
+        "vesselForm": "Pottery-vesselForm-Pergamon",
+        "manufacturingMethod": "Pottery-manufacturingMethod-Pergamon",
+        "porosity": "Pottery-porosity-Pergamon",
+        "coatCondition": "Wood-paintCondition-default",
+        "clayHardness": "Pottery-clayHardness-Pergamon",
+        "fragmentSize": "Pottery-fragmentSize-Pergamon",
+        "breakStructure": "Pottery-breakStructure-Pergamon",
+        "breakEdge": "Pottery-breakEdge-Pergamon",
+        "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
+        "coatType": "Pottery-coatType-Pergamon",
+        "coatQuality": "Pottery-coatQuality-Pergamon",
+        "decorationTechnique": "Pottery-decorationTechnique-Pergamon",
+        "decorationPlacement": "Pottery-decorationPlacement-Pergamon",
+        "paintCondition": "Wood-paintCondition-default"
       }
     },
-    "valuelists": {
-      "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
-      "coatQuality": "Pottery-coatQuality-Pergamon",
-      "coatCondition": "Wood-paintCondition-default",
-      "paintCondition": "Wood-paintCondition-default",
-      "objectType": "Terracotta-objectType-Pergamon",
-      "form": "Terracotta-form-Pergamon",
-      "manufacturingMethod": "Terracotta-manufacturingMethod-Pergamon",
-      "decorationTechnique": "Terracotta-decorationTechnique-Pergamon",
-      "depictedBeing": "Terracotta-depictedBeing-Pergamon",
-      "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
-      "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
-      "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
-      "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-    }
-  },
-  "Photo:default": {
-    "fields": {},
-    "hidden": []
-  },
-  "Drawing:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Stone:default": {
-    "hidden": [
-      "purpose",
-      "workmanship",
-      "formDescription",
-      "color",
-      "architectureElement",
-      "temperAmount"
-    ],
-    "fields": {
-      "objectType": {
-        "inputType": "dropdown"
+    "Grave:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Bone:default": {
+      "hidden": [
+        "boneClassification",
+        "burningGrade"
+      ],
+      "fields": {
+        "treatment": {
+          "inputType": "radio"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "input"
+        },
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        }
       },
-      "form": {
-        "inputType": "dropdown"
-      },
-      "usedAsSpolia": {
-        "inputType": "radio"
-      },
-      "material": {
-        "inputType": "radio"
-      },
-      "origin": {
-        "inputType": "dropdown"
-      },
-      "colorOutside": {
-        "inputType": "input"
-      },
-      "colorInside": {
-        "inputType": "input"
-      },
-      "colorBreak": {
-        "inputType": "input"
-      },
-      "constructionDetails": {
-        "inputType": "radio"
-      },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
-      },
-      "paintColor": {
-        "inputType": "input"
-      },
-      "paintColorMunsell": {
-        "inputType": "input"
-      },
-      "paintCondition": {
-        "inputType": "dropdown"
-      },
-      "depictedBeing": {
-        "inputType": "dropdown"
-      },
-      "depictedBeingSpecific": {
-        "inputType": "input"
-      },
-      "depictedBeingSex": {
-        "inputType": "radio"
-      },
-      "depictedBeingAge": {
-        "inputType": "radio"
-      },
-      "depictedBeingFormat": {
-        "inputType": "radio"
-      },
-      "artist": {
-        "inputType": "input"
-      },
-      "depictedBeingClothing": {
-        "inputType": "radio"
+      "valuelists": {
+        "treatment": "Mollusk-treatment-Pergamon",
+        "objectType": "Bone-objectType-Pergamon",
+        "form": "Bone-form-Pergamon",
+        "decorationTechnique": "Bone-decorationTechnique-Pergamon"
       }
     },
-    "valuelists": {
-      "objectType": "Stone-objectType-Pergamon",
-      "form": "Stone-form-Pergamon",
-      "usedAsSpolia": "Stone-usedAsSpolia-Pergamon",
-      "material": "Stone-material-Pergamon",
-      "origin": "Stone-origin-Pergamon",
-      "constructionDetails": "Stone-constructionDetails-Pergamon",
-      "decorationTechnique": "Stone-decorationTechnique-Pergamon",
-      "paintCondition": "Wood-paintCondition-default",
-      "depictedBeing": "Terracotta-depictedBeing-Pergamon",
-      "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
-      "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
-      "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
-      "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-    }
-  },
-  "Coin:default": {
-    "hidden": [],
-    "fields": {
-      "denomination": {
-        "inputType": "dropdown"
+    "Terracotta:default": {
+      "hidden": [
+        "vesselForm",
+        "formDescription",
+        "vesselFormSpecific",
+        "temperAmount",
+        "temperParticles",
+        "clayStructure",
+        "clayColorBreak",
+        "clayColorInside",
+        "clayColorOutside"
+      ],
+      "fields": {
+        "manufacturing": {
+          "inputType": "input"
+        },
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorInsideMunsell": {
+          "inputType": "input"
+        },
+        "colorBreak": {
+          "inputType": "input"
+        },
+        "colorBreakMunsell": {
+          "inputType": "input"
+        },
+        "coatColorInside": {
+          "inputType": "input"
+        },
+        "coatColorInsideMunsell": {
+          "inputType": "input"
+        },
+        "coatColorOutside": {
+          "inputType": "input"
+        },
+        "coatColorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "paintColor": {
+          "inputType": "input"
+        },
+        "paintColorMunsell": {
+          "inputType": "input"
+        },
+        "surfaceCondition": {
+          "inputType": "radio"
+        },
+        "coatQuality": {
+          "inputType": "checkboxes"
+        },
+        "coatCondition": {
+          "inputType": "dropdown"
+        },
+        "paintCondition": {
+          "inputType": "dropdown"
+        },
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "manufacturingMethod": {
+          "inputType": "checkboxes"
+        },
+        "decorationTechnique": {
+          "inputType": "radio"
+        },
+        "decorationDescription": {
+          "inputType": "input"
+        },
+        "depictedBeing": {
+          "inputType": "dropdown"
+        },
+        "depictedBeingSpecific": {
+          "inputType": "input"
+        },
+        "depictedBeingSex": {
+          "inputType": "radio"
+        },
+        "depictedBeingAge": {
+          "inputType": "radio"
+        },
+        "depictedBeingFormat": {
+          "inputType": "radio"
+        },
+        "artist": {
+          "inputType": "input"
+        },
+        "depictedBeingClothing": {
+          "inputType": "radio"
+        },
+        "temper": {
+          "inputType": "text"
+        }
       },
-      "mintingRuler": {
-        "inputType": "input"
-      },
-      "mint": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
+        "coatQuality": "Pottery-coatQuality-Pergamon",
+        "coatCondition": "Wood-paintCondition-default",
+        "paintCondition": "Wood-paintCondition-default",
+        "objectType": "Terracotta-objectType-Pergamon",
+        "form": "Terracotta-form-Pergamon",
+        "manufacturingMethod": "Terracotta-manufacturingMethod-Pergamon",
+        "decorationTechnique": "Terracotta-decorationTechnique-Pergamon",
+        "depictedBeing": "Terracotta-depictedBeing-Pergamon",
+        "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
+        "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
+        "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
+        "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
       }
     },
-    "valuelists": {
-      "denomination": "Coin-denomination-Pergamon",
-      "mint": "Coin-mint-Pergamon"
-    }
-  },
-  "PlasterFragment:default": {
-    "hidden": [
-      "color",
-      "plasterComponents",
-      "hasDecoration"
-    ],
-    "fields": {
-      "objectType": {
-        "inputType": "dropdown"
+    "Photo:default": {
+      "fields": {},
+      "hidden": []
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Stone:default": {
+      "hidden": [
+        "purpose",
+        "workmanship",
+        "formDescription",
+        "color",
+        "architectureElement",
+        "temperAmount"
+      ],
+      "fields": {
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "form": {
+          "inputType": "dropdown"
+        },
+        "usedAsSpolia": {
+          "inputType": "radio"
+        },
+        "material": {
+          "inputType": "radio"
+        },
+        "origin": {
+          "inputType": "dropdown"
+        },
+        "colorOutside": {
+          "inputType": "input"
+        },
+        "colorInside": {
+          "inputType": "input"
+        },
+        "colorBreak": {
+          "inputType": "input"
+        },
+        "constructionDetails": {
+          "inputType": "radio"
+        },
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        },
+        "paintColor": {
+          "inputType": "input"
+        },
+        "paintColorMunsell": {
+          "inputType": "input"
+        },
+        "paintCondition": {
+          "inputType": "dropdown"
+        },
+        "depictedBeing": {
+          "inputType": "dropdown"
+        },
+        "depictedBeingSpecific": {
+          "inputType": "input"
+        },
+        "depictedBeingSex": {
+          "inputType": "radio"
+        },
+        "depictedBeingAge": {
+          "inputType": "radio"
+        },
+        "depictedBeingFormat": {
+          "inputType": "radio"
+        },
+        "artist": {
+          "inputType": "input"
+        },
+        "depictedBeingClothing": {
+          "inputType": "radio"
+        }
       },
-      "materialPlasterUndercoat1": {
-        "inputType": "input"
-      },
-      "colorPlasterUndercoat1": {
-        "inputType": "input"
-      },
-      "colorPlasterUndercoat1Munsell": {
-        "inputType": "input"
-      },
-      "materialPlasterUndercoat2": {
-        "inputType": "input"
-      },
-      "colorPlasterUndercoat2": {
-        "inputType": "input"
-      },
-      "colorPlasterUndercoat2Munsell": {
-        "inputType": "input"
-      },
-      "materialFinePlaster": {
-        "inputType": "input"
-      },
-      "colorFinePlaster": {
-        "inputType": "input"
-      },
-      "colorFinePlasterMunsell": {
-        "inputType": "input"
-      },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
-      },
-      "paintingTechnique": {
-        "inputType": "radio"
-      },
-      "paintColor": {
-        "inputType": "input"
-      },
-      "paintColorMunsell": {
-        "inputType": "input"
-      },
-      "paintCondition": {
-        "inputType": "dropdown"
-      },
-      "specialFeatures": {
-        "inputType": "checkboxes"
+      "valuelists": {
+        "objectType": "Stone-objectType-Pergamon",
+        "form": "Stone-form-Pergamon",
+        "usedAsSpolia": "Stone-usedAsSpolia-Pergamon",
+        "material": "Stone-material-Pergamon",
+        "origin": "Stone-origin-Pergamon",
+        "constructionDetails": "Stone-constructionDetails-Pergamon",
+        "decorationTechnique": "Stone-decorationTechnique-Pergamon",
+        "paintCondition": "Wood-paintCondition-default",
+        "depictedBeing": "Terracotta-depictedBeing-Pergamon",
+        "depictedBeingSex": "Terracotta-depictedBeingSex-Pergamon",
+        "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
+        "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
+        "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
       }
     },
-    "valuelists": {
-      "objectType": "PlasterFragment-objectType-Pergamon",
-      "decorationTechnique": "PlasterFragment-decorationTechnique-Pergamon",
-      "paintingTechnique": "PlasterFragment-paintingTechnique-Pergamon",
-      "paintCondition": "Wood-paintCondition-default",
-      "specialFeatures": "PlasterFragment-specialFeatures-Pergamon"
-    }
-  },
-  "Profile": {
-    "hidden": [],
-    "commons": [
-      "dimensionHeight",
-      "dimensionVerticalExtent",
-      "orientation"
-    ],
-    "fields": {},
-    "color": "#c6dbef",
-    "valuelists": {
-      "orientation": "orientation-default-1"
-    }
-  },
-  "Sample:default": {
-    "hidden": [],
-    "fields": {
-      "soilType": {
-        "inputType": "dropdown"
+    "Coin:default": {
+      "hidden": [],
+      "fields": {
+        "denomination": {
+          "inputType": "dropdown"
+        },
+        "mintingRuler": {
+          "inputType": "input"
+        },
+        "mint": {
+          "inputType": "dropdown"
+        }
       },
-      "operationClassification": {
-        "inputType": "dropdown"
+      "valuelists": {
+        "denomination": "Coin-denomination-Pergamon",
+        "mint": "Coin-mint-Pergamon"
       }
     },
-    "color": "#9ecae1",
-    "valuelists": {
-      "soilType": "Layer-soilType-default",
-      "operationClassification": "ProcessUnit-operationClassification-Pergamon"
-    }
-  },
-  "ProcessUnit": {
-    "hidden": [],
-    "commons": [
-      "date",
-      "description",
-      "processor"
-    ],
-    "fields": {
-      "operationClassification": {
-        "inputType": "dropdown"
+    "PlasterFragment:default": {
+      "hidden": [
+        "color",
+        "plasterComponents",
+        "hasDecoration"
+      ],
+      "fields": {
+        "objectType": {
+          "inputType": "dropdown"
+        },
+        "materialPlasterUndercoat1": {
+          "inputType": "input"
+        },
+        "colorPlasterUndercoat1": {
+          "inputType": "input"
+        },
+        "colorPlasterUndercoat1Munsell": {
+          "inputType": "input"
+        },
+        "materialPlasterUndercoat2": {
+          "inputType": "input"
+        },
+        "colorPlasterUndercoat2": {
+          "inputType": "input"
+        },
+        "colorPlasterUndercoat2Munsell": {
+          "inputType": "input"
+        },
+        "materialFinePlaster": {
+          "inputType": "input"
+        },
+        "colorFinePlaster": {
+          "inputType": "input"
+        },
+        "colorFinePlasterMunsell": {
+          "inputType": "input"
+        },
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        },
+        "paintingTechnique": {
+          "inputType": "radio"
+        },
+        "paintColor": {
+          "inputType": "input"
+        },
+        "paintColorMunsell": {
+          "inputType": "input"
+        },
+        "paintCondition": {
+          "inputType": "dropdown"
+        },
+        "specialFeatures": {
+          "inputType": "checkboxes"
+        }
+      },
+      "valuelists": {
+        "objectType": "PlasterFragment-objectType-Pergamon",
+        "decorationTechnique": "PlasterFragment-decorationTechnique-Pergamon",
+        "paintingTechnique": "PlasterFragment-paintingTechnique-Pergamon",
+        "paintCondition": "Wood-paintCondition-default",
+        "specialFeatures": "PlasterFragment-specialFeatures-Pergamon"
       }
     },
-    "color": "#08306b",
-    "valuelists": {
-      "operationClassification": "ProcessUnit-operationClassification-Pergamon"
-    }
-  },
-  "SurveyBurial": {
-    "hidden": [],
-    "commons": [
-      "area",
-      "beginningDate",
-      "endDate",
-      "dating",
-      "description",
-      "diary",
-      "dating",
-      "processor",
-      "dimensionLength",
-      "dimensionVerticalExtent",
-      "dimensionWidth"
-    ],
-    "fields": {
-      "comparison": {
-        "inputType": "text"
-      },
-      "hasDisturbance": {
-        "inputType": "boolean"
-      },
-      "featureAmount": {
-        "inputType": "input"
-      },
-      "color": {
-        "inputType": "checkboxes"
-      },
-      "featureBorders": {
-        "inputType": "checkboxes"
-      },
-      "featureForm": {
-        "inputType": "checkboxes"
-      },
-      "ageDetermination": {
-        "inputType": "input"
-      },
-      "ageDeterminationBasis": {
-        "inputType": "input"
-      },
-      "bodyHeightAndRobustness": {
-        "inputType": "input"
-      },
-      "burialRite": {
-        "inputType": "input"
-      },
-      "conditionComment": {
-        "inputType": "input"
-      },
-      "dietReconstruction": {
-        "inputType": "input"
-      },
-      "findingPlace": {
-        "inputType": "input"
-      },
-      "palaeopathologicalReport": {
-        "inputType": "input"
-      },
-      "publicationDatingFinds": {
-        "inputType": "text"
-      },
-      "publicationDatingStratigraphy": {
-        "inputType": "text"
-      },
-      "sexDetermination": {
-        "inputType": "input"
-      },
-      "sexDeterminationBasis": {
-        "inputType": "input"
-      },
-      "amountIndividuals": {
-        "inputType": "dropdown"
-      },
-      "burialCharacteristic": {
-        "inputType": "dropdown"
-      },
-      "burialDocumentation": {
-        "inputType": "checkboxes"
-      },
-      "graveFeature": {
-        "inputType": "checkboxes"
-      },
-      "positionArms": {
-        "inputType": "checkboxes"
-      },
-      "positionLegs": {
-        "inputType": "checkboxes"
-      },
-      "positioningIndividuals": {
-        "inputType": "checkboxes"
+    "Profile": {
+      "hidden": [],
+      "commons": [
+        "dimensionHeight",
+        "dimensionVerticalExtent",
+        "orientation"
+      ],
+      "fields": {},
+      "color": "#c6dbef",
+      "valuelists": {
+        "orientation": "orientation-default-1"
       }
     },
-    "valuelists": {
-      "color": "colors-default-1",
-      "featureBorders": "Feature-featureBorders-default",
-      "featureForm": "Feature-featureForm-default",
-      "amountIndividuals": "Burial-amountIndividuals-default",
-      "burialCharacteristic": "Burial-burialCharacteristic-default",
-      "burialDocumentation": "Burial-burialDocumentation-default",
-      "graveFeature": "Burial-graveFeature-default",
-      "positionArms": "Burial-positionArms-default",
-      "positionLegs": "Burial-positionLegs-default",
-      "positioningIndividuals": "Burial-positioningIndividuals-default"
-    }
-  },
-  "BuildingFloor": {
-    "hidden": [],
-    "commons": [
-      "area",
-      "beginningDate",
-      "endDate",
-      "diary",
-      "description",
-      "processor",
-      "dimensionLength",
-      "dimensionVerticalExtent",
-      "dimensionWidth"
-    ],
-    "fields": {
-      "comparison": {
-        "inputType": "text"
+    "Sample:default": {
+      "hidden": [],
+      "fields": {
+        "soilType": {
+          "inputType": "dropdown"
+        },
+        "operationClassification": {
+          "inputType": "dropdown"
+        }
       },
-      "hasDisturbance": {
-        "inputType": "boolean"
-      },
-      "featureAmount": {
-        "inputType": "input"
-      },
-      "color": {
-        "inputType": "checkboxes"
-      },
-      "featureBorders": {
-        "inputType": "checkboxes"
-      },
-      "featureForm": {
-        "inputType": "checkboxes"
-      },
-      "conditionComment": {
-        "inputType": "input"
-      },
-      "condition": {
-        "inputType": "dropdown"
-      },
-      "conditionAmount": {
-        "inputType": "dropdown"
-      },
-      "consistency": {
-        "inputType": "checkboxes"
-      },
-      "distinguishingCriteria": {
-        "inputType": "radio"
-      },
-      "floorClassification": {
-        "inputType": "dropdown"
-      },
-      "layerClassification": {
-        "inputType": "dropdown"
-      },
-      "mortarBinder": {
-        "inputType": "radio"
+      "color": "#9ecae1",
+      "valuelists": {
+        "soilType": "Layer-soilType-default",
+        "operationClassification": "ProcessUnit-operationClassification-Pergamon"
       }
     },
-    "valuelists": {
-      "color": "colors-default-1",
-      "featureBorders": "Feature-featureBorders-default",
-      "featureForm": "Feature-featureForm-default",
-      "condition": "Wall_surface-condition-Meninx",
-      "conditionAmount": "Building-conditionAmount-default",
-      "consistency": "Layer-consistency-default",
-      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-      "floorClassification": "Floor-floorClassification-default",
-      "layerClassification": "Layer-layerClassification-default",
-      "mortarBinder": "Architecture-mortarBinder-default"
-    }
-  },
-  "Excavation:default": {
-    "hidden": [],
-    "commons": [
-      "beginningDate",
-      "endDate",
-      "dating",
-      "diary",
-      "processor"
-    ],
-    "fields": {
-      "color": {
-        "inputType": "checkboxes"
+    "ProcessUnit": {
+      "hidden": [],
+      "commons": [
+        "date",
+        "description",
+        "processor"
+      ],
+      "fields": {
+        "operationClassification": {
+          "inputType": "dropdown"
+        }
       },
-      "featureBorders": {
-        "inputType": "checkboxes"
+      "color": "#08306b",
+      "valuelists": {
+        "operationClassification": "ProcessUnit-operationClassification-Pergamon"
       }
     },
-    "valuelists": {
-      "color": "colors-default-1",
-      "featureBorders": "Feature-featureBorders-default"
+    "SurveyBurial": {
+      "hidden": [],
+      "commons": [
+        "area",
+        "beginningDate",
+        "endDate",
+        "dating",
+        "description",
+        "diary",
+        "dating",
+        "processor",
+        "dimensionLength",
+        "dimensionVerticalExtent",
+        "dimensionWidth"
+      ],
+      "fields": {
+        "comparison": {
+          "inputType": "text"
+        },
+        "hasDisturbance": {
+          "inputType": "boolean"
+        },
+        "featureAmount": {
+          "inputType": "input"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "featureBorders": {
+          "inputType": "checkboxes"
+        },
+        "featureForm": {
+          "inputType": "checkboxes"
+        },
+        "ageDetermination": {
+          "inputType": "input"
+        },
+        "ageDeterminationBasis": {
+          "inputType": "input"
+        },
+        "bodyHeightAndRobustness": {
+          "inputType": "input"
+        },
+        "burialRite": {
+          "inputType": "input"
+        },
+        "conditionComment": {
+          "inputType": "input"
+        },
+        "dietReconstruction": {
+          "inputType": "input"
+        },
+        "findingPlace": {
+          "inputType": "input"
+        },
+        "palaeopathologicalReport": {
+          "inputType": "input"
+        },
+        "publicationDatingFinds": {
+          "inputType": "text"
+        },
+        "publicationDatingStratigraphy": {
+          "inputType": "text"
+        },
+        "sexDetermination": {
+          "inputType": "input"
+        },
+        "sexDeterminationBasis": {
+          "inputType": "input"
+        },
+        "amountIndividuals": {
+          "inputType": "dropdown"
+        },
+        "burialCharacteristic": {
+          "inputType": "dropdown"
+        },
+        "burialDocumentation": {
+          "inputType": "checkboxes"
+        },
+        "graveFeature": {
+          "inputType": "checkboxes"
+        },
+        "positionArms": {
+          "inputType": "checkboxes"
+        },
+        "positionLegs": {
+          "inputType": "checkboxes"
+        },
+        "positioningIndividuals": {
+          "inputType": "checkboxes"
+        }
+      },
+      "valuelists": {
+        "color": "colors-default-1",
+        "featureBorders": "Feature-featureBorders-default",
+        "featureForm": "Feature-featureForm-default",
+        "amountIndividuals": "Burial-amountIndividuals-default",
+        "burialCharacteristic": "Burial-burialCharacteristic-default",
+        "burialDocumentation": "Burial-burialDocumentation-default",
+        "graveFeature": "Burial-graveFeature-default",
+        "positionArms": "Burial-positionArms-default",
+        "positionLegs": "Burial-positionLegs-default",
+        "positioningIndividuals": "Burial-positioningIndividuals-default"
+      }
+    },
+    "BuildingFloor": {
+      "hidden": [],
+      "commons": [
+        "area",
+        "beginningDate",
+        "endDate",
+        "diary",
+        "description",
+        "processor",
+        "dimensionLength",
+        "dimensionVerticalExtent",
+        "dimensionWidth"
+      ],
+      "fields": {
+        "comparison": {
+          "inputType": "text"
+        },
+        "hasDisturbance": {
+          "inputType": "boolean"
+        },
+        "featureAmount": {
+          "inputType": "input"
+        },
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "featureBorders": {
+          "inputType": "checkboxes"
+        },
+        "featureForm": {
+          "inputType": "checkboxes"
+        },
+        "conditionComment": {
+          "inputType": "input"
+        },
+        "condition": {
+          "inputType": "dropdown"
+        },
+        "conditionAmount": {
+          "inputType": "dropdown"
+        },
+        "consistency": {
+          "inputType": "checkboxes"
+        },
+        "distinguishingCriteria": {
+          "inputType": "radio"
+        },
+        "floorClassification": {
+          "inputType": "dropdown"
+        },
+        "layerClassification": {
+          "inputType": "dropdown"
+        },
+        "mortarBinder": {
+          "inputType": "radio"
+        }
+      },
+      "valuelists": {
+        "color": "colors-default-1",
+        "featureBorders": "Feature-featureBorders-default",
+        "featureForm": "Feature-featureForm-default",
+        "condition": "Wall_surface-condition-Meninx",
+        "conditionAmount": "Building-conditionAmount-default",
+        "consistency": "Layer-consistency-default",
+        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+        "floorClassification": "Floor-floorClassification-default",
+        "layerClassification": "Layer-layerClassification-default",
+        "mortarBinder": "Architecture-mortarBinder-default"
+      }
+    },
+    "Excavation:default": {
+      "hidden": [],
+      "commons": [
+        "beginningDate",
+        "endDate",
+        "dating",
+        "diary",
+        "processor"
+      ],
+      "fields": {
+        "color": {
+          "inputType": "checkboxes"
+        },
+        "featureBorders": {
+          "inputType": "checkboxes"
+        }
+      },
+      "valuelists": {
+        "color": "colors-default-1",
+        "featureBorders": "Feature-featureBorders-default"
+      }
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
     }
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
   }
 }

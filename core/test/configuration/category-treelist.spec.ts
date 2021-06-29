@@ -1,6 +1,6 @@
-import {linkParentAndChildInstances} from '../../src/configuration/category-forest';
-import {Category} from '../../src/model';
-import {Forest, Tree} from '../../src/tools';
+import { linkParentAndChildInstances } from '../../src/configuration/category-forest';
+import { Category } from '../../src/model';
+import { Forest, Tree } from '../../src/tools';
 
 
 describe('CategoryForest', () => {

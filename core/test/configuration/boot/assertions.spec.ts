@@ -17,8 +17,9 @@ describe('Assertions', () => {
        };
 
        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-           C: { fields: {} },
+           C: { fields: {}, groups: [] },
        };
+
        const libraryCategories: Map<LibraryCategoryDefinition> = {
            'C:default': {
                categoryName: 'C',
@@ -31,6 +32,7 @@ describe('Assertions', () => {
                creationDate: ''
            },
        };
+       
        const customCategories: Map<CustomCategoryDefinition> = {
            C: { fields: {} }
        };

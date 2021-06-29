@@ -29,7 +29,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
-                fields: {}
+                fields: {},
+                groups: []
             }
         };
         const customCategories: Map<CustomCategoryDefinition> = {
@@ -56,10 +57,12 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
-                fields: {}
+                fields: {},
+                groups: []
             },
             C: {
-                fields: {}
+                fields: {},
+                groups: []
             }
         };
         const customCategories: Map<CustomCategoryDefinition> = {
@@ -88,7 +91,8 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {
                     field1: { inputType: 'input' },
                     field2: { inputType: 'input' }
-                }
+                },
+                groups: []
             }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -134,7 +138,7 @@ describe('buildRawProjectConfiguration', () => {
     it('valuelistId - provided via valuelists property in custom category', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } } }
+            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {};
         const customCategories: Map<CustomCategoryDefinition> = {
@@ -163,7 +167,7 @@ describe('buildRawProjectConfiguration', () => {
     it('valuelistId - overwrite valuelists property in custom category, extending a library category - for a common field', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {} } };
+            A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
@@ -176,7 +180,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelist-id-2' },
-                fields: { }
+                fields: {}
             }
         };
 
@@ -202,7 +206,7 @@ describe('buildRawProjectConfiguration', () => {
     it('valuelistId - provided via valuelists property in library', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } } }
+            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:default': {
@@ -217,7 +221,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
         const customCategories: Map<CustomCategoryDefinition> = {
-            'A:default': { fields: {}}
+            'A:default': { fields: {} }
         };
 
         const result = buildRaw(
@@ -239,7 +243,7 @@ describe('buildRawProjectConfiguration', () => {
     it('valuelistId - nowhere provided - built in category selected', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } } }
+            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
         };
         const customCategories: Map<CustomCategoryDefinition> = {
             'A': { fields: { aField: {} } }
@@ -266,7 +270,7 @@ describe('buildRawProjectConfiguration', () => {
     it('valuelistId - nowhere provided - library category selected', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } } }
+            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
@@ -304,7 +308,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('duplication in selection', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
                 categoryName: 'A',
@@ -351,7 +355,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('duplication in selection - built in categories create category name implicitly', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} }};
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
                 categoryName: 'A',
@@ -384,7 +388,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('category names - divergent input type', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
                 categoryName: 'A',
@@ -425,7 +429,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('subcategories - user defined subcategory not allowed', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
                 categoryName: 'B',
@@ -444,7 +448,7 @@ describe('buildRawProjectConfiguration', () => {
             buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
-                { 'B:0': { fields: {} } },
+                { 'B:0': { fields: {}, groups: [] } },
                 {},
                 {},
                 {}
@@ -460,7 +464,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - cannot set type of common in library categories', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
@@ -479,7 +483,7 @@ describe('buildRawProjectConfiguration', () => {
             buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
-                { 'A:0': { fields: {} } },
+                { 'A:0': { fields: {}, groups: [] } },
                 commonFields,
                 {},
                 {}
@@ -495,10 +499,10 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - cannot set type of common in custom categories', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const customCategories: Map<CustomCategoryDefinition> = {
-            'A': { fields: { aCommon: { inputType: 'text' } } }
+            'A': { fields: { aCommon: { inputType: 'text' } }, groups: [] }
         };
 
         try {
@@ -519,7 +523,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - common field not provided', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = {};
         const customCategories: Map<CustomCategoryDefinition> = {
             A: { fields: {}, commons: ['missing']}
@@ -543,7 +547,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - mix in commons in library category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
@@ -574,12 +578,12 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - mix in commons in custom category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const customCategories: Map<CustomCategoryDefinition> = {
             A: {
                 commons: ['aCommon'],
-                fields: { }
+                fields: {}
             }
         };
 
@@ -599,7 +603,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - add together commons from library and custom category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = {
             aCommon: { group: 'stem', inputType: 'input' },
             bCommon: { group: 'stem', inputType: 'input' }
@@ -641,7 +645,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('commons - use valuelistFromProjectField if defined in commons', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const commonFields = {
             aCommon: { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
         };
@@ -677,7 +681,7 @@ describe('buildRawProjectConfiguration', () => {
 
     it('field property validation - invalid input type', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
                 categoryName: 'A',
@@ -712,10 +716,12 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - missing input type in field of entirely new custom category', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }
+            A: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {};
-        const customCategories: Map<CustomCategoryDefinition> = { 'C': { parent: 'A', fields: { cField: {} } } };
+        const customCategories: Map<CustomCategoryDefinition> = {
+            C: { parent: 'A', fields: { cField: {} } }
+        };
 
         try {
             buildRawProjectConfiguration(
@@ -738,7 +744,7 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - missing input name in field of builtInCategory name - extension of supercategory', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {} }
+            A: { fields: {}, groups: [] }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -769,7 +775,7 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation  - extension of supercategory - inputType inherited from builtIn', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'input' } } }
+            A: { fields: { aField: { inputType: 'input' } }, groups: [] }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -798,7 +804,7 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - missing input type in field of library category - new subcategory', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }
+            A: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -830,7 +836,7 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - must not set field name on inherited field', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'input' } } }
+            A: { fields: { aField: { inputType: 'input' } }, groups: [] }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -859,7 +865,7 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - undefined property in library category field', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {} }
+            A: { fields: {}, groups: [] }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -890,12 +896,12 @@ describe('buildRawProjectConfiguration', () => {
     it('field property validation - undefined property in custom category field', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {} }
+            A: { fields: {}, groups: [] }
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
             'A': {
-                fields: { aField: { group: 'a'} as any }
+                fields: { aField: { xyz: 'a' } as any }
             }
         };
 
@@ -908,7 +914,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'custom', 'group'
+                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'custom', 'xyz'
             ]);
         }
     });
@@ -920,7 +926,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: 'input' }
-                }
+                },
+                groups: []
             }
         };
 
@@ -1052,7 +1059,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: InputType.TEXT }
-                }
+                },
+                groups: []
             }
         };
 
@@ -1094,7 +1102,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: 'text' }
-                }
+                },
+                groups: []
             }
         };
 
@@ -1104,7 +1113,6 @@ describe('buildRawProjectConfiguration', () => {
                     field1: {},
                     field2: { inputType: 'text' }
                 }
-                // TODO Set group as soon as it is allowed in custom categories
             }
         };
 
@@ -1124,7 +1132,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: InputType.TEXT }
-                }
+                },
+                groups: []
             }
         };
 
@@ -1178,7 +1187,10 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: FieldDefinition.InputType.TEXT }
-                }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ]
             }
         };
 
@@ -1223,8 +1235,7 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    // TODO Reactivate as soon as groups can be set in builtIn categories
-    /*it('set group labels', () => {
+    it('set group labels', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
@@ -1233,13 +1244,27 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {
                     field1: { inputType: FieldDefinition.InputType.TEXT },
                     field2: { inputType: FieldDefinition.InputType.TEXT }
-                }
+                },
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
             }
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
-            A: { fields: { field3: { inputType: FieldDefinition.InputType.TEXT }} },
-            B: { parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT }} }
+            A: {
+                fields: { field3: { inputType: FieldDefinition.InputType.TEXT } },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] },
+                    { name: Groups.PARENT, fields: ['field3'] }
+                ]
+            },
+            B: {
+                parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT } },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] },
+                    { name: Groups.PARENT, fields: ['field3'] },
+                    { name: Groups.CHILD, fields: ['field4'] }
+                ]
+            }
         };
 
         const languageConfigurations = {
@@ -1271,7 +1296,8 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('apply order', () => {
+    // TODO Reactivate as soon as categories order can be configured again
+    /*it('apply categories order', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             B: { fields: {} },
@@ -1295,7 +1321,7 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('apply order to children', () => {
+    it('apply categories order to children', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             B: { fields: {}, parent: 'D' },
@@ -1318,7 +1344,7 @@ describe('buildRawProjectConfiguration', () => {
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
-    });
+    });*/
 
 
     it('put relations into groups', () => {
@@ -1327,7 +1353,8 @@ describe('buildRawProjectConfiguration', () => {
             P: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
-                fields: {}
+                fields: {},
+                groups: []
             },
         };
 
@@ -1351,8 +1378,9 @@ describe('buildRawProjectConfiguration', () => {
             ]
         );
 
-        const parentGroup = result['P'].groups[0];
-        const childGroup = result['P'].children[0].groups[0];
+        // First group is always the (auto-generated) stem group, position group is expected as second group
+        const parentGroup = result['P'].groups[1];
+        const childGroup = result['P'].children[0].groups[1];
 
         expect(parentGroup.name).toEqual('position');
         expect(parentGroup.relations[0].name).toEqual('isAbove');
@@ -1367,7 +1395,8 @@ describe('buildRawProjectConfiguration', () => {
             P: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
-                fields: {}
+                fields: {},
+                groups: []
             },
         };
 
@@ -1390,14 +1419,18 @@ describe('buildRawProjectConfiguration', () => {
         const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
-        const parentGroup = result['P'].groups[0];
-        const childGroup = result['P'].children[0].groups[0];
 
+        // First group is always the (auto-generated) stem group, position group is expected as second group
+        const parentGroup = result['P'].groups[1];
+        const childGroup = result['P'].children[0].groups[1];
+
+        expect(parentGroup.name).toEqual('position');
         expect(parentGroup.fields[0].name).toEqual('geometry');
         expect(parentGroup.fields[0].label.en).toEqual('Geometry');
+        expect(childGroup.name).toEqual('position');
         expect(childGroup.fields[0].name).toEqual('geometry');
         expect(childGroup.fields[0].label.en).toEqual('Geometry');
-    });*/
+    });
 
 
     it('link parent and child instances', () => {
@@ -1406,7 +1439,8 @@ describe('buildRawProjectConfiguration', () => {
             P: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
-                fields: {}
+                fields: {},
+                groups: []
             },
         };
 
@@ -1435,10 +1469,12 @@ describe('buildRawProjectConfiguration', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
-                fields: {}
+                fields: {},
+                groups: []
             },
             B: {
-                fields: {}
+                fields: {},
+                groups: []
             }
         };
 

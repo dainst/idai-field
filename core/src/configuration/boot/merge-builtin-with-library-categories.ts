@@ -56,4 +56,5 @@ function merge(target: any, source: any) {
     }
 
     if (source.libraryId) target.libraryId = source.libraryId;
+    if (source.groups) target.groups = source.groups;
 }

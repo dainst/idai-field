@@ -81,6 +81,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
 
     target.defaultColor = target.color;
     if (source.color) target.color = source.color;
+    if (source.groups) target.groups = source.groups;
 
     return flow(
         source,

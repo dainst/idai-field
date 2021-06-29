@@ -1,7 +1,7 @@
-import {ProjectCategories} from '../../src/configuration/project-categories';
+import { sameset } from 'tsfun';
+import { ProjectCategories } from '../../src/configuration/project-categories';
 import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
-import {sameset} from 'tsfun';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
 import getImageCategoryNames = ProjectCategories.getImageCategoryNames;
@@ -10,8 +10,8 @@ import getOverviewTopLevelCategories = ProjectCategories.getOverviewToplevelCate
 import getOverviewCategoryNames = ProjectCategories.getOverviewCategoryNames;
 import getOverviewCategories = ProjectCategories.getOverviewCategories;
 import getFeatureCategoryNames = ProjectCategories.getFeatureCategoryNames;
-import {Forest, Named, Tree} from '../../src/tools';
-import {Category} from '../../src/model';
+import { Forest, Named, Tree } from '../../src/tools';
+import { Category } from '../../src/model';
 
 
 describe('ProjectCategories', () => {
@@ -21,7 +21,7 @@ describe('ProjectCategories', () => {
             { name: 'Image' },
             [
                 [
-                    {name: 'Drawing'},
+                    { name: 'Drawing' },
                     []
                 ]
             ]
@@ -30,7 +30,7 @@ describe('ProjectCategories', () => {
             { name: 'Operation' },
             [
                 [
-                    {name: 'Trench'},
+                    { name: 'Trench' },
                     []
                 ]
             ]
@@ -40,30 +40,30 @@ describe('ProjectCategories', () => {
             []
         ],
         [
-            {name: 'Inscription'},
+            { name: 'Inscription' },
             []
         ],
         [
-            {name: 'Type'},
+            { name: 'Type' },
             []
         ],
         [
-            {name: 'TypeCatalog'},
+            { name: 'TypeCatalog' },
             []
         ],
         [
-            {name: 'Project'},
+            { name: 'Project' },
             []
         ],
         [
-            {name: 'Find'},
+            { name: 'Find' },
             []
         ],
         [
-            {name: 'Feature'},
+            { name: 'Feature' },
             [
                 [
-                    {name: 'Architecture'},
+                    { name: 'Architecture' },
                     []
                 ]
             ]

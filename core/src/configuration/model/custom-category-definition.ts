@@ -1,14 +1,12 @@
 import { includedIn, isNot, Map, throws } from 'tsfun';
-import {Valuelists} from '../../model/valuelist-definition';
-import {Name} from '../../tools';
+import { Valuelists } from '../../model/valuelist-definition';
+import { Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';
 import { BaseCategoryDefinition, BaseFieldDefinition } from './base-category-definition';
 
 
 /**
- * CategoryDefinition, as provided by users.
- *
  * @author Daniel de Oliveira
  */
 export interface CustomCategoryDefinition extends BaseCategoryDefinition {
@@ -34,7 +32,9 @@ export module CustomFieldDefinition {
 }
 
 
-const VALID_CATEGORY_PROPERTIES = ['valuelists', 'positionValuelists', 'commons', 'color', 'hidden', 'parent', 'fields'];
+const VALID_CATEGORY_PROPERTIES = [
+    'valuelists', 'positionValuelists', 'commons', 'color', 'hidden', 'parent', 'fields', 'groups'
+];
 
 const VALID_FIELD_PROPERTIES = ['inputType', 'creationDate', 'createdBy'];
 

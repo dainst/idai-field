@@ -1,3 +1,4 @@
+import { Map } from 'tsfun';
 import { FieldDefinition } from '../model/field-definition';
 import { Groups } from '../model/group';
 import { RelationDefinition } from '../model/relation-definition';
@@ -100,7 +101,7 @@ export class BuiltInConfiguration {
     };
     
 
-    public builtInCategories: any = {
+    public builtInCategories: Map<BuiltinCategoryDefinition> = {
         Project: {
             fields: {
                 identifier: {
@@ -119,23 +120,57 @@ export class BuiltInConfiguration {
                 campaigns: {
                     inputType: FieldDefinition.InputType.MULTIINPUT
                 }
-            }
-        } as BuiltinCategoryDefinition,
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['shortName', 'shortDescription']
+                },
+                {
+                    name: Groups.PARENT,
+                    fields: ['staff', 'campaigns', 'coordinateReferenceSystem']
+                }
+            ]
+        },
         Operation: {
             supercategory: true,
             abstract: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         Building: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             parent: 'Operation'
         },
         Survey: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             parent: 'Operation'
         },
         Trench: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             parent: 'Operation'
         },
         Place: {
@@ -143,43 +178,95 @@ export class BuiltInConfiguration {
                 gazId: {
                     inputType: FieldDefinition.InputType.UNSIGNEDINT
                 }
-            }
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.PARENT,
+                    fields: ['gazId']
+                }
+            ],
         },
         Inscription: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             mustLieWithin: true
         },
         // Room is an idealized (non material) entity
         Room: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         // An idealized (non material) entity, must be created within a Room
         RoomWall: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             mustLieWithin: true
         },
         // An idealized (non material) entity, must be created within a Room
         RoomFloor: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             mustLieWithin: true
         },
         // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
             fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ],
             mustLieWithin: true
         },
         // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         Area: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         Feature: {
             supercategory: true,
@@ -191,7 +278,17 @@ export class BuiltInConfiguration {
                 dating: {
                     inputType: FieldDefinition.InputType.DATING,
                 }
-            }
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.TIME,
+                    fields: ['period', 'dating']
+                }
+            ]
         },
         Find: {
             supercategory: true,
@@ -200,11 +297,27 @@ export class BuiltInConfiguration {
                 instanceOf: {
                     inputType: 'instanceOf',
                 }
-            }
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.IDENTIFICATION,
+                    fields: ['instanceOf']
+                }
+            ]
         },
         Sample: {
             mustLieWithin: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         TypeCatalog: {
             supercategory: true,
@@ -213,12 +326,28 @@ export class BuiltInConfiguration {
                     inputType: FieldDefinition.InputType.DROPDOWN,
                     constraintIndexed: true,
                 }
-            }
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.IDENTIFICATION,
+                    fields: ['criterion']
+                }
+            ]
         },
         Type: {
             supercategory: true,
             mustLieWithin: true,
-            fields: {}
+            fields: {},
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                }
+            ]
         },
         Image: {
             supercategory: true,
@@ -250,8 +379,18 @@ export class BuiltInConfiguration {
                     visible: false,
                     editable: false
                 }
-            }
-        } as BuiltinCategoryDefinition,
+            },
+            groups: [
+                {
+                    name: Groups.STEM,
+                    fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.PARENT,
+                    fields: ['height', 'width']
+                }
+            ]
+        },
     };
 
 
@@ -516,7 +655,13 @@ export class BuiltInConfiguration {
             (this.builtInCategories as any)['Other'] = {
                 color: '#CC6600',
                 parent: 'Feature',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
         }
 
@@ -524,11 +669,23 @@ export class BuiltInConfiguration {
 
             (this.builtInCategories as any)['Wall_surface'] = {
                 color: '#ffff99',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
             (this.builtInCategories as any)['Drilling'] = {
                 color: '#08519c',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
             this.builtInRelations.push({
                 name: 'isRecordedIn',
@@ -549,20 +706,44 @@ export class BuiltInConfiguration {
                 userDefinedSubcategoriesAllowed: true,
                 abstract: true,
                 color: '#08306b',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
             (this.builtInCategories as any)['Profile'] = {
                 color: '#c6dbef',
                 parent: 'ProcessUnit',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
             (this.builtInCategories as any)['BuildingFloor'] = {
                 color: '#6600cc',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
             (this.builtInCategories as any)['SurveyBurial'] = {
                 color: '#45ff95',
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
 
             this.builtInRelations.push({
@@ -614,7 +795,13 @@ export class BuiltInConfiguration {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: false,
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
 
             (this.builtInCategories as any)['Building'] = {
@@ -622,9 +809,19 @@ export class BuiltInConfiguration {
                 parent: 'Operation',
                 fields: {
                     gazId: {
-                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                        inputType: FieldDefinition.InputType.UNSIGNEDINT,
                     }
-                }
+                },
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.PARENT,
+                        fields: ['gazId']
+                    }
+                ]
             };
 
             (this.builtInCategories as any)['Find'] = {
@@ -637,13 +834,33 @@ export class BuiltInConfiguration {
                     diameterPercentage: {
                         inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
                     },
-                }
+                },
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.IDENTIFICATION,
+                        fields: ['instanceOf']
+                    },
+                    {
+                        name: Groups.DIMENSION,
+                        fields: ['diameterPercentage']
+                    }
+                ]
             };
 
             (this.builtInCategories as any)['Impression'] = {
                 supercategory: false,
                 userDefinedSubcategoriesAllowed: false,
-                fields: {}
+                fields: {},
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'shortDescription']
+                    }
+                ]
             };
 
             this.builtInRelations.push({

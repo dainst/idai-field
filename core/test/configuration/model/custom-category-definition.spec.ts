@@ -1,5 +1,6 @@
-import {ConfigurationErrors} from '../../../src/configuration/boot';
-import {CustomCategoryDefinition} from '../../../src/configuration/model';
+import { ConfigurationErrors } from '../../../src/configuration/boot';
+import { CustomCategoryDefinition } from '../../../src/configuration/model';
+
 
 describe('CustomCategoryDefinition', () => {
 

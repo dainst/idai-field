@@ -1,5 +1,5 @@
 import { Map } from 'tsfun';
-import { BaseFieldDefinition, BaseCategoryDefinition } from './base-category-definition';
+import { BaseFieldDefinition, BaseCategoryDefinition, BaseGroupDefinition } from './base-category-definition';
 
 
 /**
@@ -14,6 +14,7 @@ export interface BuiltinCategoryDefinition extends BaseCategoryDefinition {
     commons?: string[];
     supercategory?: boolean,
     userDefinedSubcategoriesAllowed?: boolean,
+    groups: Array<BaseGroupDefinition>;
 
     /**
      * If set to true, a resource of this category can only be created inside another
@@ -26,6 +27,8 @@ export interface BuiltinCategoryDefinition extends BaseCategoryDefinition {
 
 export interface BuiltinFieldDefinition extends BaseFieldDefinition {
 
+    visible?: boolean;
+    editable?: boolean;
     valuelistFromProjectField?: string;
     allowOnlyValuesOfParent?: boolean;
 }

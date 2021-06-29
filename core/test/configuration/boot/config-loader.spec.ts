@@ -77,8 +77,8 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go(
-                { processor : { inputType: 'input' }},
-                { 'A': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
+                { processor : { inputType: 'input' } },
+                { 'A': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [],
                 {},
                 undefined,
@@ -123,7 +123,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 { processor: { inputType: 'input' } },
-                { 'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true } },
+                { 'A': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true } },
                 [],
                 {},
                 undefined,
@@ -171,10 +171,10 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 {
-                    'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true},
-                    'B': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true},
-                    'C': { fields: {}},
-                    'D': { fields: {}}
+                    'A': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true},
+                    'B': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true},
+                    'C': { fields: {}, groups: [] },
+                    'D': { fields: {}, groups: [] }
                 },
                 [
                     {
@@ -217,9 +217,10 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 {
-                    A: { fields: {}},
-                    B: { fields: {}},
-                    T: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }},
+                    A: { fields: {}, groups: [] },
+                    B: { fields: {}, groups: [] },
+                    T: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
+                },
                 [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
                 undefined, 'User');
         } catch(err) {
@@ -267,9 +268,9 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 {
-                    Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    A: { fields: {} },
-                    B: { fields: {} }
+                    Parent: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
+                    A: { fields: {}, groups: [] },
+                    B: { fields: {}, groups: [] }
                 },
                 [
                     { name: 'r1', domain: ['A'], range: ['B'] },
@@ -319,10 +320,10 @@ describe('ConfigLoader', () => {
         });
 
         const customCategories: Map<CustomCategoryDefinition> = {
-            'A': { fields: { fieldA1: { } } },
-            'B': { fields: { fieldB2: { inputType: 'boolean' } } },
-            'F': { fields: {} },
-            'G': { fields: {} }
+            'A': { fields: { fieldA1: { } }, groups: [] },
+            'B': { fields: { fieldB2: { inputType: 'boolean' } }, groups: [] },
+            'F': { fields: {}, groups: [] },
+            'G': { fields: {}, groups: [] }
         };
 
         applyConfig(
@@ -335,8 +336,8 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go({},
                 {
-                    'F': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    'G': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
+                    'F': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
+                    'G': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
                 undefined, 'User'
             );
 
@@ -372,14 +373,15 @@ describe('ConfigLoader', () => {
             }
         });
 
-        // TODO Define groups as soon as it's possible for custom categories
-
         const customCategories: Map<CustomCategoryDefinition> = {
             'B:0': {
                 parent: 'Find',
-                fields: { fieldC1: { inputType: 'boolean'} }
+                fields: { fieldB1: { inputType: 'boolean'} },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldB1'] }
+                ]
             },
-            'Find:0': { fields: {} }
+            'Find:0': { fields: {}, groups: [] }
         };
 
         applyConfig(
@@ -391,12 +393,21 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { 'Find': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
-                undefined, 'User'
+                {
+                    'Find': {
+                        fields: {},
+                        groups: [],
+                        userDefinedSubcategoriesAllowed: true,
+                        supercategory: true
+                    }
+                },
+                [], {}, undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0'].groups[0].fields.find(field => field.name == 'fieldC1')
-                .inputType).toEqual('boolean');
+            expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0']
+                .groups[0].fields
+                .find(field => field.name == 'fieldB1').inputType)
+                .toEqual('boolean');
 
         } catch(err) {
             fail(err);
@@ -415,7 +426,7 @@ describe('ConfigLoader', () => {
                 parent: 'Find',
                 commons: [],
                 valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'}}
+                fields: { fieldC1: { inputType: 'boolean'} }
             }
         };
 
@@ -448,14 +459,16 @@ describe('ConfigLoader', () => {
                 parent: 'Place',
                 commons: [],
                 valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'}}}
+                fields: { fieldC1: { inputType: 'boolean'} }
+            }
         };
 
         applyConfig(customFieldsConfiguration);
 
         try {
-            await configLoader.go({}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
-                undefined, 'User');
+            await configLoader.go({},
+                { Place: { fields: { fieldA1: { inputType: 'unsignedInt' } }, groups: [] } },
+                [], {}, undefined, 'User');
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
@@ -525,7 +538,7 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
+                { Parent: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [], {},
                 undefined, 'User'
             );
@@ -586,8 +599,8 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { Parent: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }}, [], {},
-                undefined, 'User'
+                { Parent: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true } },
+                [], {}, undefined, 'User'
             );
 
             expect(pconf.getCategoriesArray().length).toBe(2);
@@ -627,7 +640,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go({}, { A: { fields: {} }}, [], {},
+            pconf = await configLoader.go({}, { A: { fields: {}, groups: [] } }, [], {},
                 undefined, 'User'
             );
             const result = pconf.getCategory('A').groups[0];
@@ -677,8 +690,8 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 {
-                    A: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    B: { fields: {} }
+                    A: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
+                    B: { fields: {}, groups: [] }
                 },
                 [],
                 {},

@@ -1,5 +1,5 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { Category, CategoryDefinition, FieldDefinition, Group } from '../../model';
+import { Category, CategoryDefinition, FieldDefinition, Group, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { ConfigurationErrors } from './configuration-errors';
@@ -54,8 +54,10 @@ function createGroups(category: Category): Category {
         stemGroup = Group.create('stem');
         category.groups.unshift(stemGroup);
     }
+    stemGroup.fields.unshift(category[TEMP_FIELDS][Resource.CATEGORY]);
 
-    const fieldsInGroups: string[] = flatten(1, category[TEMP_GROUPS].map(group => group.fields));
+    const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[])
+        .concat(Resource.CATEGORY);
     const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
         .filter(fieldName => !fieldsInGroups.includes(fieldName))
         .map(fieldName => category[TEMP_FIELDS][fieldName]);

@@ -120,12 +120,10 @@ export module FieldsViewUtil {
     }
 
 
-    export async function getGroupsForResource(
-        resource: Resource,
-        projectConfiguration: ProjectConfiguration,
-        datastore: Datastore,
-        languages?: string[]
-    ): Promise<Array<FieldsViewGroup>> {
+    export async function getGroupsForResource(resource: Resource,
+                                               projectConfiguration: ProjectConfiguration,
+                                               datastore: Datastore,
+                                               languages?: string[]): Promise<Array<FieldsViewGroup>> {
 
         return await aFlow(
             FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
@@ -136,12 +134,9 @@ export module FieldsViewUtil {
     }
 
 
-    export function getObjectLabel(
-        object: any,
-        field: FieldsViewField,
-        getTranslation: (key: string) => string,
-        formatDecimal: (value: number) => string
-    ): string {
+    export function getObjectLabel(object: any, field: FieldsViewField,
+                                   getTranslation: (key: string) => string,
+                                   formatDecimal: (value: number) => string): string {
 
         if (object.label) {
             return object.label;

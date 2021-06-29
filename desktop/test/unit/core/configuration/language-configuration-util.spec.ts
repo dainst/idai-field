@@ -48,8 +48,7 @@ import { CustomLanguageConfigurations,
         defaultLabel: fieldLabel,
         description: fieldDescription,
         defaultDescription: fieldDescription,
-        inputType: 'text',
-        group: 'stem'
+        inputType: 'text'
     };
 
 

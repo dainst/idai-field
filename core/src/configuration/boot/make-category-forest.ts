@@ -49,13 +49,21 @@ function createGroups(category: Category): Category {
         return group;
     });
 
+    completeStemGroup(category);
+
+    return category;
+}
+
+
+function completeStemGroup(category: Category) {
+
     let stemGroup: Group = category.groups.find(group => group.name === 'stem');
     if (!stemGroup) {
         stemGroup = Group.create('stem');
         category.groups.unshift(stemGroup);
     }
 
-    const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[])
+    const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
 
     if (category[TEMP_FIELDS][Resource.CATEGORY]) {
         stemGroup.fields.unshift(category[TEMP_FIELDS][Resource.CATEGORY]);
@@ -67,9 +75,8 @@ function createGroups(category: Category): Category {
         .map(fieldName => category[TEMP_FIELDS][fieldName]);
 
     stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups);
-
-    return category;
 }
+
 
 
 function addChildCategory(categoryTree: Forest<Category>,

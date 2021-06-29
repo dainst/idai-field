@@ -54,10 +54,14 @@ function createGroups(category: Category): Category {
         stemGroup = Group.create('stem');
         category.groups.unshift(stemGroup);
     }
-    stemGroup.fields.unshift(category[TEMP_FIELDS][Resource.CATEGORY]);
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[])
-        .concat(Resource.CATEGORY);
+
+    if (category[TEMP_FIELDS][Resource.CATEGORY]) {
+        stemGroup.fields.unshift(category[TEMP_FIELDS][Resource.CATEGORY]);
+        fieldsInGroups.push(Resource.CATEGORY);
+    }
+
     const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
         .filter(fieldName => !fieldsInGroups.includes(fieldName))
         .map(fieldName => category[TEMP_FIELDS][fieldName]);

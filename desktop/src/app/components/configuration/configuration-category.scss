@@ -69,7 +69,8 @@ configuration-category {
     }
 
     .card {
-      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-bottom: 01px;
 
       .value-col {
           height: 1.69rem;
@@ -118,6 +119,14 @@ configuration-category {
         }
       }
     }
+
+    .field-element:first-of-type .card {
+      margin-top: 1px;
+    }
+  
+    .field-element:last-of-type .card {
+      margin-bottom: 1px;
+    }
   }
 
   .category-editor {
@@ -136,6 +145,8 @@ configuration-category {
 
   .field-drag-element-placeholder {
     min-height: 55px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background: #ccc;
     border: dotted 3px #999;
     transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);

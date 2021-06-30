@@ -1,6 +1,6 @@
 export { Action } from './action';
 export { Category } from './category';
-export { CategoryDefinition } from './category-definition';
+export { CategoryDefinition, GroupDefinition } from './category-definition';
 export { Constraint } from './constraint';
 export { Dating } from './dating';
 export { Dimension } from './dimension';

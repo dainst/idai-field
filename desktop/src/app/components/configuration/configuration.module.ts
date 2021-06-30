@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ProjectConfigurationComponent } from './project-configuration.component';
@@ -13,6 +14,7 @@ import { AddFieldModalComponent } from './add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AddCategoryModalComponent } from './add-category-modal.component';
+import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { AddCategoryModalComponent } from './add-category-modal.component';
         FormsModule,
         NgbModule,
         WidgetsModule,
-        ColorPickerModule
+        ColorPickerModule,
+        DragDropModule
     ],
     declarations: [
         ProjectConfigurationComponent,
@@ -32,7 +35,8 @@ import { AddCategoryModalComponent } from './add-category-modal.component';
         AddFieldModalComponent,
         AddCategoryModalComponent,
         FieldEditorModalComponent,
-        CategoryEditorModalComponent
+        CategoryEditorModalComponent,
+        ConfigurationFieldDragElement
     ],
     exports: [
         ProjectConfigurationComponent

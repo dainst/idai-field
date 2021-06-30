@@ -49,15 +49,25 @@
     </div>
 
     <div class="col-10 content" [class.shortened]="description">
-        <div class="fields-container">
-            <div *ngFor="let field of getFields()">
+        <div class="fields-container"
+            cdkDropList (cdkDropListDropped)="onDrop($event)">
+            <div *ngFor="let field of getFields()"
+                 cdkDrag cdkDragBoundary="#project-configuration-content"
+                 [cdkDragData]="field.name">
                 <configuration-field [field]="field"
-                                     [customConfigurationDocument]="customConfigurationDocument"
                                      [category]="category"
+                                     [customConfigurationDocument]="customConfigurationDocument"
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
                                      (onEdited)="onEdited.emit($event)">
                 </configuration-field>
+                <div *cdkDragPreview>
+                    <configuration-field-drag-element [field]="field"
+                                                      [category]="category"
+                                                      [hidden]="isHidden(field)">
+                    </configuration-field-drag-element>
+                </div>
+                <div *cdkDragPlaceholder class="field-drag-element-placeholder"></div>
             </div>
             <div *ngFor="let relation of getRelations()">
                 <configuration-relation [relation]="relation"

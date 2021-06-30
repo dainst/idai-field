@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { and, any, compose, flatten, includedIn, is, isnt, map, not, on, or, Predicate, to } from 'tsfun';
+import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
-    RelationDefinition, Relations, Resource } from 'idai-field-core';
+    RelationDefinition, Resource, Document, GroupDefinition, Inplace, ProjectConfiguration, AppConfigurator, getConfigurationName } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
@@ -11,6 +12,8 @@ import { CategoryEditorModalComponent } from './editor/category-editor-modal.com
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './project-configuration.component';
 import { AngularUtility } from '../../angular/angular-utility';
+import { SettingsProvider } from '../../core/settings/settings-provider';
+import { Messages } from '../messages/messages';
 
 
 @Component({
@@ -39,7 +42,10 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     constructor(private menuService: MenuService,
-                private modalService: NgbModal) {}
+                private modalService: NgbModal,
+                private appConfigurator: AppConfigurator,
+                private settingsProvider: SettingsProvider,
+                private messages: Messages) {}
     
 
     ngOnChanges(changes: SimpleChanges) {
@@ -160,6 +166,36 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    public async onDrop(event: CdkDragDrop<any>) {
+
+        const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+            this.category, this.permanentlyHiddenFields
+        );
+        const selectedGroup: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
+        Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
+    
+        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        clonedConfigurationDocument.resource
+            .categories[this.category.libraryId ?? this.category.name]
+            .groups = groups;
+        
+        try {
+            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                clonedConfigurationDocument
+            );
+            this.onEdited.emit({ 
+                newProjectConfiguration,
+                newCustomConfigurationDocument: clonedConfigurationDocument
+            });
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
         }
     }
 

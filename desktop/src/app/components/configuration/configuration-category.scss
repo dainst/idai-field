@@ -117,4 +117,10 @@ configuration-category {
     transform: translate(-20px, -30px);
     z-index: 1001;
   }
+
+  .field-drag-element-placeholder {
+    min-height: 55px;
+    background: #ccc;
+    border: dotted 3px #999;
+  }
 }

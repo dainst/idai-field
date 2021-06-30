@@ -1,0 +1,12 @@
+<div *ngIf="field && category" class="card"
+     [class.bg-warning]="isCustomField()"
+     [class.bg-secondary]="hidden"
+     [class.text-white]="hidden">
+    <div class="card-header" [class.parent-element]="parentField">
+        <category-icon *ngIf="parentField"
+            [size]="28"
+            [category]="category.parentCategory"></category-icon>
+        <b *ngIf="label"> {{label}}</b>
+        <code> {{field.name}}</code>
+    </div>
+</div>

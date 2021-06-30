@@ -152,6 +152,10 @@ configuration-category {
     transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
   }
 
+  .group-drop-list .field-drag-element-placeholder {
+    display: none;
+  }
+
   .cdk-drag-animating {
     transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
   }

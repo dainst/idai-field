@@ -64,6 +64,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
     
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
+    public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
+
     public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
 
     public isHidden = (field: FieldDefinition) =>
@@ -170,13 +172,21 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public async onDrop(event: CdkDragDrop<any>) {
+    public async onDrop(event: CdkDragDrop<any>, targetGroup?: Group) {
 
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
         const selectedGroup: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
-        Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
+
+        if (targetGroup) {
+            if (targetGroup.name === selectedGroup.name) return;
+            const fieldName: string = selectedGroup.fields.splice(event.previousIndex, 1)[0];
+            const targetGroupDefinition: GroupDefinition = groups.find(group => group.name === targetGroup.name);
+            targetGroupDefinition.fields.push(fieldName);
+        } else {
+            Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
+        }
     
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource

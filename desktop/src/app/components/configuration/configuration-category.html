@@ -37,7 +37,10 @@
 <div class="row">
     <div class="col-2 groups">
         <ul class="nav nav-pills flex-column">
-            <li *ngFor="let group of getGroups()" class="nav flex-column">
+            <li *ngFor="let group of getGroups()"
+                [id]="'group-' + group.name" class="nav flex-column group-drop-list"
+                cdkDropList (cdkDropListDropped)="onDrop($event, group)"
+                [cdkDropListConnectedTo]="['fields-list']">
                 <a class="nav-link group-button"
                         [class.active]="selectedGroup === group.name"
                         (click)="selectedGroup = group.name">
@@ -49,8 +52,9 @@
     </div>
 
     <div class="col-10 content" [class.shortened]="description">
-        <div class="fields-container"
-            cdkDropList (cdkDropListDropped)="onDrop($event)">
+        <div id="fields-list" class="fields-container"
+            cdkDropList (cdkDropListDropped)="onDrop($event)"
+            [cdkDropListConnectedTo]="getGroupListIds()">
             <div *ngFor="let field of getFields()" class="field-element"
                  cdkDrag cdkDragBoundary="#project-configuration-content"
                  [cdkDragData]="field.name">

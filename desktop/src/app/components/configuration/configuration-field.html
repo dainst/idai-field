@@ -1,12 +1,12 @@
 <div *ngIf="field && category" class="card"
-     [class.bg-warning]="field.source === 'custom'"
+     [class.bg-warning]="isCustomField()"
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden">
     <div class="card-header" [class.parent-element]="parentField">
         <category-icon *ngIf="parentField"
             [size]="28"
             [category]="category.parentCategory"></category-icon>
-        <span *ngIf="field.source === 'custom'"
+        <span *ngIf="isCustomField()"
             class="mdi mdi-alert-circle-outline"
             ngbTooltip="Projektspezifisches Feld"
             i18n-ngbTooltip="@@config.source.custom"

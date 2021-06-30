@@ -78,6 +78,18 @@ configuration-category {
       .card-header {
         height: 55px;
 
+        .mdi-cursor-move {
+          color: #5f5e5e;
+          position: relative;
+          top: 3px;
+          right: 6px;
+        }
+    
+        &.parent-element .mdi-cursor-move {
+          top: unset;
+          bottom: 2px;
+        }
+
         .category-icon {
           position: relative;
           top: 2px;
@@ -85,11 +97,15 @@ configuration-category {
           margin-right: 2px;
         }
 
+        &.parent-element .category-icon {
+          margin-left: 12px;
+        }
+
         b,
         code,
         .mdi-alert-circle-outline {
           position: relative;
-          top: 4px;
+          top: 3px;
         }
     
         &.parent-element {

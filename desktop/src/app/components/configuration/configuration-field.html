@@ -3,6 +3,7 @@
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden">
     <div class="card-header" [class.parent-element]="parentField">
+        <ng-content></ng-content>
         <category-icon *ngIf="parentField"
             [size]="28"
             [category]="category.parentCategory"></category-icon>

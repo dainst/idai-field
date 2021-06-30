@@ -60,6 +60,7 @@
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
                                      (onEdited)="onEdited.emit($event)">
+                    <span class="mdi mdi-cursor-move" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>
                     <configuration-field-drag-element [field]="field"

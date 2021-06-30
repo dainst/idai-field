@@ -122,5 +122,14 @@ configuration-category {
     min-height: 55px;
     background: #ccc;
     border: dotted 3px #999;
+    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drag-animating {
+    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .fields-container.cdk-drop-list-dragging .field-element:not(.cdk-drag-placeholder) {
+    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
   }
 }

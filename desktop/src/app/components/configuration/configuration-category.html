@@ -51,7 +51,7 @@
     <div class="col-10 content" [class.shortened]="description">
         <div class="fields-container"
             cdkDropList (cdkDropListDropped)="onDrop($event)">
-            <div *ngFor="let field of getFields()"
+            <div *ngFor="let field of getFields()" class="field-element"
                  cdkDrag cdkDragBoundary="#project-configuration-content"
                  [cdkDragData]="field.name">
                 <configuration-field [field]="field"

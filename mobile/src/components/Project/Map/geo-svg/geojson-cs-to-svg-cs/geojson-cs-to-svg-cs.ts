@@ -1,6 +1,6 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-import { identityMatrix4, Matrix4, matrixVecMul4, multiply4, processTransform3d } from 'react-native-redash';
+import { identityMatrix4, Matrix4, matrixVecMul4, processTransform3d } from 'react-native-redash';
 import { GeometryBoundings } from './cs-transform-utils';
 import { getViewPortTransform, ViewBox, ViewPort } from './viewport-utils/viewport-utils';
 
@@ -59,7 +59,7 @@ export const processTransform2d = (transformationMatrix: Matrix4, position: Posi
 export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null, viewPort: ViewPort | undefined): Matrix4 => {
 
     if(!geoBoundings || !viewPort) return identityMatrix4;
-
+    //console.log('here! in transform',geoBoundings, viewPort);
     const { minX, minY, maxX, maxY } = geoBoundings;
     const viewBox: ViewBox = [minX, minY, maxX - minX, maxY - minY];
 
@@ -71,8 +71,8 @@ export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null
         [0, 0, 1, 0],
         [0,0,0,1]
     ];
-
-    return multiply4(correctYCoordinateDirection(Math.max(viewPort.width, viewPort.height)), worldToViewPort);
+    return worldToViewPort;
+    //return multiply4(correctYCoordinateDirection(Math.max(viewPort.width, viewPort.height)), worldToViewPort);
 };
 
 

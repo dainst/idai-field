@@ -10,7 +10,7 @@ import { ToastType } from '../common/Toast/ToastProvider';
 import AddModal from './AddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
-import Map from './Map/Map';
+import NMap from './Map/NMap';
 import SearchBar from './SearchBar';
 
 interface DocumentsMapProps {
@@ -128,7 +128,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 onBarCodeScanned
             } } />
             <View style={ styles.container }>
-                <Map
+                <NMap
                     repository={ repository }
                     selectedDocumentIds={ useMemo(() => documents.map(doc => doc.resource.id),[documents]) }
                     config={ config }

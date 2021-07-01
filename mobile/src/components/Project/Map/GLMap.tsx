@@ -34,6 +34,7 @@ const GLMap: React.FC<GLMapProps> = (props) => {
     useEffect(() => {
         
         if(props.viewPort){
+            scene.clear();
             setCamera(new OrthographicCamera(
                 props.viewPort.x,
                 Math.max(props.viewPort.width, props.viewPort.height ),
@@ -42,7 +43,7 @@ const GLMap: React.FC<GLMapProps> = (props) => {
         }
 
 
-    },[props.geoBoundings, props.viewPort]);
+    },[props.geoBoundings, props.viewPort, scene]);
 
     useEffect(() => {
         setTransformMatrix( setupTransformationMatrix(props.geoBoundings,props.viewPort));

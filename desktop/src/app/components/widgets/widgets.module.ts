@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DocumentPickerComponent } from './document-picker.component';
 import { Loading } from './loading';
@@ -28,7 +29,8 @@ import { EditSaveDialogComponent } from './edit-save-dialog.component';
         NgbModule,
         FormsModule,
         RouterModule,
-        IdaiMessagesModule
+        IdaiMessagesModule,
+        DragDropModule
     ],
     declarations: [
         DocumentPickerComponent,

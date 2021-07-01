@@ -1,35 +1,59 @@
-<ul class="category-picker list-group">
+<ul class="category-picker list-group"
+    cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
+    (cdkDropListDropped)="onDrop($event)">
     <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
         class="list-group-item popover-item"
         (click)="pickCategory(undefined)"
         [ngClass]="{ 'selected-category': !selectedCategories || selectedCategories.length === 0 }">
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
     </li>
-    <li *ngFor="let category of categories"
-        class="list-group-item popover-item"
-        [ngClass]="{
-            'selected-category': selectedCategories && selectedCategories.indexOf(category.name) > -1,
-            'abstract-category': category.isAbstract,
-            'child-category': isChildCategory(category),
-            'parent-selected': isParentSelected(category),
-            'custom-category': highlightCustomCategories && isCustomCategory(category)
+    <span *ngFor="let parentCategory of topLevelCategoriesArray"
+          cdkDrag cdkDragBoundary=".category-picker" cdkDragLockAxis="y">
+        <li class="list-group-item popover-item"
+            [ngClass]="{
+                'selected-category': selectedCategories && selectedCategories.indexOf(parentCategory.name) > -1,
+                'abstract-category': parentCategory.isAbstract,
+                'custom-category': highlightCustomCategories && isCustomCategory(parentCategory)
         }">
-        <div id="choose-category-option-{{getCategoryId(category)}}"
-             class="category-item" [class.short-category-item]="isCreateButtonVisible(category)"
-             (click)="pickCategory(category)">
-            <category-icon [category]="category.name" size="30"></category-icon>
-            <div class="category-label">
-                {{getCategoryLabel(category)}}
-                <span *ngIf="highlightCustomCategories && hasCustomFields(category)"> *</span>
+            <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
+                class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
+                (click)="pickCategory(parentCategory)">
+                <category-icon [category]="parentCategory.name" size="30"></category-icon>
+                <div class="category-label">
+                    {{getCategoryLabel(parentCategory)}}
+                    <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
+                </div>
             </div>
-        </div>
-        <button *ngIf="isCreateButtonVisible(category)"
-                class="btn-link add-subcategory-button"
-                (click)="onCreateSubcategory.emit(category)"
-                container="body"
-                ngbTooltip="Unterkategorie hinzufügen"
-                i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory">
-            <span class="mdi mdi-plus-circle text-success"></span>
-        </button>
-    </li>
+            <button *ngIf="isCreateButtonVisible(parentCategory)"
+                    class="btn-link add-subcategory-button"
+                    (click)="onCreateSubcategory.emit(parentCategory)"
+                    container="body"
+                    ngbTooltip="Unterkategorie hinzufügen"
+                    i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory">
+                <span class="mdi mdi-plus-circle text-success"></span>
+            </button>
+        </li>
+        <ul class="category-children-list" 
+            cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
+            (cdkDropListDropped)="onDrop($event, parentCategory)">
+            <li *ngFor="let childCategory of parentCategory.children"
+                cdkDrag cdkDragBoundary=".category-children-list" cdkDragLockAxis="y"
+                class="list-group-item popover-item child-category"
+                [ngClass]="{
+                    'selected-category': selectedCategories && selectedCategories.indexOf(childCategory.name) > -1,
+                    'abstract-category': childCategory.isAbstract,
+                    'parent-selected': isParentSelected(childCategory),
+                    'custom-category': highlightCustomCategories && isCustomCategory(childCategory)
+            }">
+                <div id="choose-category-option-{{getCategoryId(childCategory)}}"
+                    class="category-item" (click)="pickCategory(childCategory)">
+                    <category-icon [category]="childCategory.name" size="30"></category-icon>
+                    <div class="category-label">
+                        {{getCategoryLabel(childCategory)}}
+                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </span>
 </ul>

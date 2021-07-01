@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Datastore, ConfigurationDocument, ProjectConfiguration,  } from 'idai-field-core';
+import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator, getConfigurationName } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
@@ -65,6 +65,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
+                private appConfigurator: AppConfigurator,
                 private i18n: I18n) {}
 
 
@@ -103,6 +104,28 @@ export class ProjectConfigurationComponent implements OnInit {
         this.projectConfiguration.update(configurationChange.newProjectConfiguration);
         this.loadCategories();
         this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+    }
+
+
+    public async setNewCategoriesOrder(newOrder: string[]) {
+    
+        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        clonedConfigurationDocument.resource.order = newOrder;
+        
+        try {
+            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                clonedConfigurationDocument
+            );
+            this.saveChanges({ 
+                newProjectConfiguration,
+                newCustomConfigurationDocument: clonedConfigurationDocument
+            });
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+        }
     }
 
 

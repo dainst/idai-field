@@ -18,13 +18,15 @@
         <div id="project-configuration-content" class="row">
             <div class="col-2 sidebar">
                 <category-picker *ngIf="topLevelCategoriesArray"
-                                [toplevelCategoriesArray]="topLevelCategoriesArray"
+                                [topLevelCategoriesArray]="topLevelCategoriesArray"
                                 [selectedCategories]="[selectedCategory.name]"
                                 [allowPickingAbstractCategories]="true"
                                 [highlightCustomCategories]="true"
                                 [showCreateButtons]="true"
+                                [allowChangingOrder]="true"
                                 (onCategoryPicked)="selectCategory($event)"
-                                (onCreateSubcategory)="addSubcategory($event)"></category-picker>
+                                (onCreateSubcategory)="addSubcategory($event)"
+                                (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
             </div>
 
             <div class="col-10">

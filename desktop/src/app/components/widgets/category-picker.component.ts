@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { on, any, is, compose, map, to, Predicate } from 'tsfun';
-import { Named, FieldDefinition, Category, LabelUtil } from 'idai-field-core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { any, is, compose, map, to, Predicate } from 'tsfun';
+import { FieldDefinition, Category, LabelUtil, Named, Inplace } from 'idai-field-core';
 
 
 @Component({
@@ -10,30 +11,19 @@ import { Named, FieldDefinition, Category, LabelUtil } from 'idai-field-core';
 /**
  * @author Thomas Kleinke
  */
-export class CategoryPickerComponent implements OnChanges {
+export class CategoryPickerComponent {
 
-    @Input() toplevelCategoriesArray: Array<Category>;
+    @Input() topLevelCategoriesArray: Array<Category>;
     @Input() selectedCategories: string[];
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
     @Input() showCreateButtons: boolean = false;
+    @Input() allowChangingOrder: boolean = false;
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
-
-    public categories: Array<Category> = [];
-
-
-    ngOnChanges() {
-
-        this.categories = [];
-
-        this.toplevelCategoriesArray.forEach(category => {
-            this.categories.push(category);
-            if (category.children) this.categories = this.categories.concat(category.children);
-        });
-    }
+    @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
 
     public getCategoryLabel = (category: Category): string => LabelUtil.getLabel(category);
@@ -50,17 +40,35 @@ export class CategoryPickerComponent implements OnChanges {
     }
 
 
-    public getCategoryId(category: Category): string {
+    public onDrop(event: CdkDragDrop<any>, parentCategory?: Category) {
 
-        return (this.isChildCategory(category) ? (category.parentCategory as Category).name.toLowerCase() + '-' : '')
-            + category.name.toLowerCase();
+        if (parentCategory) {
+            Inplace.moveInArray(
+                this.topLevelCategoriesArray
+                    .find(category => category.name === parentCategory.name)
+                    .children,
+                event.previousIndex,
+                event.currentIndex
+            );
+        } else {
+            Inplace.moveInArray(
+                this.topLevelCategoriesArray,
+                event.previousIndex,
+                event.currentIndex
+            );
+        }
+
+        this.onOrderChanged.emit(this.getCategoriesOrder());
     }
 
 
-    public isChildCategory(category: Category): boolean {
+    public getCategoryId(category: Category): string {
 
-        return category.parentCategory !== undefined
-            && this.categories.find(on(Named.NAME)(category.parentCategory)) !== undefined;
+        return (
+            category.parentCategory
+                ? (category.parentCategory as Category).name.toLowerCase() + '-'
+                : ''
+        ) + category.name.toLowerCase();
     }
 
 
@@ -82,4 +90,14 @@ export class CategoryPickerComponent implements OnChanges {
         map(to(FieldDefinition.SOURCE)),
         any(is(FieldDefinition.Source.CUSTOM))
     );
+
+
+    private getCategoriesOrder(): string[] {
+
+        return this.topLevelCategoriesArray.reduce((order, category) => {
+            order.push(category.name);
+            if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
+            return order;
+        }, []);
+    }
 }

@@ -36,10 +36,10 @@
 
 <div class="row">
     <div class="col-2 groups">
-        <ul class="nav nav-pills flex-column"
+        <ul class="nav nav-pills flex-column groups-container"
             cdkDropList (cdkDropListDropped)="onGroupDrop($event)">
             <li *ngFor="let group of getGroups()"
-                class="nav flex-column"
+                class="nav flex-column group-element"
                 cdkDrag cdkDragBoundary=".groups" cdkDragLockAxis="y">
                 <a [id]="'group-' + group.name" class="nav-link group-button"
                    cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"

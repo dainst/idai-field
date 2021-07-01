@@ -170,7 +170,8 @@ configuration-category {
     transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  .fields-container.cdk-drop-list-dragging .field-element:not(.cdk-drag-placeholder) {
+  .fields-container.cdk-drop-list-dragging .field-element:not(.cdk-drag-placeholder),
+  .groups-container.cdk-drop-list-dragging .group-element:not(.cdk-drag-placeholder) {
     transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 }

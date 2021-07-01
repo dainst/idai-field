@@ -49,6 +49,10 @@
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>
+                <div *cdkDragPreview class="group-drag-preview">
+                    {{getGroupLabel(group)}}
+                    <span *ngIf="hasCustomFields(group)"> *</span>
+                </div>
                 <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>
         </ul>

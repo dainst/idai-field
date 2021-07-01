@@ -188,10 +188,16 @@ export class ConfigurationCategoryComponent implements OnChanges {
             Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
     
+        await this.saveNewGroupsConfiguration(groups);
+    }
+
+
+    private async saveNewGroupsConfiguration(newGroups: Array<GroupDefinition>) {
+
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name]
-            .groups = groups;
+            .groups = newGroups;
         
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(

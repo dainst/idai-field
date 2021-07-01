@@ -14,7 +14,7 @@
                 'selected-category': selectedCategories && selectedCategories.indexOf(parentCategory.name) > -1,
                 'abstract-category': parentCategory.isAbstract,
                 'custom-category': highlightCustomCategories && isCustomCategory(parentCategory)
-        }">
+            }">
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
                 class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
                 (click)="pickCategory(parentCategory)">
@@ -33,6 +33,14 @@
                 <span class="mdi mdi-plus-circle text-success"></span>
             </button>
         </li>
+        <div *cdkDragPreview class="category-drag-preview">
+            <category-icon [category]="parentCategory.name" size="30"></category-icon>
+            <div class="category-label">
+                {{getCategoryLabel(parentCategory)}}
+                <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
+            </div>
+        </div>
+        <div *cdkDragPlaceholder class="category-drag-placeholder"></div>
         <ul class="category-children-list" 
             cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
             (cdkDropListDropped)="onDrop($event, parentCategory)">
@@ -44,7 +52,7 @@
                     'abstract-category': childCategory.isAbstract,
                     'parent-selected': isParentSelected(childCategory),
                     'custom-category': highlightCustomCategories && isCustomCategory(childCategory)
-            }">
+                }">
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"
                     class="category-item" (click)="pickCategory(childCategory)">
                     <category-icon [category]="childCategory.name" size="30"></category-icon>
@@ -53,6 +61,14 @@
                         <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
                     </div>
                 </div>
+                <div *cdkDragPreview class="category-drag-preview">
+                    <category-icon [category]="childCategory.name" size="30"></category-icon>
+                    <div class="category-label">
+                        {{getCategoryLabel(childCategory)}}
+                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
+                    </div>
+                </div>
+                <div *cdkDragPlaceholder class="category-drag-placeholder"></div>
             </li>
         </ul>
     </span>

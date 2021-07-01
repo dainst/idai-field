@@ -149,7 +149,7 @@ configuration-category {
     margin-bottom: 10px;
     background: #ccc;
     border: dotted 3px #999;
-    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+    transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 
   .group-drop-list .field-drag-element-placeholder {
@@ -157,10 +157,10 @@ configuration-category {
   }
 
   .cdk-drag-animating {
-    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+    transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 
   .fields-container.cdk-drop-list-dragging .field-element:not(.cdk-drag-placeholder) {
-    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+    transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 }

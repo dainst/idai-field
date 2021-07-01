@@ -143,16 +143,26 @@ configuration-category {
     z-index: 1001;
   }
 
-  .field-drag-element-placeholder {
-    min-height: 55px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .field-drag-placeholder,
+  .group-drag-placeholder {
     background: #ccc;
     border: dotted 3px #999;
     transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  .group-drop-list .field-drag-element-placeholder {
+  .field-drag-placeholder {
+    min-height: 55px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .group-drag-placeholder {
+    min-height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .group-button .field-drag-placeholder {
     display: none;
   }
 

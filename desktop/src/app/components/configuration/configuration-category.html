@@ -36,24 +36,27 @@
 
 <div class="row">
     <div class="col-2 groups">
-        <ul class="nav nav-pills flex-column">
+        <ul class="nav nav-pills flex-column"
+            cdkDropList (cdkDropListDropped)="onGroupDrop($event)">
             <li *ngFor="let group of getGroups()"
-                [id]="'group-' + group.name" class="nav flex-column group-drop-list"
-                cdkDropList (cdkDropListDropped)="onDrop($event, group)"
-                [cdkDropListConnectedTo]="['fields-list']">
-                <a class="nav-link group-button"
+                class="nav flex-column"
+                cdkDrag cdkDragBoundary=".groups" cdkDragLockAxis="y">
+                <a [id]="'group-' + group.name" class="nav-link group-button"
+                   cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"
+                   [cdkDropListConnectedTo]="['fields-list']"
                         [class.active]="selectedGroup === group.name"
                         (click)="selectedGroup = group.name">
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>
+                <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>
         </ul>
     </div>
 
     <div class="col-10 content" [class.shortened]="description">
         <div id="fields-list" class="fields-container"
-            cdkDropList (cdkDropListDropped)="onDrop($event)"
+            cdkDropList (cdkDropListDropped)="onFieldDrop($event)"
             [cdkDropListConnectedTo]="getGroupListIds()">
             <div *ngFor="let field of getFields()" class="field-element"
                  cdkDrag cdkDragBoundary="#project-configuration-content"
@@ -72,7 +75,7 @@
                                                       [hidden]="isHidden(field)">
                     </configuration-field-drag-element>
                 </div>
-                <div *cdkDragPlaceholder class="field-drag-element-placeholder"></div>
+                <div *cdkDragPlaceholder class="field-drag-placeholder"></div>
             </div>
             <div *ngFor="let relation of getRelations()">
                 <configuration-relation [relation]="relation"

@@ -172,7 +172,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public async onDrop(event: CdkDragDrop<any>, targetGroup?: Group) {
+    public async onFieldDrop(event: CdkDragDrop<any>, targetGroup?: Group) {
 
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
@@ -188,6 +188,17 @@ export class ConfigurationCategoryComponent implements OnChanges {
             Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
     
+        await this.saveNewGroupsConfiguration(groups);
+    }
+
+
+    public async onGroupDrop(event: CdkDragDrop<any>) {
+        
+        const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+            this.category, this.permanentlyHiddenFields
+        );
+        Inplace.moveInArray(groups, event.previousIndex, event.currentIndex);
+
         await this.saveNewGroupsConfiguration(groups);
     }
 

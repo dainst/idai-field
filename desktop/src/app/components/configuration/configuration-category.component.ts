@@ -31,6 +31,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() category: Category;
     @Input() customConfigurationDocument: ConfigurationDocument;
     @Input() showHiddenFields: boolean = true;
+    @Input() allowDragAndDrop: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
 
     @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();

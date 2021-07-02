@@ -12,6 +12,15 @@
                             i18n-ngbTooltip="@@configuration.showHiddenFields">
                         <span class="mdi mdi-eye"></span>
                     </button>
+                    <button id="toggle-drag-and-drop-button"
+                            class="btn btn-secondary"
+                            [class.active]="allowDragAndDrop"
+                            (click)="allowDragAndDrop = !allowDragAndDrop"
+                            placement="right" container="body"
+                            ngbTooltip="Verschieben von Konfigurationselementen erlauben"
+                            i18n-ngbTooltip="@@configuration.allowDragAndDrop">
+                        <span class="mdi mdi-cursor-move"></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -23,7 +32,7 @@
                                 [allowPickingAbstractCategories]="true"
                                 [highlightCustomCategories]="true"
                                 [showCreateButtons]="true"
-                                [allowChangingOrder]="true"
+                                [allowChangingOrder]="allowDragAndDrop"
                                 (onCategoryPicked)="selectCategory($event)"
                                 (onCreateSubcategory)="addSubcategory($event)"
                                 (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
@@ -33,6 +42,7 @@
                 <configuration-category [category]="selectedCategory"
                                         [customConfigurationDocument]="customConfigurationDocument"
                                         [showHiddenFields]="showHiddenFields"
+                                        [allowDragAndDrop]="allowDragAndDrop"
                                         [availableInputTypes]="availableInputTypes"
                                         (onEdited)="saveChanges($event)"></configuration-category>
             </div>

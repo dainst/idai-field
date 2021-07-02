@@ -36,6 +36,7 @@ export class ProjectConfigurationComponent implements OnInit {
     public customConfigurationDocument: ConfigurationDocument;
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
+    public allowDragAndDrop: boolean = true;
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }) },

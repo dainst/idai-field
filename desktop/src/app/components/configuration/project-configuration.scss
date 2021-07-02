@@ -18,7 +18,8 @@
   .default-nav {
     padding: 5px;
 
-    #show-hidden-fields-button {
+    #show-hidden-fields-button,
+    #allow-drag-and-drop-button {
       &.active {
         box-shadow: inset 1px 1px 2px 1px rgb(0 0 0 / 20%) !important;
       }

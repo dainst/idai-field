@@ -101,6 +101,26 @@ category-picker {
     right: 8px;
     color: #848484;
   }
+
+  .cdk-drag-disabled {
+    category-icon {
+      left: unset !important;
+    }
+  }
+  
+  span:not(.cdk-drag-disabled) {
+    .parent-category {
+      category-icon {
+        left: 37px;
+      }
+    }
+    
+    .child-category {
+      category-icon {
+        left: 57px;
+      }
+    }
+  }
 }
 
 category-picker .category-item,
@@ -116,19 +136,12 @@ category-picker .category-item,
 
   category-icon {
     position: absolute;
-    left: 37px;
   }
 
   .category-label {
     display: inline-block;
     margin-left: 40px;
     width: calc(100% - 65px);
-  }
-}
-
-.child-category {
-  category-icon {
-    left: 57px !important;
   }
 }
 

@@ -9,7 +9,7 @@
     </li>
     <span *ngFor="let parentCategory of topLevelCategoriesArray"
           cdkDrag cdkDragBoundary=".category-picker" cdkDragLockAxis="y">
-        <li class="list-group-item popover-item"
+        <li class="list-group-item popover-item parent-category"
             [ngClass]="{
                 'selected-category': selectedCategories && selectedCategories.indexOf(parentCategory.name) > -1,
                 'abstract-category': parentCategory.isAbstract,
@@ -18,7 +18,7 @@
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
                 class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
                 (click)="pickCategory(parentCategory)">
-                <span class="mdi mdi-menu" cdkDragHandle></span>
+                <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
                 <category-icon [category]="parentCategory.name" size="30"></category-icon>
                 <div class="category-label">
                     {{getCategoryLabel(parentCategory)}}
@@ -56,7 +56,7 @@
                 }">
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"
                     class="category-item" (click)="pickCategory(childCategory)">
-                    <span class="mdi mdi-menu" cdkDragHandle></span>
+                    <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
                     <category-icon [category]="childCategory.name" size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}

@@ -347,7 +347,7 @@ export class ResourcesPage {
     }
 
 
-    public static async performCreateOperation(identifier: string) {
+    public static async performCreateTrench(identifier: string) {
 
         await NavbarPage.clickTab('project');
         await this.performCreateResource(identifier, 'operation-trench');

@@ -178,7 +178,7 @@ describe('resources --', () => {
         await waitForNotExist(await NavbarPage.getTab('resources', 't1'));
 
         // create
-        await ResourcesPage.performCreateOperation('newTrench');
+        await ResourcesPage.performCreateTrench('newTrench');
         label = await NavbarPage.getActiveNavLinkLabel();
         expect(label).toContain('newTrench');
         const elements = await ResourcesPage.getListItemEls();

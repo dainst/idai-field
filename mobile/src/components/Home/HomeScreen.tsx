@@ -177,7 +177,7 @@ const renderRecentProjects = (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ececec',
+        backgroundColor: colors.containerBackground,
         padding: 5,
     },
     topRow: {

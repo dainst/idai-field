@@ -7,6 +7,7 @@ import { GestureResponderEvent, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import useToast from '../../../hooks/use-toast';
+import { colors } from '../../../utils/colors';
 import { ToastType } from '../../common/Toast/ToastProvider';
 import { GeometryBoundings, setupTransformationMatrix, ViewPort } from './geo-svg';
 import {
@@ -91,7 +92,7 @@ const GLMap: React.FC<GLMapProps> = (props) => {
     const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-        const sceneColor = 'white';
+        const sceneColor = colors.containerBackground;
 
         const renderer = new Renderer({ gl });
         renderer.setSize(width, height);

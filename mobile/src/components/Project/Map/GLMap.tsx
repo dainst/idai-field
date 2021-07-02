@@ -108,7 +108,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
         render();
     };
 
-    const touchEvent = (e: GestureResponderEvent) => {
+    const onPress = (e: GestureResponderEvent) => {
 
         const vec = new Vector2(
             (e.nativeEvent.locationX / viewPort.width ) * 2 - 1,
@@ -124,7 +124,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
 
     return (
         <GLView
-            onTouchStart={ touchEvent }
+            onTouchStart={ onPress }
             style={ styles.container }
             onContextCreate={ _onContextCreate }
         />

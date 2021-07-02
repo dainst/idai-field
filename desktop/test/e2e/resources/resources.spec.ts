@@ -271,7 +271,7 @@ describe('resources --', () => {
     it('show only values of parent resource for campaign field in editor', async done => {
 
         await NavbarPage.clickTab('project');
-        await ResourcesPage.performCreateResource('trench', 'trench');
+        await ResourcesPage.performCreateResource('trench', 'operation-trench');
         await ResourcesPage.clickHierarchyButton('trench');
         await ResourcesPage.performCreateResource('feature', 'feature');
         await ResourcesPage.openEditByDoubleClickResource('feature');
@@ -548,7 +548,7 @@ describe('resources --', () => {
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
-        await SearchBarPage.clickChooseCategoryFilter('trench', 'modal');
+        await SearchBarPage.clickChooseCategoryFilter('operation-trench', 'modal');
 
         let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
         for (let label of labels) {

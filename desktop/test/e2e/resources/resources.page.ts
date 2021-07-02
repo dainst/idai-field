@@ -350,7 +350,7 @@ export class ResourcesPage {
     public static async performCreateOperation(identifier: string) {
 
         await NavbarPage.clickTab('project');
-        await this.performCreateResource(identifier, 'trench');
+        await this.performCreateResource(identifier, 'operation-trench');
         await this.clickHierarchyButton(identifier);
     }
 

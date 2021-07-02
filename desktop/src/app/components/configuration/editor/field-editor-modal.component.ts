@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { AppConfigurator, CustomCategoryDefinition, FieldDefinition, I18nString } from 'idai-field-core';
+import { AppConfigurator, CustomCategoryDefinition, FieldDefinition, Group, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
@@ -25,7 +25,9 @@ import { LanguageConfigurationUtil } from '../../../core/configuration/language-
 export class FieldEditorModalComponent extends ConfigurationEditorModalComponent {
 
     public field: FieldDefinition|undefined;
+    public groupName: string;
     public availableInputTypes: Array<InputType>;
+    public permanentlyHiddenFields: string[];
 
     public hideable: boolean;
     public hidden: boolean;
@@ -55,6 +57,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedCategoryDefinition().fields[this.field.name] = {
                 inputType: 'input'
             };
+            const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+                this.category, this.permanentlyHiddenFields
+            );
+            groups.find(group => group.name === this.groupName).fields.push(this.field.name);
+            this.getClonedCategoryDefinition().groups = groups;
         } else if (!this.getClonedCategoryDefinition().fields[this.field.name]) {
             this.getClonedCategoryDefinition().fields[this.field.name] = {};
         }

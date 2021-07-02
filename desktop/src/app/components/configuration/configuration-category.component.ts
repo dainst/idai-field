@@ -253,7 +253,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
             defaultDescription: {},
             source: 'custom'
         };
+        modalReference.componentInstance.groupName = this.selectedGroup;
         modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
+        modalReference.componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
         modalReference.componentInstance.new = true;
         modalReference.componentInstance.initialize();
 

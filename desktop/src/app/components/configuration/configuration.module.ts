@@ -10,12 +10,12 @@ import { ConfigurationFieldComponent } from './configuration-field.component';
 import { ConfigurationRelationComponent } from './configuration-relation.component';
 import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
-import { AddFieldModalComponent } from './add-field-modal.component';
+import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
-import { AddCategoryModalComponent } from './add-category-modal.component';
+import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
-import { AddGroupModalComponent } from './add-group-modal.component';
+import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 
 

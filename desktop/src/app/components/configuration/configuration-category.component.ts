@@ -6,7 +6,7 @@ import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinit
     RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator, getConfigurationName } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
-import { AddFieldModalComponent } from './add-field-modal.component';
+import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
@@ -14,7 +14,7 @@ import { InputType } from './project-configuration.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { Messages } from '../messages/messages';
-import { AddGroupModalComponent } from './add-group-modal.component';
+import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 
 

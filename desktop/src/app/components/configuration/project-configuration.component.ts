@@ -8,7 +8,7 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { AddCategoryModalComponent } from './add-category-modal.component';
+import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 

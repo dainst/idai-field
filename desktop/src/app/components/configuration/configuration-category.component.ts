@@ -214,7 +214,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                clonedConfigurationDocument
+                Document.clone(clonedConfigurationDocument)
             );
             this.onEdited.emit({ 
                 newProjectConfiguration,

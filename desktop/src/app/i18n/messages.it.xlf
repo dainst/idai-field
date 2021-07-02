@@ -967,7 +967,7 @@
         <source>Kategorie hinzufügen</source>
         <target state="new">Kategorie hinzufügen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-category-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -975,7 +975,7 @@
         <source>Neue Kategorie erstellen</source>
         <target state="new">Neue Kategorie erstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-category-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -983,19 +983,19 @@
         <source>Feld hinzufügen</source>
         <target state="new">Feld hinzufügen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-field-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createField" datatype="html">
         <source>Neues Feld erstellen</source>
         <target state="new">Neues Feld anlegen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-field-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -1003,19 +1003,19 @@
         <source>Gruppe hinzufügen</source>
         <target state="new">Gruppe hinzufügen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-group-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">108,118</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createGroup" datatype="html">
         <source>Neue Gruppe erstellen</source>
         <target state="new">Neue Gruppe erstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-group-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -1024,7 +1024,7 @@
         <target state="final">Formulario specifico del progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editCategory" datatype="html">
@@ -1032,7 +1032,7 @@
         <target state="new">Kateogorie bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -1056,7 +1056,7 @@
         <target state="new">Feldbezeichnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
@@ -1064,7 +1064,7 @@
         <target state="new"> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.visibility" datatype="html">
@@ -1251,6 +1251,14 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.allowDragAndDrop" datatype="html">
+        <source>Verschieben von Konfigurationselementen erlauben</source>
+        <target state="new">Verschieben von Konfigurationselementen erlauben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
+          <context context-type="linenumber">53,56</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
         <source>Relation</source>
         <target state="final">Relazione</target>
@@ -1332,7 +1340,7 @@
         <target state="final">Categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.libraryId" datatype="html">
@@ -1340,7 +1348,7 @@
         <target state="final">Formulario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoryLabel" datatype="html">
@@ -1360,7 +1368,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.color" datatype="html">
@@ -3599,7 +3607,7 @@
         <target state="final">Campo specifico del progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editField" datatype="html">
@@ -3607,7 +3615,7 @@
         <target state="new">Feld bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.conflicts" datatype="html">
@@ -5143,15 +5151,15 @@
         <target state="final">Annulla
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-category-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-field-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add-group-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
@@ -5220,7 +5228,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>

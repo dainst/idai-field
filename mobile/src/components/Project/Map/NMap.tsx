@@ -1,17 +1,11 @@
-import { Document, ProjectConfiguration, Query } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import useToast from '../../../hooks/use-toast';
 import { DocumentRepository } from '../../../repositories/document-repository';
-import { ToastType } from '../../common/Toast/ToastProvider';
-import { GeometryBoundings, getGeometryBoundings, ViewPort } from './geo-svg';
+import { ViewPort } from './geo-svg';
 import GLMap from './GLMap';
 import MapBottomSheet from './MapBottomSheet';
 
-const searchQuery: Query = {
-    q: '*',
-    constraints: { 'geometry:exist': 'KNOWN' }
-};
 
 interface NMapProps {
     repository: DocumentRepository;
@@ -27,12 +21,7 @@ interface NMapProps {
 const NMap: React.FC<NMapProps> = (props) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();
-    const [allDocs, setAllDocs] = useState<Document[]>([]);
-    const [geoBounds, setGeoBounds] = useState<GeometryBoundings | null>(null);
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
-
-
-    const { showToast } = useToast();
 
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
@@ -45,29 +34,17 @@ const NMap: React.FC<NMapProps> = (props) => {
     }, [props.highlightedDocId, setHighlightedDocFromId]);
     
     
-    useEffect(() => {
-        props.repository.find(searchQuery)
-            .then(result => {
-                setAllDocs(result.documents);
-                setGeoBounds(getGeometryBoundings(result.documents));
-            })
-            .catch(err => showToast(ToastType.Error,`${err}`));
-    },[props.repository, showToast]);
-
-
     const handleLayoutChange = (event: LayoutChangeEvent) => setViewPort(event.nativeEvent.layout);
 
     
     return (
         <View style={ styles.container } onLayout={ handleLayoutChange }>
 
-            {(geoBounds && allDocs && viewPort) &&
-                <GLMap
-                    allDocs={ allDocs }
-                    geoBoundings={ geoBounds }
-                    viewPort={ viewPort }
-                    config={ props.config }
-                    setHighlightedDocId={ setHighlightedDocFromId } />}
+            {(viewPort) && <GLMap
+                repository={ props.repository }
+                config={ props.config }
+                viewPort={ viewPort }
+                setHighlightedDocId={ setHighlightedDocFromId } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 config={ props.config }

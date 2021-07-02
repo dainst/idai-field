@@ -1,93 +1,90 @@
-import { FieldGeometry } from 'core/dist';
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import React, { useEffect, useState } from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
-import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
+import useMapData from '../../../hooks/use-Nmapdata';
 import useToast from '../../../hooks/use-toast';
+import { DocumentRepository } from '../../../repositories/document-repository';
 import { colors } from '../../../utils/colors';
 import { ToastType } from '../../common/Toast/ToastProvider';
-import { GeometryBoundings, setupTransformationMatrix, ViewPort } from './geo-svg';
+import { ViewPort } from './geo-svg';
 import {
-    lineStringToShape, multiPointToShape,
-    multiPolygonToShape, pointToShape, polygonToShape
+    lineStringToShape, multiPointToShape, multiPolygonToShape,
+    pointToShape, polygonToShape
 } from './geojson-gl-shape';
 
 interface GLMapProps {
-    geoBoundings: GeometryBoundings;
+    repository: DocumentRepository
+    config: ProjectConfiguration;
     viewPort: ViewPort;
-    allDocs: Document[];
-    config: ProjectConfiguration
     setHighlightedDocId: (docId: string) => void;
 }
 
 
-const GLMap: React.FC<GLMapProps> = (props) => {
+const GLMap: React.FC<GLMapProps> = ({ repository, config, viewPort,setHighlightedDocId }) => {
 
 
     let timeout: number;
     const [camera, setCamera] = useState<OrthographicCamera>();
     const [scene, _setScene] = useState<Scene>(new Scene());
-    const [transformMatrix, setTransformMatrix] = useState<Matrix4>();
+   
+    const [geoDocuments, transformMatrix ] = useMapData(repository, viewPort);
     const { showToast } = useToast();
 
     useEffect(() => {
         
-        if(props.viewPort){
+        if(viewPort){
             scene.clear();
+            const maxSize = Math.max(viewPort.width, viewPort.height );
             setCamera(new OrthographicCamera(
-                props.viewPort.x,
-                Math.max(props.viewPort.width, props.viewPort.height ),
-                Math.max(props.viewPort.height,props.viewPort.width ),
-                props.viewPort.y));
+                viewPort.x,
+                maxSize,
+                maxSize,
+                viewPort.y));
         }
 
 
-    },[props.geoBoundings, props.viewPort, scene]);
+    },[ viewPort, scene]);
+
 
     useEffect(() => {
-        setTransformMatrix( setupTransformationMatrix(props.geoBoundings,props.viewPort));
-    },[props.geoBoundings, props.viewPort]);
     
+        if(!transformMatrix || !geoDocuments.length) return;
 
-    useEffect(() => {
-        
-        if(!transformMatrix) return;
-        props.allDocs.forEach((doc) => {
+        geoDocuments.forEach((doc) => {
             
             const geometry = doc.resource.geometry as FieldGeometry;
             
             switch(geometry.type){
                 case 'Polygon':
-                    polygonToShape(transformMatrix, scene, props.config,doc, geometry.coordinates ,false);
+                    polygonToShape(transformMatrix, scene, config,doc, geometry.coordinates ,false);
                     break;
                 case 'LineString':
-                    lineStringToShape(transformMatrix, scene, props.config,doc, geometry.coordinates, true);
+                    lineStringToShape(transformMatrix, scene, config,doc, geometry.coordinates, true);
                     break;
                 case 'MultiPolygon':
-                    multiPolygonToShape(transformMatrix, scene, props.config, doc, geometry.coordinates, true);
+                    multiPolygonToShape(transformMatrix, scene, config, doc, geometry.coordinates, true);
                     break;
                 case 'Point':
-                    pointToShape(transformMatrix, scene, props.config, doc, geometry.coordinates, true);
+                    pointToShape(transformMatrix, scene, config, doc, geometry.coordinates, true);
                     break;
                 case 'MultiPoint':
-                    multiPointToShape(transformMatrix,scene, props.config, doc, geometry.coordinates, true);
+                    multiPointToShape(transformMatrix,scene, config, doc, geometry.coordinates, true);
                     break;
                 default:
                     showToast(ToastType.Error, `Unknown geometry type ${geometry.type}`);
                     break ;
             }
         });
- 
+    },[geoDocuments, config ,scene, transformMatrix, showToast]);
 
-    },[props.allDocs, props.config ,scene, transformMatrix, showToast]);
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => clearTimeout(timeout),[]);
 
-    if (!camera || !props.allDocs.length) return null;
+    if (!camera || !scene.children.length) return null;
 
     const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
@@ -114,16 +111,14 @@ const GLMap: React.FC<GLMapProps> = (props) => {
     const touchEvent = (e: GestureResponderEvent) => {
 
         const vec = new Vector2(
-            (e.nativeEvent.locationX / props.viewPort.width ) * 2 - 1,
-            -(e.nativeEvent.locationY / props.viewPort.height) * 2 + 1);
+            (e.nativeEvent.locationX / viewPort.width ) * 2 - 1,
+            -(e.nativeEvent.locationY / viewPort.height) * 2 + 1);
         const raycaster = new Raycaster();
         raycaster.setFromCamera(vec, camera);
         const intersects = raycaster.intersectObjects(scene.children);
         if(intersects.length > 0){
-            props.setHighlightedDocId(intersects[0].object.uuid);
+            setHighlightedDocId(intersects[0].object.uuid);
         }
-        
-       
     };
 
 
@@ -142,4 +137,6 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+
 export default GLMap;

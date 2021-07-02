@@ -3,9 +3,9 @@ import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { GestureResponderEvent, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
-import { OrthographicCamera, Scene } from 'three';
+import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import useToast from '../../../hooks/use-toast';
 import { ToastType } from '../../common/Toast/ToastProvider';
 import { GeometryBoundings, setupTransformationMatrix, ViewPort } from './geo-svg';
@@ -19,6 +19,7 @@ interface GLMapProps {
     viewPort: ViewPort;
     allDocs: Document[];
     config: ProjectConfiguration
+    setHighlightedDocId: (docId: string) => void;
 }
 
 
@@ -109,9 +110,25 @@ const GLMap: React.FC<GLMapProps> = (props) => {
         render();
     };
 
+    const touchEvent = (e: GestureResponderEvent) => {
+
+        const vec = new Vector2(
+            (e.nativeEvent.locationX / props.viewPort.width ) * 2 - 1,
+            -(e.nativeEvent.locationY / props.viewPort.height) * 2 + 1);
+        const raycaster = new Raycaster();
+        raycaster.setFromCamera(vec, camera);
+        const intersects = raycaster.intersectObjects(scene.children);
+        if(intersects.length > 0){
+            props.setHighlightedDocId(intersects[0].object.name);
+        }
+        
+       
+    };
+
 
     return (
         <GLView
+            onTouchStart={ touchEvent }
             style={ styles.container }
             onContextCreate={ _onContextCreate }
         />

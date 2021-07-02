@@ -55,6 +55,7 @@ export const polygonToShape: ShapeFunction<Position[][]> = (matrix, scene,config
         const geometryPoints = new BufferGeometry().setFromPoints( points );
         const line = new Line( geometryPoints,
             new LineBasicMaterial( { color, linewidth: strokeWidth } ) );
+        line.name = document.resource.id;
         scene.add( line );
 
     }
@@ -102,6 +103,7 @@ export const pointToShape: ShapeFunction<Position> =
     const circle = new Mesh(
         circleGeometry,
         new MeshBasicMaterial({ color: config.getColorForCategory(document.resource.category) }) );
+    circle.name = document.resource.id;
     scene.add( circle );
 
 

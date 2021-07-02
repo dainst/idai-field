@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
-    RelationDefinition, Resource, Document, GroupDefinition, Inplace, ProjectConfiguration, AppConfigurator, getConfigurationName } from 'idai-field-core';
+    RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator, getConfigurationName } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add-field-modal.component';
@@ -192,7 +192,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             const targetGroupDefinition: GroupDefinition = groups.find(group => group.name === targetGroup.name);
             targetGroupDefinition.fields.push(fieldName);
         } else {
-            Inplace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
+            InPlace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
     
         await this.saveNewGroupsConfiguration(groups);
@@ -204,7 +204,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
-        Inplace.moveInArray(groups, event.previousIndex, event.currentIndex);
+        InPlace.moveInArray(groups, event.previousIndex, event.currentIndex);
 
         await this.saveNewGroupsConfiguration(groups);
     }

@@ -1,4 +1,4 @@
-import { Inplace } from '../../src/tools';
+import { InPlace } from '../../src/tools';
 
 
 /**
@@ -12,7 +12,7 @@ describe('Inplace', () => {
             subObject: { a: '1' }
         };
 
-        Inplace.setOn(object, ['subObject', 'b', 'test'])('2');
+        InPlace.setOn(object, ['subObject', 'b', 'test'])('2');
 
         expect(object.subObject.a).toBe('1');
         expect(object.subObject['b']['test']).toBe('2');
@@ -32,7 +32,7 @@ describe('Inplace', () => {
             }
         };
 
-        Inplace.removeFrom(object, ['subObject1', 'subObject1a', 'subObject1a1', 'test']);
+        InPlace.removeFrom(object, ['subObject1', 'subObject1a', 'subObject1a1', 'test']);
         
         expect(object.subObject1).toBeUndefined();
         expect(object.subObject2.subObject2a.test).toBe('1');
@@ -50,7 +50,7 @@ describe('Inplace', () => {
             }
         };
 
-        Inplace.removeFrom(object, ['subObject', 'array', 1, 'test']);
+        InPlace.removeFrom(object, ['subObject', 'array', 1, 'test']);
         
         expect(object.subObject.array.length).toBe(1);
         expect(object.subObject.array[0].test).toBe('1');

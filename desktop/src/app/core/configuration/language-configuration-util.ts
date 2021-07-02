@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, Group, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
+import { Category, FieldDefinition, Group, I18nString, InPlace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -71,7 +71,7 @@ export module LanguageConfigurationUtil {
                                                           categoryName?: string, fieldName?: string,
                                                           groupName?: string) {
 
-        Inplace.removeFrom(
+        InPlace.removeFrom(
             customLanguageConfigurations,
             groupName
                 ? [languageCode, 'groups', groupName]
@@ -87,7 +87,7 @@ export module LanguageConfigurationUtil {
                                                      languageCode: string, categoryName: string,
                                                      fieldName?: string, groupName?: string) {
 
-        Inplace.setOn(
+        InPlace.setOn(
             customLanguageConfigurations,
             groupName
                 ? [languageCode, 'groups', groupName]

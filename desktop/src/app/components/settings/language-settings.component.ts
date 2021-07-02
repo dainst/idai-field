@@ -2,7 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Inplace } from 'idai-field-core';
+import { InPlace } from 'idai-field-core';
 import { MenuContext, MenuService } from '../menu-service';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
 import { Language, LanguagesUtil } from '../../core/util/languages-util';
@@ -39,7 +39,7 @@ export class LanguageSettingsComponent {
 
     public onDrop(event: CdkDragDrop<string[], any>) {
 
-        Inplace.moveInArray(this.selectedLanguages, event.previousIndex, event.currentIndex);
+        InPlace.moveInArray(this.selectedLanguages, event.previousIndex, event.currentIndex);
     }
 
 

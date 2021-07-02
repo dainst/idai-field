@@ -12,4 +12,4 @@ export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export * from './utils';
 export * from './valuelist-util';
 export * from './label-util';
-export * from './inplace';
+export * from './in-place';

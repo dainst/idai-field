@@ -5,9 +5,9 @@ import { isNumber, isString, to, Path, take, isEmpty } from 'tsfun';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * 
- * Inplace modifications of Structs (nested arrays or objects, as per {} and [])
+ * In-place modifications of structs (nested arrays or objects, as per {} and [])
  */
-export namespace Inplace {
+export namespace InPlace {
 
     export function setOn(object: any, path_: Path) {
 

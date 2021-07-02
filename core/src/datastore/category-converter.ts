@@ -4,7 +4,7 @@ import { Document } from '../model/document';
 import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
 import { Forest } from '../tools/forest';
-import { Inplace } from '../tools/inplace';
+import { InPlace } from '../tools/in-place';
 import { Migrator } from './migrator';
 
 
@@ -17,22 +17,22 @@ export class CategoryConverter {
 
         const convertedDocument = Migrator.migrate(document);
 
-        Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
+        InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
 
         // TODO review after 2.19 released
         if (this.categories) {
 
             if (ProjectCategories.getImageCategoryNames(this.categories)
                 .includes(convertedDocument.resource.category)) {
-                    Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Image.DEPICTS], []);
+                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Image.DEPICTS], []);
                 } else {
-                    Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.RECORDEDIN], []);
+                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.RECORDEDIN], []);
 
                     if (ProjectCategories.getFeatureCategoryNames(this.categories)
                         .includes(convertedDocument.resource.category)) {
-                            Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
-                            Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);
-                            Inplace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.CONTEMPORARY], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.CONTEMPORARY], []);
                         }
                 }
         }

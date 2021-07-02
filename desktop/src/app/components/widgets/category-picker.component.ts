@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
-import { FieldDefinition, Category, LabelUtil, Named, Inplace } from 'idai-field-core';
+import { FieldDefinition, Category, LabelUtil, Named, InPlace } from 'idai-field-core';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class CategoryPickerComponent {
     public onDrop(event: CdkDragDrop<any>, parentCategory?: Category) {
 
         if (parentCategory) {
-            Inplace.moveInArray(
+            InPlace.moveInArray(
                 this.topLevelCategoriesArray
                     .find(category => category.name === parentCategory.name)
                     .children,
@@ -51,7 +51,7 @@ export class CategoryPickerComponent {
                 event.currentIndex
             );
         } else {
-            Inplace.moveInArray(
+            InPlace.moveInArray(
                 this.topLevelCategoriesArray,
                 event.previousIndex,
                 event.currentIndex

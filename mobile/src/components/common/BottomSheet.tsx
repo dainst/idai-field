@@ -101,7 +101,10 @@ const BottomSheet: React.FC<BottomSheetProps> = (props) => {
 
 
     return (
-        <View style={ StyleSheet.absoluteFillObject } pointerEvents="box-none" onLayout={ handleLayoutChange }>
+        <View
+            style={ [styles.container, StyleSheet.absoluteFillObject ] }
+            pointerEvents="box-none"
+            onLayout={ handleLayoutChange }>
             <Animated.View
                 style={ [
                     StyleSheet.absoluteFillObject,
@@ -122,7 +125,7 @@ const BottomSheet: React.FC<BottomSheetProps> = (props) => {
                     shouldCancelWhenOutside={ false }
                     onGestureEvent={ _onGestureEvent }
                     onHandlerStateChange={ _onHandlerStateChange }>
-                    <Animated.View style={ styles.container }>
+                    <Animated.View style={ styles.mainContent }>
                         {props.children}
                     </Animated.View>
                 </PanGestureHandler>
@@ -133,6 +136,12 @@ const BottomSheet: React.FC<BottomSheetProps> = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        elevation: 15,
+        shadowColor: 'black',
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
+    },
+    mainContent: {
       flex: 1,
     },
     header: {

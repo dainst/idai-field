@@ -142,12 +142,12 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
     },
     mainContent: {
-      flex: 1,
+        flex: 1,
     },
     header: {
-      height: HEADER_HEIGHT,
-      backgroundColor: 'white',
-      alignItems: 'center',
+        height: HEADER_HEIGHT,
+        backgroundColor: 'white',
+        alignItems: 'center',
     },
     icon: {
         backgroundColor: '#ccc',

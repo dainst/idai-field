@@ -79,14 +79,14 @@ configuration-category {
       .card-header {
         height: 55px;
 
-        .mdi-cursor-move {
+        .mdi-menu {
           color: #5f5e5e;
           position: relative;
           top: 3px;
           right: 6px;
         }
     
-        &.parent-element .mdi-cursor-move {
+        &.parent-element .mdi-menu {
           top: unset;
           bottom: 2px;
         }

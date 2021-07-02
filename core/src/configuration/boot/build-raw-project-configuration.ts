@@ -1,9 +1,9 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    keysValues, Map, map, Mapping, on, or, Pair, pairWith, reduce, subtract,
-    update, update as updateStruct, assoc, isUndefinedOrEmpty, not } from 'tsfun';
+    keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
+    isUndefinedOrEmpty, not } from 'tsfun';
 import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
-import { Forest,Tree, Labeled, withDissoc, sortStructArray } from '../../tools';
+import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
@@ -176,7 +176,7 @@ const setGroupLabels = (languageConfigurations: LanguageConfigurations) => (cate
         group.label = getGroupLabel(category, group.name, 'complete', languageConfigurations);
         group.defaultLabel = getGroupLabel(category, group.name, 'default', languageConfigurations);
     });
-    
+
     return category;
 }
 

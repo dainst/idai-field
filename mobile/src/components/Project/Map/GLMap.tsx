@@ -18,12 +18,12 @@ import {
 interface GLMapProps {
     repository: DocumentRepository
     config: ProjectConfiguration;
-    viewPort: ViewPort;
     setHighlightedDocId: (docId: string) => void;
+    viewPort: ViewPort;
 }
 
 
-const GLMap: React.FC<GLMapProps> = ({ repository, config, viewPort,setHighlightedDocId }) => {
+const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, viewPort }) => {
 
 
     let timeout: number;

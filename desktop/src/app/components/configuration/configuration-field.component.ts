@@ -9,6 +9,7 @@ import { FieldEditorModalComponent } from './editor/field-editor-modal.component
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { InputType } from './project-configuration.component';
 import { AngularUtility } from '../../angular/angular-utility';
+import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
 
 const locale: string = typeof window !== 'undefined'
@@ -51,7 +52,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
         if (!this.category || !this.field) return;
 
-        this.parentField = this.isParentField();
+        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
         this.updateLabelAndDescription();
     }
 
@@ -114,15 +115,5 @@ export class ConfigurationFieldComponent implements OnChanges {
         const { label, description } = LabelUtil.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
-    }
-
-
-    private isParentField(): boolean {
-
-        if (!this.category.parentCategory) return false;
-
-        return flatten(this.category.parentCategory.groups.map(to('fields')))
-            .map(to('name'))
-            .includes(this.field.name);
     }
 }

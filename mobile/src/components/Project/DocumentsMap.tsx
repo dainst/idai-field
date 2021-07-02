@@ -18,7 +18,6 @@ interface DocumentsMapProps {
     navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     repository: DocumentRepository;
     documents: Document[];
-    selectedDocument?: Document;
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;

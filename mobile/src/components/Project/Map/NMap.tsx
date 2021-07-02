@@ -44,7 +44,8 @@ const NMap: React.FC<NMapProps> = (props) => {
                 repository={ props.repository }
                 config={ props.config }
                 viewPort={ viewPort }
-                setHighlightedDocId={ setHighlightedDocFromId } />}
+                setHighlightedDocId={ setHighlightedDocFromId }
+                selectedDocumentIds={ props.selectedDocumentIds } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 config={ props.config }
@@ -56,6 +57,7 @@ const NMap: React.FC<NMapProps> = (props) => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

@@ -5,13 +5,14 @@ import React, { useEffect, useState } from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import useMapData from '../../../hooks/use-Nmapdata';
+import usePrevious from '../../../hooks/use-previous';
 import useToast from '../../../hooks/use-toast';
 import { DocumentRepository } from '../../../repositories/document-repository';
 import { colors } from '../../../utils/colors';
 import { ToastType } from '../../common/Toast/ToastProvider';
 import { ViewPort } from './geo-svg';
 import {
-    lineStringToShape, multiPointToShape, multiPolygonToShape,
+    lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson-gl-shape';
 
@@ -20,10 +21,11 @@ interface GLMapProps {
     config: ProjectConfiguration;
     setHighlightedDocId: (docId: string) => void;
     viewPort: ViewPort;
+    selectedDocumentIds: string[];
 }
 
 
-const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, viewPort }) => {
+const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, viewPort, selectedDocumentIds }) => {
 
 
     let timeout: number;
@@ -32,6 +34,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
    
     const [geoDocuments, transformMatrix ] = useMapData(repository, viewPort);
     const { showToast } = useToast();
+    const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
     useEffect(() => {
         
@@ -59,19 +62,17 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
             
             switch(geometry.type){
                 case 'Polygon':
-                    polygonToShape(transformMatrix, scene, config,doc, geometry.coordinates ,false);
+                case 'MultiPolygon':
+                    polygonToShape(transformMatrix, scene, config,doc, geometry.coordinates );
                     break;
                 case 'LineString':
-                    lineStringToShape(transformMatrix, scene, config,doc, geometry.coordinates, true);
-                    break;
-                case 'MultiPolygon':
-                    multiPolygonToShape(transformMatrix, scene, config, doc, geometry.coordinates, true);
+                    lineStringToShape(transformMatrix, scene, config,doc, geometry.coordinates);
                     break;
                 case 'Point':
-                    pointToShape(transformMatrix, scene, config, doc, geometry.coordinates, true);
+                    pointToShape(transformMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'MultiPoint':
-                    multiPointToShape(transformMatrix,scene, config, doc, geometry.coordinates, true);
+                    multiPointToShape(transformMatrix,scene, config, doc, geometry.coordinates);
                     break;
                 default:
                     showToast(ToastType.Error, `Unknown geometry type ${geometry.type}`);
@@ -79,6 +80,38 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
             }
         });
     },[geoDocuments, config ,scene, transformMatrix, showToast]);
+
+
+    useEffect(() => {
+
+        if(previousSelectedDocIds){
+            previousSelectedDocIds.forEach(docId => {
+                const object = scene.getObjectByProperty('uuid',docId);
+                
+                if(object){
+                    object.userData = { ...object.userData, isSelected: false };
+                    
+                    object.children.forEach(child => {
+                        child.visible = child.name === ObjectChildValues.notSelected ? true : false;
+                    });
+                }
+            });
+        }
+        
+        if(!selectedDocumentIds) return;
+        selectedDocumentIds.forEach(docId => {
+         
+            const object = scene.getObjectByProperty('uuid',docId);
+            
+            if(object){
+                object.userData = { ...object.userData, isSelected: true };
+                object.children.forEach(child => {
+                    child.visible = child.name === ObjectChildValues.selected ? true : false;
+                });
+            }
+
+        });
+    },[scene, selectedDocumentIds, previousSelectedDocIds]);
 
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,9 +148,15 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
             -(e.nativeEvent.locationY / viewPort.height) * 2 + 1);
         const raycaster = new Raycaster();
         raycaster.setFromCamera(vec, camera);
-        const intersects = raycaster.intersectObjects(scene.children);
-        if(intersects.length > 0){
-            setHighlightedDocId(intersects[0].object.uuid);
+        const intersections = raycaster.intersectObjects(scene.children,true);
+        
+        for(const intersection of intersections){
+            const object = intersection.object;
+            const parent = object.parent;
+            if(parent){
+                const objectData = parent.userData as ObjectData;
+                if(objectData.isSelected) setHighlightedDocId(parent.uuid);
+            }
         }
     };
 

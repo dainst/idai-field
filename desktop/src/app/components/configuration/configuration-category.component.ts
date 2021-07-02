@@ -14,6 +14,8 @@ import { InputType } from './project-configuration.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { Messages } from '../messages/messages';
+import { AddGroupModalComponent } from './add-group-modal.component';
+import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 
 
 @Component({
@@ -53,7 +55,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         if (changes['category']) {
             if (!changes['category'].previousValue
                     || changes['category'].currentValue.name !== changes['category'].previousValue.name) {
-                this.selectedGroup = this.getGroups()[0].name;
+                this.selectedGroup = this.category.groups[0].name;
             }
             this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();
         }
@@ -64,7 +66,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
-    public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
 
     public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
 
@@ -84,17 +86,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
             ? this.customConfigurationDocument.resource
                 .categories[this.category.parentCategory.libraryId ?? this.category.parentCategory.name]
             : undefined;
-    }
-
-
-    public getGroups(): Array<Group> {
-
-        return this.category.groups.filter(
-            or(
-                (group: Group) => group.fields.length > 0,
-                (group: Group) => group.relations.length > 0
-            )
-        );
     }
 
 
@@ -164,6 +155,22 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         try {
             await this.createNewField(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    public async addGroup() {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(AddGroupModalComponent);
+
+        try {
+            await this.createNewGroup(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -247,6 +254,37 @@ export class ConfigurationCategoryComponent implements OnChanges {
             source: 'custom'
         };
         modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
+        modalReference.componentInstance.new = true;
+        modalReference.componentInstance.initialize();
+
+        try {
+            this.onEdited.emit(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    private async createNewGroup(groupName: string) {
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            GroupEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.group = {
+            name: groupName,
+            label: {},
+            defaultLabel: {},
+            fields: [],
+            relations: []
+        };
+        modalReference.componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
         modalReference.componentInstance.new = true;
         modalReference.componentInstance.initialize();
 

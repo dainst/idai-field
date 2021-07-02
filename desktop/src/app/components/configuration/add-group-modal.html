@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.addGroup">Gruppe hinzufügen</h5>
+</div>
+
+<div class="modal-body">
+    <input type="text" id="field-name" class="form-control" [(ngModel)]="groupName">
+</div>
+
+<div class="modal-footer">
+    <div id="create-field-button"
+         class="btn btn-success"
+         (click)="createGroup()">
+        <span i18n="@@configuration.createGroup">Neue Gruppe erstellen</span>
+    </div>
+    <div id="cancel-add-field-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

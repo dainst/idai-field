@@ -1,8 +1,7 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AppConfigurator, Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition,
-    getConfigurationName, I18nString, ProjectConfiguration, Document } from 'idai-field-core';
 import { clone } from 'tsfun';
-import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
+import { AppConfigurator, ConfigurationDocument, getConfigurationName, I18nString, ProjectConfiguration,
+    Document, Category, CustomCategoryDefinition } from 'idai-field-core';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { MenuContext, MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
@@ -16,13 +15,12 @@ export abstract class ConfigurationEditorModalComponent {
 
     public customConfigurationDocument: ConfigurationDocument;
     public category: Category;
-    public field: FieldDefinition|undefined;
     public new: boolean = false;
 
     public label: I18nString;
-    public description: I18nString;
+    public description?: I18nString;
     public clonedLabel: I18nString;
-    public clonedDescription: I18nString;
+    public clonedDescription?: I18nString;
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public saving: boolean;
@@ -41,7 +39,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
 
-
+    
     public getClonedCategoryDefinition(): CustomCategoryDefinition {
 
         return this.clonedConfigurationDocument.resource
@@ -79,11 +77,11 @@ export abstract class ConfigurationEditorModalComponent {
 
         this.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
 
-        this.label = this.field ? this.field.label : this.category.label;
-        this.description = this.field ? this.field.description : this.category.description;
+        this.label = this.getLabel();
+        this.description = this.getDescription();
 
         this.clonedLabel = clone(this.label);
-        this.clonedDescription = clone(this.description);
+        if (this.description) this.clonedDescription = clone(this.description);
 
         this.saving = false;
     }
@@ -92,10 +90,7 @@ export abstract class ConfigurationEditorModalComponent {
     public async save() {
 
         this.saving = true;
-
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category, this.field
-        );
+        this.updateCustomLanguageConfigurations();
 
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
@@ -171,4 +166,11 @@ export abstract class ConfigurationEditorModalComponent {
             this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
         }
     }
+
+
+    protected abstract getLabel(): I18nString;
+
+    protected abstract getDescription(): I18nString|undefined;
+
+    protected abstract updateCustomLanguageConfigurations();
 }

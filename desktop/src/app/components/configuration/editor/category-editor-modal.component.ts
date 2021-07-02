@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { AppConfigurator } from 'idai-field-core';
+import { AppConfigurator, I18nString } from 'idai-field-core';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
+import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 
 
 @Component({
@@ -79,6 +80,26 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
             || this.getClonedCategoryDefinition().color !== this.currentColor;
+    }
+
+    
+    protected getLabel(): I18nString {
+
+        return this.category.label;
+    }
+
+
+    protected getDescription(): I18nString {
+
+        return this.category.description;
+    }
+
+
+    protected updateCustomLanguageConfigurations() {
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category
+        );
     }
 
 

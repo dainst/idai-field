@@ -38,7 +38,7 @@
     <div class="col-2 groups">
         <ul class="nav nav-pills flex-column groups-container"
             cdkDropList (cdkDropListDropped)="onGroupDrop($event)">
-            <li *ngFor="let group of getGroups()"
+            <li *ngFor="let group of category.groups"
                 class="nav flex-column group-element"
                 cdkDrag cdkDragBoundary=".groups" cdkDragLockAxis="y">
                 <a [id]="'group-' + group.name" class="nav-link group-button"
@@ -56,6 +56,12 @@
                 <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>
         </ul>
+        <div id="add-group-button" class="circular-button green-button"
+            (click)="addGroup()"
+            ngbTooltip="Gruppe hinzufügen"
+            i18n-ngbTooltip="@@configuration.addGroup">
+            <span class="mdi mdi-plus"></span>
+        </div>
     </div>
 
     <div class="col-10 content" [class.shortened]="description">

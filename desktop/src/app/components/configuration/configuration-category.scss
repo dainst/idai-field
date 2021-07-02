@@ -137,10 +137,20 @@ configuration-category {
     margin-left: 12px;
   }
 
-  #add-field-button {
+  #add-field-button,
+  #add-group-button {
     left: 50%;
-    transform: translate(-20px, -30px);
     z-index: 1001;
+  }
+
+  #add-field-button {
+    transform: translate(-20px, -30px);
+  }
+
+  #add-group-button {
+    position: absolute;
+    bottom: 6px;
+    transform: translate(-20px, 0);
   }
 
   .field-drag-placeholder,

@@ -170,32 +170,32 @@ const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
-function setGroupLabels(languageConfigurations: LanguageConfigurations) {
+const setGroupLabels = (languageConfigurations: LanguageConfigurations) => (category: Category) => {
 
-    return (category: Category) => {
-
-        const groupLabel = ({ name: name }: Group) => {
-
-            if (name === Groups.PARENT) {
-                return category.parentCategory
-                    ? category.parentCategory.label
-                    : category.label;
-            } else if (name === Groups.CHILD) {
-                return category.label;
-            } else {
-                return LanguageConfiguration.getI18nString(
-                    languageConfigurations.complete, 'groups', name
-                );
-            }
-        };
-
-        return update(
-            Category.GROUPS,
-            compose(
-                map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Labeled.LABEL, label)(group as any))))(category);
-    };
+    category.groups.forEach(group => {
+        group.label = getGroupLabel(category, group.name, 'complete', languageConfigurations);
+        group.defaultLabel = getGroupLabel(category, group.name, 'default', languageConfigurations);
+    });
+    
+    return category;
 }
+
+
+function getGroupLabel(category: Category, groupName: string, configuration: 'default'|'complete',
+                       languageConfigurations: LanguageConfigurations) {
+
+    if (groupName === Groups.PARENT) {
+        return category.parentCategory
+            ? category.parentCategory.label
+            : category.label;
+    } else if (groupName === Groups.CHILD) {
+        return category.label;
+    } else {
+        return LanguageConfiguration.getI18nString(
+            languageConfigurations[configuration], 'groups', groupName
+        );
+    }
+};
 
 
 function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) {

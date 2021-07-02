@@ -1,5 +1,6 @@
 import { Labeled, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
+import { I18nString } from './i18n-string';
 import { RelationDefinition } from './relation-definition';
 import { Relations } from './relations';
 
@@ -45,6 +46,7 @@ export interface BaseGroup extends Named, Labeled {
 
     fields: Array<any>;
     relations: Array<any>;
+    defaultLabel?: I18nString;
 }
 
 

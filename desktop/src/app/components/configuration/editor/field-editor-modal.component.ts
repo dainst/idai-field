@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { AppConfigurator, CustomCategoryDefinition } from 'idai-field-core';
+import { AppConfigurator, CustomCategoryDefinition, FieldDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
 import { InputType } from '../project-configuration.component';
+import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 
 
 @Component({
@@ -23,6 +24,7 @@ import { InputType } from '../project-configuration.component';
  */
 export class FieldEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    public field: FieldDefinition|undefined;
     public availableInputTypes: Array<InputType>;
 
     public hideable: boolean;
@@ -109,6 +111,27 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
+    }
+
+
+    protected getLabel(): I18nString {
+
+        return this.field.label;
+    }
+
+
+    protected getDescription(): I18nString {
+
+        return this.field.description;
+    }
+
+
+    protected updateCustomLanguageConfigurations() {
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription,
+            this.category, this.field
+        );
     }
 
 

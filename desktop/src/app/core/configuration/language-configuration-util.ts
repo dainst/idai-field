@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
+import { Category, FieldDefinition, Group, I18nString, Inplace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -10,25 +10,30 @@ export type CustomLanguageConfigurations = { [language: string]: LanguageConfigu
 export module LanguageConfigurationUtil {
 
     export function updateCustomLanguageConfigurations(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                       editedLabel: I18nString, editedDescription: I18nString,
-                                                       category: Category, field?: FieldDefinition) {
+                                                       editedLabel: I18nString, editedDescription?: I18nString,
+                                                       category?: Category, field?: FieldDefinition,
+                                                       group?: Group) {
 
         updateCustomLanguageConfigurationSection(
-            customLanguageConfigurations, 'label', editedLabel, category, field
+            customLanguageConfigurations, 'label', editedLabel, category, field, group
         );
-        updateCustomLanguageConfigurationSection(
-            customLanguageConfigurations, 'description', editedDescription, category, field
-        );
+
+        if (!group && editedDescription) {
+            updateCustomLanguageConfigurationSection(
+                customLanguageConfigurations, 'description', editedDescription, category, field
+            );
+        }
     }
 
 
     function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                       section: 'label'|'description', editedI18nString: I18nString,
-                                                      category: Category, field?: FieldDefinition) {
+                                                      category: Category, field?: FieldDefinition, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {
             handleNewTextInCustomLanguageConfigurationSection(
-                customLanguageConfigurations, section, editedI18nString[languageCode], languageCode, category, field
+                customLanguageConfigurations, section, editedI18nString[languageCode], languageCode, category,
+                field, group
             );
         });
 
@@ -36,7 +41,7 @@ export module LanguageConfigurationUtil {
             .filter(languageCode => !editedI18nString[languageCode])
             .forEach(languageCode => {
                 deleteFromCustomLanguageConfigurationSection(
-                    customLanguageConfigurations, section, languageCode, category.name, field?.name
+                    customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
                 );
             });
     }
@@ -45,17 +50,17 @@ export module LanguageConfigurationUtil {
     function handleNewTextInCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                                section: 'label'|'description', newText: string,
                                                                languageCode: string, category: Category,
-                                                               field?: FieldDefinition) {
+                                                               field?: FieldDefinition, group?: Group) {
 
-        const definition = field ?? category;
+        const definition = group ?? field ?? category;
 
         if (newText === definition[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
             deleteFromCustomLanguageConfigurationSection(
-                customLanguageConfigurations, section, languageCode, category.name, field?.name
+                customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
             );
         } else {
             addToCustomLanguageConfigurationSection(
-                customLanguageConfigurations, section, newText, languageCode, category.name, field?.name
+                customLanguageConfigurations, section, newText, languageCode, category?.name, field?.name, group?.name
             );
         }
     }
@@ -63,13 +68,16 @@ export module LanguageConfigurationUtil {
 
     function deleteFromCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                           section: 'label'|'description', languageCode: string,
-                                                          categoryName: string, fieldName?: string) {
+                                                          categoryName?: string, fieldName?: string,
+                                                          groupName?: string) {
 
         Inplace.removeFrom(
             customLanguageConfigurations,
-            fieldName
-                ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
-                : [languageCode, 'categories', categoryName, section]
+            groupName
+                ? [languageCode, 'groups', groupName]
+                : fieldName
+                    ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+                    : [languageCode, 'categories', categoryName, section]
         );
     }
 
@@ -77,13 +85,15 @@ export module LanguageConfigurationUtil {
     function addToCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                      section: 'label'|'description', newText: string,
                                                      languageCode: string, categoryName: string,
-                                                     fieldName?: string) {
+                                                     fieldName?: string, groupName?: string) {
 
         Inplace.setOn(
             customLanguageConfigurations,
-            fieldName
-                ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
-                : [languageCode, 'categories', categoryName, section]
+            groupName
+                ? [languageCode, 'groups', groupName]
+                : fieldName
+                    ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+                    : [languageCode, 'categories', categoryName, section]
         )(newText);
     }
 }

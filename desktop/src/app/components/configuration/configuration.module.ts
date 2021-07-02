@@ -15,6 +15,8 @@ import { FieldEditorModalComponent } from './editor/field-editor-modal.component
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AddCategoryModalComponent } from './add-category-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
+import { AddGroupModalComponent } from './add-group-modal.component';
+import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 
 
 @NgModule({
@@ -33,8 +35,10 @@ import { ConfigurationFieldDragElement } from './configuration-field-drag-elemen
         ConfigurationRelationComponent,
         MultiLanguageInputComponent,
         AddFieldModalComponent,
+        AddGroupModalComponent,
         AddCategoryModalComponent,
         FieldEditorModalComponent,
+        GroupEditorModalComponent,
         CategoryEditorModalComponent,
         ConfigurationFieldDragElement
     ],
@@ -44,8 +48,10 @@ import { ConfigurationFieldDragElement } from './configuration-field-drag-elemen
     entryComponents: [
         ProjectConfigurationComponent,
         AddFieldModalComponent,
+        AddGroupModalComponent,
         AddCategoryModalComponent,
         FieldEditorModalComponent,
+        GroupEditorModalComponent,
         CategoryEditorModalComponent
     ]
 })

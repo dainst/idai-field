@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, I18nString } from 'idai-field-core';
+import { Category, FieldDefinition, I18nString, Group } from 'idai-field-core';
 import { CustomLanguageConfigurations,
     LanguageConfigurationUtil } from '../../../../src/app/core/configuration/language-configuration-util';
 
@@ -28,6 +28,11 @@ import { CustomLanguageConfigurations,
         en: 'Field description text'
     };
 
+    const groupLabel: I18nString = {
+        de: 'Test-Gruppe',
+        en: 'Test group'
+    };
+
     const category: Category = {
         name: 'testCategory',
         label: categoryLabel,
@@ -49,6 +54,14 @@ import { CustomLanguageConfigurations,
         description: fieldDescription,
         defaultDescription: fieldDescription,
         inputType: 'text'
+    };
+
+    const group: Group = {
+        name: 'testGroup',
+        label: groupLabel,
+        defaultLabel: groupLabel,
+        fields: [],
+        relations: []
     };
 
 
@@ -134,6 +147,34 @@ import { CustomLanguageConfigurations,
         expect(customLanguageConfigurations.de.categories.testCategory.description).toBe('Neue Beschreibung');
         expect(customLanguageConfigurations.en.categories.testCategory.label).toBe('New label');
         expect(customLanguageConfigurations.en.categories.testCategory.description).toBe('New description');
+    });
+
+
+    it('Add new translations to custom language configurations for group', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {}
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Neues Label',
+            en: 'New label'
+        };
+
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            undefined,
+            undefined,
+            undefined,
+            group
+        );
+
+        expect(customLanguageConfigurations.de.groups.testGroup).toBe('Neues Label');
+        expect(customLanguageConfigurations.en.groups.testGroup).toBe('New label');
     });
 
 
@@ -228,6 +269,39 @@ import { CustomLanguageConfigurations,
     });
 
 
+    it('Remove deleted translations from custom language configurations for group', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                groups: {
+                    testGroup: 'Altes Label'
+                }
+            },
+            en: {
+                groups: {
+                    testGroup: 'Old label'
+                }
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Altes Label'
+        };
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            undefined,
+            undefined,
+            undefined,
+            group
+        );
+
+        expect(customLanguageConfigurations.de.groups.testGroup).toBe('Altes Label');
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
     it('Remove translations equal to default translation from custom language configurations for field', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
@@ -291,6 +365,33 @@ import { CustomLanguageConfigurations,
             editedLabel,
             editedDescription,
             category
+        );
+
+        expect(customLanguageConfigurations.de).toBeUndefined();
+    });
+
+
+    it('Remove translations equal to default translation from custom language configurations for group', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                groups: {
+                    testGroup: 'Altes Label'
+                }
+            }
+        };
+        
+        const editedLabel: I18nString = {
+            de: 'Test-Gruppe'
+        };
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            editedLabel,
+            undefined,
+            undefined,
+            undefined,
+            group
         );
 
         expect(customLanguageConfigurations.de).toBeUndefined();

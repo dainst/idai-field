@@ -48,6 +48,15 @@ configuration-category {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+
+          .mdi-menu {
+            color: #5f5e5e;
+            margin-right: 5px;
+          }
+
+          &.active .mdi-menu {
+            color: #fff;
+          }
         }
       }
     }

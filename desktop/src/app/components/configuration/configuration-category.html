@@ -44,8 +44,9 @@
                 <a [id]="'group-' + group.name" class="nav-link group-button"
                    cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"
                    [cdkDropListConnectedTo]="['fields-list']"
-                        [class.active]="selectedGroup === group.name"
-                        (click)="selectedGroup = group.name">
+                   [class.active]="selectedGroup === group.name"
+                   (click)="selectedGroup = group.name">
+                    <span class="mdi mdi-menu" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>

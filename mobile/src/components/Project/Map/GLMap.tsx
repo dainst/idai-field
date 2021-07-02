@@ -120,7 +120,7 @@ const GLMap: React.FC<GLMapProps> = (props) => {
         raycaster.setFromCamera(vec, camera);
         const intersects = raycaster.intersectObjects(scene.children);
         if(intersects.length > 0){
-            props.setHighlightedDocId(intersects[0].object.name);
+            props.setHighlightedDocId(intersects[0].object.uuid);
         }
         
        

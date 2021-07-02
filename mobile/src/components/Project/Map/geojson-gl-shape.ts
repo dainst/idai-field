@@ -4,7 +4,7 @@ import { Document, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, DoubleSide, Line,
-    LineBasicMaterial, Mesh, MeshBasicMaterial, Scene, Shape, ShapeGeometry, Vector2
+    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, Vector2
 } from 'three';
 import { processTransform2d } from './geo-svg';
 import { pointRadius, strokeWidth } from './geo-svg/constants';
@@ -27,11 +27,7 @@ export const polygonToShape: ShapeFunction<Position[][]> = (matrix, scene,config
 
     const color = config.getColorForCategory(document.resource.category);
     const shape = new Shape();
-    const material = new MeshBasicMaterial({
-        color,
-        opacity: 0.7,
-        side: DoubleSide, depthWrite: false
-    });
+    let object: Object3D;
 
     coordinates.forEach((ringCoords, i) => {
         if(i === 0){
@@ -43,22 +39,24 @@ export const polygonToShape: ShapeFunction<Position[][]> = (matrix, scene,config
     });
     
     if(isSelected){
+        const material = new MeshBasicMaterial({
+            color,
+            opacity: 0.7,
+            side: DoubleSide, depthWrite: false
+        });
         const geo = new ShapeGeometry(shape);
-        const mesh = new Mesh(geo, material);
-        mesh.name = document.resource.id;
+        object = new Mesh(geo, material);
        
-        scene.add(mesh);
-
     } else { //outline
         shape.autoClose = true;
         const points = shape.getPoints();
         const geometryPoints = new BufferGeometry().setFromPoints( points );
-        const line = new Line( geometryPoints,
+        object = new Line( geometryPoints,
             new LineBasicMaterial( { color, linewidth: strokeWidth } ) );
-        line.name = document.resource.id;
-        scene.add( line );
 
     }
+    addObjectInfo(object,document);
+    scene.add(object);
 };
 
 
@@ -78,7 +76,7 @@ export const lineStringToShape: ShapeFunction<Position[]> = (matrix, scene, conf
     });
     const geo = new BufferGeometry().setFromPoints(points);
     const line = new Line(geo, material);
-    line.name = document.resource.id;
+    addObjectInfo(line, document);
     scene.add(line);
 };
 
@@ -93,7 +91,7 @@ export const pointToShape: ShapeFunction<Position> =
     if(!coordinates) return;
   
     const [x,y] = processTransform2d(matrix,coordinates);
- 
+    
     
     const radius = pointRadius;
     const segments = 30; //<-- Increase or decrease for more resolution
@@ -103,8 +101,13 @@ export const pointToShape: ShapeFunction<Position> =
     const circle = new Mesh(
         circleGeometry,
         new MeshBasicMaterial({ color: config.getColorForCategory(document.resource.category) }) );
-    circle.name = document.resource.id;
+    addObjectInfo(circle, document);
     scene.add( circle );
 
 
+};
+
+const addObjectInfo = (object: Object3D, doc: Document) => {
+    object.name = doc.resource.identifier;
+    object.uuid = doc.resource.id;
 };

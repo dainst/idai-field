@@ -312,7 +312,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
         const modalReference: NgbModalRef = this.modalService.open(
             DeleteFieldModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;

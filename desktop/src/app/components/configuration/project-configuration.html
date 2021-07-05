@@ -1,3 +1,7 @@
+<configuration-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
+
 <div *ngIf="customConfigurationDocument" class="project-configuration row">
     <div class="col">
         <div class="row">
@@ -46,7 +50,11 @@
                                         [showHiddenFields]="showHiddenFields"
                                         [allowDragAndDrop]="allowDragAndDrop"
                                         [availableInputTypes]="availableInputTypes"
-                                        (onEdited)="saveChanges($event)"></configuration-category>
+                                        [contextMenu]="contextMenu"
+                                        (onEditCategory)="editCategory(selectedCategory)"
+                                        (onEditGroup)="editGroup(selectedCategory, $event)"
+                                        (onEditField)="editField(selectedCategory, $event)"
+                                        (onConfigurationChanged)="saveChanges($event)"></configuration-category>
             </div>
         </div>
     </div>

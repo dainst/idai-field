@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator, getConfigurationName } from 'idai-field-core';
+import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
+    getConfigurationName, FieldDefinition, Group, Groups } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
@@ -11,6 +12,11 @@ import { ConfigurationChange } from '../../core/configuration/configuration-chan
 import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
+import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
+import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
+import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
+import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
+import { ComponentHelpers } from '../component-helpers';
 
 
 export type InputType = {
@@ -22,7 +28,9 @@ export type InputType = {
 @Component({
     templateUrl: './project-configuration.html',
     host: {
-        '(window:keydown)': 'onKeyDown($event)'
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:click)': 'onClick($event, false)',
+        '(window:contextmenu)': 'onClick($event, true)'
     }
 })
 /**
@@ -37,6 +45,7 @@ export class ProjectConfigurationComponent implements OnInit {
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
+    public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }) },
@@ -86,6 +95,40 @@ export class ProjectConfigurationComponent implements OnInit {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
+        }
+    }
+
+
+    public onClick(event: any, rightClick: boolean = false) {
+
+        if (!this.contextMenu.position) return;
+
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+            || rightClick && target.id && (
+                target.id.startsWith('category-')
+                || target.id.startsWith('group-')
+                || target.id.startsWith('field-')
+            ))) {
+
+            this.contextMenu.close();
+        }
+    }
+
+
+    public performContextMenuAction(action: ConfigurationContextMenuAction) {
+
+        switch(action) {
+            case 'edit':
+                if (this.contextMenu.group) {
+                    this.editGroup(this.contextMenu.category, this.contextMenu.group);
+                } else if (this.contextMenu.field) {
+                    this.editField(this.contextMenu.category, this.contextMenu.field);
+                } else {
+                    this.editCategory(this.contextMenu.category);
+                }
+                break;
+            case 'delete':
+                break;
         }
     }
 
@@ -176,6 +219,80 @@ export class ProjectConfigurationComponent implements OnInit {
         try {
             const result = await modalReference.result;
             await this.saveChanges(result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public async editCategory(category: Category) {
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            CategoryEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = category;
+        modalReference.componentInstance.initialize();
+
+        try {
+            await this.saveChanges(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public async editGroup(category: Category, group: Group) {
+
+        if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            GroupEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = category;
+        modalReference.componentInstance.group = group;
+        modalReference.componentInstance.initialize();
+
+        try {
+            await this.saveChanges(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public async editField(category: Category, field: FieldDefinition) {
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            FieldEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = category;
+        modalReference.componentInstance.field = field;
+        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
+        modalReference.componentInstance.initialize();
+
+        try {
+            await this.saveChanges(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {

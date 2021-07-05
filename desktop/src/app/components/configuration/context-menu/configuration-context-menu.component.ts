@@ -45,16 +45,13 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isEditOptionAvailable(): boolean {
 
-        return this.contextMenu.category !== undefined
-            || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group))
-            || this.contextMenu.field !== undefined;
+        return !this.contextMenu.group
+            || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group));
     }
 
 
     public isDeleteOptionAvailable(): boolean {
 
-        return this.contextMenu.category !== undefined
-            || this.contextMenu.group !== undefined
-            || this.contextMenu.field !== undefined;
+        return true;
     }
 }

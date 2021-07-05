@@ -1,7 +1,10 @@
-<div *ngIf="field && category" class="card"
+<div *ngIf="field && category"
+     [id]="'field-' + field.name"
+     class="card"
      [class.bg-warning]="isCustomField()"
      [class.bg-secondary]="hidden"
-     [class.text-white]="hidden">
+     [class.text-white]="hidden"
+     (contextmenu)="contextMenu.open($event, category, undefined, field)">
     <div class="card-header" [class.parent-element]="parentField">
         <ng-content></ng-content>
         <category-icon *ngIf="parentField"
@@ -17,7 +20,7 @@
         <code> {{field.name}}</code>
         <div *ngIf="!parentField" class="btn-group right edit-buttons">
             <button class="btn btn-primary"
-                    (click)="edit()"
+                    (click)="onEdit.emit()"
                     placement="left" container="body"
                     ngbTooltip="Feld bearbeiten"
                     i18n-ngbTooltip="@@configuration.editField">

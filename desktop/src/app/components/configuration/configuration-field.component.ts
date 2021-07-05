@@ -1,15 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { flatten, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
     ValuelistUtil, LabelUtil } from 'idai-field-core';
-import { MenuContext, MenuService } from '../menu-service';
-import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { InputType } from './project-configuration.component';
-import { AngularUtility } from '../../angular/angular-utility';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 
 
 const locale: string = typeof window !== 'undefined'
@@ -32,8 +27,9 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() customConfigurationDocument: ConfigurationDocument;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
+    @Input() contextMenu: ConfigurationContextMenu;
 
-    @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
+    @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
 
     public parentField: boolean = false;
     public customFieldDefinitionClone: CustomFieldDefinition | undefined;
@@ -43,9 +39,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private modalService: NgbModal,
-                private menuService: MenuService,
-                private i18n: I18n) {}
+    constructor(private i18n: I18n) {}
 
 
     ngOnChanges() {
@@ -74,31 +68,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         return this.customConfigurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
-    }
-
-
-    public async edit() {
-
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
-
-        const modalReference: NgbModalRef = this.modalService.open(
-            FieldEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = this.category;
-        modalReference.componentInstance.field = this.field;
-        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
-        modalReference.componentInstance.initialize();
-
-        try {
-            this.onEdited.emit(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
     }
 
 

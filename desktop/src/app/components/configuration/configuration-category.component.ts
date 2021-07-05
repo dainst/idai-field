@@ -4,31 +4,23 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
     RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
-    getConfigurationName, Groups } from 'idai-field-core';
+    getConfigurationName } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './project-configuration.component';
-import { AngularUtility } from '../../angular/angular-utility';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
-import { ComponentHelpers } from '../component-helpers';
 
 
 @Component({
     selector: 'configuration-category',
-    templateUrl: './configuration-category.html',
-    host: {
-        '(window:click)': 'handleClick($event, false)',
-        '(window:contextmenu)': 'handleClick($event, true)'
-    }
+    templateUrl: './configuration-category.html'
 })
 /**
 * @author Sebastian Cuy
@@ -41,13 +33,16 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() showHiddenFields: boolean = true;
     @Input() allowDragAndDrop: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
+    @Input() contextMenu: ConfigurationContextMenu;
 
-    @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
+    @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
+    @Output() onEditField: EventEmitter<FieldDefinition> = new EventEmitter<FieldDefinition>();
+    @Output() onConfigurationChanged: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
 
     public selectedGroup: string;
     public label: string;
     public description: string;
-    public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
     private permanentlyHiddenFields: string[];
 
@@ -133,63 +128,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public performContextMenuAction(action: ConfigurationContextMenuAction) {
+    public async addGroup() {
 
-        switch(action) {
-            case 'edit':
-                this.editGroup(this.contextMenu.group);
-                break;
-            case 'delete':
-                break;
-        }
-    }
+        this.menuService.setContext(MenuContext.MODAL);
 
-
-    public async editCategory() {
-
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
-
-        const modalReference: NgbModalRef = this.modalService.open(
-            CategoryEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = this.category;
-        modalReference.componentInstance.initialize();
+        const modalReference: NgbModalRef = this.modalService.open(AddGroupModalComponent);
 
         try {
-            this.onEdited.emit(await modalReference.result);
+            await this.createNewGroup(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
-    }
-
-
-    public async editGroup(group: Group) {
-
-        if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
-
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
-
-        const modalReference: NgbModalRef = this.modalService.open(
-            GroupEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = this.category;
-        modalReference.componentInstance.group = group;
-        modalReference.componentInstance.initialize();
-
-        try {
-            this.onEdited.emit(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
         }
     }
 
@@ -202,22 +152,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         try {
             await this.createNewField(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-        }
-    }
-
-
-    public async addGroup() {
-
-        this.menuService.setContext(MenuContext.MODAL);
-
-        const modalReference: NgbModalRef = this.modalService.open(AddGroupModalComponent);
-
-        try {
-            await this.createNewGroup(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -257,18 +191,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public handleClick(event: any, rightClick: boolean = false) {
-
-        if (!this.contextMenu.position) return;
-
-        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
-            || rightClick && target.id && target.id.startsWith('group-'))) {
-
-            this.contextMenu.close();
-        }
-    }
-
-
     private async saveNewGroupsConfiguration(newGroups: Array<GroupDefinition>) {
 
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
@@ -282,7 +204,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 Document.clone(clonedConfigurationDocument)
             );
-            this.onEdited.emit({ 
+            this.onConfigurationChanged.emit({ 
                 newProjectConfiguration,
                 newCustomConfigurationDocument: clonedConfigurationDocument
             });
@@ -319,7 +241,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         modalReference.componentInstance.initialize();
 
         try {
-            this.onEdited.emit(await modalReference.result);
+            this.onConfigurationChanged.emit(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -350,7 +272,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         modalReference.componentInstance.initialize();
 
         try {
-            this.onEdited.emit(await modalReference.result);
+            this.onConfigurationChanged.emit(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {

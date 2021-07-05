@@ -7,13 +7,13 @@ import { ContextMenu } from '../../widgets/context-menu';
  */
  export class ConfigurationContextMenu extends ContextMenu {
 
-    public category?: Category;
+    public category: Category;
     public group?: Group;
     public field?: FieldDefinition;
 
 
-    public open(event: MouseEvent, category?: Category, group?: Group, field?: FieldDefinition) {
-
+    public open(event: MouseEvent, category: Category, group?: Group, field?: FieldDefinition) {
+        
         super.open(event, category, group, field);
         
         this.category = category;

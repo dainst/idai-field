@@ -1,41 +1,39 @@
-<configuration-context-menu *ngIf="contextMenu.isOpen()"
-    [contextMenu]="contextMenu"
-    (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
-
-<div class="row" [class.custom-category]="!category.libraryId">
-    <div class="col header header-left d-flex">
-        <category-icon size="41" [category]="category"></category-icon>
-        <h5>
-            <span *ngIf="!category.libraryId"
-                class="mdi mdi-alert-circle-outline"
-                ngbTooltip="Projektspezifisches Formular"
-                i18n-ngbTooltip="@@config.form.custom"
-                placement="right">
+<div [id]="'category-' + category.name" (contextmenu)="contextMenu.open($event, category)">
+    <div class="row" [class.custom-category]="!category.libraryId">
+        <div class="col header header-left d-flex">
+            <category-icon size="41" [category]="category"></category-icon>
+            <h5>
+                <span *ngIf="!category.libraryId"
+                    class="mdi mdi-alert-circle-outline"
+                    ngbTooltip="Projektspezifisches Formular"
+                    i18n-ngbTooltip="@@config.form.custom"
+                    placement="right">
+                </span>
+                {{label}}
+            </h5>
+        </div>
+        <div class="col header header-right text-right">
+            <span *ngIf="category.name">
+                <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
+                <code>{{category.name}}</code>
             </span>
-            {{label}}
-        </h5>
+            &nbsp;
+            <span *ngIf="category.libraryId">
+                <strong i18n="@@config.libraryId">Formular</strong>:
+                <code>{{category.libraryId}}</code>
+            </span>
+            <button class="btn btn-primary edit-category-button"
+                    (click)="onEditCategory.emit()"
+                    placement="left" container="body"
+                    ngbTooltip="Kategorie bearbeiten"
+                    i18n-ngbTooltip="@@configuration.editCategory">
+                <span class="mdi mdi-pencil"></span>
+            </button>
+        </div>
     </div>
-    <div class="col header header-right text-right">
-        <span *ngIf="category.name">
-            <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
-            <code>{{category.name}}</code>
-        </span>
-        &nbsp;
-        <span *ngIf="category.libraryId">
-            <strong i18n="@@config.libraryId">Formular</strong>:
-            <code>{{category.libraryId}}</code>
-        </span>
-        <button class="btn btn-primary edit-category-button"
-                (click)="editCategory()"
-                placement="left" container="body"
-                ngbTooltip="Kategorie bearbeiten"
-                i18n-ngbTooltip="@@configuration.editCategory">
-            <span class="mdi mdi-pencil"></span>
-        </button>
+    <div *ngIf="description" class="row subheader">
+        <div class="col">{{description}}</div>
     </div>
-</div>
-<div *ngIf="description" class="row subheader">
-    <div class="col">{{description}}</div>
 </div>
 
 <div class="row">
@@ -51,8 +49,8 @@
                    [cdkDropListDisabled]="!allowDragAndDrop"
                    [class.active]="selectedGroup === group.name"
                    (click)="selectedGroup = group.name"
-                   (dblclick)="editGroup(group)"
-                   (contextmenu)="contextMenu.open($event, undefined, group, undefined)">
+                   (dblclick)="onEditGroup.emit(group)"
+                   (contextmenu)="contextMenu.open($event, category, group)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
@@ -85,7 +83,8 @@
                                      [customConfigurationDocument]="customConfigurationDocument"
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
-                                     (onEdited)="onEdited.emit($event)">
+                                     [contextMenu]="contextMenu"
+                                     (onEdited)="onEditField.emit(field)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>

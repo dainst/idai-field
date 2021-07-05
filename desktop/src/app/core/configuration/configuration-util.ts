@@ -1,6 +1,6 @@
 import { flatten, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Resource,
-    GroupDefinition, Group, Groups } from 'idai-field-core';
+    GroupDefinition, Group, Groups, Document, ConfigurationDocument } from 'idai-field-core';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -42,6 +42,25 @@ export module ConfigurationUtil {
             });
             return result;
         }, []);
+    }
+
+
+    export function deleteField(category: Category, field: FieldDefinition,
+                                customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
+
+        const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
+        const clonedCategoryConfiguration = clonedConfigurationDocument.resource
+            .categories[category.libraryId ?? category.name];
+        delete clonedCategoryConfiguration.fields[field.name];
+
+        if (clonedCategoryConfiguration.groups) {
+            const groupDefinition = clonedCategoryConfiguration.groups.find(
+                group => group.fields.includes(field.name)
+            );
+            groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
+        }
+
+        return clonedConfigurationDocument;
     }
 
 

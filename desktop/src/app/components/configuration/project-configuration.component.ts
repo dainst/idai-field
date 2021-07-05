@@ -18,6 +18,7 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
+import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
 
 export type InputType = {
@@ -338,27 +339,19 @@ export class ProjectConfigurationComponent implements OnInit {
 
     private async deleteField(category: Category, field: FieldDefinition) {
 
-        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
-        const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name];
-        delete clonedCategoryConfiguration.fields[field.name];
-
-        if (clonedCategoryConfiguration.groups) {
-            const groupDefinition = clonedCategoryConfiguration.groups.find(
-                group => group.fields.includes(field.name)
-            );
-            groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
-        }
+        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
+            category, field, this.customConfigurationDocument
+        );
 
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                clonedConfigurationDocument
+                changedConfigurationDocument
             );
             await this.saveChanges({ 
                 newProjectConfiguration,
-                newCustomConfigurationDocument: clonedConfigurationDocument
+                newCustomConfigurationDocument: changedConfigurationDocument
             });
         } catch (errWithParams) {
             // TODO Show user-readable error messages

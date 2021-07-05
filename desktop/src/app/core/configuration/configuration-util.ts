@@ -1,6 +1,6 @@
 import { flatten, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Resource,
-    GroupDefinition } from 'idai-field-core';
+    GroupDefinition, Group, Groups } from 'idai-field-core';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -42,5 +42,11 @@ export module ConfigurationUtil {
             });
             return result;
         }, []);
+    }
+
+
+    export function isEditableGroup(group: Group): boolean {
+
+        return group.name !== Groups.PARENT && group.name !== Groups.CHILD;
     }
 }

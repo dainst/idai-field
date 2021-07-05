@@ -1,17 +1,18 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
-import {to, aReduce} from 'tsfun';
-import {Datastore, ImageDocument} from 'idai-field-core';
-import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
-import {AngularUtility} from '../../../angular/angular-utility';
-import {showMissingThumbnailMessageOnConsole} from '../log-messages';
-import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output,
+    SimpleChanges } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { to, aReduce } from 'tsfun';
+import { Datastore, ImageDocument } from 'idai-field-core';
+import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from '../../../core/images/row/image-row';
+import { AngularUtility } from '../../../angular/angular-utility';
+import { showMissingThumbnailMessageOnConsole } from '../log-messages';
+import { BlobMaker } from '../../../core/images/imagestore/blob-maker';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
-import {ContextMenu} from '../../resources/widgets/context-menu';
 
 
 const MAX_IMAGE_WIDTH = 600;
 const PLACEHOLDER_WIDTH = 150;
+
 
 @Component({
     selector: 'image-row',
@@ -43,8 +44,6 @@ export class ImageRowComponent implements OnChanges {
     public initializing: boolean;
 
     private imageRow: ImageRow;
-
-    public contextMenu = new ContextMenu();
 
 
     constructor(private imagestore: Imagestore,

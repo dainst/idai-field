@@ -17,11 +17,18 @@ import { SettingsProvider } from '../../core/settings/settings-provider';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
+import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
+import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
+import { ComponentHelpers } from '../component-helpers';
 
 
 @Component({
     selector: 'configuration-category',
-    templateUrl: './configuration-category.html'
+    templateUrl: './configuration-category.html',
+    host: {
+        '(window:click)': 'handleClick($event, false)',
+        '(window:contextmenu)': 'handleClick($event, true)'
+    }
 })
 /**
 * @author Sebastian Cuy
@@ -38,9 +45,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Output() onEdited: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
 
     public selectedGroup: string;
-
     public label: string;
     public description: string;
+    public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
     private permanentlyHiddenFields: string[];
 
@@ -123,6 +130,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .relations
             .filter(on('editable', is(true)));
+    }
+
+
+    public performContextMenuAction(action: ConfigurationContextMenuAction) {
+
+        switch(action) {
+            case 'edit':
+                this.editGroup(this.contextMenu.group);
+                break;
+            case 'delete':
+                break;
+        }
     }
 
 
@@ -235,6 +254,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
         InPlace.moveInArray(groups, event.previousIndex, event.currentIndex);
 
         await this.saveNewGroupsConfiguration(groups);
+    }
+
+
+    public handleClick(event: any, rightClick: boolean = false) {
+
+        if (!this.contextMenu.position) return;
+
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+            || rightClick && target.id && target.id.startsWith('group-'))) {
+
+            this.contextMenu.close();
+        }
     }
 
 

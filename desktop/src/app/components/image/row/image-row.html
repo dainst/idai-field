@@ -13,8 +13,7 @@
                 class="imageRowImage"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover"
-                 [style.width]="getImageWidth(image) + 'px'"
-                 (contextmenu)="contextMenu.open($event, [image.document])">
+                 [style.width]="getImageWidth(image) + 'px'">
             <div *ngIf="!hasImageUrl(image) && !initializing"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">

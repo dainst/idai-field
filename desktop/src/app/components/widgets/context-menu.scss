@@ -28,17 +28,12 @@
     font-size: 13px;
   }
 
-  .mdi-pencil,
-  .mdi-image-multiple,
-  .mdi-file-tree,
-  .mdi-shape-polygon-plus,
-  .mdi-vector-polyline,
-  .mdi-map-marker-plus {
+  .mdi {
     color: #37588e;
   }
 
   .mdi-delete {
-    color: #dc3545;
+    color: #dc3545 !important;
   }
 
   hr {

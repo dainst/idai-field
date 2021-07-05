@@ -4,10 +4,10 @@ import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
 import { Loading } from '../../../widgets/loading';
 import { BaseList } from '../../base-list';
-import { ContextMenuAction } from '../../widgets/context-menu.component';
+import { ResourcesContextMenuAction } from '../../widgets/resources-context-menu.component';
 import { ViewFacade } from '../../../../core/resources/view/view-facade';
 import { NavigationService } from '../../../../core/resources/navigation/navigation-service';
-import { ContextMenu } from '../../widgets/context-menu';
+import { ResourcesContextMenu } from '../../widgets/resources-context-menu';
 import { MenuContext, MenuService } from '../../../menu-service';
 import {ComponentHelpers} from '../../../component-helpers';
 
@@ -30,7 +30,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
-    public contextMenu: ContextMenu = new ContextMenu();
+    public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     private lastSelectedDocument: FieldDocument|undefined;
 
@@ -127,7 +127,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    public async performContextMenuAction(action: ContextMenuAction) {
+    public async performContextMenuAction(action: ResourcesContextMenuAction) {
 
         if (this.resourcesComponent.isPopoverMenuOpened() &&
                 ['edit-geometry', 'create-polygon', 'create-line-string', 'create-point'].includes(action)) {

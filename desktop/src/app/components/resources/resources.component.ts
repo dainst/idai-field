@@ -1,25 +1,23 @@
-import {ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Subscription} from 'rxjs';
-import {Document} from 'idai-field-core';
-import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
-import {Loading} from '../widgets/loading';
-import {RoutingService} from '../routing-service';
-import {DoceditLauncher} from './service/docedit-launcher';
-import {M} from '../messages/m';
-import {MoveModalComponent} from './move-modal.component';
-import {AngularUtility} from '../../angular/angular-utility';
-import {ResourceDeletion} from './deletion/resource-deletion';
-import {TabManager} from '../../core/tabs/tab-manager';
-import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
-import {NavigationService} from '../../core/resources/navigation/navigation-service';
-import {MenuContext, MenuService} from '../menu-service';
-import {Messages} from '../messages/messages';
-import {ProjectCategories} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
-import {NavigationPath} from '../../core/resources/view/state/navigation-path';
-import {ViewModalLauncher} from './service/view-modal-launcher';
+import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subscription } from 'rxjs';
+import { Document, FieldDocument, FieldGeometry, Category, ProjectCategories,
+    ProjectConfiguration } from 'idai-field-core';
+import { Loading } from '../widgets/loading';
+import { RoutingService } from '../routing-service';
+import { DoceditLauncher } from './service/docedit-launcher';
+import { M } from '../messages/m';
+import { MoveModalComponent } from './move-modal.component';
+import { AngularUtility } from '../../angular/angular-utility';
+import { ResourceDeletion } from './deletion/resource-deletion';
+import { TabManager } from '../../core/tabs/tab-manager';
+import { ResourcesViewMode, ViewFacade } from '../../core/resources/view/view-facade';
+import { NavigationService } from '../../core/resources/navigation/navigation-service';
+import { MenuContext, MenuService } from '../menu-service';
+import { Messages } from '../messages/messages';
+import { NavigationPath } from '../../core/resources/view/state/navigation-path';
+import { ViewModalLauncher } from './service/view-modal-launcher';
 
 
 export type PopoverMenu = 'none'|'info'|'children';

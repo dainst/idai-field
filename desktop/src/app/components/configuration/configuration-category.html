@@ -1,3 +1,7 @@
+<configuration-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
+
 <div class="row" [class.custom-category]="!category.libraryId">
     <div class="col header header-left d-flex">
         <category-icon size="41" [category]="category"></category-icon>
@@ -47,7 +51,8 @@
                    [cdkDropListDisabled]="!allowDragAndDrop"
                    [class.active]="selectedGroup === group.name"
                    (click)="selectedGroup = group.name"
-                   (dblclick)="editGroup(group)">
+                   (dblclick)="editGroup(group)"
+                   (contextmenu)="contextMenu.open($event, undefined, group, undefined)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>

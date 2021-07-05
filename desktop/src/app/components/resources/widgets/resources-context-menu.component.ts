@@ -1,29 +1,30 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {ContextMenu, ContextMenuOrientation} from './context-menu';
-import {FieldDocument, ProjectCategories} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
-import {MoveUtility} from '../../../core/resources/move-utility';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { FieldDocument, ProjectCategories, ProjectConfiguration } from 'idai-field-core';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { ResourcesContextMenu } from './resources-context-menu';
+import { ContextMenuOrientation } from '../../widgets/context-menu';
+import { MoveUtility } from '../../../core/resources/move-utility';
 
 
-export type ContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
+export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
     |'create-point'|'edit-geometry';
 
 
 @Component({
-    selector: 'context-menu',
-    templateUrl: './context-menu.html'
+    selector: 'resources-context-menu',
+    templateUrl: './resources-context-menu.html'
 })
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ContextMenuComponent implements OnChanges {
+export class ResourcesContextMenuComponent implements OnChanges {
 
-    @Input() contextMenu: ContextMenu;
+    @Input() contextMenu: ResourcesContextMenu;
     @Input() showViewOption: boolean = false;
 
-    @Output() onSelectAction: EventEmitter<ContextMenuAction> = new EventEmitter<ContextMenuAction>();
+    @Output() onSelectAction: EventEmitter<ResourcesContextMenuAction>
+        = new EventEmitter<ResourcesContextMenuAction>();
 
     public orientation: ContextMenuOrientation = 'top';
 
@@ -32,21 +33,14 @@ export class ContextMenuComponent implements OnChanges {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
+    public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
+
+    public getBottomPosition = (yPosition: number) => ResourcesContextMenu.getBottomPosition(yPosition);
+
+
     ngOnChanges() {
 
-        this.orientation = ContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
-
-
-    public selectAction(action: ContextMenuAction) {
-
-        this.onSelectAction.emit(action);
-    }
-
-
-    public getBottomPosition(yPosition: number): number {
-
-        return window.innerHeight - yPosition;
+        this.orientation = ResourcesContextMenu.computeOrientation(this.contextMenu.position?.y);
     }
 
 

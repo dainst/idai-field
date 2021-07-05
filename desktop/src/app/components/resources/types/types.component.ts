@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Imagestore } from '../../../core/images/imagestore/imagestore';
-import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager } from 'idai-field-core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager,
+    ProjectCategories } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
-import { ProjectCategories } from 'idai-field-core';
+import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
@@ -15,9 +15,9 @@ import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';
 import { ViewModalLauncher } from '../service/view-modal-launcher';
-import { ContextMenu } from '../widgets/context-menu';
-import { ContextMenuAction } from '../widgets/context-menu.component';
-import {ComponentHelpers} from '../../component-helpers';
+import { ResourcesContextMenu } from '../widgets/resources-context-menu';
+import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
+import { ComponentHelpers } from '../../component-helpers';
 
 
 @Component({
@@ -60,7 +60,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     public linkedDocuments: Array<FieldDocument> = [];
 
     public images: { [resourceId: string]: Array<Blob> } = {};
-    public contextMenu: ContextMenu = new ContextMenu();
+    public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     private expandAllGroups: boolean = false;
     private visibleSections = ['types'];
@@ -138,7 +138,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     }
 
 
-    public async performContextMenuAction(action: ContextMenuAction) {
+    public async performContextMenuAction(action: ResourcesContextMenuAction) {
 
         if (this.contextMenu.documents.length !== 1) return;
         const document: FieldDocument = this.contextMenu.documents[0] as FieldDocument;

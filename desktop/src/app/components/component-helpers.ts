@@ -1,6 +1,8 @@
-import {Predicate} from 'tsfun';
+import { Predicate } from 'tsfun';
+
 
 type DomElement = any;
+
 
 export namespace ComponentHelpers {
 

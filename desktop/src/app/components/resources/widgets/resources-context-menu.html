@@ -49,7 +49,7 @@
     <div *ngIf="isEditGeometryOptionAvailable()"
             id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
         <span class="mdi mdi-pencil"></span>
-        <span class="dropdown-entry-label" >
+        <span class="dropdown-entry-label">
                 <span *ngIf="contextMenu.documents[0].resource.geometry.type === 'Polygon'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.polygon">Polygon bearbeiten</span>

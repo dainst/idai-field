@@ -1,7 +1,7 @@
-<context-menu *ngIf="contextMenu.isOpen()"
-              [contextMenu]="contextMenu"
-              [showViewOption]="true"
-              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+<resources-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    [showViewOption]="true"
+    (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
 
 <div id="type-grid" class="bg-light" (scroll)="contextMenu.close()">
     <document-info *ngIf="mainDocument"

@@ -1,6 +1,3 @@
-import {Document} from 'idai-field-core';
-
-
 export type ContextMenuOrientation = 'top'|'bottom';
 
 
@@ -10,22 +7,17 @@ export type ContextMenuOrientation = 'top'|'bottom';
 export class ContextMenu {
 
     public position: { x: number, y: number }|undefined;
-    public documents: Array<Document> = [];
 
 
-    public open(event: MouseEvent, documents: Array<Document>) {
-
-        if (documents.find(document => !document.resource.id)) return this.close();
+    public open(event: MouseEvent, ...data: any) {
 
         this.position = { x: event.clientX, y: event.clientY };
-        this.documents = documents;
     }
 
 
     public close() {
 
         this.position = undefined;
-        this.documents = [];
     }
 
 
@@ -40,5 +32,11 @@ export class ContextMenu {
         return !yPosition || yPosition <= window.innerHeight * 0.6
             ? 'top'
             : 'bottom';
+    }
+
+
+    public static getBottomPosition(yPosition: number): number {
+
+        return window.innerHeight - yPosition;
     }
 }

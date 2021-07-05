@@ -1,6 +1,6 @@
-<context-menu *ngIf="contextMenu.isOpen()"
-              [contextMenu]="contextMenu"
-              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+<resources-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
 
 <popover-menu [document]="selectedDocument"></popover-menu>
 

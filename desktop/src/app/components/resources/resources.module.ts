@@ -47,7 +47,7 @@ import { TypeGridElementComponent } from './types/type-grid-element.component';
 import { TypeGridComponent } from './types/type-grid.component';
 import { TypeIconComponent } from './types/type-icon.component';
 import { TypesComponent } from './types/types.component';
-import { ContextMenuComponent } from './widgets/context-menu.component';
+import { ResourcesContextMenuComponent } from './widgets/resources-context-menu.component';
 import { ListButtonGroupComponent } from './widgets/list-button-group.component';
 import { ChildrenViewComponent } from './widgets/popovermenu/children-view.component';
 import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.component';
@@ -89,7 +89,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,
         SearchSuggestionsComponent,
-        ContextMenuComponent,
+        ResourcesContextMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent,
         ChildrenViewComponent,

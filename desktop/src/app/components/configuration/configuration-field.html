@@ -4,6 +4,7 @@
      [class.bg-warning]="isCustomField()"
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden"
+     (dblclick)="onEdit.emit()"
      (contextmenu)="contextMenu.open($event, category, undefined, field)">
     <div class="card-header" [class.parent-element]="parentField">
         <ng-content></ng-content>

@@ -1,4 +1,6 @@
-<div [id]="'category-' + category.name" (contextmenu)="contextMenu.open($event, category)">
+<div [id]="'category-' + category.name"
+    (dblclick)="onEditCategory.emit()"
+    (contextmenu)="contextMenu.open($event, category)">
     <div class="row" [class.custom-category]="!category.libraryId">
         <div class="col header header-left d-flex">
             <category-icon size="41" [category]="category"></category-icon>
@@ -78,7 +80,7 @@
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
                                      [contextMenu]="contextMenu"
-                                     (onEdited)="onEditField.emit(field)">
+                                     (onEdit)="onEditField.emit(field)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>

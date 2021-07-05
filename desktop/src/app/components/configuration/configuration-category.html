@@ -22,7 +22,7 @@
             <code>{{category.libraryId}}</code>
         </span>
         <button class="btn btn-primary edit-category-button"
-                (click)="edit()"
+                (click)="editCategory()"
                 placement="left" container="body"
                 ngbTooltip="Kategorie bearbeiten"
                 i18n-ngbTooltip="@@configuration.editCategory">
@@ -46,7 +46,8 @@
                    [cdkDropListConnectedTo]="['fields-list']"
                    [cdkDropListDisabled]="!allowDragAndDrop"
                    [class.active]="selectedGroup === group.name"
-                   (click)="selectedGroup = group.name">
+                   (click)="selectedGroup = group.name"
+                   (dblclick)="editGroup(group)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>

@@ -3,7 +3,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
-    RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator, getConfigurationName } from 'idai-field-core';
+    RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
+    getConfigurationName, Groups } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
@@ -125,7 +126,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public async edit() {
+    public async editCategory() {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
@@ -135,6 +136,32 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.initialize();
+
+        try {
+            this.onEdited.emit(await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public async editGroup(group: Group) {
+
+        if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            GroupEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = this.category;
+        modalReference.componentInstance.group = group;
         modalReference.componentInstance.initialize();
 
         try {

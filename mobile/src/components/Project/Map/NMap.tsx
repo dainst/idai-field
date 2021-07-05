@@ -18,6 +18,7 @@ interface NMapProps {
     selectDocument: (doc: Document) => void;
 }
 
+
 const NMap: React.FC<NMapProps> = (props) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();

@@ -36,6 +36,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
     const { showToast } = useToast();
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
+
     useEffect(() => {
         
         if(viewPort){
@@ -47,8 +48,6 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
                 maxSize,
                 viewPort.y));
         }
-
-
     },[ viewPort, scene]);
 
 
@@ -119,6 +118,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
 
     if (!camera || !scene.children.length) return null;
 
+    
     const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
@@ -140,6 +140,7 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
         };
         render();
     };
+
 
     const onPress = (e: GestureResponderEvent) => {
 

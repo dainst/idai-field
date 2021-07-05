@@ -1,6 +1,7 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import useMapData from '../../../hooks/use-Nmapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
 import { ViewPort } from './geo-svg';
 import GLMap from './GLMap';
@@ -23,7 +24,12 @@ const NMap: React.FC<NMapProps> = (props) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
-
+    
+    const [
+        geoDocuments,
+        transformMatrix,
+        cameraView,
+        focusMapOnDocumentId] = useMapData(props.repository,viewPort,props.selectedDocumentIds);
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
         props.repository.get(docId).then(setHighlightedDoc), [props.repository]);
@@ -42,11 +48,13 @@ const NMap: React.FC<NMapProps> = (props) => {
         <View style={ styles.container } onLayout={ handleLayoutChange }>
 
             {(viewPort) && <GLMap
-                repository={ props.repository }
                 config={ props.config }
-                viewPort={ viewPort }
                 setHighlightedDocId={ setHighlightedDocFromId }
-                selectedDocumentIds={ props.selectedDocumentIds } />}
+                viewPort={ viewPort }
+                cameraView={ cameraView }
+                transformMatrix={ transformMatrix }
+                selectedDocumentIds={ props.selectedDocumentIds }
+                geoDocuments={ geoDocuments } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 config={ props.config }
@@ -54,7 +62,7 @@ const NMap: React.FC<NMapProps> = (props) => {
                 languages={ props.languages }
                 addDocument={ props.addDocument }
                 removeDocument={ props.removeDocument }
-                focusHandler={ (docId) => console.log(docId) } />
+                focusHandler={ focusMapOnDocumentId } />
         </View>
     );
 };

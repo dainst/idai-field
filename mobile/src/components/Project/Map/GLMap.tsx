@@ -1,13 +1,13 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
-import { FieldGeometry, ProjectConfiguration } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
+import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
+import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
-import useMapData from '../../../hooks/use-Nmapdata';
+import { CameraView } from '../../../hooks/use-Nmapdata';
 import usePrevious from '../../../hooks/use-previous';
 import useToast from '../../../hooks/use-toast';
-import { DocumentRepository } from '../../../repositories/document-repository';
 import { colors } from '../../../utils/colors';
 import { ToastType } from '../../common/Toast/ToastProvider';
 import { ViewPort } from './geo-svg';
@@ -15,24 +15,25 @@ import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson-gl-shape';
-
 interface GLMapProps {
-    repository: DocumentRepository
     config: ProjectConfiguration;
     setHighlightedDocId: (docId: string) => void;
     viewPort: ViewPort;
+    cameraView: CameraView | undefined;
+    transformMatrix: Matrix4 | undefined;
     selectedDocumentIds: string[];
+    geoDocuments: Document[];
 }
 
 
-const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, viewPort, selectedDocumentIds }) => {
+const GLMap: React.FC<GLMapProps> = ({
+     config, setHighlightedDocId, viewPort, cameraView, transformMatrix, selectedDocumentIds, geoDocuments }) => {
 
 
     let timeout: number;
-    const [camera, setCamera] = useState<OrthographicCamera>();
+    const [camera, setCamera] = useState<OrthographicCamera>(new OrthographicCamera(0,0,100,100));
     const [scene, _setScene] = useState<Scene>(new Scene());
    
-    const [geoDocuments, transformMatrix ] = useMapData(repository, viewPort);
     const { showToast } = useToast();
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
@@ -48,7 +49,23 @@ const GLMap: React.FC<GLMapProps> = ({ repository, config, setHighlightedDocId, 
                 maxSize,
                 viewPort.y));
         }
+        
     },[ viewPort, scene]);
+
+
+    const updateCamera = useCallback((cameraView: CameraView | undefined) => {
+
+        if(!camera || !cameraView) return;
+        const { left, right, top, bottom } = cameraView;
+        camera.left = left;
+        camera.right = right;
+        camera.top = top;
+        camera.bottom = bottom;
+        camera.updateProjectionMatrix();
+    },[camera]);
+
+
+    useEffect(() => updateCamera(cameraView),[cameraView, updateCamera]);
 
 
     useEffect(() => {

@@ -40,7 +40,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
     // selected Child
     const material = new MeshBasicMaterial({
         color,
-        opacity: 0.7,
+        opacity: 0.6,
     });
     shapes.forEach(shape => {
         const geo = new ShapeGeometry(shape);

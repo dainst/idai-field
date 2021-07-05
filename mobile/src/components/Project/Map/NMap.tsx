@@ -52,7 +52,7 @@ const NMap: React.FC<NMapProps> = (props) => {
                 repository={ props.repository }
                 languages={ props.languages }
                 addDocument={ props.addDocument }
-                removeDocument={ (_highlightedDoc) => {console.log('removeDoc');} }
+                removeDocument={ props.removeDocument }
                 focusHandler={ (docId) => console.log(docId) } />
         </View>
     );

@@ -17,6 +17,7 @@ import { GroupEditorModalComponent } from './editor/group-editor-modal.component
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
+import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 
 
 export type InputType = {
@@ -128,6 +129,9 @@ export class ProjectConfigurationComponent implements OnInit {
                 }
                 break;
             case 'delete':
+                if (this.contextMenu.field) {
+                    this.openDeleteFieldModal(this.contextMenu.category, this.contextMenu.field);
+                }
                 break;
         }
     }
@@ -162,7 +166,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 clonedConfigurationDocument
             );
-            this.saveChanges({ 
+            await this.saveChanges({ 
                 newProjectConfiguration,
                 newCustomConfigurationDocument: clonedConfigurationDocument
             });
@@ -301,10 +305,64 @@ export class ProjectConfigurationComponent implements OnInit {
         }
     }
 
+    
+    public async openDeleteFieldModal(category: Category, field: FieldDefinition) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            DeleteFieldModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.category = category;
+        modalReference.componentInstance.field = field;
+
+        try {
+            await modalReference.result;
+            await this.deleteField(category, field);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
 
     private loadCategories() {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
+    }
+
+
+    private async deleteField(category: Category, field: FieldDefinition) {
+
+        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        const clonedCategoryConfiguration = clonedConfigurationDocument.resource
+            .categories[category.libraryId ?? category.name];
+        delete clonedCategoryConfiguration.fields[field.name];
+
+        if (clonedCategoryConfiguration.groups) {
+            const groupDefinition = clonedCategoryConfiguration.groups.find(
+                group => group.fields.includes(field.name)
+            );
+            groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
+        }
+
+        try {
+            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                clonedConfigurationDocument
+            );
+            await this.saveChanges({ 
+                newProjectConfiguration,
+                newCustomConfigurationDocument: clonedConfigurationDocument
+            });
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+        }
     }
 }

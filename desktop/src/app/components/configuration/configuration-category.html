@@ -22,13 +22,6 @@
                 <strong i18n="@@config.libraryId">Formular</strong>:
                 <code>{{category.libraryId}}</code>
             </span>
-            <button class="btn btn-primary edit-category-button"
-                    (click)="onEditCategory.emit()"
-                    placement="left" container="body"
-                    ngbTooltip="Kategorie bearbeiten"
-                    i18n-ngbTooltip="@@configuration.editCategory">
-                <span class="mdi mdi-pencil"></span>
-            </button>
         </div>
     </div>
     <div *ngIf="description" class="row subheader">

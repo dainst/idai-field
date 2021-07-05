@@ -10,7 +10,7 @@ configuration-category {
     }
 
     &.header-right {
-      padding-top: 8px;
+      padding-top: 16px;
       padding-right: 8px;
     }
 
@@ -142,10 +142,6 @@ configuration-category {
 
   .category-editor {
     background-color: #eee;
-  }
-
-  .edit-category-button {
-    margin-left: 12px;
   }
 
   #add-field-button,

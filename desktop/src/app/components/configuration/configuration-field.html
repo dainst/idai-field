@@ -18,15 +18,6 @@
         </span>
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
-        <div *ngIf="!parentField" class="btn-group right edit-buttons">
-            <button class="btn btn-primary"
-                    (click)="onEdit.emit()"
-                    placement="left" container="body"
-                    ngbTooltip="Feld bearbeiten"
-                    i18n-ngbTooltip="@@configuration.editField">
-                <span class="mdi mdi-pencil"></span>
-            </button>
-        </div>
     </div>
 
     <div *ngIf="!parentField" class="card-body">

@@ -1,4 +1,4 @@
-import {Map, clone} from 'tsfun';
+import {Map, clone, keysValues} from 'tsfun';
 import {addSourceField, BuiltinCategoryDefinition,
     LanguageConfiguration, LibraryCategoryDefinition,
     mergeBuiltInWithLibraryCategories,
@@ -8,9 +8,13 @@ import {addSourceField, BuiltinCategoryDefinition,
 
 export interface ConfigurationIndex {
 
+    [term: string]: any /* a unique CategoryDefinition per label, for now */
 }
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 export namespace ConfigurationIndex {
 
     export function create(builtinCategories: Map<BuiltinCategoryDefinition>,
@@ -31,14 +35,21 @@ export namespace ConfigurationIndex {
                 }, category, category.categoryName);
         }
 
-        console.log("result", result)
+        return Object.values(result).reduce((index, category) => {
 
-        return undefined;
+            const defaultLabel = category['defaultLabel'];
+            for (const label of Object.values(defaultLabel)) {
+                index[label as any] = category;
+            }
+            return index;
+        }, {});
     }
 
 
-    export function find(index: ConfigurationIndex, searchTerm: string) {
+    export function find(index: ConfigurationIndex, searchTerm: string): any|undefined {
 
-        return 'abcdef';
+        for (const [categoryName, category] of keysValues(index)) {
+            if (categoryName.startsWith(searchTerm)) return category;
+        }
     }
 }

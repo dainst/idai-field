@@ -56,7 +56,7 @@ export class AddCategoryModalComponent {
 
     public changeCategoryNameInput() {
 
-        console.log("categoryName",
+        console.log("match",
             ConfigurationIndex.find(this.configurationIndex, this.categoryName));
     }
 }

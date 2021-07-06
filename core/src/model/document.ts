@@ -1,4 +1,4 @@
-import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys } from 'tsfun';
+import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys, isUndefinedOrEmpty } from 'tsfun';
 import { Resource } from './resource';
 import { NewDocument } from './new-document';
 import { Action } from './action';
@@ -113,7 +113,13 @@ export module Document {
 
     export function removeEmptyRelationArrays(document: Document) {
 
-        return removeRelations(getEmptyRelationFields(document))(document);
+        const undefinedOrEmptyRelationFields = flow(
+            document.resource.relations,
+            filter(isUndefinedOrEmpty),
+            keys
+        );
+
+        return removeRelations(undefinedOrEmptyRelationFields)(document);
     }
 
 
@@ -126,16 +132,6 @@ export module Document {
     export function hasRelations(document: Document, relationName: string): boolean {
 
         return Resource.hasRelations(document.resource, relationName);
-    }
-
-
-    function getEmptyRelationFields(document: Document): string[] {
-
-        return flow(
-            document.resource.relations,
-            filter(isEmpty),
-            keys
-        );
     }
 
 

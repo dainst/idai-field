@@ -1,8 +1,8 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
-import React, { useCallback, useEffect, useState } from 'react';
-import { GestureResponderEvent, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { CameraView } from '../../../hooks/use-Nmapdata';
@@ -15,6 +15,18 @@ import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson-gl-shape';
+import { calcCenter, calcDistance } from './SvgMap/math-utils';
+
+interface Coordinate {
+    x: number;
+    y: number;
+}
+
+const moveThreshold = 5;
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const no = () => {};
+const yes = () => true;
+
 interface GLMapProps {
     config: ProjectConfiguration;
     setHighlightedDocId: (docId: string) => void;
@@ -31,11 +43,89 @@ const GLMap: React.FC<GLMapProps> = ({
 
 
     let timeout: number;
-    const [camera, setCamera] = useState<OrthographicCamera>(new OrthographicCamera(0,0,100,100));
-    const [scene, _setScene] = useState<Scene>(new Scene());
-   
+    const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,0,100,100) ).current;
+    const scene = useRef<Scene>(new Scene() ).current;
+
     const { showToast } = useToast();
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
+
+
+    //boolean to init gestures
+    const isZooming = useRef<boolean>(false);
+    const isMoving = useRef<boolean>(false);
+
+    //reference values set at the beginning of the gesture
+    const initialTouch = useRef<Coordinate>({ x:0, y:0 });
+    const initialX = useRef<number>(0);
+    const initialY = useRef<number>(0);
+    const initialZoom = useRef<number>(1);
+    const initialDistance = useRef<number>(0);
+   
+
+    const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
+        e.nativeEvent.touches.length === 2 ||
+        Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
+
+    const panResponder = useRef(PanResponder.create({
+        onPanResponderGrant: no,
+        onPanResponderTerminate: no,
+        onShouldBlockNativeResponder: yes,
+        onPanResponderTerminationRequest: yes,
+        onMoveShouldSetPanResponder: shouldRespond,
+        onStartShouldSetPanResponder: shouldRespond,
+        onMoveShouldSetPanResponderCapture: shouldRespond,
+        onStartShouldSetPanResponderCapture: shouldRespond,
+        onPanResponderMove: e => {
+            const { nativeEvent: { touches } } = e;
+            if(touches.length === 1){
+                const [{ pageX, pageY }] = touches;
+                touchHandler(pageX, pageY);
+            } else if(touches.length === 2) {
+                const [touch1, touch2] = touches;
+                zoomHandler(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY);
+            } else return;
+            e.preventDefault();
+        },
+        onPanResponderRelease: () => {
+            isMoving.current = false;
+            isZooming.current = false;
+        }
+    })).current;
+
+    const touchHandler = (x: number, y: number): void => {
+
+        if(!isMoving.current || isZooming.current){
+            isMoving.current = true;
+            isZooming.current = false;
+            initialX.current = camera.position.x;
+            initialY.current = camera.position.y;
+            initialTouch.current = { x, y };
+        } else {
+            const dx = x - initialTouch.current.x;
+            const dy = y - initialTouch.current.y;
+            camera.position.set(initialX.current - dx / camera.zoom, initialY.current + dy / camera.zoom, 5);
+            camera.updateProjectionMatrix();
+        }
+    };
+
+    const zoomHandler = (x1: number, y1: number, x2: number, y2: number ): void => {
+        const distance = calcDistance(x1, y1, x2, y2);
+        const { x, y } = calcCenter(x1, y1, x2, y2);
+
+        if(!isZooming.current){
+            isZooming.current = true;
+            initialTouch.current = { x,y };
+            initialX.current = camera.position.x;
+            initialY.current = camera.position.y;
+            initialZoom.current = camera.zoom;
+            initialDistance.current = distance;
+        } else {
+            const touchZoom = distance / initialDistance.current;
+            const newZoom = initialZoom.current * touchZoom;
+            camera.zoom = newZoom;
+            camera.updateProjectionMatrix();
+        }
+    };
 
 
     useEffect(() => {
@@ -43,17 +133,18 @@ const GLMap: React.FC<GLMapProps> = ({
         if(viewPort){
             scene.clear();
             const maxSize = Math.max(viewPort.width, viewPort.height );
-            setCamera(new OrthographicCamera(
-                viewPort.x,
-                maxSize,
-                maxSize,
-                viewPort.y));
+            camera.left = viewPort.x;
+            camera.right = maxSize;
+            camera.top = maxSize;
+            camera.bottom = viewPort.y;
+            camera.position.set(0,0,5);
+            camera.updateProjectionMatrix();
         }
         
-    },[ viewPort, scene]);
+    },[ viewPort, scene, camera]);
 
 
-    const updateCamera = useCallback((cameraView: CameraView | undefined) => {
+    const updateCamera = useCallback((cameraView: CameraView | undefined, zoom?: number) => {
 
         if(!camera || !cameraView) return;
         const { left, right, top, bottom } = cameraView;
@@ -61,6 +152,8 @@ const GLMap: React.FC<GLMapProps> = ({
         camera.right = right;
         camera.top = top;
         camera.bottom = bottom;
+        if(zoom) camera.zoom = zoom;
+        camera.position.set(0,0,5);
         camera.updateProjectionMatrix();
     },[camera]);
 
@@ -132,32 +225,7 @@ const GLMap: React.FC<GLMapProps> = ({
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => clearTimeout(timeout),[]);
-
-    if (!camera || !scene.children.length) return null;
-
-    
-    const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
-
-        const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-        const sceneColor = colors.containerBackground;
-
-        const renderer = new Renderer({ gl });
-        renderer.setSize(width, height);
-        renderer.setClearColor(sceneColor);
-
-        camera.position.set(0, 0, 5);
-        // camera.zoom = 2;
-        // camera.updateProjectionMatrix();
-
-        const render = () => {
-            timeout = requestAnimationFrame(render);
-            //update();
-            renderer.render(scene, camera);
-            gl.endFrameEXP();
-        };
-        render();
-    };
-
+   
 
     const onPress = (e: GestureResponderEvent) => {
 
@@ -177,11 +245,33 @@ const GLMap: React.FC<GLMapProps> = ({
             }
         }
     };
+    
+    const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
+        const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
+
+        const renderer = new Renderer({ gl });
+        renderer.setSize(width, height);
+        renderer.setClearColor(colors.containerBackground);
+
+        camera.position.set(0, 0, 5);
+
+
+        const render = () => {
+            timeout = requestAnimationFrame(render);
+            renderer.render(scene, camera);
+            gl.endFrameEXP();
+        };
+        render();
+    };
+
+    
+    if (!camera || !scene.children.length) return null;
 
     return (
         <GLView
             onTouchStart={ onPress }
+            { ...panResponder.panHandlers }
             style={ styles.container }
             onContextCreate={ _onContextCreate }
         />

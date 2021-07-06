@@ -9,7 +9,6 @@ import { CameraView } from '../../../hooks/use-Nmapdata';
 import usePrevious from '../../../hooks/use-previous';
 import useToast from '../../../hooks/use-toast';
 import { colors } from '../../../utils/colors';
-import { ToastType } from '../../common/Toast/ToastProvider';
 import { ViewPort } from './geo-svg';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
@@ -175,6 +174,7 @@ const GLMap: React.FC<GLMapProps> = ({
                     polygonToShape(transformMatrix, scene, config,doc, geometry.coordinates );
                     break;
                 case 'LineString':
+                case 'MultiLineString':
                     lineStringToShape(transformMatrix, scene, config,doc, geometry.coordinates);
                     break;
                 case 'Point':
@@ -183,12 +183,9 @@ const GLMap: React.FC<GLMapProps> = ({
                 case 'MultiPoint':
                     multiPointToShape(transformMatrix,scene, config, doc, geometry.coordinates);
                     break;
-                default:
-                    showToast(ToastType.Error, `Unknown geometry type ${geometry.type}`);
-                    break ;
             }
         });
-    },[geoDocuments, config ,scene, transformMatrix, showToast]);
+    },[geoDocuments, config ,scene, transformMatrix]);
 
 
     useEffect(() => {

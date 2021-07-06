@@ -65,8 +65,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
     scene.add(parent);
 };
 
-const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
-const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
+
 
 const geoJsonPolyToShape = ( matrix: Matrix4, polygon: Position[][]): Shape => {
     
@@ -85,32 +84,46 @@ const geoJsonPolyToShape = ( matrix: Matrix4, polygon: Position[][]): Shape => {
 };
 
 
-export const lineStringToShape: ShapeFunction<Position[]> = (matrix, scene, config, document, coordinates) => {
+export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (matrix, scene, config, document, coordinates) => {
 
     if(!coordinates) return;
 
-    const points: Vector2[] = [];
     const parent = new Object3D();
     const color = config.getColorForCategory(document.resource.category);
+    const geos: BufferGeometry[] = [];
 
+    if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates))
+    else coordinates.forEach(lineString => geos.push(geoJsonLineToShape(matrix, lineString)))
+
+    // selected Child
+    geos.forEach(geo => {
+        const selectedLine = new Line(geo, lineStringMaterial(color, true));
+        selectedLine.name = ObjectChildValues.selected;
+        selectedLine.visible = false;
+        parent.add(selectedLine)
+    });
+
+    // not selected Child
+    geos.forEach(geo => {
+        const notSelectedLine = new Line(geo,lineStringMaterial(color, false));
+        notSelectedLine.name = ObjectChildValues.notSelected;
+        notSelectedLine.visible = true;
+        parent.add(notSelectedLine);
+    })
+
+    addObjectInfo(parent, document);
+    scene.add(parent);
+};
+
+
+const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): BufferGeometry => {
+
+    const points: Vector2[] = [];
     coordinates.forEach(point => {
         const [x,y] = processTransform2d(matrix,point);
         points.push(new Vector2(x,y));
     });
-    const geo = new BufferGeometry().setFromPoints(points);
-
-    // selected Child
-    const selectedLine = new Line(geo, lineStringMaterial(color, true));
-    selectedLine.name = ObjectChildValues.selected;
-    selectedLine.visible = false;
-
-    // not selected Child
-    const notSelectedLine = new Line(geo,lineStringMaterial(color, false));
-    notSelectedLine.name = ObjectChildValues.notSelected;
-    notSelectedLine.visible = true;
-
-    addObjectInfo(parent, document);
-    scene.add(parent);
+    return new BufferGeometry().setFromPoints(points);
 };
 
 // eslint-disable-next-line max-len
@@ -158,6 +171,9 @@ const addObjectInfo = (object: Object3D, doc: Document) => {
     object.userData = userData;
 };
 
+const isPosition1d = (coords: Position[] | Position[][]): coords is Position[] => arrayDim(coords) === 2;
+const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
+const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
 
 const lineStringMaterial = (color: string, isSelected: boolean = false) =>
     new LineBasicMaterial({ color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });

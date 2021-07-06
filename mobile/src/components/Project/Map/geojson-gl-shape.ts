@@ -58,6 +58,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         const geometryPoints = new BufferGeometry().setFromPoints( points );
         const notSelected = new Line( geometryPoints, notSelectedMaterial);
         notSelected.name = ObjectChildValues.notSelected;
+        notSelected.renderOrder = 1
         parent.add(notSelected);
     });
     
@@ -108,6 +109,7 @@ export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (matr
         const notSelectedLine = new Line(geo,lineStringMaterial(color, false));
         notSelectedLine.name = ObjectChildValues.notSelected;
         notSelectedLine.visible = true;
+        notSelectedLine.renderOrder = 1;
         parent.add(notSelectedLine);
     })
 
@@ -154,6 +156,7 @@ export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, doc
     const notSelectedCircle = new Mesh(circleGeometry, pointMaterial(color, false));
     notSelectedCircle.name = ObjectChildValues.notSelected;
     notSelectedCircle.visible = true;
+    notSelectedCircle.renderOrder = 1;
     parent.add(notSelectedCircle);
 
     addObjectInfo(parent, document);

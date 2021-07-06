@@ -2,7 +2,7 @@ import {Map, clone} from 'tsfun';
 import {addSourceField, BuiltinCategoryDefinition,
     LanguageConfiguration, LibraryCategoryDefinition,
     mergeBuiltInWithLibraryCategories,
-    applyLanguagesToCategories
+    applyLanguagesToCategory
 } from 'idai-field-core';
 
 
@@ -23,11 +23,13 @@ export namespace ConfigurationIndex {
         addSourceField(bCats, lCats, undefined, undefined);
         const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
 
-        applyLanguagesToCategories(
-            {
-                default: languages,
-                complete: {}
-            }, result);
+        for (const category of Object.values(result)) {
+            applyLanguagesToCategory(
+                {
+                    default: languages,
+                    complete: {}
+                }, category, category.categoryName);
+        }
 
         console.log("result", result)
 

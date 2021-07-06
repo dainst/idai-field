@@ -30,7 +30,6 @@ export class AddCategoryModalComponent {
         try {
             const config = await this.configReader.read('/Library/Categories.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            console.log("languages", languages)
             this.configurationIndex = ConfigurationIndex.create(
                 new BuiltInConfiguration('').builtInCategories,
                 config,

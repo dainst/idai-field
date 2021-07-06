@@ -8,13 +8,13 @@ import {FieldDefinition} from '../../model/field-definition';
 
 export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>,
                                libraryCategories: Map<LibraryCategoryDefinition>,
-                               customCategories: Map<CustomCategoryDefinition>,
-                               commonFields: Map<any>) {
+                               customCategories: Map<CustomCategoryDefinition>|undefined,
+                               commonFields: Map<any>|undefined) {
 
     setFieldSourceOnCategories(builtInCategories, FieldDefinition.Source.BUILTIN);
     setFieldSourceOnCategories(libraryCategories, FieldDefinition.Source.LIBRARY);
-    setFieldSourceOnCategories(customCategories, FieldDefinition.Source.CUSTOM);
-    setFieldSourceOnFields(commonFields, FieldDefinition.Source.COMMON);
+    if (customCategories) setFieldSourceOnCategories(customCategories, FieldDefinition.Source.CUSTOM);
+    if (commonFields) setFieldSourceOnFields(commonFields, FieldDefinition.Source.COMMON);
 }
 
 

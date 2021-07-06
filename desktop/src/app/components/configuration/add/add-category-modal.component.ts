@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfigReader } from 'idai-field-core';
+import { BuiltInConfiguration, ConfigReader } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 
 
@@ -26,9 +26,11 @@ export class AddCategoryModalComponent {
 
     private async readConfig() {
 
-        let config;
         try {
-            config = await this.configReader.read('/Library/Categories.json');
+            const config = await this.configReader.read('/Library/Categories.json');
+            this.configurationIndex = ConfigurationIndex.create(
+                new BuiltInConfiguration('').builtInCategories,
+                config);
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);
         }

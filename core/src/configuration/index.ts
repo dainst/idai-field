@@ -1,3 +1,4 @@
+export { BuiltInConfiguration } from './built-in-configuration';
 export { AppConfigurator } from './app-configurator';
 export * from './boot';
 export { linkParentAndChildInstances } from './category-forest';

@@ -1,6 +1,6 @@
 import { Document, FieldGeometry, Query } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
-import { identityMatrix4, Matrix4 } from 'react-native-redash';
+import { Matrix4 } from 'react-native-redash';
 import {
     GeometryBoundings, getGeometryBoundings,
     getMinMaxCoords,
@@ -32,11 +32,12 @@ const useMapData = (
 
     const [geoDocuments, setGeoDocuments] = useState<Document[]>([]);
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
-    const [transformMatrix, setTransformMatrix] = useState<Matrix4>(identityMatrix4);
+    const [transformMatrix, setTransformMatrix] = useState<Matrix4>();
     const [cameraView, setCameraView] = useState<CameraView>();
 
     const focusMapOnDocumentIds = useCallback(async (docIds: string[]) => {
 
+        if(!transformMatrix) return
         
         const geoDocs: FieldGeometry[] = [];
         const docs = await repository.getMultiple(docIds);

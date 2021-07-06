@@ -157,17 +157,17 @@ export class ProjectConfigurationComponent implements OnInit {
 
 
     public async setNewCategoriesOrder(newOrder: string[]) {
-    
+
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource.order = newOrder;
-        
+
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 clonedConfigurationDocument
             );
-            await this.saveChanges({ 
+            await this.saveChanges({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: clonedConfigurationDocument
             });
@@ -189,6 +189,7 @@ export class ProjectConfigurationComponent implements OnInit {
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
+        modalReference.componentInstance.parentCategory = parentCategory;
 
         try {
             await this.createNewSubcategory(parentCategory, await modalReference.result);
@@ -306,7 +307,7 @@ export class ProjectConfigurationComponent implements OnInit {
         }
     }
 
-    
+
     public async openDeleteFieldModal(category: Category, field: FieldDefinition) {
 
         this.menuService.setContext(MenuContext.MODAL);
@@ -349,7 +350,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 changedConfigurationDocument
             );
-            await this.saveChanges({ 
+            await this.saveChanges({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: changedConfigurationDocument
             });

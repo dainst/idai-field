@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BuiltInConfiguration, ConfigReader, ConfigLoader } from 'idai-field-core';
+import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 
 
@@ -14,7 +14,9 @@ export class AddCategoryModalComponent {
 
     public categoryName: string;
 
-    public configurationIndex = {};
+    public parentCategory: Category;
+
+    private configurationIndex = {};
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -56,7 +58,11 @@ export class AddCategoryModalComponent {
 
     public changeCategoryNameInput() {
 
-        console.log("match",
-            ConfigurationIndex.find(this.configurationIndex, this.categoryName));
+        // TODO Take language into account, too
+
+        const categories =
+            ConfigurationIndex.find(this.configurationIndex, this.categoryName)
+                .filter(category => category['parent'] === this.parentCategory.name);
+        console.log("result", categories)
     }
 }

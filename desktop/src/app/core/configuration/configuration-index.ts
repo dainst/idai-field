@@ -1,8 +1,9 @@
-import {Map, clone, keysValues} from 'tsfun';
+import {Map, clone, keysValues, right} from 'tsfun';
 import {addSourceField, BuiltinCategoryDefinition,
     LanguageConfiguration, LibraryCategoryDefinition,
     mergeBuiltInWithLibraryCategories,
-    applyLanguagesToCategory
+    applyLanguagesToCategory,
+    Category
 } from 'idai-field-core';
 
 
@@ -46,10 +47,12 @@ export namespace ConfigurationIndex {
     }
 
 
-    export function find(index: ConfigurationIndex, searchTerm: string): any|undefined {
+    export function find(index: ConfigurationIndex,
+                         searchTerm: string): Array<Category> {
 
-        for (const [categoryName, category] of keysValues(index)) {
-            if (categoryName.startsWith(searchTerm)) return category;
-        }
+        return keysValues(index)
+            .filter(([categoryName, _]) =>
+                categoryName.toLocaleLowerCase().startsWith(searchTerm))
+            .map(right);
     }
 }

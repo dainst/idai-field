@@ -163,7 +163,7 @@ const GLMap: React.FC<GLMapProps> = ({
     useEffect(() => {
     
         if(!transformMatrix || !geoDocuments.length) return;
-
+        scene.clear();
         geoDocuments.forEach((doc) => {
             
             const geometry = doc.resource.geometry as FieldGeometry;

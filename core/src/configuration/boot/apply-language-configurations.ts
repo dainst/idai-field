@@ -16,7 +16,7 @@ export function applyLanguageConfigurations(languageConfigurations: LanguageConf
 
         if (categories) {
             applyFields(languageConfigurations, categories);
-            applyCategories(languageConfigurations, categories);
+            applyLanguagesToCategories(languageConfigurations, categories);
         }
         if (relations) applyRelations(languageConfigurations, relations);
 
@@ -67,9 +67,10 @@ function applyRelations(languageConfigurations: LanguageConfigurations, relation
 }
 
 
-function applyCategories(languageConfigurations: LanguageConfigurations, categories: any) {
+export function applyLanguagesToCategories(languageConfigurations: LanguageConfigurations, categories: any) {
 
     for (const categoryName of Object.keys(categories)) {
+        
         const category = categories[categoryName];
         category.label = LanguageConfiguration.getI18nString(
             languageConfigurations.complete,

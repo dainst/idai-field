@@ -1,7 +1,7 @@
 export { addExtraFields } from './add-extra-fields';
 export { addRelations } from './add-relations';
 export { addSourceField } from './add-source-field';
-export { applyLanguageConfigurations } from './apply-language-configurations';
+export { applyLanguageConfigurations, applyLanguagesToCategories } from './apply-language-configurations';
 export { applySearchConfiguration } from './apply-search-configuration';
 export { assertFieldsAreValid } from './assert-fields-are-valid';
 export { Assertions } from './assertions';

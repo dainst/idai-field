@@ -3,7 +3,11 @@
 </div>
 
 <div class="modal-body">
-    <input type="text" id="category-name" class="form-control" [(ngModel)]="categoryName">
+    <input type="text"
+           id="category-name"
+           class="form-control"
+           [(ngModel)]="categoryName"
+           (ngModelChange)="changeCategoryNameInput()">
 </div>
 
 <div class="modal-footer">

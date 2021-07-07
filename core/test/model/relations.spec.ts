@@ -72,4 +72,13 @@ describe('Relations', () => {
         
         expect(Relations.equivalent(relA)(relB)).toBeTruthy();
     });
+
+
+    it('equivalent - undefined or empty', () => {
+
+        const relA = { a: undefined };
+        const relB = { a: []};
+
+        expect(Relations.equivalent(relA)(relB)).toBeTruthy();
+    });
 });

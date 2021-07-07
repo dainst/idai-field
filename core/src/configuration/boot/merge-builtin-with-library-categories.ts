@@ -23,6 +23,8 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
         if (extendedBuiltInCategory) {
             const newMergedCategory: any = ObjectUtils.jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
+            newMergedCategory['source'] = 'library';
+
             keysValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
                 if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
                         && (libraryCategoryField as any)['inputType']) {

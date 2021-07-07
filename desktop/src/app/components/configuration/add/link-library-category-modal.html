@@ -9,9 +9,8 @@
             class="form-control"
             [(ngModel)]="categoryName"
             (ngModelChange)="changeCategoryNameInput()">
-        <div>
-            Listing
-        </div>
+        <category-listing [category]="parentCategory">
+        </category-listing>
     </div>
     <div class="col-md-6">
         <category-preview [category]="parentCategory">

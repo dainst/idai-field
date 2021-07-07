@@ -1,0 +1,47 @@
+.document-teaser .teaser-container.link:hover {
+    background-color: var(--main-bg-color-hover);
+}
+
+.document-teaser .teaser-container .row {
+    align-items: center;
+}
+
+.document-teaser .short-description {
+    font-size: .9rem;
+}
+
+.document-teaser .short-description.single-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.document-teaser h3 {
+    font-size: 18px;
+}
+
+.document-teaser h4 {
+    font-size: 17px;
+}
+
+.document-teaser .teaser-small {
+    padding: .25rem 1rem;
+}
+
+.document-teaser .teaser-small h3 {
+    font-size: 15px;
+}
+
+.document-teaser .teaser-small h4 {
+    font-size: 13px;
+}
+
+.document-teaser .teaser-small .short-description {
+    font-size: 11px;
+}
+
+.document-teaser .teaser-button:hover {
+    background-color: var(--main-bg-color-hover);
+}

@@ -1,0 +1,142 @@
+{
+    "index_patterns": [
+        "idai-field_*"
+    ],
+    "settings": {
+        "index.mapping.total_fields.limit": 10000
+    },
+    "mappings": {
+        "properties": {
+            "resource": {
+                "properties": {
+                    "id": {
+                        "type": "keyword",
+                        "store": true
+                    },
+                    "identifier": {
+                        "type": "keyword",
+                        "store": true
+                    },
+                    "category": {
+                        "properties": {
+                            "name": {
+                                "type": "keyword",
+                                "store": true
+                            }
+                        }
+                    },
+                    /* Elasticsearch does only support indexing wgs84
+                       coordinates in the geo_shape field type. Thus
+                       local geometry is only stored and
+                       coordinates are not indexed. */
+                    "geometry": {
+                        "properties": {
+                            "coordinates": {
+                                "type": "double",
+                                "index": false
+                            }
+                        }
+                    },
+                    "geometry_wgs84": {
+                        "type": "geo_shape",
+                        "coerce": true
+                    },
+                    "childrenCount": {
+                        "type": "integer",
+                        "store": true
+                    },
+                    "featureVectors":{
+                        "properties":{
+                            "resnet": {
+                                "type": "dense_vector",
+                                "dims": 2048
+                            },
+                            "phaseFourier": {
+                                "type": "dense_vector",
+                                "dims": 164
+                            }
+                        }
+                    }
+
+                }
+            },
+            "project": {
+                "type": "keyword",
+                "store": true
+            },
+            "created": {
+                "properties": {
+                    "date": {
+                        "type": "date"
+                    }
+                }
+            },
+            "modified": {
+                "properties": {
+                    "date": {
+                        "type": "date"
+                    }
+                }
+            },
+            "sort": {
+                "type": "keyword"
+            }
+        },
+        "dynamic_templates": [
+            {
+                "relationsId": {
+                    "path_match": "resource.relations.*.resource.id",
+                    "mapping": {
+                        "type": "keyword",
+                        "store": true
+                    }
+                }
+            },
+            {
+                "relationsParentId": {
+                    "path_match": "resource.relations.*.resource.parentId",
+                    "mapping": {
+                        "type": "keyword",
+                        "store": true
+                    }
+                }
+            },
+            {
+                "relationsIdentifier": {
+                    "path_match": "resource.relations.*.resource.identifier",
+                    "mapping": {
+                        "type": "keyword",
+                        "store": true
+                    }
+                }
+            },
+            {
+                "names": {
+                    "path_match": "resource.*.name",
+                    "mapping": {
+                        "type": "keyword",
+                        "store": true
+                    }
+                }
+            },
+            {
+                "relationsResNetFeatureVectors": {
+                    "path_match": "resource.relations.*.resource.featureVectors.resnet",
+                    "mapping": {
+                        "type": "dense_vector",
+                        "dims": 2048
+                    }
+                }
+            },
+            {
+                "relationsPhaseFourierFeatureVectors": {
+                    "path_match": "resource.relations.*.resource.featureVectors.phaseFourier",
+                    "mapping": {
+                        "type": "dense_vector",
+                        "dims": 164
+                    }
+                }
+            }
+        ]
+    }
+}

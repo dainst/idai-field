@@ -1,0 +1,36 @@
+.shapes-home .search-background {
+    background-image: linear-gradient(to right, rgba(106, 164, 184, 0.95) 0%, rgb(85, 126, 187) 100%);
+    position: relative;
+}
+
+.shapes-home .search-background::after {
+    background-image: url(./shapes_home.jpg);
+    content: "";
+    opacity: 0.25;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.shapes-home .search-container {
+    position: relative;
+    margin: auto;
+    padding: 150px 0;
+    text-align: center;
+    width: 600px;
+    color: white;
+    z-index: 2;
+}
+
+.function-bar-link {
+    color: white;
+}
+
+.function-bar-link:hover {
+    color: white;
+    text-decoration: underline;
+    cursor: default;
+}

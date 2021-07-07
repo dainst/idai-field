@@ -1,0 +1,11 @@
+.project-sidebar .card {
+    margin: 0 0 10px;
+}
+
+.project-sidebar .card:first-child {
+    margin: 10px 0;
+}
+
+.project-sidebar .card .form-control {
+  border: 0;
+}

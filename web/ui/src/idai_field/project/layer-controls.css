@@ -1,0 +1,18 @@
+.layer-controls .btn-link,
+.layer-controls .btn-link:active,
+.layer-controls .btn-link:focus {
+    text-align: left;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.layer-controls .btn-link.active {
+    color: var(--main-link-color-hover);
+}
+
+.layer-controls .btn-link:hover {
+    color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.layer-controls .list-group-item .btn:focus {
+    box-shadow: none;
+}

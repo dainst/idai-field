@@ -1,0 +1,44 @@
+.image-container {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+}
+
+.image-container-0 {
+    z-index: 5;
+    left: 22px;
+    top: 10px;
+}
+
+.image-container-1 {
+    z-index: 4;
+    left: 0;
+    top: -12px;
+}
+
+.image-container-2 {
+    z-index: 3;
+    left: 44px;
+    top: 32px
+}
+
+.image-container-3 {
+    z-index: 2;
+    left: 38px;
+    top: -20px;
+}
+
+.image-container-4 {
+    z-index: 1;
+    left: 5;
+    top: 26px;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: scale-down;
+    user-select: none;
+    -webkit-user-drag: none;
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,12 @@
+.projects-overview-sidebar .documents {
+    max-height: calc(100vh - 189px) !important;
+}
+
+.projects-overview-sidebar .documents-card {
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.projects-overview-sidebar .card:first-child {
+    margin: 0 0 10px 0;
+}

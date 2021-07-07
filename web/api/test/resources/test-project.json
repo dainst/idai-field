@@ -1,0 +1,221 @@
+[
+  {
+    "item": {
+      "name": "Operation",
+      "label": {
+        "de": "Maßnahme",
+        "en": "Operation"
+      },
+      "description": {},
+      "isAbstract": true,
+      "color": "#8cf547",
+      "libraryId": "Operation:default",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            {
+              "visible": false,
+              "editable": false,
+              "group": "stem",
+              "source": "builtin",
+              "label": {
+                "de": "Kategorie",
+                "en": "Category"
+              },
+              "description": {
+                "de": "Typ der Ressource",
+                "en": "Type of resource"
+              },
+              "name": "category",
+              "inputType": "input"
+            },
+            {
+              "editable": false,
+              "visible": false,
+              "group": "stem",
+              "source": "builtin",
+              "name": "id",
+              "label": {},
+              "description": {},
+              "inputType": "input"
+            },
+            {
+              "name": "shortDescription",
+              "inputType": "input",
+              "label": {
+                "de": "Kurzbeschreibung",
+                "en": "Short description"
+              },
+              "description": {}
+            },
+            {
+              "inputType": "checkboxes",
+              "source": "library",
+              "valuelist": {
+                "creationDate": "",
+                "createdBy": "",
+                "description": {
+                  "de": "",
+                  "en": ""
+                },
+                "values": {
+                  "Blau": {
+                    "labels": {
+                      "en": "Blue",
+                      "de": "Blau"
+                    }
+                  },
+                  "Gelb": {
+                    "labels": {
+                      "en": "Yellow",
+                      "de": "Gelb"
+                    }
+                  },
+                  "Grün": {}
+                }
+              },
+              "label": {
+                "de": "Farbe",
+                "en": "Color"
+              },
+              "description": {},
+              "name": "color"
+            },
+            {
+              "inputType": "checkboxes",
+              "source": "library",
+              "valuelist": {
+                "creationDate": "",
+                "createdBy": "",
+                "description": {
+                  "de": "",
+                  "en": ""
+                },
+                "values": {
+                  "Granit": {},
+                  "Kalk": {},
+                  "Kalkmörtel": {},
+                  "Kalkstein": {},
+                  "Kalzit": {},
+                  "Kreide": {},
+                  "Marmor": {},
+                  "Pophyr": {},
+                  "Quarz": {},
+                  "Sandstein": {},
+                  "Ziegel": {}
+                }
+              },
+              "name": "material",
+              "label": {
+                "de": "Material",
+                "en": "Material"
+              },
+              "description": {}
+            }
+          ],
+          "relations": [
+            {
+              "name": "liesWithin",
+              "label": {
+                "de": "Liegt in",
+                "en": "Lies within"
+              },
+              "description": {},
+              "domain": [
+                "Trench",
+                "Building",
+                "Survey",
+                "Operation",
+                "Place"
+              ],
+              "range": [
+                "Place"
+              ],
+              "editable": false
+            }
+          ],
+          "label": "Stammdaten"
+        },
+        {
+          "name": "dimensions",
+          "fields": [
+            {
+              "inputType": "dimension",
+              "source": "common",
+              "positionValues": {
+                "createdBy": "",
+                "creationDate": "",
+                "description": {},
+                "values": {
+                  "Maximale Ausdehnung": {
+                    "labels": {
+                      "de": "Maximale Ausdehnung",
+                      "en": "Maximum expansion"
+                    }
+                  },
+                  "Minimale Ausdehnung": {
+                    "labels": {
+                      "de": "Minimale Ausdehnung",
+                      "en": "Minimum expansion"
+                    }
+                  }
+                }
+              },
+              "name": "width",
+              "label": {
+                "de": "Breite",
+                "en": "Width"
+              },
+              "description": {}
+            }
+          ],
+          "relations": [],
+          "label": "Maße"
+        },
+        {
+          "name": "time",
+          "fields": [
+            {
+              "inputType": "dropdownRange",
+              "source": "common",
+              "valuelist": {
+                "creationDate": "",
+                "createdBy": "IT-Referat, DAI, 2019",
+                "description": {
+                  "de": "",
+                  "en": ""
+                },
+                "values": {
+                  "Old Babylonian": {
+                    "labels": {
+                      "de": "Altbabylonisch",
+                      "en": "Old Babylonian"
+                    }
+                  },
+                  "New Babylonian": {
+                    "labels": {
+                      "de": "Neubabylonisch",
+                      "en": "New Babylonian"
+                    }
+                  }
+                }
+              },
+              "name": "period",
+              "label": {
+                "de": "Grobdatierung",
+                "en": "Period"
+              },
+              "description": {}
+            }
+          ],
+          "relations": [],
+          "label": {
+            "de": "Zeit",
+            "en": "Time"
+          }
+        }
+      ]
+    }
+  }
+]

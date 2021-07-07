@@ -1,0 +1,43 @@
+.download-view .carousel-indicators li {
+    background-color: black;
+}
+
+.download-view .carousel-caption h3 {
+    color: black;
+}
+
+.download-view .carousel-control-next,
+.download-view .carousel-control-prev {
+    filter: invert(100%);
+}
+
+.download-view .carousel-item img {
+    width: 1000px;
+    height: 490px;
+}
+
+.download-view .apple-icon,
+.download-view .windows-icon,
+.download-view .linux-icon,
+.download-view .github-icon {
+    position: relative;
+    margin-right: 4px;
+}
+
+.download-view .apple-icon {
+    bottom: 2px;
+}
+
+.download-view .github-icon,
+.download-view .windows-icon,
+.download-view .linux-icon {
+    bottom: 1px;
+}
+
+.download-view .download-icon {
+    margin-left: 2px;
+}
+
+.download-view h3 {
+    margin-bottom: 18px;
+}

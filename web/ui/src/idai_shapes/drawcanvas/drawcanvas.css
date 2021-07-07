@@ -1,0 +1,13 @@
+.drawcanvas {
+    border: 1px solid white;
+    opacity: 90%;
+}
+
+.backgroundline {
+    background-image: linear-gradient(white, white);
+    background-size: 3px 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+

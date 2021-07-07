@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { set } from 'tsfun';
 import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 
@@ -36,10 +37,16 @@ export class LinkLibraryCategoryModalComponent {
         try {
             const config = await this.configReader.read('/Library/Categories.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            this.configurationIndex = ConfigurationIndex.create(
+            const [categories, configurationIndex] = ConfigurationIndex.create(
                 new BuiltInConfiguration('').builtInCategories,
                 config,
                 languages);
+
+            this.configurationIndex = configurationIndex;
+            this.categories = categories
+                .filter(category => category['parent'] === this.parentCategory.name) as any;
+            if (this.categories.length > 0) this.category = this.categories[0];
+
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);
         }
@@ -70,9 +77,9 @@ export class LinkLibraryCategoryModalComponent {
 
         // TODO Take language into account, too
 
-        this.categories =
+        this.categories = set(
             ConfigurationIndex.find(this.configurationIndex, this.categoryName)
-                .filter(category => category['parent'] === this.parentCategory.name);
-        console.log("result", this.categories)
+                .filter(category => category['parent'] === this.parentCategory.name)) as any;
+        if (this.categories.length > 0) this.category = this.categories[0];
     }
 }

@@ -3,7 +3,8 @@
     <ul style="background-color: white">
         <li *ngFor="let category of categories"
             (click)="selectCategory(category)">
-            {{category.defaultLabel.de}}
+            <category-icon [category]="category.categoryName" size="30"></category-icon>
+            {{category.categoryName}}
         </li>
     </ul>
 </div>

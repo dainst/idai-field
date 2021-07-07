@@ -23,6 +23,7 @@ export class CategoryPickerComponent {
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
+    @Output() onLinkSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
 

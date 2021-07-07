@@ -20,6 +20,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
+import {LinkLibraryCategoryModalComponent} from './add/link-library-category-modal.component';
 
 
 export type InputType = {
@@ -187,12 +188,32 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
+    public async linkSubcategory(parentCategory: Category) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            LinkLibraryCategoryModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.parentCategory = parentCategory;
+
+        try {
+            // await this.createNewSubcategory(parentCategory, await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
     public async addSubcategory(parentCategory: Category) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
-        modalReference.componentInstance.parentCategory = parentCategory;
 
         try {
             await this.createNewSubcategory(parentCategory, await modalReference.result);
@@ -374,7 +395,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 changedConfigurationDocument
             );
-            await this.saveChanges({ 
+            await this.saveChanges({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: changedConfigurationDocument
             });

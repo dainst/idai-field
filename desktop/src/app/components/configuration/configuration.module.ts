@@ -14,6 +14,7 @@ import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AddCategoryModalComponent } from './add/add-category-modal.component';
+import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
@@ -40,6 +41,7 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryModalComponent,
+        LinkLibraryCategoryModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

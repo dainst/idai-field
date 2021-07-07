@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.addCategory">Kategorie auswählen</h5>
+</div>
+
+<div class="modal-body row">
+    <div class="col-md-6">
+        <input type="text"
+            id="category-name"
+            class="form-control"
+            [(ngModel)]="categoryName"
+            (ngModelChange)="changeCategoryNameInput()">
+        <div>
+            Listing
+        </div>
+    </div>
+    <div class="col-md-6">
+        Preview
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="create-category-button"
+         class="btn btn-success"
+         (click)="createCategory()">
+        <span i18n="@@configuration.createCategory">Kategorie auswählen</span>
+    </div>
+    <div id="cancel-add-category-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

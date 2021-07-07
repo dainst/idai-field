@@ -45,6 +45,18 @@ export module ConfigurationUtil {
     }
 
 
+    export function deleteGroup(category: Category, group: Group,
+                                customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
+
+        const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
+        const clonedCategoryConfiguration = clonedConfigurationDocument.resource
+            .categories[category.libraryId ?? category.name];
+        clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
+
+        return clonedConfigurationDocument;
+    }
+
+
     export function deleteField(category: Category, field: FieldDefinition,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 
@@ -52,13 +64,11 @@ export module ConfigurationUtil {
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
             .categories[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
-
-        if (clonedCategoryConfiguration.groups) {
-            const groupDefinition = clonedCategoryConfiguration.groups.find(
-                group => group.fields.includes(field.name)
-            );
-            groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
-        }
+        
+        const groupDefinition = clonedCategoryConfiguration.groups.find(
+            group => group.fields.includes(field.name)
+        );
+        groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
 
         return clonedConfigurationDocument;
     }

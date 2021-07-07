@@ -19,6 +19,7 @@ import { ConfigurationContextMenuAction } from './context-menu/configuration-con
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 
 
 export type InputType = {
@@ -130,7 +131,9 @@ export class ProjectConfigurationComponent implements OnInit {
                 }
                 break;
             case 'delete':
-                if (this.contextMenu.field) {
+                if (this.contextMenu.group) {
+                    this.openDeleteGroupModal(this.contextMenu.category, this.contextMenu.group);
+                } else if (this.contextMenu.field) {
                     this.openDeleteFieldModal(this.contextMenu.category, this.contextMenu.field);
                 }
                 break;
@@ -306,6 +309,28 @@ export class ProjectConfigurationComponent implements OnInit {
         }
     }
 
+
+    public async openDeleteGroupModal(category: Category, group: Group) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            DeleteGroupModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.group = group;
+
+        try {
+            await modalReference.result;
+            await this.deleteGroup(category, group);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
     
     public async openDeleteFieldModal(category: Category, field: FieldDefinition) {
 
@@ -315,7 +340,6 @@ export class ProjectConfigurationComponent implements OnInit {
             DeleteFieldModalComponent,
             { backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;
 
         try {
@@ -334,6 +358,29 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
+    }
+
+
+    private async deleteGroup(category: Category, group: Group) {
+
+        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
+            category, group, this.customConfigurationDocument
+        );
+
+        try {
+            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                changedConfigurationDocument
+            );
+            await this.saveChanges({ 
+                newProjectConfiguration,
+                newCustomConfigurationDocument: changedConfigurationDocument
+            });
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+        }
     }
 
 

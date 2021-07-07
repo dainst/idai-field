@@ -19,6 +19,7 @@ import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenuComponent } from './context-menu/configuration-context-menu.component';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
+import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DeleteFieldModalComponent } from './delete/delete-field-modal.component
         CategoryEditorModalComponent,
         ConfigurationFieldDragElement,
         ConfigurationContextMenuComponent,
-        DeleteFieldModalComponent
+        DeleteFieldModalComponent,
+        DeleteGroupModalComponent
     ],
     exports: [
         ProjectConfigurationComponent
@@ -57,7 +59,8 @@ import { DeleteFieldModalComponent } from './delete/delete-field-modal.component
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
-        DeleteFieldModalComponent
+        DeleteFieldModalComponent,
+        DeleteGroupModalComponent
     ]
 })
 

@@ -34,6 +34,7 @@ interface DocumentsContainerProps {
     projectSettings: ProjectSettings;
     config: ProjectConfiguration;
     relationsManager: RelationsManager;
+    username: string;
     languages: string[];
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
@@ -48,6 +49,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     projectSettings,
     config,
     relationsManager,
+    username,
     languages,
     setProjectSettings
 }) => {
@@ -129,6 +131,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
+                    username={ username }
                     config={ config }
                     repository={ repository }
                     languages={ languages }

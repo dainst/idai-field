@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.deleteGroup.header">Gruppe löschen?</h5>
+</div>
+
+<div class="modal-body">
+    <span *ngIf="isDeletionAllowed()" i18n="configuration.deleteGroup.body">
+        Möchten Sie die Gruppe <code>{{group.name}}</code> wirklich löschen?
+    </span>
+    <span *ngIf="!isDeletionAllowed()" i18n="configuration.deleteGroup.notAllowed">
+        Die Gruppe <code>{{group.name}}</code> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind.
+        Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie.
+    </span>
+</div>
+
+<div class="modal-footer">
+    <div *ngIf="isDeletionAllowed()" id="create-field-button"
+         class="btn btn-danger"
+         (click)="confirmDeletion()">
+        <span i18n="@@buttons.delete">Löschen</span>
+    </div>
+    <div id="cancel-add-field-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

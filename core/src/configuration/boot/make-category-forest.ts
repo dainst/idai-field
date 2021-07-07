@@ -1,5 +1,5 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { Category, CategoryDefinition, FieldDefinition, Group, Resource } from '../../model';
+import { Category, CategoryDefinition, FieldDefinition, Group } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { ConfigurationErrors } from './configuration-errors';
@@ -57,24 +57,21 @@ function createGroups(category: Category): Category {
 
 function completeStemGroup(category: Category) {
 
+    const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
+    const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
+        .filter(fieldName => !fieldsInGroups.includes(fieldName)
+            && (category[TEMP_FIELDS][fieldName].visible || category[TEMP_FIELDS][fieldName].editable))
+        .map(fieldName => category[TEMP_FIELDS][fieldName]);
+
+    if (fieldsNotInGroups.length === 0) return;
+
     let stemGroup: Group = category.groups.find(group => group.name === 'stem');
     if (!stemGroup) {
         stemGroup = Group.create('stem');
         category.groups.unshift(stemGroup);
     }
 
-    const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-
-    if (category[TEMP_FIELDS][Resource.CATEGORY]) {
-        stemGroup.fields.unshift(category[TEMP_FIELDS][Resource.CATEGORY]);
-        fieldsInGroups.push(Resource.CATEGORY);
-    }
-
-    const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
-        .filter(fieldName => !fieldsInGroups.includes(fieldName))
-        .map(fieldName => category[TEMP_FIELDS][fieldName]);
-
-    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups);
+    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups); 
 }
 
 

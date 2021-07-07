@@ -11,5 +11,5 @@ import { Category } from 'idai-field-core';
  */
 export class CategoryPreviewComponent {
 
-    @Input() category: Category;
+    @Input() category: Category|undefined;
 }

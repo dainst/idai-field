@@ -16,6 +16,10 @@ export class LinkLibraryCategoryModalComponent {
 
     public parentCategory: Category;
 
+    public category: Category|undefined;
+
+    public categories: Array<Category> = [];
+
     private configurationIndex = {};
 
 
@@ -42,6 +46,12 @@ export class LinkLibraryCategoryModalComponent {
     }
 
 
+    public selectCategory(category: Category) {
+
+        this.category = category;
+    }
+
+
     public createCategory() {
 
         if (!this.categoryName) return;
@@ -60,9 +70,9 @@ export class LinkLibraryCategoryModalComponent {
 
         // TODO Take language into account, too
 
-        const categories =
+        this.categories =
             ConfigurationIndex.find(this.configurationIndex, this.categoryName)
                 .filter(category => category['parent'] === this.parentCategory.name);
-        console.log("result", categories)
+        console.log("result", this.categories)
     }
 }

@@ -1,14 +1,19 @@
 <div id="category-preview">
-    <h4>Preview of a selected subcategory of
-    {{category.name}}
+    <h4>Preview of a selected subcategory
     </h4>
-    <div style="background-color: white">
-        abc
-        <br>
-        def
-        <br>
-        ghi
-        <br>
-        jkl
+    <div *ngIf="category">
+        <h4>{{category.name}}</h4>
+        <div style="background-color: white">
+            <ul>
+                <li *ngFor="let group of category.groups">
+                    <ul>
+                        <h5>{{group.name}}</h5>
+                        <li *ngFor="let field of group.fields">
+                            {{field}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

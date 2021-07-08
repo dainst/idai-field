@@ -76,7 +76,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             openProject('test');
         } else {
             await pouchdbManager.createDb('test', { _id: 'project', resource: { id: 'project' } }, false);
-            //await pouchdbManager.createDb('test')
             const loader = new SampleDataLoaderBase('en');
             await loader.go(pouchdbManager.getDb(), 'test');
             openProject('test');

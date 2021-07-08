@@ -20,14 +20,17 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
                                                    : Array<Category> {
 
     const bCats = clone(builtinCategories);
-    const lCats = remove(on(LibraryCategoryDefinition.PARENT, isUndefined),
+    const lCats = remove(on(LibraryCategoryDefinition.PARENT, 
+                            isUndefined),
                          clone(libraryCategories));
+
     addSourceField(bCats, lCats, undefined, undefined);
     const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
 
     for (const category of values(result)) {
 
-        category.fields = filter(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.LIBRARY)),
+        category.fields = filter(on(FieldDefinition.SOURCE, 
+                                    is(FieldDefinition.Source.LIBRARY)),
                                  category.fields);
     }
 
@@ -37,10 +40,6 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
                 default: languages,
                 complete: languages
             }, category, category.categoryName);
-    }
-
-    for (const [name, category] of keysValues(result)) {
-        category['name'] = name;
     }
 
     return filter(

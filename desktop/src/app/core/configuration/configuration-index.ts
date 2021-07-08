@@ -29,8 +29,6 @@ export namespace ConfigurationIndex {
             libraryCategories,
             languages);
 
-        console.log("categories", categories)
-
         return [categories, categories.reduce((index, category) => {
 
             const defaultLabel = category['defaultLabel'];

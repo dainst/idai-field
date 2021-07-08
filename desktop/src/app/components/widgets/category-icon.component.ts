@@ -50,6 +50,6 @@ export class CategoryIconComponent implements OnChanges {
 
     private getCategoryName(): string {
 
-        return isString(this.category) ? this.category : this.category.name;
+        return isString(this.category) ? this.category : this.category.categoryName;
     }
 }

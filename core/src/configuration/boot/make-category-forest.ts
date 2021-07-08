@@ -101,14 +101,15 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;
     category.name = definition.name;
+    category.categoryName = definition.categoryName;
     category.label = definition.label;
     category.description = definition.description;
     category.defaultLabel = definition.defaultLabel;
     category.defaultDescription = definition.defaultDescription;
     category.groups = [];
     category.isAbstract = definition.abstract || false;
-    category.color = definition.color ?? Category.generateColorForCategory(definition.name);
-    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.name);
+    category.color = definition.color ?? Category.generateColorForCategory(definition.categoryName);
+    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.categoryName);
     category.children = [];
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;

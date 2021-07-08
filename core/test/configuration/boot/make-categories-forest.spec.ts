@@ -16,14 +16,17 @@ describe('makeCategoriesForest', () => {
         const confDef = {
             A: {
                 name: A,
+                categoryName: A,
                 parent: P,
                 description: { 'de': '' },
                 fields: { a: { inputType: FieldDefinition.InputType.INPUT } },
                 groups: [
                     { name: Groups.STEM, fields: ['a'] }
                 ]
-            }, P: {
+            }, 
+            P: {
                 name: P,
+                categoryName: P,
                 description: { 'de': '' },
                 fields: { p: { inputType: FieldDefinition.InputType.INPUT } },
                 groups: [
@@ -55,16 +58,19 @@ describe('makeCategoriesForest', () => {
         const confDef = {
             A: {
                 name: A,
+                categoryName: A,
                 parent: P,
                 description: { 'de': '' },
                 fields: {}
             }, B: {
                 name: B,
+                categoryName: B,
                 parent: P,
                 description: { 'de': '' },
                 fields: {}
             }, P: {
                 name: P,
+                categoryName: P,
                 description: { 'de': '' },
                 fields: {}
             }
@@ -90,6 +96,7 @@ describe('makeCategoriesForest', () => {
         const confDef = {
             T: {
                 name: T,
+                categoryName: T,
                 description: { 'de': '' },
                 fields: {
                     shortDescription: {
@@ -119,6 +126,7 @@ describe('makeCategoriesForest', () => {
 
         const firstLevelCategory = {
             name: 'FirstLevelCategory',
+            categoryName: 'FirstLevelCategory',
             fields: {
                 fieldA: {
                     label: 'Field A',
@@ -129,6 +137,7 @@ describe('makeCategoriesForest', () => {
 
         const secondLevelCategory = {
             name: 'SecondLevelCategory',
+            categoryName: 'SecondLevelCategory',
             parent: 'FirstLevelCategory',
             fields: {
                 fieldA: {
@@ -153,6 +162,7 @@ describe('makeCategoriesForest', () => {
 
         const secondLevelCategory = {
             name: 'SecondLevelCategory',
+            categoryName: 'SecondLevelCategory',
             parent: 'FirstLevelCategory',
             groups: [{
                 name: 'stem',

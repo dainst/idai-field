@@ -1,12 +1,23 @@
 import { flatten, flow, map, to } from 'tsfun';
 import { I18nString } from './i18n-string';
-import { Named } from '../tools/named';
+import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { Group } from './group';
 import { LabelUtil } from '../tools/label-util';
 
 
 export interface Category extends Named {
+
+    categoryName: Name, // Multiple Categories can share common semantics.
+                        // Fields shared between categories with the same
+                        // categoryName mean the same thing.
+                        //
+                        // Note that that the name property given by the extension of Named
+                        // may or may not coincide with the categoryName, depending on the 
+                        // given context.
+
+    libraryId?: string; // The id, as given in the Library, provided it is a 
+                        // Library category or an custom extension of a Library category.
 
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
@@ -19,7 +30,6 @@ export interface Category extends Named {
     defaultColor?: string;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
-    libraryId?: string;
     userDefinedSubcategoriesAllowed?: boolean
 }
 

@@ -35,6 +35,7 @@ import { CustomLanguageConfigurations,
 
     const category: Category = {
         name: 'testCategory',
+        categoryName: 'testCategory',
         label: categoryLabel,
         defaultLabel: categoryLabel,
         description: categoryDescription,
@@ -81,7 +82,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Neues Label',
             en: 'New label'
@@ -124,7 +125,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Neues Label',
             en: 'New label'
@@ -157,7 +158,7 @@ import { CustomLanguageConfigurations,
                 categories: {}
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Neues Label',
             en: 'New label'
@@ -206,7 +207,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Altes Label'
         };
@@ -249,7 +250,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Altes Label'
         };
@@ -283,7 +284,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Altes Label'
         };
@@ -318,7 +319,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Test-Feld'
         };
@@ -351,7 +352,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Test-Kategorie'
         };
@@ -380,7 +381,7 @@ import { CustomLanguageConfigurations,
                 }
             }
         };
-        
+
         const editedLabel: I18nString = {
             de: 'Test-Gruppe'
         };

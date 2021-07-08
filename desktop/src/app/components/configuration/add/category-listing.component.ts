@@ -18,8 +18,5 @@ export class CategoryListingComponent {
 
     public selectCategory = (category: Category) => this.onCategorySelected.emit(category);
 
-    // TODO use label instead of defaultLabel
-    public getTranslation = (value: any) => LabelUtil.getTranslation(value);
-
     public getLabel = (value: any) => LabelUtil.getLabel(value);
 }

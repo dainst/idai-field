@@ -1,13 +1,13 @@
 <div id="category-preview">
     <div *ngIf="category">
-        <h4>{{getTranslation(category.defaultLabel)}}</h4>
+        <h4>{{getLabel(category.label)}}</h4>
         <div id="preview-inner" style="background-color: white">
             <ul>
                 <li *ngFor="let group of category.groups">
                     <ul>
                         <h5>{{group.name}}</h5>
                         <li *ngFor="let field of group.fields">
-                            {{getTranslation(field.defaultLabel)}}
+                            {{getLabel(field)}}
                         </li>
                     </ul>
                 </li>

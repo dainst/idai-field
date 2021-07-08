@@ -1,4 +1,5 @@
 import { Map, clone, values, keysValues, remove, isUndefined, on, is, filter } from 'tsfun';
+import {FieldDefinition} from '../../model';
 import { applyLanguagesToCategory, makeCategoryForest} from '../boot';
 import { addSourceField } from '../boot/add-source-field';
 import { mergeBuiltInWithLibraryCategories } from '../boot/merge-builtin-with-library-categories';
@@ -15,14 +16,15 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
                                                    languages: { [language: string]: Array<LanguageConfiguration> }) {
 
     const bCats = clone(builtinCategories);
-    const lCats = remove(clone(libraryCategories), 
-                         on(LibraryCategoryDefinition.Properties.PARENT, isUndefined));
+    const lCats = remove(on(LibraryCategoryDefinition.PARENT, isUndefined),
+                         clone(libraryCategories));
     addSourceField(bCats, lCats, undefined, undefined);
     const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
 
     for (const category of values(result)) {
 
-        category.fields = filter(category.fields, on('source', is('library')));
+        category.fields = filter(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.LIBRARY)),
+                                 category.fields);
     }
 
     for (const category of Object.values(result)) {

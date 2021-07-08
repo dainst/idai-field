@@ -1,8 +1,6 @@
 <div id="category-preview">
-    <h4>Preview of a selected subcategory
-    </h4>
     <div *ngIf="category">
-        <h4>{{category.name}}</h4>
+        <h4>{{getTranslation(category.defaultLabel)}}</h4>
         <div id="preview-inner" style="background-color: white">
             <ul>
                 <li *ngFor="let group of category.groups">

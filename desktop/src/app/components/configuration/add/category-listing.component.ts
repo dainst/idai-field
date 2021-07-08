@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Category } from 'idai-field-core';
+import { Category, LabelUtil } from 'idai-field-core';
 
 
 @Component({
@@ -17,4 +17,9 @@ export class CategoryListingComponent {
     @Output() onCategorySelected = new EventEmitter<Category>();
 
     public selectCategory = (category: Category) => this.onCategorySelected.emit(category);
+
+    // TODO use label instead of defaultLabel
+    public getTranslation = (value: any) => LabelUtil.getTranslation(value);
+
+    public getLabel = (value: any) => LabelUtil.getLabel(value);
 }

@@ -1,6 +1,5 @@
 import {createContextIndependentCategories} from '../../../src/configuration/index/create-context-independent-categories';
 import {FieldDefinition} from '../../../src/model/field-definition';
-import {Tree} from '../../../src/tools/forest';
 
 describe('createContextIndependentCategories', () => {
 
@@ -19,7 +18,7 @@ describe('createContextIndependentCategories', () => {
                 }
             },
             {
-                'Find:default': { // This will be filtered out
+                'Find:default': { // This should be selected // TODO implement, currently the default Find is selected
                     categoryName: 'Find',
                     groups: [],
                     fields: {},
@@ -32,8 +31,9 @@ describe('createContextIndependentCategories', () => {
                 'Pottery:a': {
                     categoryName: 'Pottery',
                     parent: 'Find',
-                    groups: [],
-                    fields: { a: { inputType: FieldDefinition.InputType.INPUT } },
+                    groups: [{ name: 'group-a', fields: ['a', 'c'] }],
+                    fields: { a: { inputType: FieldDefinition.InputType.INPUT },
+                              c: { inputType: FieldDefinition.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},
@@ -43,8 +43,9 @@ describe('createContextIndependentCategories', () => {
                 'Pottery:b': {
                     categoryName: 'Pottery',
                     parent: 'Find',
-                    groups: [],
-                    fields: { b: { inputType: FieldDefinition.InputType.INPUT } },
+                    groups: [{ name: 'group-b', fields: ['c', 'b'] }],
+                    fields: { b: { inputType: FieldDefinition.InputType.INPUT },
+                              c: { inputType: FieldDefinition.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},
@@ -53,19 +54,35 @@ describe('createContextIndependentCategories', () => {
                 }
             },
             {
-                de: [{
-                    categories: { 
-                        Find: { label: 'Fund', fields: { identifier: { label: 'Identifier'} } },
-                        Pottery: { label: 'Keramik', fields: { a: { label: 'A' }, b: { label: 'B' }} } 
-                    }  
-                }]
+                de: [
+                    // core - language conf
+                    {
+                        categories: { 
+                            Find: { 
+                                label: 'Fund', 
+                                fields: { 
+                                    identifier: { label: 'Identifier' } 
+                                } 
+                            },
+                        }  
+                    }, 
+                    // library - language conf
+                    {
+                        categories: {
+                            Pottery: { 
+                                label: 'Keramik', 
+                                fields: { 
+                                    a: { label: 'A' }, 
+                                    b: { label: 'B' }, 
+                                    c: { label: 'C' }} 
+                                } 
+                        }
+                    }
+                ]
             }
-        
         );
 
-        for (const r of result) {
-            // console.log(r.name);
-            // console.log(JSON.stringify(r.groups));
-        }
+        expect(result[0].groups[1].name).toEqual('group-a');
+        expect(result[1].groups[1].name).toEqual('group-b');
     });
 });

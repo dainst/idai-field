@@ -1,5 +1,5 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { RelationsUtil } from '..';
+import { RelationsUtil } from '../relations-utils';
 import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';

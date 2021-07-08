@@ -63,8 +63,7 @@ describe('createContextIndependentCategories', () => {
         
         );
 
-        const res = Tree.flatten(result);
-        for (const r of res) {
+        for (const r of result) {
             // console.log(r.name);
             // console.log(JSON.stringify(r.groups));
         }

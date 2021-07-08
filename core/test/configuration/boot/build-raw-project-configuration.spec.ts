@@ -92,7 +92,7 @@ describe('buildRawProjectConfiguration', () => {
                     field1: { inputType: 'input' },
                     field2: { inputType: 'input' }
                 },
-                groups: []
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
             }
         };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -100,11 +100,14 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 commons: ['aCommonField', 'bCommonField'],
                 valuelists: {},
-                groups: [],
                 fields: {
                     field3: { inputType: 'input' },
                     field4: { inputType: 'input' }
                 },
+                groups: [{
+                    name: Groups.STEM,
+                    fields: ['field1', 'field2', 'field3', 'field4', 'aCommonField', 'bCommonField']
+                }],
                 creationDate: '', createdBy: '', description: {}
             }
         };

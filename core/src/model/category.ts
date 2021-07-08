@@ -7,14 +7,14 @@ import { LabelUtil } from '../tools/label-util';
 
 
 export interface Category extends Named {
+    
+    // Note that that the name property given `extends Named`
+    // may coincide with `categoryName` or `libraryId`, depending on the 
+    // given context.
 
     categoryName: Name, // Multiple Categories can share common semantics.
                         // Fields shared between categories with the same
                         // categoryName mean the same thing.
-                        //
-                        // Note that that the name property given by the extension of Named
-                        // may or may not coincide with the categoryName, depending on the 
-                        // given context.
 
     libraryId?: string; // The id, as given in the Library, provided it is a 
                         // Library category or an custom extension of a Library category.

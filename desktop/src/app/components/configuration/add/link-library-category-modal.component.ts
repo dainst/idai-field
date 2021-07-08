@@ -86,7 +86,7 @@ export class LinkLibraryCategoryModalComponent {
 
         this.categories = set(
             ConfigurationIndex.find(this.configurationIndex, this.categoryName)
-                .filter(category => category['parentCategory'].categoryName === this.parentCategory.name)) as any;
+                .filter(category => category['parentCategory'].name === this.parentCategory.name)) as any;
         if (this.categories.length > 0) this.category = this.categories[0];
     }
 
@@ -136,7 +136,7 @@ export class LinkLibraryCategoryModalComponent {
 
             this.configurationIndex = configurationIndex;
             this.categories = categories
-                .filter(category => category['parentCategory'].categoryName === this.parentCategory.name) as any;
+                .filter(category => category['parentCategory'].name === this.parentCategory.name) as any;
             if (this.categories.length > 0) this.category = this.categories[0];
 
         } catch (e) {

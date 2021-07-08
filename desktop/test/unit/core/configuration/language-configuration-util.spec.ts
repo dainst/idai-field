@@ -35,7 +35,6 @@ import { CustomLanguageConfigurations,
 
     const category: Category = {
         name: 'testCategory',
-        categoryName: 'testCategory',
         label: categoryLabel,
         defaultLabel: categoryLabel,
         description: categoryDescription,

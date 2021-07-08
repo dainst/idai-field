@@ -1,4 +1,4 @@
-import { filter, flow, includedIn, is, isEmpty, isNot, Map, map, not, on, Pair } from 'tsfun';
+import { filter, flow, includedIn, is, isEmpty, Map, map, not, on, Pair } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../model';
 import { Forest, isTopLevelItemOrChildThereof, LabelUtil, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';

@@ -82,7 +82,7 @@ function completeStemGroup(category: Category) {
         category.groups.unshift(stemGroup);
     }
 
-    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups); 
+    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups);
 }
 
 
@@ -120,15 +120,15 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;
     category.name = definition.name;
-    category.categoryName = definition.categoryName;
     category.label = definition.label;
+    category.source = definition.source;
     category.description = definition.description;
     category.defaultLabel = definition.defaultLabel;
     category.defaultDescription = definition.defaultDescription;
     category.groups = [];
     category.isAbstract = definition.abstract || false;
-    category.color = definition.color ?? Category.generateColorForCategory(definition.categoryName);
-    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.categoryName);
+    category.color = definition.color ?? Category.generateColorForCategory(definition.name);
+    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.name);
     category.children = [];
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;

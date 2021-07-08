@@ -13,8 +13,8 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
     const categories: Map<TransientCategoryDefinition>
         = clone(builtInCategories) as unknown as Map<TransientCategoryDefinition>;
     for (const [name, category] of keysValues(categories)) {
+        category.libraryId = name;
         category.categoryName = name;
-        category.name = name;
     }
 
     for (const [name, libraryCategory] of keysValues(libraryCategories)) {
@@ -24,7 +24,8 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
             const newMergedCategory: any = ObjectUtils.jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
             newMergedCategory['source'] = 'library';
-            newMergedCategory.name = name;
+            newMergedCategory.libraryId = name;
+            newMergedCategory.categoryName = libraryCategory.categoryName;
 
             keysValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
                 if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
@@ -40,8 +41,7 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
         } else {
             if (!libraryCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, name];
             categories[name] = libraryCategory as TransientCategoryDefinition;
-            categories[name].name = name;
-            categories[name].categoryName = libraryCategory.categoryName;
+            categories[name].libraryId = name;
         }
     }
 

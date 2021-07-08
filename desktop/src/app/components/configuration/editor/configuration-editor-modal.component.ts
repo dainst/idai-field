@@ -39,18 +39,18 @@ export abstract class ConfigurationEditorModalComponent {
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
 
-    
+
     public getClonedCategoryDefinition(): CustomCategoryDefinition {
 
         return this.clonedConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name];
+            .categories[this.category.name];
     }
 
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition {
 
         return this.customConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name];
+            .categories[this.category.name];
     }
 
 
@@ -98,7 +98,7 @@ export abstract class ConfigurationEditorModalComponent {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 Document.clone(this.clonedConfigurationDocument)
             );
-            this.activeModal.close({ 
+            this.activeModal.close({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: this.clonedConfigurationDocument
             });

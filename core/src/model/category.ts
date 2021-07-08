@@ -9,16 +9,15 @@ import { LabelUtil } from '../tools/label-util';
 export interface Category extends Named {
     
     // Note that that the name property given `extends Named`
-    // may coincide with `categoryName` or `libraryId`, depending on the 
-    // given context.
+    // may coincide with `categoryName`, depending on the given context.
+    // 
+    // It is used to identify an edit form.
 
     categoryName: Name, // Multiple Categories can share common semantics.
                         // Fields shared between categories with the same
                         // categoryName mean the same thing.
 
-    libraryId?: string; // The id, as given in the Library, provided it is a 
-                        // Library category or an custom extension of a Library category.
-
+    source?: 'builtin'|'library'|'custom';
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
@@ -46,6 +45,14 @@ export module Category {
     export const CHILDREN = 'children';
     export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
+
+
+    export module Source {
+
+        export const BUILTIN = 'builtin';
+        export const LIBRARY = 'library';
+        export const CUSTOM = 'custom';
+    }
 
 
     export function getFields(category: Category): Array<FieldDefinition> {

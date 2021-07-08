@@ -83,7 +83,7 @@ export class CategoryPickerComponent {
     }
 
 
-    public isCustomCategory: Predicate<Category> = category => !category.libraryId;
+    public isCustomCategory: Predicate<Category> = category => category.source === 'custom';
 
 
     public hasCustomFields: Predicate<Category> = compose(

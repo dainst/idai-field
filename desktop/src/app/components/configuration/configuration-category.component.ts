@@ -80,7 +80,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
-        return this.customConfigurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
+        return this.customConfigurationDocument.resource.categories[this.category.name];
     }
 
 
@@ -88,7 +88,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         return this.category.parentCategory
             ? this.customConfigurationDocument.resource
-                .categories[this.category.parentCategory.libraryId ?? this.category.parentCategory.name]
+                .categories[this.category.parentCategory.name]
             : undefined;
     }
 
@@ -195,7 +195,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name]
+            .categories[this.category.name]
             .groups = newGroups;
 
         try {
@@ -294,7 +294,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const result: string[] = flatten(this.category.groups.map(to('fields')))
             .filter(field => !field.visible
                 && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                && (!this.category.libraryId || !ConfigurationUtil.isHidden(
+                && (this.category.source === 'custom' || !ConfigurationUtil.isHidden(
                     this.getCustomCategoryDefinition(),
                     this.getParentCustomCategoryDefinition()
                 )(field)))

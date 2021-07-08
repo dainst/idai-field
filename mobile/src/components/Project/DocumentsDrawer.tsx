@@ -72,9 +72,8 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                                             : null,
                                         ...TransitionPresets.SlideFromRightIOS
                                     } }
-                                    initialParams={ { documents } }
                                 >
-                                    { ({ route }) => <DocumentsList { ...listProps } route={ route } /> }
+                                    { () => <DocumentsList { ...listProps } documents={ documents } /> }
                                 </Stack.Screen>
                             </Stack.Navigator>
                         </NavigationContainer>

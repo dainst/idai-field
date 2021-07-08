@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { PouchdbManager, SampleDataLoaderBase } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,13 +13,13 @@ import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
 
-
 interface HomeScreenProps {
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
     setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
+    pouchdbManager: PouchdbManager;
 }
 
 
@@ -28,6 +29,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     setProjectSettings,
     deleteProject,
     navigate,
+    pouchdbManager
 }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
@@ -65,6 +67,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         navigate('LoadingScreen');
     },[navigate, setCurrentProject,setProjectSettings]);
 
+
+    const setTestProject = async () => {
+
+        if(!pouchdbManager) return;
+
+        if(preferences.projects['test']){
+            openProject('test');
+        } else {
+            await pouchdbManager.createDb('test', { _id: 'project', resource: { id: 'project' } }, false);
+            //await pouchdbManager.createDb('test')
+            const loader = new SampleDataLoaderBase('en');
+            await loader.go(pouchdbManager.getDb(), 'test');
+            openProject('test');
+        }
+    };
+
+    
     const usernameNotSet = () => preferences.username === '';
 
     return <>
@@ -122,7 +141,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 />
                 <Button
                     icon={ <Ionicons name="folder-open" size={ 16 } /> }
-                    onPress={ () => openProject('test') }
+                    onPress={ setTestProject }
                     title="Open test project"
                     style={ styles.bottomRowButton }
                     isDisabled={ usernameNotSet() }

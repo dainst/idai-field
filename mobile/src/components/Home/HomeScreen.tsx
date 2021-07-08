@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { PouchdbManager, SampleDataLoaderBase } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,7 +18,6 @@ interface HomeScreenProps {
     deleteProject: (project: string) => void;
     setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
-    pouchdbManager: PouchdbManager;
 }
 
 
@@ -29,7 +27,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     setProjectSettings,
     deleteProject,
     navigate,
-    pouchdbManager
 }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
@@ -66,21 +63,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         setProjectSettings(project, { url, password, connected: true });
         navigate('LoadingScreen');
     },[navigate, setCurrentProject,setProjectSettings]);
-
-
-    const setTestProject = async () => {
-
-        if(!pouchdbManager) return;
-
-        if(preferences.projects['test']){
-            openProject('test');
-        } else {
-            await pouchdbManager.createDb('test', { _id: 'project', resource: { id: 'project' } }, false);
-            const loader = new SampleDataLoaderBase('en');
-            await loader.go(pouchdbManager.getDb(), 'test');
-            openProject('test');
-        }
-    };
 
     
     const usernameNotSet = () => preferences.username === '';
@@ -140,7 +122,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 />
                 <Button
                     icon={ <Ionicons name="folder-open" size={ 16 } /> }
-                    onPress={ setTestProject }
+                    onPress={ () => openProject('test') }
                     title="Open test project"
                     style={ styles.bottomRowButton }
                     isDisabled={ usernameNotSet() }

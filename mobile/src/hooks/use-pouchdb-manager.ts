@@ -1,4 +1,4 @@
-import { PouchdbManager } from 'idai-field-core';
+import { PouchdbManager, SampleDataLoaderBase } from 'idai-field-core';
 import PouchDB from 'pouchdb-react-native';
 import { useEffect, useState } from 'react';
 
@@ -29,6 +29,10 @@ export default usePouchdbManager;
 const buildPouchDbManager = async (project: string): Promise<PouchdbManager> => {
 
     const manager = new PouchdbManager((name: string) => new PouchDB(name));
-    await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, false);
+    await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, project === 'test');
+    if(project === 'test'){
+        const loader = new SampleDataLoaderBase('en');
+        await loader.go(manager.getDb(), 'test');
+    }
     return manager;
 };

@@ -70,7 +70,6 @@ export default function App(): ReactElement {
                                     setProjectSettings={ setProjectSettings }
                                     deleteProject={ deleteProject }
                                     navigate={ (screen: string) => navigation.navigate(screen) }
-                                    pouchdbManager={ pouchdbManager }
                                 /> }
                             </Stack.Screen>
                             <Stack.Screen name="ProjectScreen">

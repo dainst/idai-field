@@ -1,4 +1,3 @@
-import { PouchdbManager } from 'idai-field-core';
 import React from 'react';
 import { Preferences } from '../../models/preferences';
 import { fireEvent, render, waitFor } from '../../utils/test-utils';
@@ -109,5 +108,4 @@ const mockProps = () => ({
     deleteProject: jest.fn(_ => { return; }),
     setProjectSettings: jest.fn(_ => { return; }),
     navigate: jest.fn(_ => { return; }),
-    pouchdbManager: {} as PouchdbManager
 });

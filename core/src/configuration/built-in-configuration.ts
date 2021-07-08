@@ -286,8 +286,12 @@ export class BuiltInConfiguration {
                     fields: ['identifier', 'shortDescription']
                 },
                 {
+                    name: Groups.POSITION,
+                    fields: ['isBelow', 'isAbove', 'isEquivalentTo', 'borders', 'cuts', 'isCutBy']
+                },
+                {
                     name: Groups.TIME,
-                    fields: ['period', 'dating']
+                    fields: ['period', 'dating', 'isBefore', 'isAfter', 'isContemporaryWith']
                 }
             ]
         },
@@ -347,6 +351,10 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'shortDescription']
+                },
+                {
+                    name: Groups.IDENTIFICATION,
+                    fields: ['hasInstance']
                 }
             ]
         },
@@ -424,28 +432,36 @@ export class BuiltInConfiguration {
             domain: ['Image:inherit'],
             range: [],
             inverse: 'isDepictedIn',
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isDepictedIn',
             domain: [],
             range: ['Image:inherit'],
             inverse: 'depicts',
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'hasMapLayer',
             inverse: 'isMapLayerOf',
             domain: ['Operation:inherit'],
             range: ['Image:inherit'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isMapLayerOf',
             inverse: 'hasMapLayer',
             domain: ['Image:inherit'],
             range: ['Operation:inherit'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isAfter',
@@ -453,7 +469,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isBefore',
@@ -461,7 +479,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isEquivalentTo',
@@ -469,7 +489,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isContemporaryWith',
@@ -477,7 +499,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isAbove',
@@ -485,7 +509,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isBelow',
@@ -493,7 +519,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'cuts',
@@ -501,7 +529,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isCutBy',
@@ -509,7 +539,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'borders',
@@ -517,7 +549,9 @@ export class BuiltInConfiguration {
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'borders',
@@ -525,156 +559,204 @@ export class BuiltInConfiguration {
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit'],
             sameMainCategoryResource: true,
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Inscription'],
             range: ['Trench'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Room'],
             range: ['Building'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['RoomFloor'],
             range: ['Building'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['RoomWall'],
             range: ['Building'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['RoomCeiling'],
             range: ['Building'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Area:inherit'],
             range: ['Survey'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['BuildingPart:inherit'],
             range: ['Building', 'Survey'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Find:inherit'],
             range: ['Trench', 'Survey'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Feature:inherit'],
             range: ['Trench'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
             domain: ['Sample'],
             range: ['Trench', 'Survey'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Operation:inherit', 'Place'],
             range: ['Place'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Inscription'],
             range: ['Find:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Sample'],
             range: ['Feature:inherit', 'Find:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Area:inherit'],
             range: ['Area:inherit'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['RoomFloor'],
             range: ['Room'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['RoomWall'],
             range: ['Room'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['RoomCeiling'],
             range: ['Room'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'liesWithin',
             domain: ['Type:inherit'],
             range: ['Type:inherit', 'TypeCatalog:inherit'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'isInstanceOf',
             inverse: 'hasInstance',
             domain: ['Find:inherit'],
             range: ['Type:inherit'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         },
         {
             name: 'hasInstance',
             inverse: 'isInstanceOf',
             domain: ['Type:inherit'],
             range: ['Find:inherit'],
-            editable: true
+            editable: true,
+            visible: true,
+            inputType: 'relation'
         }
     ];
 
@@ -729,13 +811,15 @@ export class BuiltInConfiguration {
                 name: 'isRecordedIn',
                 domain: ['Wall_surface'],
                 range: ['Trench'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
             this.builtInRelations.push({
                 name: 'isRecordedIn',
                 domain: ['Drilling'],
                 range: ['Survey'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
         }
 
@@ -790,21 +874,24 @@ export class BuiltInConfiguration {
                 name: 'isRecordedIn',
                 domain: ['ProcessUnit'],
                 range: ['Trench'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
                 name: 'isRecordedIn',
                 domain: ['BuildingFloor'],
                 range: ['Building'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
                 name: 'isRecordedIn',
                 domain: ['SurveyBurial'],
                 range: ['Survey'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
@@ -812,7 +899,8 @@ export class BuiltInConfiguration {
                 domain: ['SurveyBurial'],
                 range: ['Area:inherit'],
                 sameMainCategoryResource: true,
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
@@ -821,7 +909,8 @@ export class BuiltInConfiguration {
                 domain: ['BuildingFloor'],
                 range: ['BuildingPart:inherit'],
                 sameMainCategoryResource: true,
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({ // override existing definition
@@ -830,7 +919,8 @@ export class BuiltInConfiguration {
                 domain: ['BuildingPart:inherit'],
                 range: ['BuildingPart:inherit', 'BuildingFloor'],
                 sameMainCategoryResource: true,
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
         }
 
@@ -913,28 +1003,32 @@ export class BuiltInConfiguration {
                 name: 'isRecordedIn',
                 domain: ['Quantification:inherit', 'Impression'],
                 range: ['Trench:inherit'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
                 name: 'liesWithin',
                 domain: ['Find:inherit'],
                 range: ['Feature:inherit', 'Area:inherit', 'Quantification:inherit'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
                 name: 'liesWithin',
                 domain: ['Impression'],
                 range: ['Feature:inherit'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
                 name: 'liesWithin',
                 domain: ['Quantification:inherit'],
                 range: ['Feature:inherit', 'Quantification:inherit'],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             });
          
             this.builtInRelations.push({
@@ -943,7 +1037,8 @@ export class BuiltInConfiguration {
                 domain: ['Feature:inherit'],
                 range: ['Feature:inherit'],
                 sameMainCategoryResource: true,
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
@@ -952,7 +1047,8 @@ export class BuiltInConfiguration {
                 domain: ['Feature:inherit'],
                 range: ['Feature:inherit'],
                 sameMainCategoryResource: true,
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
 
             this.builtInRelations.push({
@@ -960,7 +1056,8 @@ export class BuiltInConfiguration {
                 inverse: 'hasFinds',
                 domain: ['Find:inherit'],
                 range: ['Building', 'Place', 'Survey', 'Trench'],
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
             
             this.builtInRelations.push({
@@ -968,7 +1065,8 @@ export class BuiltInConfiguration {
                 inverse: 'wasFoundIn',
                 domain: ['Building', 'Place', 'Survey', 'Trench'],
                 range: ['Find:inherit'],
-                editable: true
+                editable: true,
+                inputType: 'relation'
             });
 
             (this.builtInFields as any)['datingAddenda'] = {

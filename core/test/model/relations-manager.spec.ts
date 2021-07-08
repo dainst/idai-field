@@ -17,20 +17,23 @@ describe('RelationsManager', () => {
                 inverse: 'Contains',
                 domain: [],
                 range: [],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             },
             {
                 name: 'Contains',
                 inverse: 'BelongsTo',
                 domain: [],
                 range: [],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             },
             {
                 name: 'isRecordedIn',
                 domain: [],
                 range: [],
-                editable: false
+                editable: false,
+                inputType: 'relation'
             }
         ]]);
 

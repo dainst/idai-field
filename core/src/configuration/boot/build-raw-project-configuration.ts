@@ -86,8 +86,7 @@ function processCategories(validateFields: any,
         setCategoryNames,
         applySearchConfiguration(searchConfiguration),
         validateFields,
-        makeCategoryForest,
-        Tree.mapList(putRelationsIntoGroups(relations)),
+        makeCategoryForest(relations),
         Tree.mapList(setGroupLabels(languageConfigurations)),
         setGeometriesInGroups(languageConfigurations),
         orderCategories(categoriesOrder),
@@ -139,28 +138,6 @@ function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
         };
         positionGroup.fields.unshift(geometryField);
 
-        return category;
-    }
-}
-
-
-function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
-
-    return (category: Category /* modified in place */): Category => {
-
-        const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
-
-        for (let relation of relDefs) {
-            const groupName: string|undefined = Groups.getGroupNameForRelation(relation.name);
-            if (!groupName) continue;
-
-            let group = category.groups.find(group => group.name === groupName);
-            if (!group) {
-                group = Group.create(groupName);
-                category.groups.push(group);
-            }
-            group.relations.push(relation);
-        }
         return category;
     }
 }

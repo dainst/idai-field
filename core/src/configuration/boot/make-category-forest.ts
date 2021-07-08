@@ -1,5 +1,6 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { Category, CategoryDefinition, FieldDefinition, Group } from '../../model';
+import { RelationsUtil } from '..';
+import { Category, CategoryDefinition, FieldDefinition, Group, RelationDefinition } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { ConfigurationErrors } from './configuration-errors';
@@ -13,7 +14,8 @@ const TEMP_GROUPS = 'tempGroups';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoryForest(categories: any): Forest<Category> {
+export const makeCategoryForest = (relationDefinitions: Array<RelationDefinition>) =>
+        (categories: any): Forest<Category> => {
 
     const [parentDefs, childDefs] =
         separate<CategoryDefinition>(on(CategoryDefinition.PARENT, not(isDefined)), categories);
@@ -28,7 +30,7 @@ export function makeCategoryForest(categories: any): Forest<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories as any),
-        Tree.mapList(createGroups),
+        Tree.mapList(createGroups(relationDefinitions)),
         Tree.mapList(detach(TEMP_FIELDS)),
         Tree.mapList(detach(TEMP_GROUPS)),
         linkParentAndChildInstances
@@ -39,12 +41,19 @@ export function makeCategoryForest(categories: any): Forest<Category> {
 export const generateEmptyList = () => []; // to make sure getting a new instance every time this is called
 
 
-function createGroups(category: Category): Category {
+const createGroups = (relationDefinitions: Array<RelationDefinition>) => (category: Category): Category => {
+
+    const categoryRelations: Array<RelationDefinition> = RelationsUtil.getRelationDefinitions(
+        relationDefinitions, category.name
+    );
 
     category.groups = category[TEMP_GROUPS].map(groupDefinition => {
         const group = Group.create(groupDefinition.name);
         group.fields = set(groupDefinition.fields)
-            .map(fieldName => category[TEMP_FIELDS][fieldName])
+            .map(fieldName => {
+                return category[TEMP_FIELDS][fieldName]
+                    ?? categoryRelations.find(relation => relation.name === fieldName)
+            })
             .filter(field => field !== undefined)
         return group;
     });

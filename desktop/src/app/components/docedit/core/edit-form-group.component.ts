@@ -13,7 +13,6 @@ import { Document, LabelUtil, FieldDefinition, RelationDefinition, LabeledValue 
 export class EditFormGroup implements OnChanges {
 
     @Input() fieldDefinitions: Array<FieldDefinition>;
-    @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() document: Document;
 
     public labels: { [name: string]: string };
@@ -37,10 +36,7 @@ export class EditFormGroup implements OnChanges {
         this.labels = {};
         this.descriptions = {};
 
-        const labeledValues: Array<LabeledValue> = (this.fieldDefinitions as Array<LabeledValue>)
-            .concat(this.relationDefinitions as Array<LabeledValue>);
-
-        labeledValues.forEach(field => {
+        this.fieldDefinitions.forEach(field => {
             const { label, description } = LabelUtil.getLabelAndDescription(field);
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;

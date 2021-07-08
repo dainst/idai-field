@@ -43,7 +43,8 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['domainA'],
             range : ['rangeA'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
         configuration.relations = [];
 
@@ -60,14 +61,16 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['domainA', 'domainB', 'domainC'],
             range : ['rangeA'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         const r2: RelationDefinition = {
             name: 'R',
             domain: ['domainB', 'domainC'],
             range : ['rangeB'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration = [{ T1: t1 }, []];
@@ -88,14 +91,16 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['T1:inherit'],
             range : ['rangeA'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         const r2: RelationDefinition = {
             name: 'R',
             domain: ['T1:inherit'],
             range: ['rangeA', 'rangeB', 'rangeC'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration = [{ T1: t1 }, []];
@@ -115,7 +120,8 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['T2', 'T3'],
             range: [],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration.relations = [];
@@ -133,7 +139,8 @@ describe('addRelations', () => {
             name: 'R',
             domain: [],
             range: ['T2', 'T3'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration.relations = [];
@@ -150,7 +157,8 @@ describe('addRelations', () => {
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T3' ],
             range: [ 'T1:inherit' ],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration[1] = [];
@@ -172,7 +180,8 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['T1:inherit'],
             range: ['T3'],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration[1] = [];
@@ -195,7 +204,8 @@ describe('addRelations', () => {
             name: 'R',
             domain: ['T1:inherit'],
             range: [],
-            editable: false
+            editable: false,
+            inputType: 'relation'
         };
 
         configuration[1] = [];

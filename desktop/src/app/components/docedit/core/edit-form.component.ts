@@ -26,7 +26,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public categories: string[];
 
     public extraGroups: Array<Group> = [
-        { name: 'conflicts', fields: [], relations: [] }
+        { name: 'conflicts', fields: [] }
     ];
 
     public groups: Array<Group> = [];
@@ -73,21 +73,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
                 && !ProjectCategories.getImageCategoryNames(
                     this.projectConfiguration.getCategoryForest()).includes(this.document.resource.category))
             || (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
-            || this.getRelationDefinitions(groupName).length > 0;
+            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0;
     }
 
 
     public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
-    }
-
-
-    public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
-
-        return (this.groups.find(group => group.name === groupName) as any).relations
-            .filter(relation => relation.editable);
     }
 
 

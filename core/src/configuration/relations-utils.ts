@@ -1,4 +1,4 @@
-import {RelationDefinition} from '../model';
+import { RelationDefinition } from '../model';
 
 
 /**

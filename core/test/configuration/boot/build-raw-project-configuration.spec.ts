@@ -1358,14 +1358,19 @@ describe('buildRawProjectConfiguration', () => {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                groups: []
+                groups: [
+                    { name: Groups.POSITION, fields: ['isAbove'] }
+                ]
             },
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
             C: {
                 fields: {},
-                parent: 'P'
+                parent: 'P',
+                groups: [
+                    { name: Groups.POSITION, fields: ['isAbove'] }
+                ]
             }
         };
 
@@ -1374,7 +1379,6 @@ describe('buildRawProjectConfiguration', () => {
                 {
                     name: 'isAbove',
                     inverse: 'isBelow',
-                    label: 'relationLabel',
                     domain: ['P:inherit'],
                     range: ['P:inherit'],
                     sameMainCategoryResource: true
@@ -1382,14 +1386,13 @@ describe('buildRawProjectConfiguration', () => {
             ]
         );
 
-        // First group is always the (auto-generated) stem group, position group is expected as second group
-        const parentGroup = result['P'].groups[1];
-        const childGroup = result['P'].children[0].groups[1];
+        const parentGroup = result['P'].groups[0];
+        const childGroup = result['P'].children[0].groups[0];
 
-        expect(parentGroup.name).toEqual('position');
-        expect(parentGroup.relations[0].name).toEqual('isAbove');
-        expect(childGroup.name).toEqual('position');
-        expect(childGroup.relations[0].name).toEqual('isAbove');
+        expect(parentGroup.name).toEqual(Groups.POSITION);
+        expect(parentGroup.fields[1].name).toEqual('isAbove');
+        expect(childGroup.name).toEqual(Groups.POSITION);
+        expect(childGroup.fields[1].name).toEqual('isAbove');
     });
 
 
@@ -1424,9 +1427,8 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
 
-        // First group is always the (auto-generated) stem group, position group is expected as second group
-        const parentGroup = result['P'].groups[1];
-        const childGroup = result['P'].children[0].groups[1];
+        const parentGroup = result['P'].groups[0];
+        const childGroup = result['P'].children[0].groups[0];
 
         expect(parentGroup.name).toEqual('position');
         expect(parentGroup.fields[0].name).toEqual('geometry');

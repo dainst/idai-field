@@ -1,21 +1,29 @@
-import {RelationPickerGroupComponent} from '../../../../../src/app/components/docedit/widgets/relationpicker/relation-picker-group.component';
+import { Resource } from 'idai-field-core';
+import { RelationPickerGroupComponent } from '../../../../../src/app/components/docedit/widgets/relationpicker/relation-picker-group.component';
+
 
 /**
  * @author Thomas Kleinke
  */
 describe('RelationPickerGroupComponent', () => {
 
-    let document: any;
+    let resource: Resource;
     let relationPickerGroupComponent: RelationPickerGroupComponent;
 
 
     beforeEach(() => {
 
-        document = { resource : { id: 'id1', identifier: 'ob1', category: 'object', relations : {} } };
+        resource = { id: 'id1', identifier: 'ob1', category: 'Category', relations : {} };
 
         relationPickerGroupComponent = new RelationPickerGroupComponent();
-        relationPickerGroupComponent.document = document;
-        relationPickerGroupComponent.relationDefinition = { name: 'Above', inverse: 'Below' };
+        relationPickerGroupComponent.resource = resource;
+        relationPickerGroupComponent.relationDefinition = {
+            name: 'Above',
+            inverse: 'Below',
+            domain: ['Category'],
+            range: ['Category'],
+            inputType: 'relation'
+        };
     });
 
 
@@ -24,8 +32,8 @@ describe('RelationPickerGroupComponent', () => {
         relationPickerGroupComponent.ngOnChanges();
         relationPickerGroupComponent.createRelation();
 
-        expect(document.resource.relations['Above'].length).toBe(1);
-        expect(document.resource.relations['Above'][0]).toBe('');
+        expect(resource.relations['Above'].length).toBe(1);
+        expect(resource.relations['Above'][0]).toBe('');
     });
 });
 

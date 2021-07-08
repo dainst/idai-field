@@ -76,10 +76,33 @@ describe('Validations', () => {
                     ]}]
                 }, []]
             ] as any), [
-
-                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE', editable: false },
-                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE', editable: false },
-                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE', editable: false }
+                {
+                    name: 'isRelatedTo',
+                    domain: ['T'],
+                    range: ['T'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isDepictedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isRecordedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                }
             ]
         ]
     );

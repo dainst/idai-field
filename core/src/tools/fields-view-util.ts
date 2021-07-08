@@ -1,6 +1,5 @@
-import { aFlow, aMap, and, assoc, compose, isEmpty, filter, Filter, flatten, flow, includedIn,
-    is, isArray, isDefined, isNot, isObject, isString, L, lookup, map, Map, Mapping, on, or, pairWith,
-    Predicate, R, to, isUndefinedOrEmpty, isnt, not } from 'tsfun';
+import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
+    L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not, aMap, aCompose } from 'tsfun';
 import { LabelUtil } from './label-util';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
@@ -9,12 +8,9 @@ import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
-import { FieldResource } from '../model/field-resource';
 import { BaseGroup, Group, Groups } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
-import { RelationDefinition } from '../model/relation-definition';
-import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
 import { ValuelistDefinition } from '../model/valuelist-definition';
 import { Named } from './named';
@@ -27,25 +23,18 @@ type FieldContent = any;
 export interface FieldsViewGroup extends BaseGroup {
 
     shown: boolean;
-    relations: Array<FieldsViewRelation>;
     fields: Array<FieldsViewField>;
-}
-
-
-export interface FieldsViewRelation {
-
-    label: string;
-    targets: Array<Document>;
 }
 
 
 export interface FieldsViewField {
 
-    value: string | string[]; // TODO add object types
     label: string;
-    type: 'default' | 'array' | 'object';
+    type: 'default'|'array'|'object'|'relation';
+    value?: string|string[]; // TODO add object types
     valuelist?: ValuelistDefinition;
     positionValues?: ValuelistDefinition;
+    targets?: Array<Document>;
 }
 
 
@@ -79,21 +68,6 @@ export module FieldsViewUtil {
     }
 
 
-    export function filterRelationsToShowFor(resource: Resource): Filter<Array<RelationDefinition>> {
-
-        return filter(
-            on(Named.NAME,
-                and(
-                    isNot(includedIn(Relations.Hierarchy.ALL)),
-                    isnt(Relations.Image.ISDEPICTEDIN),
-                    isnt(Relations.Image.HASMAPLAYER),
-                    compose(lookup(resource.relations), not(isUndefinedOrEmpty))
-                )
-            )
-        );
-    }
-
-
     export const isVisibleField: Predicate<FieldDefinition> = or(
         on(FieldDefinition.VISIBLE, is(true)),
         on(Named.NAME, is(Resource.CATEGORY))
@@ -101,8 +75,7 @@ export module FieldsViewUtil {
 
 
     export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(
-        on(FieldsViewGroup.FIELDS, not(isEmpty)),
-        on(FieldsViewGroup.RELATIONS, not(isEmpty))
+        on(FieldsViewGroup.FIELDS, not(isEmpty))
     );
 
 
@@ -124,10 +97,11 @@ export module FieldsViewUtil {
                                                datastore: Datastore,
                                                languages?: string[]): Promise<Array<FieldsViewGroup>> {
 
+        const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
+
         return await aFlow(
             FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
-            putActualResourceRelationsIntoGroups(resource, datastore),
-            putActualResourceFieldsIntoGroups(resource, projectConfiguration, languages),
+            putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, languages),
             filter(shouldBeDisplayed)
         );
     }
@@ -168,29 +142,12 @@ export module FieldsViewUtil {
 }
 
 
-function putActualResourceRelationsIntoGroups(resource: Resource, datastore: Datastore) {
-
-    return ($: any) => aMap(async (group: any /* ! modified in place ! */) => {
-
-        group.relations = await aFlow(
-            group.relations,
-            FieldsViewUtil.filterRelationsToShowFor(resource),
-            aMap(async (relation: RelationDefinition) => {
-                return {
-                    label: LabelUtil.getLabel(relation),
-                    targets: await datastore.getMultiple(resource.relations[relation.name])
-                }
-            })
-        );
-        return group;
-    }, $);
-}
-
-
-function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration, languages?: string[],): Mapping {
+function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
+                                           relationTargets: Map<Array<Document>>,
+                                           languages?: string[]): Mapping {
 
     const fieldContent: Mapping<FieldDefinition, FieldContent>
-        = compose(to(Named.NAME), lookup(resource));
+        = compose(to(Named.NAME), getFieldContent(resource));
 
     return map(
         assoc(Group.FIELDS,
@@ -198,7 +155,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 map(pairWith(fieldContent)),
                 filter(on(R, isDefined)),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
-                map(makeField(projectConfiguration, languages)),
+                map(makeField(projectConfiguration, relationTargets, languages)),
                 flatten() as any /* TODO review typing*/
             )
         )
@@ -206,24 +163,53 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
 }
 
 
-function makeField(projectConfiguration: ProjectConfiguration, languages?: string[]) {
+function makeField(projectConfiguration: ProjectConfiguration, relationTargets: Map<Array<Document>>,
+                   languages?: string[]) {
 
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
-        return {
-            label: LabelUtil.getLabel(field),
-            value: isArray(fieldContent)
-                ? fieldContent.map((fieldContent: any) =>
-                    FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, field.valuelist, languages
+        return field.inputType === FieldDefinition.InputType.RELATION
+            ? {
+                label: LabelUtil.getLabel(field),
+                type: 'relation',
+                targets: relationTargets[field.name]
+            }
+            : {
+                label: LabelUtil.getLabel(field),
+                value: isArray(fieldContent)
+                    ? fieldContent.map((fieldContent: any) =>
+                        FieldsViewUtil.getValue(
+                            fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                        )
                     )
-                )
-                : FieldsViewUtil.getValue(
-                    fieldContent, field.name, projectConfiguration, field.valuelist, languages
-                ),
-            type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
-            valuelist: field.valuelist,
-            positionValues: field.positionValues
-        };
+                    : FieldsViewUtil.getValue(
+                        fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                    ),
+                type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
+                valuelist: field.valuelist,
+                positionValues: field.positionValues
+            };
     }
+}
+
+
+const getFieldContent = (resource: Resource) => (fieldName: string): any => {
+
+    return resource[fieldName]
+        ?? (resource.relations[fieldName] && resource.relations[fieldName].length > 0
+            ? resource.relations[fieldName]
+            : undefined
+        );
+}
+
+
+async function getRelationTargets(resource: Resource, datastore: Datastore): Promise<Map<Array<Document>>> {
+
+    const targets: Map<Array<Document>> = {};
+
+    for (let relationName of Object.keys(resource.relations)) {
+        targets[relationName] = await datastore.getMultiple(resource.relations[relationName]);
+    }
+
+    return targets;
 }

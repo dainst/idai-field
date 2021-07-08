@@ -91,11 +91,6 @@
                 </div>
                 <div *cdkDragPlaceholder class="field-drag-placeholder"></div>
             </div>
-            <div *ngFor="let relation of getRelations()">
-                <configuration-relation [relation]="relation"
-                                        [category]="category">
-                </configuration-relation>
-            </div>
         </div>
         <div id="add-field-button" class="circular-button green-button"
             (click)="addField()"

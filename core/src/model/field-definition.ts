@@ -67,6 +67,7 @@ export module FieldDefinition {
         |'dimension'
         |'literature'
         |'geometry'
+        |'relation'
         |'instanceOf'
         |'default';
 
@@ -88,6 +89,7 @@ export module FieldDefinition {
         export const DIMENSION = 'dimension';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
+        export const RELATION = 'relation';
         export const NONE = 'none';
         export const DEFAULT = 'default';
     }

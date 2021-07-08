@@ -1,5 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {isEmpty} from 'tsfun';
+import { isEmpty } from 'tsfun';
+import { RelationDefinition, Resource } from 'idai-field-core';
+
 
 /**
  * @author Thomas Kleinke
@@ -8,18 +10,17 @@ import {isEmpty} from 'tsfun';
     selector: 'relation-picker-group',
     templateUrl: './relation-picker-group.html'
 })
-
 export class RelationPickerGroupComponent implements OnChanges {
 
-    @Input() document: any;
-    @Input() relationDefinition: any;
+    @Input() resource: Resource;
+    @Input() relationDefinition: RelationDefinition;
 
     public relations: any;
 
 
     public ngOnChanges() {
 
-        if (this.document) this.relations = this.document.resource.relations;
+        if (this.resource) this.relations = this.resource.relations;
     }
 
 
@@ -28,7 +29,7 @@ export class RelationPickerGroupComponent implements OnChanges {
         if (!this.relations[this.relationDefinition.name])
             this.relations[this.relationDefinition.name] = [];
 
-        this.relations[this.relationDefinition.name].push('')
+        this.relations[this.relationDefinition.name].push('');
     }
 
 

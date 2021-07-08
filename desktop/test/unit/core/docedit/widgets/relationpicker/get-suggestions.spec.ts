@@ -1,5 +1,6 @@
 import { doc, RelationDefinition, Document } from 'idai-field-core';
-import { getSuggestions, MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
+import { getSuggestions,
+    MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
 
 
 /**
@@ -27,7 +28,9 @@ describe('getSuggestions', () => {
             name: 'relation',
             domain: [],
             range: ['RangeCategory1', 'RangeCategory2'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition, 'input');
@@ -61,7 +64,9 @@ describe('getSuggestions', () => {
             inverse: 'inverse',
             domain: [],
             range: ['RangeCategory'],
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
@@ -96,7 +101,9 @@ describe('getSuggestions', () => {
             domain: [],
             range: ['RangeCategory'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
@@ -130,7 +137,9 @@ describe('getSuggestions', () => {
             domain: [],
             range: ['RangeCategory'],
             sameMainCategoryResource: true,
-            editable: false
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         };
 
         try {

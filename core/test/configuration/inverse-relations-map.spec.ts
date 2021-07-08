@@ -8,8 +8,8 @@ describe('InverseRelationsMap', () => {
        const inverseRelationsMap: InverseRelationsMap
            = makeInverseRelationsMap(
                [
-                   { name: 'a', inverse: 'b', domain: [], range: [], editable: false },
-                   { name: 'c', domain: [], range: [], editable: false }
+                   { name: 'a', inverse: 'b', domain: [], range: [], editable: false, inputType: 'relation' },
+                   { name: 'c', domain: [], range: [], editable: false, inputType: 'relation' }
                 ]
             );
 

@@ -1,6 +1,6 @@
-import {isEmpty, not, on, subtract} from 'tsfun';
-import {RelationDefinition} from '../../model/relation-definition';
-import {Named} from '../../tools/named';
+import { isEmpty, not, on, subtract } from 'tsfun';
+import { RelationDefinition } from '../../model/relation-definition';
+import { Named } from '../../tools/named';
 
 
 /**

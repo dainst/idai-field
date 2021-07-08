@@ -1,5 +1,5 @@
 import { ConfigurationErrors, makeCategoryForest } from '../../../src/configuration/boot';
-import { Category, FieldDefinition, FieldResource, Groups, Resource } from '../../../src/model';
+import { Category, FieldDefinition, FieldResource, Groups, RelationDefinition, Resource } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 
 
@@ -18,21 +18,21 @@ describe('makeCategoriesForest', () => {
                 name: A,
                 parent: P,
                 description: { 'de': '' },
-                fields: { a: { inputType: FieldDefinition.InputType.INPUT } },
+                fields: { a: { inputType: FieldDefinition.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['a'] }
                 ]
             }, P: {
                 name: P,
                 description: { 'de': '' },
-                fields: { p: { inputType: FieldDefinition.InputType.INPUT } },
+                fields: { p: { inputType: FieldDefinition.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['p'] }
                 ]
             }
         };
 
-        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(confDef)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest([])(confDef)));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -70,7 +70,7 @@ describe('makeCategoriesForest', () => {
             }
         };
 
-        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(confDef)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest([])(confDef)));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -100,16 +100,24 @@ describe('makeCategoriesForest', () => {
                     }
                 },
                 groups: [
-                    { name: Groups.STEM, fields: ['identifier', 'shortDescription'] }
+                    { name: Groups.STEM, fields: ['identifier', 'relation', 'shortDescription'] }
                 ]
             }
         };
 
-        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(confDef)));
+        const relations: Array<RelationDefinition> = [{
+            name: 'relation',
+            domain: ['T'],
+            range: ['X'],
+            inputType: 'relation'
+        }];
+
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest(relations)(confDef)));
 
         expect(categoriesMap[T].groups[0].name).toEqual(Groups.STEM);
         expect(categoriesMap[T].groups[0].fields[0].name).toEqual(Resource.IDENTIFIER);
-        expect(categoriesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
+        expect(categoriesMap[T].groups[0].fields[1].name).toEqual('relation');
+        expect(categoriesMap[T].groups[0].fields[2].name).toEqual(FieldResource.SHORTDESCRIPTION);
     });
 
 
@@ -122,7 +130,8 @@ describe('makeCategoriesForest', () => {
             fields: {
                 fieldA: {
                     label: 'Field A',
-                    inputType: 'text'
+                    inputType: 'text',
+                    visible: true
                 }
             }
         };
@@ -132,13 +141,14 @@ describe('makeCategoriesForest', () => {
             parent: 'FirstLevelCategory',
             fields: {
                 fieldA: {
-                    label: 'Field A1'
+                    label: 'Field A1',
+                    visible: true
                 }
             }
         };
 
         expect(
-            () => makeCategoryForest(
+            () => makeCategoryForest([])(
                 {
                     FirstLevelCategory: firstLevelCategory,
                     SecondLevelCategory: secondLevelCategory

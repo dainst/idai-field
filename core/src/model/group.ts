@@ -38,14 +38,12 @@ export module Groups {
 export interface Group extends BaseGroup {
 
     fields: Array<FieldDefinition>;
-    relations: Array<RelationDefinition>;
 }
 
 
 export interface BaseGroup extends Named, Labeled {
 
     fields: Array<any>;
-    relations: Array<any>;
     defaultLabel?: I18nString;
 }
 
@@ -53,10 +51,9 @@ export interface BaseGroup extends Named, Labeled {
 export module Group {
 
     export const FIELDS = 'fields';
-    export const RELATIONS = 'relations';
 
     export function create(name: string) {
 
-        return { name: name, fields: [], relations: [] };
+        return { name: name, fields: [] };
     }
 }

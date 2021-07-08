@@ -1,16 +1,15 @@
-import { Labeled, Named } from '../tools/named';
+import { FieldDefinition } from './field-definition';
 
 
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition extends Named, Labeled {
+export interface RelationDefinition extends FieldDefinition {
 
     domain: string[];
     range: string[];
     inverse?: any;
     sameMainCategoryResource?: boolean;
-    editable: boolean;  // Editable in docedit modal
 }
 
 

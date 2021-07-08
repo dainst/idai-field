@@ -60,8 +60,7 @@ import { CustomLanguageConfigurations,
         name: 'testGroup',
         label: groupLabel,
         defaultLabel: groupLabel,
-        fields: [],
-        relations: []
+        fields: []
     };
 
 

@@ -25,12 +25,7 @@ export class DeleteGroupModalComponent {
 
     public isDeletionAllowed() {
 
-        console.log(this.group);
-        console.log(this.group.fields.filter(field => field.visible));
-        console.log(this.group.relations.filter(relation => relation.editable));
-
-        return this.group.fields.filter(field => field.visible).length === 0
-            && this.group.relations.filter(relation => relation.editable).length === 0;
+        return this.group.fields.filter(field => field.visible).length === 0;
     }
 
 

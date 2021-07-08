@@ -181,12 +181,14 @@ describe('ConfigLoader', () => {
                         name: 'connection',
                         domain: ['C'],
                         range: ['D'],
-                        editable: false
+                        editable: false,
+                        inputType: 'relation'
                     }, {
                         name: 'connection',
                         domain: ['A:inherit'],
                         range: ['B:inherit'],
-                        editable: false
+                        editable: false,
+                        inputType: 'relation'
                     }],
                 {},
                 undefined,
@@ -223,8 +225,15 @@ describe('ConfigLoader', () => {
                     B: { fields: {}, groups: [] },
                     T: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
                 },
-                [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false, editable: false }], {},
-                undefined, 'User');
+                [{
+                    name: 'abc',
+                    domain: ['A'],
+                    range: ['B'],
+                    sameMainCategoryResource: false,
+                    editable: false,
+                    inputType: 'relation'
+                }],
+                {}, undefined, 'User');
         } catch(err) {
             fail(err);
         }
@@ -275,8 +284,8 @@ describe('ConfigLoader', () => {
                     B: { fields: {}, groups: [] }
                 },
                 [
-                    { name: 'r1', domain: ['A'], range: ['B'], editable: false },
-                    { name: 'r2', domain: ['A'], range: ['B'], editable: false }
+                    { name: 'r1', domain: ['A'], range: ['B'], editable: false, inputType: 'relation' },
+                    { name: 'r2', domain: ['A'], range: ['B'], editable: false, inputType: 'relation' }
                 ],
                 {},
                 undefined, 'User'
@@ -617,7 +626,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('apply hidden', async done => {
+   it('apply hidden', async done => {
 
         Object.assign(libraryCategories, {
             'A:0': {
@@ -627,8 +636,14 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldA1: { inputType: 'input' },
                     fieldA2: { inputType: 'input' },
-                    fieldA3: { inputType: 'input' }},
-                creationDate: '', createdBy: '', description: {}  }
+                    fieldA3: { inputType: 'input' }
+                },
+                groups: [{
+                    name: Groups.STEM,
+                    fields: ['fieldA1', 'fieldA2', 'fieldA3']
+                }],
+                creationDate: '', createdBy: '', description: {}
+            }
         });
 
         applyConfig({ 'A:0': { fields: {}, hidden: ['fieldA1', 'fieldA2'] } },

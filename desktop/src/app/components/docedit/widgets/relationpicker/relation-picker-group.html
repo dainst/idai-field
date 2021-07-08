@@ -1,5 +1,5 @@
 <div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
-    <relation-picker [(resource)]="document.resource"
+    <relation-picker [resource]="resource"
                      [relationDefinition]="relationDefinition"
                      [relationIndex]="i"></relation-picker>
 </div>

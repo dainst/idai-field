@@ -48,20 +48,26 @@ describe('DocumentHolder', () => {
                     inverse: 'bears',
                     domain: ['Trench'],
                     range: ['Find'],
-                    editable: false
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
                 },
                 {
                     name: 'isFoundOn2',
                     inverse: 'bears',
                     domain: ['Trench'],
                     range: ['Find'],
-                    editable: false
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
                 },
                 {
                     name: 'isRecordedIn',
                     domain: ['Find'],
                     range: ['Trench'],
-                    editable: false
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
                 }
             ]
         ]);

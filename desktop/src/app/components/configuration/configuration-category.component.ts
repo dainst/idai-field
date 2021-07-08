@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
-    RelationDefinition, Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
+    Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
     getConfigurationName } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
@@ -116,15 +116,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     )
                 )
             );
-    }
-
-
-    public getRelations(): Array<RelationDefinition> {
-
-        return this.category.groups
-            .find(on(Named.NAME, is(this.selectedGroup)))!
-            .relations
-            .filter(on('editable', is(true)));
     }
 
 

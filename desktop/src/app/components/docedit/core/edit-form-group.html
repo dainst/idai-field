@@ -15,23 +15,3 @@
         </div>
     </div>
 </div>
-
-<ul class="list-group list-group-flush">
-
-    <ng-template ngFor [ngForOf]="relationDefinitions" let-relationDefinition="$implicit">
-        <li id="{{labels[relationDefinition.name].replace(' ', '-').toLowerCase()}}"
-            class="card">
-
-            <div class="card-header h4">
-                <span class="card-title">{{labels[relationDefinition.name]}}</span>
-            </div>
-
-            <ul class="card-body">
-                <li style="list-style-type: none;">
-                    <relation-picker-group [document]="document"
-                                           [relationDefinition]="relationDefinition"></relation-picker-group>
-                </li>
-            </ul>
-        </li>
-    </ng-template>
-</ul>

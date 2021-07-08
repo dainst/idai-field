@@ -7,7 +7,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { ProjectConfigurationComponent } from './project-configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
-import { ConfigurationRelationComponent } from './configuration-relation.component';
 import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
@@ -35,7 +34,6 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
         ProjectConfigurationComponent,
         ConfigurationFieldComponent,
         ConfigurationCategoryComponent,
-        ConfigurationRelationComponent,
         MultiLanguageInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,

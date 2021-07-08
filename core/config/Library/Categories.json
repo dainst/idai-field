@@ -1098,11 +1098,11 @@
       },
       {
         "name": "position",
-        "fields": ["dimensionVerticalExtent"]
+        "fields": ["dimensionVerticalExtent", "isBelow", "isAbove", "isEquivalentTo", "borders", "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },
@@ -2651,6 +2651,10 @@
       {
         "name": "parent",
         "fields": ["description", "literature"]
+      },
+      {
+        "name": "identification",
+        "fields": ["hasInstance"]
       }
     ]
   }

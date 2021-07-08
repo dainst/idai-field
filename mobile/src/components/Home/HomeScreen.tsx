@@ -65,6 +65,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         navigate('LoadingScreen');
     },[navigate, setCurrentProject,setProjectSettings]);
 
+    const usernameNotSet = () => preferences.username === '';
+
     return <>
         { isProjectModalOpen && <CreateProjectModal
             onProjectCreated={ openProject }
@@ -81,7 +83,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         /> }
         <SafeAreaView style={ styles.container } testID="home-screen">
             <Row style={ styles.topRow }>
-                { preferences.username === '' &&
+                { usernameNotSet() &&
                     <Row style={ styles.usernameWarning }>
                         <Ionicons name="alert-circle" size={ 16 } style={ styles.usernameWarningText } />
                         <Text style={ styles.usernameWarningText }>Make sure to set your name!</Text>
@@ -99,7 +101,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 setSelectedProject,
                 preferences.recentProjects,
                 openProject,
-                setIsDeleteModalOpen
+                setIsDeleteModalOpen,
+                usernameNotSet()
             ) }
             <Column style={ styles.bottomRow }>
                 <Button
@@ -108,6 +111,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     title="Create new project"
                     variant="success"
                     style={ styles.bottomRowButton }
+                    isDisabled={ usernameNotSet() }
                 />
                 <Button
                     icon={ <Ionicons name="cloud-download-outline" size={ 16 } /> }
@@ -121,6 +125,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     onPress={ () => openProject('test') }
                     title="Open test project"
                     style={ styles.bottomRowButton }
+                    isDisabled={ usernameNotSet() }
                 />
             </Column>
         </SafeAreaView>
@@ -135,7 +140,8 @@ const renderRecentProjects = (
     setSelectedProject: React.Dispatch<React.SetStateAction<string>>,
     recentProjects: string[],
     openProject: (project: string) => void,
-    setIsDeleteModalOpen: (open: boolean) => void
+    setIsDeleteModalOpen: (open: boolean) => void,
+    usernameNotSet: boolean
 ) => (
     <Column style={ styles.projectPickerContainer }>
         <Text style={ { fontWeight: '600', fontSize: 16 } }>
@@ -155,6 +161,7 @@ const renderRecentProjects = (
                 onPress={ () => openProject(selectedProject) }
                 title="Open"
                 variant="primary"
+                isDisabled={ usernameNotSet }
             />
             <Button
                 testID="delete-project-button"

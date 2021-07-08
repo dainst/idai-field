@@ -69,7 +69,8 @@ export module FieldDefinition {
         |'geometry'
         |'relation'
         |'instanceOf'
-        |'default';
+        |'default'
+        |'category';
 
     export module InputType {
 
@@ -90,6 +91,7 @@ export module FieldDefinition {
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
         export const RELATION = 'relation';
+        export const CATEGORY = 'category';
         export const NONE = 'none';
         export const DEFAULT = 'default';
     }

@@ -125,7 +125,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['shortName', 'shortDescription']
+                    fields: ['shortName', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.PARENT,
@@ -140,7 +140,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ]
         },
@@ -149,7 +149,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             parent: 'Operation'
@@ -159,7 +159,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             parent: 'Operation'
@@ -169,7 +169,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             parent: 'Operation'
@@ -183,7 +183,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.PARENT,
@@ -196,7 +196,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             mustLieWithin: true
@@ -209,7 +209,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ]
         },
@@ -219,7 +219,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             mustLieWithin: true
@@ -230,7 +230,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             mustLieWithin: true
@@ -241,7 +241,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ],
             mustLieWithin: true
@@ -254,7 +254,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ]
         },
@@ -265,7 +265,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ]
         },
@@ -283,7 +283,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.POSITION,
@@ -306,7 +306,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.IDENTIFICATION,
@@ -320,7 +320,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 }
             ]
         },
@@ -335,7 +335,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.IDENTIFICATION,
@@ -350,7 +350,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.IDENTIFICATION,
@@ -392,7 +392,7 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription']
                 },
                 {
                     name: Groups.PARENT,
@@ -410,7 +410,7 @@ export class BuiltInConfiguration {
             source: 'builtin'
         } as FieldDefinition,
         category: {
-            visible: false,
+            visible: true,
             editable: false,
             source: 'builtin'
         } as FieldDefinition,

@@ -68,7 +68,8 @@ export class ProjectConfigurationComponent implements OnInit {
         { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }) },
         { name: 'geometry', label: this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' }) },
         { name: 'instanceOf', label: this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' }) },
-        { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) }
+        { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) },
+        { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
 

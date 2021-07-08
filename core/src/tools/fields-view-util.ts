@@ -1,5 +1,5 @@
 import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
-    L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not, aMap, aCompose } from 'tsfun';
+    L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
 import { LabelUtil } from './label-util';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
@@ -68,10 +68,7 @@ export module FieldsViewUtil {
     }
 
 
-    export const isVisibleField: Predicate<FieldDefinition> = or(
-        on(FieldDefinition.VISIBLE, is(true)),
-        on(Named.NAME, is(Resource.CATEGORY))
-    );
+    export const isVisibleField: Predicate<FieldDefinition> = on(FieldDefinition.VISIBLE, is(true));
 
 
     export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(

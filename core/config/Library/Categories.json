@@ -21,7 +21,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
       },
       {
         "name": "parent",
@@ -63,7 +63,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
       },
       {
         "name": "parent",
@@ -104,7 +104,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
       },
       {
         "name": "parent",
@@ -149,7 +149,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "supervisor", "processor", "campaign", "diary",
+        "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "diary",
           "beginningDate", "endDate"]
       },
       {
@@ -223,7 +223,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -275,7 +275,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -371,7 +371,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -456,7 +456,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["shortName", "shortDescription"]
+        "fields": ["category", "shortName", "shortDescription"]
       },
       {
         "name": "parent",
@@ -535,7 +535,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -623,7 +623,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
           "endDate"]
       },
       {
@@ -720,7 +720,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -847,7 +847,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -900,7 +900,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
           "endDate"]
       },
       {
@@ -961,7 +961,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription"]
+        "fields": ["identifier", "category", "shortDescription"]
       },
       {
         "name": "parent",
@@ -1015,7 +1015,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -1085,7 +1085,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -1152,7 +1152,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -1224,7 +1224,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
       },
       {
         "name": "parent",
@@ -1258,7 +1258,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "draughtsmen", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
       },
       {
         "name": "parent",
@@ -1440,7 +1440,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -1564,7 +1564,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -1665,7 +1665,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
           "endDate"]
       },
       {
@@ -1737,7 +1737,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -1805,7 +1805,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
       },
       {
         "name": "parent",
@@ -1903,7 +1903,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -1967,7 +1967,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "draughtsmen", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
       },
       {
         "name": "parent",
@@ -1996,7 +1996,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "supervisor", "processor", "campaign",
+        "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign",
           "beginningDate", "endDate"]
       },
       {
@@ -2072,7 +2072,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -2155,7 +2155,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -2258,7 +2258,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -2316,7 +2316,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -2359,7 +2359,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "draughtsmen", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
       },
       {
         "name": "parent",
@@ -2413,7 +2413,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
       },
       {
         "name": "identification",
@@ -2460,7 +2460,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
       }
     ]
   },
@@ -2488,7 +2488,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "campaign"]
       },
       {
         "name": "parent",
@@ -2517,7 +2517,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "campaign"]
       },
       {
         "name": "parent",
@@ -2549,7 +2549,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "campaign"]
+        "fields": ["identifier", "category", "shortDescription", "campaign"]
       },
       {
         "name": "parent",
@@ -2598,7 +2598,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription", "processor", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "date"]
       },
       {
         "name": "parent",
@@ -2623,7 +2623,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription"]
+        "fields": ["identifier", "category", "shortDescription"]
       },
       {
         "name": "identification",
@@ -2646,7 +2646,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "shortDescription"]
+        "fields": ["identifier", "category", "shortDescription"]
       },
       {
         "name": "parent",

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
 import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
@@ -29,6 +29,8 @@ export class LinkLibraryCategoryModalComponent {
 
     private configurationIndex = {};
 
+    public saveChanges: any;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
@@ -47,12 +49,14 @@ export class LinkLibraryCategoryModalComponent {
         const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
 
         try {
-            await this.createNewSubcategory(parentCategory, await modalReference.result);
+            const result = await this.createNewSubcategory(parentCategory, await modalReference.result);
+            console.log(result)
         } catch (err) {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
+            this.activeModal.close(this.categoryName);
         }
     }
 
@@ -66,7 +70,6 @@ export class LinkLibraryCategoryModalComponent {
     public createCategory() {
 
         if (!this.categoryName) return;
-
         this.activeModal.close(this.categoryName);
     }
 
@@ -109,8 +112,7 @@ export class LinkLibraryCategoryModalComponent {
         modalReference.componentInstance.initialize();
 
         try {
-            const result = await modalReference.result;
-            // await this.saveChanges(result);
+            this.saveChanges(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {

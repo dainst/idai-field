@@ -197,6 +197,7 @@ export class ProjectConfigurationComponent implements OnInit {
         );
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.saveChanges = (result) => this.saveChanges(result);
 
         try {
             // await this.createNewSubcategory(parentCategory, await modalReference.result);

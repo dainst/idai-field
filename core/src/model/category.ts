@@ -8,10 +8,12 @@ import { LabelUtil } from '../tools/label-util';
 
 export interface Category extends Named {
     
-    // Note that that the name property given `extends Named`
-    // may coincide with `categoryName`, depending on the given context.
+    // name: Name; given by `extends Named`
     // 
-    // It is used to identify an edit form.
+    // Used to identify an edit form. So 'Find' is different
+    // (can have different form fields)
+    // from 'Find:default', which is different from 'Other:Find:Identifier',
+    // although they may share common semantics (see categoryName).
 
     categoryName: Name, // Multiple Categories can share common semantics.
                         // Fields shared between categories with the same

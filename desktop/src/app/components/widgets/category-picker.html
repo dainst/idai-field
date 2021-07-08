@@ -30,24 +30,10 @@
                     container="body"
                     ngbTooltip="Unterkategorie hinzufügen"
                     i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory"
-                    [ngbPopover]="linkOrAddMenu"
+                    (click)="onCreateSubcategory.emit(parentCategory)"
                     placement="right">
                 <span class="mdi mdi-plus-circle text-success"></span>
             </button>
-            <ng-template #linkOrAddMenu>
-                <div class="popover-inner">
-                    <span
-                        class="btn btn-primary add-new-category-button"
-                        (click)="onCreateSubcategory.emit(parentCategory)"
-                        i18n="@@category-picker.add-new-category">Neue Kategorie hinzufügen
-                    </span>
-                    <span
-                        class="btn btn-primary link-library-category-button"
-                        (click)="onLinkSubcategory.emit(parentCategory)"
-                        i18n="@@category-picker.link-library-category">Bibliothek durchsuchen
-                    </span>
-                </div>
-            </ng-template>
         </li>
         <div *cdkDragPreview class="category-drag-preview">
             <category-icon [category]="parentCategory.name" size="30"></category-icon>

@@ -9,7 +9,6 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
@@ -188,7 +187,7 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async linkSubcategory(parentCategory: Category) {
+    public async addSubcategory(parentCategory: Category) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
@@ -197,58 +196,10 @@ export class ProjectConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.parentCategory = parentCategory;
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
 
         try {
             // await this.createNewSubcategory(parentCategory, await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
-    }
-
-
-    public async addSubcategory(parentCategory: Category) {
-
-        this.menuService.setContext(MenuContext.MODAL);
-
-        const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
-
-        try {
-            await this.createNewSubcategory(parentCategory, await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
-    }
-
-
-    private async createNewSubcategory(parentCategory: Category, categoryName: string) {
-
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
-
-        const modalReference: NgbModalRef = this.modalService.open(
-            CategoryEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = {
-            name: categoryName,
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            parentCategory: parentCategory
-        };
-        modalReference.componentInstance.new = true;
-        modalReference.componentInstance.initialize();
-
-        try {
-            const result = await modalReference.result;
-            await this.saveChanges(result);
         } catch (err) {
             // Modal has been canceled
         } finally {

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
-import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category } from 'idai-field-core';
+import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
+import { MenuContext, MenuService } from '../../menu-service';
+import { AddCategoryModalComponent } from './add-category-modal.component';
+import { AngularUtility } from '../../../angular/angular-utility';
+import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
 
 
 @Component({
@@ -15,6 +19,8 @@ export class LinkLibraryCategoryModalComponent {
 
     public categoryName: string;
 
+    customConfigurationDocument: ConfigurationDocument;
+
     public parentCategory: Category;
 
     public category: Category|undefined;
@@ -26,29 +32,27 @@ export class LinkLibraryCategoryModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
-                private configLoader: ConfigLoader) {
+                private configLoader: ConfigLoader,
+                private menuService: MenuService,
+                private modalService: NgbModal) {
 
         this.readConfig();
     }
 
 
-    private async readConfig() {
+    public async addSubcategory(parentCategory: Category) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
 
         try {
-            const config = await this.configReader.read('/Library/Categories.json');
-            const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            const [categories, configurationIndex] = ConfigurationIndex.create(
-                new BuiltInConfiguration('').builtInCategories,
-                config,
-                languages);
-
-            this.configurationIndex = configurationIndex;
-            this.categories = categories
-                .filter(category => category['parentCategory'].categoryName === this.parentCategory.name) as any;
-            if (this.categories.length > 0) this.category = this.categories[0];
-
-        } catch (e) {
-            console.error('error while reading config in AddCategoryModalComponent', e);
+            await this.createNewSubcategory(parentCategory, await modalReference.result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -81,5 +85,58 @@ export class LinkLibraryCategoryModalComponent {
             ConfigurationIndex.find(this.configurationIndex, this.categoryName)
                 .filter(category => category['parentCategory'].categoryName === this.parentCategory.name)) as any;
         if (this.categories.length > 0) this.category = this.categories[0];
+    }
+
+
+    private async createNewSubcategory(parentCategory: Category, categoryName: string) {
+
+        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            CategoryEditorModalComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.category = {
+            name: categoryName,
+            label: {},
+            defaultLabel: {},
+            description: {},
+            defaultDescription: {},
+            parentCategory: parentCategory
+        };
+        modalReference.componentInstance.new = true;
+        modalReference.componentInstance.initialize();
+
+        try {
+            const result = await modalReference.result;
+            // await this.saveChanges(result);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    private async readConfig() {
+
+        try {
+            const config = await this.configReader.read('/Library/Categories.json');
+            const languages = await this.configLoader.readDefaultLanguageConfigurations();
+            const [categories, configurationIndex] = ConfigurationIndex.create(
+                new BuiltInConfiguration('').builtInCategories,
+                config,
+                languages);
+
+            this.configurationIndex = configurationIndex;
+            this.categories = categories
+                .filter(category => category['parentCategory'].categoryName === this.parentCategory.name) as any;
+            if (this.categories.length > 0) this.category = this.categories[0];
+
+        } catch (e) {
+            console.error('error while reading config in AddCategoryModalComponent', e);
+        }
     }
 }

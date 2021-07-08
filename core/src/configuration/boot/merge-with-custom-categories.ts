@@ -44,14 +44,15 @@ function handleChildCategoryExtension(customCategoryName: string, customCategory
 }
 
 
-function handleDirectCategoryExtension(customCategoryName: string, customCategory: CustomCategoryDefinition,
+function handleDirectCategoryExtension(customCategoryName: string, 
+                                       customCategory: CustomCategoryDefinition,
                                        extendedCategory: TransientCategoryDefinition) {
 
     checkFieldCategoryChanges(customCategoryName, customCategory.fields, extendedCategory.fields);
 
     const newMergedCategory: any = clone(extendedCategory);
     mergePropertiesOfCategory(newMergedCategory, customCategory);
-    mergeFields(newMergedCategory.fields, customCategory.fields);
+    mergeFields(newMergedCategory.fields, customCategory.fields as any);
     return newMergedCategory;
 }
 

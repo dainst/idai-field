@@ -10,6 +10,7 @@ describe('mergeWithCustomCategories', () => {
 
         const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
+                name: 'A:default',
                 categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
@@ -18,6 +19,7 @@ describe('mergeWithCustomCategories', () => {
                 description: {},
                 fields: {
                     f1: {
+                        name: 'f1',
                         inputType: FieldDefinition.InputType.INPUT
                     }
                 },
@@ -45,6 +47,7 @@ describe('mergeWithCustomCategories', () => {
 
         const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
+                name: 'A:default',
                 categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
@@ -53,6 +56,7 @@ describe('mergeWithCustomCategories', () => {
                 description: {},
                 fields: {
                     f1: {
+                        name: 'f1',
                         inputType: FieldDefinition.InputType.INPUT
                     }
                 },
@@ -81,6 +85,7 @@ describe('mergeWithCustomCategories', () => {
 
         const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
+                name: 'A:default',
                 categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
@@ -89,6 +94,7 @@ describe('mergeWithCustomCategories', () => {
                 description: {},
                 fields: {
                     f1: {
+                        name: 'f1',
                         inputType: FieldDefinition.InputType.INPUT
                     }
                 },

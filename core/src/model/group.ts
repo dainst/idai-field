@@ -5,6 +5,13 @@ import { RelationDefinition } from './relation-definition';
 import { Relations } from './relations';
 
 
+export interface GroupDefinition {
+
+    name: string;
+    fields: string[];
+}
+
+
 export module Groups {
 
     export const STEM = 'stem';

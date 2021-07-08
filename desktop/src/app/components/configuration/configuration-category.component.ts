@@ -52,7 +52,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 private appConfigurator: AppConfigurator,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages) {}
-    
+
 
     ngOnChanges(changes: SimpleChanges) {
 
@@ -67,7 +67,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-    
+
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
     public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
@@ -83,7 +83,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         return this.customConfigurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
     }
 
-    
+
     public getParentCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
         return this.category.parentCategory
@@ -175,13 +175,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } else {
             InPlace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
-    
+
         await this.saveNewGroupsConfiguration(groups);
     }
 
 
     public async onGroupDrop(event: CdkDragDrop<any>) {
-        
+
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
@@ -197,14 +197,14 @@ export class ConfigurationCategoryComponent implements OnChanges {
         clonedConfigurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name]
             .groups = newGroups;
-        
+
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 Document.clone(clonedConfigurationDocument)
             );
-            this.onConfigurationChanged.emit({ 
+            this.onConfigurationChanged.emit({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: clonedConfigurationDocument
             });

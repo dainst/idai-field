@@ -1,7 +1,6 @@
 import { Map } from 'tsfun';
 import { applySearchConfiguration } from '../../../src/configuration/boot';
-import { LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { CategoryDefinition } from '../../../src/model';
+import { LibraryCategoryDefinition, TransientCategoryDefinition } from '../../../src/configuration/model';
 
 
 /**
@@ -39,7 +38,7 @@ describe('applySearchConfiguration', () => {
     it('apply search configuration', () => {
 
         categories = {
-                A: { fields: { a1: {}, a2: {}, a3: {} } } as CategoryDefinition
+                A: { fields: { a1: {}, a2: {}, a3: {} } } as any
         } ;
 
         const searchConfiguration = {

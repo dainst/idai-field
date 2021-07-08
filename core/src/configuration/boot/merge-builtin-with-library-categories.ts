@@ -34,11 +34,11 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
                     ];
                 }
             });
-            mergeFields(newMergedCategory.fields, libraryCategory.fields);
+            mergeFields(newMergedCategory.fields, libraryCategory.fields as any);
             categories[libraryCategoryName] = newMergedCategory;
         } else {
             if (!libraryCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, libraryCategoryName];
-            categories[libraryCategoryName] = libraryCategory;
+            categories[libraryCategoryName] = libraryCategory as TransientCategoryDefinition;
         }
     });
 

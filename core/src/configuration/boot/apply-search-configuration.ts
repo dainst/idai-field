@@ -1,13 +1,13 @@
 import {Map} from 'tsfun';
-import {CategoryDefinition} from '../../model/category-definition';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 
 
 export function applySearchConfiguration(searchConfiguration: any) {
 
-    return (categories: Map<CategoryDefinition>) => {
+    return (categories: Map<TransientCategoryDefinition>) => {
 
         Object.keys(searchConfiguration).forEach(categoryName => {
-            const category: CategoryDefinition = categories[categoryName];
+            const category: TransientCategoryDefinition = categories[categoryName];
             if (!category) return;
 
             applySearchConfigurationForCategory(searchConfiguration, category, categoryName, 'fulltext',
@@ -21,7 +21,8 @@ export function applySearchConfiguration(searchConfiguration: any) {
 }
 
 
-function applySearchConfigurationForCategory(searchConfiguration: any, category: CategoryDefinition,
+function applySearchConfigurationForCategory(searchConfiguration: any, 
+                                             category: TransientCategoryDefinition,
                                              categoryName: string, indexType: string,
                                              indexFieldName: string) {
 

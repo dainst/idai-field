@@ -1,4 +1,5 @@
-import { RelationDefinition,CategoryDefinition,ValuelistDefinition } from '../../model';
+import { RelationDefinition, ValuelistDefinition } from '../../model';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 
@@ -57,7 +58,7 @@ export module ConfigurationValidation {
     }
 
 
-    function validateFieldDefinitions__(categories: Array<CategoryDefinition>): Array<Array<string>> {
+    function validateFieldDefinitions__(categories: Array<TransientCategoryDefinition>): Array<Array<string>> {
 
         let msgs = [] as any;
 
@@ -76,7 +77,7 @@ export module ConfigurationValidation {
                     ]);
                 }
                 if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
-                    && !isValidValuelist(fieldDefinition.positionValues)) {
+                    && !isValidValuelist((fieldDefinition as any).positionValues)) {
                     msgs.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
                         fieldName,

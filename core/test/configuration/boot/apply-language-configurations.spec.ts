@@ -2,7 +2,6 @@ import { Map } from 'tsfun';
 import { applyLanguageConfigurations } from '../../../src/configuration/boot';
 import { LibraryCategoryDefinition } from '../../../src/configuration/model';
 import { LanguageConfigurations } from '../../../src/configuration/model/language-configurations';
-import { CategoryDefinition } from '../../../src/model';
 
 
 /**
@@ -44,8 +43,8 @@ describe('applyLanguageConfigurations', () => {
 
         configuration = [
             {
-                A: { fields: { a: {}, a1: {} } } as CategoryDefinition,
-                B: { fields: { b: {} } } as CategoryDefinition
+                A: { fields: { a: {}, a1: {} } } as any,
+                B: { fields: { b: {} } } as any
             },
             [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
         ];
@@ -93,8 +92,8 @@ describe('applyLanguageConfigurations', () => {
 
         configuration = [
             {
-                A: { fields: { a: {} } } as CategoryDefinition,
-                B: { fields: { b: {} } } as CategoryDefinition
+                A: { fields: { a: {} } } as any,
+                B: { fields: { b: {} } } as any
             },
             [{ name: 'isRecordedIn' }]
         ];
@@ -196,9 +195,9 @@ describe('applyLanguageConfigurations', () => {
 
         configuration = [
             {
-                A: { fields: { a: {} } } as CategoryDefinition,
-                B: { fields: { b: {} } } as CategoryDefinition,
-                C: { fields: { c: {} } } as CategoryDefinition
+                A: { fields: { a: {} } } as any,
+                B: { fields: { b: {} } } as any,
+                C: { fields: { c: {} } } as any
             },
             [{ name: 'isRecordedIn' }]
         ];

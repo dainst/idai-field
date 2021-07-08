@@ -1,6 +1,5 @@
 export { Action } from './action';
 export { Category } from './category';
-export { CategoryDefinition, GroupDefinition } from './category-definition';
 export { Constraint } from './constraint';
 export { Dating } from './dating';
 export { Dimension } from './dimension';
@@ -13,7 +12,7 @@ export { FieldDocument } from './field-document';
 export { FieldGeometry, FieldGeometryType } from './field-geometry';
 export { FieldRelations } from './field-relations';
 export { FieldResource } from './field-resource';
-export { BaseGroup, Group, Groups } from './group';
+export { BaseGroup, Group, Groups, GroupDefinition } from './group';
 export { ImageDocument } from './image-document';
 export { ImageGeoreference } from './image-georeference';
 export { ImageRelations } from './image-relations';

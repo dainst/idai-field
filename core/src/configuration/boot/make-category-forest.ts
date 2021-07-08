@@ -1,7 +1,8 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { Category, CategoryDefinition, FieldDefinition, Group, Resource } from '../../model';
+import { Category, FieldDefinition, Group, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 
@@ -16,7 +17,7 @@ const TEMP_GROUPS = 'tempGroups';
 export function makeCategoryForest(categories: any): Forest<Category> {
 
     const [parentDefs, childDefs] =
-        separate<CategoryDefinition>(on(CategoryDefinition.PARENT, not(isDefined)), categories);
+        separate<TransientCategoryDefinition>(on('parent', not(isDefined)), categories);
 
     const parentCategories = flow(
         parentDefs,
@@ -80,7 +81,7 @@ function completeStemGroup(category: Category) {
 
 
 function addChildCategory(categoryTree: Forest<Category>,
-                          childDefinition: CategoryDefinition): Forest<Category> {
+                          childDefinition: TransientCategoryDefinition): Forest<Category> {
 
     const found = categoryTree
         .find(({ item: category }) => category.name === childDefinition.parent);
@@ -95,7 +96,7 @@ function addChildCategory(categoryTree: Forest<Category>,
 }
 
 
-function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
+function buildCategoryFromDefinition(definition: any/* TransientCategoryDefinition */): Category {
 
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;

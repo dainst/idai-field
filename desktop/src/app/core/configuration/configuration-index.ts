@@ -3,7 +3,8 @@ import {addSourceField, BuiltinCategoryDefinition,
     LanguageConfiguration, LibraryCategoryDefinition,
     mergeBuiltInWithLibraryCategories,
     applyLanguagesToCategory,
-    Category
+    Category,
+    createContextIndependentCategories
 } from 'idai-field-core';
 
 
@@ -23,20 +24,14 @@ export namespace ConfigurationIndex {
                            languages: { [language: string]: Array<LanguageConfiguration> })
     : [Array<any>, ConfigurationIndex] {
 
-        const bCats = clone(builtinCategories);
-        const lCats = clone(libraryCategories);
-        addSourceField(bCats, lCats, undefined, undefined);
-        const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
+        const categories = createContextIndependentCategories(
+            builtinCategories,
+            libraryCategories,
+            languages);
 
-        for (const category of Object.values(result)) {
-            applyLanguagesToCategory(
-                {
-                    default: languages,
-                    complete: {}
-                }, category, category.categoryName);
-        }
+        console.log("categories", categories)
 
-        return [Object.values(result), Object.values(result).reduce((index, category) => {
+        return [categories, categories.reduce((index, category) => {
 
             const defaultLabel = category['defaultLabel'];
             for (const label of Object.values(defaultLabel)) {

@@ -8,3 +8,4 @@ export { ProjectCategories } from './project-categories';
 export { ProjectConfiguration } from './project-configuration';
 export { getConfigurationName } from './project-configuration-names';
 export { RelationsUtil } from './relations-utils';
+export { createContextIndependentCategories } from './index/create-context-independent-categories';

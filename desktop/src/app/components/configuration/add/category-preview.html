@@ -7,7 +7,7 @@
                     <ul>
                         <h5>{{group.name}}</h5>
                         <li *ngFor="let field of group.fields">
-                            {{field}}
+                            {{getTranslation(field.defaultLabel)}}
                         </li>
                     </ul>
                 </li>

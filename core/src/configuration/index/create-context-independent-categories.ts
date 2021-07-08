@@ -1,7 +1,7 @@
-import { Map, clone, values, keysValues, remove, isUndefined, on, is, filter, not } from 'tsfun';
-import {Category, FieldDefinition} from '../../model';
+import { Map, clone, values, remove, isUndefined, on, is, filter, not } from 'tsfun';
+import { Category, FieldDefinition, RelationDefinition } from '../../model';
 import { Tree } from '../../tools/forest';
-import { applyLanguagesToCategory, makeCategoryForest} from '../boot';
+import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
 import { addSourceField } from '../boot/add-source-field';
 import { mergeBuiltInWithLibraryCategories } from '../boot/merge-builtin-with-library-categories';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
@@ -15,6 +15,7 @@ import { LibraryCategoryDefinition } from '../model/library-category-definition'
  * @author Daniel de Oliveira
  */
 export function createContextIndependentCategories(builtinCategories: Map<BuiltinCategoryDefinition>,
+                                                   builtInRelations: Array<RelationDefinition>,
                                                    libraryCategories: Map<LibraryCategoryDefinition>,
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
                                                    : Array<Category> {
@@ -44,5 +45,5 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
 
     return filter(
         on('parentCategory', not(isUndefined)),
-        Tree.flatten(makeCategoryForest(result)));
+        Tree.flatten(makeCategoryForest(builtInRelations)(result)));
 }

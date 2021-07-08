@@ -1,5 +1,6 @@
-import {createContextIndependentCategories} from '../../../src/configuration/index/create-context-independent-categories';
-import {FieldDefinition} from '../../../src/model/field-definition';
+import { createContextIndependentCategories } from '../../../src/configuration/index/create-context-independent-categories';
+import { FieldDefinition } from '../../../src/model/field-definition';
+
 
 describe('createContextIndependentCategories', () => {
 
@@ -17,6 +18,7 @@ describe('createContextIndependentCategories', () => {
                     }
                 }
             },
+            [],
             {
                 'Find:default': { // This should be selected // TODO implement, currently the default Find is selected
                     categoryName: 'Find',
@@ -82,7 +84,7 @@ describe('createContextIndependentCategories', () => {
             }
         );
 
-        expect(result[0].groups[1].name).toEqual('group-a');
-        expect(result[1].groups[1].name).toEqual('group-b');
+        expect(result[0].groups[0].name).toEqual('group-a');
+        expect(result[1].groups[0].name).toEqual('group-b');
     });
 });

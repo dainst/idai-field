@@ -1,11 +1,6 @@
-import {Map, clone, keysValues, right} from 'tsfun';
-import {addSourceField, BuiltinCategoryDefinition,
-    LanguageConfiguration, LibraryCategoryDefinition,
-    mergeBuiltInWithLibraryCategories,
-    applyLanguagesToCategory,
-    Category,
-    createContextIndependentCategories
-} from 'idai-field-core';
+import { Map, keysValues, right } from 'tsfun';
+import { BuiltinCategoryDefinition, LanguageConfiguration, LibraryCategoryDefinition, Category,
+    createContextIndependentCategories, RelationDefinition } from 'idai-field-core';
 
 
 export interface ConfigurationIndex {
@@ -20,12 +15,14 @@ export interface ConfigurationIndex {
 export namespace ConfigurationIndex {
 
     export function create(builtinCategories: Map<BuiltinCategoryDefinition>,
+                           builtInRelations: Array<RelationDefinition>,
                            libraryCategories: Map<LibraryCategoryDefinition>,
                            languages: { [language: string]: Array<LanguageConfiguration> })
     : [Array<any>, ConfigurationIndex] {
 
         const categories = createContextIndependentCategories(
             builtinCategories,
+            builtInRelations,
             libraryCategories,
             languages);
 

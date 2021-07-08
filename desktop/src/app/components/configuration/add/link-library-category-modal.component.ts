@@ -125,10 +125,12 @@ export class LinkLibraryCategoryModalComponent {
     private async readConfig() {
 
         try {
+            const builtInConfiguration = new BuiltInConfiguration('');
             const config = await this.configReader.read('/Library/Categories.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
             const [categories, configurationIndex] = ConfigurationIndex.create(
-                new BuiltInConfiguration('').builtInCategories,
+                builtInConfiguration.builtInCategories,
+                builtInConfiguration.builtInRelations,
                 config,
                 languages);
 

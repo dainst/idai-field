@@ -101,7 +101,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
         <SafeAreaView style={ styles.container }>
             <TitleBar
                 title={
-                    <Heading>Load {currentProject}</Heading>
+                    <Heading>Loading {currentProject}</Heading>
                 }
                 left={ <Button
                     variant="transparent"

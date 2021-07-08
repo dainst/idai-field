@@ -36,7 +36,7 @@ describe('makeCategoriesForest', () => {
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
-        expect(Category.getFields(categoriesMap[P].children[0]).length).toBe(2);
+        expect(Category.getFields(categoriesMap[P].children[0]).length).toBe(3); // includes id
 
         const categoryA = categoriesMap[P].children[0];
 

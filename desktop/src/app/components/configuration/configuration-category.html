@@ -36,7 +36,7 @@
         <ul class="nav nav-pills flex-column groups-container"
             cdkDropList [cdkDropListDisabled]="!allowDragAndDrop"
             (cdkDropListDropped)="onGroupDrop($event)">
-            <li *ngFor="let group of category.groups"
+            <li *ngFor="let group of getGroups()"
                 class="nav flex-column group-element"
                 cdkDrag cdkDragBoundary=".groups" cdkDragLockAxis="y">
                 <a [id]="'group-' + group.name" class="nav-link group-button"

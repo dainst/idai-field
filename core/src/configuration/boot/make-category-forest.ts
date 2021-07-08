@@ -1,6 +1,6 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
 import { RelationsUtil } from '..';
-import { Category, CategoryDefinition, FieldDefinition, Group, RelationDefinition } from '../../model';
+import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { ConfigurationErrors } from './configuration-errors';
@@ -59,6 +59,7 @@ const createGroups = (relationDefinitions: Array<RelationDefinition>) => (catego
     });
 
     completeStemGroup(category);
+    putCoreFieldsToHiddenGroup(category);
 
     return category;
 }
@@ -83,6 +84,16 @@ function completeStemGroup(category: Category) {
     stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups); 
 }
 
+
+function putCoreFieldsToHiddenGroup(category: Category) {
+
+    category.groups.push({
+        name: Groups.HIDDEN_CORE_FIELDS,
+        fields: [
+            category[TEMP_FIELDS][Resource.ID]
+        ]
+    });
+}
 
 
 function addChildCategory(categoryTree: Forest<Category>,

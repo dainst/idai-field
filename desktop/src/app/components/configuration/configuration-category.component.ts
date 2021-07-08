@@ -4,7 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
     Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
-    getConfigurationName } from 'idai-field-core';
+    getConfigurationName, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
@@ -67,10 +67,11 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
+    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
     
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
-    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
 
     public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
 
@@ -102,7 +103,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getFields(): Array<FieldDefinition> {
 
-        return this.category.groups
+        return this.getGroups()
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .fields
             .filter(
@@ -282,7 +283,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private getPermanentlyHiddenFields(): string[] {
 
-        const result: string[] = flatten(this.category.groups.map(to('fields')))
+        const result: string[] = flatten(this.getGroups().map(to('fields')))
             .filter(field => !field.visible
                 && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
                 && (!this.category.libraryId || !ConfigurationUtil.isHidden(

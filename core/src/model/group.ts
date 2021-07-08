@@ -15,6 +15,7 @@ export module Groups {
     export const PROPERTIES = 'properties';
     export const PARENT = 'parent';
     export const CHILD = 'child';
+    export const HIDDEN_CORE_FIELDS = '_hiddenCoreFields';
     
 
     export function getGroupNameForRelation(relationName: string): string|undefined {

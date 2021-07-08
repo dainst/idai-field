@@ -35,6 +35,7 @@ const Button = ({
             style={ [getButtonStyle(variant), style, isDisabled && getDisabledStyle(variant)] }
             activeOpacity={ .9 }
             testID={ testID }
+            disabled={ isDisabled }
         >
         <View style={ styles.container }>
             { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }

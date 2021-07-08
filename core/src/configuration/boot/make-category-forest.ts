@@ -88,6 +88,8 @@ function completeStemGroup(category: Category) {
 
 function putCoreFieldsToHiddenGroup(category: Category) {
 
+    if (!category[TEMP_FIELDS][Resource.ID]) return;
+
     category.groups.push({
         name: Groups.HIDDEN_CORE_FIELDS,
         fields: [

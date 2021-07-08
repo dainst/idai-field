@@ -1427,8 +1427,8 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
 
-        const parentGroup = result['P'].groups[1];
-        const childGroup = result['P'].children[0].groups[1];
+        const parentGroup = result['P'].groups[0];
+        const childGroup = result['P'].children[0].groups[0];
 
         expect(parentGroup.name).toEqual('position');
         expect(parentGroup.fields[0].name).toEqual('geometry');

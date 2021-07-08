@@ -1,4 +1,6 @@
 import {createContextIndependentCategories} from '../../../src/configuration/index/create-context-independent-categories';
+import {FieldDefinition} from '../../../src/model/field-definition';
+import {Tree} from '../../../src/tools/forest';
 
 describe('createContextIndependentCategories', () => {
 
@@ -9,11 +11,15 @@ describe('createContextIndependentCategories', () => {
                 Find: { 
                     supercategory: true,
                     groups: [],
-                    fields: {}
+                    fields: {
+                        identifier: { 
+                            inputType: FieldDefinition.InputType.INPUT,
+                        }
+                    }
                 }
             },
             {
-                'Find:default': {
+                'Find:default': { // This will be filtered out
                     categoryName: 'Find',
                     groups: [],
                     fields: {},
@@ -27,7 +33,7 @@ describe('createContextIndependentCategories', () => {
                     categoryName: 'Pottery',
                     parent: 'Find',
                     groups: [],
-                    fields: {},
+                    fields: { a: { inputType: FieldDefinition.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},
@@ -38,7 +44,7 @@ describe('createContextIndependentCategories', () => {
                     categoryName: 'Pottery',
                     parent: 'Find',
                     groups: [],
-                    fields: {},
+                    fields: { b: { inputType: FieldDefinition.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},
@@ -49,12 +55,18 @@ describe('createContextIndependentCategories', () => {
             {
                 de: [{
                     categories: { 
-                        Find: { label: 'Fund' },
-                        Pottery: { label: 'Keramik' } 
+                        Find: { label: 'Fund', fields: { identifier: { label: 'Identifier'} } },
+                        Pottery: { label: 'Keramik', fields: { a: { label: 'A' }, b: { label: 'B' }} } 
                     }  
                 }]
             }
+        
         );
-        expect(result).toEqual('abcdef');
+
+        const res = Tree.flatten(result);
+        for (const r of res) {
+            // console.log(r.name);
+            // console.log(JSON.stringify(r.groups));
+        }
     });
 });

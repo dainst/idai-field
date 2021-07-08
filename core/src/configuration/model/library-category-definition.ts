@@ -45,6 +45,11 @@ const VALID_FIELD_PROPERTIES = [
 
 export module LibraryCategoryDefinition {
 
+    export const Properties = {
+
+        PARENT: 'parent'
+    }
+
     export function makeAssertIsValid(builtinCategories: string[]) {
 
         return function assertIsValid([categoryName, category]: [Name, LibraryCategoryDefinition]) {

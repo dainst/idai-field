@@ -1,5 +1,4 @@
-import { Map, clone, keysValues, detach } from 'tsfun';
-import { Tree } from '../../tools';
+import { Map, clone, values, keysValues, remove, isUndefined, on, is, filter } from 'tsfun';
 import { applyLanguagesToCategory, makeCategoryForest} from '../boot';
 import { addSourceField } from '../boot/add-source-field';
 import { mergeBuiltInWithLibraryCategories } from '../boot/merge-builtin-with-library-categories';
@@ -16,9 +15,15 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
                                                    languages: { [language: string]: Array<LanguageConfiguration> }) {
 
     const bCats = clone(builtinCategories);
-    const lCats = clone(libraryCategories);
+    const lCats = remove(clone(libraryCategories), 
+                         on(LibraryCategoryDefinition.Properties.PARENT, isUndefined));
     addSourceField(bCats, lCats, undefined, undefined);
     const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
+
+    for (const category of values(result)) {
+
+        category.fields = filter(category.fields, on('source', is('library')));
+    }
 
     for (const category of Object.values(result)) {
         applyLanguagesToCategory(
@@ -32,15 +37,5 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
         category['name'] = name;
     }
 
-    // console.log("cats", JSON.stringify(result, null, 4))
-
-    const res = makeCategoryForest(result);
-
-    for (const res2 of Tree.flatten(res)) {
-
-        // console.log(res2.name)
-        // console.log(JSON.stringify(res2.defaultLabel))
-    }
-
-    return "abcdef";
+    return makeCategoryForest(result);
 }

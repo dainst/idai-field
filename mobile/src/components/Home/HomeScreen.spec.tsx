@@ -56,9 +56,20 @@ describe('HomeScreen', () => {
         expect(props.deleteProject).toHaveBeenCalledWith('project-1');
     });
 
+    it('diables project button if no username is set', async () => {
+
+        const props = mockProps();
+        props.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByText } = render(<HomeScreen { ... props } />);
+        fireEvent.press(getByText('Open'));
+
+        expect(props.setCurrentProject).toHaveBeenCalledTimes(0);
+    });
+
     it('allows opening project', async () => {
 
         const props = mockProps();
+        props.preferences.username = 'testuser';
         props.preferences.recentProjects = ['project-1', 'project-2'];
         const { getByText } = render(<HomeScreen { ... props } />);
         fireEvent.press(getByText('Open'));
@@ -70,6 +81,7 @@ describe('HomeScreen', () => {
     it('allows creating project', async () => {
 
         const props = mockProps();
+        props.preferences.username = 'testuser';
         const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
         fireEvent.press(getByText('Create new project'));
 
@@ -94,5 +106,6 @@ const mockProps = () => ({
     } as Preferences,
     setCurrentProject: jest.fn(_ => { return; }),
     deleteProject: jest.fn(_ => { return; }),
+    setProjectSettings: jest.fn(_ => { return; }),
     navigate: jest.fn(_ => { return; }),
 });

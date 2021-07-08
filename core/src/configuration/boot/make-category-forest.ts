@@ -1,8 +1,9 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
 import { RelationsUtil } from '../relations-utils';
-import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
+import { Category, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 
@@ -18,7 +19,7 @@ export const makeCategoryForest = (relationDefinitions: Array<RelationDefinition
         (categories: any): Forest<Category> => {
 
     const [parentDefs, childDefs] =
-        separate<CategoryDefinition>(on(CategoryDefinition.PARENT, not(isDefined)), categories);
+        separate<TransientCategoryDefinition>(on('parent', not(isDefined)), categories);
 
     const parentCategories = flow(
         parentDefs,
@@ -97,7 +98,7 @@ function putCoreFieldsToHiddenGroup(category: Category) {
 
 
 function addChildCategory(categoryTree: Forest<Category>,
-                          childDefinition: CategoryDefinition): Forest<Category> {
+                          childDefinition: TransientCategoryDefinition): Forest<Category> {
 
     const found = categoryTree
         .find(({ item: category }) => category.name === childDefinition.parent);
@@ -112,19 +113,20 @@ function addChildCategory(categoryTree: Forest<Category>,
 }
 
 
-function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
+function buildCategoryFromDefinition(definition: any/* TransientCategoryDefinition */): Category {
 
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;
     category.name = definition.name;
+    category.categoryName = definition.categoryName;
     category.label = definition.label;
     category.description = definition.description;
     category.defaultLabel = definition.defaultLabel;
     category.defaultDescription = definition.defaultDescription;
     category.groups = [];
     category.isAbstract = definition.abstract || false;
-    category.color = definition.color ?? Category.generateColorForCategory(definition.name);
-    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.name);
+    category.color = definition.color ?? Category.generateColorForCategory(definition.categoryName);
+    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(definition.categoryName);
     category.children = [];
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;

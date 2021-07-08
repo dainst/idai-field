@@ -9,7 +9,6 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { ConfigurationChange } from '../../core/configuration/configuration-change';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
@@ -20,6 +19,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
+import {LinkLibraryCategoryModalComponent} from './add/link-library-category-modal.component';
 
 
 export type InputType = {
@@ -193,43 +193,16 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
-        modalReference.componentInstance.parentCategory = parentCategory;
-
-        try {
-            await this.createNewSubcategory(parentCategory, await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
-    }
-
-
-    private async createNewSubcategory(parentCategory: Category, categoryName: string) {
-
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
-
         const modalReference: NgbModalRef = this.modalService.open(
-            CategoryEditorModalComponent,
+            LinkLibraryCategoryModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = {
-            name: categoryName,
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            parentCategory: parentCategory
-        };
-        modalReference.componentInstance.new = true;
-        modalReference.componentInstance.initialize();
+        modalReference.componentInstance.saveChanges = (result) => this.saveChanges(result);
 
         try {
-            const result = await modalReference.result;
-            await this.saveChanges(result);
+            // await this.createNewSubcategory(parentCategory, await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -376,7 +349,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 changedConfigurationDocument
             );
-            await this.saveChanges({ 
+            await this.saveChanges({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: changedConfigurationDocument
             });

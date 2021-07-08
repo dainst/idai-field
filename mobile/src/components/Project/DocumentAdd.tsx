@@ -26,6 +26,7 @@ type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'D
 
 interface DocumentAddProps {
     config: ProjectConfiguration;
+    username: string;
     repository: DocumentRepository;
     navigation: DocumentAddNav;
     languages: string[];
@@ -34,7 +35,7 @@ interface DocumentAddProps {
 }
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({
-        config, repository, navigation, languages, parentDoc, categoryName }) => {
+        config, username, repository, navigation, languages, parentDoc, categoryName }) => {
     
     const [category, setCategory] = useState<Category>();
     const [activeGroup, setActiveGroup] = useState<Group>();
@@ -78,7 +79,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
             const newDocument: NewDocument = {
                 resource: newResource
             };
-            repository.create(newDocument,'mkihm')
+            repository.create(newDocument,username)
                 .then(doc => {
                     showToast(ToastType.Success,`Created ${doc.resource.identifier}`);
                     setResourceToDefault();

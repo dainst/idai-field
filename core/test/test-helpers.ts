@@ -96,6 +96,7 @@ export function createDocuments(documents: NiceDocs) {
 export const createCategory = (name: string): Tree<Category> => ({
     item: {
         name,
+        categoryName: name,
         label: {},
         isAbstract: false,
         children: [],

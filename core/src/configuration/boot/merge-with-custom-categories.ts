@@ -31,27 +31,31 @@ export function mergeWithCustomCategories(customCategories: Map<CustomCategoryDe
 }
 
 
-function handleChildCategoryExtension(customCategoryName: string, customCategory: CustomCategoryDefinition,
-                                      assertInputTypePresentIfNotCommonField: Function): TransientCategoryDefinition {
+function handleChildCategoryExtension(customCategoryName: string, 
+                                      customCategory: CustomCategoryDefinition,
+                                      assertInputTypePresentIfNotCommonField: Function)
+                                      : TransientCategoryDefinition {
 
     if (!customCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customCategoryName];
 
-    keysValues(customCategory.fields).forEach(([fieldName, field]) => {
+    for (const [fieldName, field] of keysValues(customCategory.fields)) {
         assertInputTypePresentIfNotCommonField(customCategoryName, fieldName, field);
-    });
+    };
 
+    customCategory['categoryName'] = customCategoryName;
     return customCategory as TransientCategoryDefinition;
 }
 
 
-function handleDirectCategoryExtension(customCategoryName: string, customCategory: CustomCategoryDefinition,
+function handleDirectCategoryExtension(customCategoryName: string, 
+                                       customCategory: CustomCategoryDefinition,
                                        extendedCategory: TransientCategoryDefinition) {
 
     checkFieldCategoryChanges(customCategoryName, customCategory.fields, extendedCategory.fields);
 
     const newMergedCategory: any = clone(extendedCategory);
     mergePropertiesOfCategory(newMergedCategory, customCategory);
-    mergeFields(newMergedCategory.fields, customCategory.fields);
+    mergeFields(newMergedCategory.fields, customCategory.fields as any);
     return newMergedCategory;
 }
 

@@ -56,6 +56,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ currentProject, preferenc
             config={ config }
             relationsManager={ relationsManager }
             repository={ repository }
+            username={ preferences.username }
             syncStatus={ syncStatus }
             languages={ preferences.languages }
         />

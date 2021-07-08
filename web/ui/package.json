@@ -1,0 +1,145 @@
+{
+  "name": "ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@mdi/js": "^5.9.55",
+    "@mdi/react": "^1.4.0",
+    "@tensorflow/tfjs": "^2.8.5",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/geojson": "^7946.0.7",
+    "@types/history": "^4.7.8",
+    "@types/jest": "^24.0.0",
+    "@types/leaflet": "^1.5.21",
+    "@types/node": "^12.19.15",
+    "@types/ol": "^6.4.2",
+    "@types/react": "^16.14.3",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-leaflet": "^2.5.2",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-transition-group": "^4.4.0",
+    "bootstrap": "^4.6.0",
+    "chokidar": "3.0.0",
+    "i18next": "^19.8.7",
+    "idai-field-core": "1.1.1",
+    "idai-shapes-ceramics_resnet50": "^1.0.1",
+    "idai-shapes-ceramics-segmentation-unet": "^1.0.0",
+    "leaflet": "^1.7.1",
+    "leaflet-iiif": "^3.0.0",
+    "object-hash": "^2.1.1",
+    "ol": "6.4.3",
+    "ol-mapbox-style": "^6.3.1",
+    "proj4": "^2.7.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.4.3",
+    "react-dom": "^16.14.0",
+    "react-i18next": "^11.8.5",
+    "react-leaflet": "^2.8.0",
+    "react-markdown": "^4.3.1",
+    "react-modal": "^3.12.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.1",
+    "tsfun": "5.5.16",
+    "typescript": "3.8.3"
+  },
+  "scripts": {
+    "start": "PORT=3001 react-scripts start",
+    "start-shapes": "PORT=3002 REACT_APP_MAIN=shapes react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "postinstall": "npx copyfiles -f node_modules/idai-shapes-ceramics_resnet50/model/* public/models/model && npx copyfiles -f node_modules/idai-shapes-ceramics-segmentation-unet/model/* public/models/seg_model"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "varsIgnorePattern": "_"
+        }
+      ],
+      "@typescript-eslint/array-type": [
+        "warn",
+        {
+          "default": "array"
+        }
+      ],
+      "@typescript-eslint/semi": [
+        "warn",
+        "always"
+      ],
+      "@typescript-eslint/no-inferrable-types": 0,
+      "max-len": [
+        "warn",
+        {
+          "code": 120
+        }
+      ],
+      "no-trailing-spaces": [
+        "warn",
+        {
+          "skipBlankLines": true
+        }
+      ],
+      "no-multiple-empty-lines": [
+        "warn",
+        {
+          "max": 2
+        }
+      ],
+      "quotes": [
+        "warn",
+        "single"
+      ],
+      "jsx-quotes": [
+        "warn",
+        "prefer-double"
+      ],
+      "object-curly-spacing": [
+        "warn",
+        "always"
+      ],
+      "react/jsx-curly-spacing": [
+        "warn",
+        "always"
+      ],
+      "react/jsx-tag-spacing": [
+        "warn"
+      ],
+      "react/jsx-equals-spacing": [
+        "warn"
+      ],
+      "no-multi-spaces": [
+        "warn"
+      ]
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:4000",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}

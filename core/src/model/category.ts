@@ -1,13 +1,25 @@
 import { flatten, flow, map, to } from 'tsfun';
 import { I18nString } from './i18n-string';
-import { Named } from '../tools/named';
+import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { Group } from './group';
 import { LabelUtil } from '../tools/label-util';
 
 
 export interface Category extends Named {
+    
+    // name: Name; given by `extends Named`
+    // 
+    // Used to identify an edit form. So 'Find' is different
+    // (can have different form fields)
+    // from 'Find:default', which is different from 'Other:Find:Identifier',
+    // although they may share common semantics (see categoryName).
 
+    categoryName: Name, // Multiple Categories can share common semantics.
+                        // Fields shared between categories with the same
+                        // categoryName mean the same thing.
+
+    source?: 'builtin'|'library'|'custom';
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
@@ -19,7 +31,6 @@ export interface Category extends Named {
     defaultColor?: string;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
-    libraryId?: string;
     userDefinedSubcategoriesAllowed?: boolean
 }
 
@@ -36,6 +47,14 @@ export module Category {
     export const CHILDREN = 'children';
     export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
+
+
+    export module Source {
+
+        export const BUILTIN = 'builtin';
+        export const LIBRARY = 'library';
+        export const CUSTOM = 'custom';
+    }
 
 
     export function getFields(category: Category): Array<FieldDefinition> {

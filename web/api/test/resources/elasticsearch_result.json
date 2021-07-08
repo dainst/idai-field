@@ -1,0 +1,235 @@
+{
+    "took": 198,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 29636,
+            "relation": "eq"
+        },
+        "max_score": 0.96345556,
+        "hits": [
+            {
+                "_index": "idai-field",
+                "_type": "_doc",
+                "_id": "00fca6eb-ad18-a150-4e37-4ce2cf49df5b",
+                "_score": 0.96345556,
+                "_source": {
+                    "resource": {
+                        "category": {
+                            "name": "PlasterFragment",
+                            "label": {}
+                        },
+                        "relations": {
+                            "liesWithin": [
+                                {
+                                    "resource": {
+                                        "id": "b0e90175-bcea-9dae-0724-5cb8702e0318",
+                                        "parentId": "d3638687-3492-d567-7fc8-9c4799137af0"
+                                    }
+                                }
+                            ],
+                            "isRecordedIn": [
+                                {
+                                    "resource": {
+                                        "id": "2667b1a9-6935-2ef4-1c19-d7f37de25cac"
+                                    }
+                                }
+                            ],
+                            "isChildOf":[
+                                {
+                                    "resource": {
+                                        "id": "b0e90175-bcea-9dae-0724-5cb8702e0318",
+                                        "parentId": "d3638687-3492-d567-7fc8-9c4799137af0"
+                                    }
+                                }
+                            ]
+                        },
+                        "identifier": "TES17.116.046a",
+                        "id": "00fca6eb-ad18-a150-4e37-4ce2cf49df5b"
+                    },
+                    "project": "test",
+                    "modified": [],
+                    "created": {
+                        "user": "yyyyyyyy",
+                        "date": "2019-08-26T11:54:17.366Z"
+                    }
+                }
+            },
+            {
+                "_index": "idai-field",
+                "_type": "_doc",
+                "_id": "01eb730f-b62b-1057-2606-9bee5f60e627",
+                "_score": 0.96345556,
+                "_source": {
+                    "resource": {
+                        "category": {
+                            "name": "Trench",
+                            "label": {
+                                "de": "Schnitt",
+                                "en": "Trench"
+                            }
+                        },
+                        "shortDescription": "Quadrant ohne einen zugeordneten Grabungsplatz",
+                        "relations": {
+                            "liesWithin": [
+                                {
+                                    "resource": {
+                                        "id": "19ef31fa-0d08-31d4-72c8-176150710819",
+                                        "parentId": "d3638687-3492-d567-7fc8-9c4799137af0"
+                                    }
+                                }
+                            ],
+                            "isRecordedIn": [],
+                            "isChildOf": [
+                                {
+                                    "resource": {
+                                        "id": "19ef31fa-0d08-31d4-72c8-176150710819",
+                                        "parentId": "d3638687-3492-d567-7fc8-9c4799137af0"
+                                    }
+                                }
+                            ]
+                        },
+                        "identifier": "TES4999-5004",
+                        "id": "01eb730f-b62b-1057-2606-9bee5f60e627",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                4999,
+                                4958
+                            ]
+                        }
+                    },
+                    "project": "test",
+                    "modified": [
+                        {
+                            "user": "xxxxxxxx",
+                            "date": "2019-08-24T12:40:12.961Z"
+                        },
+                        {
+                            "user": "xxxxxxxx",
+                            "date": "2019-08-24T13:52:42.092Z"
+                        },
+                        {
+                            "user": "xxxxxxxx",
+                            "date": "2019-08-24T13:55:57.844Z"
+                        },
+                        {
+                            "user": "yyyyyyyy",
+                            "date": "2019-09-02T14:22:56.882Z"
+                        }
+                    ],
+                    "created": {
+                        "user": "xxxxxxxx",
+                        "date": "2019-08-24T12:03:12.966Z"
+                    }
+                }
+            }
+        ]
+    },
+    "aggregations": {
+        "resource.category": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 959,
+            "buckets": [
+                {
+                    "key": "Operation",
+                    "doc_count": 22356,
+                    "data": {
+                        "hits": {
+                            "hits": [
+                                {
+                                    "_source": {
+                                        "resource.category": [{
+                                            "name": "Operation",
+                                            "label": {
+                                                "de": "Maßnahme",
+                                                "en": "Operation"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "key": "Find",
+                    "doc_count": 1817,
+                    "data": {
+                        "hits": {
+                            "hits": [
+                                {
+                                    "_source": {
+                                        "resource.category": [{
+                                            "name": "Find",
+                                            "label": {
+                                                "de": "Fund",
+                                                "en": "Find"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "project": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 2,
+            "buckets": [
+                {
+                    "key": "Value 3",
+                    "doc_count": 124234,
+                    "data": {
+                        "hits": {
+                            "hits": [
+                                {
+                                    "_source": {
+                                        "field2": [{
+                                            "name": "Value 3",
+                                            "label": {
+                                                "de": "Value 3 (Deutsch)",
+                                                "en": "Value 3 (English)"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "key": "",
+
+
+                    "doc_count": 867,
+                    "data": {
+                        "hits": {
+                            "hits": [
+                                {
+                                    "_source": {
+                                        "field2": [{
+                                            "name": "Value 4",
+                                            "label": {
+                                                "de": "Value 4 (Deutsch)",
+                                                "en": "Value 4 (English)"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

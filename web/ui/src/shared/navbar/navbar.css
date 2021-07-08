@@ -1,0 +1,32 @@
+.navbar-project-arrow {
+    position: relative;
+    top: 9px;
+    left: -6px;
+    margin-right: -12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.active-navitem,
+.active-navitem > a {
+    color: white !important;
+}
+
+.navbar .input-group .form-control:focus {
+    border-right: 0;
+}
+
+.navbar .input-group .btn-link {
+    padding-top: 4px;
+    background-color: #fff;
+    color: var(--main-link-color);
+    border: 1px solid #ced4da;
+    border-left: 0;
+}
+
+.navbar .input-group-append .btn-link:hover {
+    color: var(--main-link-color-hover) !important;
+}
+
+.navbar .input-group .form-control:focus + .input-group-append .btn-link {
+    border-color: #80bdff !important;
+}

@@ -12,35 +12,38 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
 
     const categories: Map<TransientCategoryDefinition>
         = clone(builtInCategories) as unknown as Map<TransientCategoryDefinition>;
+    for (const [name, category] of keysValues(categories)) {
+        category.categoryName = name;
+        category.name = name;
+    }
 
-    keysValues(categories).forEach(([categoryName,category]) => {
-        (category as any).categoryName = categoryName;
-    });
-
-    keysValues(libraryCategories).forEach(([libraryCategoryName,libraryCategory]) => {
+    for (const [name, libraryCategory] of keysValues(libraryCategories)) {
 
         const extendedBuiltInCategory = builtInCategories[libraryCategory.categoryName];
         if (extendedBuiltInCategory) {
             const newMergedCategory: any = ObjectUtils.jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
             newMergedCategory['source'] = 'library';
+            newMergedCategory.name = name;
 
             keysValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
                 if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
                         && (libraryCategoryField as any)['inputType']) {
                     throw [
-                        ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, libraryCategoryName,
+                        ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, name,
                         libraryCategoryFieldName
                     ];
                 }
             });
-            mergeFields(newMergedCategory.fields, libraryCategory.fields);
-            categories[libraryCategoryName] = newMergedCategory;
+            mergeFields(newMergedCategory.fields, libraryCategory.fields as any);
+            categories[name] = newMergedCategory;
         } else {
-            if (!libraryCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, libraryCategoryName];
-            categories[libraryCategoryName] = libraryCategory;
+            if (!libraryCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, name];
+            categories[name] = libraryCategory as TransientCategoryDefinition;
+            categories[name].name = name;
+            categories[name].categoryName = libraryCategory.categoryName;
         }
-    });
+    }
 
     return categories;
 }

@@ -1,0 +1,11 @@
+#category-preview {
+
+    background-color: white;
+
+    #preview-inner {
+
+        max-height: 65vh;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+}

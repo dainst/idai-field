@@ -1,6 +1,6 @@
-import { Document, ImageDocument } from 'idai-field-core';
+import { ImageDocument, SampleDataLoaderBase } from 'idai-field-core';
 import { ImageConverter } from '../../../images/imagestore/image-converter';
-import { getSampleDocuments } from './sample-data';
+
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -11,11 +11,13 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class SampleDataLoader {
+export class SampleDataLoader extends SampleDataLoaderBase {
 
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
-                private locale: string) {}
+                locale: string) {
+                    super(locale)
+                }
 
 
     public async go(db: PouchDB.Database, project: string) {
@@ -29,14 +31,6 @@ export class SampleDataLoader {
             );
         } catch(err) {
             console.error('Failed to load sample data', err);
-        }
-    }
-
-
-    private async loadSampleDocuments(db: any): Promise<any> {
-
-        for (let document of getSampleDocuments(this.locale)) {
-            await SampleDataLoader.createDocument(document as Document, db);
         }
     }
 
@@ -92,22 +86,22 @@ export class SampleDataLoader {
     }
 
 
-    private static async createDocument(document: Document, db: PouchDB.Database) {
+    // private static async createDocument(document: Document, db: PouchDB.Database) {
 
-        document.created = { user: 'sample_data', date: new Date() };
-        document.modified = [{ user: 'sample_data', date: new Date() }];
-        document._id = document.resource.id;
-        document.resource.type = document.resource.category;
-        delete document.resource.category;
+    //     document.created = { user: 'sample_data', date: new Date() };
+    //     document.modified = [{ user: 'sample_data', date: new Date() }];
+    //     document._id = document.resource.id;
+    //     document.resource.type = document.resource.category;
+    //     delete document.resource.category;
 
-        if (document.resource.id === 'project') {
-            try {
-                const project = await db.get('project');
-                await db.remove('project', project._rev);
-            } catch {
-                // Ignore errors
-            }
-        }
-        await db.put(document);
-    }
+    //     if (document.resource.id === 'project') {
+    //         try {
+    //             const project = await db.get('project');
+    //             await db.remove('project', project._rev);
+    //         } catch {
+    //             // Ignore errors
+    //         }
+    //     }
+    //     await db.put(document);
+    // }
 }

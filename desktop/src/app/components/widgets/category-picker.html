@@ -27,10 +27,11 @@
             </div>
             <button *ngIf="isCreateButtonVisible(parentCategory)"
                     class="btn-link add-subcategory-button"
-                    (click)="onCreateSubcategory.emit(parentCategory)"
                     container="body"
                     ngbTooltip="Unterkategorie hinzufügen"
-                    i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory">
+                    i18n-ngbTooltip="@@widgets.categoryPicker.addSubcategory"
+                    (click)="onCreateSubcategory.emit(parentCategory)"
+                    placement="right">
                 <span class="mdi mdi-plus-circle text-success"></span>
             </button>
         </li>
@@ -42,7 +43,7 @@
             </div>
         </div>
         <div *cdkDragPlaceholder class="category-drag-placeholder"></div>
-        <ul class="category-children-list" 
+        <ul class="category-children-list"
             cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
             (cdkDropListDropped)="onDrop($event, parentCategory)">
             <li *ngFor="let childCategory of parentCategory.children"

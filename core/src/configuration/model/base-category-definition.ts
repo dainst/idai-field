@@ -1,4 +1,5 @@
 import { Map } from 'tsfun';
+import {Named} from '../../tools/named';
 
 
 export interface BaseCategoryDefinition {

@@ -1,5 +1,5 @@
-import {NewDocument} from 'idai-field-core';
-import {SAMPLE_DATA_LABELS} from './sample-data-labels';
+import { NewDocument } from '../../model/new-document';
+import { SAMPLE_DATA_LABELS } from './sample-data-labels';
 
 
 export const getSampleDocuments = (locale: string): NewDocument[] => [

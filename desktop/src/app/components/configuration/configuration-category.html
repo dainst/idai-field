@@ -1,11 +1,11 @@
 <div [id]="'category-' + category.name"
     (dblclick)="onEditCategory.emit()"
     (contextmenu)="contextMenu.open($event, category)">
-    <div class="row" [class.custom-category]="!category.libraryId">
+    <div class="row" [class.custom-category]="category.source === 'custom'">
         <div class="col header header-left d-flex">
             <category-icon size="41" [category]="category"></category-icon>
             <h5>
-                <span *ngIf="!category.libraryId"
+                <span *ngIf="category.source === 'custom'"
                     class="mdi mdi-alert-circle-outline"
                     ngbTooltip="Projektspezifisches Formular"
                     i18n-ngbTooltip="@@config.form.custom"
@@ -20,9 +20,9 @@
                 <code>{{category.name}}</code>
             </span>
             &nbsp;
-            <span *ngIf="category.libraryId">
+            <span *ngIf="category.source !== 'custom'">
                 <strong i18n="@@config.libraryId">Formular</strong>:
-                <code>{{category.libraryId}}</code>
+                <code>{{category.name}}</code>
             </span>
         </div>
     </div>

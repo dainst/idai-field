@@ -1,7 +1,7 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
     isUndefinedOrEmpty, not } from 'tsfun';
-import { RelationDefinition,CategoryDefinition,Category,Groups,Group,FieldDefinition } from '../../model';
+import { RelationDefinition, Category,Groups,Group,FieldDefinition } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -80,7 +80,7 @@ function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
                            searchConfiguration: any,
                            categoriesOrder: string[],
-                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
+                           relations: Array<RelationDefinition>): Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
 
     return compose(
         setCategoryNames,
@@ -95,7 +95,7 @@ function processCategories(validateFields: any,
 }
 
 
-function setCategoryNames(categories: Map<CategoryDefinition>): Map<CategoryDefinition> {
+function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
 
     Object.keys(categories).forEach(categoryName => {
         categories[categoryName].name = categoryName;

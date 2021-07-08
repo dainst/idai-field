@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+@font-face {
+  font-family: 'Cargan';
+  src: local('Cargan-Light'), url(./Cargan-Light.woff2) format('woff2'), url(./Cargan-Light.woff) format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+:root {
+  --main-bg-color: #eceeef;
+  --main-bg-color-hover: #efefef;
+  --secondary-bg-color: white;
+  --main-link-color: #5882c2;
+  --main-link-color-hover: #375d97;
+  --font-body: 'Open Sans', sans-serif;
+  --font-headings: 'Cargan', serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--main-bg-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a {
+  color: var(--main-link-color);
+}
+
+a:hover {
+  color: var(--main-link-color-hover);
+  text-decoration: none;
+}
+
+.card {
+  border-radius: 0;
+  border: 0;
+  margin: 15px 0;
+  flex: 0 0 auto;
+}
+
+.card-header {
+  background-color: var(--secondary-bg-color);
+  border-bottom: 4px dotted var(--main-bg-color);
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+  margin: .5rem 0;
+}
+
+.navbar-brand {
+  font-family: var(--font-headings);
+}
+
+.navbar-dark .navbar-nav .nav-link a {
+  color: rgba(255,255,255,.5);
+}
+
+.navbar-dark .navbar-nav .nav-link a:focus,
+.navbar-dark .navbar-nav .nav-link a:hover {
+  color: rgba(255,255,255,.75);
+}
+
+.navbar-dark .btn-link {
+  color: rgb(255,255,255);
+  padding: 1px 6px;
+  line-height: 1;
+  border: 0;
+  vertical-align: baseline;
+}
+
+.navbar-dark .btn-link:focus,
+.navbar-dark .btn-link:hover {
+  text-decoration: none;
+  color: rgba(255,255,255,1) !important;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+input.form-control:focus[type=text] {
+  box-shadow: none;
+}

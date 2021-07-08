@@ -1,0 +1,83 @@
+version: "3.7"
+
+services:
+
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.8.0"
+    environment:
+      - "bootstrap.memory_lock=true"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms640m -Xmx640m"
+      - "discovery.type=single-node"
+      - "cluster.name=field.dainst.org"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    volumes:
+      - "elasticsearch-data:/usr/share/elasticsearch/data"
+
+  cantaloupe:
+    image: dainst/cantaloupe
+    build: .
+    ports:
+      - 8182:8182
+    environment:
+      HTTP_HTTP2_ENABLED: "true"
+      HTTPS_HTTP2_ENABLED: "true"
+      ENDPOINT_IIIF_CONTENT_DISPOSITION: none
+      SOURCE_STATIC: FilesystemSource
+      FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX: /imageroot/
+      PROCESSOR_SELECTION_STRATEGY: ManualSelectionStrategy
+      PROCESSOR_MANUALSELECTIONSTRATEGY_JP2: OpenJpegProcessor
+      LOG_APPLICATION_LEVEL: warn
+      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
+    volumes:
+      - type: volume
+        source: idai-field-web_images
+        target: /imageroot
+        volume:
+          nocopy: true
+
+  api:
+    image: "dainst/idai-field-web-api:latest"
+    ports:
+      - "4000:4000"
+    volumes:
+      - "/opt/idai-field/api/config:/opt/src/api/config"
+      - type: volume
+        source: idai-field-web_images
+        target: /imageroot
+        volume:
+           nocopy: true
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=web"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world; PathPrefix:/api"
+        - "traefik.port=4000"
+
+  ui:
+    image: "dainst/idai-field-web-ui:latest"
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=web"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world"
+        - "traefik.port=80"
+
+volumes:
+  elasticsearch-data:
+  idai-field-web_images:
+
+networks:
+  web:
+    external: true

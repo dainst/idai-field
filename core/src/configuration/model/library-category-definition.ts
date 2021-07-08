@@ -16,7 +16,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
     color?: string,
     valuelists: Valuelists;
     positionValuelists?: Valuelists;
-    commons: string[];
+    commons?: string[];
     parent?: string,
     categoryName: string;
     libraryId?: string;
@@ -43,7 +43,10 @@ const VALID_FIELD_PROPERTIES = [
 ];
 
 
-export module LibraryCategoryDefinition {
+export namespace LibraryCategoryDefinition {
+
+    export const PARENT = 'parent';
+
 
     export function makeAssertIsValid(builtinCategories: string[]) {
 

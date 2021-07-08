@@ -1,0 +1,70 @@
+.document-list-transition .enter {
+    transform: translateX(100%);
+    pointer-events: none;
+}
+
+.document-list-transition.backward .enter {
+    transform: translateX(-100%);
+}
+
+.document-list-transition .enter-active {
+    transform: translateX(0);
+    transition: transform 500ms;
+}
+
+.document-list-transition.backward .enter-active {
+    transform: translateX(0);
+    transition: transform 500ms;
+}
+
+.document-list-transition .exit {
+    transform: translateX(0);
+    pointer-events: none;
+}
+
+.document-list-transition.backward .exit {
+    transform: translateX(0);
+}
+
+.document-list-transition .exit-active {
+    transform: translateX(-100%);
+    transition: transform 500ms;
+}
+
+.document-list-transition.backward .exit-active {
+    transform: translateX(100%);
+    transition: transform 500ms;
+}
+
+.document-list-transition .exit-active .btn-link {
+    background-color: white !important;
+    color: transparent !important;
+}
+
+.document-hierarchy {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    transition: color 0.25s;
+}
+
+.document-hierarchy .btn-link:hover {
+    background-color: var(--main-bg-color-hover);
+}
+
+.document-hierarchy .btn-link,
+.document-hierarchy .btn-link:active,
+.document-hierarchy .btn-link:focus {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.document-hierarchy .documents {
+    overflow: hidden auto;
+    flex-grow: 1;
+}
+
+.document-hierarchy .previous-button {
+    height: 100%;
+    padding: 0;
+}

@@ -1,0 +1,16 @@
+.placeholder {
+    padding: 0;
+    margin: -4px 0 0 13px;
+}
+
+.placeholder svg {
+    cursor: pointer;
+}
+
+.placeholder svg:hover {
+    background-color: var(--main-bg-color-hover);
+}
+
+#placeholder-popover {
+    max-width: 600px;
+}

@@ -1,0 +1,12 @@
+*.idea
+*.iml
+*.DS_Store
+
+data/elasticsearch/
+data/cantaloupe/
+ui/public/model*/*
+
+
+TODO
+
+docker-compose.override.yml

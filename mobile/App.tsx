@@ -14,7 +14,6 @@ import SettingsScreen from './src/components/Settings/SettingsScreen';
 import usePouchdbManager from './src/hooks/use-pouchdb-manager';
 import usePreferences from './src/hooks/use-preferences';
 
-
 export type AppStackParamList = {
     HomeScreen: undefined;
     ProjectScreen: undefined;
@@ -54,8 +53,8 @@ export default function App(): ReactElement {
         await pouchdbManager?.destroyDb(project);
     }, [removeProject, pouchdbManager]);
 
-
-    if (preferences) {
+  
+    if (preferences && pouchdbManager) {
         return (
             <SafeAreaProvider>
                 <ToastProvider>

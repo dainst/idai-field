@@ -29,7 +29,7 @@ export interface FieldDefinition {
 
 export module FieldDefinition {
 
-    export type SOURCE_TYPES = 'builtin' |'library' |'custom' |'common';
+    export type SOURCE_TYPES = 'builtin'|'library' |'custom' |'common';
 
     export const INPUTTYPE = 'inputType';
     export const SOURCE = 'source';

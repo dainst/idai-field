@@ -1,0 +1,338 @@
+{
+  "navbar": {
+    "projects": "Projekte",
+    "desktop": "Desktop",
+    "download": "Download",
+    "manual": "Handbuch",
+    "contact": "Kontakt",
+    "login": "Login",
+    "loggedInAs": "Eingeloggt als:",
+    "logOut": "Ausloggen",
+    "languageModal": {
+      "title": "Sprachen",
+      "info": "Die ausgewählten Sprachen und ihre Priorität richten sich nach den Spracheinstellungen des Browsers.",
+      "userInterfaceLanguage": "Sprache der Benutzeroberfläche:",
+      "availableUserInterfaceLanguages": "Übersetzungen der Benutzeroberfläche sind verfügbar für die Sprachen:",
+      "configurationLanguages": "Sprachen für Feldbezeichnungen und -werte:"
+    }
+  },
+  "login": {
+    "wrongUserNameOrPassword": "Nutzername oder Passwort falsch!",
+    "userName": "Benutzername",
+    "password": "Passwort",
+    "logIn": "Einloggen"
+  },
+  "searchBar": {
+    "search": "Suche"
+  },
+  "project": {
+    "backToSearchResults": "Zurück zu den Suchergebnissen",
+    "viewInContext": "Im Kontext anzeigen",
+    "noResults": "Keine Ergebnisse",
+    "noGeometries": {
+      "search": "Im Suchergebnis befinden sich keine Ressourcen, die mit Geodaten verknüpft sind.",
+      "hierarchy": "Auf dieser Ebene der Projekthierarchie befinden sich keine Ressourcen, die mit Geodaten verknüpft sind."
+    },
+    "map": {
+      "layerControls": {
+        "project": "Projekt"
+      }
+    },
+    "filters": "Filter"
+  },
+  "projectHome": {
+    "categories": "Kategorien",
+    "toHierarchicalView": "Zur hierarchischen Ansicht",
+    "institution": "Institution",
+    "projectSupervisor": "Leitung",
+    "contactPerson": "Kontakt",
+    "staff": "Mitarbeiter*innen",
+    "links": "Weiterführende Informationen",
+    "externalReference": "Projekt-Homepage",
+    "gazId": "iDAI.gazetteer",
+    "bibliography": "Bibliographie"
+  },
+  "projectsOverview": {
+    "backendNotAvailable": "Backend not available!"
+  },
+  "documentTeaser": {
+    "noTargetResource": "Zielressource nicht vorhanden"
+  },
+  "permalinkButton": {
+    "title": "Permalink"
+  },
+  "licenseInformation": {
+    "modal": {
+      "title": "Lizenzinformationen"
+    }
+  },
+  "widgets": {
+    "total": {
+      "total": "Insgesamt",
+      "resources": "Ressourcen"
+    }
+  },
+  "filters": {
+    "relations": {
+      "isInstanceOf": "Instanz des Typs"
+    }
+  },
+  "image": {
+    "back": "Zurück"
+  },
+  "download": {
+    "download": "iDAI.field-Desktopanwendung herunterladen",
+    "packageInfo": "Es werden Pakete für Windows, macOS und Linux zur Verfügung gestellt.",
+    "currentVersion": "Aktuelle Version:",
+    "allVersions": "Alle Versionen...",
+    "sourceCode": "Quellcode auf GitHub",
+    "windows": "Windows (.exe)",
+    "macOS": "macOS (.dmg)",
+    "linux": "Linux (.AppImage)",
+    "slides": {
+      "metadataEditor": "Metadaten-Editor",
+      "geodataEditor": "Geodaten-Editor",
+      "matrixView": "Matrixansicht",
+      "synchronization": "Synchronisation",
+      "tableView": "Tabellenansicht",
+      "nesting": "Hierarchisierung"
+    }
+  },
+  "contact": {
+    "mailingList": {
+      "heading": "Mailingliste",
+      "info": "Bei Fragen und Anmerkungen zur Verwendung von iDAI.field in Ihrem Projekt sowie zum Austausch mit anderen Nutzer*innen wenden Sie sich gern an die iDAI.field-Mailingliste:",
+      "subscription": "Abonnement der Mailingliste"
+    },
+    "errorReports": {
+      "heading": "Fehlermeldungen",
+      "info": "Sollten Ihnen bei der Verwendung der Web- oder Desktopanwendung Fehler auffallen, melden Sie sie bitte an:"
+    }
+  },
+  "redirect": {
+    "waitForRedirection": "Bitte warten Sie einen Moment, während Sie weitergeleitet werden..."
+  },
+  "shapes": {
+    "home": {
+      "catalogs": "Kataloge:",
+      "showAllCatalogs": "Alle Kataloge anzeigen...",
+      "searchBy": "Suchen durch",
+      "drawingShape": "Zeichnen einer Form",
+      "uploadingImageFile": "Upload einer Bilddatei",
+      "textSearch": "Textsuche"
+    },
+    "browse": {
+      "subtypes": "Untergeordnete Typen",
+      "similarTypes": "Ähnliche Typen",
+      "linkedFinds": {
+        "header": "Verknüpfte Funde",
+        "showOnMap": "Verknüpfte Funde auf der Karte anzeigen"
+      }
+    },
+    "draw": {
+      "search": "suchen",
+      "clear": "löschen",
+      "brushRadius": "Pinselbreite"
+    },
+    "drawfinds": {
+      "searching": "Suche läuft"
+    }
+  },
+  "languages": {
+    "aa": "Afar",
+    "ab": "Abchasisch",
+    "ae": "Avestisch",
+    "af": "Afrikaans",
+    "ak": "Akan",
+    "am": "Amharisch",
+    "an": "Aragonesisch",
+    "ar": "Arabisch",
+    "as": "Assamesisch",
+    "av": "Awarisch",
+    "ay": "Aymara",
+    "az": "Aserbaidschanisch",
+    "ba": "Baschkirisch",
+    "be": "Weißrussisch",
+    "bg": "Bulgarisch",
+    "bi": "Bislama",
+    "bm": "Bambara",
+    "bn": "Bengalisch",
+    "bo": "Tibetisch",
+    "br": "Bretonisch",
+    "bs": "Bosnisch",
+    "ca": "Katalanisch",
+    "ce": "Tschetschenisch",
+    "ch": "Chamorro",
+    "co": "Korsisch",
+    "cr": "Cree",
+    "cs": "Tschechisch",
+    "cu": "Kirchenslawisch",
+    "cv": "Tschuwaschisch",
+    "cy": "Walisisch",
+    "da": "Dänisch",
+    "de": "Deutsch",
+    "dv": "Dhivehi",
+    "dz": "Dzongkha",
+    "ee": "Ewe",
+    "el": "Griechisch",
+    "en": "Englisch",
+    "eo": "Esperanto",
+    "es": "Spanisch",
+    "et": "Estnisch",
+    "eu": "Baskisch",
+    "fa": "Persisch",
+    "ff": "Ful",
+    "fi": "Finnisch",
+    "fj": "Fidschi",
+    "fo": "Färöisch",
+    "fr": "Französisch",
+    "fy": "Westfriesisch",
+    "ga": "Irisch",
+    "gd": "Schottisches Gälisch",
+    "gl": "Galicisch",
+    "gn": "Guaraní",
+    "gu": "Gujarati",
+    "gv": "Manx",
+    "ha": "Haussa",
+    "he": "Hebräisch",
+    "hi": "Hindi",
+    "ho": "Hiri-Motu",
+    "hr": "Kroatisch",
+    "ht": "Haiti-Kreolisch",
+    "hu": "Ungarisch",
+    "hy": "Armenisch",
+    "hz": "Herero",
+    "ia": "Interlingua",
+    "id": "Indonesisch",
+    "ie": "Interlingue",
+    "ig": "Igbo",
+    "ii": "Yi",
+    "ik": "Inupiak",
+    "io": "Ido",
+    "is": "Isländisch",
+    "it": "Italienisch",
+    "iu": "Inuktitut",
+    "ja": "Japanisch",
+    "jv": "Javanisch",
+    "ka": "Georgisch",
+    "kg": "Kongolesisch",
+    "ki": "Kikuyu",
+    "kj": "Kwanyama",
+    "kk": "Kasachisch",
+    "kl": "Grönländisch",
+    "km": "Khmer",
+    "kn": "Kannada",
+    "ko": "Koreanisch",
+    "kr": "Kanuri",
+    "ks": "Kaschmiri",
+    "ku": "Kurdisch",
+    "kv": "Komi",
+    "kw": "Kornisch",
+    "ky": "Kirgisisch",
+    "la": "Latein",
+    "lb": "Luxemburgisch",
+    "lg": "Ganda",
+    "li": "Limburgisch",
+    "ln": "Lingala",
+    "lo": "Laotisch",
+    "lt": "Litauisch",
+    "lu": "Luba-Katanga",
+    "lv": "Lettisch",
+    "mg": "Madagassisch",
+    "mh": "Marschallesisch",
+    "mi": "Maori",
+    "mk": "Mazedonisch",
+    "ml": "Malayalam",
+    "mn": "Mongolisch",
+    "mr": "Marathi",
+    "ms": "Malaiisch",
+    "mt": "Maltesisch",
+    "my": "Birmanisch",
+    "na": "Nauruisch",
+    "nb": "Norwegisch Bokmål",
+    "nd": "Nord-Ndebele",
+    "ne": "Nepalesisch",
+    "ng": "Ndonga",
+    "nl": "Niederländisch",
+    "nn": "Norwegisch Nynorsk",
+    "no": "Norwegisch",
+    "nr": "Süd-Ndebele",
+    "nv": "Navajo",
+    "ny": "Nyanja",
+    "oc": "Okzitanisch",
+    "oj": "Ojibwa",
+    "om": "Oromo",
+    "or": "Oriya",
+    "os": "Ossetisch",
+    "pa": "Punjabi",
+    "pi": "Pali",
+    "pl": "Polnisch",
+    "ps": "Paschtu",
+    "pt": "Portugiesisch",
+    "qu": "Quechua",
+    "rm": "Rätoromanisch",
+    "rn": "Rundi",
+    "ro": "Rumänisch",
+    "ru": "Russisch",
+    "rw": "Kinyarwanda",
+    "sa": "Sanskrit",
+    "sc": "Sardisch",
+    "sd": "Sindhi",
+    "se": "Nordsamisch",
+    "sg": "Sango",
+    "sh": "Serbo-Kroatisch",
+    "si": "Singhalesisch",
+    "sk": "Slowakisch",
+    "sl": "Slowenisch",
+    "sm": "Samoanisch",
+    "sn": "Shona",
+    "so": "Somali",
+    "sq": "Albanisch",
+    "sr": "Serbisch",
+    "ss": "Swazi",
+    "st": "Süd-Sotho",
+    "su": "Sundanesisch",
+    "sv": "Schwedisch",
+    "sw": "Suaheli",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "tg": "Tadschikisch",
+    "th": "Thailändisch",
+    "ti": "Tigrinya",
+    "tk": "Turkmenisch",
+    "tl": "Tagalog",
+    "tn": "Tswana",
+    "to": "Tongaisch",
+    "tr": "Türkisch",
+    "ts": "Tsonga",
+    "tt": "Tatarisch",
+    "tw": "Twi",
+    "ty": "Tahitisch",
+    "ug": "Uigurisch",
+    "uk": "Ukrainisch",
+    "ur": "Urdu",
+    "uz": "Usbekisch",
+    "ve": "Venda",
+    "vi": "Vietnamesisch",
+    "vo": "Volapük",
+    "wa": "Wallonisch",
+    "wo": "Wolof",
+    "xh": "Xhosa",
+    "yi": "Jiddisch",
+    "yo": "Yoruba",
+    "za": "Zhuang",
+    "zh": "Chinesisch",
+    "zu": "Zulu"
+  },
+  "bce": "v. Chr.",
+  "ce": "n. Chr.",
+  "bp": "BP",
+  "before": "Vor",
+  "after": "Nach",
+  "asMeasuredBy": "gemessen an",
+  "zenonId": "Zenon-ID",
+  "page": "Seite",
+  "figure": "Abbildung",
+  "from": "Von: ",
+  "to": ", bis: "
+}

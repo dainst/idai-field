@@ -2,7 +2,8 @@ import {Map} from 'tsfun';
 import {TransientFieldDefinition} from '../model/transient-category-definition';
 
 
-export function mergeFields(target: Map<TransientFieldDefinition>, source: Map<TransientFieldDefinition>) {
+export function mergeFields(target: Map<TransientFieldDefinition>, 
+                            source: Map<TransientFieldDefinition>) {
 
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;

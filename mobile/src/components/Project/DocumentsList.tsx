@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { RouteProp } from '@react-navigation/native';
 import { ProjectConfiguration } from 'core/src/configuration/project-configuration';
 import { Document } from 'idai-field-core';
 import React from 'react';
@@ -7,12 +6,11 @@ import { ScrollView, StyleSheet } from 'react-native';
 import Button from '../common/Button';
 import DocumentButton from '../common/DocumentButton';
 import Row from '../common/Row';
-import { DocumentsDrawerStackParamList } from './DocumentsDrawer';
 
 
 interface DocumentsListProps {
     config: ProjectConfiguration;
-    route: RouteProp<DocumentsDrawerStackParamList, 'DocumentsList'>;
+    documents: Document[];
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
 }
@@ -20,7 +18,7 @@ interface DocumentsListProps {
 
 const DocumentsList: React.FC<DocumentsListProps> = ({
     config,
-    route,
+    documents,
     onDocumentSelected,
     onParentSelected,
 }) => {
@@ -31,7 +29,7 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
     };
 
     return <ScrollView>
-        { route.params.documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
+        { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
             <DocumentButton
                 style={ styles.documentButton }
                 config={ config }

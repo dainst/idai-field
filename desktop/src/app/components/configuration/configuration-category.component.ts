@@ -52,7 +52,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 private appConfigurator: AppConfigurator,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages) {}
-    
+
 
     ngOnChanges(changes: SimpleChanges) {
 
@@ -67,8 +67,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
     
+    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
+
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
 
     public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
@@ -81,15 +82,15 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
-        return this.customConfigurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
+        return this.customConfigurationDocument.resource.categories[this.category.name];
     }
 
-    
+
     public getParentCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
         return this.category.parentCategory
             ? this.customConfigurationDocument.resource
-                .categories[this.category.parentCategory.libraryId ?? this.category.parentCategory.name]
+                .categories[this.category.parentCategory.name]
             : undefined;
     }
 
@@ -167,13 +168,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } else {
             InPlace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
-    
+
         await this.saveNewGroupsConfiguration(groups);
     }
 
 
     public async onGroupDrop(event: CdkDragDrop<any>) {
-        
+
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
@@ -187,16 +188,16 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name]
+            .categories[this.category.name]
             .groups = newGroups;
-        
+
         try {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 Document.clone(clonedConfigurationDocument)
             );
-            this.onConfigurationChanged.emit({ 
+            this.onConfigurationChanged.emit({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: clonedConfigurationDocument
             });
@@ -286,7 +287,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const result: string[] = flatten(this.getGroups().map(to('fields')))
             .filter(field => !field.visible
                 && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                && (!this.category.libraryId || !ConfigurationUtil.isHidden(
+                && (this.category.source === 'custom' || !ConfigurationUtil.isHidden(
                     this.getCustomCategoryDefinition(),
                     this.getParentCustomCategoryDefinition()
                 )(field)))

@@ -1,0 +1,10 @@
+<div id="category-listing">
+    Listing of subcategories of {{category.categoryName}}
+    <ul style="background-color: white">
+        <li *ngFor="let category of categories"
+            (click)="selectCategory(category)">
+            <category-icon [category]="category" size="30"></category-icon>
+            {{getLabel(category)}}
+        </li>
+    </ul>
+</div>

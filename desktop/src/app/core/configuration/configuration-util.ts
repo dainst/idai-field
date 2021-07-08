@@ -15,7 +15,7 @@ export module ConfigurationUtil {
                              parentCustomCategoryDefinition?: CustomCategoryDefinition) =>
             (field: FieldDefinition): boolean => {
 
-        return (customCategoryDefinition?.hidden ?? []).includes(field.name) || 
+        return (customCategoryDefinition?.hidden ?? []).includes(field.name) ||
             (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }
 
@@ -50,7 +50,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name];
+            .categories[category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         return clonedConfigurationDocument;
@@ -62,9 +62,9 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name];
+            .categories[category.name];
         delete clonedCategoryConfiguration.fields[field.name];
-        
+
         const groupDefinition = clonedCategoryConfiguration.groups.find(
             group => group.fields.includes(field.name)
         );

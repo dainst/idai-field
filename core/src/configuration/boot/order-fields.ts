@@ -1,6 +1,6 @@
 import { map } from 'tsfun';
-import {CategoryDefinition} from '../../model/category-definition';
 import {FieldDefinition} from '../../model/field-definition';
+import {TransientCategoryDefinition, TransientFieldDefinition} from '../model';
 
 
 /**
@@ -18,7 +18,8 @@ export function orderFields(orderConfiguration: any){
 }
 
 
-function getOrderedFields(category: CategoryDefinition, orderConfiguration: any): Array<FieldDefinition> {
+function getOrderedFields(category: TransientCategoryDefinition, 
+                          orderConfiguration: any): Array<FieldDefinition> {
 
     const fields: Array<FieldDefinition> = [];
 
@@ -26,7 +27,7 @@ function getOrderedFields(category: CategoryDefinition, orderConfiguration: any)
 
     if (orderConfiguration.fields[category.name]) {
         orderConfiguration.fields[category.name].forEach((fieldName: string) => {
-            const field: FieldDefinition | undefined = category.fields[fieldName];
+            const field: TransientFieldDefinition | undefined = category.fields[fieldName];
             if (field) addToOrderedFields(field, fieldName, fields);
         });
     }
@@ -41,7 +42,8 @@ function getOrderedFields(category: CategoryDefinition, orderConfiguration: any)
 }
 
 
-function addToOrderedFields(field: FieldDefinition, fieldName: string, fields: Array<FieldDefinition>) {
+function addToOrderedFields(field: TransientFieldDefinition, fieldName: string, 
+                            fields: Array<TransientFieldDefinition>) {
 
     if (fields.includes(field)) return;
 

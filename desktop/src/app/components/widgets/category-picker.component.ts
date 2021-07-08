@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
-import { FieldDefinition, Category, LabelUtil, Named, InPlace } from 'idai-field-core';
+import { FieldDefinition, Category, LabelUtil, Named, InPlace, ConfigurationDocument } from 'idai-field-core';
 
 
 @Component({
@@ -23,6 +23,7 @@ export class CategoryPickerComponent {
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
+    @Output() onLinkSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
 
@@ -82,7 +83,7 @@ export class CategoryPickerComponent {
     }
 
 
-    public isCustomCategory: Predicate<Category> = category => !category.libraryId;
+    public isCustomCategory: Predicate<Category> = category => category.source === 'custom';
 
 
     public hasCustomFields: Predicate<Category> = compose(

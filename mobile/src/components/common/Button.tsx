@@ -35,11 +35,12 @@ const Button = ({
             style={ [getButtonStyle(variant), style, isDisabled && getDisabledStyle(variant)] }
             activeOpacity={ .9 }
             testID={ testID }
+            disabled={ isDisabled }
         >
         <View style={ styles.container }>
-            { icon && <Text style={ getTextStyle(variant) }>{ icon }</Text> }
+            { icon && <Text style={ getTextStyle(variant,isDisabled) }>{ icon }</Text> }
             { icon && title && <Text style={ styles.separator } />}
-            { title && <Text style={ getTextStyle(variant) }>{ title }</Text> }
+            { title && <Text style={ getTextStyle(variant,isDisabled) }>{ title }</Text> }
         </View>
     </TouchableOpacity>;
 };
@@ -53,11 +54,11 @@ const getButtonStyle = (variant: ButtonVariant): ViewStyle => ({
 });
 
 const getDisabledStyle = (variant: ButtonVariant): ViewStyle => ({
-    backgroundColor: Color(colors[variant]).alpha(0.7).string()
+    backgroundColor: Color(colors[variant]).alpha(0.5).string(),
 });
 
-const getTextStyle = (variant: ButtonVariant): TextStyle => ({
-    color: textColors[variant],
+const getTextStyle = (variant: ButtonVariant, disabled: boolean): TextStyle => ({
+    color: disabled ? 'white' : textColors[variant],
 });
 
 const styles = StyleSheet.create({

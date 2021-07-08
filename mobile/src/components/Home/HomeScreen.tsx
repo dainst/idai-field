@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { PouchdbManager, SampleDataLoaderBase } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,13 +13,13 @@ import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
 
-
 interface HomeScreenProps {
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
     setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
+    pouchdbManager: PouchdbManager;
 }
 
 
@@ -28,6 +29,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     setProjectSettings,
     deleteProject,
     navigate,
+    pouchdbManager
 }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
@@ -65,6 +67,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         navigate('LoadingScreen');
     },[navigate, setCurrentProject,setProjectSettings]);
 
+
+    const setTestProject = async () => {
+
+        if(!pouchdbManager) return;
+
+        if(preferences.projects['test']){
+            openProject('test');
+        } else {
+            await pouchdbManager.createDb('test', { _id: 'project', resource: { id: 'project' } }, false);
+            //await pouchdbManager.createDb('test')
+            const loader = new SampleDataLoaderBase('en');
+            await loader.go(pouchdbManager.getDb(), 'test');
+            openProject('test');
+        }
+    };
+
+    
+    const usernameNotSet = () => preferences.username === '';
+
     return <>
         { isProjectModalOpen && <CreateProjectModal
             onProjectCreated={ openProject }
@@ -81,7 +102,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         /> }
         <SafeAreaView style={ styles.container } testID="home-screen">
             <Row style={ styles.topRow }>
-                { preferences.username === '' &&
+                { usernameNotSet() &&
                     <Row style={ styles.usernameWarning }>
                         <Ionicons name="alert-circle" size={ 16 } style={ styles.usernameWarningText } />
                         <Text style={ styles.usernameWarningText }>Make sure to set your name!</Text>
@@ -99,7 +120,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 setSelectedProject,
                 preferences.recentProjects,
                 openProject,
-                setIsDeleteModalOpen
+                setIsDeleteModalOpen,
+                usernameNotSet()
             ) }
             <Column style={ styles.bottomRow }>
                 <Button
@@ -108,6 +130,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     title="Create new project"
                     variant="success"
                     style={ styles.bottomRowButton }
+                    isDisabled={ usernameNotSet() }
                 />
                 <Button
                     icon={ <Ionicons name="cloud-download-outline" size={ 16 } /> }
@@ -118,9 +141,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 />
                 <Button
                     icon={ <Ionicons name="folder-open" size={ 16 } /> }
-                    onPress={ () => openProject('test') }
+                    onPress={ setTestProject }
                     title="Open test project"
                     style={ styles.bottomRowButton }
+                    isDisabled={ usernameNotSet() }
                 />
             </Column>
         </SafeAreaView>
@@ -135,7 +159,8 @@ const renderRecentProjects = (
     setSelectedProject: React.Dispatch<React.SetStateAction<string>>,
     recentProjects: string[],
     openProject: (project: string) => void,
-    setIsDeleteModalOpen: (open: boolean) => void
+    setIsDeleteModalOpen: (open: boolean) => void,
+    usernameNotSet: boolean
 ) => (
     <Column style={ styles.projectPickerContainer }>
         <Text style={ { fontWeight: '600', fontSize: 16 } }>
@@ -155,6 +180,7 @@ const renderRecentProjects = (
                 onPress={ () => openProject(selectedProject) }
                 title="Open"
                 variant="primary"
+                isDisabled={ usernameNotSet }
             />
             <Button
                 testID="delete-project-button"

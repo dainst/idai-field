@@ -90,6 +90,7 @@ export module FieldDefinition {
         export const DIMENSION = 'dimension';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
+        export const INSTANCE_OF = 'instanceOf';
         export const RELATION = 'relation';
         export const CATEGORY = 'category';
         export const NONE = 'none';

@@ -1,14 +1,15 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {to, set} from 'tsfun';
-import {Datastore, Resource} from 'idai-field-core';
-import {TypeRelationPickerComponent} from './type-relation-picker.component';
-import {MenuContext, MenuService} from '../../../../menu-service';
+import { Component, Input, OnChanges } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { to, set } from 'tsfun';
+import { Datastore, Resource } from 'idai-field-core';
+import { TypeRelationPickerComponent } from './type-relation-picker.component';
+import { MenuContext, MenuService } from '../../../../menu-service';
 
 
 type ResourceIdentifier = string;
 const INSTANCE_OF = 'isInstanceOf';
 const toResourceIdentifier = to(['resource','identifier']);
+
 
 @Component({
     selector: 'dai-type-relation',

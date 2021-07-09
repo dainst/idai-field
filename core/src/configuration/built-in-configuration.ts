@@ -298,11 +298,7 @@ export class BuiltInConfiguration {
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                instanceOf: {
-                    inputType: 'instanceOf',
-                }
-            },
+            fields: {},
             groups: [
                 {
                     name: Groups.STEM,
@@ -310,7 +306,7 @@ export class BuiltInConfiguration {
                 },
                 {
                     name: Groups.IDENTIFICATION,
-                    fields: ['instanceOf']
+                    fields: ['isInstanceOf']
                 }
             ]
         },
@@ -745,9 +741,9 @@ export class BuiltInConfiguration {
             inverse: 'hasInstance',
             domain: ['Find:inherit'],
             range: ['Type:inherit'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
+            editable: true,
+            visible: true,
+            inputType: 'instanceOf'
         },
         {
             name: 'hasInstance',
@@ -964,9 +960,6 @@ export class BuiltInConfiguration {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
-                    instanceOf: {
-                        inputType: 'instanceOf',
-                    },
                     diameterPercentage: {
                         inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
                     },
@@ -978,7 +971,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.IDENTIFICATION,
-                        fields: ['instanceOf']
+                        fields: ['isInstanceOf']
                     },
                     {
                         name: Groups.DIMENSION,

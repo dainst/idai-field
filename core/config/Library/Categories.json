@@ -227,7 +227,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -279,7 +279,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -375,7 +375,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -724,7 +724,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -1444,7 +1444,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -1568,7 +1568,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -1741,7 +1741,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -1907,7 +1907,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -2076,7 +2076,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -2159,7 +2159,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -2262,7 +2262,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -2320,7 +2320,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",
@@ -2417,7 +2417,7 @@
       },
       {
         "name": "identification",
-        "fields": ["instanceOf"]
+        "fields": ["isInstanceOf"]
       },
       {
         "name": "parent",

@@ -165,7 +165,8 @@ function makeField(projectConfiguration: ProjectConfiguration, relationTargets: 
 
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
-        return field.inputType === FieldDefinition.InputType.RELATION
+        return (field.inputType === FieldDefinition.InputType.RELATION
+                || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
             ? {
                 label: Labeled.getLabel(field),
                 type: 'relation',

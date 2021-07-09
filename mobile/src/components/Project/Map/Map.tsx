@@ -1,7 +1,7 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import useMapData from '../../../hooks/use-Nmapdata';
+import useMapData from '../../../hooks/use-mapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
 import { ViewPort } from './GLMap/geojson';
 import GLMap from './GLMap/GLMap';
@@ -20,7 +20,7 @@ interface NMapProps {
 }
 
 
-const NMap: React.FC<NMapProps> = (props) => {
+const Map: React.FC<NMapProps> = (props) => {
 
     const [viewPort, setViewPort] = useState<ViewPort>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default NMap;
+export default Map;

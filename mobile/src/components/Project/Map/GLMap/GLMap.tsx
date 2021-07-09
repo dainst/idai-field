@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
-import { CameraView } from '../../../../hooks/use-Nmapdata';
+import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
 import { ViewPort } from './geojson';

@@ -188,7 +188,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
         clonedConfigurationDocument.resource
-            .categories[this.category.name]
+            .categories[this.category.libraryId ?? this.category.name]
             .groups = newGroups;
 
         try {

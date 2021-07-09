@@ -2,23 +2,11 @@ import {Map, on, Predicate} from 'tsfun';
 import {makeLookup, mapToArray} from './transformers';
 import {sortStructArray} from './sort-struct-array';
 import { SortUtil } from './sort-util';
-import { I18nString } from '../model';
-
 
 
 export type Name = string;
 
 export interface Named { name: Name }
-
-export interface Labeled { label?: I18nString }
-
-export interface LabeledValue extends Named, Labeled {};
-
-
-export module Labeled {
-
-    export const LABEL = 'label';
-}
 
 
 /**

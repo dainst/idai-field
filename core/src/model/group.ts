@@ -1,7 +1,7 @@
-import { Labeled, Named } from '../tools/named';
+import { Named } from '../tools/named';
+import { Labeled } from '../tools/labeled';
 import { FieldDefinition } from './field-definition';
 import { I18nString } from './i18n-string';
-import { RelationDefinition } from './relation-definition';
 import { Relations } from './relations';
 
 

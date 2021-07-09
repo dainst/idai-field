@@ -7,7 +7,6 @@ import { Name } from '../tools';
 import { InverseRelationsMap } from '../configuration';
 
 
-
 /**
  * Determines which targetDocuments need their relations updated, based
  * on the relations seen in <i>document</i> alone, and performs the updates.

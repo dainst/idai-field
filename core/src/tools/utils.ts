@@ -48,20 +48,6 @@ export function withDissoc(struct: any, path: string) {
 // return map(val(undefined))(range(size));
 
 
-/**
- * target: { a: 2, b: 3 }
- * source: [['a', 17]]
- * ->
- * { a: 17, b: 3 }
- */
-export function replaceIn<T>(target: Map<T>): (source: Array<Pair<string, T>>) => Map<T>;
-export function replaceIn<T>(target: Array<T>): (source: Array<Pair<number, T>>) => Array<T>;
-export function replaceIn<T>(target: Map<T>|Array<T>) {
-
-    return assocReduce(identity as any, target as Map<T>) as any;
-}
-
-
 export function pick<T>(struct: Map<T>, targetId: string): T;
 export function pick<A>(as: Array<A>, targetId: number): A;
 export function pick<A>(struct: Map<A>|Array<A>, targetId: string|number): A  {

@@ -1,9 +1,9 @@
 import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
-    Pair, pairWith, Predicate, remove, to, update, values, zip } from 'tsfun';
+    Pair, pairWith, Predicate, remove, to, update, values, zip, reduce, assoc } from 'tsfun';
 import { Document } from './document';
 import { Resource } from './resource';
 import { Relations } from './relations'
-import { Name, replaceIn } from '../tools';
+import { Name } from '../tools';
 import { InverseRelationsMap } from '../configuration';
 
 
@@ -73,7 +73,7 @@ function pruneInverseRelations(relations: Relations,
         filter(cond(setInverses, hasInverseRelation, true)),
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
-        replaceIn(relations),
+        reduce((relations, [key, value]) => assoc(key, value, relations), relations),
         remove(isEmpty)
     );
 }

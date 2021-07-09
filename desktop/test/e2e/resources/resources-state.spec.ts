@@ -510,7 +510,7 @@ describe('resources/state --', () => {
         await ResourcesPage.performCreateResource('c4', 'feature');
         await ResourcesPage.performDescendHierarchy('c4');
         await ResourcesPage.performCreateResource('c5', 'feature');
-        await ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
+        await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
 
         await ResourcesPage.clickSelectResource('c5', 'info');
         await FieldsViewPage.clickAccordionTab(1);

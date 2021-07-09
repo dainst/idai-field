@@ -356,12 +356,12 @@ export class ResourcesPage {
 
 
     public static async performCreateRelation(identifier: string, targetIdentifier: string,
-                                              relationGroupName: string) {
+                                              relationName: string) {
 
         await this.openEditByDoubleClickResource(identifier);
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupName);
-        await DoceditRelationsTabPage.typeInRelation(relationGroupName, targetIdentifier);
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationName);
+        await DoceditRelationsTabPage.typeInRelation(relationName, targetIdentifier);
         await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
     }
@@ -371,7 +371,7 @@ export class ResourcesPage {
 
         await this.performCreateResource('1', 'feature-architecture');
         await this.performCreateResource('2', 'feature-architecture');
-        await this.performCreateRelation('2', '1', 'zeitlich-vor');
+        await this.performCreateRelation('2', '1', 'isBefore');
     }
 
     // script

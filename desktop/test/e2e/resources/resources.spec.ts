@@ -225,13 +225,13 @@ describe('resources --', () => {
 
         // docedit
         await ResourcesPage.openEditByDoubleClickResource('1');
-        expect(await DoceditRelationsTabPage.getRelationButtonText('zeitlich-nach')).toEqual('2');
+        expect(await DoceditRelationsTabPage.getRelationButtonText('isAfter')).toEqual('2');
         await DoceditPage.clickCloseEdit();
         await ResourcesPage.openEditByDoubleClickResource('2');
-        expect(await DoceditRelationsTabPage.getRelationButtonText('zeitlich-vor')).toEqual('1');
+        expect(await DoceditRelationsTabPage.getRelationButtonText('isBefore')).toEqual('1');
 
         // deletion
-        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-vor');
+        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('isBefore');
         await DoceditPage.clickSaveDocument();
         await ResourcesPage.clickSelectResource('1', 'info');
         let tabs = await FieldsViewPage.getTabs();
@@ -254,8 +254,8 @@ describe('resources --', () => {
         await ResourcesPage.performCreateResource('2', 'feature-architecture');
         await DetailSidebarPage.doubleClickEditDocument('1');
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitgleich-mit');
-        await DoceditRelationsTabPage.typeInRelation('zeitgleich-mit', '2');
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
+        await DoceditRelationsTabPage.typeInRelation('isContemporaryWith', '2');
         await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickCloseEdit('discard');
 

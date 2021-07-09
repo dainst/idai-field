@@ -1,5 +1,5 @@
 import { click, getElements, getElement, typeIn, pause } from '../app';
-import {DoceditPage} from './docedit.page';
+import { DoceditPage } from './docedit.page';
 
 
 /**
@@ -17,43 +17,43 @@ export class DoceditRelationsTabPage {
     };
 
 
-    public static clickAddRelationForGroupWithIndex(groupName) {
+    public static clickAddRelationForGroupWithIndex(relationName) {
 
-        return click('#' + groupName + ' .circular-button.add-relation');
+        return click('#edit-form-element-' + relationName + ' .circular-button.add-relation');
     };
 
 
-    public static async clickRelationDeleteButtonByIndices(groupName, pickerIndex = 0) {
+    public static async clickRelationDeleteButtonByIndices(relationName, pickerIndex = 0) {
 
-        const element = await this.getRelationElementByName(groupName, pickerIndex);
+        const element = await this.getRelationElementByName(relationName, pickerIndex);
         return click(await element.$('.delete-relation'));
     };
 
 
     // get text
 
-    public static async getRelationButtonText(groupName, pickerIndex = 0) {
+    public static async getRelationButtonText(relationName, pickerIndex = 0) {
 
         await DoceditPage.clickGotoTimeTab();
-        const element = await this.getRelationElementByName(groupName, pickerIndex);
+        const element = await this.getRelationElementByName(relationName, pickerIndex);
         return (await element.$('.badge')).getText();
     };
 
 
     // elements
 
-    public static async getRelationElementByName(groupName, pickerIndex) {
+    public static async getRelationElementByName(relationName, pickerIndex) {
 
-        const groupElement = await getElement('#' + groupName);
-        return (await groupElement.$$('#relation-picker'))[pickerIndex];
+        const relationPickerGroupElement = await getElement('#edit-form-element-' + relationName);
+        return (await relationPickerGroupElement.$$('#relation-picker'))[pickerIndex];
     };
 
 
     // type in
 
-    public static async typeInRelation(groupName, input) {
+    public static async typeInRelation(relationName, input) {
 
-        await typeIn('#' + groupName + ' input', input);
+        await typeIn('#edit-form-element-' + relationName + ' input', input);
         return pause(1000);
     };
 }

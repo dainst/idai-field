@@ -1,7 +1,7 @@
 import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist } from '../app';
-import {MatrixPage} from './matrix.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import { MatrixPage } from './matrix.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
 
 
 /**
@@ -96,10 +96,10 @@ describe('matrix --', () => {
 
         await MatrixPage.clickNode('si1');
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
+        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('isAfter', 1);
 
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
-        await DoceditRelationsTabPage.typeInRelation('zeitlich-nach', 'SE4');
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('isAfter');
+        await DoceditRelationsTabPage.typeInRelation('isAfter', 'SE4');
         await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
 

@@ -49,8 +49,8 @@ describe('resources/types --', () => {
 
         await ResourcesTypeGridPage.clickEditButton();
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zugeordnete-funde');
-        await DoceditRelationsTabPage.typeInRelation('zugeordnete-funde', 'testf1');
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('hasInstance');
+        await DoceditRelationsTabPage.typeInRelation('hasInstance', 'testf1');
         await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         return DoceditPage.clickSaveDocument();
     }

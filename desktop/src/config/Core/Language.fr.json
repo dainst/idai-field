@@ -1,0 +1,91 @@
+{
+  "fields": {
+    "category": {
+      "label": "Catégorie"
+    },
+    "identifier": {
+      "label": "Identifiant",
+      "description": "Identifiant unique pour cette ressource"
+    },
+    "shortDescription": {
+      "label": "Description sommaire"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Projet",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Système de référence de coordonnées"
+        }
+      }
+    },
+    "Image": {
+      "label": "Image",
+      "fields": {
+        "height": {
+          "label": "Hauteur"
+        },
+        "width": {
+          "label": "Largeur"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Enregistré pendant l'opération"
+    },
+    "liesWithin": {
+      "label": "Dans"
+    },
+    "includes": {
+      "label": "Inclut"
+    },
+    "isAbove": {
+      "label": "Sur"
+    },
+    "isBelow": {
+      "label": "Sous"
+    },
+    "isEquivalentTo": {
+      "label": "Equivalente à"
+    },
+    "cuts": {
+      "label": "Coupe"
+    },
+    "isCutBy": {
+      "label": "Coupée par"
+    },
+    "borders": {
+      "label": "Borde"
+    },
+    "isAfter": {
+      "label": "Après"
+    },
+    "isBefore": {
+      "label": "Avant"
+    },
+    "isContemporaryWith": {
+      "label": "Contemporaine à"
+    },
+    "depicts": {
+      "label": "Illustre"
+    },
+    "isDepictedIn": {
+      "label": "Illustrée dans"
+    },
+    "isMapLayerOf": {
+      "label": "Couche cartographique"
+    },
+    "hasMapLayer": {
+      "label": "possède une couche cartographique"
+    },
+    "isInstanceOf": {
+      "label": "Classification typologique"
+    },
+    "hasInstance": {
+      "label": "Découvertes associées"
+    }
+  }
+}

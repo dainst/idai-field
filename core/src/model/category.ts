@@ -8,21 +8,52 @@ import { LabelUtil } from '../tools/label-util';
 
 export interface Category extends Named {
     
+    /**
+     * Categories can have commmon semantics with regards
+     * to their fields by being part of a groups of categories
+     * grouped under one `categoryName`. Whithin such a group, a field
+     * with any given name means always the same, wheter a concrete
+     * category lists it or not. From this perspective, the different
+     * categories sharing a common `categoryName` can be seen as different
+     * (edit-)forms representing one and the same concept.
+     */
+    categoryName: Name;
+
+    /* name: Name - given by `extends Named`
+     * In a running application this coincides with `categoryName`. 
+     * There it is a unique property because at most one category of 
+     * a given name is "active".
+     * 
+     * In the configuration editor, however, where choices amongst
+     * alternative categories can be made, the `name` is NOT the `categoryName`
+     * but is instead made to coincide with the `libraryId`.
+     */
+
+    /**
+     * For builtIn and library categories, the original identifier (possibly a map key).
+     */
     libraryId?: string; 
 
     source?: 'builtin'|'library'|'custom';
+
+    isAbstract: boolean;
+    mustLieWithin: boolean|undefined; // = undefined;
+    userDefinedSubcategoriesAllowed?: boolean
+
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
-    isAbstract: boolean;
+
+    // Contents and Appearance
+    
+    groups: Array<Group>;
+    
     label: I18nString;
     description: I18nString;
     defaultLabel?: I18nString;
     defaultDescription?: I18nString;
+
     color?: string;
     defaultColor?: string;
-    groups: Array<Group>;
-    mustLieWithin: boolean|undefined; // = undefined;
-    userDefinedSubcategoriesAllowed?: boolean
 }
 
 

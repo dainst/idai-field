@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category } from 'idai-field-core';
-import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { Map, clone, values, remove, isUndefined, on, is, filter, not } from 'tsfun';
+import { Map, clone, values, remove, isUndefined, on, is, filter, not, keysValues } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../../model';
 import { Tree } from '../../tools/forest';
 import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
@@ -41,6 +41,10 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
                 default: languages,
                 complete: languages
             }, category, category.categoryName);
+    }
+
+    for (const [name, category] of keysValues(result)) {
+        category['name'] = name;
     }
 
     return filter(

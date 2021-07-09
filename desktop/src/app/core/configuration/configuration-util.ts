@@ -1,6 +1,6 @@
 import { flatten, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Resource,
-    GroupDefinition, Group, Groups, Document, ConfigurationDocument } from 'idai-field-core';
+    GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -25,7 +25,7 @@ export module ConfigurationUtil {
         if (!category.parentCategory) return false;
 
         return flatten(category.parentCategory.groups.map(to('fields')))
-            .map(to('name'))
+            .map(Named.toName)
             .includes(field.name);
     }
 
@@ -50,7 +50,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.name];
+            .categories[category.libraryId ?? category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         return clonedConfigurationDocument;
@@ -62,7 +62,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.name];
+            .categories[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
 
         const groupDefinition = clonedCategoryConfiguration.groups.find(

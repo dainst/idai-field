@@ -1,5 +1,5 @@
 import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
-    Pair, pairWith, Predicate, remove, to, update, values, zip, reduce, assoc } from 'tsfun';
+    Pair, pairWith, Predicate, remove, to, update, values, zip, reduce, assoc, keys } from 'tsfun';
 import { Document } from './document';
 import { Resource } from './resource';
 import { Relations } from './relations'
@@ -69,7 +69,7 @@ function pruneInverseRelations(relations: Relations,
                                hasInverseRelation: Predicate<String>) {
 
     return flow(
-        Object.keys(relations),
+        keys(relations),
         filter(cond(setInverses, hasInverseRelation, true)),
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
@@ -79,12 +79,13 @@ function pruneInverseRelations(relations: Relations,
 }
 
 
-function setInverseRelations(target: Resource, resource: Resource,
-    getInverse: (_: string) => string|undefined,
-                             hasInverseRelation: Predicate<string>) {
+function setInverseRelations(target: Resource, 
+                            resource: Resource,
+                            getInverse: (_: string) => string|undefined,
+                            hasInverseRelation: Predicate<string>) {
 
     flow(
-        Object.keys(resource.relations),
+        keys(resource.relations),
         filter(hasInverseRelation),
         map(pairWith(getInverse)),
         values,

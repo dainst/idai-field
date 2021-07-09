@@ -1,5 +1,5 @@
 import { I18nString } from '../model/i18n-string';
-import { LabeledValue } from './named';
+import { Named } from './named';
 
 
 const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
@@ -7,10 +7,18 @@ const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && win
     : ['de'];
 
 
+export interface Labeled { label?: I18nString }
+
+export interface LabeledValue extends Named, Labeled {};
+
+
 /**
  * @author Thomas Kleinke
  */
-export module LabelUtil {
+export module Labeled {
+
+    export const LABEL = 'label';
+
 
     export function getLabel(labeledValue: LabeledValue, providedLanguages?: string[]): string {
 

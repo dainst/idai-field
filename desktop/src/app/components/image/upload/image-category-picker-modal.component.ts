@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, LabelUtil, ProjectConfiguration, Category } from 'idai-field-core';
+import { Document, Labeled, ProjectConfiguration, Category } from 'idai-field-core';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class ImageCategoryPickerModalComponent {
     }
 
 
-    public getImageCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
+    public getImageCategoryLabel = (category: Category) => Labeled.getLabel(category);
 
 
     public onKeyDown(event: KeyboardEvent) {

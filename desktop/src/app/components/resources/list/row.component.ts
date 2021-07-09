@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FieldDocument, Category, Datastore, RelationsManager, LabelUtil, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, Category, Datastore, RelationsManager, Labeled, ProjectConfiguration } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../core/model/validator';
 import { M } from '../../messages/m';
@@ -59,7 +59,7 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getCategoryLabel = () => LabelUtil.getLabel(this.categoriesMap[this.document.resource.category]);
+    public getCategoryLabel = () => Labeled.getLabel(this.categoriesMap[this.document.resource.category]);
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
-import { Category, ConstraintIndex, Datastore, FieldDefinition, LabelUtil, ProjectConfiguration, ValuelistDefinition,
+import { Category, ConstraintIndex, Datastore, FieldDefinition, Labeled, ProjectConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
@@ -159,9 +159,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (field.name.endsWith('.value')) {
             return this.getDropdownRangeLabel(field);
         } else if (field.name.endsWith('.endValue')) {
-            return this.getDropdownRangeEndLabel(field);  
+            return this.getDropdownRangeEndLabel(field);
         } else {
-            return LabelUtil.getLabel(field);
+            return Labeled.getLabel(field);
         }
     }
 
@@ -346,7 +346,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getDropdownRangeLabel(field: FieldDefinition): string {
 
-        const fieldLabel: string = LabelUtil.getLabel(field);
+        const fieldLabel: string = Labeled.getLabel(field);
 
         return fieldLabel + ' / ' + fieldLabel
             + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
@@ -355,7 +355,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getDropdownRangeEndLabel(field: FieldDefinition): string {
 
-        return LabelUtil.getLabel(field)
+        return Labeled.getLabel(field)
             + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
     }
 

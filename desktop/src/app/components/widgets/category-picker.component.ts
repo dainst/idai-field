@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
-import { FieldDefinition, Category, LabelUtil, Named, InPlace, ConfigurationDocument } from 'idai-field-core';
+import { FieldDefinition, Category, Labeled, Named, InPlace } from 'idai-field-core';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class CategoryPickerComponent {
     @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
 
-    public getCategoryLabel = (category: Category): string => LabelUtil.getLabel(category);
+    public getCategoryLabel = (category: Category): string => Labeled.getLabel(category);
 
     public isCreateButtonVisible = (category: Category): boolean =>
         this.showCreateButtons && category.userDefinedSubcategoriesAllowed;

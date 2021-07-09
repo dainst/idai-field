@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Category, LabelUtil } from 'idai-field-core';
+import { Category, Labeled } from 'idai-field-core';
 
 
 @Component({
@@ -18,5 +18,5 @@ export class CategoryListingComponent {
 
     public selectCategory = (category: Category) => this.onCategorySelected.emit(category);
 
-    public getLabel = (value: any) => LabelUtil.getLabel(value);
+    public getLabel = (value: any) => Labeled.getLabel(value);
 }

@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { isBoolean } from 'tsfun';
 import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups,
-     LabelUtil, Name, ProjectConfiguration, Resource } from 'idai-field-core';
+     Labeled, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
 
 
@@ -34,9 +34,9 @@ export class FieldsViewComponent implements OnChanges {
                 private datastore: Datastore,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations) {}
-            
-    
-    public getGroupLabel = (group: FieldsViewGroup) => LabelUtil.getLabel(group);
+
+
+    public getGroupLabel = (group: FieldsViewGroup) => Labeled.getLabel(group);
 
 
     async ngOnChanges() {

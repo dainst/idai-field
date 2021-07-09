@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, LabelUtil, Named,
+import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
     Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
     getConfigurationName, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
@@ -70,7 +70,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
-    public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
+    public getGroupLabel = (group: Group) => Labeled.getLabel(group);
 
     public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
 
@@ -276,7 +276,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = LabelUtil.getLabelAndDescription(this.category);
+        const { label, description } = Labeled.getLabelAndDescription(this.category);
         this.label = label;
         this.description = description;
     }

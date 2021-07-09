@@ -200,6 +200,9 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.saveChanges = (result) => this.saveChanges(result);
+        modalReference.componentInstance.chooseCategory = (category) => {
+            console.log('TODO implement - choose category', category);
+        }
 
         try {
             // await this.createNewSubcategory(parentCategory, await modalReference.result);

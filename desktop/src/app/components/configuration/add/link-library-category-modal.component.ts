@@ -31,6 +31,8 @@ export class LinkLibraryCategoryModalComponent {
 
     public saveChanges: any;
 
+    public chooseCategory: any;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
@@ -49,14 +51,13 @@ export class LinkLibraryCategoryModalComponent {
         const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
 
         try {
-            const result = await this.createNewSubcategory(parentCategory, await modalReference.result);
-            console.log(result)
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
+            await this.createNewSubcategory(parentCategory, await modalReference.result);
+
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
             this.activeModal.close(this.categoryName);
+        } catch {
+            // Modal has been canceled
         }
     }
 
@@ -69,8 +70,8 @@ export class LinkLibraryCategoryModalComponent {
 
     public createCategory() {
 
-        if (!this.categoryName) return;
-        this.activeModal.close(this.categoryName);
+        this.chooseCategory(this.category);
+        this.activeModal.close();
     }
 
 

@@ -182,7 +182,7 @@ describe('resources/types --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('isInstanceOf');
         await DoceditTypeRelationsTabPage.clickType('T1');
         await DoceditPage.clickSaveDocument();
 
@@ -215,7 +215,7 @@ describe('resources/types --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('isInstanceOf');
 
         await checkCriterionOptions(['Kein Kriterium', 'Dekoration', 'Form']);
         await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);

@@ -555,11 +555,11 @@
       },
       {
         "name": "position",
-        "fields": ["dimensionVerticalExtent"]
+        "fields": ["dimensionVerticalExtent", "isBelow", "isAbove", "isEquivalentTo", "borders", "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },
@@ -868,11 +868,12 @@
       },
       {
         "name": "position",
-        "fields": ["spatialLocation", "dimensionVerticalExtent", "orientation"]
+        "fields": ["spatialLocation", "dimensionVerticalExtent", "orientation",
+          "isBelow", "isAbove", "isEquivalentTo", "borders", "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },
@@ -1032,11 +1033,12 @@
       },
       {
         "name": "position",
-        "fields": ["dimensionVerticalExtent"]
+        "fields": ["dimensionVerticalExtent", "isBelow", "isAbove", "isEquivalentTo", "borders",
+          "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },
@@ -1170,11 +1172,12 @@
       },
       {
         "name": "position",
-        "fields": ["dimensionVerticalExtent"]
+        "fields": ["dimensionVerticalExtent", "isBelow", "isAbove", "isEquivalentTo", "borders",
+          "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },
@@ -1686,11 +1689,12 @@
       },
       {
         "name": "position",
-        "fields": ["spatialLocation", "dimensionVerticalExtent"]
+        "fields": ["spatialLocation", "dimensionVerticalExtent", "isBelow", "isAbove", "isEquivalentTo",
+          "borders", "cuts", "isCutBy"]
       },
       {
         "name": "time",
-        "fields": ["period", "dating"]
+        "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
       }
     ]
   },

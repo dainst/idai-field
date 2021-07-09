@@ -4,7 +4,7 @@ import { FieldDefinition } from '../../../src/model/field-definition';
 
 describe('createContextIndependentCategories', () => {
 
-    xit('base case', () => {
+    it('base case', () => {
     
         const result = createContextIndependentCategories(
             {

@@ -15,6 +15,14 @@ import {
 } from './geojson-gl-shape';
 import { calcCenter, calcDistance } from './SvgMap/math-utils';
 
+
+const cameraDefaultPos = {
+    x: 0,
+    y: 0,
+    z: 5,
+};
+
+
 interface Coordinate {
     x: number;
     y: number;
@@ -134,7 +142,8 @@ const GLMap: React.FC<GLMapProps> = ({
             camera.right = maxSize;
             camera.top = maxSize;
             camera.bottom = viewPort.y;
-            camera.position.set(0,0,5);
+            
+            camera.position.set(cameraDefaultPos.x, cameraDefaultPos.y, cameraDefaultPos.z);
             camera.updateProjectionMatrix();
         }
         
@@ -249,7 +258,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderer.setSize(width, height);
         renderer.setClearColor(colors.containerBackground);
 
-        camera.position.set(0, 0, 5);
+        camera.position.set(cameraDefaultPos.x,cameraDefaultPos.y,cameraDefaultPos.z);
 
 
         const render = () => {

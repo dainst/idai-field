@@ -43,14 +43,14 @@ export abstract class ConfigurationEditorModalComponent {
     public getClonedCategoryDefinition(): CustomCategoryDefinition {
 
         return this.clonedConfigurationDocument.resource
-            .categories[this.category.name];
+            .categories[this.category.libraryId ?? this.category.name];
     }
 
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition {
 
         return this.customConfigurationDocument.resource
-            .categories[this.category.name];
+            .categories[this.category.libraryId ?? this.category.name];
     }
 
 

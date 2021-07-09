@@ -50,7 +50,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.name];
+            .categories[category.libraryId ?? category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         return clonedConfigurationDocument;
@@ -62,7 +62,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.name];
+            .categories[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
 
         const groupDefinition = clonedCategoryConfiguration.groups.find(

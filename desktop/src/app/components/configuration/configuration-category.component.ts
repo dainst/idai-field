@@ -67,7 +67,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-    
+
     public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
     public getGroupLabel = (group: Group) => LabelUtil.getLabel(group);
@@ -82,7 +82,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
-        return this.customConfigurationDocument.resource.categories[this.category.name];
+        return this.customConfigurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
     }
 
 
@@ -90,7 +90,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         return this.category.parentCategory
             ? this.customConfigurationDocument.resource
-                .categories[this.category.parentCategory.name]
+                .categories[this.category.libraryId ?? this.category.parentCategory.name]
             : undefined;
     }
 

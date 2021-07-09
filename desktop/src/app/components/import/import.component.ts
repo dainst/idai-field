@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
-import { Category, Document, Datastore, IdGenerator, SyncService, LabelUtil, ProjectConfiguration,
+import { Category, Document, Datastore, IdGenerator, SyncService, Labeled, ProjectConfiguration,
     RelationsManager, ProjectCategories } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
@@ -70,7 +70,7 @@ export class ImportComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document);
 
-    public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
+    public getCategoryLabel = (category: Category) => Labeled.getLabel(category);
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 

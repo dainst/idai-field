@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category, LabelUtil } from 'idai-field-core';
+import { Category, Labeled } from 'idai-field-core';
 
 
 @Component({
@@ -13,5 +13,5 @@ export class CategoryPreviewComponent {
 
     @Input() category: Category|undefined;
 
-    public getLabel = (value: any) => LabelUtil.getLabel(value);
+    public getLabel = (value: any) => Labeled.getLabel(value);
 }

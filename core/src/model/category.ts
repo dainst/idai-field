@@ -3,7 +3,7 @@ import { I18nString } from './i18n-string';
 import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { Group } from './group';
-import { LabelUtil } from '../tools/label-util';
+import { Labeled } from '../tools/labeled';
 
 
 export interface Category extends Named {
@@ -93,7 +93,7 @@ export module Category {
     export function getLabel(fieldName: string, fields: Array<any>): string {
 
         for (let field of fields) {
-            if (field.name === fieldName) return LabelUtil.getLabel(field);
+            if (field.name === fieldName) return Labeled.getLabel(field);
         }
         return fieldName;
     }

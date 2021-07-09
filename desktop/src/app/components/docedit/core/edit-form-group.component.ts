@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Document, LabelUtil, FieldDefinition, RelationDefinition, LabeledValue } from 'idai-field-core';
+import { Document, Labeled, FieldDefinition } from 'idai-field-core';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class EditFormGroup implements OnChanges {
 
     ngOnChanges() {
 
-        this.updateLabelsAndDescriptions();        
+        this.updateLabelsAndDescriptions();
     }
 
 
@@ -37,7 +37,7 @@ export class EditFormGroup implements OnChanges {
         this.descriptions = {};
 
         this.fieldDefinitions.forEach(field => {
-            const { label, description } = LabelUtil.getLabelAndDescription(field);
+            const { label, description } = Labeled.getLabelAndDescription(field);
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });

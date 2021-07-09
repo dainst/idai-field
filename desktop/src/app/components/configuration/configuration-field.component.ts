@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
-    ValuelistUtil, LabelUtil } from 'idai-field-core';
+    ValuelistUtil, Labeled } from 'idai-field-core';
 import { InputType } from './project-configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
@@ -81,7 +81,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = LabelUtil.getLabelAndDescription(this.field);
+        const { label, description } = Labeled.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
     }

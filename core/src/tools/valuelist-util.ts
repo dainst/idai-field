@@ -3,7 +3,7 @@ import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { Resource } from '../model/resource';
 import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
-import { LabelUtil } from './label-util';
+import { Labeled } from './labeled';
 import { SortUtil } from './sort-util';
 
 
@@ -30,7 +30,7 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, providedLanguages?: string[]): string {
 
-        const label: string|undefined = LabelUtil.getTranslation(valuelist.values[valueId]?.labels, providedLanguages);
+        const label: string|undefined = Labeled.getTranslation(valuelist.values[valueId]?.labels, providedLanguages);
         return label ?? valueId;
     }
 

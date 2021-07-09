@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, FieldDocument, Query, ProjectCategories, ProjectConfiguration,
     RelationsManager, Document,
-    LabelUtil} from 'idai-field-core';
+    Labeled} from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -66,7 +66,7 @@ export class ExportComponent implements OnInit {
 
     public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
 
-    public getCategoryLabel = (category: Category) => LabelUtil.getLabel(category);
+    public getCategoryLabel = (category: Category) => Labeled.getLabel(category);
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 

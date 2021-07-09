@@ -1,105 +1,4 @@
 {
-  "commons": {
-    "dimensionLength": {
-      "label": "Länge",
-      "description": "Angabe der maximalen Länge; bei Keramik: maximale Länge des Fragmentes, Standardangabe für Ausdehnung."
-    },
-    "dimensionWidth": {
-      "label": "Breite",
-      "description": "Angabe der Breite an der maximalen Ausdehnung"
-    },
-    "dimensionHeight": {
-      "label": "Höhe",
-      "description": "Angabe der Höhe an der maximalen Ausdehnung, bei Keramik: nur gültig für die Aufnahme von Ringfüßen."
-    },
-    "dimensionThickness": {
-      "label": "Stärke / Wandstärke",
-      "description": "Dicke bzw. Stärke des Objekts, bei Keramik Wandstärke."
-    }
-  },
-  "fields": {
-    "category": {
-      "label": "Kategorie"
-    },
-    "isEquivalentTo": {
-      "label": "identisch mit"
-    },
-    "identifier": {
-      "label": "Name / ID (eindeutig)",
-      "description": "Eindeutiger Bezeichner dieser Ressource, muss sich nach dem milesischen System zur Bennenung richten; also: Areal, Jahr Schnitt ...; für Befunde bspw: HU19.A.01 für Befund 1 aus Schnitt A im Jahr 2019 auf dem Humeitepe."
-    },
-    "dimensionHeadHeight": {
-      "label": "Höhe des Kopfes",
-      "description": "Angabe der Höhe des Kopfes an der maximalen/minimalen Ausdehnung"
-    },
-    "diameterPercentage": {
-      "label": "Erhaltener Durchmesser in Prozent"
-    },
-    "shortDescription": {
-      "label": "Kurzbezeichner"
-    },
-    "scale": {
-      "label": "Maßstab"
-    },
-    "gazId": {
-      "label": "Gazetteer-ID (siehe https://gazetteer.dainst.org/)",
-      "description": "Bitte nur die eindeutige ID angeben. Bspw. nur die Nummer am Ende in der URL: https://gazetteer.dainst.org/place/2091612 (also: 2091612)."
-    },
-    "datingAddenda": {
-      "label": "Ergänzende Informationen zur Datierung"
-    },
-    "measuringPointID": {
-      "label": "Messpunkt-Nummer",
-      "description": "Punktnummer(n) in der Totalstation, leer wenn nicht zutreffend"
-    },
-    "localization": {
-      "label": "Provenienz der Messdaten",
-      "description": "Wie wurde die Lokalisierung vorgenommen?"
-    },
-    "localizationDescription": {
-      "label": "Beschreibung der Lokalisierung (wenn Messdaten fehlen)",
-      "description": "Hier kann entweder eine topographische Beschreibung eingegeben werden, falls nur diese Vorhanden ist, oder bei Bedarf die Liste der Punktnummern oder Messdaten in anderer Form nachgehalten werden."
-    },
-    "FotoNr": {
-      "label": "Fotonummer(n)",
-      "description": "Hier können die mit der Ressource assoziierten Fotonummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Fotos und entspricht dem Feld 'Fotos' auf dem Befundzettel."
-    },
-    "DrawingNr": {
-      "label": "Zeichnungsnummer(n)",
-      "description": "Hier können die mit der Ressource assoziierten Zeichnungsnummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Zeichnung und entspricht dem Feld 'Zeichnungen' auf dem Befundzettel."
-    },
-    "notes": {
-      "label": "Notizen",
-      "description": "..."
-    },
-    "otherNotes": {
-      "label": "Notizen",
-      "description": "..."
-    },
-    "quantificationOther": {
-      "label": "Andere Elemente (nicht in Formular vorgesehen)",
-      "description": "Zum Nachhalten von Bestandteilen die nicht in dem Formular widergegeben werden können - bitte vorsichtig und nur wenn absolut nötig benutzen!"
-    }
-  },
-  "relations": {
-    "isEquivalentTo": {
-      "label": "Identisch mit"
-    },
-    "isFilledBy": {
-      "label": "Verfüllt von"
-    },
-    "fills": {
-      "label": "Verfüllt"
-    },
-    "wasFoundIn": {
-      "label": "gefunden in",
-      "description": "Gebäude, Ort oder Survey dem der Fund zugeordnet werden kann."
-    },
-    "hasFinds": {
-      "label": "Zugeordnete Funde",
-      "description": "Funde die diesem Gebäude, Ort oder Survey zugeordnet werden. Bitte nur für das Inventar von Altfunden verwenden, wie bspw. die Steindepot-Aufnahme!"
-    }
-  },
   "categories": {
     "Operation": {
       "fields": {
@@ -250,7 +149,7 @@
     "PlasterFragment": {
         "fields": {
             "decorationDescription": {
-                "Label": "Beschreibung der Bemalung"
+                "label": "Beschreibung der Bemalung"
             }
         }
     },

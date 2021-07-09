@@ -457,8 +457,7 @@
         "temperType": "Pottery-temperType-milet",
         "temperAmount": "Pottery-temperAmount-milet",
         "temperGrain": "Pottery-temperGrain-milet",
-        "surfaceTreatment": "Pottery-surfaceTreatment-milet",
-        "analysisMethod": "Pottery-analysisMethod-milet"
+        "surfaceTreatment": "Pottery-surfaceTreatment-milet"
       }
     },
     "Inscription:default": {

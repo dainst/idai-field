@@ -6,7 +6,7 @@ import { DoceditPage } from './docedit.page';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DoceditRelationsTabPage {
+export class DoceditRelationsPage {
 
     // click
 

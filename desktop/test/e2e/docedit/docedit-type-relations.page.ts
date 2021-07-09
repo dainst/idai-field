@@ -4,7 +4,7 @@ import { click, getElements, getElement, selectOption } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class DoceditTypeRelationsTabPage {
+export class DoceditTypeRelationsPage {
 
     // click
 

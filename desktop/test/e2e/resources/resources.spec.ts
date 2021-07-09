@@ -5,7 +5,7 @@ import { ResourcesPage } from './resources.page';
 import { NavbarPage } from '../navbar.page';
 import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
-import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
@@ -225,13 +225,13 @@ describe('resources --', () => {
 
         // docedit
         await ResourcesPage.openEditByDoubleClickResource('1');
-        expect(await DoceditRelationsTabPage.getRelationButtonText('isAfter')).toEqual('2');
+        expect(await DoceditRelationsPage.getRelationButtonText('isAfter')).toEqual('2');
         await DoceditPage.clickCloseEdit();
         await ResourcesPage.openEditByDoubleClickResource('2');
-        expect(await DoceditRelationsTabPage.getRelationButtonText('isBefore')).toEqual('1');
+        expect(await DoceditRelationsPage.getRelationButtonText('isBefore')).toEqual('1');
 
         // deletion
-        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('isBefore');
+        await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isBefore');
         await DoceditPage.clickSaveDocument();
         await ResourcesPage.clickSelectResource('1', 'info');
         let tabs = await FieldsViewPage.getTabs();
@@ -254,9 +254,9 @@ describe('resources --', () => {
         await ResourcesPage.performCreateResource('2', 'feature-architecture');
         await DetailSidebarPage.doubleClickEditDocument('1');
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
-        await DoceditRelationsTabPage.typeInRelation('isContemporaryWith', '2');
-        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
+        await DoceditRelationsPage.typeInRelation('isContemporaryWith', '2');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickCloseEdit('discard');
 
         await ResourcesPage.clickSelectResource('1', 'info');

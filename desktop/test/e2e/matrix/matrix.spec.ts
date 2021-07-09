@@ -1,7 +1,7 @@
 import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist } from '../app';
 import { MatrixPage } from './matrix.page';
 import { DoceditPage } from '../docedit/docedit.page';
-import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 
 
 /**
@@ -96,11 +96,11 @@ describe('matrix --', () => {
 
         await MatrixPage.clickNode('si1');
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('isAfter', 1);
+        await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isAfter', 1);
 
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('isAfter');
-        await DoceditRelationsTabPage.typeInRelation('isAfter', 'SE4');
-        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isAfter');
+        await DoceditRelationsPage.typeInRelation('isAfter', 'SE4');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await MatrixPage.getAboveEdge('si1', 'si5'));

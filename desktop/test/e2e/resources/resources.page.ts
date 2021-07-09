@@ -1,7 +1,7 @@
 import { click, getElement, getElements, rightClick, hover, waitForNotExist, doubleClick, getText,
     typeIn, pressKeys } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
-import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -360,9 +360,9 @@ export class ResourcesPage {
 
         await this.openEditByDoubleClickResource(identifier);
         await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationName);
-        await DoceditRelationsTabPage.typeInRelation(relationName, targetIdentifier);
-        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex(relationName);
+        await DoceditRelationsPage.typeInRelation(relationName, targetIdentifier);
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
     }
 

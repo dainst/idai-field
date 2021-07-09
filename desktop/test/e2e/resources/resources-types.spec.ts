@@ -2,9 +2,9 @@ import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExi
 import { ResourcesPage } from './resources.page';
 import { ResourcesTypeGridPage } from './resources-type-grid.page';
 import { DoceditPage } from '../docedit/docedit.page';
-import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
-import { DoceditTypeRelationsTabPage } from '../docedit/docedit-type-relations-tab.page';
+import { DoceditTypeRelationsPage } from '../docedit/docedit-type-relations.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 
 
@@ -49,9 +49,9 @@ describe('resources/types --', () => {
 
         await ResourcesTypeGridPage.clickEditButton();
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('hasInstance');
-        await DoceditRelationsTabPage.typeInRelation('hasInstance', 'testf1');
-        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('hasInstance');
+        await DoceditRelationsPage.typeInRelation('hasInstance', 'testf1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         return DoceditPage.clickSaveDocument();
     }
 
@@ -67,7 +67,7 @@ describe('resources/types --', () => {
 
     async function checkCriterionOptions(expectedOptions: string[]) {
 
-        const options = await DoceditTypeRelationsTabPage.getCriterionOptions();
+        const options = await DoceditTypeRelationsPage.getCriterionOptions();
         expect(options.length).toBe(expectedOptions.length);
         for (let i = 0; i < options.length; i++) {
             expect(await getText(options[i])).toEqual(expectedOptions[i]);
@@ -77,7 +77,7 @@ describe('resources/types --', () => {
 
     async function checkCatalogOptions(expectedOptions: string[]) {
 
-        const options = await DoceditTypeRelationsTabPage.getCatalogOptions();
+        const options = await DoceditTypeRelationsPage.getCatalogOptions();
         expect(options.length).toBe(expectedOptions.length);
         for (let i = 0; i < options.length; i++) {
             expect(await getText(options[i])).toEqual(expectedOptions[i]);
@@ -182,8 +182,8 @@ describe('resources/types --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('isInstanceOf');
-        await DoceditTypeRelationsTabPage.clickType('T1');
+        await DoceditTypeRelationsPage.clickAddTypeRelationButton('isInstanceOf');
+        await DoceditTypeRelationsPage.clickType('T1');
         await DoceditPage.clickSaveDocument();
 
         await ResourcesPage.clickSelectResource('testf1', 'info');
@@ -215,34 +215,34 @@ describe('resources/types --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('isInstanceOf');
+        await DoceditTypeRelationsPage.clickAddTypeRelationButton('isInstanceOf');
 
         await checkCriterionOptions(['Kein Kriterium', 'Dekoration', 'Form']);
         await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
-        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
-        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
+        await waitForExist(await DoceditTypeRelationsPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption('Dekoration');
+        await DoceditTypeRelationsPage.clickCriterionOption('Dekoration');
         await checkCatalogOptions(['Alle Kataloge', 'TC1']);
-        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
+        await waitForNotExist(await DoceditTypeRelationsPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption('Form');
+        await DoceditTypeRelationsPage.clickCriterionOption('Form');
         await checkCatalogOptions(['Alle Kataloge', 'TC2']);
-        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
-        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
+        await waitForNotExist(await DoceditTypeRelationsPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption('no-criterion');
+        await DoceditTypeRelationsPage.clickCriterionOption('no-criterion');
         await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
-        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsPage.getTypeRow('T1'));
 
-        await DoceditTypeRelationsTabPage.clickCatalogOption('TC1');
-        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
+        await DoceditTypeRelationsPage.clickCatalogOption('TC1');
+        await waitForNotExist(await DoceditTypeRelationsPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCatalogOption('TC2');
-        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
-        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
+        await DoceditTypeRelationsPage.clickCatalogOption('TC2');
+        await waitForNotExist(await DoceditTypeRelationsPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickType('T2');
+        await DoceditTypeRelationsPage.clickType('T2');
         await DoceditPage.clickCloseEdit('discard');
 
         done();

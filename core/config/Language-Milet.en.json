@@ -1,108 +1,4 @@
 {
-  "commons": {
-    "dimensionLength": {
-      "label": "Length",
-      "description": "Maximum Length; for Pottery: maximum length of fragment, should be the standard measurement"
-    },
-    "dimensionWidth": {
-      "label": "Width",
-      "description": "Maximum Length (of Fragment)"
-    },
-    "dimensionHeight": {
-      "label": "Height",
-      "description": "Maximum height of Fragment, for Pottery: Only use for the oriented height of ring bases."
-    },
-    "dimensionThickness": {
-      "label": "Thickness / Wall Thickness",
-      "description": "Thickness of the object, for Pottery: Wall thickness of fragment."
-    },
-    "spatialLocation": {
-      "label": "DONT enter anything here, I have no idea why it is here"
-    }
-  },
-  "fields": {
-    "category": {
-      "label": "Category"
-    },
-    "isEquivalentTo": {
-      "label": "identical with"
-    },
-    "identifier": {
-      "label": "Name / ID (unique)",
-      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19.A.01 for Context 1 in Trench A in the year 2019 on Humeitepe. (Omit Trench if not applicable.)"
-    },
-    "dimensionHeadHeight": {
-      "label": "Height of the Head",
-      "description": "Height of the Head from Crown to ??? "
-    },
-    "diameterPercentage": {
-      "label": "Preserved Percentage of Diameter"
-    },
-    "shortDescription": {
-      "label": "Short title"
-    },
-    "scale": {
-      "label": "Scale"
-    },
-    "gazId": {
-      "label": "Gazetteer-ID (see https://gazetteer.dainst.org/)",
-      "description": "Please only enter the unique ID. This means, only the number in the end of the URL: https://gazetteer.dainst.org/place/2091612 (so: 2091612)."
-    },
-    "datingAddenda": {
-      "label": "Additional Informationen about the Dating"
-    },
-    "measuringPointID": {
-      "label": "Measuring-Point-ID",
-      "description": "ID of the data in the Totalstation, empty if not applicable"
-    },
-    "localization": {
-      "label": "Origin of Surveying Data",
-      "description": "How was the spatial data acquired?"
-    },
-    "localizationDescription": {
-      "label": "Description of Localization (if Surveying Data are missing)",
-      "description": "Either enter a (topographical) description of localization, if only that exists, or record the point numbers or surveying data in the appropriate format."
-    },
-    "FotoNr": {
-      "label": "Photograph-ID(s)",
-      "description": "List the IDs of Fotographs according to the paper form. This can also encompass fotos that are not included in the database itself, but instead archived together with the documentation."
-    },
-    "DrawingNr": {
-      "label": "Drawing-ID(s)",
-      "description": "List the IDs of drawings according to the paper form. This can also encompass drawings that are not included in the database itself, but instead archived together with the documentation."
-    },
-    "notes": {
-      "label": "Notes",
-      "description": "..."
-    },
-    "otherNotes": {
-      "label": "Notes",
-      "description": "..."
-    },
-    "quantificationOther": {
-      "label": "Other elements (not on form)",
-      "description": "Record other pottery fragments that cannot be entered into the form above - use this carefully and only if absolutely neccessary."
-    }
-  },
-  "relations": {
-    "isEquivalentTo": {
-      "label": "Identical with"
-    },
-    "isFilledBy": {
-      "label": "Is Filled by"
-    },
-    "fills": {
-      "label": "Fills"
-    },
-    "wasFoundIn": {
-      "label": "Was Found in",
-      "description": "Building, Place or Survey the find came from."
-    },
-    "hasFinds": {
-      "label": "Contains Finds",
-      "description": "Objects that were found within this Building, Place or Survey. Please only use this for the Inventory of finds from older excavations such as the Steindepot-Records!"
-    }
-  },
   "categories": {
     "Operation": {
       "fields": {
@@ -252,7 +148,7 @@
     "PlasterFragment": {
       "fields": {
         "decorationDescription": {
-          "Label": "Description of the Decoration # TODO"
+          "label": "Description of the Decoration"
         }
       }
     },

@@ -1,9 +1,9 @@
 
 import { Matrix4 } from 'react-native-redash';
-import { GeometryBoundings } from './cs-transform-utils';
-import { processTransform2d, setupTransformationMatrix } from './geojson-cs-to-svg-cs';
-import { matrixInverse4 } from './matrix-utils/matrix-utils';
-import { ViewPort } from './viewport-utils/viewport-utils';
+import { matrixInverse4 } from '../matrix-utils/matrix-utils';
+import { processTransform2d, setupTransformationMatrix } from './cs-transform';
+import { GeometryBoundings } from './utils';
+import { ViewPort } from './utils/viewport-utils';
 
 
 describe('geojson-cs-to-svg',() => {
@@ -40,7 +40,7 @@ describe('geojson-cs-to-svg',() => {
 
         const expectedResult: Matrix4 = [
             [12,0,0,0],
-            [0,-12,0,1200],
+            [0,12,0,0],
             [0,0,1,0],
             [0,0,0,1]];
         
@@ -58,7 +58,7 @@ describe('geojson-cs-to-svg',() => {
         };
         const viewPort: ViewPort = { x: 0,y: 0, width: 752.941162109375,height: 1067.2940673828125 };
         const position = [27.189346313476562,39.141404151916504];
-        const expectedTransformedPos = [913.4450481235981, 271.78206537663937];
+        const expectedTransformedPos = [913.4450481235981, 795.5120020061731];
 
         const transformationMat = setupTransformationMatrix(geoBoundings, viewPort);
         const transformedPosition = processTransform2d(transformationMat, position);

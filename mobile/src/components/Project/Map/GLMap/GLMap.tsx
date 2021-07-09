@@ -5,15 +5,15 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
-import { CameraView } from '../../../hooks/use-Nmapdata';
-import usePrevious from '../../../hooks/use-previous';
-import { colors } from '../../../utils/colors';
-import { ViewPort } from './geo-svg';
+import { CameraView } from '../../../../hooks/use-Nmapdata';
+import usePrevious from '../../../../hooks/use-previous';
+import { colors } from '../../../../utils/colors';
+import { ViewPort } from './geojson';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson-gl-shape';
-import { calcCenter, calcDistance } from './SvgMap/math-utils';
+import { calcCenter, calcDistance } from './math-utils';
 
 
 const cameraDefaultPos = {

@@ -1,13 +1,13 @@
 import { Document, FieldGeometry, Query } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
 import { Matrix4 } from 'react-native-redash';
+import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/GLMap/constants';
 import {
     GeometryBoundings, getGeometryBoundings,
     getMinMaxCoords,
     processTransform2d,
     setupTransformationMatrix, ViewPort
-} from '../components/Project/Map/geo-svg';
-import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
+} from '../components/Project/Map/GLMap/geojson';
 import { DocumentRepository } from '../repositories/document-repository';
 
 const searchQuery: Query = {
@@ -37,7 +37,7 @@ const useMapData = (
 
     const focusMapOnDocumentIds = useCallback(async (docIds: string[]) => {
 
-        if(!transformMatrix) return
+        if(!transformMatrix) return;
         
         const geoDocs: FieldGeometry[] = [];
         const docs = await repository.getMultiple(docIds);

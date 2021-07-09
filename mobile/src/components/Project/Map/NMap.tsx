@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-Nmapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
-import { ViewPort } from './geo-svg';
-import GLMap from './GLMap';
+import { ViewPort } from './GLMap/geojson';
+import GLMap from './GLMap/GLMap';
 import MapBottomSheet from './MapBottomSheet';
 
 

@@ -5,13 +5,8 @@ import { SortUtil } from './sort-util';
 import { I18nString } from '../model';
 
 
-/**
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
 
 export type Name = string;
-
 
 export interface Named { name: Name }
 
@@ -26,7 +21,18 @@ export module Labeled {
 }
 
 
-export module Named {
+/**
+ * A common interface for Maps having the `name` property.
+ * Provides utilities to work with (collections of) such structures.
+ * 
+ * When extending Named, make sure `name` is a **unique** property
+ * of your data structures 
+ * (see `arrayToMap`, where name will be repurposed as map key).
+ * 
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
+export namespace Named {
 
     export const NAME = 'name';
 
@@ -65,6 +71,5 @@ export module Named {
     export const onName = (p: Predicate) => on(Named.NAME, p);
     
     
-    // export const toName = to<Name /* users must make sure this is to be expected */>(Named.NAME);
     export const toName = (named: Named) => named.name;
 }

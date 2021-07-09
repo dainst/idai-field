@@ -58,14 +58,13 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         const geometryPoints = new BufferGeometry().setFromPoints( points );
         const notSelected = new Line( geometryPoints, notSelectedMaterial);
         notSelected.name = ObjectChildValues.notSelected;
-        notSelected.renderOrder = 1
+        notSelected.renderOrder = 1;
         parent.add(notSelected);
     });
     
     addObjectInfo(parent,document);
     scene.add(parent);
 };
-
 
 
 const geoJsonPolyToShape = ( matrix: Matrix4, polygon: Position[][]): Shape => {
@@ -85,7 +84,8 @@ const geoJsonPolyToShape = ( matrix: Matrix4, polygon: Position[][]): Shape => {
 };
 
 
-export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (matrix, scene, config, document, coordinates) => {
+export const lineStringToShape:
+    ShapeFunction<Position[] | Position[][]> = (matrix, scene, config, document, coordinates) => {
 
     if(!coordinates) return;
 
@@ -93,15 +93,15 @@ export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (matr
     const color = config.getColorForCategory(document.resource.category);
     const geos: BufferGeometry[] = [];
 
-    if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates))
-    else coordinates.forEach(lineString => geos.push(geoJsonLineToShape(matrix, lineString)))
+    if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates));
+    else coordinates.forEach(lineString => geos.push(geoJsonLineToShape(matrix, lineString)));
 
     // selected Child
     geos.forEach(geo => {
         const selectedLine = new Line(geo, lineStringMaterial(color, true));
         selectedLine.name = ObjectChildValues.selected;
         selectedLine.visible = false;
-        parent.add(selectedLine)
+        parent.add(selectedLine);
     });
 
     // not selected Child
@@ -111,7 +111,7 @@ export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (matr
         notSelectedLine.visible = true;
         notSelectedLine.renderOrder = 1;
         parent.add(notSelectedLine);
-    })
+    });
 
     addObjectInfo(parent, document);
     scene.add(parent);

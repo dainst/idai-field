@@ -7,7 +7,6 @@ import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { CameraView } from '../../../hooks/use-Nmapdata';
 import usePrevious from '../../../hooks/use-previous';
-import useToast from '../../../hooks/use-toast';
 import { colors } from '../../../utils/colors';
 import { ViewPort } from './geo-svg';
 import {
@@ -45,7 +44,6 @@ const GLMap: React.FC<GLMapProps> = ({
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,0,100,100) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
 
-    const { showToast } = useToast();
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
 

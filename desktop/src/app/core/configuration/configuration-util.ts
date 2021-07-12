@@ -1,6 +1,7 @@
 import { flatten, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
+import { LanguageConfigurationUtil } from './language-configuration-util';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
@@ -53,6 +54,10 @@ export module ConfigurationUtil {
             .categories[category.libraryId ?? category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
+        );
+
         return clonedConfigurationDocument;
     }
 
@@ -69,6 +74,10 @@ export module ConfigurationUtil {
             group => group.fields.includes(field.name)
         );
         groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            clonedConfigurationDocument.resource.languages, {}, {}, category, field
+        );
 
         return clonedConfigurationDocument;
     }

@@ -396,4 +396,90 @@ import { CustomLanguageConfigurations,
 
         expect(customLanguageConfigurations.de).toBeUndefined();
     });
+
+
+    it('Remove all translations from custom language configurations for field', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Label 1',
+                                description: 'Beschreibung 1'
+                            },
+                            testField2: {
+                                label: 'Label 2',
+                                description: 'Beschreibung 2'
+                            },
+                        }
+                    }
+                }
+            },
+            en: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Label',
+                                description: 'Description'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            {},
+            {},
+            category,
+            field
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testField)
+            .toBeUndefined();
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.label)
+            .toBe('Label 2');
+            expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.description)
+            .toBe('Beschreibung 2');
+        expect(customLanguageConfigurations.en)
+            .toBeUndefined();
+    });
+
+
+    it('Remove all translations from custom language configurations for group', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                groups: {
+                    testGroup: 'Label 1',
+                    testGroup2: 'Label 2'
+                }
+            },
+            en: {
+                groups: {
+                    testGroup: 'Label'
+                }
+            }
+        };
+
+        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            {},
+            {},
+            category,
+            undefined,
+            group
+        );
+
+        expect(customLanguageConfigurations.de.groups.testGroup)
+            .toBeUndefined();
+        expect(customLanguageConfigurations.de.groups.testGroup2)
+            .toBe('Label 2');
+        expect(customLanguageConfigurations.en)
+            .toBeUndefined();
+    });
 });

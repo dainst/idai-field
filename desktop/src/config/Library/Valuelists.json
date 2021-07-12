@@ -54604,17 +54604,6 @@
       }
     }
   },
-  "Pottery-analysisMethod-milet": {
-    "creationDate": "16-03-2021",
-    "createdBy": "Lisa Steinmann (Milet)",
-    "description": {
-      "de": "nicht mehr verwendet"
-    },
-    "values": {
-      "nicht": {},
-      "ankreuzen": {}
-    }
-  }, 
   "Sample-sampleType-milet": {
     "createdBy": "Sabine Huy / Lisa Steinmann (Milet)",
     "creationDate": "26-04-2021",

@@ -8,6 +8,7 @@ import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
+import {ProjectConfigurationComponent} from '../project-configuration.component';
 
 
 @Component({
@@ -78,7 +79,8 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
     protected updateCustomLanguageConfigurations() {
 
         LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            this.getClonedLanguageConfigurations(), this.clonedLabel, undefined, undefined, undefined, this.group
+            this.getClonedLanguageConfigurations(),
+            this.clonedLabel, undefined, undefined, undefined, this.group
         );
     }
 }

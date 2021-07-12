@@ -1,11 +1,10 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
-import { AppConfigurator, ConfigurationDocument, getConfigurationName, I18nString, ProjectConfiguration,
-    Document, Category, CustomCategoryDefinition } from 'idai-field-core';
-import { SettingsProvider } from '../../../core/settings/settings-provider';
+import { ConfigurationDocument, I18nString, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
 import { MenuContext, MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
+import { ErrWithParams } from '../../../core/import/import/import-documents';
 
 
 /**
@@ -22,6 +21,9 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedLabel: I18nString;
     public clonedDescription?: I18nString;
     public clonedConfigurationDocument: ConfigurationDocument;
+
+    public configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+        Promise<ErrWithParams|undefined>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
@@ -90,12 +92,16 @@ export abstract class ConfigurationEditorModalComponent {
         this.saving = true;
         this.updateCustomLanguageConfigurations();
 
-        try {
-            this.activeModal.close(this.clonedConfigurationDocument);
-        } catch (errWithParams) {
+        const optionalErrWithParams =
+            await this.configureAppSaveChangesAndReload(
+                this.clonedConfigurationDocument);
+
+        if (optionalErrWithParams) {
             // TODO Show user-readable error messages
-            this.messages.add(errWithParams);
+            this.messages.add(optionalErrWithParams);
             this.saving = false;
+        } else {
+            this.activeModal.close();
         }
     }
 

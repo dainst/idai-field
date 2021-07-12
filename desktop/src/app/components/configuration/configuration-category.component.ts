@@ -3,19 +3,17 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
-    Resource, Document, GroupDefinition, InPlace, ProjectConfiguration, AppConfigurator,
-    getConfigurationName, Groups} from 'idai-field-core';
+    Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
-import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './project-configuration.component';
-import { SettingsProvider } from '../../core/settings/settings-provider';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
+import {ErrWithParams} from '../../core/import/import/import-documents';
 
 
 @Component({
@@ -34,6 +32,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() allowDragAndDrop: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
+
+    @Input() configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+        Promise<ErrWithParams|undefined>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
@@ -207,6 +208,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.field = {
@@ -242,6 +244,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
             GroupEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.group = {
@@ -256,7 +260,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         modalReference.componentInstance.initialize();
 
         try {
-            this.onConfigurationChanged.emit(await modalReference.result);
+            await modalReference.result
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -282,7 +286,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     this.getCustomCategoryDefinition(),
                     this.getParentCustomCategoryDefinition()
                 )(field)))
-            .map(to('name'));
+            .map(Named.toName);
 
         if (this.category.name === 'Project') result.push(Resource.IDENTIFIER);
 

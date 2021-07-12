@@ -19,7 +19,8 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import {LinkLibraryCategoryModalComponent} from './add/link-library-category-modal.component';
+import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
+import { ErrWithParams } from '../../core/import/import/import-documents';
 
 
 export type InputType = {
@@ -196,12 +197,13 @@ export class ProjectConfigurationComponent implements OnInit {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChangesAndReload(await modalReference.result);
+            await modalReference.result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -221,13 +223,15 @@ export class ProjectConfigurationComponent implements OnInit {
             GroupEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;
         modalReference.componentInstance.initialize();
 
         try {
-            await this.configureAppSaveChangesAndReload(await modalReference.result);
+            await modalReference.result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -245,6 +249,7 @@ export class ProjectConfigurationComponent implements OnInit {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;
@@ -252,7 +257,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.configureAppSaveChangesAndReload(await modalReference.result);
+            await modalReference.result
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -306,17 +311,31 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument) {
+    public configureAppSaveChangesAndReload = async (configurationDocument: ConfigurationDocument)
+                                                     : Promise<ErrWithParams|undefined> => /* '=>' binds 'this' */ {
 
-        const newProjectConfiguration = await this.appConfigurator.go(
-            this.settingsProvider.getSettings().username,
-            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-            Document.clone(configurationDocument)
-        );
-        await this.saveChangesAndReload({
-            newProjectConfiguration,
-            newCustomConfigurationDocument: configurationDocument
-        })
+        let newProjectConfiguration;
+        try {
+             newProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                Document.clone(configurationDocument)
+            );
+        } catch (errWithParams) {
+
+            return errWithParams;
+
+        } finally {
+
+            try {
+                await this.saveChangesAndReload({
+                    newProjectConfiguration,
+                    newCustomConfigurationDocument: configurationDocument
+                });
+            } catch (e) {
+                console.error('error in configureAppSaveChangesAndReload', e)
+            }
+        }
     }
 
 

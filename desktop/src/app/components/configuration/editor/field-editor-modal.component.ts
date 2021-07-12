@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { AppConfigurator, CustomCategoryDefinition, FieldDefinition, Group, GroupDefinition, I18nString } from 'idai-field-core';
+import { AppConfigurator, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
-import { InputType } from '../project-configuration.component';
+import { InputType, ProjectConfigurationComponent } from '../project-configuration.component';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
+import {ErrWithParams} from '../../../core/import/import/import-documents';
 
 
 @Component({

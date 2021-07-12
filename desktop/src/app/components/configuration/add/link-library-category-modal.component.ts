@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
-import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
+import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext, MenuService } from '../../menu-service';
 import { AddCategoryModalComponent } from './add-category-modal.component';
@@ -72,7 +72,15 @@ export class LinkLibraryCategoryModalComponent {
 
     public createCategory() {
 
-        this.activeModal.close(this.category);
+        if (!this.category) return;
+
+        const configurationDocument = Document.clone(this.customConfigurationDocument);
+        configurationDocument.resource.categories[this.category.name] = {
+            fields: {},
+            hidden: []
+        }
+        this.configureAppSaveChangesAndReload(configurationDocument);
+        this.activeModal.close();
     }
 
 

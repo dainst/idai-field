@@ -178,9 +178,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.saveChanges = (result) => this.saveChangesAndReload(result);
 
         try {
-            const result = await modalReference.result;
-            console.log("result", result)
-            // await this.createNewSubcategory(parentCategory, await modalReference.result);
+            await modalReference.result;
         } catch (err) {
             // Modal has been canceled
         } finally {

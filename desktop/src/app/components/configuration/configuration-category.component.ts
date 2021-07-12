@@ -39,7 +39,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
     @Output() onEditField: EventEmitter<FieldDefinition> = new EventEmitter<FieldDefinition>();
-    @Output() onConfigurationChanged: EventEmitter<ConfigurationDocument> = new EventEmitter<ConfigurationDocument>();
 
     public selectedGroup: string;
     public label: string;
@@ -192,7 +191,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .groups = newGroups;
 
         try {
-            this.onConfigurationChanged.emit(clonedConfigurationDocument);
+            await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);

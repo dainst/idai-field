@@ -58,7 +58,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         if (changes['category']) {
             if (!changes['category'].previousValue
-                    || changes['category'].currentValue.name !== changes['category'].previousValue.name) {
+                    || changes['category'].currentValue.name !== changes['category'].previousValue.name
+                    || !this.category.groups.map(to(Named.NAME)).includes(this.selectedGroup)) {
                 this.selectedGroup = this.category.groups[0].name;
             }
             this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();

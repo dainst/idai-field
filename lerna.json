@@ -2,7 +2,8 @@
   "packages": [
     "core",
     "desktop",
-    "mobile"
+    "mobile",
+    "web/ui"
   ],
   "version": "independent"
 }

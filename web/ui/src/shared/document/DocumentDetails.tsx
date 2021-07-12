@@ -126,7 +126,10 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
         const labeledPosition =
             (object as Dimension).measurementPosition;
         return Dimension.generateLabel(
-            object1, getDecimalValue, t, labeledPosition ? getLabel(labeledPosition as any) : undefined
+            object1, getDecimalValue, t, labeledPosition
+                // eslint-disable-next-line
+                ? getLabel(labeledPosition as any)
+                : undefined
         );
     }
     

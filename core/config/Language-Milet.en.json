@@ -1,78 +1,12 @@
 {
-  "fields": {
-    "category": {
-      "label": "Category"
-    },
-    "isEquivalentTo": {
-      "label": "identical with"
-    },
-    "identifier": {
-      "label": "Name / ID (eindeutig)",
-      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19.A.01 for Context 1 in Trench A in the year 2019 on Humeitepe. (Omit Trench if not applicable.)"
-    },
-    "dimensionHeadHeight": {
-      "label": "Height of the Head",
-      "description": "Height of the Head from Crown to ??? "
-    },
-    "shortDescription": {
-      "label": "Short title"
-    },
-    "scale": {
-      "label": "Scale"
-    },
-    "measuringPointID": {
-      "label": "Measuring-Point-ID",
-      "description": "ID of the data in the Totalstation, empty if not applicable"
-    },
-    "localization": {
-      "label": "Origin of Surveying Data",
-      "description": "How was the spatial data acquired?"
-    },
-    "localizationDescription": {
-      "label": "Description of Localization (if Surveying Data are missing)",
-      "description": "Either enter a (topographical) description of localization, if only that exists, or record the point numbers or surveying data in the appropriate format."
-    },
-    "FotoNr": {
-      "label": "Photograph-ID(s)",
-      "description": "List the IDs of Fotographs according to the paper form. This can also encompass fotos that are not included in the database itself, but instead archived together with the documentation."
-    },
-    "DrawingNr": {
-      "label": "Drawing-ID(s)",
-      "description": "List the IDs of drawings according to the paper form. This can also encompass drawings that are not included in the database itself, but instead archived together with the documentation."
-    },
-    "notes": {
-      "label": "Notes",
-      "description": "..."
-    },
-    "otherNotes": {
-      "label": "Notes",
-      "description": "..."
-    },
-    "quantificationOther": {
-      "label": "Other elements (not on form)",
-      "description": "Record other pottery fragments that cannot be entered into the form above - use this carefully and only if absolutely neccessary."
-    }
-  },
-  "relations": {
-    "isEquivalentTo": {
-      "label": "identical with"
-    },
-    "isFilledBy": {
-      "label": "is filled by"
-    },
-    "fills": {
-      "label": "fills"
-    },
-    "wasFoundIn": {
-      "label": "was found in",
-      "description": "Building, Place or Survey they find came from."
-    },
-    "hasFinds": {
-      "label": "Contains Finds",
-      "description": "Objects that were found within this Building, Place or Survey. Please only use this for the Inventory of finds from older excavations such as the Steindepot-Records!"
-    }
-  },
   "categories": {
+    "Operation": {
+      "fields": {
+        "AreaShorthand": {
+          "label": "Abbreviation of Excavation Area"
+        }
+      }
+    },
     "Trench": {
       "label": "Excavation-Area"
     },
@@ -88,25 +22,33 @@
           "description": "State the precision with which the contents of the context or unit should be processed. This can be found on the second page of the paper form under the same heading."
         }
       }
-    },    
+    },
     "Layer": {
       "label": "Context",
-      "fields": { 
+      "fields": {
+        "findprocessingFinished": {
+          "label": "Find processing finished",
+          "description": "Mark (Yes), if find processing of this context has been finished."
+        },
         "sampleTaken": {
           "label": "Sample taken",
           "description": "'Yes' if a sample has been collected from the context, e.g. flotation, charcoal, etc.; 'No' if no sample has been taken."
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing Criteria (in relation to surrounding contexts)",
+          "description": "Which criteria have been used to distinguish the context from its surrounding material? (Has to be interpolated from the short Description, there is no corresponding field on the paperform.)"
         },
         "layerClassification": {
           "label": "Classification of Context",
           "description": "Should be identical with the field '' from the paper form. If any terminology is used their often but not present in the database, please let us know."
         },
+        "isNatural": {
+          "label": "Natural Occurence",
+          "description": "Is this context a naturally occuring layer ('Yes' for e.g erosion, 'no' if anthropogenous). No corresponding field on the paper form. Can be decided in post-processing."
+        },
         "contextDescription": {
           "label": "Short Description",
           "description": "Corresponds to the field 'short description' on the paper form."
-        },
-        "distinguishingCriteria": {
-          "label": "Distinguishing Criteria (in relation to surrounding contexts)",
-          "description": "Which criteria have been used to distinguish the context from its surrounding material? (Has to be interpolated from the short Description, there is no corresponding field on the paperform.)"
         },
         "soilType": {
           "label": "Soiltype",
@@ -148,10 +90,6 @@
           "label": "Other finds and special finds",
           "description": "Addenda to 'Finds (overview'). Additionally add the inventory numbers of any special finds associated with this layer. (Additional Finds and Special Finds on the paper form.)"
         },
-        "isNatural": {
-          "label": "Natural Occurence",
-          "description": "Is this context a naturally occuring layer ('Yes' for e.g erosion, 'no' if anthropogenous). No corresponding field on the paper form. Can be decided in post-processing."
-        },
         "layerInterpretation": {
           "label": "Interpretation",
           "description": "Contents of 'Interpretation' on the paper form. Can be amended in post-processing."
@@ -163,17 +101,31 @@
       }
     },
     "StrUnit": {
-      "label": "Stratigraphical Unit"
+      "label": "Stratigraphical Unit",
+      "fields": {
+        "unitNotes": {
+          "label": "Notes"
+        }
+      }
+    },
+    "Profile": {
+      "label": "Profile",
+      "fields": {
+        "profileClassification": {
+          "label": "Description of Profile",
+          "description": "Enter the text on the paper form here."
+        }
+      }
+    },
+    "TrenchSketch": {
+      "label": "Trench Sketch",
+      "fields": {}
     },
     "Find": {
       "fields": {
         "storagePlaceOther": {
           "label": "Other Storage Place",
           "description": "Please enter place of storage here if it is not an option in the list above."
-        },
-        "measuringPointOrigin": {
-          "label": "Origin of Surveying Data",
-          "description": "Origin of Surveying Data"
         },
         "workflow": {
           "label": "Workflow",
@@ -190,6 +142,115 @@
         "YearOfFind": {
           "label": "Year (in case of Altfund)",
           "description": "Year in which the object has been found or first recorded, in case of Altfunde"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "decorationDescription": {
+          "label": "Description of the Decoration"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Pottery",
+      "fields": {
+        "potteryGroup": {
+          "label": "Pottery Group"
+        },
+        "functionalCategory": {
+          "label": "Functional Category"
+        },
+        "vesselForm": {
+          "label": "Vessel Form"
+        },
+        "vesselFormDescription": {
+          "label": "Description of Vessel Form"
+        },
+        "vesselType": {
+          "label": "Type"
+        },
+        "provenanceInput": {
+          "label": "Provenance",
+          "description": "In case not listed in Dropdown or more detailed data availbale."
+        },
+        "amountSherdsTotal": {
+          "label": "Quantification: Total amount of fragments"
+        },
+        "amountSherdsRim": {
+          "label": "Quantification: Amount of Rimfragments"
+        },
+        "amountSherdsWall": {
+          "label": "Quantification: Amount of Wallfragments"
+        },
+        "amountSherdsBase": {
+          "label": "Quantification: Amount of Basefragments"
+        },
+        "amountSherdsHandles": {
+          "label": "Quantification: Amount of Handlefragments"
+        },
+        "amountSherdsLid": {
+          "label": "Quantification: Amount of Lidfragments"
+        },
+        "amountSherdsOther": {
+          "label": "Quantification: Amount of other fragments"
+        },
+        "amountSherdsWholeProfile": {
+          "label": "Quantification: Amount of fragments with complete profile"
+        },
+        "weightTotal": {
+          "label": "Quantification: Total weight (in g)",
+          "description": ""
+        },
+        "potteryCondition": {
+          "label": "Quantification and Preservation: Condition"
+        },
+        "fabricGroup": {
+          "label": "Fabric: Group"
+        },
+        "fabricColorInsideMunsell": {
+          "label": "Fabric: Color inside (Munsell, format should be: 2.5R 2.5/2 (???))"
+        },
+        "fabricColorOutsideMunsell": {
+          "label": "Fabric: Color outside (Munsell, Format!)"
+        },
+        "fabricColorBreakMunsell": {
+          "label": "Fabric: Color core (Munsell, Format!)"
+        },
+        "fabricHardness": {
+          "label": "Fabric: Hardness"
+        },
+        "fabricStructure": {
+          "label": "Fabric: Structure at Break"
+        },
+        "temperType": {
+          "label": "Fabric: Type of Temper"
+        },
+        "temperTypeOther": {
+          "label": "Fabric: Type of Temper (other components)"
+        },
+        "temperAmount": {
+          "label": "Fabric: Amount"
+        },
+        "temperGrain": {
+          "label": "Fabric: Grain"
+        },
+        "surfaceTreatment": {
+          "label": "Surface and Decoration: Treatment"
+        },
+        "surfaceTreatmentDescription": {
+          "label": "Surface and Decoration: Treatment - Description"
+        },
+        "otherNotes": {
+          "label": "Working Notes"
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey-Area",
+      "fields": {
+        "researchMethod-milet": {
+          "label": "Research method"
         }
       }
     },
@@ -276,8 +337,38 @@
           "description": "Additional information or descriptions of the Sculptures attributes"
         },
         "sculptureQuality": {
-          "label": "Quality of the worksmanship and sculpture",
+          "label": "Quality of the worksmanship and sculpture"
+        }
+      }
+    },
+    "Building": {
+      "fields": {
+        "buildingType": {
+          "label": "Function of Building",
           "description": ""
+        },
+        "buildingCategory": {
+          "label": "Type of Building",
+          "description": ""
+        },
+        "buildingContractor": {
+          "label": "Contractor",
+          "description": "Can be a city, single person or other entitity."
+        },
+        "associatedDeity": {
+          "label": "Associated Deity",
+          "description": "If applicable: In case of Dedication, Temples etc. Try to use the main names without epiclesis."
+        },
+        "excavatedIn": {
+          "label": "Excavation years",
+          "description": "When was this structure excavated?"
+        },
+        "excavatedBy": {
+          "label": "Excavated by",
+          "description": "Person who was responsible for the excavation"
+        },
+        "architecturalOrder": {
+          "label": "Architectural Order"
         }
       }
     },
@@ -288,266 +379,245 @@
           "description": "Direction the Photograph was shot in."
         }
       }
-    }
-  },
-  
-  "Quantification": {
-    "label": "Quantification",
-    "fields": {
-      "quantificationType": {
-        "label": "Type of Find",
-        "description": ""
-      },
-      "countTotal": {
-        "label": "Fragment Count (total)",
-        "description": ""
-      },
-      "weightTotal": {
-        "label": "Weight (total)",
-        "description": ""
-      },
-      "quantificationNotes": {
-        "label": "Remarks and Comments on Quantification",
-        "description": ""
+    },
+    "Drawing": {
+      "fields": {}
+    },
+    "Sample": {
+      "fields": {
+        "volume": {
+          "label": "Volume in ml"
+        },
+        "analysisMethod": {
+          "label": "Analysis: Method"
+        },
+        "analysisMethodOther": {
+          "label": "Analysis: Method (other)"
+        },
+        "analysisAim": {
+          "label": "Analysis: Aim"
+        },
+        "analysisActor": {
+          "label": "Analysis: Executing Person / Laboratory"
+        },
+        "analysisResult": {
+          "label": "Analysis: Result"
+        }
       }
-    }
-  },
-  "Pottery_Quantification_A": {
-    "label": "Quantification Pottery A",
-    "fields": {
-      "countArchitecturalCeramics": {
-        "label": "Architectural Ceramics (Fragment count)",
-        "description": ""
-      }, 
-      "weightArchitecturalCeramics": {
-        "label": "Architectural Ceramics (Weight in g)",
-        "description": ""
-      },
-      "countTransportamphorae": {
-        "label": "Transportamphorae (Fragment count)",
-        "description": ""
-      }, 
-      "weightTransportamphorae": {
-        "label": "Transportamphorae (Weight in g)",
-        "description": ""
-      },
-      "countHouseholdwares": {
-        "label": "Household pottery (Fragment count)",
-        "description": ""
-      }, 
-      "weightHouseholdwares": {
-        "label": "Household pottery (Weight in g)",
-        "description": ""
-      },
-      "countCookingwares": {
-        "label": "Cooking pottery (Fragment count)",
-        "description": ""
-      }, 
-      "weightCookingwares": {
-        "label": "Cooking pottery (Weight in g)",
-        "description": ""
-      },
-      "countStoragevessels": {
-        "label": "Storage vessels (Fragment count)",
-        "description": ""
-      }, 
-      "weightStoragevessels": {
-        "label": "Storage vessels (Weight in g)",
-        "description": ""
-      },
-      "countTablewares": {
-        "label": "Tablewares (Fragment count)",
-        "description": ""
-      }, 
-      "weightTablewares": {
-        "label": "Tablewares (Weight in g)",
-        "description": ""
-      },
-      "countFinepottery": {
-        "label": "Fine pottery (Fragment count)",
-        "description": ""
-      }, 
-      "weightFinepottery": {
-        "label": "Fine pottery (Weight in g)",
-        "description": ""
-      },
-      "countOilcontainers": {
-        "label": "Oil containers = Lekythoi, Unguentaria etc. (Fragment count)",
-        "description": ""
-      }, 
-      "weightOilcontainers": {
-        "label": "Oil containers = Lekythoi, Unguentaria etc. (Weight in g)",
-        "description": ""
-      },
-      "countTools": {
-        "label": "Tools = Lamps, Weights, Beehives etc. (Fragment count)",
-        "description": ""
-      }, 
-      "weightTools": {
-        "label": "Tools = Lamps, Weights, Beehives etc. (Weight in g)",
-        "description": ""
-      },
-      "countUnspecified": {
-        "label": "undetermined (Fragment count)",
-        "description": ""
-      }, 
-      "weightUnspecified": {
-        "label": "undetermined (Weight in g)",
-        "description": ""
+    },
+    "Quantification": {
+      "label": "Quantification",
+      "fields": {
+        "quantificationType": {
+          "label": "Type of Find"
+        },
+        "countTotal": {
+          "label": "Fragment Count (total)"
+        },
+        "weightTotal": {
+          "label": "Weight (total)"
+        },
+        "quantificationNotes": {
+          "label": "Remarks and Comments on Quantification"
+        }
       }
-    }
-  },
-  "Pottery_Quantification_B": {
-    "label": "Quantification Pottery B",
-    "fields": {
-      "countTransportamphoraeRim": {
-        "label": "Transportamphorae (Rim fragments)",
-        "description": ""
-      }, 
-      "countTransportamphoraeBase": {
-        "label": "Transportamphorae (Base fragments)",
-        "description": ""
-      }, 
-      "countTransportamphoraeHandle": {
-        "label": "Transportamphorae (Handle fragments)",
-        "description": ""
-      }, 
-      "countHouseholdwaresRim": {
-        "label": "Household pottery (Rim fragments)",
-        "description": ""
-      }, 
-      "countHouseholdwaresBase": {
-        "label": "Household pottery (Base fragments)",
-        "description": ""
-      }, 
-      "countHouseholdwaresHandle": {
-        "label": "Household pottery (Handle fragments)",
-        "description": ""
-      },
-      "countCookingwaresRim": {
-        "label": "Cooking pottery (Rim fragments)",
-        "description": ""
-      }, 
-      "countCookingwaresBase": {
-        "label": "Cooking pottery (Base fragments)",
-        "description": ""
-      }, 
-      "countCookingwaresHandle": {
-        "label": "Cooking pottery (Handle fragments)",
-        "description": ""
-      }, 
-      "countStoragevesselsRim": {
-        "label": "Storage vessels (Rim fragments)",
-        "description": ""
-      },  
-      "countStoragevesselsBase": {
-        "label": "Storage vessels (Base fragments)",
-        "description": ""
-      },  
-      "countStoragevesselsHandle": {
-        "label": "Storage vessels (Handle fragments)",
-        "description": ""
-      }, 
-      "countTablewaresRim": {
-        "label": "Tablewares (Rim fragments)",
-        "description": ""
-      }, 
-      "countTablewaresBase": {
-        "label": "Tablewares (Base fragments)",
-        "description": ""
-      }, 
-      "countTablewaresHandle": {
-        "label": "Tablewares (Handle fragments)",
-        "description": ""
-      }, 
-      "countFinepotteryRim": {
-        "label": "Fine pottery (Rim fragments)",
-        "description": ""
-      }, 
-      "countFinepotteryBase": {
-        "label": "Fine pottery (Base fragments)",
-        "description": ""
-      }, 
-      "countFinepotteryHandle": {
-        "label": "Fine pottery (Handle fragments)",
-        "description": ""
-      }, 
-      "countOilcontainersRim": {
-        "label": "Öl = Lekythen, Unguentarien etc.",
-        "description": ""
-      }, 
-      "countOilcontainersBase": {
-        "label": "Oil containers = Lekythoi, Unguentaria etc. (Base fragments)",
-        "description": ""
-      }, 
-      "countOilcontainersHandle": {
-        "label": "Oil containers = Lekythoi, Unguentaria etc. (Handle fragments)",
-        "description": ""
-      }, 
-      "countLampsRim": {
-        "label": "Lamps (Rim fragments)",
-        "description": ""
-      }, 
-      "countLampsBase": {
-        "label": "Lamps (Base fragments)",
-        "description": ""
-      }, 
-      "countLampsHandle": {
-        "label": "Lamps (Handle fragments)",
-        "description": ""
+    },
+    "Pottery_Quantification_A": {
+      "label": "Quantification Pottery A",
+      "fields": {
+        "countArchitecturalCeramics": {
+          "label": "Architectural Ceramics (Fragment count)"
+        },
+        "weightArchitecturalCeramics": {
+          "label": "Architectural Ceramics (Weight in g)"
+        },
+        "countTransportamphorae": {
+          "label": "Transportamphorae (Fragment count)"
+        },
+        "weightTransportamphorae": {
+          "label": "Transportamphorae (Weight in g)"
+        },
+        "countHouseholdwares": {
+          "label": "Household pottery (Fragment count)"
+        },
+        "weightHouseholdwares": {
+          "label": "Household pottery (Weight in g)"
+        },
+        "countCookingwares": {
+          "label": "Kitchen pottery (Fragment count)"
+        },
+        "weightCookingwares": {
+          "label": "Kitchen pottery (Weight in g)"
+        },
+        "countStoragevessels": {
+          "label": "Storage vessels (Fragment count)"
+        },
+        "weightStoragevessels": {
+          "label": "Storage vessels (Weight in g)"
+        },
+        "countTablewares": {
+          "label": "Tablewares (Fragment count)"
+        },
+        "weightTablewares": {
+          "label": "Tablewares (Weight in g)"
+        },
+        "countFinepottery": {
+          "label": "Fine pottery (Fragment count)"
+        },
+        "weightFinepottery": {
+          "label": "Fine pottery (Weight in g)"
+        },
+        "countOilcontainers": {
+          "label": "Oil containers (Fragment count)"
+        },
+        "weightOilcontainers": {
+          "label": "Oil containers (Weight in g)"
+        },
+        "countTools": {
+          "label": "Tools = Lamps, Weights, Beehives etc. (Fragment count)"
+        },
+        "weightTools": {
+          "label": "Tools = Lamps, Weights, Beehives etc. (Weight in g)"
+        },
+        "countUnspecified": {
+          "label": "undetermined (Fragment count)"
+        },
+        "weightUnspecified": {
+          "label": "undetermined (Weight in g)"
+        }
       }
-    }
-  },
-  "Impression": {
-    "label": "First Impression (Context)",
-    "fields": {
-      "infoFromField": {
-        "label": "Assessment of the context by the trench director",
-        "description": ""
-      },
-      "closedContext": {
-        "label": "closed Context",
-        "description": ""
-      },
-      "checkAgainstOtherContexts": {
-        "label": "(Possible) affiliation with other contexts",
-        "description": ""
-      },
-      "findProcessingWorkflow": {
-        "label": "Processing Workflow",
-        "description": ""
-      },
-      "workflowDone": {
-        "label": "Processing finished",
-        "description": ""
-      },
-      "relativeAmount": {
-        "label": "Relative amount of finds",
-        "description": ""
-      },
-      "relativeAmountCheck": {
-        "label": "Relative amount of finds",
-        "description": ""
-      },
-      "materialCondition": {
-        "label": "Condition (of finds)",
-        "description": ""
-      },
-      "fitsOtherContexts": {
-        "label": "Affiliation with other context as assessed by find processing",
-        "description": ""
-      },
-      "findSpectrum": {
-        "label": "Composition of form spectrum, quantitative relations",
-        "description": ""
-      },
-      "specialFinds": {
-        "label": "Special / remarkable forms and finds",
-        "description": ""
-      },
-      "generalNotes": {
-        "label": "Generalized first impression, comments",
-        "description": ""
+    },
+    "Pottery_Quantification_B": {
+      "label": "Quantification Pottery B",
+      "fields": {
+        "countTransportamphoraeRim": {
+          "label": "Transportamphorae (Rim fragments)"
+        },
+        "countTransportamphoraeBase": {
+          "label": "Transportamphorae (Base fragments)"
+        },
+        "countTransportamphoraeHandle": {
+          "label": "Transportamphorae (Handle fragments)"
+        },
+        "countHouseholdwaresRim": {
+          "label": "Household pottery (Rim fragments)"
+        },
+        "countHouseholdwaresBase": {
+          "label": "Household pottery (Base fragments)"
+        },
+        "countHouseholdwaresHandle": {
+          "label": "Household pottery (Handle fragments)"
+        },
+        "countCookingwaresRim": {
+          "label": "Cooking pottery (Rim fragments)"
+        },
+        "countCookingwaresWall": {
+          "label": "Cooking pottery (Wall fragments)"
+        },
+        "countCookingwaresBase": {
+          "label": "Cooking pottery (Base fragments)"
+        },
+        "countCookingwaresHandle": {
+          "label": "Cooking pottery (Handle fragments)"
+        },
+        "countStoragevesselsRim": {
+          "label": "Storage vessels (Rim fragments)"
+        },
+        "countStoragevesselsBase": {
+          "label": "Storage vessels (Base fragments)"
+        },
+        "countStoragevesselsHandle": {
+          "label": "Storage vessels (Handle fragments)"
+        },
+        "countTablewaresRim": {
+          "label": "Tablewares (Rim fragments)"
+        },
+        "countTablewaresWall": {
+          "label": "Tablewares (Wall fragments)",
+          "description": ""
+        },
+        "countTablewaresBase": {
+          "label": "Tablewares (Base fragments)"
+        },
+        "countTablewaresHandle": {
+          "label": "Tablewares (Handle fragments)"
+        },
+        "countFinepotteryRim": {
+          "label": "Fine pottery (Rim fragments)"
+        },
+        "countFinepotteryWall": {
+          "label": "Fine pottery (Wall fragments)",
+          "description": ""
+        },
+        "countFinepotteryBase": {
+          "label": "Fine pottery (Base fragments)"
+        },
+        "countFinepotteryHandle": {
+          "label": "Fine pottery (Handle fragments)"
+        },
+        "countOilcontainersRim": {
+          "label": "Oil containers (Rim fragments)"
+        },
+        "countOilcontainersBase": {
+          "label": "Oil containers (Base fragments)"
+        },
+        "countOilcontainersHandle": {
+          "label": "Oil containers (Handle fragments)"
+        },
+        "countLampsRim": {
+          "label": "Lamps (Rim fragments)"
+        },
+        "countLampsWall": {
+          "label": "Lamps (Wall fragments)",
+          "description": ""
+        },
+        "countLampsBase": {
+          "label": "Lamps (Base fragments)"
+        },
+        "countLampsHandle": {
+          "label": "Lamps (Handle fragments)"
+        }
+      }
+    },
+    "Impression": {
+      "label": "First Impression (Context)",
+      "fields": {
+        "infoFromField": {
+          "label": "Assessment of the context by the trench director"
+        },
+        "closedContext": {
+          "label": "closed Context"
+        },
+        "checkAgainstOtherContexts": {
+          "label": "(Possible) affiliation with other contexts"
+        },
+        "findProcessingWorkflow": {
+          "label": "Processing Workflow"
+        },
+        "workflowDone": {
+          "label": "Processing finished"
+        },
+        "relativeAmount": {
+          "label": "Relative amount of finds"
+        },
+        "relativeAmountCheck": {
+          "label": "Relative amount of finds"
+        },
+        "materialCondition": {
+          "label": "Condition (of finds)"
+        },
+        "fitsOtherContexts": {
+          "label": "Affiliation with other context as assessed by find processing"
+        },
+        "findSpectrum": {
+          "label": "Composition of form spectrum, quantitative relations"
+        },
+        "specialFinds": {
+          "label": "Special / remarkable forms and finds"
+        },
+        "generalNotes": {
+          "label": "Generalized first impression, comments"
+        }
       }
     }
   }

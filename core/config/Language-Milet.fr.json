@@ -1,0 +1,624 @@
+{
+    "categories": {
+        "Operation": {
+            "fields": {
+                "AreaShorthand": {
+                    "label": "Abréviation de la zone de fouille"
+                }
+            }
+        },
+        "Trench": {
+            "label": "Aire de fouille / Zone de fouille"
+        },
+        "Feature": {
+            "label": "Tranchée / Secteur",
+            "fields": {
+                "hasDisturbance": {
+                    "label": "Perturbé",
+                    "description": "Est-ce que la zone de fouille est perturbée? (ex. possible contamination de matériel)"
+                },
+                "contextFindProcessing": {
+                    "label": "Demande de traitement",
+                    "description": "Indiquez la précision avec laquelle le contenu du contexte ou de l'unité doit être traité. Vous le trouverez sur la deuxième page du formulaire papier sous le même titre"
+                }
+            }
+        },
+        "Layer": {
+            "label": "Contexte",
+            "fields": {
+                "findprocessingFinished": {
+                    "label": "Traitement terminé",
+                    "description": "Marquer (oui) si le traitement de ce contexte est terminé"
+                },
+                "sampleTaken": {
+                    "label": "Echantillon prélevé",
+                    "description": "'Oui' si un échantillon a été prélevé, e.g. flotation, charbon, etc.; 'Non' si aucun échantillon n'a été prélevé"
+                },
+                "distinguishingCriteria": {
+                    "label": "Critères distinctifs (par rapport aux contextes environnants)",
+                    "description": "Quels critères ont été utilisés pour distinguer le contexte par rapport à son environnement (il n'y a pas de champ correspondant sur le formulaire papier)"
+                },
+                "layerClassification": {
+                    "label": "Classification du contexte",
+                    "description": "Doit être identifique au'' de la fiche papier. Si une terminologie est utilisée souvent mais n'est pas présente dans la base de données, veuillez nous en informer."
+                },
+                "isNatural": {
+                    "label": "Occurence naturelle",
+                    "description": "Cette couche est-elle d'origine naturelle ? ('oui' si p.ex. érosion, 'non' si anthropique). Il n'y a pas de champ correspondant dans le formulaire papier. Peut-être décidé en post-fouille"
+                },
+                "contextDescription": {
+                    "label": "Courte description",
+                    "description": "Correspond au champ 'description courte' sur le formulaire papier"
+                },
+                "soilType": {
+                    "label": "Type de sédiment",
+                    "description": "De quel type principal de sédiment s'agit-il? Produire une description détaillée dans le champ 'Couleur / Type de sédiment / Consistance'."
+                },
+                "consistency": {
+                    "label": "Consistance",
+                    "description": "Consistance du sédiment "
+                },
+                "layerSoilContentDesc": {
+                    "label": "Couleur / Type de sédiment / Consistance",
+                    "description": "Contenu du formulaire papier: Couleur / Type de sédiment / Consistance"
+                },
+                "layerColor0": {
+                    "label": "Intensité de la couleur de base du sédiment",
+                    "description": "Sélectionnez la couleur principale du sédiment ainsi que 'Intensité de la couleur du sol'"
+                },
+                "layerColorIntensity": {
+                    "label": "Intensité de la couleur de base du sédiment",
+                    "description": "Sélectionnez l'intensité de la couleur de base des sédiments"
+                },
+                "layerInclusions": {
+                    "label": "Matériaux / Inclusions",
+                    "description": "Sélectionnez tout matériau présent dans le sédiment qui n'est pas un objet archéologique. Addenda dans le champ de texte ci-dessous"
+                },
+                "layerInclusionsDesc": {
+                    "label": "Matériaux / Inclusions: Description et addenda",
+                    "description": "Contenu du formulaire papier 'Matériaux / Inclusions'"
+                },
+                "layerFinds": {
+                    "label": "Découvertes (Aperçu)",
+                    "description": "Aperçu des types de découvertes dans ce contexte"
+                },
+                "layerFindsComplete": {
+                    "label": "Collecte complète de découvertes",
+                    "description": "Est-ce que toutes les découvertes ont été données pour traitement (oui) ou seule une partie a été archivée (non). (champs présents sur le formulaire)"
+                },
+                "layerFindsOther": {
+                    "label": "Autres découvertes et découvertes particulières",
+                    "description": "Addenda au champ 'Découvertes (Aperçu). Ajouter les numéros d'inventaires des découvertes particulières associées à cette couche. (Découvertes particulières ou additionnelles sur les formulaires papier)"
+                },
+                "layerInterpretation": {
+                    "label": "Interprétation",
+                    "description": "Contenu du champ 'Interprétation' dans le formulaire papier. Peut-être ammendé après la fouille."
+                },
+                "layerDatingIndication": {
+                    "label": "Eléments de datation",
+                    "description": "Elaborer sur la base de la datation de ce contexte telle qu'enregistrée dans le champs 'Time/Temps/?' sous 'Période'. (Voir le champ correspondant dans le formulaire)"
+                }
+            }
+        },
+        "StrUnit": {
+            "label": "Unité stratigraphique",
+            "fields": {
+                "unitNotes": {
+                    "label": "Notes"
+                }
+            }
+        },
+        "Profile": {
+            "label": "Profil/Coupe",
+            "fields": {
+                "profileClassification": {
+                    "label": "Description du profil / coupe",
+                    "description": "Enter the text on the paper form here."
+                }
+            }
+        },
+        "TrenchSketch": {
+            "label": "Croquis de la tranchée",
+            "fields": {}
+        },
+        "Find": {
+            "fields": {
+                "storagePlaceOther": {
+                    "label": "Autre lieu d'entreposition",
+                    "description": "Entrez le lieu d'entreposition s'il ne figure pas dans la liste ci-dessus"
+                },
+                "workflow": {
+                    "label": "Statut de traitement (workflow)",
+                    "description": "De quel traitement cette découverte a-t-elle déjà fait l'objet?"
+                },
+                "OldInventoryNr": {
+                    "label": "Ancien numéro d'inventaire",
+                    "description": "Entrez les différents numéros d'inventaires attribués dans des systèmes d'enregistrement précédents"
+                },
+                "MuseumInventoryNr": {
+                    "label": "Numéros d'inventaire du musée de Milet",
+                    "description": "Numéros d'inventaire du musée de Milet"
+                },
+                "YearOfFind": {
+                    "label": "Année (dans le cas d'une découverte ancienne)",
+                    "description": "Année à laquelle la découverte a été faite ou inventoriée"
+                }
+            }
+        },
+        "PlasterFragment": {
+          "fields": {
+            "decorationDescription": {
+              "label": "Description de la décoration"
+            }
+          }
+        },
+        "Pottery": {
+            "label": "Céramique",
+            "fields": {
+                "potteryGroup": {
+                    "label": "Groupe de céramique"
+                },
+                "functionalCategory": {
+                    "label": "Catégorie fonctionnelle"
+                },
+                "vesselForm": {
+                    "label": "Forme du contenant"
+                },
+                "vesselFormDescription": {
+                    "label": "Description de la forme du contenant"
+                },
+                "vesselType": {
+                    "label": "Type"
+                },
+                "provenanceInput": {
+                    "label": "Provenance",
+                    "description": "Remplir si choix indisponible dans le menu déroulant ou si plus d'infos disponibles"
+                },
+                "amountSherdsTotal": {
+                    "label": "Quantification: Nombre total de fragments"
+                },
+                "amountSherdsRim": {
+                    "label": "Quantification: Nombre de fragments de bords"
+                },
+                "amountSherdsWall": {
+                    "label": "Quantification: Nombre de fragments de panses"
+                },
+                "amountSherdsBase": {
+                    "label": "Quantification: Nombre de fragments de pieds/bases"
+                },
+                "amountSherdsHandles": {
+                    "label": "Quantification: Nombre de fragments d'anses"
+                },
+                "amountSherdsLid": {
+                    "label": "Quantification: Nombre de fragments de couvercles"
+                },
+                "amountSherdsOther": {
+                    "label": "Quantification: Nombre d'autres fragments"
+                },
+                "amountSherdsWholeProfile": {
+                    "label": "Quantification: Nombre de fragments avec profils complets"
+                },
+                "weightTotal": {
+                    "label": "Quantification: Poids total (en gr.)",
+                    "description": ""
+                },
+                "potteryCondition": {
+                    "label": "Quantification et conservation: Etat"
+                },
+                "fabricGroup": {
+                    "label": "Matériau: Groupe"
+                },
+                "fabricColorInsideMunsell": {
+                    "label": "Matériau: Couleur intérieure (Munsell, format: 2.5R 2.5/2 (???))"
+                },
+                "fabricColorOutsideMunsell": {
+                    "label": "Matériau: Couleur extérieure (Munsell, Format!)"
+                },
+                "fabricColorBreakMunsell": {
+                    "label": "Matériau: Couleur au coeur/tranche (Munsell, Format!)"
+                },
+                "fabricHardness": {
+                    "label": "Matériau: Dureté"
+                },
+                "fabricStructure": {
+                    "label": "Matériau: Structure à la cassure/tranche"
+                },
+                "temperType": {
+                    "label": "Matériau: Type de dégraissant"
+                },
+                "temperTypeOther": {
+                    "label": "Matériau: Type de dégraissant (autres composants)"
+                },
+                "temperAmount": {
+                    "label": "Matériau: Quantité"
+                },
+                "temperGrain": {
+                    "label": "Matériau: Grain"
+                },
+                "surfaceTreatment": {
+                    "label": "Surface et Décoration: Traitement"
+                },
+                "surfaceTreatmentDescription": {
+                    "label": "Surface et décoration: Traitement - Description"
+                },
+                "otherNotes": {
+                    "label": "Notes de travail"
+                }
+            }
+        },
+        "Survey": {
+            "label": "Aire de prospection",
+            "fields": {
+                "researchMethod-milet": {
+                    "label": "Méthode de recherche"
+                }
+            }
+        },
+        "Sculpture": {
+            "label": "Sculpture",
+            "fields": {
+                "reused": {
+                    "label": "Réutilisée / Retravaillée / Retaillée",
+                    "description": "Est-ce que cette statue a été retravaillée et/ou retaillée"
+                },
+                "sculptureMaterial": {
+                    "label": "Matériau",
+                    "description": "Matériau principal utilisé pour la sculpture"
+                },
+                "sculptureMaterialAttr": {
+                    "label": "Matériau: Détails",
+                    "description": "Précisions sur les différents matériaux utilisés pour la sculptures"
+                },
+                "colour": {
+                    "label": "Matériau: Couleur",
+                    "description": "Couleur principale du matériau de sculpture."
+                },
+                "sculptureMarbleType": {
+                    "label": "Type de marbre"
+                },
+                "materialDescription": {
+                    "label": "Matériau: Description et Addenda",
+                    "description": "Description détaillée du matériau et addenda, ex. autres matériaux et leur description."
+                },
+                "sculptureBodypart": {
+                    "label": "Fragments de sculpture",
+                    "description": "Quelles parties de la sculptures sont conservées?"
+                },
+                "sculptureBodypartOther": {
+                    "label": "Autres types de fragments",
+                    "description": "Si le type de fragment n'est pas listé, entrez le ici"
+                },
+                "sculptureName": {
+                    "label": "Identité du personnage honoré",
+                    "description": "Quelle est la personne représentée?"
+                },
+                "sculptureGender": {
+                    "label": "Genre",
+                    "description": "Genre de la sculpture."
+                },
+                "sculptureType": {
+                    "label": "Catégorie générale / Type",
+                    "description": "Catégorie générale ou type auquel assigné la statue"
+                },
+                "sculptureTypeDescription": {
+                    "label": "Catégorie générale / Type: Notes et Addenda",
+                    "description": "Notes additionnelles par rapport au type de la sculpture"
+                },
+                "sculptureClothing": {
+                    "label": "Vêtements",
+                    "description": "Vêtements visibles sur la sculpture."
+                },
+                "sculptureClothingDescription": {
+                    "label": "Vêtements: Addenda",
+                    "description": "informations additionnelles et descriptions en rapport aux vêtements"
+                },
+                "sculptureHairstyle": {
+                    "label": "Coiffure",
+                    "description": ""
+                },
+                "sculptureHairstyleDescription": {
+                    "label": "Coiffure: Notes",
+                    "description": "Informations additionnelles et descriptions de la coiffure"
+                },
+                "sculptureBeardstyle": {
+                    "label": "Style de barbe",
+                    "description": ""
+                },
+                "sculptureBeardstyleDescription": {
+                    "label": "Style de barbe: Notes",
+                    "description": "Informations additionnelles et description de la barbe"
+                },
+                "sculptureAttributes": {
+                    "label": "Attributs",
+                    "description": ""
+                },
+                "sculptureAttributesDescription": {
+                    "label": "Attributs: Notes",
+                    "description": "Informations additionnelles et description des attributs"
+                },
+                "sculptureQuality": {
+                    "label": "Qualité de réalisation de la statue"
+                }
+            }
+        },
+        "Building": {
+            "fields": {
+                "buildingType": {
+                    "label": "Fonction du bâtiment",
+                    "description": ""
+                },
+                "buildingCategory": {
+                    "label": "Type de bâtiment",
+                    "description": ""
+                },
+                "buildingContractor": {
+                    "label": "Commanditaire",
+                    "description": "cité, personne, entité, etc."
+                },
+                "associatedDeity": {
+                    "label": "Divinité associée",
+                    "description": "Si possible: In case of Dedication, Temples etc. Try to use the main names without epiclesis."
+                },
+                "excavatedIn": {
+                    "label": "Années de fouille",
+                    "description": "Quand cette construction a-t-elle été fouillée?"
+                },
+                "excavatedBy": {
+                    "label": "Fouillée par",
+                    "description": "Personne responsable de la fouille"
+                },
+                "architecturalOrder": {
+                    "label": "Ordre architectural"
+                }
+            }
+        },
+        "Photo": {
+            "fields": {
+                "viewDirection": {
+                    "label": "Vue en direction du/de ...",
+                    "description": "Direction de la prise de la photographie"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {}
+        },
+        "Sample": {
+            "fields": {
+                "volume": {
+                    "label": "Volume en ml"
+                },
+                "analysisMethod": {
+                    "label": "Analyse: Méthode"
+                },
+                "analysisMethodOther": {
+                    "label": "Analyse: Méthode (autre)"
+                },
+                "analysisAim": {
+                    "label": "Analyse: objectif"
+                },
+                "analysisActor": {
+                    "label": "Analyse: Personne / Laboratoire"
+                },
+                "analysisResult": {
+                    "label": "Analyse: Résultat"
+                }
+            }
+        },
+        "Quantification": {
+            "label": "Quantification",
+            "fields": {
+                "quantificationType": {
+                    "label": "Type de découverte"
+                },
+                "countTotal": {
+                    "label": "Nombre de fragments (total)"
+                },
+                "weightTotal": {
+                    "label": "Poids (total)"
+                },
+                "quantificationNotes": {
+                    "label": "Remarques et commentaires sur la quantification"
+                }
+            }
+        },
+        "Pottery_Quantification_A": {
+            "label": "Quantification céramique A",
+            "fields": {
+                "countArchitecturalCeramics": {
+                    "label": "Terres cuites architecturales (Nombre de fragments)"
+                },
+                "weightArchitecturalCeramics": {
+                    "label": "Architectural Ceramics (Poids en gr.)"
+                },
+                "countTransportamphorae": {
+                    "label": "Amphores de transport (Nombre de fragments)"
+                },
+                "weightTransportamphorae": {
+                    "label": "Amphores de transport (Poids en gr.)"
+                },
+                "countHouseholdwares": {
+                    "label": "Céramiques domestiques (Nombre de fragments)"
+                },
+                "weightHouseholdwares": {
+                    "label": "Céramiques domestiques (Poids en gr.)"
+                },
+                "countCookingwares": {
+                    "label": "Céramiques de cuisine (Nombre de fragments)"
+                },
+                "weightCookingwares": {
+                    "label": "Céramiques de cuisine (Poids en gr.)"
+                },
+                "countStoragevessels": {
+                    "label": "Céramiques de stockage (Nombre de fragments)"
+                },
+                "weightStoragevessels": {
+                    "label": "Céramiques de stockage (Poids en gr.)"
+                },
+                "countTablewares": {
+                    "label": "Céramiques de table (Nombre de fragments)"
+                },
+                "weightTablewares": {
+                    "label": "Céramiques de table (Poids en gr.)"
+                },
+                "countFinepottery": {
+                    "label": "Céramiques fines (Nombre de fragments)"
+                },
+                "weightFinepottery": {
+                    "label": "Céramiques fines (Poids en gr.)"
+                },
+                "countOilcontainers": {
+                    "label": "Contenants d'huile (Nombre de fragments)"
+                },
+                "weightOilcontainers": {
+                    "label": "Contenants d'huile (Poids en gr.)"
+                },
+                "countTools": {
+                    "label": "Outils = Lampes, poids, ruches, etc. (Nombre de fragments)"
+                },
+                "weightTools": {
+                    "label": "Outils = Lampes, poids, ruches, etc. (Poids en gr.)"
+                },
+                "countUnspecified": {
+                    "label": "Indéterminé (Nombre de fragments)"
+                },
+                "weightUnspecified": {
+                    "label": "Indéterminé (Poids en gr.)"
+                }
+            }
+        },
+        "Pottery_Quantification_B": {
+            "label": "Quantification céramique B",
+            "fields": {
+                "countTransportamphoraeRim": {
+                    "label": "Amphores de transport (Fragments de bords)"
+                },
+                "countTransportamphoraeBase": {
+                    "label": "Amphores de transport (Fragments de bases/pieds)"
+                },
+                "countTransportamphoraeHandle": {
+                    "label": "Amphores de transport (Fragments d'anses)"
+                },
+                "countHouseholdwaresRim": {
+                    "label": "Céramiques domestiques (Fragments de bords)"
+                },
+                "countHouseholdwaresBase": {
+                    "label": "Céramiques domestiques (Fragments de bases/pieds)"
+                },
+                "countHouseholdwaresHandle": {
+                    "label": "Céramiques domestiques (Fragments d'anses)"
+                },
+                "countCookingwaresRim": {
+                    "label": "Céramiques de cuisson (Fragments de bords)"
+                },
+                "countCookingwaresWall": {
+                    "label": "Céramiques de cuisson (Fragments de panses)"
+                },
+                "countCookingwaresBase": {
+                    "label": "Céramiques de cuisson (Fragments de bases/pieds)"
+                },
+                "countCookingwaresHandle": {
+                    "label": "Céramiques de cuisson (Fragments d'anses)"
+                },
+                "countStoragevesselsRim": {
+                    "label": "Céramiques de stockage (Fragments de bords)"
+                },
+                "countStoragevesselsBase": {
+                    "label": "Céramiques de stockage (Fragments de bases/pieds)"
+                },
+                "countStoragevesselsHandle": {
+                    "label": "Céramiques de stockage (Fragments d'anses)"
+                },
+                "countTablewaresRim": {
+                    "label": "Céramiques de table (Fragments de bords)"
+                },
+                "countTablewaresWall": {
+                    "label": "Céramiques de table (Fragments de panses)",
+                    "description": ""
+                },
+                "countTablewaresBase": {
+                    "label": "Céramiques de table (Fragments de bases/pieds)"
+                },
+                "countTablewaresHandle": {
+                    "label": "Céramiques de table (Fragments d'anses)"
+                },
+                "countFinepotteryRim": {
+                    "label": "Céramiques fines (Fragments de bords)"
+                },
+                "countFinepotteryWall": {
+                    "label": "Céramiques fines (Fragments de panses)",
+                    "description": ""
+                },
+                "countFinepotteryBase": {
+                    "label": "Céramiques fines (Fragments de bases/pieds)"
+                },
+                "countFinepotteryHandle": {
+                    "label": "Céramiques fines (Fragments d'anses)"
+                },
+                "countOilcontainersRim": {
+                    "label": "Contenants d'huile (Fragments de bords)"
+                },
+                "countOilcontainersBase": {
+                    "label": "Contenants d'huile (Fragments de bases/pieds)"
+                },
+                "countOilcontainersHandle": {
+                    "label": "Contenants d'huile (Fragments d'anses)"
+                },
+                "countLampsRim": {
+                    "label": "Lampes (Fragments de bords)"
+                },
+                "countLampsWall": {
+                    "label": "Lampes (Fragments de panses)",
+                    "description": ""
+                },
+                "countLampsBase": {
+                    "label": "Lampes (Fragments de bases/pieds)"
+                },
+                "countLampsHandle": {
+                    "label": "Lampes (Fragments d'anses)"
+                }
+            }
+        },
+        "Impression": {
+            "label": "Première impression (Contexte)",
+            "fields": {
+                "infoFromField": {
+                    "label": "Evaluation du contexte par le responsable de secteur"
+                },
+                "closedContext": {
+                    "label": "Contexte clos"
+                },
+                "checkAgainstOtherContexts": {
+                    "label": "Relation éventuelle avec d'autres contextes"
+                },
+                "findProcessingWorkflow": {
+                    "label": "Etat du traitement de l'objet"
+                },
+                "workflowDone": {
+                    "label": "Traitement terminé"
+                },
+                "relativeAmount": {
+                    "label": "Quantité relative de découvertes"
+                },
+                "relativeAmountCheck": {
+                    "label": "Quantité relative"
+                },
+                "materialCondition": {
+                    "label": "Etat de conservation (des découvertes)"
+                },
+                "fitsOtherContexts": {
+                    "label": "Relation à d'autres contextes après le traitement des découvertes"
+                },
+                "findSpectrum": {
+                    "label": "Composition du spectre de formes, relations quantitatives"
+                },
+                "specialFinds": {
+                    "label": "Formes particulières/remarquables parmi les découvertes"
+                },
+                "generalNotes": {
+                    "label": "Première impression générale, commentaires"
+                }
+            }
+        }
+    }
+}

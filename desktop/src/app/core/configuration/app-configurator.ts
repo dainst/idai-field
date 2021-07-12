@@ -334,7 +334,7 @@ export class AppConfigurator {
             name: 'isMapLayerOf',
             inverse: 'hasMapLayer',
             domain: ['Image:inherit'],
-            range: ['Operation:inherit']
+            range: ['Operation:inherit'],
             label: ''
         },
         {
@@ -683,7 +683,7 @@ export class AppConfigurator {
         }
 
         if (customConfigurationName === 'Milet') {
-            
+
             (this.builtinCategories as any)['Quantification'] = {
                 color: '#c6dbef',
                 supercategory: true,
@@ -751,7 +751,7 @@ export class AppConfigurator {
                 domain: ['Quantification:inherit'],
                 range: ['Feature:inherit', 'Quantification:inherit']
             });
-         
+
             this.defaultRelations.push({
                 name: 'fills',
                 inverse: 'isFilledBy',
@@ -777,7 +777,7 @@ export class AppConfigurator {
                 domain: ['Find:inherit'],
                 range: ['Building', 'Place', 'Survey', 'Trench']
             });
-            
+
             this.defaultRelations.push({
                 name: 'hasFinds',
                 inverse: 'wasFoundIn',

@@ -24,9 +24,7 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
                                 inverseRelationsMap: InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
-    const cloneOfTargetDocuments = targetDocuments
-        .map(Document.clone)
-        .map(Document.removeEmptyRelationArrays);
+    const cloneOfTargetDocuments = targetDocuments.map(Document.clone);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);

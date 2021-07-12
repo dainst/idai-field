@@ -1,4 +1,4 @@
-import { set, sameset, arrayEqual, flatMap, includedIn, objectEqual } from 'tsfun';
+import { set, sameset, arrayEqual, flatMap, includedIn, objectEqual, remove, isUndefinedOrEmpty } from 'tsfun';
 import { Resource } from './resource';
 
 
@@ -128,7 +128,10 @@ export namespace Relations {
     }
 
 
-    export const equivalent = (r1: Relations) => (r2: Relations) => objectEqual(sameset as any, r1)(r2);
+    export const equivalent = (r1: Relations) => (r2: Relations) =>
+        objectEqual(sameset as any,
+            remove(isUndefinedOrEmpty, r1))(
+            remove(isUndefinedOrEmpty, r2));
 
 
     function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {

@@ -149,15 +149,7 @@ export class ProjectConfigurationComponent implements OnInit {
         clonedConfigurationDocument.resource.order = newOrder;
 
         try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(clonedConfigurationDocument)
-            );
-            await this.saveChanges({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: clonedConfigurationDocument
-            });
+            await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -181,7 +173,7 @@ export class ProjectConfigurationComponent implements OnInit {
         );
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.saveChanges = (result) => this.saveChanges(result);
+        modalReference.componentInstance.saveChanges = (result) => this.saveChangesAndReload(result);
 
         try {
             const result = await modalReference.result;
@@ -209,7 +201,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChanges(await modalReference.result);
+            await this.saveChangesAndReload(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -235,7 +227,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChanges(await modalReference.result);
+            await this.saveChangesAndReload(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -260,7 +252,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChanges(await modalReference.result);
+            await this.saveChangesAndReload(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -314,69 +306,20 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async saveChanges(configurationChange: ConfigurationChange) {
-
-        await this.updateConfigurationDocument(configurationChange.newCustomConfigurationDocument);
-        this.resetProjectConfigurationComponent(configurationChange.newProjectConfiguration);
-    }
-
-
-    private async updateConfigurationDocument(configurationDocument: ConfigurationDocument) {
+    public async saveChangesAndReload(configurationChange: ConfigurationChange) {
 
         try {
             this.customConfigurationDocument = await this.datastore.update(
-                configurationDocument,
+                configurationChange.newCustomConfigurationDocument,
                 this.settingsProvider.getSettings().username
             ) as ConfigurationDocument;
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
             return;
         }
-    }
-
-
-    private resetProjectConfigurationComponent(projectConfiguration: ProjectConfiguration) {
-
-        this.projectConfiguration.update(projectConfiguration);
+        this.projectConfiguration.update(configurationChange.newProjectConfiguration);
         this.loadCategories();
         this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-    }
-
-
-    private loadCategories() {
-
-        this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
-            .filter(category => !category.parentCategory);
-    }
-
-
-    private async deleteGroup(category: Category, group: Group) {
-
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-            category, group, this.customConfigurationDocument
-        );
-
-        try {
-            const newProjectConfiguration = await this.configureApp(changedConfigurationDocument);
-
-            await this.saveChanges({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: changedConfigurationDocument
-            });
-        } catch (errWithParams) {
-            // TODO Show user-readable error messages
-            this.messages.add(errWithParams);
-        }
-    }
-
-
-    private async configureApp(configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
-
-        return this.appConfigurator.go(
-            this.settingsProvider.getSettings().username,
-            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-            Document.clone(configurationDocument)
-        );
     }
 
 
@@ -387,18 +330,46 @@ export class ProjectConfigurationComponent implements OnInit {
         );
 
         try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(changedConfigurationDocument)
-            );
-            await this.saveChanges({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: changedConfigurationDocument
-            });
+            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
+    }
+
+
+    private async deleteGroup(category: Category, group: Group) {
+
+        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
+            category, group, this.customConfigurationDocument
+        );
+
+        try {
+            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+        }
+    }
+
+
+    private loadCategories() {
+
+        this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
+            .filter(category => !category.parentCategory);
+    }
+
+
+    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument) {
+
+        const newProjectConfiguration = await this.appConfigurator.go(
+            this.settingsProvider.getSettings().username,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            Document.clone(configurationDocument)
+        );
+        await this.saveChangesAndReload({
+            newProjectConfiguration,
+            newCustomConfigurationDocument: configurationDocument
+        })
     }
 }

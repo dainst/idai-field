@@ -227,7 +227,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         modalReference.componentInstance.initialize();
 
         try {
-            this.onConfigurationChanged.emit(await modalReference.result);
+            await modalReference.result
         } catch (err) {
             // Modal has been canceled
         } finally {

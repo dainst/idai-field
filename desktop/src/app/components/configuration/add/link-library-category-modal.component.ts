@@ -7,6 +7,7 @@ import { MenuContext, MenuService } from '../../menu-service';
 import { AddCategoryModalComponent } from './add-category-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
+import {ErrWithParams} from '../../../core/import/import/import-documents';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class LinkLibraryCategoryModalComponent {
 
     public saveChanges: any;
 
+    public configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+        Promise<ErrWithParams|undefined>;
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
@@ -47,6 +50,7 @@ export class LinkLibraryCategoryModalComponent {
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
+        modalReference.componentInstance.categoryName = this.categoryName;
 
         try {
             await this.createNewSubcategory(parentCategory, await modalReference.result);
@@ -97,6 +101,7 @@ export class LinkLibraryCategoryModalComponent {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = {
             name: categoryName,
@@ -110,9 +115,9 @@ export class LinkLibraryCategoryModalComponent {
         modalReference.componentInstance.initialize();
 
         try {
-            this.saveChanges(await modalReference.result);
+            await modalReference.result;
         } catch (err) {
-            // Modal has been canceled
+            throw err; // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();

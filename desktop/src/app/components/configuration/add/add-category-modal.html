@@ -1,19 +1,16 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.addCategory">Kategorie hinzufügen</h5>
-</div>
-
-<div class="modal-body">
-    <input type="text"
-           id="category-name"
-           class="form-control"
-           [(ngModel)]="categoryName">
+    <h5 class="modal-title" i18n="@@configuration.addCategory">
+        Neue Kategorie "{{categoryName?.toLowerCase()}}" erstellen?
+    </h5>
 </div>
 
 <div class="modal-footer">
     <div id="create-category-button"
          class="btn btn-success"
          (click)="createCategory()">
-        <span i18n="@@configuration.createCategory">Neue Kategorie erstellen</span>
+        <span i18n="@@configuration.createCategory">
+            Bestätigen
+        </span>
     </div>
     <div id="cancel-add-category-modal-button"
          class="btn btn-secondary"

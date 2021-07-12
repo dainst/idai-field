@@ -3,12 +3,21 @@
 </div>
 
 <div class="modal-body row">
+
     <div class="col-md-6">
+
         <input type="text"
             id="category-name"
             class="form-control"
             [(ngModel)]="categoryName"
             (ngModelChange)="changeCategoryNameInput()">
+        <div
+            id="create-new-category-button"
+            class="btn btn-success"
+            style="position: absolute; left: 10px"
+            (click)="addSubcategory(parentCategory)">
+            <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzfügen</span>
+        </div>
         <category-listing
             [category]="parentCategory"
             [categories]="categories"
@@ -22,13 +31,6 @@
 </div>
 
 <div class="modal-footer">
-    <div
-        id="create-new-category-button"
-        class="btn btn-success"
-        style="position: absolute; left: 10px"
-        (click)="addSubcategory(parentCategory)">
-        <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzfügen</span>
-    </div>
     <div id="create-category-button"
          class="btn btn-success"
          (click)="createCategory()">

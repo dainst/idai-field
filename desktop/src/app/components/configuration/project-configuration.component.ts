@@ -172,6 +172,7 @@ export class ProjectConfigurationComponent implements OnInit {
             LinkLibraryCategoryModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.saveChanges = (result) => this.saveChangesAndReload(result);
@@ -309,6 +310,7 @@ export class ProjectConfigurationComponent implements OnInit {
             AngularUtility.blurActiveElement();
         }
     }
+
 
     public async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
             : Promise<ErrWithParams|undefined> {

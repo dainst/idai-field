@@ -143,24 +143,6 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async saveChanges(configurationChange: ConfigurationChange) {
-
-        try {
-            this.customConfigurationDocument = await this.datastore.update(
-                configurationChange.newCustomConfigurationDocument,
-                this.settingsProvider.getSettings().username
-            ) as ConfigurationDocument;
-        } catch (errWithParams) {
-            this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
-            return;
-        }
-
-        this.projectConfiguration.update(configurationChange.newProjectConfiguration);
-        this.loadCategories();
-        this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-    }
-
-
     public async setNewCategoriesOrder(newOrder: string[]) {
 
         const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
@@ -200,11 +182,10 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.saveChanges = (result) => this.saveChanges(result);
-        modalReference.componentInstance.chooseCategory = (category) => {
-            console.log('TODO implement - choose category', category);
-        }
 
         try {
+            const result = await modalReference.result;
+            console.log("result", result)
             // await this.createNewSubcategory(parentCategory, await modalReference.result);
         } catch (err) {
             // Modal has been canceled
@@ -333,6 +314,35 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
+    public async saveChanges(configurationChange: ConfigurationChange) {
+
+        await this.updateConfigurationDocument(configurationChange.newCustomConfigurationDocument);
+        this.resetProjectConfigurationComponent(configurationChange.newProjectConfiguration);
+    }
+
+
+    private async updateConfigurationDocument(configurationDocument: ConfigurationDocument) {
+
+        try {
+            this.customConfigurationDocument = await this.datastore.update(
+                configurationDocument,
+                this.settingsProvider.getSettings().username
+            ) as ConfigurationDocument;
+        } catch (errWithParams) {
+            this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
+            return;
+        }
+    }
+
+
+    private resetProjectConfigurationComponent(projectConfiguration: ProjectConfiguration) {
+
+        this.projectConfiguration.update(projectConfiguration);
+        this.loadCategories();
+        this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+    }
+
+
     private loadCategories() {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
@@ -347,11 +357,8 @@ export class ProjectConfigurationComponent implements OnInit {
         );
 
         try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(changedConfigurationDocument)
-            );
+            const newProjectConfiguration = await this.configureApp(changedConfigurationDocument);
+
             await this.saveChanges({
                 newProjectConfiguration,
                 newCustomConfigurationDocument: changedConfigurationDocument
@@ -360,6 +367,16 @@ export class ProjectConfigurationComponent implements OnInit {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
+    }
+
+
+    private async configureApp(configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
+
+        return this.appConfigurator.go(
+            this.settingsProvider.getSettings().username,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            Document.clone(configurationDocument)
+        );
     }
 
 

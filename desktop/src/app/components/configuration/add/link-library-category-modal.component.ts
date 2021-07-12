@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
 import { BuiltInConfiguration, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
@@ -30,8 +30,6 @@ export class LinkLibraryCategoryModalComponent {
     private configurationIndex = {};
 
     public saveChanges: any;
-
-    public chooseCategory: any;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -70,8 +68,7 @@ export class LinkLibraryCategoryModalComponent {
 
     public createCategory() {
 
-        this.chooseCategory(this.category);
-        this.activeModal.close();
+        this.activeModal.close(this.category);
     }
 
 

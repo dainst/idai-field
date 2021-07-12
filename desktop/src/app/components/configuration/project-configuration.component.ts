@@ -195,7 +195,7 @@ export class ProjectConfigurationComponent implements OnInit {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();

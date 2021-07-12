@@ -16,7 +16,7 @@ import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';
 
 
-const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'it'];
+const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
 
 type CustomConfiguration = {
     categories: { [formName: string]: CustomCategoryDefinition },

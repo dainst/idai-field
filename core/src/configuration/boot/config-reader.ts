@@ -27,6 +27,7 @@ import coreLanguageDe from '../../../config/Core/Language.de.json';
 import coreLanguageEn from '../../../config/Core/Language.en.json';
 import coreLanguageEs from '../../../config/Core/Language.es.json';
 import coreLanguageIt from '../../../config/Core/Language.it.json';
+import coreLanguageFr from '../../../config/Core/Language.fr.json';
 import languageAbbirCella_en from '../../../config/Language-AbbirCella.en.json';
 import languageAbbirCella_fr from '../../../config/Language-AbbirCella.fr.json';
 import languageAlUla_en from '../../../config/Language-AlUla.en.json';
@@ -65,6 +66,7 @@ import libraryLanguageDe from '../../../config/Library/Language.de.json';
 import libraryLanguageEn from '../../../config/Library/Language.en.json';
 import libraryLanguageEs from '../../../config/Library/Language.es.json';
 import libraryLanguageIt from '../../../config/Library/Language.it.json';
+import libraryLanguageFr from '../../../config/Library/Language.fr.json';
 import libraryValuelists from '../../../config/Library/Valuelists.json';
 import search from '../../../config/Search.json';
 import { LanguageConfiguration } from '../model';
@@ -75,11 +77,13 @@ const PATH_MAP: Record<string, any> = {
     '/Core/Language.en.json': coreLanguageEn,
     '/Core/Language.es.json': coreLanguageEs,
     '/Core/Language.it.json': coreLanguageIt,
+    '/Core/Language.fr.json': coreLanguageFr,
     '/Library/Categories.json': libraryCategories,
     '/Library/Language.de.json': libraryLanguageDe,
     '/Library/Language.en.json': libraryLanguageEn,
     '/Library/Language.es.json': libraryLanguageEs,
     '/Library/Language.it.json': libraryLanguageIt,
+    '/Library/Language.fr.json': libraryLanguageFr,
     '/Library/Valuelists.json': libraryValuelists,
     '/Config-Default.json': configDefault,
     '/Search.json': search,

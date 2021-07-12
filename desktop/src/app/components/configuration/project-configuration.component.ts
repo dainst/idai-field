@@ -8,7 +8,6 @@ import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
-import { ConfigurationChange } from '../../core/configuration/configuration-change';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';

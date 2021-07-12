@@ -30,14 +30,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
 
     constructor(activeModal: NgbActiveModal,
-                appConfigurator: AppConfigurator,
-                settingsProvider: SettingsProvider,
                 modalService: NgbModal,
                 menuService: MenuService,
                 messages: Messages,
                 private i18n: I18n) {
-        
-        super(activeModal, appConfigurator, settingsProvider, modalService, menuService, messages);
+
+        super(activeModal, modalService, menuService, messages);
     }
 
 
@@ -82,7 +80,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedCategoryDefinition().color !== this.currentColor;
     }
 
-    
+
     protected getLabel(): I18nString {
 
         return this.category.label;
@@ -107,7 +105,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         const canvasContext = document.createElement('canvas').getContext('2d');
         canvasContext.fillStyle = color;
-        
+
         return canvasContext.fillStyle;
     }
 }

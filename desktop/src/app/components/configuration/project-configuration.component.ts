@@ -227,7 +227,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChangesAndReload(await modalReference.result);
+            await this.configureAppSaveChangesAndReload(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -252,7 +252,7 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.initialize();
 
         try {
-            await this.saveChangesAndReload(await modalReference.result);
+            await this.configureAppSaveChangesAndReload(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -303,6 +303,20 @@ export class ProjectConfigurationComponent implements OnInit {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
+    }
+
+
+    public async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument) {
+
+        const newProjectConfiguration = await this.appConfigurator.go(
+            this.settingsProvider.getSettings().username,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            Document.clone(configurationDocument)
+        );
+        await this.saveChangesAndReload({
+            newProjectConfiguration,
+            newCustomConfigurationDocument: configurationDocument
+        })
     }
 
 
@@ -357,19 +371,5 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
-    }
-
-
-    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument) {
-
-        const newProjectConfiguration = await this.appConfigurator.go(
-            this.settingsProvider.getSettings().username,
-            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-            Document.clone(configurationDocument)
-        );
-        await this.saveChangesAndReload({
-            newProjectConfiguration,
-            newCustomConfigurationDocument: configurationDocument
-        })
     }
 }

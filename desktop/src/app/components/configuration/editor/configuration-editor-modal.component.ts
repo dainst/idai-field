@@ -30,8 +30,6 @@ export abstract class ConfigurationEditorModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private appConfigurator: AppConfigurator,
-                private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
                 private menuService: MenuService,
                 private messages: Messages) {}
@@ -93,15 +91,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(this.clonedConfigurationDocument)
-            );
-            this.activeModal.close({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: this.clonedConfigurationDocument
-            });
+            this.activeModal.close(this.clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);

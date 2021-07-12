@@ -38,7 +38,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
     @Output() onEditField: EventEmitter<FieldDefinition> = new EventEmitter<FieldDefinition>();
-    @Output() onConfigurationChanged: EventEmitter<ConfigurationChange> = new EventEmitter<ConfigurationChange>();
+    @Output() onConfigurationChanged: EventEmitter<ConfigurationDocument> = new EventEmitter<ConfigurationDocument>();
 
     public selectedGroup: string;
     public label: string;
@@ -49,8 +49,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     constructor(private menuService: MenuService,
                 private modalService: NgbModal,
-                private appConfigurator: AppConfigurator,
-                private settingsProvider: SettingsProvider,
                 private messages: Messages) {}
 
 
@@ -193,15 +191,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .groups = newGroups;
 
         try {
-            const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(clonedConfigurationDocument)
-            );
-            this.onConfigurationChanged.emit({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: clonedConfigurationDocument
-            });
+            this.onConfigurationChanged.emit(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);

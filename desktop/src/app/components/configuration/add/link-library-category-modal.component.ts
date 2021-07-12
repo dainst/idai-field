@@ -79,8 +79,10 @@ export class LinkLibraryCategoryModalComponent {
             fields: {},
             hidden: []
         }
-        this.configureAppSaveChangesAndReload(configurationDocument);
-        this.activeModal.close();
+        try {
+            this.configureAppSaveChangesAndReload(configurationDocument);
+            this.activeModal.close();
+        } catch { /* stay in modal */ }
     }
 
 

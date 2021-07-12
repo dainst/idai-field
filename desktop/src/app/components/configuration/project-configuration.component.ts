@@ -321,7 +321,7 @@ export class ProjectConfigurationComponent implements OnInit {
                 Document.clone(configurationDocument)
             );
         } catch (errWithParams) {
-            return errWithParams;
+            return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
         try {

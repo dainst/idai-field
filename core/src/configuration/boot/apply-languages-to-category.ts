@@ -4,8 +4,8 @@ import { LanguageConfigurations } from '../model/language-configurations';
 
 
 export function applyLanguagesToCategory(languageConfigurations: LanguageConfigurations, 
-                                  category: any, 
-                                  categoryName: string) {
+                                         category: any, 
+                                         categoryName: string) {
 
     category.label = LanguageConfiguration.getI18nString(
         languageConfigurations.complete,

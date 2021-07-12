@@ -52,6 +52,7 @@ import languageMeninx_de from '../../../config/Language-Meninx.de.json';
 import languageMeninx_en from '../../../config/Language-Meninx.en.json';
 import languageMilet_de from '../../../config/Language-Milet.de.json';
 import languageMilet_en from '../../../config/Language-Milet.en.json';
+import languageMilet_fr from '../../../config/Language-Milet.fr.json';
 import languageMonTur_de from '../../../config/Language-MonTur.de.json';
 import languagePergamon_de from '../../../config/Language-Pergamon.de.json';
 import languagePergamon_en from '../../../config/Language-Pergamon.en.json';
@@ -127,7 +128,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Kalapodi': { de: languageKalapodi_de },
     'Kephissostal': { de: languageKephissostal_de },
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
-    'Milet': { de: languageMilet_de, en: languageMilet_en },
+    'Milet': { de: languageMilet_de, en: languageMilet_en, fr: languageMilet_fr },
     'MonTur': { de: languageMonTur_de },
     'Pergamon': { de: languagePergamon_de, en: languagePergamon_en },
     'Postumii': { de: languagePostumii_de, it: languagePostumii_it },

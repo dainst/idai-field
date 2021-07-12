@@ -33,7 +33,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+    @Input() saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
@@ -191,7 +191,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .groups = newGroups;
 
         try {
-            await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);
+            await this.saveAndReload(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -207,7 +207,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.field = {
@@ -244,7 +244,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
 
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.group = {

@@ -198,7 +198,7 @@ export class ProjectConfigurationComponent implements OnInit {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
+        modalReference.componentInstance.saveAndReload = this.saveAndReload
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();
@@ -225,7 +225,7 @@ export class ProjectConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
 
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
+        modalReference.componentInstance.saveAndReload = this.saveAndReload
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;
@@ -250,7 +250,7 @@ export class ProjectConfigurationComponent implements OnInit {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload;
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;

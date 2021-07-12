@@ -22,7 +22,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18nString;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+    public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
     public saving: boolean;
@@ -93,7 +93,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         const optionalErrWithParams =
-            await this.configureAppSaveChangesAndReload(
+            await this.saveAndReload(
                 this.clonedConfigurationDocument);
 
         if (optionalErrWithParams) {

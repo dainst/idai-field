@@ -57243,5 +57243,191 @@
       }
     },
     "order": ["storeroom", "museum", "other"]
-  }
+  },
+  "periods-elephantine": {
+    "creationDate": "31-05-2021",
+    "createdBy": "Peter Kopp, DAI",
+    "description": {},
+    "values": {
+       "Naqadazeit": {
+          "labels": {
+             "de": "Naqadazeit",
+             "en": "Naqada Period"
+          }
+       },
+       "Frühdynastisch": {
+          "labels": {
+             "de": "Frühgeschichte",
+             "en": "Early Dynastic"
+          }
+       },
+       "Altes Reich": {
+          "labels": {
+             "de": "Altes Reich",
+             "en": "Old Kingdom"
+          }
+       },
+       "Erste Zwischenzeit": {
+          "labels": {
+             "de": "Erste Zwischenzeit",
+             "en": "First Intermediate Period"
+          }
+       },
+       "Mittleres Reich": {
+          "labels": {
+             "de": "Mittleres Reich",
+             "en": "Middle Kingdom"
+          }
+       },
+       "Zweite Zwischenzeit": {
+          "labels": {
+             "de": "Zweite Zwischenzeit",
+             "en": "Second Intermediate Period"
+          }
+       },
+       "Neues Reich": {
+          "labels": {
+             "de": "Neues Reich",
+             "en": "New Kingdom"
+          }
+       },
+       "Dritte Zwischenzeit": {
+          "labels": {
+             "de": "Dritte Zwischenzeit",
+             "en": "Third Intermediate Period"
+          }
+       },
+       "Spätzeit": {
+          "labels": {
+             "de": "Spätzeit",
+             "en": "Late Period"
+          }
+       },
+       "Ptolemäisch": {
+          "labels": {
+             "de": "Ptolemäisch",
+             "en": "Ptolemaic"
+          }
+       },
+       "Römisch": {
+          "labels": {
+             "de": "Römisch",
+             "en": "Roman"
+          }
+       },
+       "Spätantik": {
+          "labels": {
+             "de": "Spätantik",
+             "en": "Late Antiquity"
+          }
+       },
+       "Islamisch": {
+          "labels": {
+             "de": "Islamisch",
+             "en": "Islamic"
+          }
+       },
+       "Osmanisch": {
+          "labels": {
+             "de": "Osmanisch",
+             "en": "Ottoman"
+          }
+       },
+       "Modern": {
+          "labels": {
+             "de": "Modern",
+             "en": "Modern"
+          }
+       }
+    },
+    "order": [
+       "Naqadazeit",
+       "Frühdynastisch",
+       "Altes Reich",
+       "Erste Zwischenzeit",
+       "Mittleres Reich",
+       "Zweite Zwischenzeit",
+       "Neues Reich",
+       "Dritte Zwischenzeit",
+       "Spätzeit",
+       "Ptolemäisch",
+       "Römisch",
+       "Spätantik",
+       "Islamisch",
+       "Osmanisch",
+       "Modern"
+    ]
+ },
+ "featureSamples-elephantine": {
+   "createdBy": "Peter Kopp, DAI",
+   "creationDate": "05-07-2021",
+   "description": {},
+   "values": {
+     "Bodenprobe": {
+       "labels": {
+         "de": "Bodenprobe",
+         "en": "soil sample"
+       }
+     },
+     "C14-Analyse": {
+       "labels": {
+         "de": "C14-Analyse",
+         "en": "C14 analysis"
+       }
+     },
+     "Ziegelanalyse": {
+       "labels": {
+         "de": "Ziegelanalyse",
+         "en": "brick abalysis"
+       }
+     },
+     "Flotation": {
+       "labels": {
+         "de": "Flotation",
+         "en": "flotation"
+       }
+     },
+     "Botanikprobe (Trockensiebung)": {
+       "labels": {
+         "de": "Botanikprobe (Trockensiebung)",
+         "en": "botany sample (dry sieving)"
+       }
+     },
+      "Phytolithenanalyse": {
+       "labels": {
+         "de": "Phytolithenanalyse",
+         "en": "phytoliths analysis"
+       }
+     },
+     "Mikromorphologie": {
+       "labels": {
+         "de": "Mikromorphologie",
+         "en": "micromorphology"
+       }
+     },
+     "Putzprobe": {
+       "labels": {
+         "de": "Putzprobe",
+         "en": "plaster sample"
+       }
+     },
+     "andere": {
+       "labels": {
+         "de": "andere",
+         "en": "other"
+       }
+     }
+   },
+   "order": [
+       "Flotation",
+       "Botanikprobe (Trockensiebung)",
+       "Phytolithenanalyse",
+       "Mikromorphologie",
+       "Bodenprobe",
+       "Ziegelanalyse",
+       "Putzprobe",
+       "C14-Analyse",
+       "andere"
+    ]
+ }
 }

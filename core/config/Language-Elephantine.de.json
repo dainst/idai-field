@@ -1,0 +1,62 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "period": {
+          "label": "Epoche"
+        },
+        "searchFeatureType": {
+          "label": "Kurzbeschreibung: Suche nach verwandten Befunden und Synonymen",
+          "description": "Findet z.B. bei Eingabe des Suchbegriffs >Stufe< auch alle Befunde zu >Treppe<"
+        },
+        "areal": {
+          "label": "Areal",
+          "description": "Bezeichnung des Stadtareals von Elephantine"
+        },
+        "architectUnitNumber": {
+          "label": "Architektonische Einheit",
+          "description": "Nummer des Hauses, Name des Gebäudes oder der Straße"
+        },
+        "roomNumber": {
+          "label": "Raum",
+          "description": "Nummer des Raumes"
+        },
+        "installationNumber": {
+          "label": "Installation",
+          "description": "Nummer des Installation, Mauer etc."
+        },
+        "stratum": {
+          "label": "Lokales Stratum",
+          "description": "Lokales Stratum in dem Grabungsareal"
+        },
+        "potteryStage": {
+          "label": "Keramikstufe",
+          "description": "Keramikstufe der Serie von Elephantine"
+        },
+        "findsLeftAtTrench": {
+          "label": "Nicht in die Magazine verbrachte Funde",
+          "description": "Funde ohne Bearbeitungsspuren, die im Grabungsareal verblieben sind"
+        },
+        "drawingPlanum": {
+          "label": "Planumszeichnung",
+         "description": "Nummer der Planumszeichnung"
+        },
+        "drawingProfile": {
+          "label": "Profilzeichnung",
+          "description": "Nummer der Profilzeichnung"
+        },
+        "photoNumber": {
+          "label": "Fotos",
+          "description": "Nummer des Fotos im DAI-System, z.B. ELE-43-PK-0001.TIF, ggf. mit angehängter Befundnummer, z.B. ELE-43-PK-0004 43501C_q.TIF"
+        },
+        "featureVolume": {
+          "label": "Volumen des Befundes in Litern"
+        },
+        "featureSamples": {
+          "label": "Proben",
+          "description": "Am Schnitt entnommene Proben"
+        }
+      }
+    }
+  }
+}

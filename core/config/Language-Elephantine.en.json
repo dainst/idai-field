@@ -1,0 +1,62 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "period": {
+          "label": "Period"
+        },
+        "searchFeatureType": {
+          "label": "Brief description: Search for related features",
+          "description": "For example, if you enter the search term >step<, it also finds all findings on >staircase<"
+        },
+        "areal": {
+          "label": "Area",
+          "description": "Designation of the quarter of Elephantine"
+        },
+        "architectUnitNumber": {
+          "label": "Architectural unit ",
+          "description": "Number of the house, name of the building or street"
+        },
+        "roomNumber": {
+          "label": "Room",
+          "description": "Room number"
+        },
+        "installationNumber": {
+          "label": "Installation",
+          "description": "Number of the installation, wall etc."
+        },
+        "stratum": {
+          "label": "Local stratum",
+          "description": "Local stratum of the excavation area"
+        },
+        "potteryStage": {
+          "label": "Pottery Stage",
+          "description": "Pottery stage of the Elephantine series"
+        },
+        "findsLeftAtTrench": {
+          "label": "Finds not stored in the magazines",
+          "description": "Finds without traces of processing that remained in the excavation area"
+        },
+        "drawingPlanum": {
+          "label": "Planum drawing",
+          "description": "Number of the planum drawing"
+        },
+        "drawingProfile": {
+          "label": "Profile drawing",
+          "description": "Number of the profile drawing"
+        },
+        "photoNumber": {
+          "label": "Photos",
+          "description": "Number of the photo in the DAI system, e.g. ELE-43-PK-0001.TIF, if necessary with attached feature number, e.g. ELE-43-PK-0004 43501C_q.TIF"
+        },
+        "featureVolume": {
+          "label": "Volume of the feature in litres"
+        },
+        "featureSamples": {
+          "label": "Samples",
+          "description": "Samples taken at the trench"
+        }
+      }
+    }
+  }
+}

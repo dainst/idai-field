@@ -8,6 +8,7 @@ import configBourgou from '../../../config/Config-Bourgou.json';
 import configCampidoglio from '../../../config/Config-Campidoglio.json';
 import configCastiglione from '../../../config/Config-Castiglione.json';
 import configDefault from '../../../config/Config-Default.json';
+import configElephantine from '../../../config/Config-Elephantine.json';
 import configGadara from '../../../config/Config-Gadara.json';
 import configHeliopolis from '../../../config/Config-Heliopolis.json';
 import configKalapodi from '../../../config/Config-Kalapodi.json';
@@ -39,6 +40,8 @@ import languageCampidoglio_en from '../../../config/Language-Campidoglio.en.json
 import languageCastiglione_en from '../../../config/Language-Castiglione.en.json';
 import languageDefault_de from '../../../config/Language-Default.de.json';
 import languageDefault_en from '../../../config/Language-Default.en.json';
+import languageElephantine_de from '../../../config/Language-Elephantine.de.json';
+import languageElephantine_en from '../../../config/Language-Elephantine.en.json';
 import languageGadara_de from '../../../config/Language-Gadara.de.json';
 import languageGadara_en from '../../../config/Language-Gadara.en.json';
 import languageHeliopolis_en from '../../../config/Language-Heliopolis.en.json';
@@ -87,6 +90,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Bourgou.json': configBourgou,
     '/Config-Campidoglio.json': configCampidoglio,
     '/Config-Castiglione.json': configCastiglione,
+    '/Config-Elephantine.json': configElephantine,
     '/Config-Gadara.json': configGadara,
     '/Config-Heliopolis.json': configHeliopolis,
     '/Config-Kalapodi.json': configKalapodi,
@@ -113,6 +117,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Campidoglio': { en: languageCampidoglio_en },
     'Castiglione': { en: languageCastiglione_en },
     'Default': { de: languageDefault_de, en: languageDefault_en },
+    'Elephantine': { de: languageElephantine_de, en: languageElephantine_en },
     'Gadara': { de: languageGadara_de, en: languageGadara_en },
     'Heliopolis': { en: languageHeliopolis_en },
     'Kalapodi': { de: languageKalapodi_de },

@@ -170,7 +170,7 @@ export class ProjectConfigurationComponent implements OnInit {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                clonedConfigurationDocument
+                Document.clone(clonedConfigurationDocument)
             );
             await this.saveChanges({
                 newProjectConfiguration,
@@ -350,7 +350,7 @@ export class ProjectConfigurationComponent implements OnInit {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                changedConfigurationDocument
+                Document.clone(changedConfigurationDocument)
             );
             await this.saveChanges({
                 newProjectConfiguration,
@@ -373,7 +373,7 @@ export class ProjectConfigurationComponent implements OnInit {
             const newProjectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
                 this.settingsProvider.getSettings().username,
                 getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                changedConfigurationDocument
+                Document.clone(changedConfigurationDocument)
             );
             await this.saveChanges({
                 newProjectConfiguration,

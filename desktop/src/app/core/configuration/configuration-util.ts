@@ -34,15 +34,17 @@ export module ConfigurationUtil {
     export function createGroupsConfiguration(category: Category,
                                               permanentlyHiddenFields: string[]): Array<GroupDefinition> {
 
-        return category.groups.reduce((result, group) => {
-            result.push({
-                name: group.name,
-                fields: group.fields
-                    .filter(field => !permanentlyHiddenFields.includes(field.name))
-                    .map(field => field.name)
-            });
-            return result;
-        }, []);
+        return category.groups
+            .filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS)
+            .reduce((result, group) => {
+                result.push({
+                    name: group.name,
+                    fields: group.fields
+                        .filter(field => !permanentlyHiddenFields.includes(field.name))
+                        .map(field => field.name)
+                });
+                return result;
+            }, []);
     }
 
 

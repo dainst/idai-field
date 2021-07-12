@@ -175,7 +175,6 @@ export class ProjectConfigurationComponent implements OnInit {
         modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.saveChanges = (result) => this.saveChangesAndReload(result);
 
         try {
             await modalReference.result;
@@ -223,7 +222,7 @@ export class ProjectConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
 
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;
@@ -248,7 +247,7 @@ export class ProjectConfigurationComponent implements OnInit {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;
@@ -325,30 +324,22 @@ export class ProjectConfigurationComponent implements OnInit {
         }
 
         try {
-            await this.saveChangesAndReload({
-                newProjectConfiguration,
-                newCustomConfigurationDocument: configurationDocument
-            });
+            try {
+                this.customConfigurationDocument = await this.datastore.update(
+                    configurationDocument,
+                    this.settingsProvider.getSettings().username
+                ) as ConfigurationDocument;
+            } catch (errWithParams) {
+                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
+                return;
+            }
+            this.projectConfiguration.update(newProjectConfiguration);
+            this.loadCategories();
+            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
-    }
-
-
-    public async saveChangesAndReload(configurationChange: ConfigurationChange) {
-
-        try {
-            this.customConfigurationDocument = await this.datastore.update(
-                configurationChange.newCustomConfigurationDocument,
-                this.settingsProvider.getSettings().username
-            ) as ConfigurationDocument;
-        } catch (errWithParams) {
-            this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
-            return;
-        }
-        this.projectConfiguration.update(configurationChange.newProjectConfiguration);
-        this.loadCategories();
-        this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
     }
 
 

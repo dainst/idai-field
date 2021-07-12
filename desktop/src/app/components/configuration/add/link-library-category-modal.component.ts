@@ -7,7 +7,7 @@ import { MenuContext, MenuService } from '../../menu-service';
 import { AddCategoryModalComponent } from './add-category-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
-import {ErrWithParams} from '../../../core/import/import/import-documents';
+import { ErrWithParams } from '../../../core/import/import/import-documents';
 
 
 @Component({
@@ -29,8 +29,6 @@ export class LinkLibraryCategoryModalComponent {
     public categories: Array<Category> = [];
 
     private configurationIndex = {};
-
-    public saveChanges: any;
 
     public configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;

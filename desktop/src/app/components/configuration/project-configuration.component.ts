@@ -381,17 +381,15 @@ export class ProjectConfigurationComponent implements OnInit {
         } catch (errWithParams) {
 
             return errWithParams;
+        }
 
-        } finally {
-
-            try {
-                await this.saveChangesAndReload({
-                    newProjectConfiguration,
-                    newCustomConfigurationDocument: configurationDocument
-                });
-            } catch (e) {
-                console.error('error in configureAppSaveChangesAndReload', e)
-            }
+        try {
+            await this.saveChangesAndReload({
+                newProjectConfiguration,
+                newCustomConfigurationDocument: configurationDocument
+            });
+        } catch (e) {
+            console.error('error in configureAppSaveChangesAndReload', e)
         }
     }
 }

@@ -23,6 +23,7 @@ export const PROJECT_MAPPING = {
     'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
+    'elephantine': { prefix: 'Elephantine', label: 'Elephantine' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
     'heliopolis-project': { prefix: 'Heliopolis', label: 'Heliopolis' },
     'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },

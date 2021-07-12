@@ -1,0 +1,179 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Feature:default": {
+    "color": "black",
+    "hidden": ["endDate", "beginningDate", "color", "hasDisturbance", "featureForm", "featureBorders"],
+    "commons": ["date", "literature"],
+    "valuelists": {
+      "period": "periods-elephantine",
+      "featureSamples": "featureSamples-elephantine"
+    },
+    "fields": {
+      "potteryStage": {
+        "inputType": "input"
+      },
+      "drawingPlanum": {
+        "inputType": "input"
+      },
+      "drawingProfile": {
+        "inputType": "input"
+      },
+      "photoNumber": {
+        "inputType": "input"
+      },
+      "findsLeftAtTrench": {
+        "inputType": "text"
+      },
+      "featureVolume": {
+        "inputType": "unsignedInt"
+      },
+      "stratum": {
+        "inputType": "input"
+      },
+      "areal": {
+        "inputType": "input"
+      },
+      "architectUnitNumber": {
+        "inputType": "input"
+      },
+      "roomNumber": {
+        "inputType": "input"
+      },
+      "installationNumber": {
+        "inputType": "input"
+      },
+      "featureSamples": {
+        "inputType": "checkboxes"
+      },
+      "searchFeatureType": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "commons": ["date"],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Coin:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "PlasterFragment:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Sample:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

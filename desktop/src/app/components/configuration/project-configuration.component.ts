@@ -312,40 +312,6 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
-            : Promise<ErrWithParams|undefined> {
-
-        let newProjectConfiguration;
-        try {
-             newProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(configurationDocument)
-            );
-        } catch (errWithParams) {
-            return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
-        }
-
-        try {
-            try {
-                this.customConfigurationDocument = await this.datastore.update(
-                    configurationDocument,
-                    this.settingsProvider.getSettings().username
-                ) as ConfigurationDocument;
-            } catch (errWithParams) {
-                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
-                return;
-            }
-            this.projectConfiguration.update(newProjectConfiguration);
-            this.loadCategories();
-            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-
-        } catch (e) {
-            console.error('error in configureAppSaveChangesAndReload', e);
-        }
-    }
-
-
     private async deleteField(category: Category, field: FieldDefinition) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
@@ -380,5 +346,39 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
+    }
+
+
+    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
+            : Promise<ErrWithParams|undefined> {
+
+        let newProjectConfiguration;
+        try {
+             newProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                Document.clone(configurationDocument)
+            );
+        } catch (errWithParams) {
+            return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
+        }
+
+        try {
+            try {
+                this.customConfigurationDocument = await this.datastore.update(
+                    configurationDocument,
+                    this.settingsProvider.getSettings().username
+                ) as ConfigurationDocument;
+            } catch (errWithParams) {
+                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
+                return;
+            }
+            this.projectConfiguration.update(newProjectConfiguration);
+            this.loadCategories();
+            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+
+        } catch (e) {
+            console.error('error in configureAppSaveChangesAndReload', e);
+        }
     }
 }

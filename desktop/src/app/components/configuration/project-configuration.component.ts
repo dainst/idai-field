@@ -311,34 +311,6 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public configureAppSaveChangesAndReload = async (configurationDocument: ConfigurationDocument)
-                                                     : Promise<ErrWithParams|undefined> => /* '=>' binds 'this' */ {
-
-        let newProjectConfiguration;
-        try {
-             newProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(configurationDocument)
-            );
-        } catch (errWithParams) {
-
-            return errWithParams;
-
-        } finally {
-
-            try {
-                await this.saveChangesAndReload({
-                    newProjectConfiguration,
-                    newCustomConfigurationDocument: configurationDocument
-                });
-            } catch (e) {
-                console.error('error in configureAppSaveChangesAndReload', e)
-            }
-        }
-    }
-
-
     public async saveChangesAndReload(configurationChange: ConfigurationChange) {
 
         try {
@@ -390,5 +362,36 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
+    }
+
+
+    // Put this public function temporarily to the bottom because
+    // keywords get not properly highlighted in this and the following functions
+    // presumably because of the fat array in combination with something else
+    public configureAppSaveChangesAndReload = async (configurationDocument: ConfigurationDocument)
+                                                     : Promise<ErrWithParams|undefined> => /* '=>' binds 'this' */ {
+
+        let newProjectConfiguration;
+        try {
+             newProjectConfiguration = await this.appConfigurator.go(
+                this.settingsProvider.getSettings().username,
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                Document.clone(configurationDocument)
+            );
+        } catch (errWithParams) {
+
+            return errWithParams;
+
+        } finally {
+
+            try {
+                await this.saveChangesAndReload({
+                    newProjectConfiguration,
+                    newCustomConfigurationDocument: configurationDocument
+                });
+            } catch (e) {
+                console.error('error in configureAppSaveChangesAndReload', e)
+            }
+        }
     }
 }

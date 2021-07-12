@@ -51,7 +51,7 @@
                                         [allowDragAndDrop]="allowDragAndDrop"
                                         [availableInputTypes]="availableInputTypes"
                                         [contextMenu]="contextMenu"
-                                        [configureAppSaveChangesAndReload]="configureAppSaveChangesAndReload"
+                                        [configureAppSaveChangesAndReload]="configureAppSaveChangesAndReload.bind(this)"
                                         (onConfigurationChanged)="configureAppSaveChangesAndReload($event)"
                                         (onEditCategory)="editCategory(selectedCategory)"
                                         (onEditGroup)="editGroup(selectedCategory, $event)"

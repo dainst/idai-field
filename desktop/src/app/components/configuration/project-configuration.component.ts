@@ -73,6 +73,9 @@ export class ProjectConfigurationComponent implements OnInit {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
+    public saveAndReload = (configurationDocument: ConfigurationDocument)
+        : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(configurationDocument);
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
@@ -172,7 +175,7 @@ export class ProjectConfigurationComponent implements OnInit {
             LinkLibraryCategoryModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
 
@@ -195,7 +198,7 @@ export class ProjectConfigurationComponent implements OnInit {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();
@@ -222,7 +225,7 @@ export class ProjectConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
 
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;
@@ -247,7 +250,7 @@ export class ProjectConfigurationComponent implements OnInit {
             FieldEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload.bind(this);
+        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;
@@ -309,7 +312,7 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    public async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
+    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
             : Promise<ErrWithParams|undefined> {
 
         let newProjectConfiguration;

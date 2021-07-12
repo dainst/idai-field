@@ -1,7 +1,7 @@
 
 import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
-import {applyLanguagesToCategory} from './apply-languages-to-category';
+import { applyLanguagesToCategory } from './apply-languages-to-category';
 
 
 /**

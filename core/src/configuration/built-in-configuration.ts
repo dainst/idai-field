@@ -136,11 +136,20 @@ export class BuiltInConfiguration {
         Operation: {
             supercategory: true,
             abstract: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
@@ -150,6 +159,10 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             parent: 'Operation'
@@ -160,6 +173,10 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             parent: 'Operation'
@@ -170,6 +187,10 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             parent: 'Operation'
@@ -178,6 +199,10 @@ export class BuiltInConfiguration {
             fields: {
                 gazId: {
                     inputType: FieldDefinition.InputType.UNSIGNEDINT
+                },
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
                 }
             },
             groups: [
@@ -188,6 +213,10 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.PARENT,
                     fields: ['gazId']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
         },
@@ -205,43 +234,79 @@ export class BuiltInConfiguration {
         Room: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
         // An idealized (non material) entity, must be created within a Room
         RoomWall: {
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             mustLieWithin: true
         },
         // An idealized (non material) entity, must be created within a Room
         RoomFloor: {
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             mustLieWithin: true
         },
         // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ],
             mustLieWithin: true
@@ -250,22 +315,40 @@ export class BuiltInConfiguration {
         BuildingPart: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
         Area: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
@@ -278,6 +361,10 @@ export class BuiltInConfiguration {
                 },
                 dating: {
                     inputType: FieldDefinition.InputType.DATING,
+                },
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
                 }
             },
             groups: [
@@ -287,7 +374,7 @@ export class BuiltInConfiguration {
                 },
                 {
                     name: Groups.POSITION,
-                    fields: ['isBelow', 'isAbove', 'isEquivalentTo', 'borders', 'cuts', 'isCutBy']
+                    fields: ['geometry', 'isBelow', 'isAbove', 'isEquivalentTo', 'borders', 'cuts', 'isCutBy']
                 },
                 {
                     name: Groups.TIME,
@@ -298,7 +385,12 @@ export class BuiltInConfiguration {
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
@@ -307,16 +399,29 @@ export class BuiltInConfiguration {
                 {
                     name: Groups.IDENTIFICATION,
                     fields: ['isInstanceOf']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
         Sample: {
             mustLieWithin: true,
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             groups: [
                 {
                     name: Groups.STEM,
                     fields: ['identifier', 'category', 'shortDescription']
+                },
+                {
+                    name: Groups.POSITION,
+                    fields: ['geometry']
                 }
             ]
         },
@@ -771,11 +876,20 @@ export class BuiltInConfiguration {
             (this.builtInCategories as any)['Other'] = {
                 color: '#CC6600',
                 parent: 'Feature',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -785,21 +899,38 @@ export class BuiltInConfiguration {
 
             (this.builtInCategories as any)['Wall_surface'] = {
                 color: '#ffff99',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
             (this.builtInCategories as any)['Drilling'] = {
                 color: '#08519c',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -826,42 +957,78 @@ export class BuiltInConfiguration {
                 userDefinedSubcategoriesAllowed: true,
                 abstract: true,
                 color: '#08306b',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
             (this.builtInCategories as any)['Profile'] = {
                 color: '#c6dbef',
                 parent: 'ProcessUnit',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
             (this.builtInCategories as any)['BuildingFloor'] = {
                 color: '#6600cc',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
             (this.builtInCategories as any)['SurveyBurial'] = {
                 color: '#45ff95',
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -927,11 +1094,20 @@ export class BuiltInConfiguration {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: false,
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -942,6 +1118,10 @@ export class BuiltInConfiguration {
                 fields: {
                     gazId: {
                         inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    },
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
                     }
                 },
                 groups: [
@@ -952,6 +1132,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.PARENT,
                         fields: ['gazId']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -963,6 +1147,10 @@ export class BuiltInConfiguration {
                     diameterPercentage: {
                         inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
                     },
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
                 },
                 groups: [
                     {
@@ -976,6 +1164,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.DIMENSION,
                         fields: ['diameterPercentage']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };
@@ -983,11 +1175,20 @@ export class BuiltInConfiguration {
             (this.builtInCategories as any)['Impression'] = {
                 supercategory: false,
                 userDefinedSubcategoriesAllowed: false,
-                fields: {},
+                fields: {
+                    geometry: {
+                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        visible: false
+                    }
+                },
                 groups: [
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             };

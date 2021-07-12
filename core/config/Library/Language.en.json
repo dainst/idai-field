@@ -1,7 +1,4 @@
 {
-  "other": {
-    "geometry": "Geometry"
-  },
   "groups": {
     "stem": "Core",
     "time": "Time",

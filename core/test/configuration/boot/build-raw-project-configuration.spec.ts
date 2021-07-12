@@ -1390,52 +1390,9 @@ describe('buildRawProjectConfiguration', () => {
         const childGroup = result['P'].children[0].groups[0];
 
         expect(parentGroup.name).toEqual(Groups.POSITION);
-        expect(parentGroup.fields[1].name).toEqual('isAbove');
+        expect(parentGroup.fields[0].name).toEqual('isAbove');
         expect(childGroup.name).toEqual(Groups.POSITION);
-        expect(childGroup.fields[1].name).toEqual('isAbove');
-    });
-
-
-    it('put geometry into groups', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            P: {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                fields: {},
-                groups: []
-            },
-        };
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            C: {
-                fields: {},
-                parent: 'P'
-            }
-        };
-
-        const languageConfigurations = {
-            complete: {
-                en: [{
-                    other: { geometry: 'Geometry' }
-                }]
-            },
-            default: {}
-        };
-
-        const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
-        );
-
-        const parentGroup = result['P'].groups[0];
-        const childGroup = result['P'].children[0].groups[0];
-
-        expect(parentGroup.name).toEqual('position');
-        expect(parentGroup.fields[0].name).toEqual('geometry');
-        expect(parentGroup.fields[0].label.en).toEqual('Geometry');
-        expect(childGroup.name).toEqual('position');
-        expect(childGroup.fields[0].name).toEqual('geometry');
-        expect(childGroup.fields[0].label.en).toEqual('Geometry');
+        expect(childGroup.fields[0].name).toEqual('isAbove');
     });
 
 

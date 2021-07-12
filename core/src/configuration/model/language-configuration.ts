@@ -8,7 +8,6 @@ export interface LanguageConfiguration {
     groups?: { [groupName: string]: string };
     commons?: { [fieldName: string]: FieldLanguageDefinition };
     fields?: { [fieldName: string]: FieldLanguageDefinition };
-    other?: { [fieldName: string]: string };
 }
 
 

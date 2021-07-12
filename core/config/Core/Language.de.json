@@ -9,6 +9,9 @@
     },
     "shortDescription": {
       "label": "Kurzbeschreibung"
+    },
+    "geometry": {
+      "label": "Geometrie"
     }
   },
   "categories": {

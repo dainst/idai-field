@@ -4,7 +4,7 @@ import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Res
 import { LanguageConfigurationUtil } from './language-configuration-util';
 
 
-export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
+export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
 
 
 /**

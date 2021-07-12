@@ -1,7 +1,7 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
     isUndefinedOrEmpty, not } from 'tsfun';
-import { RelationDefinition, Category,Groups,Group,FieldDefinition } from '../../model';
+import { RelationDefinition, Category, Groups } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -11,9 +11,7 @@ import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
-import { ProjectCategories } from '../project-categories';
 import { RawProjectConfiguration } from '../project-configuration';
-import { RelationsUtil } from '../relations-utils';
 import { addExtraFields } from './add-extra-fields';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';
@@ -88,7 +86,6 @@ function processCategories(validateFields: any,
         validateFields,
         makeCategoryForest(relations),
         Tree.mapList(setGroupLabels(languageConfigurations)),
-        setGeometriesInGroups(languageConfigurations),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances
     );
@@ -102,44 +99,6 @@ function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<Tra
     });
 
     return categories;
-}
-
-
-const setGeometriesInGroups = (languageConfigurations: LanguageConfigurations) => (categoriesTree: Forest<Category>) =>
-    Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
-
-
-function adjustCategoryGeometry(languageConfigurations: LanguageConfigurations,
-                                categoriesTree: Forest<Category>) {
-
-    return (category: Category /* modified in place */): Category => {
-
-        if (!ProjectCategories.isGeometryCategory(categoriesTree, category.name)) return category;
-
-        let positionGroup = category.groups.find(group => group.name === Groups.POSITION);
-        if (!positionGroup) {
-            positionGroup = Group.create(Groups.POSITION);
-            positionGroup.label = LanguageConfiguration.getI18nString(
-                languageConfigurations.complete, 'groups', 'position'
-            );
-            category.groups.push(positionGroup);
-        }
-
-        const geometryField: FieldDefinition = {
-            name: 'geometry',
-            label: LanguageConfiguration.getI18nString(
-                languageConfigurations.complete, 'other', 'geometry'
-            ),
-            defaultLabel: LanguageConfiguration.getI18nString(
-                languageConfigurations.default, 'other', 'geometry'
-            ),
-            inputType: 'geometry',
-            editable: true
-        };
-        positionGroup.fields.unshift(geometryField);
-
-        return category;
-    }
 }
 
 

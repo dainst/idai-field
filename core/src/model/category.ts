@@ -39,6 +39,7 @@ export interface Category extends Named {
     isAbstract: boolean;
     mustLieWithin: boolean|undefined; // = undefined;
     userDefinedSubcategoriesAllowed?: boolean
+    mandatory?: boolean;
 
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;

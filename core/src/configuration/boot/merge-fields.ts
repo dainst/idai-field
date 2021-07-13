@@ -1,5 +1,5 @@
-import {Map} from 'tsfun';
-import {TransientFieldDefinition} from '../model/transient-category-definition';
+import { Map } from 'tsfun';
+import { TransientFieldDefinition } from '../model/transient-category-definition';
 
 
 export function mergeFields(target: Map<TransientFieldDefinition>, 

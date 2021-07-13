@@ -1,6 +1,6 @@
-import {clone, keysValues, Map} from 'tsfun';
-import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
+import { clone, keysValues, Map } from 'tsfun';
+import { CustomCategoryDefinition } from '../model/custom-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
 
 
 export function hideFields(customCategories: Map<CustomCategoryDefinition>) {

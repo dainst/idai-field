@@ -52,6 +52,8 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        return !this.contextMenu.field || this.contextMenu.field.source === 'custom';
+        return (!this.contextMenu.field || this.contextMenu.field.source === 'custom')
+            && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
+                || !this.contextMenu.category.mandatory);
     }
 }

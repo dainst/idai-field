@@ -1,5 +1,6 @@
-import {intersection, subtract} from 'tsfun';
-import {RelationDefinition} from '../../model/relation-definition';
+import { intersection, subtract } from 'tsfun';
+import { RelationDefinition } from '../../model/relation-definition';
+
 
 /**
  * Used to validate to configuration in the form it comes from the user, i.e.
@@ -9,7 +10,6 @@ import {RelationDefinition} from '../../model/relation-definition';
  * @author Daniel de Oliveira
  */
 export class PrePreprocessConfigurationValidator {
-
 
     private static evaluateRelationDomain(relation: RelationDefinition, appConfiguration: any) {
 

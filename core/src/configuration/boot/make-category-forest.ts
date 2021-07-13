@@ -3,7 +3,7 @@ import { RelationsUtil } from '../relations-utils';
 import { Category, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 
@@ -133,6 +133,7 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
     category.children = [];
     category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;
+    category.mandatory = definition.mandatory;
 
     category[TEMP_FIELDS] = definition.fields || {};
     Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);

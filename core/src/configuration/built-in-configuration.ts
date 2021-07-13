@@ -103,6 +103,7 @@ export class BuiltInConfiguration {
 
     public builtInCategories: Map<BuiltinCategoryDefinition> = {
         Project: {
+            mandatory: true,
             fields: {
                 identifier: {
                     inputType: FieldDefinition.InputType.INPUT,
@@ -136,6 +137,7 @@ export class BuiltInConfiguration {
         Operation: {
             supercategory: true,
             abstract: true,
+            mandatory: true,
             fields: {
                 geometry: {
                     inputType: FieldDefinition.InputType.GEOMETRY,
@@ -427,6 +429,7 @@ export class BuiltInConfiguration {
         },
         TypeCatalog: {
             supercategory: true,
+            mandatory: true,
             fields: {
                 criterion: {
                     inputType: FieldDefinition.InputType.DROPDOWN,
@@ -447,6 +450,7 @@ export class BuiltInConfiguration {
         Type: {
             supercategory: true,
             mustLieWithin: true,
+            mandatory: true,
             fields: {},
             groups: [
                 {
@@ -462,6 +466,7 @@ export class BuiltInConfiguration {
         Image: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            mandatory: true,
             fields: {
                 height: {
                     inputType: FieldDefinition.InputType.UNSIGNEDINT,

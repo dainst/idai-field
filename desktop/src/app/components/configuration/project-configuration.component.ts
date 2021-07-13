@@ -390,7 +390,7 @@ export class ProjectConfigurationComponent implements OnInit {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
         } else {
             this.selectCategory(this.topLevelCategoriesArray[0]);
-        } 
+        }
     }
 
 

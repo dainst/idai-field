@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
+import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
     Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
@@ -131,7 +131,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 
@@ -147,7 +147,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 
@@ -201,10 +201,12 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private async createNewField(fieldName: string) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+            this.modals.make<FieldEditorModalComponent>(
+                FieldEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -224,22 +226,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
-        }
+        this.modals.awaitResult(result, nop, nop);
     }
 
 
     private async createNewGroup(groupName: string) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
+            this.modals.make<GroupEditorModalComponent>(
+                GroupEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -255,13 +253,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
-        }
+        this.modals.awaitResult(result, nop, nop);
     }
 
 

@@ -58,6 +58,9 @@ export interface Category extends Named {
 }
 
 
+type Color = string;
+
+
 /**
  * @author F.Z.
  * @author Thomas Kleinke
@@ -121,7 +124,7 @@ export namespace Category {
     }
 
 
-    export function isBrightColor(color: string): boolean {
+    export function isBrightColor(color: Color): boolean {
 
         color = color.substring(1); // strip #
         let rgb = parseInt(color, 16);   // convert rrggbb to decimal
@@ -134,7 +137,7 @@ export namespace Category {
     }
 
 
-    export function generateColorForCategory(categoryName: string): string {
+    export function generateColorForCategory(categoryName: string): Color {
 
         const hash = hashCode(categoryName);
         const r = (hash & 0xFF0000) >> 16;

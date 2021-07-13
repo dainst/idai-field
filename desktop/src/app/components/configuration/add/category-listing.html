@@ -5,7 +5,7 @@
         <li *ngFor="let category of categories"
             (click)="selectCategory(category)">
             <category-icon [category]="category" size="30"></category-icon>
-            {{getLabel(category)}}
+            {{getLabel(category)}}&nbsp;&nbsp;(Formular: {{category.name}})
         </li>
     </ul>
 </div>

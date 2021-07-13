@@ -15,7 +15,7 @@ export interface LabeledValue extends Named, Labeled {};
 /**
  * @author Thomas Kleinke
  */
-export module Labeled {
+export namespace Labeled {
 
     export const LABEL = 'label';
 

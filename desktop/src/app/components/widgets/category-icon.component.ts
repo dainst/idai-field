@@ -1,7 +1,9 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
-import { Category, ProjectConfiguration } from 'idai-field-core';
+import { Category, Labeled, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
+type Color = string;
+type Character = string;
 
 @Component({
     selector: 'category-icon',
@@ -12,15 +14,16 @@ import { Category, ProjectConfiguration } from 'idai-field-core';
 
 /**
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export class CategoryIconComponent implements OnChanges {
 
     @Input() size: number;
     @Input() category: string|Category;
 
-    public character: string;
-    public color: string;
-    public textColor: string;
+    public character: Character;
+    public color: Color;
+    public textColor: Color;
     public pxSize: string;
 
 
@@ -29,16 +32,18 @@ export class CategoryIconComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.character = this.projectConfiguration.getLabelForCategory(this.getCategoryName()).substr(0, 1);
-        this.color = this.projectConfiguration.getColorForCategory(this.getCategoryName());
-        this.textColor = CategoryIconComponent.isColorTooBright(this.color) ? 'black' : 'white';
+        this.determineCharacterForCategory();
+        this.determineColorForCategory();
+        this.textColor = CategoryIconComponent.isColorTooBright(this.color)
+            ? 'black'
+            : 'white';
         this.pxSize = this.size + 'px';
     }
 
 
     private static isColorTooBright(c: any): boolean {
 
-        c = c.substring(1);      // strip #
+        c = c.substring(1);          // strip #
         let rgb = parseInt(c, 16);   // convert rrggbb to decimal
         let r = (rgb >> 16) & 0xff;  // extract red
         let g = (rgb >>  8) & 0xff;  // extract green
@@ -48,8 +53,20 @@ export class CategoryIconComponent implements OnChanges {
     }
 
 
-    private getCategoryName(): string {
+    private determineCharacterForCategory() {
 
-        return isString(this.category) ? this.category : this.category.name;
+        this.character =
+            StringUtils.first(
+                isString(this.category)
+                    ? this.projectConfiguration.getLabelForCategory(this.category)
+                    : Labeled.getLabel(this.category));
+    }
+
+
+    private determineColorForCategory() {
+
+        this.color = isString(this.category)
+            ? this.projectConfiguration.getColorForCategory(this.category)
+            : this.category.color;
     }
 }

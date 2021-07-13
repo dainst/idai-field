@@ -3,7 +3,9 @@ const parseInteger = parseInt;
 /**
  * @author Daniel de Oliveira
  */
-export module StringUtils {
+export namespace StringUtils {
+
+    export const first = (s: string) => s.length > 0 ? s[0] : undefined;
 
     export const toLowerCase = (s: string) => s.toLowerCase();
     

@@ -43,7 +43,7 @@ export class Modals {
     public async awaitResult<R = any>(
         result: Promise<R>,
         onSuccess: () => void,
-        afterCatch: () => void) {
+        onFinish: () => void) {
 
         try {
             await result;
@@ -52,7 +52,7 @@ export class Modals {
             // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
-            afterCatch();
+            onFinish();
         }
     }
 

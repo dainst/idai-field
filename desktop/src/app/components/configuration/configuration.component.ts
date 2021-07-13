@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, FieldDefinition, Group, Groups } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -18,9 +17,10 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
+import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
+import { Modals } from '../services/modals';
 
 
 export type InputType = {
@@ -30,7 +30,7 @@ export type InputType = {
 
 
 @Component({
-    templateUrl: './project-configuration.html',
+    templateUrl: './configuration.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:click)': 'onClick($event, false)',
@@ -41,11 +41,11 @@ export type InputType = {
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ProjectConfigurationComponent implements OnInit {
+export class ConfigurationComponent implements OnInit {
 
     public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
-    public customConfigurationDocument: ConfigurationDocument;
+    public configurationDocument: ConfigurationDocument;
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
@@ -79,11 +79,10 @@ export class ProjectConfigurationComponent implements OnInit {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
-                private menuService: MenuService,
                 private datastore: Datastore,
                 private messages: Messages,
+                private modals: Modals,
                 private settingsProvider: SettingsProvider,
-                private modalService: NgbModal,
                 private appConfigurator: AppConfigurator,
                 private i18n: I18n) {}
 
@@ -92,7 +91,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
         this.loadCategories();
 
-        this.customConfigurationDocument = await this.datastore.get(
+        this.configurationDocument = await this.datastore.get(
             'configuration',
             { skipCache: true }
         ) as ConfigurationDocument;
@@ -101,7 +100,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
+        if (event.key === 'Escape' && this.modals.getMenuContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -151,7 +150,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async setNewCategoriesOrder(newOrder: string[]) {
 
-        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource.order = newOrder;
 
         try {
@@ -171,22 +170,21 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async addSubcategory(parentCategory: Category) {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            LinkLibraryCategoryModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
-        modalReference.componentInstance.parentCategory = parentCategory;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        const [result, componentInstance] =
+            this.modals.make<AddCategoryModalComponent>(AddCategoryModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.parentCategory = parentCategory;
+        componentInstance.configurationDocument = this.configurationDocument;
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -194,23 +192,22 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async editCategory(category: Category) {
 
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            CategoryEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.initialize();
+        const [result, componentInstance] =
+            this.modals.make<CategoryEditorModalComponent>(CategoryEditorModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.initialize();
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -220,25 +217,23 @@ export class ProjectConfigurationComponent implements OnInit {
 
         if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            GroupEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
+        const [result, componentInstance] =
+            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
 
-        modalReference.componentInstance.saveAndReload = this.saveAndReload
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.group = group;
-        modalReference.componentInstance.initialize();
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.group = group;
+        componentInstance.initialize();
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -246,25 +241,24 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async editField(category: Category, field: FieldDefinition) {
 
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            FieldEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.field = field;
-        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
-        modalReference.componentInstance.initialize();
+        const [result, componentInstance] =
+            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.field = field;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.initialize();
 
         try {
-            await modalReference.result
+            await result
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -272,21 +266,20 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async openDeleteCategoryModal(category: Category) {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteCategoryModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.category = category;
+        const [result, componentInstance] =
+            this.modals.make<DeleteCategoryModalComponent>(DeleteCategoryModalComponent);
+
+        componentInstance.category = category;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteCategory(category);
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -294,21 +287,20 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async openDeleteGroupModal(category: Category, group: Group) {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteGroupModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.group = group;
+        const [result, componentInstance] =
+            this.modals.make<DeleteGroupModalComponent>(DeleteGroupModalComponent);
+
+        componentInstance.group = group;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteGroup(category, group);
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -316,21 +308,20 @@ export class ProjectConfigurationComponent implements OnInit {
 
     public async openDeleteFieldModal(category: Category, field: FieldDefinition) {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteFieldModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.field = field;
+        const [result, componentInstance] =
+            this.modals.make<DeleteFieldModalComponent>(DeleteFieldModalComponent);
+
+        componentInstance.field = field;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteField(category, field);
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
     }
@@ -339,7 +330,7 @@ export class ProjectConfigurationComponent implements OnInit {
     private async deleteCategory(category: Category) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
-            category, this.customConfigurationDocument
+            category, this.configurationDocument
         );
 
         try {
@@ -354,7 +345,7 @@ export class ProjectConfigurationComponent implements OnInit {
     private async deleteGroup(category: Category, group: Group) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-            category, group, this.customConfigurationDocument
+            category, group, this.configurationDocument
         );
 
         try {
@@ -369,7 +360,7 @@ export class ProjectConfigurationComponent implements OnInit {
     private async deleteField(category: Category, field: FieldDefinition) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-            category, field, this.customConfigurationDocument
+            category, field, this.configurationDocument
         );
 
         try {
@@ -410,7 +401,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
         try {
             try {
-                this.customConfigurationDocument = await this.datastore.update(
+                this.configurationDocument = await this.datastore.update(
                     configurationDocument,
                     this.settingsProvider.getSettings().username
                 ) as ConfigurationDocument;
@@ -422,7 +413,7 @@ export class ProjectConfigurationComponent implements OnInit {
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
-            this.loadCategories();            
+            this.loadCategories();
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }

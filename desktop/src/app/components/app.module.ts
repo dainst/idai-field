@@ -37,11 +37,12 @@ import { HelpComponent } from './help/help.component';
 import { ImageOverviewModule } from './image/overview/image-overview.module';
 import { ImportModule } from './import/import-module';
 import { MatrixModule } from './matrix/matrix.module';
-import { MenuService } from './menu-service';
+import { Menus } from './services/menus';
 import { IdaiMessagesModule } from './messages/idai-messages.module';
 import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
+import { Modals } from './services/modals';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';
@@ -95,6 +96,7 @@ registerLocaleData(localeIt, 'it');
         HelpComponent
     ],
     providers: [
+        Modals,
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
@@ -213,7 +215,7 @@ registerLocaleData(localeIt, 'it');
             deps: [IndexFacade, TabSpaceCalculator, StateSerializer, Datastore, Router]
         },
         TabSpaceCalculator,
-        MenuService,
+        Menus,
         UtilTranslations
     ],
     entryComponents: [

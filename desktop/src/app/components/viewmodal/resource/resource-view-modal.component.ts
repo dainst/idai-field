@@ -4,10 +4,10 @@ import {on, is} from 'tsfun';
 import {Datastore, Document} from 'idai-field-core';
 import {FieldDocument, ImageDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
-import {RoutingService} from '../../routing-service';
+import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import {MenuService} from '../../menu-service';
+import {Menus} from '../../services/menus';
 
 
 @Component({
@@ -32,8 +32,8 @@ export class ResourceViewModalComponent extends ViewModalComponent {
                 private datastore: Datastore,
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
-                routingService: RoutingService,
-                menuService: MenuService) {
+                routingService: Routing,
+                menuService: Menus) {
 
         super(activeModal, modalService, routingService, menuService);
     }

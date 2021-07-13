@@ -1,3 +1,5 @@
+import {MsgWithParams} from '../../components/messages/msg-with-params';
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -18,7 +20,7 @@ export module ProjectNameValidator {
     /**
      * @returns msgWithParams if invalid, otherwise undefined
      */
-    export function validate(newProjectName: string, existingProjectNames?: string[]): string[]|undefined {
+    export function validate(newProjectName: string, existingProjectNames?: string[]): MsgWithParams|undefined {
 
         if (newProjectName === '') return [Errors.RESOURCES_ERROR_NO_PROJECT_NAME];
 

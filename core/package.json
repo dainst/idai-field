@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "rxjs": "~6.5.4",
-        "tsfun": "5.5.34",
+        "tsfun": "5.5.35",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

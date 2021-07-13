@@ -6,7 +6,7 @@ import { DatastoreErrors } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { ProjectCategories } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../core/resources/view/view-facade';
+import { ViewFacade } from '../../core/resources/view/view-facade';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ import { ViewFacade } from '../core/resources/view/view-facade';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class RoutingService {
+export class Routing {
 
     private currentRoute: any;
 

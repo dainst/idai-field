@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-field-core';
-import {MenuContext, MenuService} from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
 
@@ -13,7 +14,7 @@ import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view
 export class ViewModalLauncher {
 
     constructor(private modalService: NgbModal,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     public async openImageViewModal(document: Document, mode: ImageViewModalComponent.Mode) {

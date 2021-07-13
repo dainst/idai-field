@@ -2,7 +2,7 @@
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
 
-<div *ngIf="customConfigurationDocument" class="project-configuration row">
+<div *ngIf="configurationDocument" class="project-configuration row">
     <div class="col">
         <div class="row">
             <div class="col default-nav bg-light">
@@ -47,7 +47,7 @@
 
             <div class="col-10">
                 <configuration-category [category]="selectedCategory"
-                                        [customConfigurationDocument]="customConfigurationDocument"
+                                        [configurationDocument]="configurationDocument"
                                         [showHiddenFields]="showHiddenFields"
                                         [allowDragAndDrop]="allowDragAndDrop"
                                         [availableInputTypes]="availableInputTypes"

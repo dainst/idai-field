@@ -1,7 +1,7 @@
 import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { Document, Datastore, IndexFacade } from 'idai-field-core';
 import {ComponentHelpers} from '../component-helpers';
-import { RoutingService } from '../routing-service';
+import { Routing } from '../services/routing';
 import { NavbarComponent } from './navbar.component';
 
 
@@ -23,7 +23,7 @@ export class TaskbarConflictsComponent {
     @ViewChild('popover', { static: false }) private popover: any;
 
 
-    constructor(private routingService: RoutingService,
+    constructor(private routingService: Routing,
                 private renderer: Renderer2,
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,

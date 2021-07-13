@@ -15,7 +15,8 @@ import { JavaToolExecutor } from '../../core/java/java-tool-executor';
 import { ImageRelationsManager } from '../../core/model/image-relations-manager';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ExportModalComponent } from './export-modal.component';
@@ -59,7 +60,7 @@ export class ExportComponent implements OnInit {
                 private datastore: Datastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager) {}
 

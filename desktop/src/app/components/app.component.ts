@@ -2,7 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppController } from '../core/app-controller';
-import { MenuService } from './menu-service';
+import { Menus } from './services/menus';
 import { UtilTranslations } from '../core/util/util-translations';
 import { Messages } from './messages/messages';
 import { Imagestore } from '../core/images/imagestore/imagestore';
@@ -26,7 +26,7 @@ export class AppComponent {
     constructor(router: Router,
                 private messages: Messages,
                 private renderer: Renderer2,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 appController: AppController,

@@ -8,11 +8,13 @@ import { ProjectNameValidator } from '../../core/model/project-name-validator';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
+import {MsgWithParams} from '../messages/msg-with-params';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
-import {ViewModalLauncher} from '../resources/service/view-modal-launcher';
+import { ViewModalLauncher } from '../resources/service/view-modal-launcher';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -49,7 +51,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
                 private datastore: Datastore,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private viewModalLauncher: ViewModalLauncher) {
     }
 
@@ -111,7 +113,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async createProject() {
 
-        const validationErrorMessage: string[]|undefined =
+        const validationErrorMessage: MsgWithParams|undefined =
             ProjectNameValidatorMsgConversion.convert(
                 ProjectNameValidator.validate(this.newProject, this.getProjects())
             );

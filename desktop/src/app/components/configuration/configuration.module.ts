@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ProjectConfigurationComponent } from './project-configuration.component';
+import { ConfigurationComponent } from './configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
 import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
@@ -12,10 +12,9 @@ import { ConfigurationCategoryComponent } from './configuration-category.compone
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryPreviewComponent } from './add/category-preview.component';
 import { CategoryListingComponent } from './add/category-listing.component';
-import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
+import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
@@ -35,16 +34,15 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         DragDropModule
     ],
     declarations: [
-        ProjectConfigurationComponent,
+        ConfigurationComponent,
         ConfigurationFieldComponent,
         ConfigurationCategoryComponent,
         MultiLanguageInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
-        AddCategoryModalComponent,
         CategoryPreviewComponent,
         CategoryListingComponent,
-        LinkLibraryCategoryModalComponent,
+        AddCategoryModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
@@ -55,13 +53,12 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         DeleteCategoryModalComponent
     ],
     exports: [
-        ProjectConfigurationComponent
+        ConfigurationComponent
     ],
     entryComponents: [
-        ProjectConfigurationComponent,
+        ConfigurationComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
-        AddCategoryModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

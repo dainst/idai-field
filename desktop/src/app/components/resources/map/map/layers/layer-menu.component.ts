@@ -4,7 +4,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ImageDocument} from 'idai-field-core';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
-import {MenuContext, MenuService} from '../../../../menu-service';
+import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../services/menus';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {LayerUtility} from './layer-utility';
 import {Loading} from '../../../../widgets/loading';
@@ -40,7 +41,7 @@ export class LayerMenuComponent extends MenuComponent {
                 private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
                 renderer: Renderer2,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
     }

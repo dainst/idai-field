@@ -1,10 +1,11 @@
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {M} from './m';
+import {MsgWithParams} from './msg-with-params';
 
 
 export module ProjectNameValidatorMsgConversion {
 
-    export function convert(msgWithParams: string[]|undefined): string[]|undefined {
+    export function convert(msgWithParams: MsgWithParams|undefined): MsgWithParams|undefined {
 
         if (msgWithParams === undefined) return undefined;
         if (msgWithParams.length === 0) return msgWithParams;
@@ -22,6 +23,6 @@ export module ProjectNameValidatorMsgConversion {
             m = M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS;
         }
 
-        return [m].concat(msgWithParams.slice(1));
+        return [m].concat(msgWithParams.slice(1)) as MsgWithParams;
     }
 }

@@ -2,8 +2,9 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-field-core';
 import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {RoutingService} from '../routing-service';
-import {MenuContext, MenuService} from '../menu-service';
+import {Routing} from '../services/routing';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import {ImageRowItem} from '../../core/images/row/image-row';
 
 
@@ -18,8 +19,8 @@ export abstract class ViewModalComponent {
 
     constructor(protected activeModal: NgbActiveModal,
                 protected modalService: NgbModal,
-                private routingService: RoutingService,
-                private menuService: MenuService) {}
+                private routingService: Routing,
+                private menuService: Menus) {}
 
 
     protected abstract getDocument(isImageDocument?: boolean): Document;

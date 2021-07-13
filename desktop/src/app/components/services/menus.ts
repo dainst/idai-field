@@ -1,31 +1,15 @@
 import {Router} from '@angular/router';
 import {Injectable, NgZone} from '@angular/core';
-
+import {MenuContext} from './menu-context';
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
-
-type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryEdit'|'mapLayersEdit'|'georeferenceEdit'|'configurationEdit';
-
-
-export module MenuContext {
-
-    export const DEFAULT = 'default';
-    export const DOCEDIT = 'docedit';
-    export const MODAL = 'modal';
-    export const PROJECTS = 'projects';
-    export const GEOMETRY_EDIT = 'geometryEdit';
-    export const MAP_LAYERS_EDIT = 'mapLayersEdit';
-    export const GEOREFERENCE_EDIT = 'georeferenceEdit';
-    export const CONFIGURATION_EDIT = 'configurationEdit';
-}
 
 
 @Injectable()
 /**
  * @author Thomas Kleinke
  */
-export class MenuService {
+export class Menus {
 
     private context: MenuContext;
 

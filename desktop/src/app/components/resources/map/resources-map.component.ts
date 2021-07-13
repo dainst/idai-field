@@ -3,7 +3,8 @@ import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManage
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { ResourcesComponent } from '../resources.component';
@@ -35,7 +36,7 @@ export class ResourcesMapComponent {
                 private relationsManager: RelationsManager,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 

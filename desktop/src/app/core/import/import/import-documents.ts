@@ -1,4 +1,4 @@
-import {Map, Either} from 'tsfun';
+import {Map, Either, Array1} from 'tsfun';
 import {Document, Resource} from 'idai-field-core';
 import {ImportValidator} from './process/import-validator';
 import {Find, Get} from './types';
@@ -56,7 +56,7 @@ export interface ImportResult {
 }
 
 
-export type ErrWithParams = Array<string>;
+export type ErrWithParams = Array1<string>;
 export type CreateDocuments = Array<Document>;
 export type UpdateDocuments = Array<Document>;
 export type TargetDocuments = Array<Document>;

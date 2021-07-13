@@ -1,5 +1,5 @@
 import {BaseList} from '../../../../src/app/components/resources/base-list';
-import {MenuContext} from '../../../../src/app/components/menu-service';
+import { MenuContext } from '../../../../src/app/components/services/menu-context';
 
 
 /**

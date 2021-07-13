@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Document, FieldDocument, FieldGeometry, Category, ProjectCategories,
     ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
-import { RoutingService } from '../routing-service';
+import { Routing } from '../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
 import { MoveModalComponent } from './move-modal.component';
@@ -14,10 +14,12 @@ import { ResourceDeletion } from './deletion/resource-deletion';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../core/resources/view/view-facade';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../core/resources/view/state/navigation-path';
 import { ViewModalLauncher } from './service/view-modal-launcher';
+import {MsgWithParams} from '../messages/msg-with-params';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -47,7 +49,7 @@ export class ResourcesComponent implements OnDestroy {
 
     constructor(route: ActivatedRoute,
                 public viewFacade: ViewFacade,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private doceditLauncher: DoceditLauncher,
                 private viewModalLauncher: ViewModalLauncher,
                 private renderer: Renderer2,
@@ -59,7 +61,7 @@ export class ResourcesComponent implements OnDestroy {
                 private tabManager: TabManager,
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -187,7 +189,7 @@ export class ResourcesComponent implements OnDestroy {
             await this.viewFacade.rebuildNavigationPath();
             await this.routingService.jumpToResource(documents[0]);
         } catch (msgWithParams) {
-            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the move modal has been canceled
         }
 
@@ -210,7 +212,7 @@ export class ResourcesComponent implements OnDestroy {
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         } catch (msgWithParams) {
-            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the delete modal has been canceled.
         }
 

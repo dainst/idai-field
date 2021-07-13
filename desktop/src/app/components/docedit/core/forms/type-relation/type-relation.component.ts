@@ -3,7 +3,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { to, set } from 'tsfun';
 import { Datastore, Resource } from 'idai-field-core';
 import { TypeRelationPickerComponent } from './type-relation-picker.component';
-import { MenuContext, MenuService } from '../../../../menu-service';
+import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../services/menus';
 
 
 type ResourceIdentifier = string;
@@ -28,7 +29,7 @@ export class TypeRelationComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private modalService: NgbModal,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     ngOnChanges() {

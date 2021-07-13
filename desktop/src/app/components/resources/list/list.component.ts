@@ -5,7 +5,7 @@ import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
 import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {MenuService} from '../../menu-service';
+import {Menus} from '../../services/menus';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class ListComponent extends BaseList implements OnChanges {
                 viewFacade: ViewFacade,
                 loading: Loading,
                 projectConfiguration: ProjectConfiguration,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
         this.categoriesMap = Named.arrayToMap(projectConfiguration.getCategoriesArray());

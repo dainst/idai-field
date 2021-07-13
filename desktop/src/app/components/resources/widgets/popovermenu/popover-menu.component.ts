@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Document} from 'idai-field-core';
 import {PopoverMenu, ResourcesComponent} from '../../resources.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
-import {RoutingService} from '../../../routing-service';
+import {Routing} from '../../../services/routing';
 import {ViewModalLauncher} from '../../service/view-modal-launcher';
 import { FieldDocument } from 'idai-field-core';
 
@@ -23,7 +23,7 @@ export class PopoverMenuComponent {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private viewModalLauncher: ViewModalLauncher) {}
 
 

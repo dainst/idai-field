@@ -5,9 +5,9 @@ import { equal, isEmpty } from 'tsfun';
 import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { MenuService } from '../../menu-service';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
-import { InputType } from '../project-configuration.component';
+import { InputType } from '../configuration.component';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 
 
@@ -38,7 +38,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     constructor(activeModal: NgbActiveModal,
                 modalService: NgbModal,
-                menuService: MenuService,
+                menuService: Menus,
                 messages: Messages,
                 private i18n: I18n) {
 

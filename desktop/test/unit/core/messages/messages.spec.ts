@@ -1,5 +1,6 @@
 import {MDInternal} from '../../../../src/app/components/messages/md-internal';
 import {Messages} from '../../../../src/app/components/messages/messages';
+import {MsgWithParams} from '../../../../src/app/components/messages/msg-with-params';
 
 
 /**
@@ -108,7 +109,7 @@ describe('Messages', () => {
     it('should add a message with parameters', () => {
 
         let params = ['param1','param2'];
-        messages.add(['key2'].concat(params));
+        messages.add(['key2'].concat(params) as MsgWithParams);
         expect(messages.getActiveMessages()[1].params).toEqual(params);
     });
 
@@ -122,7 +123,7 @@ describe('Messages', () => {
 
     it('should throw an error if array is empty', () => {
 
-        messages.add([]);
+        messages.add([] as unknown as MsgWithParams);
         verifyUnknownError('no msg found for key of M with id: "undefined"');
     });
 });

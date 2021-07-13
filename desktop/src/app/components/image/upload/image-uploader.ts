@@ -5,7 +5,8 @@ import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { readWldFile } from '../../../core/images/wld/wld-import';
 import { ExtensionUtil } from '../../../core/util/extension-util';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import { M } from '../../messages/m';
 import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
@@ -36,7 +37,7 @@ export class ImageUploader {
                        private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,
                        private uploadStatus: UploadStatus,
-                       private menuService: MenuService) {}
+                       private menuService: Menus) {}
 
 
     /**

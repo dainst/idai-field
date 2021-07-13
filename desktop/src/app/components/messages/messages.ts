@@ -1,6 +1,7 @@
 import {Message} from './message';
 import {MD} from './md';
 import {MDInternal} from './md-internal';
+import {MsgWithParams} from './msg-with-params';
 
 
 /**
@@ -21,11 +22,11 @@ export class Messages {
     // Messages of these types fade away after the given timeout.
     private static TIMEOUT_TYPES: string[] = ['success', 'info'];
 
-    
+
     constructor(private messagesDictionary: MD,
                 private timeout: number) {
     }
-    
+
 
     /**
      * @param msgWithParams an array of strings and numbers
@@ -34,7 +35,7 @@ export class Messages {
      *   Every occurrence of "[0]", "[1]", "[2]" etc. will be replaced with the param string at the corresponding
      *   array position: [0] will be replaced with params[0] etc.
      */
-    public add(msgWithParams: Array<string>) {
+    public add(msgWithParams: MsgWithParams) {
 
         if (msgWithParams.length == 0) {
             return this.addUnknownError('no msg found for key of M with id: "undefined"');
@@ -86,7 +87,7 @@ export class Messages {
         return this.activeMessages;
     }
 
-    
+
     private addUnknownError(consoleError: string, parameters?: string[]) {
 
         if (parameters && parameters.length > 0) console.error(consoleError, parameters);
@@ -99,7 +100,7 @@ export class Messages {
         this.startTimeout(message);
         this.activeMessages.push(message);
     }
-    
+
 
     private fetchTemplate(key: string): Message {
 

@@ -6,7 +6,8 @@ import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
 import { DocumentHolder } from '../../core/docedit/document-holder';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
@@ -14,6 +15,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
+import { MsgWithParams } from '../messages/msg-with-params';
 
 
 @Component({
@@ -51,7 +53,7 @@ export class DoceditComponent {
                 private datastore: Datastore,
                 public projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private i18n: I18n) {}
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -201,9 +203,9 @@ export class DoceditComponent {
             return undefined;
         }
 
-        this.messages.add(errorWithParams.length > 0
+        this.messages.add((errorWithParams.length > 0
             ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration)
-            : [M.DOCEDIT_ERROR_SAVE]);
+            : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
     }
 
 

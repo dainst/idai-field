@@ -4,11 +4,10 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
 import { Group, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { MenuService } from '../../menu-service';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
-import {ProjectConfigurationComponent} from '../project-configuration.component';
 
 
 @Component({
@@ -33,7 +32,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
     constructor(activeModal: NgbActiveModal,
                 modalService: NgbModal,
-                menuService: MenuService,
+                menuService: Menus,
                 messages: Messages,
                 private i18n: I18n) {
 

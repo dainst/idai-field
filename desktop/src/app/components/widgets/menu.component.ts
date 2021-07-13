@@ -1,6 +1,7 @@
 import {Renderer2} from '@angular/core';
 import {ComponentHelpers} from '../component-helpers';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 
 
 /**
@@ -15,7 +16,7 @@ export abstract class MenuComponent {
 
 
     constructor(private renderer: Renderer2,
-                protected menuService: MenuService,
+                protected menuService: Menus,
                 private buttonElementId: string,
                 private menuElementsPrefix: string) {}
 

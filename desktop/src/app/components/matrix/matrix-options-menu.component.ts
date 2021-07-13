@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
-import {MenuService} from '../menu-service';
+import {Menus} from '../services/menus';
 import {MenuComponent} from '../widgets/menu.component';
 import {MatrixLineMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 
@@ -18,7 +18,7 @@ export class MatrixOptionsMenuComponent extends MenuComponent {
 
     constructor(private matrixState: MatrixState,
                 renderer: Renderer2,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(renderer, menuService, 'matrix-options-button', 'matrix-options-menu');
     }

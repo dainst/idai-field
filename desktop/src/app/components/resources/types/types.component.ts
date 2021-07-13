@@ -9,8 +9,9 @@ import { NavigationPath } from '../../../core/resources/view/state/navigation-pa
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { TabManager } from '../../../core/tabs/tab-manager';
 import { TypeImagesUtil } from '../../../core/util/type-images-util';
-import { MenuContext, MenuService } from '../../menu-service';
-import { RoutingService } from '../../routing-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
+import { Routing } from '../../services/routing';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';
@@ -70,14 +71,14 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private imagestore: Imagestore,
                 private relationsManager: RelationsManager,
                 private viewModalLauncher: ViewModalLauncher,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));

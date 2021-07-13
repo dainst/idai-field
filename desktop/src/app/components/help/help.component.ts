@@ -5,7 +5,8 @@ import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Settings} from '../../core/settings/settings';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -40,7 +41,7 @@ export class HelpComponent implements OnInit {
                 private settingsService: SettingsService,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     async ngOnInit() {

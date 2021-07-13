@@ -9,8 +9,10 @@ import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 import {SettingsProvider} from '../../core/settings/settings-provider';
+import {MsgWithParams} from '../messages/msg-with-params';
 
 
 @Component({
@@ -41,7 +43,7 @@ export class BackupLoadingComponent {
         private settingsService: SettingsService,
         private backupProvider: BackupProvider,
         private tabManager: TabManager,
-        private menuService: MenuService
+        private menuService: Menus
     ) {}
 
 
@@ -57,7 +59,7 @@ export class BackupLoadingComponent {
 
         if (this.running) return;
 
-        const errorMessage: string[]|undefined = this.validateInputs();
+        const errorMessage: MsgWithParams|undefined = this.validateInputs();
         if (errorMessage) return this.messages.add(errorMessage);
 
         this.running = true;
@@ -72,7 +74,7 @@ export class BackupLoadingComponent {
     }
 
 
-    private validateInputs(): string[]|undefined {
+    private validateInputs(): MsgWithParams|undefined {
 
         if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
         if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
@@ -89,7 +91,7 @@ export class BackupLoadingComponent {
     private async readBackupFile() {
 
         try {
-            const warnings: string[][] = await this.backupProvider.readDump(this.path, this.projectName);
+            const warnings: MsgWithParams[] = await this.backupProvider.readDump(this.path, this.projectName) as any;
             await this.settingsService.addProject(this.projectName);
             if (warnings) warnings.forEach(warning => this.messages.add(warning));
             this.messages.add([M.BACKUP_READ_SUCCESS]);

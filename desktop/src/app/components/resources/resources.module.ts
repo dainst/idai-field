@@ -17,7 +17,7 @@ import { DoceditModule } from '../docedit/docedit.module';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageViewerModule } from '../image/viewer/image-viewer.module';
 import { Messages } from '../messages/messages';
-import { RoutingService } from '../routing-service';
+import { Routing } from '../services/routing';
 import { Loading } from '../widgets/loading';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { BaseList } from './base-list';
@@ -97,7 +97,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
-        RoutingService,
+        Routing,
         DoceditLauncher,
         ViewModalLauncher,
         LayerManager,
@@ -106,12 +106,12 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         {
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,
-                         routingService: RoutingService,
+                         routingService: Routing,
                          viewFacade: ViewFacade) => {
 
                 return new NavigationService(projectConfiguration, routingService, viewFacade);
             },
-            deps: [ProjectConfiguration, RoutingService, ViewFacade]
+            deps: [ProjectConfiguration, Routing, ViewFacade]
         },
         {
             provide: ResourcesStateManager,

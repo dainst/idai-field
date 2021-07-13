@@ -1,7 +1,8 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
 import { ConfigurationDocument, I18nString, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
@@ -12,7 +13,7 @@ import { ErrWithParams } from '../../../core/import/import/import-documents';
  */
 export abstract class ConfigurationEditorModalComponent {
 
-    public customConfigurationDocument: ConfigurationDocument;
+    public configurationDocument: ConfigurationDocument;
     public category: Category;
     public new: boolean = false;
 
@@ -33,7 +34,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private messages: Messages) {}
 
 
@@ -49,7 +50,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition {
 
-        return this.customConfigurationDocument.resource
+        return this.configurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name];
     }
 
@@ -75,7 +76,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     public initialize() {
 
-        this.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
 
         this.label = this.getLabel();
         this.description = this.getDescription();

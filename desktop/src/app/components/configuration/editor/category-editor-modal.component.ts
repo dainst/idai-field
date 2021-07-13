@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
 import { I18nString } from 'idai-field-core';
-import { MenuService } from '../../menu-service';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
@@ -30,7 +30,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     constructor(activeModal: NgbActiveModal,
                 modalService: NgbModal,
-                menuService: MenuService,
+                menuService: Menus,
                 messages: Messages,
                 private i18n: I18n) {
 

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, NewDocument, FieldDocument } from 'idai-field-core';
 import { DoceditComponent } from '../../docedit/docedit.component';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 
 
@@ -16,7 +17,7 @@ export class DoceditLauncher {
 
     constructor(private modalService: NgbModal,
                 private viewFacade: ViewFacade,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     public async editDocument(document: Document|NewDocument,

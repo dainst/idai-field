@@ -21,6 +21,7 @@ import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { Modals } from '../services/modals';
+import {nop} from 'tsfun';
 
 
 export type InputType = {
@@ -181,14 +182,9 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -206,14 +202,9 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.category = category;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -234,14 +225,9 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.group = group;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -261,14 +247,9 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.initialize();
 
-        try {
-            await result
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -282,15 +263,9 @@ export class ConfigurationComponent implements OnInit {
 
         componentInstance.category = category;
 
-        try {
-            await result;
-            await this.deleteCategory(category);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            () => this.deleteCategory(category),
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -306,15 +281,9 @@ export class ConfigurationComponent implements OnInit {
 
         componentInstance.group = group;
 
-        try {
-            await result;
-            await this.deleteGroup(category, group);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            () => this.deleteGroup(category, group),
+            () => AngularUtility.blurActiveElement());
     }
 
 
@@ -328,15 +297,9 @@ export class ConfigurationComponent implements OnInit {
 
         componentInstance.field = field;
 
-        try {
-            await result;
-            await this.deleteField(category, field);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            () => this.deleteField(category, field),
+            () => AngularUtility.blurActiveElement());
     }
 
 

@@ -83,10 +83,12 @@ export class AddCategoryModalComponent {
 
     public async createNewSubcategory(parentCategory: Category) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<CategoryEditorModalComponent>(CategoryEditorModalComponent, 'lg');
+            this.modals.make<CategoryEditorModalComponent>(
+                CategoryEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -107,7 +109,7 @@ export class AddCategoryModalComponent {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }

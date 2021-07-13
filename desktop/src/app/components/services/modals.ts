@@ -22,7 +22,9 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-     public make<MC, R = any>(modalClass: any, size?: string /* TODO provide own options object, or large?: true*/) {
+    public make<MC, R = any>(modalClass: any, context: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
+
+        this.menuService.setContext(context);
 
         const options: NgbModalOptions = {
             backdrop: 'static',
@@ -47,6 +49,12 @@ export class Modals {
     public setMenuContext(context: MenuContext) {
 
         this.menuService.setContext(context);
+    }
+
+
+    public resetMenuContext() {
+
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 

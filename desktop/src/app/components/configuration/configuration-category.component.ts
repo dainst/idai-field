@@ -131,7 +131,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 
@@ -147,7 +147,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 
@@ -201,10 +201,12 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private async createNewField(fieldName: string) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+            this.modals.make<FieldEditorModalComponent>(
+                FieldEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -229,17 +231,19 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 
 
     private async createNewGroup(groupName: string) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
+            this.modals.make<GroupEditorModalComponent>(
+                GroupEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -260,7 +264,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
         }
     }
 

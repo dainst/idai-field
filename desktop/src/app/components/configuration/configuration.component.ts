@@ -170,10 +170,12 @@ export class ConfigurationComponent implements OnInit {
 
     public async addSubcategory(parentCategory: Category) {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
-
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(AddCategoryModalComponent, 'lg');
+            this.modals.make<AddCategoryModalComponent>(
+                AddCategoryModalComponent,
+                MenuContext.MODAL,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.parentCategory = parentCategory;
@@ -184,7 +186,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -192,10 +194,12 @@ export class ConfigurationComponent implements OnInit {
 
     public async editCategory(category: Category) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<CategoryEditorModalComponent>(CategoryEditorModalComponent, 'lg');
+            this.modals.make<CategoryEditorModalComponent>(
+                CategoryEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -207,7 +211,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -217,10 +221,12 @@ export class ConfigurationComponent implements OnInit {
 
         if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
+            this.modals.make<GroupEditorModalComponent>(
+                GroupEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -233,7 +239,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -241,10 +247,12 @@ export class ConfigurationComponent implements OnInit {
 
     public async editField(category: Category, field: FieldDefinition) {
 
-        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
-
         const [result, componentInstance] =
-            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+            this.modals.make<FieldEditorModalComponent>(
+                FieldEditorModalComponent,
+                MenuContext.CONFIGURATION_EDIT,
+                'lg'
+            );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -258,7 +266,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -266,10 +274,11 @@ export class ConfigurationComponent implements OnInit {
 
     public async openDeleteCategoryModal(category: Category) {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
-
         const [result, componentInstance] =
-            this.modals.make<DeleteCategoryModalComponent>(DeleteCategoryModalComponent);
+            this.modals.make<DeleteCategoryModalComponent>(
+                DeleteCategoryModalComponent,
+                MenuContext.MODAL
+            );
 
         componentInstance.category = category;
 
@@ -279,7 +288,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -290,7 +299,10 @@ export class ConfigurationComponent implements OnInit {
         this.modals.setMenuContext(MenuContext.MODAL);
 
         const [result, componentInstance] =
-            this.modals.make<DeleteGroupModalComponent>(DeleteGroupModalComponent);
+            this.modals.make<DeleteGroupModalComponent>(
+                DeleteGroupModalComponent,
+                MenuContext.MODAL
+            );
 
         componentInstance.group = group;
 
@@ -300,7 +312,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }
@@ -308,10 +320,11 @@ export class ConfigurationComponent implements OnInit {
 
     public async openDeleteFieldModal(category: Category, field: FieldDefinition) {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
-
         const [result, componentInstance] =
-            this.modals.make<DeleteFieldModalComponent>(DeleteFieldModalComponent);
+            this.modals.make<DeleteFieldModalComponent>(
+                DeleteFieldModalComponent,
+                MenuContext.MODAL
+            );
 
         componentInstance.field = field;
 
@@ -321,7 +334,7 @@ export class ConfigurationComponent implements OnInit {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.modals.setMenuContext(MenuContext.DEFAULT);
+            this.modals.resetMenuContext();
             AngularUtility.blurActiveElement();
         }
     }

@@ -7,7 +7,7 @@ import {PlusButtonStatus} from './plus-button.component';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class BaseList {
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
                 protected loading: Loading,
-                protected menuService: MenuService) {
+                protected menuService: Menus) {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
         this.viewFacade.navigationPathNotifications().subscribe(path => this.navigationPath = path);

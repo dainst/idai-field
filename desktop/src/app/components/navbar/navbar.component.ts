@@ -8,7 +8,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import {ProjectsModalComponent} from './projects-modal.component';
 
 
@@ -36,7 +36,7 @@ export class NavbarComponent implements DoCheck {
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
                 private settingsProvider: SettingsProvider,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private modalService: NgbModal,
                 private i18n: I18n) {
 

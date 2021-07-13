@@ -4,7 +4,7 @@ import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {Routing} from '../services/routing';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import {ImageRowItem} from '../../core/images/row/image-row';
 
 
@@ -20,7 +20,7 @@ export abstract class ViewModalComponent {
     constructor(protected activeModal: NgbActiveModal,
                 protected modalService: NgbModal,
                 private routingService: Routing,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     protected abstract getDocument(isImageDocument?: boolean): Document;

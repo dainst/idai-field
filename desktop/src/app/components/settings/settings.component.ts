@@ -7,7 +7,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
                 private settingsService: SettingsService,
                 private messages: Messages,
                 private tabManager: TabManager,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     ngOnInit() {

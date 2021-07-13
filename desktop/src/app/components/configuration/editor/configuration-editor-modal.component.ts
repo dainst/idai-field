@@ -2,7 +2,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { clone } from 'tsfun';
 import { ConfigurationDocument, I18nString, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
 import { MenuContext } from '../../services/menu-context';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
@@ -34,7 +34,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private messages: Messages) {}
 
 

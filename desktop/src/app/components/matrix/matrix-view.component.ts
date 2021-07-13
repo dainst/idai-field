@@ -20,7 +20,7 @@ import IS_CUT_BY = Relations.Position.CUTBY;
 import CUTS = Relations.Position.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { ProjectCategories } from 'idai-field-core';
 
 const Viz = require('viz.js');
@@ -62,7 +62,7 @@ export class MatrixViewComponent implements OnInit {
                 private matrixState: MatrixState,
                 private loading: Loading,
                 private tabManager: TabManager,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     public getDocumentLabel = (document: any) => Document.getLabel(document);

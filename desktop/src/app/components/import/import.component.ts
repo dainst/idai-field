@@ -14,7 +14,7 @@ import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { ExtensionUtil } from '../../core/util/extension-util';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
@@ -63,7 +63,7 @@ export class ImportComponent implements OnInit {
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         this.resetOperationIfNecessary();
     }

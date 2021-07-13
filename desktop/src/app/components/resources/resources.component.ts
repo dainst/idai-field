@@ -15,7 +15,7 @@ import { TabManager } from '../../core/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../core/resources/view/view-facade';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../core/resources/view/state/navigation-path';
 import { ViewModalLauncher } from './service/view-modal-launcher';
@@ -61,7 +61,7 @@ export class ResourcesComponent implements OnDestroy {
                 private tabManager: TabManager,
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();

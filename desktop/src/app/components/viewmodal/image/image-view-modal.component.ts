@@ -7,7 +7,7 @@ import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 
@@ -39,7 +39,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
                 routingService: Routing,
-                menuService: MenuService,
+                menuService: Menus,
                 private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager,
                 private i18n: I18n) {

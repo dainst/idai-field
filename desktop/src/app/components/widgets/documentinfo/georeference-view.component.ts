@@ -6,7 +6,7 @@ import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
 import { MenuContext } from '../../services/menu-context';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
 import {MsgWithParams} from '../../messages/msg-with-params';
 
@@ -36,7 +36,7 @@ export class GeoreferenceViewComponent {
                 private messages: Messages,
                 private modalService: NgbModal,
                 private settingsProvider: SettingsProvider,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     public exportWldFile = () => downloadWldFile(this.document);

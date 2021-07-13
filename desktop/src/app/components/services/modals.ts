@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModalOptions, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from './menu-context';
-import { MenuService } from './menu-service';
+import { Menus } from './menus';
 
 
 @Injectable()
@@ -11,7 +11,7 @@ import { MenuService } from './menu-service';
 export class Modals {
 
     constructor(private modalService: NgbModal,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     /**

@@ -9,7 +9,7 @@ import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import {MsgWithParams} from '../messages/msg-with-params';
@@ -51,7 +51,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
                 private datastore: Datastore,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private viewModalLauncher: ViewModalLauncher) {
     }
 

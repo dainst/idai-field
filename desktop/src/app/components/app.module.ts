@@ -37,7 +37,7 @@ import { HelpComponent } from './help/help.component';
 import { ImageOverviewModule } from './image/overview/image-overview.module';
 import { ImportModule } from './import/import-module';
 import { MatrixModule } from './matrix/matrix.module';
-import { MenuService } from './services/menu-service';
+import { Menus } from './services/menus';
 import { IdaiMessagesModule } from './messages/idai-messages.module';
 import { M } from './messages/m';
 import { MD } from './messages/md';
@@ -215,7 +215,7 @@ registerLocaleData(localeIt, 'it');
             deps: [IndexFacade, TabSpaceCalculator, StateSerializer, Datastore, Router]
         },
         TabSpaceCalculator,
-        MenuService,
+        Menus,
         UtilTranslations
     ],
     entryComponents: [

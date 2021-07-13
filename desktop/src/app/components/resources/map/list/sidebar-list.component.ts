@@ -9,7 +9,7 @@ import { ViewFacade } from '../../../../core/resources/view/view-facade';
 import { NavigationService } from '../../../../core/resources/navigation/navigation-service';
 import { ResourcesContextMenu } from '../../widgets/resources-context-menu';
 import { MenuContext } from '../../../services/menu-context';
-import { MenuService } from '../../../services/menu-service';
+import { Menus } from '../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
 
 
@@ -40,7 +40,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
 

@@ -8,7 +8,7 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import { MenuContext } from '../../services/menu-context';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from 'idai-field-core';
 import {TabManager} from '../../../core/tabs/tab-manager';
@@ -44,7 +44,7 @@ export class ImageOverviewComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
                 private modalService: NgbModal,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         this.imageOverviewFacade.initialize();
         route.params.subscribe(async (params) => {

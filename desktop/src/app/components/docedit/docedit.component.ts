@@ -7,7 +7,7 @@ import { ProjectConfiguration } from 'idai-field-core';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
@@ -53,7 +53,7 @@ export class DoceditComponent {
                 private datastore: Datastore,
                 public projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private i18n: I18n) {}
 
     public isChanged = () => this.documentHolder.isChanged();

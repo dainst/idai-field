@@ -10,7 +10,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {MsgWithParams} from '../messages/msg-with-params';
 
@@ -43,7 +43,7 @@ export class BackupLoadingComponent {
         private settingsService: SettingsService,
         private backupProvider: BackupProvider,
         private tabManager: TabManager,
-        private menuService: MenuService
+        private menuService: Menus
     ) {}
 
 

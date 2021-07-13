@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
-import { MenuService } from '../components/services/menu-service';
+import { Menus } from '../components/services/menus';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './images/imagestore/image-converter';
 import { Imagestore } from './images/imagestore/imagestore';
@@ -31,7 +31,7 @@ export class AppController {
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: MenuService) {}
+                private menuService: Menus) {}
 
 
     public setupServer(): Promise<any> {

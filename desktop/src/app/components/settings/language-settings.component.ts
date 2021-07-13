@@ -4,7 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { InPlace } from 'idai-field-core';
 import { MenuContext } from '../services/menu-context';
-import { MenuService } from '../services/menu-service';
+import { Menus } from '../services/menus';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
 import { Language, LanguagesUtil } from '../../core/util/languages-util';
 
@@ -25,7 +25,7 @@ export class LanguageSettingsComponent {
 
 
     constructor(private modalService: NgbModal,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private i18n: I18n) {
 
         this.languages = this.getAvailableLanguages();

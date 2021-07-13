@@ -9,7 +9,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 /**
  * @author Thomas Kleinke
  */
-export class MenuService {
+export class Menus {
 
     private context: MenuContext;
 

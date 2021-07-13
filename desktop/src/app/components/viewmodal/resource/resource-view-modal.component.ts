@@ -7,7 +7,7 @@ import {ViewModalComponent} from '../view-modal.component';
 import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import {MenuService} from '../../services/menu-service';
+import {Menus} from '../../services/menus';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class ResourceViewModalComponent extends ViewModalComponent {
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
                 routingService: Routing,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(activeModal, modalService, routingService, menuService);
     }

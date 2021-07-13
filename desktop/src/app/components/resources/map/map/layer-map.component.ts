@@ -3,7 +3,7 @@ import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } fro
 import { Document } from 'idai-field-core';
 import L from 'leaflet';
 import { MenuContext } from '../../../services/menu-context';
-import { MenuService } from '../../../services/menu-service';
+import { Menus } from '../../../services/menus';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ImageContainer } from '../../../../core/images/imagestore/image-container';
 import { SettingsProvider } from '../../../../core/settings/settings-provider';
@@ -45,7 +45,7 @@ export class LayerMapComponent extends MapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef,
                 private datastore: PouchdbDatastore,
-                private menuService: MenuService) {
+                private menuService: Menus) {
 
         super(projectConfiguration, zone);
 

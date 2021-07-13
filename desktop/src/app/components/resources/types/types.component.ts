@@ -10,7 +10,7 @@ import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { TabManager } from '../../../core/tabs/tab-manager';
 import { TypeImagesUtil } from '../../../core/util/type-images-util';
 import { MenuContext } from '../../services/menu-context';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import { Routing } from '../../services/routing';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
@@ -78,7 +78,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));

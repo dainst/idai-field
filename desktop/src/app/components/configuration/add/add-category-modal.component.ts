@@ -4,7 +4,7 @@ import { set } from 'tsfun';
 import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext } from '../../services/menu-context';
-import { MenuService } from '../../services/menu-service';
+import { Menus } from '../../services/menus';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
@@ -36,7 +36,7 @@ export class AddCategoryModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
-                private menuService: MenuService,
+                private menuService: Menus,
                 private modalService: NgbModal) {
 
         this.readConfig();

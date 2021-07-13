@@ -5,7 +5,7 @@ import {ImageDocument} from 'idai-field-core';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { MenuService } from '../../../../services/menu-service';
+import { Menus } from '../../../../services/menus';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {LayerUtility} from './layer-utility';
 import {Loading} from '../../../../widgets/loading';
@@ -41,7 +41,7 @@ export class LayerMenuComponent extends MenuComponent {
                 private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
                 renderer: Renderer2,
-                menuService: MenuService) {
+                menuService: Menus) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
     }

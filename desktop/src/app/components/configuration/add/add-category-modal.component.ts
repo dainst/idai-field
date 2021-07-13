@@ -92,7 +92,19 @@ export class AddCategoryModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = {
+        componentInstance.category = this.makeNewCategory(this.parentCategory);
+        componentInstance.new = true;
+        componentInstance.initialize();
+
+        this.modals.awaitResult(result,
+            () => this.activeModal.close(),
+            () => AngularUtility.blurActiveElement());
+    }
+
+
+    private makeNewCategory(parentCategory: Category): Category {
+
+        return {
             name: this.categoryName,
             label: {},
             defaultLabel: {},
@@ -100,12 +112,6 @@ export class AddCategoryModalComponent {
             defaultDescription: {},
             parentCategory: parentCategory
         } as any /* TODO any */;
-        componentInstance.new = true;
-        componentInstance.initialize();
-
-        this.modals.awaitResult(result,
-            () => this.activeModal.close(),
-            () => AngularUtility.blurActiveElement());
     }
 
 

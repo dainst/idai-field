@@ -2,7 +2,7 @@ import {Observable, Observer} from 'rxjs';
 import {Document, ProjectConfiguration} from 'idai-field-core';
 import {FieldDocument, Category, ObserverUtil} from 'idai-field-core';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingService} from '../../../components/routing-service';
+import {Routing} from '../../../components/services/routing';
 
 
 /**
@@ -17,7 +17,7 @@ export class NavigationService {
     private moveIntoObservers: Array<Observer<any>> = [];
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private viewFacade: ViewFacade) {
     }
 

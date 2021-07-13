@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {Datastore, FieldDocument} from 'idai-field-core';
-import {RoutingService} from '../../routing-service';
+import {Routing} from '../../services/routing';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Query} from 'idai-field-core';
@@ -27,7 +27,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     private stopListeningToKeyDownEvents: Function|undefined;
 
 
-    constructor(private routingService: RoutingService,
+    constructor(private routingService: Routing,
                 private datastore: Datastore,
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,

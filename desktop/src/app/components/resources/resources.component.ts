@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Document, FieldDocument, FieldGeometry, Category, ProjectCategories,
     ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
-import { RoutingService } from '../routing-service';
+import { Routing } from '../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
 import { MoveModalComponent } from './move-modal.component';
@@ -49,7 +49,7 @@ export class ResourcesComponent implements OnDestroy {
 
     constructor(route: ActivatedRoute,
                 public viewFacade: ViewFacade,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private doceditLauncher: DoceditLauncher,
                 private viewModalLauncher: ViewModalLauncher,
                 private renderer: Renderer2,

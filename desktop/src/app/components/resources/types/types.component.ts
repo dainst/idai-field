@@ -11,7 +11,7 @@ import { TabManager } from '../../../core/tabs/tab-manager';
 import { TypeImagesUtil } from '../../../core/util/type-images-util';
 import { MenuContext } from '../../services/menu-context';
 import { MenuService } from '../../services/menu-service';
-import { RoutingService } from '../../routing-service';
+import { Routing } from '../../services/routing';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';
@@ -71,7 +71,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private imagestore: Imagestore,
                 private relationsManager: RelationsManager,
                 private viewModalLauncher: ViewModalLauncher,
-                private routingService: RoutingService,
+                private routingService: Routing,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,

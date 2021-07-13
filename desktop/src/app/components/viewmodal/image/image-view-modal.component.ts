@@ -3,7 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument, Relations} from 'idai-field-core';
-import {RoutingService} from '../../routing-service';
+import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
@@ -38,7 +38,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
-                routingService: RoutingService,
+                routingService: Routing,
                 menuService: MenuService,
                 private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager,

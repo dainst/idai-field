@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.addCategory">Kategorie auswählen</h5>
+    <h5 class="modal-title" i18n="@@configuration.selectCategory">Kategorie auswählen</h5>
 </div>
 
 <div class="modal-body row">
@@ -16,7 +16,7 @@
             class="btn btn-success"
             style="position: absolute; left: 10px"
             (click)="createNewSubcategory(parentCategory)">
-            <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzfügen</span>
+            <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzufügen</span>
         </div>
         <category-listing
             [category]="parentCategory"
@@ -34,7 +34,7 @@
     <div id="create-category-button"
          class="btn btn-success"
          (click)="createCategory()">
-        <span i18n="@@configuration.createCategory">Kategorie auswählen</span>
+        <span i18n="@@configuration.selectCategory">Kategorie auswählen</span>
     </div>
     <div id="cancel-add-category-modal-button"
          class="btn btn-secondary"

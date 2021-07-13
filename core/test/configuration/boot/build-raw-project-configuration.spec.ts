@@ -1316,7 +1316,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConfiguration = ['C', 'A'];
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {},
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} },
             orderConfiguration
         ).map(Named.toName);
 
@@ -1343,7 +1343,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConfiguration = ['C', 'A'];
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }, {},
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} },
             orderConfiguration
         )['D'].children.map(to(Named.NAME));
 

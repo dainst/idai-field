@@ -38,6 +38,8 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
 const VALID_FIELD_PROPERTIES = [
     'inputType',
     'positionValues',
+    'constraintIndexed',
+    'fulltextIndexed',
     'creationDate',
     'createdBy'
 ];

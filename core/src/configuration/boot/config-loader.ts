@@ -94,13 +94,11 @@ export class ConfigLoader {
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
-        const searchConfigurationPath = '/Search.json';
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
         let customCategories;
         let languageConfigurations: LanguageConfigurations;
         let categoriesOrder: string[];
-        let searchConfiguration: any;
         let valuelistsConfiguration: any;
 
         try {
@@ -117,7 +115,6 @@ export class ConfigLoader {
                 default: defaultLanguageConfigurations
             };
             categoriesOrder = configurationDocument.resource.order;
-            searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
         } catch (msgWithParams) {
             throw [msgWithParams];
@@ -137,7 +134,6 @@ export class ConfigLoader {
                     extraFields,
                     relations,
                     languageConfigurations,
-                    searchConfiguration,
                     categoriesOrder,
                     (categories: any) => {
                         const fieldValidationErrors =

@@ -16,7 +16,6 @@ import { addExtraFields } from './add-extra-fields';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';
 import { applyLanguageConfigurations } from './apply-language-configurations';
-import { applySearchConfiguration } from './apply-search-configuration';
 import { Assertions } from './assertions';
 import { ConfigurationErrors } from './configuration-errors';
 import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
@@ -41,7 +40,6 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
-                                             searchConfiguration: any = {},
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity): RawProjectConfiguration {
 
@@ -65,7 +63,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         addRelations(relations),
         applyLanguageConfigurations(languageConfigurations),
         updateStruct(CATEGORIES,
-            processCategories(validateFields, languageConfigurations, searchConfiguration, categoriesOrder, relations)
+            processCategories(validateFields, languageConfigurations, categoriesOrder, relations)
         )
     );
 }
@@ -76,13 +74,11 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 
 function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
-                           searchConfiguration: any,
                            categoriesOrder: string[],
                            relations: Array<RelationDefinition>): Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
 
     return compose(
         setCategoryNames,
-        applySearchConfiguration(searchConfiguration),
         validateFields,
         makeCategoryForest(relations),
         Tree.mapList(setGroupLabels(languageConfigurations)),

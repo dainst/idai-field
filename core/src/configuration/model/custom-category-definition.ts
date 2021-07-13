@@ -36,7 +36,7 @@ const VALID_CATEGORY_PROPERTIES = [
     'valuelists', 'positionValuelists', 'commons', 'color', 'hidden', 'parent', 'fields', 'groups'
 ];
 
-const VALID_FIELD_PROPERTIES = ['inputType', 'creationDate', 'createdBy'];
+const VALID_FIELD_PROPERTIES = ['inputType', 'constraintIndexed', 'fulltextIndexed', 'creationDate', 'createdBy'];
 
 
 export module CustomCategoryDefinition {

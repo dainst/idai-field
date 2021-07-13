@@ -1,12 +1,12 @@
-import {flow, forEach, is, keysValues, Map} from 'tsfun';
-import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
-import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
-import {ConfigurationErrors} from './configuration-errors';
-import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {ValuelistDefinition} from '../../model/valuelist-definition';
-import {Named} from '../../tools/named';
+import { flow, forEach, is, keysValues, Map} from 'tsfun';
+import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { CustomCategoryDefinition } from '../model/custom-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
+import { ConfigurationErrors } from './configuration-errors';
+import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
+import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Named } from '../../tools/named';
 
 
 export module Assertions {

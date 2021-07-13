@@ -1,8 +1,7 @@
-import {
-    AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore, Document, DocumentCache,
-    NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, ResourceId, SyncService, toResourceId
-} from 'idai-field-core';
 import { sameset } from 'tsfun';
+import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
+    Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, ResourceId,
+    SyncService, toResourceId } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -20,8 +19,9 @@ import { SettingsProvider } from '../../../../src/app/core/settings/settings-pro
 import { SettingsService } from '../../../../src/app/core/settings/settings-service';
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
-import PouchDB =  require('pouchdb-node');
-import {StateSerializer} from '../../../../src/app/core/common/state-serializer';
+import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
+
+import PouchDB = require('pouchdb-node');
 
 const fs = require('fs');
 
@@ -71,7 +71,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
     await settingsService.bootProjectDb(settings.selectedProject, true);
 
     const projectConfiguration = await settingsService.loadConfiguration();
-    return {settingsService, projectConfiguration, settingsProvider};
+    return { settingsService, projectConfiguration, settingsProvider };
 }
 
 
@@ -98,10 +98,10 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
     const pouchdbServer = new PouchdbServer();
 
-    const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(
+    const { settingsService, projectConfiguration, settingsProvider } = await setupSettingsService(
         pouchdbManager, pouchdbServer, projectName);
 
-    const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
+    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const pouchdbDatastore = new PouchdbDatastore(
         pouchdbManager.getDb(),

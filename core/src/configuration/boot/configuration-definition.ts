@@ -1,4 +1,5 @@
-import {RelationDefinition} from '../../model/relation-definition';
+import { RelationDefinition } from '../../model/relation-definition';
+
 
 /**
  * @author Daniel de Oliveira

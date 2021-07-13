@@ -14,15 +14,18 @@ export class BuiltInConfiguration {
     public commonFields = {
         period: {
             inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+            constraintIndexed: true
         },
         dating: {
             inputType: FieldDefinition.InputType.DATING,
         },
         diary: {
             inputType: FieldDefinition.InputType.INPUT,
+            constraintIndexed: true
         },
         area: {
             inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
+            constraintIndexed: true
         },
         dimensionLength: {
             inputType: FieldDefinition.InputType.DIMENSION,
@@ -50,7 +53,7 @@ export class BuiltInConfiguration {
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            inputTypeOptions: { validation: { permissive: true }},
+            inputTypeOptions: { validation: { permissive: true } },
             positionValuelistId: 'position-values-edge-default'
         },
         dimensionOther: {
@@ -66,34 +69,40 @@ export class BuiltInConfiguration {
         supervisor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
+            constraintIndexed: true
         },
         processor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
+            constraintIndexed: true
         },
         campaign: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
+            constraintIndexed: true
         },
         draughtsmen: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
+            constraintIndexed: true
         },
         description: {
             inputType: FieldDefinition.InputType.TEXT
         },
         date: {
-            inputType: FieldDefinition.InputType.DATE,
+            inputType: FieldDefinition.InputType.DATE
         },
         spatialLocation: {
-            inputType: FieldDefinition.InputType.INPUT,
+            inputType: FieldDefinition.InputType.INPUT
         },
         provenance: {
             inputType: FieldDefinition.InputType.DROPDOWN,
+            constraintIndexed: true
         },
         orientation: {
             inputType: FieldDefinition.InputType.DROPDOWN,
+            constraintIndexed: true
         },
         literature: {
             inputType: FieldDefinition.InputType.LITERATURE
@@ -200,7 +209,8 @@ export class BuiltInConfiguration {
         Place: {
             fields: {
                 gazId: {
-                    inputType: FieldDefinition.InputType.UNSIGNEDINT
+                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    constraintIndexed: true
                 },
                 geometry: {
                     inputType: FieldDefinition.InputType.GEOMETRY,
@@ -358,8 +368,10 @@ export class BuiltInConfiguration {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
             fields: {
+                // TODO Use common field?
                 period: {
                     inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+                    constraintIndexed: true
                 },
                 dating: {
                     inputType: FieldDefinition.InputType.DATING,
@@ -433,7 +445,7 @@ export class BuiltInConfiguration {
             fields: {
                 criterion: {
                     inputType: FieldDefinition.InputType.DROPDOWN,
-                    constraintIndexed: true,
+                    constraintIndexed: true
                 }
             },
             groups: [
@@ -1123,6 +1135,7 @@ export class BuiltInConfiguration {
                 fields: {
                     gazId: {
                         inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                        constraintIndexed: true
                     },
                     geometry: {
                         inputType: FieldDefinition.InputType.GEOMETRY,

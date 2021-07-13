@@ -3,7 +3,6 @@ export { addRelations } from './add-relations';
 export { addSourceField } from './add-source-field';
 export { applyLanguageConfigurations } from './apply-language-configurations';
 export { applyLanguagesToCategory } from './apply-languages-to-category';
-export { applySearchConfiguration } from './apply-search-configuration';
 export { assertFieldsAreValid } from './assert-fields-are-valid';
 export { Assertions } from './assertions';
 export { buildRawProjectConfiguration } from './build-raw-project-configuration';

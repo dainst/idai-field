@@ -1,9 +1,9 @@
-import {cond, isEmpty, flow, includedIn, isNot, on,
-    isDefined, filter, and, Map, remove, keysValues, forEach, map, values, not} from 'tsfun';
-import {ConfigurationErrors} from './configuration-errors';
-import {LibraryFieldDefinition} from '../model/library-category-definition';
-import {CustomFieldDefinition} from '../model/custom-category-definition';
-import {BaseFieldDefinition} from '../model/base-category-definition';
+import { cond, isEmpty, flow, includedIn, isNot, on,
+    isDefined, filter, and, Map, remove, keysValues, forEach, map, values, not } from 'tsfun';
+import { ConfigurationErrors } from './configuration-errors';
+import { LibraryFieldDefinition } from '../model/library-category-definition';
+import { CustomFieldDefinition } from '../model/custom-category-definition';
+import { BaseFieldDefinition } from '../model/base-category-definition';
 
 
 const VALID_INPUT_TYPES = [

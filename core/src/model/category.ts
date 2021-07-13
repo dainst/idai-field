@@ -63,7 +63,7 @@ export interface Category extends Named {
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export module Category {
+export namespace Category {
 
     export const COLOR = 'color';
     export const PARENT_CATEGORY = 'parentCategory';
@@ -72,11 +72,26 @@ export module Category {
     export const GROUPS = 'groups';
 
 
-    export module Source {
+    export namespace Source {
 
         export const BUILTIN = 'builtin';
         export const LIBRARY = 'library';
         export const CUSTOM = 'custom';
+    }
+
+
+    export function build(name: Name, parentCategory?: Category): Category {
+
+        const newCategory = {
+            name: name,
+            label: {},
+            defaultLabel: {},
+            description: {},
+            defaultDescription: {},
+        } as any /* TODO any */;
+
+        if (parentCategory) newCategory[PARENT_CATEGORY] = parentCategory;
+        return newCategory;
     }
 
 

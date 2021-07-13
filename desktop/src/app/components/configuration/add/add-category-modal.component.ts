@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, Category, ConfigurationDocument, Name } from 'idai-field-core';
+import { Document, Category, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext } from '../../services/menu-context';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -93,25 +93,12 @@ export class AddCategoryModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = AddCategoryModalComponent.makeNewCategory(this.searchTerm, this.parentCategory);
+        componentInstance.category = Category.build(this.searchTerm, this.parentCategory);
         componentInstance.new = true;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
             () => this.activeModal.close(),
             () => AngularUtility.blurActiveElement());
-    }
-
-
-    private static makeNewCategory(name: Name, parentCategory: Category): Category {
-
-        return {
-            name: name,
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            parentCategory: parentCategory
-        } as any /* TODO any */;
     }
 }

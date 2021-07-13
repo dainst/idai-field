@@ -177,7 +177,7 @@ export class ConfigurationComponent implements OnInit {
             LinkLibraryCategoryModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.saveAndReload
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.parentCategory = parentCategory;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
 
@@ -200,7 +200,7 @@ export class ConfigurationComponent implements OnInit {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();
@@ -227,7 +227,7 @@ export class ConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
 
-        modalReference.componentInstance.saveAndReload = this.saveAndReload
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;

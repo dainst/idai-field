@@ -30,7 +30,7 @@ export class LinkLibraryCategoryModalComponent {
 
     private configurationIndex = {};
 
-    public configureAppSaveChangesAndReload: (configurationDocument: ConfigurationDocument) =>
+    public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
     constructor(public activeModal: NgbActiveModal,
@@ -78,7 +78,7 @@ export class LinkLibraryCategoryModalComponent {
             hidden: []
         }
         try {
-            this.configureAppSaveChangesAndReload(configurationDocument);
+            this.saveAndReload(configurationDocument);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }
@@ -109,7 +109,7 @@ export class LinkLibraryCategoryModalComponent {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        modalReference.componentInstance.configureAppSaveChangesAndReload = this.configureAppSaveChangesAndReload;
+        modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
         modalReference.componentInstance.category = {
             name: categoryName,

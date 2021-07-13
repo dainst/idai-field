@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, FieldDefinition, Group, Groups } from 'idai-field-core';
+    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
@@ -22,6 +22,7 @@ import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { Modals } from '../services/modals';
 import {nop} from 'tsfun';
+import {ConfigurationIndex} from '../../core/configuration/configuration-index';
 
 
 export type InputType = {
@@ -51,6 +52,7 @@ export class ConfigurationComponent implements OnInit {
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    private configurationIndex: ConfigurationIndex = {};
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }) },
@@ -85,6 +87,8 @@ export class ConfigurationComponent implements OnInit {
                 private modals: Modals,
                 private settingsProvider: SettingsProvider,
                 private appConfigurator: AppConfigurator,
+                private configReader: ConfigReader,
+                private configLoader: ConfigLoader,
                 private i18n: I18n) {}
 
 
@@ -96,6 +100,8 @@ export class ConfigurationComponent implements OnInit {
             'configuration',
             { skipCache: true }
         ) as ConfigurationDocument;
+
+        this.buildConfigurationIndex();
     }
 
 
@@ -181,6 +187,8 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.init();
 
         this.modals.awaitResult(result,
             nop,
@@ -392,6 +400,24 @@ export class ConfigurationComponent implements OnInit {
             this.loadCategories();
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
+        }
+    }
+
+
+    private async buildConfigurationIndex() {
+
+        try {
+            const builtInConfiguration = new BuiltInConfiguration('');
+            const config = await this.configReader.read('/Library/Categories.json');
+            const languages = await this.configLoader.readDefaultLanguageConfigurations();
+            this.configurationIndex = ConfigurationIndex.create(
+                builtInConfiguration.builtInCategories,
+                builtInConfiguration.builtInRelations,
+                config,
+                languages);
+
+        } catch (e) {
+            console.error('error while reading config in AddCategoryModalComponent', e);
         }
     }
 }

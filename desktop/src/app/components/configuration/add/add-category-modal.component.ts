@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument, Named, Name } from 'idai-field-core';
+import { Document, Category, ConfigurationDocument, Name } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext } from '../../services/menu-context';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -27,19 +27,19 @@ export class AddCategoryModalComponent {
 
     public categories: Array<Category> = [];
 
-    private configurationIndex: ConfigurationIndex = {};
+    public configurationIndex: ConfigurationIndex = {};
 
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
     constructor(public activeModal: NgbActiveModal,
-                private configReader: ConfigReader,
-                private configLoader: ConfigLoader,
-                private modals: Modals) {
+                private modals: Modals) {}
 
-        this.readConfig();
+
+    public init() {
+
+        this.applyCategoryNameSearch();
     }
-
 
     public selectCategory(category: Category) {
 
@@ -100,26 +100,6 @@ export class AddCategoryModalComponent {
         this.modals.awaitResult(result,
             () => this.activeModal.close(),
             () => AngularUtility.blurActiveElement());
-    }
-
-
-    private async readConfig() {
-
-        try {
-            const builtInConfiguration = new BuiltInConfiguration('');
-            const config = await this.configReader.read('/Library/Categories.json');
-            const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            this.configurationIndex = ConfigurationIndex.create(
-                builtInConfiguration.builtInCategories,
-                builtInConfiguration.builtInRelations,
-                config,
-                languages);
-
-            this.applyCategoryNameSearch();
-
-        } catch (e) {
-            console.error('error while reading config in AddCategoryModalComponent', e);
-        }
     }
 
 

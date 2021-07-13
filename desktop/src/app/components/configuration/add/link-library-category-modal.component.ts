@@ -4,7 +4,6 @@ import { set } from 'tsfun';
 import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext, MenuService } from '../../menu-service';
-import { AddCategoryModalComponent } from './add-category-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
@@ -20,7 +19,7 @@ export class LinkLibraryCategoryModalComponent {
 
     public categoryName: string;
 
-    customConfigurationDocument: ConfigurationDocument;
+    public configurationDocument: ConfigurationDocument;
 
     public parentCategory: Category;
 
@@ -43,25 +42,6 @@ export class LinkLibraryCategoryModalComponent {
     }
 
 
-    public async addSubcategory(parentCategory: Category) {
-
-        this.menuService.setContext(MenuContext.MODAL);
-
-        const modalReference: NgbModalRef = this.modalService.open(AddCategoryModalComponent);
-        modalReference.componentInstance.categoryName = this.categoryName;
-
-        try {
-            await this.createNewSubcategory(parentCategory, await modalReference.result);
-
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-            this.activeModal.close(this.categoryName);
-        } catch {
-            // Modal has been canceled
-        }
-    }
-
-
     public selectCategory(category: Category) {
 
         this.category = category;
@@ -72,7 +52,7 @@ export class LinkLibraryCategoryModalComponent {
 
         if (!this.category) return;
 
-        const configurationDocument = Document.clone(this.customConfigurationDocument);
+        const configurationDocument = Document.clone(this.configurationDocument);
         configurationDocument.resource.categories[this.category.name] = {
             fields: {},
             hidden: []
@@ -101,7 +81,7 @@ export class LinkLibraryCategoryModalComponent {
     }
 
 
-    private async createNewSubcategory(parentCategory: Category, categoryName: string) {
+    public async createNewSubcategory(parentCategory: Category) {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
@@ -109,10 +89,11 @@ export class LinkLibraryCategoryModalComponent {
             CategoryEditorModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = {
-            name: categoryName,
+            name: this.categoryName,
             label: {},
             defaultLabel: {},
             description: {},
@@ -124,8 +105,9 @@ export class LinkLibraryCategoryModalComponent {
 
         try {
             await modalReference.result;
+            this.activeModal.close();
         } catch (err) {
-            throw err; // Modal has been canceled
+            // Modal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();

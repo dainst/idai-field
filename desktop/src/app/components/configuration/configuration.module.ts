@@ -12,7 +12,6 @@ import { ConfigurationCategoryComponent } from './configuration-category.compone
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { CategoryPreviewComponent } from './add/category-preview.component';
 import { CategoryListingComponent } from './add/category-listing.component';
 import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
@@ -41,7 +40,6 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         MultiLanguageInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
-        AddCategoryModalComponent,
         CategoryPreviewComponent,
         CategoryListingComponent,
         LinkLibraryCategoryModalComponent,
@@ -61,7 +59,6 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         ConfigurationComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
-        AddCategoryModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

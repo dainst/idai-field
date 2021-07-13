@@ -27,7 +27,7 @@ import {ErrWithParams} from '../../core/import/import/import-documents';
 export class ConfigurationCategoryComponent implements OnChanges {
 
     @Input() category: Category;
-    @Input() customConfigurationDocument: ConfigurationDocument;
+    @Input() configurationDocument: ConfigurationDocument;
     @Input() showHiddenFields: boolean = true;
     @Input() allowDragAndDrop: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
@@ -73,7 +73,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
 
-    public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
+    public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
     public isHidden = (field: FieldDefinition) =>
         ConfigurationUtil.isHidden(this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition())(field);
@@ -81,14 +81,14 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
-        return this.customConfigurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
+        return this.configurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
     }
 
 
     public getParentCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
 
         return this.category.parentCategory
-            ? this.customConfigurationDocument.resource
+            ? this.configurationDocument.resource
                 .categories[this.category.libraryId ?? this.category.parentCategory.name]
             : undefined;
     }
@@ -185,7 +185,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private async saveNewGroupsConfiguration(newGroups: Array<GroupDefinition>) {
 
-        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name]
             .groups = newGroups;
@@ -208,7 +208,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.field = {
             name: fieldName,
@@ -245,7 +245,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
 
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = this.category;
         modalReference.componentInstance.group = {
             name: groupName,

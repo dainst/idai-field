@@ -24,7 +24,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     @Input() category: Category;
     @Input() field: FieldDefinition;
-    @Input() customConfigurationDocument: ConfigurationDocument;
+    @Input() configurationDocument: ConfigurationDocument;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -58,14 +58,14 @@ export class ConfigurationFieldComponent implements OnChanges {
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
         ValuelistUtil.getValueLabel(valuelist, valueId);
 
-    public getCustomLanguageConfigurations = () => this.customConfigurationDocument.resource.languages;
+    public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
     public isCustomField = () => this.field.source === 'custom';
 
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 
-        return this.customConfigurationDocument.resource
+        return this.configurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
     }

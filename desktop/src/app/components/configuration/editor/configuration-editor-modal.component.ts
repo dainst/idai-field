@@ -12,7 +12,7 @@ import { ErrWithParams } from '../../../core/import/import/import-documents';
  */
 export abstract class ConfigurationEditorModalComponent {
 
-    public customConfigurationDocument: ConfigurationDocument;
+    public configurationDocument: ConfigurationDocument;
     public category: Category;
     public new: boolean = false;
 
@@ -49,7 +49,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     public getCustomCategoryDefinition(): CustomCategoryDefinition {
 
-        return this.customConfigurationDocument.resource
+        return this.configurationDocument.resource
             .categories[this.category.libraryId ?? this.category.name];
     }
 
@@ -75,7 +75,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     public initialize() {
 
-        this.clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
 
         this.label = this.getLabel();
         this.description = this.getDescription();

@@ -45,7 +45,7 @@ export class ConfigurationComponent implements OnInit {
 
     public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
-    public customConfigurationDocument: ConfigurationDocument;
+    public configurationDocument: ConfigurationDocument;
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
@@ -92,7 +92,7 @@ export class ConfigurationComponent implements OnInit {
 
         this.loadCategories();
 
-        this.customConfigurationDocument = await this.datastore.get(
+        this.configurationDocument = await this.datastore.get(
             'configuration',
             { skipCache: true }
         ) as ConfigurationDocument;
@@ -151,7 +151,7 @@ export class ConfigurationComponent implements OnInit {
 
     public async setNewCategoriesOrder(newOrder: string[]) {
 
-        const clonedConfigurationDocument = Document.clone(this.customConfigurationDocument);
+        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource.order = newOrder;
 
         try {
@@ -179,7 +179,7 @@ export class ConfigurationComponent implements OnInit {
         );
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
         modalReference.componentInstance.parentCategory = parentCategory;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
 
         try {
             await modalReference.result;
@@ -201,7 +201,7 @@ export class ConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.initialize();
 
@@ -228,7 +228,7 @@ export class ConfigurationComponent implements OnInit {
         );
 
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.group = group;
         modalReference.componentInstance.initialize();
@@ -253,7 +253,7 @@ export class ConfigurationComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.customConfigurationDocument = this.customConfigurationDocument;
+        modalReference.componentInstance.configurationDocument = this.configurationDocument;
         modalReference.componentInstance.category = category;
         modalReference.componentInstance.field = field;
         modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
@@ -339,7 +339,7 @@ export class ConfigurationComponent implements OnInit {
     private async deleteCategory(category: Category) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
-            category, this.customConfigurationDocument
+            category, this.configurationDocument
         );
 
         try {
@@ -354,7 +354,7 @@ export class ConfigurationComponent implements OnInit {
     private async deleteGroup(category: Category, group: Group) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-            category, group, this.customConfigurationDocument
+            category, group, this.configurationDocument
         );
 
         try {
@@ -369,7 +369,7 @@ export class ConfigurationComponent implements OnInit {
     private async deleteField(category: Category, field: FieldDefinition) {
 
         const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-            category, field, this.customConfigurationDocument
+            category, field, this.configurationDocument
         );
 
         try {
@@ -410,7 +410,7 @@ export class ConfigurationComponent implements OnInit {
 
         try {
             try {
-                this.customConfigurationDocument = await this.datastore.update(
+                this.configurationDocument = await this.datastore.update(
                     configurationDocument,
                     this.settingsProvider.getSettings().username
                 ) as ConfigurationDocument;

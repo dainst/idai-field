@@ -1,9 +1,8 @@
-import {flatMap, flow, filter, isEmpty, map, forEach, lookup, not} from 'tsfun';
-import {Document} from '../model/document';
-import {Resource} from '../model/resource';
-import {ResultSets} from './result-sets';
-import {StringUtils} from '../tools/string-utils';
-
+import { flatMap, flow, filter, isEmpty, map, forEach, lookup, not } from 'tsfun';
+import { Document } from '../model/document';
+import { Resource } from '../model/resource';
+import { ResultSets } from './result-sets';
+import { StringUtils } from '../tools/string-utils';
 
 
 export interface FulltextIndex {
@@ -67,8 +66,8 @@ export module FulltextIndex {
      *   indexed under the specified categories will be included in the results.
      */
     export function get(index: FulltextIndex,
-                           s: string,
-                           categories: string[]|undefined): Array<Resource.Id> {
+                        s: string,
+                        categories: string[]|undefined): Array<Resource.Id> {
 
         if (isEmpty(index)) return [];
 

@@ -1,16 +1,27 @@
-import {update} from 'tsfun';
+import { update } from 'tsfun';
+
 
 export function createMockProjectConfiguration(): any {
 
-    const projectConfiguration = jasmine.createSpyObj('projectConfiguration',
-        ['getCategoriesArray']);
+    const projectConfiguration = jasmine.createSpyObj(
+        'projectConfiguration',
+        ['getCategoriesArray']
+    );
 
-    const defaultFieldConfiguration =  {
+    const defaultFieldConfiguration = {
         name: '',
-        groups: [{ fields: {
-            identifier: {},
-            shortDescription: {},
-        }}]
+        groups: [{
+            fields: [
+                {
+                    name: 'identifier',
+                    fulltextIndexed: true
+                },
+                {
+                    name: 'shortDescription',
+                    fulltextIndexed: true
+                }
+            ]
+        }]
     };
 
     projectConfiguration.getCategoriesArray.and.returnValue([
@@ -18,7 +29,7 @@ export function createMockProjectConfiguration(): any {
         update('name', 'category2', defaultFieldConfiguration),
         update('name', 'category3', defaultFieldConfiguration),
         update('name', 'Find', defaultFieldConfiguration),
-        update('name', 'Type', defaultFieldConfiguration),
+        update('name', 'Type', defaultFieldConfiguration)
     ]);
 
     return projectConfiguration;

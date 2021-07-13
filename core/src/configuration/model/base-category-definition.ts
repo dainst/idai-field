@@ -19,6 +19,7 @@ export interface BaseFieldDefinition {
 
     inputType?: string;
     constraintIndexed?: true;
+    fulltextIndexed?: true;
     source?: 'builtin'|'library'|'custom'|'common';
 }
 

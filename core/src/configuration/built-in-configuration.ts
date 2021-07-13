@@ -535,11 +535,13 @@ export class BuiltInConfiguration {
         shortDescription: {
             visible: true,
             editable: true,
+            fulltextIndexed: true
         } as FieldDefinition,
         identifier: {
             visible: false,
             editable: true,
             mandatory: true,
+            fulltextIndexed: true
         } as FieldDefinition
     };
 

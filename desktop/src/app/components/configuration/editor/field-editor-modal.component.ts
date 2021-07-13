@@ -7,7 +7,7 @@ import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/config
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
-import { InputType } from '../project-configuration.component';
+import { InputType } from '../configuration.component';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 
 

@@ -30,7 +30,7 @@ export type InputType = {
 
 
 @Component({
-    templateUrl: './project-configuration.html',
+    templateUrl: './configuration.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:click)': 'onClick($event, false)',
@@ -41,7 +41,7 @@ export type InputType = {
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ProjectConfigurationComponent implements OnInit {
+export class ConfigurationComponent implements OnInit {
 
     public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
@@ -422,7 +422,7 @@ export class ProjectConfigurationComponent implements OnInit {
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
-            this.loadCategories();            
+            this.loadCategories();
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }

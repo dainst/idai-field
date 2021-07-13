@@ -8,7 +8,7 @@ import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configura
 import { MenuContext, MenuService } from '../menu-service';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { InputType } from './project-configuration.component';
+import { InputType } from './configuration.component';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';

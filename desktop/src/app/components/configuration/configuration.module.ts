@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ProjectConfigurationComponent } from './project-configuration.component';
+import { ConfigurationComponent } from './configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
 import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
@@ -35,7 +35,7 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         DragDropModule
     ],
     declarations: [
-        ProjectConfigurationComponent,
+        ConfigurationComponent,
         ConfigurationFieldComponent,
         ConfigurationCategoryComponent,
         MultiLanguageInputComponent,
@@ -55,10 +55,10 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         DeleteCategoryModalComponent
     ],
     exports: [
-        ProjectConfigurationComponent
+        ConfigurationComponent
     ],
     entryComponents: [
-        ProjectConfigurationComponent,
+        ConfigurationComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryModalComponent,

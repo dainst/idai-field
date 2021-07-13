@@ -8,7 +8,6 @@ import { MenuService } from '../../menu-service';
 import { Messages } from '../../messages/messages';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
-import {ProjectConfigurationComponent} from '../project-configuration.component';
 
 
 @Component({

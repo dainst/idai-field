@@ -23,7 +23,7 @@ $roboto-font-path: 'fonts/' !default;
 @import 'app/components/image/image';
 @import 'app/components/matrix/matrix-view';
 @import 'app/components/help/help';
-@import 'app/components/configuration/project-configuration';
+@import 'app/components/configuration/configuration';
 
 .search-help-tooltip {
   .tooltip-inner {

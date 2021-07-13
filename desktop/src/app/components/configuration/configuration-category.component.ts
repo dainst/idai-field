@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
+import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
     Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
@@ -226,13 +226,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-        }
+        this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -259,13 +253,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        try {
-            await result;
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-        }
+        this.modals.awaitResult(result, nop, nop);
     }
 
 

@@ -1,5 +1,5 @@
 import { RelationDefinition, ValuelistDefinition } from '../../model';
-import {TransientCategoryDefinition} from '../model/transient-category-definition';
+import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 

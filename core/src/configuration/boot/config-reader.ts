@@ -69,7 +69,6 @@ import libraryLanguageEs from '../../../config/Library/Language.es.json';
 import libraryLanguageIt from '../../../config/Library/Language.it.json';
 import libraryLanguageFr from '../../../config/Library/Language.fr.json';
 import libraryValuelists from '../../../config/Library/Valuelists.json';
-import search from '../../../config/Search.json';
 import { LanguageConfiguration } from '../model';
 
 
@@ -87,7 +86,6 @@ const PATH_MAP: Record<string, any> = {
     '/Library/Language.fr.json': libraryLanguageFr,
     '/Library/Valuelists.json': libraryValuelists,
     '/Config-Default.json': configDefault,
-    '/Search.json': search,
     '/Config-AbbirCella.json': configAbbirCella,
     '/Config-AlUla.json': configAlUla,
     '/Config-Ayamonte.json': configAyamonte,

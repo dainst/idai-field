@@ -196,28 +196,36 @@
         "inputType": "input"
       },
       "color": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "transparency": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "vesselForm": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "vesselFormSpecific": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -269,7 +277,8 @@
     },
     "fields": {
       "classification": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -335,37 +344,48 @@
         "inputType": "input"
       },
       "brickForm": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "brickUsage": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "clayColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturing": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "specificType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "temper": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -511,25 +531,32 @@
         "inputType": "input"
       },
       "amountIndividuals": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "burialCharacteristic": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "burialDocumentation": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "graveFeature": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "positionArms": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "positionLegs": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "positioningIndividuals": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -593,31 +620,40 @@
         "inputType": "input"
       },
       "hasRestoration": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "buildingCategory": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "buildingCategorySpecific": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "buildingTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "buildingType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "context": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "material": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -672,16 +708,20 @@
     },
     "fields": {
       "color": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "typeOfWood": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "colorOutside": {
         "inputType": "input"
@@ -702,10 +742,12 @@
         "inputType": "input"
       },
       "surfaceCondition": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "paintColor": {
         "inputType": "input"
@@ -714,7 +756,8 @@
         "inputType": "input"
       },
       "paintCondition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -793,13 +836,16 @@
         "inputType": "input"
       },
       "hasGrouting": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "layerAmount": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "layerHeight": {
-        "inputType": "unsignedFloat"
+        "inputType": "unsignedFloat",
+        "constraintIndexed": true
       },
       "materialCharacteristic": {
         "inputType": "input"
@@ -811,37 +857,48 @@
         "inputType": "input"
       },
       "blockProcessing": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "blockTreatment": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "brickwork": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "construction": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "mortarBinder": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "mortarColor": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "mortarConsistency": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "wallClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "wallType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -935,7 +992,8 @@
     },
     "fields": {
       "placeName": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "buildingHistory": {
         "inputType": "text"
@@ -953,10 +1011,12 @@
         "inputType": "input"
       },
       "findspotClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "siteClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -998,19 +1058,24 @@
     },
     "fields": {
       "isNatural": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "consistency": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "distinguishingCriteria": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "layerClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "soilType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1065,23 +1130,26 @@
       "featureBorders": "Feature-featureBorders-default",
       "featureForm": "Feature-featureForm-default",
       "period": "periods-default-1"
-
     },
     "fields": {
       "comparison": {
         "inputType": "text"
       },
       "hasDisturbance": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "color": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "featureBorders": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "featureForm": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1131,25 +1199,32 @@
         "inputType": "input"
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "consistency": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "distinguishingCriteria": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "floorClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "layerClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "mortarBinder": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1213,16 +1288,20 @@
         "inputType": "text"
       },
       "language": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1306,52 +1385,67 @@
     },
     "fields": {
       "amountSherdsWall": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsRim": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsBase": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsHandles": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsLip": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsPedestal": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsRimBase": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsRimShoulder": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsShoulder": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsOther": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "amountSherdsPercent": {
         "inputType": "unsignedFloat"
       },
       "amountSherdsLid": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "clayColorBreakMunsell": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "clayColorInsideMunsell": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "clayColorOutsideMunsell": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "hasCoat": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "decorationDescription": {
         "inputType": "input"
@@ -1369,76 +1463,100 @@
         "inputType": "input"
       },
       "typeNumber": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "clayColorBreak": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayHardness": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "coatColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatInside": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "coatInsideType": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatOutside": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "coatOutsideType": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturing": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "materialType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "specificType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "temper": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "temperAmount": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "temperParticles": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "temperTypeClay": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "vesselForm": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "vesselFormSpecific": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1494,58 +1612,73 @@
     "commons": [],
     "fields": {
       "vesselpart": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "Firing": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "temper": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "temperAmount": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "temperParticles": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "coatOutsideType": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "FormComparisonCompendia": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "FormComparisonCompendiadetail": {
         "inputType": "input"
       },
       "DecorationComparisonCompendia": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "DecorationComparisonCompendiadetail": {
         "inputType": "input"
       },
       "ApplicationComparisonCompendia": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "ApplicationComparisonCompendiadetail": {
         "inputType": "input"
       },
       "Drawing": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "vesselForm": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "valuelists": {
@@ -1630,7 +1763,8 @@
         "inputType": "input"
       },
       "findingPlace": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "publicationDatingFinds": {
         "inputType": "text"
@@ -1645,25 +1779,32 @@
         "inputType": "input"
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "distinguishingCriteria": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "graveType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "specificType": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "soilType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "tombBuilding": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1718,25 +1859,32 @@
     },
     "fields": {
       "biologicalAge": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "boneClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "boneType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "burningGrade": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "sex": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "species": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1801,10 +1949,12 @@
         "inputType": "input"
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1860,49 +2010,64 @@
     },
     "fields": {
       "clayColorBreak": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "clayStructure": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "coatColorInside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "coatColorOutside": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "surfaceCondition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "temper": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "temperAmount": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "temperParticles": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "vesselForm": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "vesselFormSpecific": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1957,16 +2122,20 @@
     },
     "fields": {
       "drawingMaterial": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "drawingTool": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "drawingType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       },
       "scale": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -1995,7 +2164,8 @@
     },
     "fields": {
       "researchMethod": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2053,25 +2223,32 @@
         "inputType": "input"
       },
       "architectureElement": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "color": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "material": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "origin": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "temperAmount": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2133,28 +2310,35 @@
         "inputType": "input"
       },
       "preservedDiameter": {
-        "inputType": "unsignedFloat"
+        "inputType": "unsignedFloat",
+        "constraintIndexed": true
       },
       "reverseSideDescription": {
         "inputType": "input"
       },
       "denomination": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "metalMaterial": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "mint": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "mintingRuler": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "stampPositioning": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2224,13 +2408,15 @@
     },
     "fields": {
       "amount": {
-        "inputType": "unsignedInt"
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
       },
       "bibliography": {
         "inputType": "text"
       },
       "catalogueNumber": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "comparison": {
         "inputType": "text"
@@ -2242,22 +2428,27 @@
         "inputType": "unsignedFloat"
       },
       "hasRestoration": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "storageInventoryNumber": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "weight": {
         "inputType": "unsignedFloat"
       },
       "condition": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "conditionAmount": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "storagePlace": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2309,13 +2500,16 @@
         "inputType": "input"
       },
       "hasDecoration": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       },
       "color": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "plasterComponents": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2394,25 +2588,32 @@
     },
     "fields": {
       "decorationTechnique": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "formDescription": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "metalMaterial": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "constraintIndexed": true
       },
       "objectType": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "vesselForm": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       },
       "vesselFormSpecific": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2552,7 +2753,8 @@
     "valuelists": {},
     "fields": {
       "isIllegal": {
-        "inputType": "boolean"
+        "inputType": "boolean",
+        "constraintIndexed": true
       }
     },
     "groups": [
@@ -2595,13 +2797,15 @@
     },
     "fields": {
       "labNumber": {
-        "inputType": "input"
+        "inputType": "input",
+        "constraintIndexed": true
       },
       "weight": {
         "inputType": "unsignedFloat"
       },
       "sampleType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "constraintIndexed": true
       }
     },
     "groups": [

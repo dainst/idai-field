@@ -1,6 +1,7 @@
 import { doc } from 'idai-field-core';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
-import PouchDB =  require('pouchdb-node');
+
+import PouchDB = require('pouchdb-node');
 
 
 describe('subsystem/datastore/find', () => {
@@ -37,8 +38,8 @@ describe('subsystem/datastore/find', () => {
 
     it('DocumentDatastore - do not throw and return everything with all categories', async done => {
 
-        image0 = doc('Image','Image','Image','image0');
-        trench0 = doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image', 'Image', 'Image', 'image0');
+        trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
         await datastore.create(image0);
         await datastore.create(trench0);
@@ -55,8 +56,8 @@ describe('subsystem/datastore/find', () => {
 
     it('DocumentDatastore - return everything when called without categories', async done => {
 
-        image0 = doc('Image','Image','Image','image0');
-        trench0 = doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image', 'Image', 'Image', 'image0');
+        trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
         await datastore.create(image0);
         await datastore.create(trench0);

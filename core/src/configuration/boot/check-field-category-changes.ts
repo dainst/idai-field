@@ -1,6 +1,6 @@
-import {filter, flow, forEach, isDefined, lookup, Map, map, on, to, assoc, values} from 'tsfun';
-import {CustomFieldDefinition} from '../model/custom-category-definition';
-import {TransientFieldDefinition} from '../model/transient-category-definition';
+import { filter, flow, forEach, isDefined, lookup, Map, map, on, to, assoc, values } from 'tsfun';
+import { CustomFieldDefinition } from '../model/custom-category-definition';
+import { TransientFieldDefinition } from '../model/transient-category-definition';
 
 
 export function checkFieldCategoryChanges(customCategoryName: string,

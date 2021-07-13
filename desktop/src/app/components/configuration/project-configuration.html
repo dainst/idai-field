@@ -39,6 +39,7 @@
                                 [highlightCustomCategories]="true"
                                 [showCreateButtons]="true"
                                 [allowChangingOrder]="allowDragAndDrop"
+                                [contextMenu]="contextMenu"
                                 (onCategoryPicked)="selectCategory($event)"
                                 (onCreateSubcategory)="addSubcategory($event)"
                                 (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>

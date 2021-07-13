@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
 import { FieldDefinition, Category, Labeled, Named, InPlace } from 'idai-field-core';
+import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class CategoryPickerComponent {
     @Input() highlightCustomCategories: boolean = false;
     @Input() showCreateButtons: boolean = false;
     @Input() allowChangingOrder: boolean = false;
+    @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
@@ -31,6 +33,8 @@ export class CategoryPickerComponent {
 
     public isCreateButtonVisible = (category: Category): boolean =>
         this.showCreateButtons && category.userDefinedSubcategoriesAllowed;
+
+    public openContextMenu = (event: MouseEvent, category: Category) => this.contextMenu?.open(event, category);
 
 
     public pickCategory(category: Category) {

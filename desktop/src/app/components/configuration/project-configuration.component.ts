@@ -113,7 +113,8 @@ export class ProjectConfigurationComponent implements OnInit {
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
             || rightClick && target.id && (
-                target.id.startsWith('category-')
+                target.id.startsWith('choose-category-option-')
+                || target.id.startsWith('category-')
                 || target.id.startsWith('group-')
                 || target.id.startsWith('field-')
             ))) {

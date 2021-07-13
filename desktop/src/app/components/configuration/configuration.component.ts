@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, FieldDefinition, Group, Groups } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
@@ -21,6 +21,7 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
 import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
+import {Modals} from '../services/modals';
 
 
 export type InputType = {
@@ -83,7 +84,7 @@ export class ConfigurationComponent implements OnInit {
                 private datastore: Datastore,
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
-                private modalService: NgbModal,
+                private modals: Modals,
                 private appConfigurator: AppConfigurator,
                 private i18n: I18n) {}
 
@@ -173,13 +174,12 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            AddCategoryModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.parentCategory = parentCategory;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
+        const [modalReference, componentInstance] =
+            this.modals.make<AddCategoryModalComponent>(AddCategoryModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.parentCategory = parentCategory;
+        componentInstance.configurationDocument = this.configurationDocument;
 
         try {
             await modalReference.result;
@@ -196,14 +196,13 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            CategoryEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.initialize();
+        const [modalReference, componentInstance] =
+            this.modals.make<CategoryEditorModalComponent>(CategoryEditorModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.initialize();
 
         try {
             await modalReference.result;
@@ -222,16 +221,14 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            GroupEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
+        const [modalReference, componentInstance] =
+            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
 
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.group = group;
-        modalReference.componentInstance.initialize();
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.group = group;
+        componentInstance.initialize();
 
         try {
             await modalReference.result;
@@ -248,16 +245,15 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            FieldEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
-        modalReference.componentInstance.category = category;
-        modalReference.componentInstance.field = field;
-        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
-        modalReference.componentInstance.initialize();
+        const [modalReference, componentInstance] =
+            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = category;
+        componentInstance.field = field;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.initialize();
 
         try {
             await modalReference.result
@@ -274,11 +270,10 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteCategoryModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.category = category;
+        const [modalReference, componentInstance] =
+            this.modals.make<DeleteCategoryModalComponent>(DeleteCategoryModalComponent);
+
+        componentInstance.category = category;
 
         try {
             await modalReference.result;
@@ -296,11 +291,10 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteGroupModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.group = group;
+        const [modalReference, componentInstance] =
+            this.modals.make<DeleteGroupModalComponent>(DeleteGroupModalComponent);
+
+        componentInstance.group = group;
 
         try {
             await modalReference.result;
@@ -318,11 +312,10 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            DeleteFieldModalComponent,
-            { backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.field = field;
+        const [modalReference, componentInstance] =
+            this.modals.make<DeleteFieldModalComponent>(DeleteFieldModalComponent);
+
+        componentInstance.field = field;
 
         try {
             await modalReference.result;

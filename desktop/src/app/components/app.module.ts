@@ -42,6 +42,7 @@ import { IdaiMessagesModule } from './messages/idai-messages.module';
 import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
+import { Modals } from './services/modals';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';
@@ -95,6 +96,7 @@ registerLocaleData(localeIt, 'it');
         HelpComponent
     ],
     providers: [
+        Modals,
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
     Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
@@ -14,6 +14,7 @@ import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import {ErrWithParams} from '../../core/import/import/import-documents';
+import {Modals} from '../services/modals';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     constructor(private menuService: MenuService,
-                private modalService: NgbModal,
+                private modals: Modals,
                 private messages: Messages) {}
 
 
@@ -124,7 +125,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(AddGroupModalComponent);
+        const modalReference: NgbModalRef = this.modals.open(AddGroupModalComponent);
 
         try {
             await this.createNewGroup(await modalReference.result);
@@ -140,7 +141,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalReference: NgbModalRef = this.modalService.open(AddFieldModalComponent);
+        const modalReference: NgbModalRef = this.modals.open(AddFieldModalComponent);
 
         try {
             await this.createNewField(await modalReference.result);
@@ -203,14 +204,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            FieldEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
-        modalReference.componentInstance.category = this.category;
-        modalReference.componentInstance.field = {
+        const [modalReference, componentInstance] =
+            this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.field = {
             name: fieldName,
             inputType: 'input',
             label: {},
@@ -219,11 +219,11 @@ export class ConfigurationCategoryComponent implements OnChanges {
             defaultDescription: {},
             source: 'custom'
         };
-        modalReference.componentInstance.groupName = this.selectedGroup;
-        modalReference.componentInstance.availableInputTypes = this.availableInputTypes;
-        modalReference.componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        modalReference.componentInstance.new = true;
-        modalReference.componentInstance.initialize();
+        componentInstance.groupName = this.selectedGroup;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.new = true;
+        componentInstance.initialize();
 
         try {
             await modalReference.result
@@ -239,24 +239,22 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const modalReference: NgbModalRef = this.modalService.open(
-            GroupEditorModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
+        const [modalReference, componentInstance] =
+            this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
 
-        modalReference.componentInstance.saveAndReload = this.saveAndReload;
-        modalReference.componentInstance.configurationDocument = this.configurationDocument;
-        modalReference.componentInstance.category = this.category;
-        modalReference.componentInstance.group = {
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.group = {
             name: groupName,
             label: {},
             defaultLabel: {},
             fields: [],
             relations: []
-        };
-        modalReference.componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        modalReference.componentInstance.new = true;
-        modalReference.componentInstance.initialize();
+        } as any; // TODO review any; relations seems to be not defined in Group
+        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.new = true;
+        componentInstance.initialize();
 
         try {
             await modalReference.result

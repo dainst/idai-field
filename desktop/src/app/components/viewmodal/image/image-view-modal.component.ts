@@ -7,7 +7,7 @@ import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import {MenuService} from '../../menu-service';
+import { MenuService } from '../../services/menu-service';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 

@@ -13,7 +13,8 @@ import { ImageRelationsManager } from '../../core/model/image-relations-manager'
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { ExtensionUtil } from '../../core/util/extension-util';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';

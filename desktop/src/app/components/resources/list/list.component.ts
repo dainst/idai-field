@@ -5,7 +5,7 @@ import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
 import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {MenuService} from '../../menu-service';
+import {MenuService} from '../../services/menu-service';
 
 
 @Component({

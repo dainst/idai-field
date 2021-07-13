@@ -6,7 +6,8 @@ import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');

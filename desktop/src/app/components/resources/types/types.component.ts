@@ -9,7 +9,8 @@ import { NavigationPath } from '../../../core/resources/view/state/navigation-pa
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { TabManager } from '../../../core/tabs/tab-manager';
 import { TypeImagesUtil } from '../../../core/util/type-images-util';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { MenuService } from '../../services/menu-service';
 import { RoutingService } from '../../routing-service';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';

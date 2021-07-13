@@ -5,7 +5,8 @@ import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Settings} from '../../core/settings/settings';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 

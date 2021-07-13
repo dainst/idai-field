@@ -3,7 +3,8 @@ import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManage
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SettingsProvider } from '../../../core/settings/settings-provider';
-import { MenuContext, MenuService } from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { MenuService } from '../../services/menu-service';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { ResourcesComponent } from '../resources.component';

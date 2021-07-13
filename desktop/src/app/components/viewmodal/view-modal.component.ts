@@ -3,7 +3,8 @@ import {Document} from 'idai-field-core';
 import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 import {ImageRowItem} from '../../core/images/row/image-row';
 
 

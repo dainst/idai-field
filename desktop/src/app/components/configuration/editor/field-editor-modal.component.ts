@@ -5,7 +5,7 @@ import { equal, isEmpty } from 'tsfun';
 import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { MenuService } from '../../menu-service';
+import { MenuService } from '../../services/menu-service';
 import { Messages } from '../../messages/messages';
 import { InputType } from '../configuration.component';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';

@@ -5,7 +5,7 @@ import { and, any, compose, flatten, includedIn, is, map, not, on, or, Predicate
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
     Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
-import { MenuContext, MenuService } from '../menu-service';
+import { MenuContext } from '../services/menu-context';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './configuration.component';
@@ -48,8 +48,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     private permanentlyHiddenFields: string[];
 
 
-    constructor(private menuService: MenuService,
-                private modals: Modals,
+    constructor(private modals: Modals,
                 private messages: Messages) {}
 
 
@@ -123,7 +122,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async addGroup() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modals.open(AddGroupModalComponent);
 
@@ -132,14 +131,14 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
         }
     }
 
 
     public async addField() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.modals.setMenuContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modals.open(AddFieldModalComponent);
 
@@ -148,7 +147,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
         }
     }
 
@@ -202,7 +201,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private async createNewField(fieldName: string) {
 
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
 
         const [result, componentInstance] =
             this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
@@ -230,14 +229,14 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
         }
     }
 
 
     private async createNewGroup(groupName: string) {
 
-        this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+        this.modals.setMenuContext(MenuContext.CONFIGURATION_EDIT);
 
         const [result, componentInstance] =
             this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
@@ -261,7 +260,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.modals.setMenuContext(MenuContext.DEFAULT);
         }
     }
 

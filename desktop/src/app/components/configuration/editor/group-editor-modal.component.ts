@@ -4,7 +4,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
 import { Group, GroupDefinition, I18nString } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { MenuService } from '../../menu-service';
+import { MenuService } from '../../services/menu-service';
 import { Messages } from '../../messages/messages';
 import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';

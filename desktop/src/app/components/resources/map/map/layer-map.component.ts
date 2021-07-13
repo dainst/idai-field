@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@ang
 import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import L from 'leaflet';
-import { MenuContext, MenuService } from '../../../../components/menu-service';
+import { MenuContext } from '../../../services/menu-context';
+import { MenuService } from '../../../services/menu-service';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ImageContainer } from '../../../../core/images/imagestore/image-container';
 import { SettingsProvider } from '../../../../core/settings/settings-provider';

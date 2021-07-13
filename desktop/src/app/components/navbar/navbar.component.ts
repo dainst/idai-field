@@ -7,7 +7,8 @@ import {TabUtil} from '../../core/tabs/tab-util';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {SettingsProvider} from '../../core/settings/settings-provider';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 import {ProjectsModalComponent} from './projects-modal.component';
 
 

@@ -2,7 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppController } from '../core/app-controller';
-import { MenuService } from './menu-service';
+import { MenuService } from './services/menu-service';
 import { UtilTranslations } from '../core/util/util-translations';
 import { Messages } from './messages/messages';
 import { Imagestore } from '../core/images/imagestore/imagestore';

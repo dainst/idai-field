@@ -7,7 +7,7 @@ import {ViewModalComponent} from '../view-modal.component';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import {MenuService} from '../../menu-service';
+import {MenuService} from '../../services/menu-service';
 
 
 @Component({

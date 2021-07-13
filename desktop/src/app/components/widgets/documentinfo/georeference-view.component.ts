@@ -5,7 +5,8 @@ import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
-import {MenuContext, MenuService} from '../../menu-service';
+import { MenuContext } from '../../services/menu-context';
+import { MenuService } from '../../services/menu-service';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
 import {MsgWithParams} from '../../messages/msg-with-params';
 

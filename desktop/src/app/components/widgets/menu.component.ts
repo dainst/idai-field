@@ -1,6 +1,7 @@
 import {Renderer2} from '@angular/core';
 import {ComponentHelpers} from '../component-helpers';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 
 
 /**

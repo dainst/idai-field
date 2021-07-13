@@ -19,7 +19,8 @@ import IS_BELOW = Relations.Position.BELOW;
 import IS_CUT_BY = Relations.Position.CUTBY;
 import CUTS = Relations.Position.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
-import {MenuContext, MenuService} from '../menu-service';
+import { MenuContext } from '../services/menu-context';
+import { MenuService } from '../services/menu-service';
 import { ProjectCategories } from 'idai-field-core';
 
 const Viz = require('viz.js');

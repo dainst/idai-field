@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
-import {MenuService} from '../menu-service';
+import {MenuService} from '../services/menu-service';
 import {MenuComponent} from '../widgets/menu.component';
 import {MatrixLineMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 

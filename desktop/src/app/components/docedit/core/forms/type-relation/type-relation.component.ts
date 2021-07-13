@@ -3,7 +3,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { to, set } from 'tsfun';
 import { Datastore, Resource } from 'idai-field-core';
 import { TypeRelationPickerComponent } from './type-relation-picker.component';
-import { MenuContext, MenuService } from '../../../../menu-service';
+import { MenuContext } from '../../../../services/menu-context';
+import { MenuService } from '../../../../services/menu-service';
 
 
 type ResourceIdentifier = string;

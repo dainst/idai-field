@@ -40,6 +40,23 @@ export class Modals {
     }
 
 
+    public async awaitResult<R = any>(
+        result: Promise<R>,
+        onSuccess: () => void,
+        afterCatch: () => void) {
+
+        try {
+            await result;
+            await onSuccess();
+        } catch {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            afterCatch();
+        }
+    }
+
+
     public open(content: any, options?: NgbModalOptions): NgbModalRef {
 
         return this.modalService.open(content, options);

@@ -103,15 +103,9 @@ export class AddCategoryModalComponent {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        try {
-            await result;
-            this.activeModal.close();
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-            AngularUtility.blurActiveElement();
-        }
+        this.modals.awaitResult(result,
+            () => this.activeModal.close(),
+            () => AngularUtility.blurActiveElement());
     }
 
 

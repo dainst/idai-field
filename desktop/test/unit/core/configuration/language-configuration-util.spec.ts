@@ -443,10 +443,9 @@ import { CustomLanguageConfigurations,
             .toBeUndefined();
         expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.label)
             .toBe('Label 2');
-            expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.description)
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.description)
             .toBe('Beschreibung 2');
-        expect(customLanguageConfigurations.en)
-            .toBeUndefined();
+        expect(customLanguageConfigurations.en).toBeUndefined();
     });
 
 
@@ -475,11 +474,59 @@ import { CustomLanguageConfigurations,
             group
         );
 
-        expect(customLanguageConfigurations.de.groups.testGroup)
-            .toBeUndefined();
-        expect(customLanguageConfigurations.de.groups.testGroup2)
+        expect(customLanguageConfigurations.de.groups.testGroup).toBeUndefined();
+        expect(customLanguageConfigurations.de.groups.testGroup2).toBe('Label 2');
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
+    it('Remove all translations from custom language configurations for category', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Label 1',
+                                description: 'Beschreibung 1'
+                            }
+                        }
+                    },
+                    testCategory2: {
+                        fields: {
+                            testField: {
+                                label: 'Label 2',
+                                description: 'Beschreibung 2'
+                            }
+                        }
+                    }
+                }
+            },
+            en: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testField: {
+                                label: 'Label',
+                                description: 'Description'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        LanguageConfigurationUtil.deleteCategoryFromCustomLanguageConfigurations(
+            customLanguageConfigurations,
+            category
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory).toBeUndefined();
+        expect(customLanguageConfigurations.de.categories.testCategory2.fields.testField.label)
             .toBe('Label 2');
-        expect(customLanguageConfigurations.en)
-            .toBeUndefined();
+        expect(customLanguageConfigurations.de.categories.testCategory2.fields.testField.description)
+            .toBe('Beschreibung 2');
+        expect(customLanguageConfigurations.en).toBeUndefined();
     });
 });

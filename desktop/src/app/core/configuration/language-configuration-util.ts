@@ -26,6 +26,15 @@ export module LanguageConfigurationUtil {
     }
 
 
+    export function deleteCategoryFromCustomLanguageConfigurations(
+            customLanguageConfigurations: CustomLanguageConfigurations, category: Category) {
+
+        Object.keys(customLanguageConfigurations).forEach(languageKey => {
+            InPlace.removeFrom(customLanguageConfigurations, [languageKey, 'categories', category.name]);
+        });
+    }
+
+
     function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                       section: 'label'|'description', editedI18nString: I18nString,
                                                       category: Category, field?: FieldDefinition, group?: Group) {

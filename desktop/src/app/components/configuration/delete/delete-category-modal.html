@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.deleteCategory.header">Kategorie löschen?</h5>
+</div>
+
+<div class="modal-body">
+    <span i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
+</div>
+
+<div class="modal-footer">
+    <div id="create-field-button"
+         class="btn btn-danger"
+         (click)="confirmDeletion()">
+        <span i18n="@@buttons.delete">Löschen</span>
+    </div>
+    <div id="cancel-add-field-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

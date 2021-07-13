@@ -48,6 +48,23 @@ export module ConfigurationUtil {
     }
 
 
+    export function deleteCategory(category: Category,
+                                   customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
+
+        const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
+        delete clonedConfigurationDocument.resource.categories[category.libraryId ?? category.name];
+
+        LanguageConfigurationUtil.deleteCategoryFromCustomLanguageConfigurations(
+            clonedConfigurationDocument.resource.languages, category
+        );
+
+        clonedConfigurationDocument.resource.order
+            = clonedConfigurationDocument.resource.order.filter(categoryName => categoryName !== category.name);
+
+        return clonedConfigurationDocument;
+    }
+
+
     export function deleteGroup(category: Category, group: Group,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 

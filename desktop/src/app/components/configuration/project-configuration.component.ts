@@ -20,6 +20,7 @@ import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
+import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 
 
 export type InputType = {
@@ -90,7 +91,6 @@ export class ProjectConfigurationComponent implements OnInit {
     async ngOnInit() {
 
         this.loadCategories();
-        this.selectCategory(this.topLevelCategoriesArray[0]);
 
         this.customConfigurationDocument = await this.datastore.get(
             'configuration',
@@ -141,6 +141,8 @@ export class ProjectConfigurationComponent implements OnInit {
                     this.openDeleteGroupModal(this.contextMenu.category, this.contextMenu.group);
                 } else if (this.contextMenu.field) {
                     this.openDeleteFieldModal(this.contextMenu.category, this.contextMenu.field);
+                } else {
+                    this.openDeleteCategoryModal(this.contextMenu.category);
                 }
                 break;
         }
@@ -268,6 +270,28 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
+    public async openDeleteCategoryModal(category: Category) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalReference: NgbModalRef = this.modalService.open(
+            DeleteCategoryModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+        modalReference.componentInstance.category = category;
+
+        try {
+            await modalReference.result;
+            await this.deleteCategory(category);
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
     public async openDeleteGroupModal(category: Category, group: Group) {
 
         this.menuService.setContext(MenuContext.MODAL);
@@ -312,10 +336,10 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
-    private async deleteField(category: Category, field: FieldDefinition) {
+    private async deleteCategory(category: Category) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-            category, field, this.customConfigurationDocument
+        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
+            category, this.customConfigurationDocument
         );
 
         try {
@@ -342,10 +366,31 @@ export class ProjectConfigurationComponent implements OnInit {
     }
 
 
+    private async deleteField(category: Category, field: FieldDefinition) {
+
+        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
+            category, field, this.customConfigurationDocument
+        );
+
+        try {
+            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            this.messages.add(errWithParams);
+        }
+    }
+
+
     private loadCategories() {
 
         this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
+
+        if (this.selectedCategory) {
+            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+        } else {
+            this.selectCategory(this.topLevelCategoriesArray[0]);
+        } 
     }
 
 
@@ -374,9 +419,10 @@ export class ProjectConfigurationComponent implements OnInit {
                 return;
             }
             this.projectConfiguration.update(newProjectConfiguration);
-            this.loadCategories();
-            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-
+            if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
+                this.selectedCategory = undefined;
+            }
+            this.loadCategories();            
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }

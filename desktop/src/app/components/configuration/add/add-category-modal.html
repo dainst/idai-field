@@ -10,12 +10,13 @@
             id="category-name"
             class="form-control"
             [(ngModel)]="categoryName"
-            (ngModelChange)="changeCategoryNameInput()">
+            (ngModelChange)="applyCategoryNameSearch()">
         <div
             id="create-new-category-button"
             class="btn btn-success"
+            [class.disabled]="categoryName.length === 0"
             style="position: absolute; left: 10px"
-            (click)="createNewSubcategory(parentCategory)">
+            (click)="createNewSubcategory()">
             <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzufügen</span>
         </div>
         <category-listing
@@ -33,6 +34,7 @@
 <div class="modal-footer">
     <div id="create-category-button"
          class="btn btn-success"
+         [class.disabled]="!category"
          (click)="createCategory()">
         <span i18n="@@configuration.selectCategory">Kategorie auswählen</span>
     </div>

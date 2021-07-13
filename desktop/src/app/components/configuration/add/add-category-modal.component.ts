@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { set } from 'tsfun';
-import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument } from 'idai-field-core';
+import { BuiltInConfiguration, Document, ConfigReader, ConfigLoader, Category, ConfigurationDocument, Named, Name } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../core/configuration/configuration-index';
 import { MenuContext } from '../../services/menu-context';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
-import {Modals} from '../../services/modals';
+import { Modals } from '../../services/modals';
 
 
 @Component({
@@ -18,7 +17,7 @@ import {Modals} from '../../services/modals';
  */
 export class AddCategoryModalComponent {
 
-    public categoryName: string;
+    public categoryName: string = '';
 
     public configurationDocument: ConfigurationDocument;
 
@@ -28,7 +27,7 @@ export class AddCategoryModalComponent {
 
     public categories: Array<Category> = [];
 
-    private configurationIndex = {};
+    private configurationIndex: ConfigurationIndex = {};
 
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
@@ -70,18 +69,20 @@ export class AddCategoryModalComponent {
     }
 
 
-    public changeCategoryNameInput() {
+    public applyCategoryNameSearch() {
 
-        // TODO Take language into account, too
-
-        this.categories = set(
+        this.categories =
             ConfigurationIndex.find(this.configurationIndex, this.categoryName)
-                .filter(category => category['parentCategory'].name === this.parentCategory.name)) as any;
-        if (this.categories.length > 0) this.category = this.categories[0];
+                .filter(category =>
+                    category['parentCategory'].name === this.parentCategory.name)
+                .filter(category =>
+                    !Object.keys(this.configurationDocument.resource.categories).includes(category.name));
+
+        this.category = this.categories?.[0];
     }
 
 
-    public async createNewSubcategory(parentCategory: Category) {
+    public async createNewSubcategory() {
 
         const [result, componentInstance] =
             this.modals.make<CategoryEditorModalComponent>(
@@ -92,7 +93,7 @@ export class AddCategoryModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.makeNewCategory(this.parentCategory);
+        componentInstance.category = AddCategoryModalComponent.makeNewCategory(this.categoryName, this.parentCategory);
         componentInstance.new = true;
         componentInstance.initialize();
 
@@ -102,38 +103,35 @@ export class AddCategoryModalComponent {
     }
 
 
-    private makeNewCategory(parentCategory: Category): Category {
-
-        return {
-            name: this.categoryName,
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            parentCategory: parentCategory
-        } as any /* TODO any */;
-    }
-
-
     private async readConfig() {
 
         try {
             const builtInConfiguration = new BuiltInConfiguration('');
             const config = await this.configReader.read('/Library/Categories.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            const [categories, configurationIndex] = ConfigurationIndex.create(
+            this.configurationIndex = ConfigurationIndex.create(
                 builtInConfiguration.builtInCategories,
                 builtInConfiguration.builtInRelations,
                 config,
                 languages);
 
-            this.configurationIndex = configurationIndex;
-            this.categories = categories
-                .filter(category => category['parentCategory'].name === this.parentCategory.name) as any;
-            if (this.categories.length > 0) this.category = this.categories[0];
+            this.applyCategoryNameSearch();
 
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);
         }
+    }
+
+
+    private static makeNewCategory(name: Name, parentCategory: Category): Category {
+
+        return {
+            name: name,
+            label: {},
+            defaultLabel: {},
+            description: {},
+            defaultDescription: {},
+            parentCategory: parentCategory
+        } as any /* TODO any */;
     }
 }

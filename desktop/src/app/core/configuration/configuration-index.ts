@@ -1,4 +1,4 @@
-import { Map, keysValues, right } from 'tsfun';
+import { Map, keysValues, right, set } from 'tsfun';
 import { BuiltinCategoryDefinition, LanguageConfiguration, LibraryCategoryDefinition, Category,
     createContextIndependentCategories, RelationDefinition } from 'idai-field-core';
 
@@ -18,7 +18,7 @@ export namespace ConfigurationIndex {
                            builtInRelations: Array<RelationDefinition>,
                            libraryCategories: Map<LibraryCategoryDefinition>,
                            languages: { [language: string]: Array<LanguageConfiguration> })
-    : [Array<any>, ConfigurationIndex] {
+            : ConfigurationIndex {
 
         const categories = createContextIndependentCategories(
             builtinCategories,
@@ -26,23 +26,23 @@ export namespace ConfigurationIndex {
             libraryCategories,
             languages);
 
-        return [categories, categories.reduce((index, category) => {
+        return categories.reduce((index, category) => {
 
             const defaultLabel = category['defaultLabel'];
             for (const label of Object.values(defaultLabel)) {
                 index[label as any] = category;
             }
             return index;
-        }, {})];
+        }, {});
     }
 
 
     export function find(index: ConfigurationIndex,
                          searchTerm: string): Array<Category> {
 
-        return keysValues(index)
+        return set(keysValues(index)
             .filter(([categoryName, _]) =>
                 categoryName.toLocaleLowerCase().startsWith(searchTerm))
-            .map(right);
+            .map(right));
     }
 }

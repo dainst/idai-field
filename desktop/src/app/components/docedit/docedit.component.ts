@@ -14,6 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
+import { MsgWithParams } from '../messages/msg-with-params';
 
 
 @Component({
@@ -201,9 +202,9 @@ export class DoceditComponent {
             return undefined;
         }
 
-        this.messages.add(errorWithParams.length > 0
+        this.messages.add((errorWithParams.length > 0
             ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration)
-            : [M.DOCEDIT_ERROR_SAVE]);
+            : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
     }
 
 

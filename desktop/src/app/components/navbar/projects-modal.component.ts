@@ -11,8 +11,9 @@ import { DoceditComponent } from '../docedit/docedit.component';
 import { MenuContext, MenuService } from '../menu-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
+import {MsgWithParams} from '../messages/msg-with-params';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
-import {ViewModalLauncher} from '../resources/service/view-modal-launcher';
+import { ViewModalLauncher } from '../resources/service/view-modal-launcher';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -111,7 +112,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async createProject() {
 
-        const validationErrorMessage: string[]|undefined =
+        const validationErrorMessage: MsgWithParams|undefined =
             ProjectNameValidatorMsgConversion.convert(
                 ProjectNameValidator.validate(this.newProject, this.getProjects())
             );

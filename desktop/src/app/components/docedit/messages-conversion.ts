@@ -2,6 +2,7 @@ import { DatastoreErrors } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ValidationErrors } from '../../core/model/validation-errors';
 import { M } from '../messages/m';
+import { MsgWithParams } from '../messages/msg-with-params';
 
 
 /**
@@ -12,9 +13,10 @@ import { M } from '../messages/m';
  */
 export module MessagesConversion {
 
-    export function convertMessage(msgWithParams: string[], projectConfiguration: ProjectConfiguration): string[] {
+    export function convertMessage(msgWithParams: MsgWithParams,
+                                   projectConfiguration: ProjectConfiguration): MsgWithParams {
 
-        if (msgWithParams.length === 0) return [];
+        if (msgWithParams.length === 0) return [M.APP_ERROR_GENERIC_SAVE_ERROR];
 
         const msg = msgWithParams[0];
 

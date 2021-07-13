@@ -2,6 +2,7 @@ import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@an
 import {Document} from 'idai-field-core';
 import {ImageUploader, ImageUploadResult} from '../upload/image-uploader';
 import {Messages} from '../../messages/messages';
+import {MsgWithParams} from '../../messages/msg-with-params';
 
 
 @Component({
@@ -83,7 +84,7 @@ export class DropAreaComponent {
         if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit(uploadResult);
 
         for (let msgWithParams of uploadResult.messages) {
-            this.messages.add(msgWithParams);
+            this.messages.add(msgWithParams as MsgWithParams);
         }
     }
 }

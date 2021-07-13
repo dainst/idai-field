@@ -5,6 +5,7 @@ import {ImportErrors} from '../../core/import/import/import-errors';
 import {ParserErrors} from '../../core/import/parser/parser-errors';
 import {ReaderErrors} from '../../core/import/reader/reader-errors';
 import {ImportCatalogErrors} from '../../core/import/import/import-catalog';
+import {MsgWithParams} from '../messages/msg-with-params';
 
 
 /**
@@ -14,13 +15,13 @@ import {ImportCatalogErrors} from '../../core/import/import/import-catalog';
  */
 export module MessagesConversion {
 
-    export function convertMessage(msgWithParams: string[]|string): string[] {
+    export function convertMessage(msgWithParams: MsgWithParams|string): MsgWithParams {
 
         if (!isArray(msgWithParams)) {
             console.warn('convertMessage: argument not of type array', msgWithParams);
             return [msgWithParams as string];
         }
-        if (msgWithParams.length === 0) return [];
+        if (msgWithParams.length === 0) return [] as any; // TODO remove any; handle differently
         let replacement = undefined;
         const msg = msgWithParams[0];
 
@@ -134,6 +135,6 @@ export module MessagesConversion {
 
         if (replacement) (msgWithParams as string[])[0] = replacement;
 
-        return msgWithParams as string[];
+        return msgWithParams as MsgWithParams;
     }
 }

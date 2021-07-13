@@ -7,6 +7,7 @@ import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
+import {MsgWithParams} from '../../messages/msg-with-params';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class GeoreferenceViewComponent {
                 const msgWithParams = (e === Errors.FileReaderError) ? [M.IMAGES_ERROR_FILEREADER, files[0].name]
                     : (e === Errors.InvalidWldFileError) ? [M.IMAGESTORE_ERROR_INVALID_WORLDFILE, files[0].name]
                     : [M.MESSAGES_ERROR_UNKNOWN_MESSAGE];
-                this.messages.add(msgWithParams);
+                this.messages.add(msgWithParams as MsgWithParams);
                 return;
             }
 

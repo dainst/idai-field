@@ -18,6 +18,7 @@ import { MenuContext, MenuService } from '../menu-service';
 import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../core/resources/view/state/navigation-path';
 import { ViewModalLauncher } from './service/view-modal-launcher';
+import {MsgWithParams} from '../messages/msg-with-params';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -187,7 +188,7 @@ export class ResourcesComponent implements OnDestroy {
             await this.viewFacade.rebuildNavigationPath();
             await this.routingService.jumpToResource(documents[0]);
         } catch (msgWithParams) {
-            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the move modal has been canceled
         }
 
@@ -210,7 +211,7 @@ export class ResourcesComponent implements OnDestroy {
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         } catch (msgWithParams) {
-            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the delete modal has been canceled.
         }
 

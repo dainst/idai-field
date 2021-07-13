@@ -19,7 +19,7 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-     public make<MC>(modalClass: any, size?: string) {
+     public make<MC, R = any>(modalClass: any, size?: string /* TODO provide own options object, or large?: true*/) {
 
         const options: NgbModalOptions = {
             backdrop: 'static',
@@ -31,7 +31,7 @@ export class Modals {
             modalClass,
             options
         );
-        return [modalReference, modalReference.componentInstance] as [NgbModalRef, MC]; // TODO maybe return only result promise on the lhs
+        return [modalReference.result, modalReference.componentInstance] as [Promise<R>, MC];
     }
 
 

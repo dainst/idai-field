@@ -204,7 +204,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -226,7 +226,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.initialize();
 
         try {
-            await modalReference.result
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -239,7 +239,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -257,7 +257,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.initialize();
 
         try {
-            await modalReference.result
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {

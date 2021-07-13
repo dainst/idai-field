@@ -174,7 +174,7 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<AddCategoryModalComponent>(AddCategoryModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -182,7 +182,7 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.configurationDocument = this.configurationDocument;
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -196,7 +196,7 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<CategoryEditorModalComponent>(CategoryEditorModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -205,7 +205,7 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.initialize();
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -221,7 +221,7 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<GroupEditorModalComponent>(GroupEditorModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -231,7 +231,7 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.initialize();
 
         try {
-            await modalReference.result;
+            await result;
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -245,7 +245,7 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<FieldEditorModalComponent>(FieldEditorModalComponent, 'lg');
 
         componentInstance.saveAndReload = this.saveAndReload;
@@ -256,7 +256,7 @@ export class ConfigurationComponent implements OnInit {
         componentInstance.initialize();
 
         try {
-            await modalReference.result
+            await result
         } catch (err) {
             // Modal has been canceled
         } finally {
@@ -270,13 +270,13 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<DeleteCategoryModalComponent>(DeleteCategoryModalComponent);
 
         componentInstance.category = category;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteCategory(category);
         } catch (err) {
             // Modal has been canceled
@@ -291,13 +291,13 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<DeleteGroupModalComponent>(DeleteGroupModalComponent);
 
         componentInstance.group = group;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteGroup(category, group);
         } catch (err) {
             // Modal has been canceled
@@ -312,13 +312,13 @@ export class ConfigurationComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const [modalReference, componentInstance] =
+        const [result, componentInstance] =
             this.modals.make<DeleteFieldModalComponent>(DeleteFieldModalComponent);
 
         componentInstance.field = field;
 
         try {
-            await modalReference.result;
+            await result;
             await this.deleteField(category, field);
         } catch (err) {
             // Modal has been canceled

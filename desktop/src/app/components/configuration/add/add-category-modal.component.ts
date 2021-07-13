@@ -17,13 +17,13 @@ import { Modals } from '../../services/modals';
  */
 export class AddCategoryModalComponent {
 
-    public categoryName: string = '';
+    public searchTerm: string = '';
 
     public configurationDocument: ConfigurationDocument;
 
     public parentCategory: Category;
 
-    public category: Category|undefined;
+    public selectedCategory: Category|undefined;
 
     public categories: Array<Category> = [];
 
@@ -43,16 +43,16 @@ export class AddCategoryModalComponent {
 
     public selectCategory(category: Category) {
 
-        this.category = category;
+        this.selectedCategory = category;
     }
 
 
     public createCategory() {
 
-        if (!this.category) return;
+        if (!this.selectedCategory) return;
 
         const configurationDocument = Document.clone(this.configurationDocument);
-        configurationDocument.resource.categories[this.category.name] = {
+        configurationDocument.resource.categories[this.selectedCategory.name] = {
             fields: {},
             hidden: []
         }
@@ -72,13 +72,13 @@ export class AddCategoryModalComponent {
     public applyCategoryNameSearch() {
 
         this.categories =
-            ConfigurationIndex.find(this.configurationIndex, this.categoryName)
+            ConfigurationIndex.find(this.configurationIndex, this.searchTerm)
                 .filter(category =>
                     category['parentCategory'].name === this.parentCategory.name)
                 .filter(category =>
                     !Object.keys(this.configurationDocument.resource.categories).includes(category.name));
 
-        this.category = this.categories?.[0];
+        this.selectedCategory = this.categories?.[0];
     }
 
 
@@ -93,7 +93,7 @@ export class AddCategoryModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = AddCategoryModalComponent.makeNewCategory(this.categoryName, this.parentCategory);
+        componentInstance.category = AddCategoryModalComponent.makeNewCategory(this.searchTerm, this.parentCategory);
         componentInstance.new = true;
         componentInstance.initialize();
 

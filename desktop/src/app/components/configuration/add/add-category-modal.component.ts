@@ -10,12 +10,12 @@ import { ErrWithParams } from '../../../core/import/import/import-documents';
 
 
 @Component({
-    templateUrl: './link-library-category-modal.html'
+    templateUrl: './add-category-modal.html'
 })
 /**
  * @author Daniel de Oliveira
  */
-export class LinkLibraryCategoryModalComponent {
+export class AddCategoryModalComponent {
 
     public categoryName: string;
 

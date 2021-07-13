@@ -18,7 +18,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import { LinkLibraryCategoryModalComponent } from './add/link-library-category-modal.component';
+import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 
@@ -174,7 +174,7 @@ export class ConfigurationComponent implements OnInit {
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modalService.open(
-            LinkLibraryCategoryModalComponent,
+            AddCategoryModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalReference.componentInstance.saveAndReload = this.saveAndReload;

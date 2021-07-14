@@ -1,6 +1,6 @@
 import { Category } from '../model/category';
 import { ValuelistDefinition } from '../model/valuelist-definition';
-import { SortUtil } from '../tools';
+import { SortUtil, ValuelistUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 
 
@@ -44,20 +44,10 @@ export class Labels {
     }
 
 
-    public getOrderedValues(valuelist: ValuelistDefinition): string[] {
+    public orderKeysByLabels(valuelist: ValuelistDefinition): string[] {
 
-        return Object.keys(valuelist.values).sort(
-            valuelist.order
-                ? this.sortByCustomOrder(valuelist.order)
-                : this.sortAlphanumerically(valuelist)
-        );
+        return ValuelistDefinition.orderKeysByLabels(valuelist, this.sortAlphanumerically);
     }
-
-
-    private sortByCustomOrder = (order: string[]) => (valueA: string, valueB: string): number => {
-
-        return order.indexOf(valueA) - order.indexOf(valueB);
-    };
 
 
     private sortAlphanumerically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {

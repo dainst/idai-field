@@ -56,7 +56,7 @@ describe('Labels', () => {
         };
 
         const labels = new Labels(getLanguages);
-        expect(labels.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1'])
     });
 
 
@@ -74,6 +74,6 @@ describe('Labels', () => {
         };
 
         const labels = new Labels(getLanguages);
-        expect(labels.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1'])
     });
 });

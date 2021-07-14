@@ -25,7 +25,7 @@ export class RadioComponent implements OnChanges {
                 private labels: Labels) {}
 
 
-    public getValues = () => this.valuelist ? this.labels.getOrderedValues(this.valuelist) : [];
+    public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
 

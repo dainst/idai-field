@@ -53,7 +53,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
-    public getValues = (valuelist: ValuelistDefinition) => this.labels.getOrderedValues(valuelist);
+    public getValues = (valuelist: ValuelistDefinition) => this.labels.orderKeysByLabels(valuelist);
 
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
         this.labels.getValueLabel(valuelist, valueId);

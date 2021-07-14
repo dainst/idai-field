@@ -249,7 +249,7 @@ export class TypeRelationPickerComponent {
                 .find(Named.onName(is(CRITERION)))
                 .valuelist;
 
-        return labels.getOrderedValues(valuelistDefinition)
+        return labels.orderKeysByLabels(valuelistDefinition)
             .map(pairWith(name => labels.getValueLabel(valuelistDefinition, name)))
             .map(([name, label]) => ({ name, label }));
     }

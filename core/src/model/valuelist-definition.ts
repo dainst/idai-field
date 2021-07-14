@@ -33,6 +33,24 @@ export module ValuelistDefinition {
 
         return valuelist.values[valueId]?.labels;
     }
+
+
+    // TODO review why we return keys instead of labels
+    export function orderKeysByLabels(valuelist: ValuelistDefinition, 
+                                      alternativeComparator: (valuelist: ValuelistDefinition) => 
+                                                             (a: string, b: string) => number): string[] {
+
+        return Object.keys(valuelist.values).sort(
+            valuelist.order
+                ? sortByCustomOrder(valuelist.order)
+                : alternativeComparator(valuelist));
+    }
+
+
+    const sortByCustomOrder = (order: string[]) => (valueA: string, valueB: string): number => {
+
+        return order.indexOf(valueA) - order.indexOf(valueB);
+    };
     
 
     export function assertIsValid(valuelistDefinition: ValuelistDefinition) {

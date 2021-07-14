@@ -56,7 +56,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.new) {
             this.getClonedCategoryDefinition().fields[this.field.name] = {
-                inputType: 'input'
+                inputType: 'input',
+                constraintIndexed: false
             };
             const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
                 this.category, this.permanentlyHiddenFields
@@ -113,7 +114,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public toggleConstraintIndexed() {
 
-        if (this.getClonedFieldDefinition().constraintIndexed === undefined) {
+        if (!this.field.defaultConstraintIndexed) {
+            this.getClonedFieldDefinition().constraintIndexed = !this.getClonedFieldDefinition().constraintIndexed;
+        } else if (this.getClonedFieldDefinition().constraintIndexed === undefined) {
             this.getClonedFieldDefinition().constraintIndexed = !this.field.defaultConstraintIndexed;
         } else {
             delete this.getClonedFieldDefinition().constraintIndexed;

@@ -19,11 +19,11 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body">
-    <div *ngIf="hideable" class="configuration-editor-section form-group">
-        <div class="configuration-editor-section-title" i18n="@@configuration.visibility">
-            Sichtbarkeit
+    <div class="configuration-editor-section form-group">
+        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
+            Grundeinstellungen
         </div>
-        <div class="row">
+        <div *ngIf="hideable" class="row">
             <div class="col-auto">
                 <span i18n="@@configuration.showField">Feld anzeigen</span>
             </div>
@@ -32,6 +32,19 @@
                     <input type="checkbox"
                         [checked]="!hidden"
                         (change)="toggleHidden()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <span i18n="@@configuration.allowFieldSpecificSearch">Feldspezifische Suche erlauben</span>
+            </div>
+            <div class="col-auto">
+                <label class="switch">
+                    <input type="checkbox"
+                        [checked]="isConstraintIndexed()"
+                        (change)="toggleConstraintIndexed()">
                     <span class="slider round"></span>
                 </label>
             </div>

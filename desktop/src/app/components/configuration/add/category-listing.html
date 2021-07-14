@@ -1,11 +1,17 @@
-<div id="category-listing"
-     style="margin-top: 60px;">
-    Listing of subcategories of {{getLabel(category)}}
-    <ul style="background-color: white">
-        <li *ngFor="let category of categories"
-            (click)="selectCategory(category)">
-            <category-icon [category]="category" size="30"></category-icon>
-            {{getLabel(category)}}&nbsp;&nbsp;(Formular: {{category.name}})
-        </li>
-    </ul>
-</div>
+Listing of subcategories of {{getLabel(category)}}
+<ul id="category-listing-inner"
+    style="background-color: white">
+    <li *ngFor="let category of categories"
+        (click)="selectCategory(category)">
+        <category-icon [category]="category" size="30"></category-icon>
+        {{getLabel(category)}}&nbsp;&nbsp;(Formular: {{category.name}})
+        <br>
+        <h5>Labels:</h5>
+        <ul>
+            <li *ngFor="let labelEntry of getLabels(category)">
+                {{labelEntry[0]}}:{{labelEntry[1]}}
+            </li>
+        </ul>
+        <hr>
+    </li>
+</ul>

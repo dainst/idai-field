@@ -1,8 +1,10 @@
-import { Map, clone, values, remove, isUndefined, on, is, filter, not, keysValues } from 'tsfun';
+import { Map, clone, remove, isUndefined, on, is, filter, not, keysValues, curry, flow } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../../model';
+import { Named } from '../../tools';
 import { Tree } from '../../tools/forest';
 import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
 import { addSourceField } from '../boot/add-source-field';
+import { setGroupLabels } from '../boot/set-group-labels';
 import { mergeBuiltInWithLibraryCategories } from '../boot/merge-builtin-with-library-categories';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { LanguageConfiguration } from '../model/language-configuration';
@@ -28,26 +30,23 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
     addSourceField(bCats, lCats, undefined, undefined);
     const result = mergeBuiltInWithLibraryCategories(bCats, lCats);
 
-    for (const category of values(result)) {
-
-        category.fields = filter(on(FieldDefinition.SOURCE, 
-                                    is(FieldDefinition.Source.LIBRARY)),
-                                 category.fields);
-    }
-
-    for (const category of Object.values(result)) {
-        applyLanguagesToCategory(
-            {
-                default: languages,
-                complete: languages
-            }, category, category.categoryName);
-    }
+    const languageConfigurations = {
+        default: languages,
+        complete: languages
+    };
 
     for (const [name, category] of keysValues(result)) {
-        category['name'] = name;
+
+        category.fields = filter(category.fields, 
+            on(FieldDefinition.SOURCE, is(FieldDefinition.Source.LIBRARY)));
+
+        applyLanguagesToCategory(languageConfigurations, category, category.categoryName);
+        category[Named.NAME] = name;
     }
 
-    return filter(
-        on('parentCategory', not(isUndefined)),
-        Tree.flatten(makeCategoryForest(builtInRelations)(result)));
+    return flow(
+        makeCategoryForest(builtInRelations)(result),
+        Tree.mapForest(curry(setGroupLabels, languageConfigurations)),
+        Tree.flatten,
+        filter(on(Category.PARENT_CATEGORY, not(isUndefined))));
 }

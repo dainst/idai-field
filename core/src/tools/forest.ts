@@ -59,15 +59,15 @@ export module Tree {
     // in flows, which we want to avoid  (same consideration which in tsfun led
     // to having various packages containing various functions versions).
 
-    export function mapList<A,B>(f: Mapping<A,B>, t: Forest<A>): Forest<B>;
-    export function mapList<A,B>(f: Mapping<A,B>): Mapping<Forest<A>,Forest<B>>;
-    export function mapList(...args: any[]): any {
+    export function mapForest<A,B>(f: Mapping<A,B>, t: Forest<A>): Forest<B>;
+    export function mapForest<A,B>(f: Mapping<A,B>): Mapping<Forest<A>,Forest<B>>;
+    export function mapForest(...args: any[]): any {
 
         const $ = (f: any) => (forest: any) => {
 
             const replacement = [];
             for (let { item: t, trees: tree } of forest) {
-                replacement.push({ item: f(t), trees: mapList(f, tree) });
+                replacement.push({ item: f(t), trees: mapForest(f, tree) });
             }
             return replacement;
         };
@@ -78,15 +78,15 @@ export module Tree {
     }
 
 
-    export function zipList<T>(ts: Array<Forest<T>>): Forest<Array<T>>;
-    export function zipList<T>(zipItems: (items: Array<T>) => T, ts: Array<Forest<T>>): Forest<T>;
-    export function zipList<T>(...args: any): any {
+    export function zipForest<T>(ts: Array<Forest<T>>): Forest<Array<T>>;
+    export function zipForest<T>(zipItems: (items: Array<T>) => T, ts: Array<Forest<T>>): Forest<T>;
+    export function zipForest<T>(...args: any): any {
 
         const $ = (zipItems: any) =>
             (ts: Array<Forest<T>>) => zip(ts).map((ns: any[]) =>
             ({
                 item: zipItems(ns.map(to(Tree.ITEM))),
-                trees: zipList(zipItems, ns.map(to(Tree.TREES)))
+                trees: zipForest(zipItems, ns.map(to(Tree.TREES)))
             })
         );
 
@@ -104,7 +104,7 @@ export module Tree {
 
             return {
                 item: f(tree.item),
-                trees: mapList(f, tree.trees)
+                trees: mapForest(f, tree.trees)
             };
         };
 

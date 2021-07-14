@@ -78,6 +78,10 @@ describe('createContextIndependentCategories', () => {
                                     b: { label: 'B' }, 
                                     c: { label: 'C' }} 
                                 } 
+                        },
+                        groups: {
+                            'group-a': 'Group-a',
+                            'group-b': 'Group-b'
                         }
                     }
                 ]
@@ -85,6 +89,8 @@ describe('createContextIndependentCategories', () => {
         );
 
         expect(result[0].groups[0].name).toEqual('group-a');
+        expect(result[0].groups[0].label['de']).toEqual('Group-a');
         expect(result[1].groups[0].name).toEqual('group-b');
+        expect(result[1].groups[0].label['de']).toEqual('Group-b');
     });
 });

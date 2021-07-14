@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader } from 'idai-field-core';
+    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader, createContextIndependentCategories } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
@@ -412,11 +412,14 @@ export class ConfigurationComponent implements OnInit {
             const builtInConfiguration = new BuiltInConfiguration('');
             const config = await this.configReader.read('/Library/Categories.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
-            this.configurationIndex = ConfigurationIndex.create(
+
+            const categories = createContextIndependentCategories(
                 builtInConfiguration.builtInCategories,
                 builtInConfiguration.builtInRelations,
                 config,
                 languages);
+
+            this.configurationIndex = ConfigurationIndex.create(categories);
 
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);

@@ -1,13 +1,12 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
-    isUndefinedOrEmpty, not } from 'tsfun';
-import { RelationDefinition, Category, Groups } from '../../model';
+    isUndefinedOrEmpty, not, curry } from 'tsfun';
+import { RelationDefinition, Category } from '../../model';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
-import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
@@ -23,6 +22,7 @@ import { hideFields } from './hide-fields';
 import { makeCategoryForest } from './make-category-forest';
 import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
 import { mergeWithCustomCategories } from './merge-with-custom-categories';
+import { setGroupLabels } from './set-group-labels';
 
 
 const CATEGORIES = 0;
@@ -81,7 +81,7 @@ function processCategories(validateFields: any,
         setCategoryNames,
         validateFields,
         makeCategoryForest(relations),
-        Tree.mapList(setGroupLabels(languageConfigurations)),
+        Tree.mapForest(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances
     );
@@ -100,34 +100,6 @@ function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<Tra
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<Category>): Forest<Category> =>
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
-
-
-const setGroupLabels = (languageConfigurations: LanguageConfigurations) => (category: Category) => {
-
-    category.groups.forEach(group => {
-        group.label = getGroupLabel(category, group.name, 'complete', languageConfigurations);
-        group.defaultLabel = getGroupLabel(category, group.name, 'default', languageConfigurations);
-    });
-
-    return category;
-}
-
-
-function getGroupLabel(category: Category, groupName: string, configuration: 'default'|'complete',
-                       languageConfigurations: LanguageConfigurations) {
-
-    if (groupName === Groups.PARENT) {
-        return category.parentCategory
-            ? category.parentCategory.label
-            : category.label;
-    } else if (groupName === Groups.CHILD) {
-        return category.label;
-    } else {
-        return LanguageConfiguration.getI18nString(
-            languageConfigurations[configuration], 'groups', groupName
-        );
-    }
-};
 
 
 function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) {

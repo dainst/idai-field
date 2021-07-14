@@ -1,13 +1,30 @@
 <div id="category-preview">
     <div *ngIf="category">
-        <h4>{{getLabel(category)}}</h4>
+        <h1>{{getLabel(category)}}</h1>
         <div id="preview-inner" style="background-color: white">
             <ul>
                 <li *ngFor="let group of category.groups">
                     <ul>
-                        <h5>{{group.name}}</h5>
+                        <h3>{{getLabel(group)}}</h3>
+
+                        <ul>
+                            <li *ngFor="let labelEntry of getLabels(group.label)">
+                                {{labelEntry[0]}}:{{labelEntry[1]}}
+                            </li>
+                        </ul>
+
+                        <h5>Fields:</h5>
                         <li *ngFor="let field of group.fields">
-                            {{getLabel(field)}}
+
+                            {{field.name}}
+                            <ul>
+                                <li *ngFor="let labelEntry of getLabels(field.label)">
+                                    {{labelEntry[0]}}:{{labelEntry[1]}}
+                                </li>
+
+                            </ul>
+
+                            <hr>
                         </li>
                     </ul>
                 </li>

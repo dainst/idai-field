@@ -1,0 +1,12 @@
+category-listing {
+
+    margin-top: 60px;
+    height: calc(100vh - 326px);
+    position: absolute;
+
+    #category-listing-inner {
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+}

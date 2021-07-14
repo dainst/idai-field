@@ -86,7 +86,7 @@ describe('Forest|Tree', () => {
                 [6, []]
             ]);
 
-        const result = Tree.mapList((_: number) => _ * 2, t);
+        const result = Tree.mapForest((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 
@@ -353,7 +353,7 @@ describe('Forest|Tree', () => {
         const tl1 = Tree.buildForest([[3, []]]);
         const tl2 = Tree.buildForest([[76, []]]);
 
-        const result = Tree.zipList(([item1, item2]: [any, any]) => {
+        const result = Tree.zipForest(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, [tl1, tl2]);
 
@@ -366,7 +366,7 @@ describe('Forest|Tree', () => {
         const tl1 = Tree.buildForest([[3, [[5, []]]]]);
         const tl2 = Tree.buildForest([[76, [[7, []]]]]);
 
-        const result = Tree.zipList(([item1, item2]: [any, any]) => {
+        const result = Tree.zipForest(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, [tl1, tl2]);
 
@@ -379,7 +379,7 @@ describe('Forest|Tree', () => {
         const tl1 = Tree.buildForest([[3, [[5, []]]]]);
         const tl2 = Tree.buildForest([[76, [[7, []]]]]);
 
-        const result = Tree.zipList([tl1, tl2]);
+        const result = Tree.zipForest([tl1, tl2]);
 
         expect(equal(result, Tree.buildForest([[[3,76],[[[5,7],[]]]]]))).toBeTruthy();
     })

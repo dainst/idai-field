@@ -41,6 +41,7 @@
                                 [allowChangingOrder]="allowDragAndDrop"
                                 [contextMenu]="contextMenu"
                                 (onCategoryPicked)="selectCategory($event)"
+                                (onEditCategory)="editCategory($event)"
                                 (onCreateSubcategory)="addSubcategory($event)"
                                 (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
             </div>

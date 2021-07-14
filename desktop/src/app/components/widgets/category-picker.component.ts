@@ -26,6 +26,7 @@ export class CategoryPickerComponent {
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Output() onEditCategory: EventEmitter<Category> = new EventEmitter<Category>();
 
 
     public getCategoryLabel = (category: Category): string => Labeled.getLabel(category);

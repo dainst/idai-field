@@ -69,6 +69,15 @@ export class MultiLanguageInputComponent implements OnChanges {
 
         this.newTranslationLanguage = '';
         this.usedLanguages = Object.keys(this.translations);
-        this.unusedLanguages = subtract(this.usedLanguages)(Object.keys(this.languages));
+        this.unusedLanguages = this.getUnusedLanguages();
+    }
+
+
+    private getUnusedLanguages(): string[] {
+
+        const unusedLanguages: string[] = subtract(this.usedLanguages)(Object.keys(this.languages));
+
+        return LanguagesUtil.getSortedLanguageCodes(this.languages)
+            .filter(languageCode => unusedLanguages.includes(languageCode));
     }
 }

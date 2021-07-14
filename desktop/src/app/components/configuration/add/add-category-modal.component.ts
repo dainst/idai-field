@@ -32,7 +32,7 @@ export class AddCategoryModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
-        
+
     constructor(public activeModal: NgbActiveModal,
                 private modals: Modals) {}
 
@@ -74,9 +74,9 @@ export class AddCategoryModalComponent {
     public applyCategoryNameSearch() {
 
         this.categories =
-            ConfigurationIndex.find(this.configurationIndex, this.searchTerm)
-                .filter(category =>
-                    category['parentCategory'].name === this.parentCategory.name)
+            ConfigurationIndex
+                .find(
+                    this.configurationIndex, this.searchTerm, this.parentCategory.name)
                 .filter(category =>
                     !Object.keys(this.configurationDocument.resource.categories).includes(category.name));
 

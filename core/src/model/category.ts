@@ -70,6 +70,7 @@ export namespace Category {
 
     export const COLOR = 'color';
     export const PARENT_CATEGORY = 'parentCategory';
+    export const DEFAULT_LABEL = 'defaultLabel';
     export const CHILDREN = 'children';
     export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';

@@ -6,6 +6,14 @@
             (click)="selectCategory(category)">
             <category-icon [category]="category" size="30"></category-icon>
             {{getLabel(category)}}&nbsp;&nbsp;(Formular: {{category.name}})
+            <br>
+            <h5>Labels:</h5>
+            <ul>
+                <li *ngFor="let labelEntry of getLabels(category)">
+                    {{labelEntry[0]}}:{{labelEntry[1]}}
+                </li>
+            </ul>
+            <hr>
         </li>
     </ul>
 </div>

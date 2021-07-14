@@ -11,5 +11,5 @@ export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export * from './utils';
 export * from './valuelist-util';
-export * from './labeled';
+export * from './i18n';
 export * from './in-place';

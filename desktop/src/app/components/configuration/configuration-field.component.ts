@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
-    ValuelistUtil, Labeled } from 'idai-field-core';
+    ValuelistUtil } from 'idai-field-core';
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';

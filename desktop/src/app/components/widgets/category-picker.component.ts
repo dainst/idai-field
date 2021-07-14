@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
-import { FieldDefinition, Category, Labeled, Named, InPlace } from 'idai-field-core';
+import { FieldDefinition, Category, Named, InPlace } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
-import {Labels} from '../services/labels';
+import { Labels } from '../services/labels';
 
 
 @Component({

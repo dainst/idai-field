@@ -1,4 +1,4 @@
-import { I18nString } from './i18n-string';
+import { I18nString } from '../tools/i18n';
 import { ValuelistDefinition } from './valuelist-definition';
 
 

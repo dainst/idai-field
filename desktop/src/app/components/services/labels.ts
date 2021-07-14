@@ -1,4 +1,4 @@
-import { Labeled, LabeledValue } from 'idai-field-core';
+import { I18N } from 'idai-field-core';
 
 const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
     ? window.require('@electron/remote').getGlobal('config').languages
@@ -8,16 +8,16 @@ const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && win
 // TODO maybe rename to Translations or Languages and extend with more functionality?
 export class Labels {
 
-    public get(labeledValue: LabeledValue): string {
+    public get(labeledValue: I18N.LabeledValue): string {
 
-        return Labeled.getLabel(labeledValue, ELECTRON_CONFIG_LANGUAGES);
+        return I18N.getLabel(labeledValue, ELECTRON_CONFIG_LANGUAGES);
     }
 
-    public getLabelAndDescription(labeledValue: LabeledValue)
+    public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
 
         // TODO why is description in Labeled?
-        return Labeled.getLabelAndDescription(labeledValue, ELECTRON_CONFIG_LANGUAGES);
+        return I18N.getLabelAndDescription(labeledValue, ELECTRON_CONFIG_LANGUAGES);
     }
 
 

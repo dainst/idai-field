@@ -1,7 +1,6 @@
 import { Named } from '../tools/named';
-import { Labeled } from '../tools/labeled';
+import { I18N, I18nString } from '../tools/i18n';
 import { FieldDefinition } from './field-definition';
-import { I18nString } from './i18n-string';
 import { Relations } from './relations';
 
 
@@ -49,7 +48,7 @@ export interface Group extends BaseGroup {
 }
 
 
-export interface BaseGroup extends Named, Labeled {
+export interface BaseGroup extends Named, I18N.Labeled {
 
     fields: Array<any>;
     defaultLabel?: I18nString;

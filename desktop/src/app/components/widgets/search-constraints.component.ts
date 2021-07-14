@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
-import { Category, ConstraintIndex, Datastore, FieldDefinition, Labeled, ProjectConfiguration, ValuelistDefinition,
+import { Category, ConstraintIndex, Datastore, FieldDefinition, ProjectConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 import {Labels} from '../services/labels';

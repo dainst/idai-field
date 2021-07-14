@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category, Labeled } from 'idai-field-core';
+import { Category } from 'idai-field-core';
 import { keysValues } from 'tsfun';
 import { Labels } from '../../services/labels';
 

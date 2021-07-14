@@ -1,4 +1,4 @@
-import { I18nString } from '../../model';
+import {I18nString} from '../../tools/i18n';
 
 
 export interface LanguageConfiguration {
@@ -39,7 +39,7 @@ export module LanguageConfiguration {
 
     export function getI18nString(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
                                   section: 'categories'|'categoriesFields'|'relations'|'groups'|'commons'
-                                  |'fields'|'other', subSectionName: string, textType?: 'label'|'description', categoryName?: string): I18nString {
+                                 |'fields'|'other', subSectionName: string, textType?: 'label'|'description', categoryName?: string): I18nString {
 
         return Object.keys(languageConfigurations).reduce((labels, language) => {
 

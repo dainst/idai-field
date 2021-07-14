@@ -1,9 +1,8 @@
 import { flatten, flow, map, to } from 'tsfun';
-import { I18nString } from './i18n-string';
+import { I18N, I18nString } from '../tools/i18n';
 import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { Group } from './group';
-import { Labeled } from '../tools/labeled';
 
 
 export interface Category extends Named {
@@ -113,7 +112,7 @@ export namespace Category {
     export function getLabel(fieldName: string, fields: Array<any>, languages: string[]): string {
 
         for (let field of fields) {
-            if (field.name === fieldName) return Labeled.getLabel(field, languages);
+            if (field.name === fieldName) return I18N.getLabel(field, languages);
         }
         return fieldName;
     }

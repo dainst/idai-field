@@ -1,6 +1,6 @@
 import { filter, flow, includedIn, is, isEmpty, Map, map, not, on, Pair } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../model';
-import { Forest, isTopLevelItemOrChildThereof, Labeled, Name, Named, Tree } from '../tools';
+import { Forest, isTopLevelItemOrChildThereof, I18N, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
@@ -181,7 +181,7 @@ export class ProjectConfiguration {
         const category: Category|undefined = this.getCategory(categoryName);
         if (!category) return '';
 
-        return Labeled.getLabel(category, languages);
+        return I18N.getLabel(category, languages);
     }
 
 

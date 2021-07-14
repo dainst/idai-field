@@ -1,6 +1,6 @@
 import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
     L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
-import { Labeled } from './labeled';
+import { I18N } from './i18n';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
@@ -173,12 +173,12 @@ function makeField(projectConfiguration: ProjectConfiguration,
         return (field.inputType === FieldDefinition.InputType.RELATION
                 || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
             ? {
-                label: Labeled.getLabel(field, languages),
+                label: I18N.getLabel(field, languages),
                 type: 'relation',
                 targets: relationTargets[field.name]
             }
             : {
-                label: Labeled.getLabel(field, languages),
+                label: I18N.getLabel(field, languages),
                 value: isArray(fieldContent)
                     ? fieldContent.map((fieldContent: any) =>
                         FieldsViewUtil.getValue(

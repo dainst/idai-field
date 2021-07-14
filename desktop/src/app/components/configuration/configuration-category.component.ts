@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Labeled, Named,
+import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Named,
     Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext } from '../services/menu-context';

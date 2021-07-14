@@ -176,15 +176,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getLabelForCategory(categoryName: string, languages: string[]): string {
-
-        const category: Category|undefined = this.getCategory(categoryName);
-        if (!category) return '';
-
-        return I18N.getLabel(category, languages);
-    }
-
-
     public getColorForCategory(categoryName: string): string {
 
         return this.getCategoryColors()[categoryName] ?? '#cccccc';

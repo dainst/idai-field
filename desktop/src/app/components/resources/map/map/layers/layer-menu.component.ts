@@ -120,7 +120,7 @@ export class LayerMenuComponent extends MenuComponent {
     public getLayerGroupLabel(layerGroup: LayerGroup): string {
 
         return layerGroup.document.resource.category === 'Project'
-            ? this.projectConfiguration.getLabelForCategory('Project', this.labels.getLanguages())
+            ? this.labels.get(this.projectConfiguration.getCategory('Project'))
             : layerGroup.document.resource.identifier;
     }
 

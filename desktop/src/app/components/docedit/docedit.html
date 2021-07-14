@@ -10,11 +10,11 @@
             <div *ngIf="documentHolder.clonedDocument"
                   class="docedit-header-label text-truncate">
                 <small *ngIf="!documentHolder.clonedDocument.resource.id" i18n="@@docedit.header.create">
-                    {{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category, this.labels.getLanguages())}}
+                    {{getCategoryLabel()}}
                     in {{parentLabel}} anlegen
                 </small>
                 <small *ngIf="documentHolder.clonedDocument.resource.id" i18n="@@docedit.header.edit">
-                    {{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category, this.labels.getLanguages())}} bearbeiten
+                    {{getCategoryLabel()}} bearbeiten
                 </small>
                 <br>
                 <strong>{{documentHolder.clonedDocument.resource.identifier}}</strong>

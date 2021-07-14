@@ -60,7 +60,7 @@ export module FieldsViewUtil {
                              valuelist?: ValuelistDefinition): any {
 
         return fieldName === Resource.CATEGORY
-            ? projectConfiguration.getLabelForCategory(fieldContent, languages)
+            ? I18N.getLabel(projectConfiguration.getCategory(fieldContent), languages)
             : valuelist
                 ? ValuelistUtil.getValueLabel(valuelist, fieldContent, languages)
                 : isString(fieldContent)

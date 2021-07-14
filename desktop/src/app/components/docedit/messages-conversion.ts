@@ -1,4 +1,4 @@
-import { DatastoreErrors } from 'idai-field-core';
+import { DatastoreErrors, I18N } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ValidationErrors } from '../../core/model/validation-errors';
 import { M } from '../messages/m';
@@ -37,18 +37,18 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
             msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
-            msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+            msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
         }
 
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;
                 msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;
                 msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             }
         }
 
@@ -56,11 +56,11 @@ export module MessagesConversion {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES;
                 msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE;
                 msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             }
         }
 
@@ -68,11 +68,11 @@ export module MessagesConversion {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES;
                 msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE;
                 msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             }
         }
 
@@ -80,11 +80,11 @@ export module MessagesConversion {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS;
                 msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR;
                 msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
+                msgWithParams[1] = I18N.getLabel(projectConfiguration.getCategory(msgWithParams[1]), languages);
             }
         }
 

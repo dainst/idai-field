@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
-import { Category, ProjectConfiguration, StringUtils } from 'idai-field-core';
-import {Labels} from '../services/labels';
+import { Category, I18N, ProjectConfiguration, StringUtils } from 'idai-field-core';
+import { Labels } from '../services/labels';
 
 type Color = string;
 type Character = string;
@@ -48,7 +48,7 @@ export class CategoryIconComponent implements OnChanges {
         this.character =
             StringUtils.first(
                 isString(this.category)
-                    ? this.projectConfiguration.getLabelForCategory(this.category, this.labels.getLanguages())
+                    ? this.labels.get(this.projectConfiguration.getCategory(this.category))
                     : this.labels.get(this.category));
     }
 

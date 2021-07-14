@@ -4,8 +4,9 @@ const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && win
     ? window.require('@electron/remote').getGlobal('config').languages
     : ['de'];
 
-// TODO review UtilTranslations
-// TODO maybe rename to Translations or Languages and extend with more functionality?
+/**
+ * @author Daniel de Oliveira
+ */
 export class Labels {
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -16,12 +17,9 @@ export class Labels {
     public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
 
-        // TODO why is description in Labeled?
         return I18N.getLabelAndDescription(labeledValue, ELECTRON_CONFIG_LANGUAGES);
     }
 
-
-    // TODO maybe remove
     public getLanguages() {
 
         return ELECTRON_CONFIG_LANGUAGES;

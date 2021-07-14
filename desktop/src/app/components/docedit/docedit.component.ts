@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, Category, Name } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
@@ -63,6 +63,8 @@ export class DoceditComponent {
     public isLoading = () => this.loading.isLoading('docedit');
 
     public getFieldDefinitionLabel: (_: string) => string;
+
+    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.documentHolder.clonedDocument.resource.category));
 
 
     public async onKeyDown(event: KeyboardEvent) {

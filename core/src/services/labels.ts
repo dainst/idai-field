@@ -3,6 +3,8 @@ import { Category } from '../model/category';
 import { I18N } from '../tools/i18n';
 
 
+export type Label = string; // move to I18N.Labeled
+
 /**
  * @author Daniel de Oliveira
  */
@@ -35,13 +37,9 @@ export class Labels {
      * @returns {string}
      * @throws {string} with an error description in case the category is not defined.
      */
-    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
+    public getFieldDefinitionLabel(category: Category, fieldName: string): Label {
 
-        const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(categoryName);
-        if (fieldDefinitions.length === 0) {
-            throw 'No category definition found for category \'' + categoryName + '\'';
-        }
-
+        const fieldDefinitions = Category.getFields(category);
         return Category.getLabel(fieldName, fieldDefinitions, this.languages.get());
     }
 

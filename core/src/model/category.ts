@@ -109,7 +109,7 @@ export namespace Category {
     }
 
 
-    export function getLabel(fieldName: string, fields: Array<any>, languages: string[]): string {
+    export function getLabel(fieldName: string, fields: Array<Named>, languages: string[]): string {
 
         for (let field of fields) {
             if (field.name === fieldName) return I18N.getLabel(field, languages);

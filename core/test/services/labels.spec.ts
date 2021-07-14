@@ -1,5 +1,3 @@
-import {Tree} from '../../src/tools/forest';
-import {ProjectConfiguration} from '../../src/configuration/project-configuration';
 import {Labels} from '../../src/services/labels';
 
 
@@ -23,10 +21,9 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[category, []]]), []]);
-        const labels = new Labels(configuration, new Languages());
+        const labels = new Labels(undefined, new Languages());
 
-        expect(labels.getFieldDefinitionLabel('T', 'aField')).toBe('Ein Feld');
+        expect(labels.getFieldDefinitionLabel(category, 'aField')).toBe('Ein Feld');
     });
 
 
@@ -41,20 +38,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[ category, []]]), []]);
-
-        const labels = new Labels(configuration, new Languages());
-        expect(labels.getFieldDefinitionLabel('T','aField')).toBe('aField');
-    });
-
-
-    it('should throw an error if field is not defined', () => {
-
-        const configuration: ProjectConfiguration = new ProjectConfiguration([[], []]);
-        const labels = new Labels(configuration, new Languages());
-
-        expect(() => {
-            labels.getFieldDefinitionLabel('UndefinedCategory', 'someField');
-        }).toThrow();
+        const labels = new Labels(undefined, new Languages());
+        expect(labels.getFieldDefinitionLabel(category,'aField')).toBe('aField');
     });
 });

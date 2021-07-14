@@ -103,7 +103,7 @@ export class DoceditComponent {
         this.documentHolder.setDocument(document);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.labels.getFieldDefinitionLabel(document.resource.category, fieldName);
+            this.labels.getFieldDefinitionLabel(this.projectConfiguration.getCategory(document.resource.category), fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();

@@ -18,6 +18,7 @@
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
                 class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
                 (click)="pickCategory(parentCategory)"
+                (dblclick)="onEditCategory.emit(parentCategory)"
                 (contextmenu)="openContextMenu($event, parentCategory)">
                 <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
                 <category-icon [category]="parentCategory.name" size="30"></category-icon>
@@ -59,6 +60,7 @@
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"
                     class="category-item"
                     (click)="pickCategory(childCategory)"
+                    (dblclick)="onEditCategory.emit(childCategory)"
                     (contextmenu)="openContextMenu($event, childCategory)">
                     <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
                     <category-icon [category]="childCategory.name" size="30"></category-icon>

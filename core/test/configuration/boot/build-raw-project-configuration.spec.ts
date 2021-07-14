@@ -954,7 +954,7 @@ describe('buildRawProjectConfiguration', () => {
         const valuelistsConfiguration: Map<ValuelistDefinition> = {
             '123': {
                 values: {
-                    'one': { labels: { de: 'Eins', en: 'One' } },
+                    'one': { label: { de: 'Eins', en: 'One' } },
                     'two': { references: { externalId: '1234567' } },
                     'three': {}
                 },
@@ -974,7 +974,7 @@ describe('buildRawProjectConfiguration', () => {
         result['A'].groups['0'].fields.sort(Named.byName);
 
         expect(result['A'].groups['0'].fields[0].valuelist.values).toEqual({
-            one: { labels: { de: 'Eins', en: 'One' } },
+            one: { label: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
         });

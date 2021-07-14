@@ -31,7 +31,7 @@ export module ValuelistDefinition {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
 
-        return valuelist.values[valueId]?.labels;
+        return valuelist.values[valueId]?.label;
     }
 
 
@@ -63,8 +63,7 @@ export module ValuelistDefinition {
 }
 
 
-export interface ValueDefinition {
+export interface ValueDefinition extends I18N.Labeled {
 
-    labels?: I18N.String, // TODO this should be called label, for consistency, for example with Category
     references?: { [referenceKey: string]: string },
 }

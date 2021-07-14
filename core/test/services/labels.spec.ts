@@ -47,10 +47,10 @@ describe('Labels', () => {
 
         const valuelist: ValuelistDefinition = {
             values: {
-                '1': { labels: { de: 'B300' } },
-                '2': { labels: { de: 'A3' } },
-                '3': { labels: { de: 'B3' } },
-                '4': { labels: { de: 'A300' } }
+                '1': { label: { de: 'B300' } },
+                '2': { label: { de: 'A3' } },
+                '3': { label: { de: 'B3' } },
+                '4': { label: { de: 'A300' } }
             },
             id: '1'
         };
@@ -65,10 +65,10 @@ describe('Labels', () => {
 
         const valuelist: ValuelistDefinition = {
             values: {
-                '1': { labels: { de: 'A' } },
-                '2': { labels: { de: 'B' } },
-                '3': { labels: { de: 'C' } },
-                '4': { labels: { de: 'D' } },
+                '1': { label: { de: 'A' } },
+                '2': { label: { de: 'B' } },
+                '3': { label: { de: 'C' } },
+                '4': { label: { de: 'D' } },
             },
             order: ['2', '4', '3', '1'],
             id: '1'

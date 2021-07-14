@@ -60,6 +60,7 @@ describe('Labels', () => {
     });
 
 
+    // TODO move to valuelist-definition.spec
     it('sort values by custom order', () => {
 
         const valuelist: ValuelistDefinition = {

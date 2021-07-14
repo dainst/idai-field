@@ -31,9 +31,9 @@ export const makeCategoryForest = (relationDefinitions: Array<RelationDefinition
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories as any),
-        Tree.mapList(createGroups(relationDefinitions)),
-        Tree.mapList(detach(TEMP_FIELDS)),
-        Tree.mapList(detach(TEMP_GROUPS)),
+        Tree.mapForest(createGroups(relationDefinitions)),
+        Tree.mapForest(detach(TEMP_FIELDS)),
+        Tree.mapForest(detach(TEMP_GROUPS)),
         linkParentAndChildInstances
     );
 }

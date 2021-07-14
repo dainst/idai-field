@@ -5,7 +5,7 @@
             <ul>
                 <li *ngFor="let group of category.groups">
                     <ul>
-                        <h5>{{group.name}}</h5>
+                        <h5>{{getLabel(group)}}</h5>
                         <li *ngFor="let field of group.fields">
                             {{getLabel(field)}}
                         </li>

@@ -102,7 +102,7 @@ registerLocaleData(localeIt, 'it');
         Languages,
         {
             provide: Labels,
-            useFactory: function(languages: Languages) { return new Labels(languages); },
+            useFactory: function(languages: Languages) { return new Labels(() => languages.get()); },
             deps: [Languages]
         },
         DecimalPipe,

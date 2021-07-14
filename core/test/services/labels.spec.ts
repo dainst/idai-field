@@ -4,10 +4,9 @@ import {Labels} from '../../src/services/labels';
 
 describe('Labels', () => {
 
-    class Languages {
 
-        public get() { return ['de'] }
-    }
+    const getLanguages = () => ['de'];
+
 
     it('should get label for category', () => {
 
@@ -22,7 +21,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(new Languages());
+        const labels = new Labels(getLanguages);
 
         expect(labels.getFieldDefinitionLabel(category, 'aField')).toBe('Ein Feld');
     });
@@ -39,7 +38,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(new Languages());
+        const labels = new Labels(getLanguages);
         expect(labels.getFieldDefinitionLabel(category,'aField')).toBe('aField');
     });
 
@@ -56,7 +55,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(new Languages());
+        const labels = new Labels(getLanguages);
         expect(labels.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
     });
 
@@ -74,7 +73,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(new Languages());
+        const labels = new Labels(getLanguages);
         expect(labels.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
     });
 });

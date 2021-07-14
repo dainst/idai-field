@@ -11,12 +11,12 @@ export type Label = string; // move to I18N.Labeled
  */
 export class Labels {
 
-    constructor(private languages: { get(): string[] }) {}
+    constructor(private getLanguages: () => string[]) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
 
-        return I18N.getLabel(labeledValue, this.languages.get());
+        return I18N.getLabel(labeledValue, this.getLanguages());
     }
 
     
@@ -24,7 +24,7 @@ export class Labels {
 
         const label = ValuelistDefinition.getValueLabel(valuelist, valueId);
 
-        const translation: string|undefined = I18N.getTranslation(label, this.languages.get());
+        const translation: string|undefined = I18N.getTranslation(label, this.getLanguages());
         return translation ?? valueId;
     }
 
@@ -32,7 +32,7 @@ export class Labels {
     public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
 
-        return I18N.getLabelAndDescription(labeledValue, this.languages.get());
+        return I18N.getLabelAndDescription(labeledValue, this.getLanguages());
     }
 
 
@@ -40,7 +40,7 @@ export class Labels {
 
         const label = Category.getFieldLabelValue(category, fieldName);
         if (!label) return undefined;
-        return I18N.getLabel(label, this.languages.get());
+        return I18N.getLabel(label, this.getLanguages());
     }
 
 

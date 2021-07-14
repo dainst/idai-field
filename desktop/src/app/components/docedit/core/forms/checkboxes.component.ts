@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Datastore, Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
+import {Labels} from '../../../services/labels';
 
 @Component({
     selector: 'dai-checkboxes',
@@ -20,7 +21,8 @@ export class CheckboxesComponent implements OnChanges {
     public valuelist: ValuelistDefinition;
 
 
-    constructor(private datastore: Datastore) {}
+    constructor(private datastore: Datastore,
+                private labels: Labels) {}
 
 
     async ngOnChanges() {
@@ -33,9 +35,9 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
-    public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];
+    public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist, this.labels.getLanguages()) : [];
 
-    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId);
+    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId, this.labels.getLanguages());
 
 
     public toggleCheckbox(item: string) {

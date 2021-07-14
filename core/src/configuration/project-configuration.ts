@@ -5,6 +5,12 @@ import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
 
+// TODO remove
+const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
+    ? window.require('@electron/remote').getGlobal('config').languages
+    : ['de'];
+
+
 export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefinition>>;
 
 
@@ -180,7 +186,7 @@ export class ProjectConfiguration {
         const category: Category|undefined = this.getCategory(categoryName);
         if (!category) return '';
 
-        return Labeled.getLabel(category);
+        return Labeled.getLabel(category, ELECTRON_CONFIG_LANGUAGES);
     }
 
 

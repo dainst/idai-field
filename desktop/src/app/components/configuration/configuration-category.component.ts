@@ -15,6 +15,7 @@ import { GroupEditorModalComponent } from './editor/group-editor-modal.component
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import {ErrWithParams} from '../../core/import/import/import-documents';
 import {Modals} from '../services/modals';
+import {Labels} from '../services/labels';
 
 
 @Component({
@@ -49,7 +50,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     constructor(private modals: Modals,
-                private messages: Messages) {}
+                private messages: Messages,
+                private labels: Labels) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
@@ -69,7 +71,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
-    public getGroupLabel = (group: Group) => Labeled.getLabel(group);
+    public getGroupLabel = (group: Group) => this.labels.get(group);
 
     public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
 
@@ -259,7 +261,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = Labeled.getLabelAndDescription(this.category);
+        const { label, description } = this.labels.getLabelAndDescription(this.category);
         this.label = label;
         this.description = description;
     }

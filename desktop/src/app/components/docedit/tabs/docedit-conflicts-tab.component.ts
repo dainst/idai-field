@@ -8,6 +8,7 @@ import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { formatContent } from './format-content';
+import {Labels} from '../../services/labels';
 
 const moment = require('moment');
 
@@ -37,6 +38,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
+                private labels: Labels,
                 private i18n: I18n) {}
 
 
@@ -51,7 +53,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         (value: string) => this.decimalPipe.transform(value)
     );
 
-    public getLabel = (field: any) => Labeled.getLabel(field);
+    public getLabel = (field: any) => this.labels.get(field);
 
 
     async ngOnChanges() {

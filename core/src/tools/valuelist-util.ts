@@ -13,7 +13,8 @@ import { SortUtil } from './sort-util';
  */
 export module ValuelistUtil {
 
-    export function getValuesNotIncludedInValuelist(resource: Resource|undefined, fieldName: string|undefined,
+    export function getValuesNotIncludedInValuelist(resource: Resource|undefined,
+                                                    fieldName: string|undefined,
                                                     valuelist: ValuelistDefinition): string[]|undefined {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
@@ -28,9 +29,9 @@ export module ValuelistUtil {
     }
 
 
-    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, providedLanguages?: string[]): string {
+    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, languages: string[]): string {
 
-        const label: string|undefined = Labeled.getTranslation(valuelist.values[valueId]?.labels, providedLanguages);
+        const label: string|undefined = Labeled.getTranslation(valuelist.values[valueId]?.labels, languages);
         return label ?? valueId;
     }
 
@@ -66,12 +67,12 @@ export module ValuelistUtil {
     }
 
 
-    export function getOrderedValues(valuelist: ValuelistDefinition): string[] {
+    export function getOrderedValues(valuelist: ValuelistDefinition, languages: string[]): string[] {
 
         return Object.keys(valuelist.values).sort(
             valuelist.order
                 ? sortByCustomOrder(valuelist.order)
-                : sortAlphanumerically(valuelist)
+                : sortAlphanumerically(valuelist, languages)
         );
     }
 
@@ -82,11 +83,11 @@ export module ValuelistUtil {
     };
 
 
-    const sortAlphanumerically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
+    const sortAlphanumerically = (valuelist: ValuelistDefinition, languages: string[]) => (valueA: string, valueB: string): number => {
 
         return SortUtil.alnumCompare(
-            getValueLabel(valuelist, valueA).toLowerCase(),
-            getValueLabel(valuelist, valueB).toLowerCase()
+            getValueLabel(valuelist, valueA, languages).toLowerCase(),
+            getValueLabel(valuelist, valueB, languages).toLowerCase()
         );
     };
 

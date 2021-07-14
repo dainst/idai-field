@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, FieldDefinition, Labeled, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
+import {Labels} from '../../../../services/labels';
+import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
 import { is, on } from 'tsfun';
 
 
@@ -10,7 +11,6 @@ type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
     selector: 'empty-valuelist-info',
     templateUrl: './empty-valuelist-info.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -23,7 +23,8 @@ export class EmptyValuelistInfoComponent implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {}
 
 
     async ngOnChanges() {
@@ -40,7 +41,7 @@ export class EmptyValuelistInfoComponent implements OnChanges {
             .getFieldDefinitions('Project')
             .find(on('name', is(this.field.valuelistFromProjectField)));
 
-        return field ? Labeled.getLabel(field) : '';
+        return field ? this.labels.get(field) : '';
     }
 
 

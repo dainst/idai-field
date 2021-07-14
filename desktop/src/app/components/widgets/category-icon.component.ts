@@ -1,6 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
 import { Category, Labeled, ProjectConfiguration, StringUtils } from 'idai-field-core';
+import {Labels} from '../services/labels';
 
 type Color = string;
 type Character = string;
@@ -27,7 +28,8 @@ export class CategoryIconComponent implements OnChanges {
     public pxSize: string;
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {}
 
 
     ngOnChanges() {
@@ -47,7 +49,7 @@ export class CategoryIconComponent implements OnChanges {
             StringUtils.first(
                 isString(this.category)
                     ? this.projectConfiguration.getLabelForCategory(this.category)
-                    : Labeled.getLabel(this.category));
+                    : this.labels.get(this.category));
     }
 
 

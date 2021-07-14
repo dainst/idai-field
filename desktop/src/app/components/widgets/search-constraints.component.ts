@@ -4,6 +4,7 @@ import { aFilter, clone, is, on } from 'tsfun';
 import { Category, ConstraintIndex, Datastore, FieldDefinition, Labeled, ProjectConfiguration, ValuelistDefinition,
     ValuelistUtil } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
+import {Labels} from '../services/labels';
 
 
 type ConstraintListItem = {
@@ -46,6 +47,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           private projectConfiguration: ProjectConfiguration,
                           private datastore: Datastore,
                           private renderer: Renderer2,
+                          protected labels: Labels,
                           protected i18n: I18n) {}
 
 
@@ -56,10 +58,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist);
+    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist, this.labels.getLanguages());
 
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
-        ValuelistUtil.getValueLabel(valuelist, valueId);
+        ValuelistUtil.getValueLabel(valuelist, valueId, this.labels.getLanguages());
 
 
     public getTooltip() {
@@ -161,7 +163,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         } else if (field.name.endsWith('.endValue')) {
             return this.getDropdownRangeEndLabel(field);
         } else {
-            return Labeled.getLabel(field);
+            return this.labels.get(field);
         }
     }
 
@@ -346,7 +348,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getDropdownRangeLabel(field: FieldDefinition): string {
 
-        const fieldLabel: string = Labeled.getLabel(field);
+        const fieldLabel: string = this.labels.get(field);
 
         return fieldLabel + ' / ' + fieldLabel
             + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
@@ -355,7 +357,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getDropdownRangeEndLabel(field: FieldDefinition): string {
 
-        return Labeled.getLabel(field)
+        return this.labels.get(field)
             + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
     }
 

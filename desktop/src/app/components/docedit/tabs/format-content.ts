@@ -1,6 +1,9 @@
 import { Dating, Dimension, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
 import { flow, isArray, isObject, isString } from 'tsfun';
 
+const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
+    ? window.require('@electron/remote').getGlobal('config').languages
+    : ['de'];
 
 export type InnerHTML = string;
 
@@ -61,7 +64,7 @@ const convertObject = (field: any, getTranslation: (key: string) => string) =>
         return OptionalRange.generateLabel(
             fieldContent,
             getTranslation,
-            (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
+            (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value, ELECTRON_CONFIG_LANGUAGES)
         );
     } else {
         return JSON.stringify(fieldContent);
@@ -76,13 +79,13 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
-                ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition));
+                ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition, ELECTRON_CONFIG_LANGUAGES));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation);
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, getTranslation)
         } else if (isString(element)) {
-            return ValuelistUtil.getValueLabel(field.valuelist, element);
+            return ValuelistUtil.getValueLabel(field.valuelist, element, ELECTRON_CONFIG_LANGUAGES);
         } else {
             return JSON.stringify(element);
         }

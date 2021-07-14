@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Category, FieldDefinition, Labeled } from 'idai-field-core';
+import { Category, FieldDefinition } from 'idai-field-core';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { Labels } from '../services/labels';
 
 
 @Component({
@@ -20,12 +21,14 @@ export class ConfigurationFieldDragElement implements OnChanges {
     public parentField: boolean = false;
     public label: string;
 
+    constructor(private labels: Labels) {}
+
 
     ngOnChanges() {
 
         if (!this.category || !this.field) return;
 
-        this.label = Labeled.getLabel(this.field);
+        this.label = this.labels.get(this.field);
         this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
     }
 

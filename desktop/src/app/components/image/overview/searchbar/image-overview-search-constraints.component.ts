@@ -1,10 +1,11 @@
+import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone } from 'tsfun'
 import { Datastore, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../core/images/overview/view/imageoverview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
+import { Labels } from '../../../services/labels';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
                 datastore: Datastore,
                 renderer: Renderer2,
                 i18n: I18n,
-                private imageOverviewFacade: ImageOverviewFacade) {
+                private imageOverviewFacade: ImageOverviewFacade,
+                labels: Labels) {
 
-        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
+        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
     }
 
 

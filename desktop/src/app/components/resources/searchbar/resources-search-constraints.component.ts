@@ -5,6 +5,7 @@ import { Datastore, FieldDefinition, ProjectConfiguration } from 'idai-field-cor
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
+import {Labels} from '../../services/labels';
 
 
 @Component({
@@ -26,9 +27,10 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 datastore: Datastore,
                 renderer: Renderer2,
                 i18n: I18n,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                labels: Labels) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
+        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
 
         this.initializeDefaultFields();
 

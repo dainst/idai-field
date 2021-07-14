@@ -20,6 +20,7 @@ import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ExportModalComponent } from './export-modal.component';
+import {Labels} from '../services/labels';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -62,12 +63,13 @@ export class ExportComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
                 private relationsManager: RelationsManager,
-                private imageRelationsManager: ImageRelationsManager) {}
+                private imageRelationsManager: ImageRelationsManager,
+                private labels: Labels) {}
 
 
     public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
 
-    public getCategoryLabel = (category: Category) => Labeled.getLabel(category);
+    public getCategoryLabel = (category: Category) => this.labels.get(category);
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 

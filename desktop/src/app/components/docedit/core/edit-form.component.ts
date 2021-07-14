@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone } from 'tsfun';
-import { Document, Labeled, ProjectConfiguration, FieldDefinition, Group,
+import { Document, ProjectConfiguration, FieldDefinition, Group,
     ProjectCategories } from 'idai-field-core';
+import {Labels} from '../../services/labels';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {}
 
 
     public activateGroup = (name: string) => this.activeGroup = name;
@@ -63,7 +65,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         return group.name === 'conflicts'
             ? this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' })
-            : Labeled.getLabel(group);
+            : this.labels.get(group);
     }
 
 

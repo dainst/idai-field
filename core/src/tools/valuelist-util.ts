@@ -3,7 +3,6 @@ import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { Resource } from '../model/resource';
 import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
-import { I18N } from './i18n';
 
 
 /**
@@ -25,12 +24,6 @@ export module ValuelistUtil {
                 : [];
 
         return itemsNotIncludedInValueList.length > 0 ? itemsNotIncludedInValueList : undefined;
-    }
-
-
-    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
-
-        return valuelist.values[valueId]?.labels;
     }
 
 
@@ -66,7 +59,8 @@ export module ValuelistUtil {
     }
 
 
-    function getValuesOfParentField(valuelist: ValuelistDefinition, fieldName: string,
+    function getValuesOfParentField(valuelist: ValuelistDefinition, 
+                                    fieldName: string,
                                     parentResource: Resource): ValuelistDefinition {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];

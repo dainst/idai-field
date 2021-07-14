@@ -1,6 +1,6 @@
 import { Category } from '../model/category';
 import { ValuelistDefinition } from '../model/valuelist-definition';
-import { SortUtil, ValuelistUtil } from '../tools';
+import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 
 
@@ -22,7 +22,7 @@ export class Labels {
     
     public getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
-        const label = ValuelistUtil.getValueLabel(valuelist, valueId);
+        const label = ValuelistDefinition.getValueLabel(valuelist, valueId);
 
         const translation: string|undefined = I18N.getTranslation(label, this.languages.get());
         return translation ?? valueId;

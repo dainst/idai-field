@@ -29,6 +29,12 @@ export interface ValuelistDefinition {
 
 export module ValuelistDefinition {
 
+    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
+
+        return valuelist.values[valueId]?.labels;
+    }
+    
+
     export function assertIsValid(valuelistDefinition: ValuelistDefinition) {
 
         if (valuelistDefinition.description === undefined) return ['missing', 'description'];

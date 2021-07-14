@@ -37,9 +37,8 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
 
     for (const [name, category] of keysValues(result)) {
 
-        category.fields = filter(on(FieldDefinition.SOURCE, 
-            is(FieldDefinition.Source.LIBRARY)),
-         category.fields);
+        category.fields = filter(category.fields, 
+            on(FieldDefinition.SOURCE, is(FieldDefinition.Source.LIBRARY)));
 
         applyLanguagesToCategory(languageConfigurations, category, category.categoryName);
         category[Named.NAME] = name;

@@ -132,6 +132,8 @@ export class ConfigurationComponent implements OnInit {
 
     public performContextMenuAction(action: ConfigurationContextMenuAction) {
 
+        this.contextMenu.close();
+
         switch(action) {
             case 'edit':
                 if (this.contextMenu.group) {

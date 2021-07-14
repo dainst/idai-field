@@ -1,6 +1,7 @@
-import {Router} from '@angular/router';
-import {Injectable, NgZone} from '@angular/core';
-import {MenuContext} from './menu-context';
+import { Router } from '@angular/router';
+import { Injectable, NgZone } from '@angular/core';
+import { MenuContext } from './menu-context';
+
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 

@@ -32,6 +32,7 @@ export class AddCategoryModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
         Promise<ErrWithParams|undefined>;
 
+        
     constructor(public activeModal: NgbActiveModal,
                 private modals: Modals) {}
 
@@ -40,6 +41,7 @@ export class AddCategoryModalComponent {
 
         this.applyCategoryNameSearch();
     }
+
 
     public selectCategory(category: Category) {
 

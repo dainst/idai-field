@@ -24,8 +24,8 @@ export interface TransientFieldDefinition extends BuiltinFieldDefinition, Librar
     valuelist?: ValuelistDefinition;
     valuelistId?: string,
     valuelistFromProjectField?: string;
-    constraintIndexed?: true;
     source?: 'builtin'|'library'|'custom'|'common';
+    defaultConstraintIndexed?: boolean;
 }
 
 

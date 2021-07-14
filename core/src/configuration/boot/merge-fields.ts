@@ -5,6 +5,10 @@ import { TransientFieldDefinition } from '../model/transient-category-definition
 export function mergeFields(target: Map<TransientFieldDefinition>, 
                             source: Map<TransientFieldDefinition>) {
 
+    for (let targetFieldName of Object.keys(target)) {
+        target[targetFieldName].defaultConstraintIndexed = target[targetFieldName].constraintIndexed;
+    }
+
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;
         for (let targetFieldName of Object.keys(target)) {
@@ -23,6 +27,9 @@ export function mergeFields(target: Map<TransientFieldDefinition>,
             if (source[sourceFieldName].valuelistFromProjectField) {
                 target[sourceFieldName].valuelistFromProjectField
                     = source[sourceFieldName].valuelistFromProjectField;
+            }
+            if (source[sourceFieldName].constraintIndexed !== undefined) {
+                target[sourceFieldName].constraintIndexed = source[sourceFieldName].constraintIndexed;
             }
         }
     }

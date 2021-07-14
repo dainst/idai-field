@@ -19,9 +19,10 @@ export interface FieldDefinition {
     positionValues?: ValuelistDefinition;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
+    fulltextIndexed?: boolean;
+    constraintIndexed?: boolean;
+    defaultConstraintIndexed?: boolean;
     mandatory?: true;
-    fulltextIndexed?: true;
-    constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
     source?: FieldDefinition.SOURCE_TYPES;
 }

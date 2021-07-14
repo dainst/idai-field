@@ -18,8 +18,8 @@ export module BaseCategoryDefinition {
 export interface BaseFieldDefinition {
 
     inputType?: string;
-    constraintIndexed?: true;
-    fulltextIndexed?: true;
+    constraintIndexed?: boolean;
+    fulltextIndexed?: boolean;
     source?: 'builtin'|'library'|'custom'|'common';
 }
 

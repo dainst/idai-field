@@ -10,6 +10,7 @@ import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.com
 import {LayerUtility} from './layer-utility';
 import {Loading} from '../../../../widgets/loading';
 import {ProjectConfiguration} from 'idai-field-core';
+import {Labels} from '../../../../services/labels';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class LayerMenuComponent extends MenuComponent {
                 private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
                 renderer: Renderer2,
-                menuService: Menus) {
+                menuService: Menus,
+                private labels: Labels) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
     }
@@ -118,7 +120,7 @@ export class LayerMenuComponent extends MenuComponent {
     public getLayerGroupLabel(layerGroup: LayerGroup): string {
 
         return layerGroup.document.resource.category === 'Project'
-            ? this.projectConfiguration.getLabelForCategory('Project')
+            ? this.projectConfiguration.getLabelForCategory('Project', this.labels.getLanguages())
             : layerGroup.document.resource.identifier;
     }
 

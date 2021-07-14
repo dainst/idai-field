@@ -21,8 +21,9 @@ import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { Modals } from '../services/modals';
-import {nop} from 'tsfun';
-import {ConfigurationIndex} from '../../core/configuration/configuration-index';
+import { nop } from 'tsfun';
+import { ConfigurationIndex } from '../../core/configuration/configuration-index';
+import { Labels } from '../services/labels';
 
 
 export type InputType = {
@@ -89,6 +90,7 @@ export class ConfigurationComponent implements OnInit {
                 private appConfigurator: AppConfigurator,
                 private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
+                private labels: Labels,
                 private i18n: I18n) {}
 
 
@@ -392,7 +394,7 @@ export class ConfigurationComponent implements OnInit {
                     this.settingsProvider.getSettings().username
                 ) as ConfigurationDocument;
             } catch (errWithParams) {
-                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration));
+                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels.getLanguages()));
                 return;
             }
             this.projectConfiguration.update(newProjectConfiguration);

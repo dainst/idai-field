@@ -114,7 +114,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIdentifierIsUnique(this.document);
             await this.validator.assertIsRecordedInTargetsExist(this.document);
         } catch(msgWithParams) {
-            this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration));
+            this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels.getLanguages()));
             await this.restoreIdentifier(this.document);
             this.changeDetectorRef.detectChanges();
             return;

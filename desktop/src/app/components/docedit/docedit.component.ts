@@ -16,6 +16,7 @@ import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
+import { Labels } from '../services/labels';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class DoceditComponent {
                 public projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
                 private menuService: Menus,
+                public labels: Labels,
                 private i18n: I18n) {}
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -100,7 +102,7 @@ export class DoceditComponent {
         this.documentHolder.setDocument(document);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
+            this.projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName, this.labels.getLanguages());
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();
@@ -204,7 +206,7 @@ export class DoceditComponent {
         }
 
         this.messages.add((errorWithParams.length > 0
-            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration)
+            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels.getLanguages())
             : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
     }
 
@@ -291,7 +293,7 @@ export class DoceditComponent {
             this.messages.add([
                 M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
                 invalidRelations
-                    .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
+                    .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName, this.labels.getLanguages()))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
         }

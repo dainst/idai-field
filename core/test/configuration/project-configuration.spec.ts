@@ -52,7 +52,7 @@ describe('ProjectConfiguration', () => {
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[category, []]]), []]);
 
-        expect(configuration.getFieldDefinitionLabel('T', 'aField')).toBe('Ein Feld');
+        expect(configuration.getFieldDefinitionLabel('T', 'aField', ['de'])).toBe('Ein Feld');
     });
 
 
@@ -69,7 +69,7 @@ describe('ProjectConfiguration', () => {
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[ category, []]]), []]);
 
-        expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('aField');
+        expect(configuration.getFieldDefinitionLabel('T','aField', ['de'])).toBe('aField');
     });
 
 
@@ -78,7 +78,7 @@ describe('ProjectConfiguration', () => {
         const configuration: ProjectConfiguration = new ProjectConfiguration([[], []]);
 
         expect(() => {
-            configuration.getFieldDefinitionLabel('UndefinedCategory', 'someField');
+            configuration.getFieldDefinitionLabel('UndefinedCategory', 'someField', ['de']);
         }).toThrow();
     });
 

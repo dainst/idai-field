@@ -5,10 +5,6 @@ import { FieldDefinition } from './field-definition';
 import { Group } from './group';
 import { Labeled } from '../tools/labeled';
 
-// TODO remove
-const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
-    ? window.require('@electron/remote').getGlobal('config').languages
-    : ['de'];
 
 export interface Category extends Named {
     
@@ -114,10 +110,10 @@ export namespace Category {
     }
 
 
-    export function getLabel(fieldName: string, fields: Array<any>): string {
+    export function getLabel(fieldName: string, fields: Array<any>, languages: string[]): string {
 
         for (let field of fields) {
-            if (field.name === fieldName) return Labeled.getLabel(field, ELECTRON_CONFIG_LANGUAGES);
+            if (field.name === fieldName) return Labeled.getLabel(field, languages);
         }
         return fieldName;
     }

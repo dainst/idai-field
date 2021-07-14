@@ -53,11 +53,14 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-    export function getValue(fieldContent: any, fieldName: string, projectConfiguration: ProjectConfiguration,
-                             valuelist?: ValuelistDefinition, languages?: string[]): any {
+    export function getValue(fieldContent: any, 
+                             fieldName: string, 
+                             projectConfiguration: ProjectConfiguration,
+                             languages: string[],
+                             valuelist?: ValuelistDefinition): any {
 
         return fieldName === Resource.CATEGORY
-            ? projectConfiguration.getLabelForCategory(fieldContent)
+            ? projectConfiguration.getLabelForCategory(fieldContent, languages)
             : valuelist
                 ? ValuelistUtil.getValueLabel(valuelist, fieldContent, languages)
                 : isString(fieldContent)
@@ -179,11 +182,11 @@ function makeField(projectConfiguration: ProjectConfiguration,
                 value: isArray(fieldContent)
                     ? fieldContent.map((fieldContent: any) =>
                         FieldsViewUtil.getValue(
-                            fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                            fieldContent, field.name, projectConfiguration, languages, field.valuelist
                         )
                     )
                     : FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                        fieldContent, field.name, projectConfiguration, languages, field.valuelist
                     ),
                 type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
                 valuelist: field.valuelist,

@@ -8,7 +8,7 @@ import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { formatContent } from './format-content';
-import {Labels} from '../../services/labels';
+import { Labels } from '../../services/labels';
 
 const moment = require('moment');
 
@@ -222,7 +222,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
-                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
+                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName, this.labels.getLanguages());
             }
 
             const fd = projectConfiguration
@@ -243,7 +243,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         for (let relationName of differingRelationsNames) {
             differingFields.push({
                 name: relationName,
-                label: projectConfiguration.getRelationDefinitionLabel(relationName),
+                label: projectConfiguration.getRelationDefinitionLabel(relationName, this.labels.getLanguages()),
                 type: 'relation',
                 rightSideWinning: false
             });

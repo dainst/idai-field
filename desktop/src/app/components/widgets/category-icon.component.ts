@@ -48,7 +48,7 @@ export class CategoryIconComponent implements OnChanges {
         this.character =
             StringUtils.first(
                 isString(this.category)
-                    ? this.projectConfiguration.getLabelForCategory(this.category)
+                    ? this.projectConfiguration.getLabelForCategory(this.category, this.labels.getLanguages())
                     : this.labels.get(this.category));
     }
 

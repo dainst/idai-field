@@ -5,7 +5,7 @@ import { ValuelistDefinition } from './valuelist-definition';
 /**
  * @author Daniel de Oliveira
  */
-export interface FieldDefinition {
+export interface FieldDefinition extends I18N.LabeledValue {
 
     name: string;
     inputType: FieldDefinition.InputType;

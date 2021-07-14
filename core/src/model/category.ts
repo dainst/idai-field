@@ -1,4 +1,4 @@
-import { flatten, flow, map, to } from 'tsfun';
+import { flatten, flow, is, map, to } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
@@ -109,6 +109,13 @@ export namespace Category {
     }
 
 
+    export function getFieldLabelValue(category: Category, field: Name): I18N.LabeledValue|undefined {
+
+        return getFields(category)?.find(Named.onName(is(field)));
+    } 
+
+
+    // TODO replace with getFieldLabel
     export function getLabel(fieldName: string, fields: Array<Named>, languages: string[]): string {
 
         for (let field of fields) {

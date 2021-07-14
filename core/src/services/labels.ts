@@ -39,8 +39,9 @@ export class Labels {
      */
     public getFieldDefinitionLabel(category: Category, fieldName: string): Label {
 
-        const fieldDefinitions = Category.getFields(category);
-        return Category.getLabel(fieldName, fieldDefinitions, this.languages.get());
+        const label = Category.getFieldLabelValue(category, fieldName);
+        if (!label) return undefined;
+        return I18N.getLabel(label, this.languages.get());
     }
 
 

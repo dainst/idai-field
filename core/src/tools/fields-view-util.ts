@@ -53,11 +53,14 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-    export function getValue(fieldContent: any, fieldName: string, projectConfiguration: ProjectConfiguration,
-                             valuelist?: ValuelistDefinition, languages?: string[]): any {
+    export function getValue(fieldContent: any, 
+                             fieldName: string, 
+                             projectConfiguration: ProjectConfiguration,
+                             languages: string[],
+                             valuelist?: ValuelistDefinition): any {
 
         return fieldName === Resource.CATEGORY
-            ? projectConfiguration.getLabelForCategory(fieldContent)
+            ? projectConfiguration.getLabelForCategory(fieldContent, languages)
             : valuelist
                 ? ValuelistUtil.getValueLabel(valuelist, fieldContent, languages)
                 : isString(fieldContent)
@@ -106,7 +109,8 @@ export module FieldsViewUtil {
 
     export function getObjectLabel(object: any, field: FieldsViewField,
                                    getTranslation: (key: string) => string,
-                                   formatDecimal: (value: number) => string): string {
+                                   formatDecimal: (value: number) => string,
+                                   languages: string[]): string {
 
         if (object.label) {
             return object.label;
@@ -120,7 +124,7 @@ export module FieldsViewUtil {
                 object,
                 formatDecimal,
                 getTranslation,
-                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
+                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition, languages)
             );
         } else if (object.quotation) {
             return Literature.generateLabel(
@@ -130,7 +134,7 @@ export module FieldsViewUtil {
             return OptionalRange.generateLabel(
                 object,
                 getTranslation,
-                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
+                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value, languages)
             );
         } else {
             return object;
@@ -160,28 +164,29 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
 }
 
 
-function makeField(projectConfiguration: ProjectConfiguration, relationTargets: Map<Array<Document>>,
-                   languages?: string[]) {
+function makeField(projectConfiguration: ProjectConfiguration, 
+                   relationTargets: Map<Array<Document>>,
+                   languages: string[]) {
 
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return (field.inputType === FieldDefinition.InputType.RELATION
                 || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
             ? {
-                label: Labeled.getLabel(field),
+                label: Labeled.getLabel(field, languages),
                 type: 'relation',
                 targets: relationTargets[field.name]
             }
             : {
-                label: Labeled.getLabel(field),
+                label: Labeled.getLabel(field, languages),
                 value: isArray(fieldContent)
                     ? fieldContent.map((fieldContent: any) =>
                         FieldsViewUtil.getValue(
-                            fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                            fieldContent, field.name, projectConfiguration, languages, field.valuelist
                         )
                     )
                     : FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, field.valuelist, languages
+                        fieldContent, field.name, projectConfiguration, languages, field.valuelist
                     ),
                 type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
                 valuelist: field.valuelist,

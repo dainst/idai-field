@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Labels } from '../../../../services/labels';
 import { Category, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
     ProjectConfiguration, Query, Relations, Resource, ValuelistUtil } from 'idai-field-core';
-import { isEmpty, flow, includedIn, is, isNot, left, map, Mapping, on, Pair, pairWith, prune, right, to,
+import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
@@ -57,7 +58,8 @@ export class TypeRelationPickerComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
-                projectConfiguration: ProjectConfiguration) {
+                projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));
     }
@@ -141,7 +143,7 @@ export class TypeRelationPickerComponent {
 
         const usedCriteria = await this.getUsedCatalogCriteria();
 
-        this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory)
+        this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory, this.labels.getLanguages())
             .filter(on(Named.NAME, includedIn(usedCriteria)));
 
         this.fetchCatalogs();
@@ -238,7 +240,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
+    private static getConfiguredCriteria(typeCatalogCategory: Category, languages: string[]): Array<Criterion> {
 
         const valuelistDefinition =
             typeCatalogCategory
@@ -248,8 +250,8 @@ export class TypeRelationPickerComponent {
                 .find(Named.onName(is(CRITERION)))
                 .valuelist;
 
-        return ValuelistUtil.getOrderedValues(valuelistDefinition)
-            .map(pairWith(name => ValuelistUtil.getValueLabel(valuelistDefinition, name)))
+        return ValuelistUtil.getOrderedValues(valuelistDefinition, languages)
+            .map(pairWith(name => ValuelistUtil.getValueLabel(valuelistDefinition, name, languages)))
             .map(([name, label]) => ({ name, label }));
     }
     // TODO use curry or provide curried variant of getValueLabel

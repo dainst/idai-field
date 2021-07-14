@@ -5,6 +5,7 @@ import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
+import { Labels } from '../services/labels';
 
 
 const locale: string = typeof window !== 'undefined'
@@ -39,7 +40,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private i18n: I18n) {}
+    constructor(private i18n: I18n, private labels: Labels) {}
 
 
     ngOnChanges() {
@@ -53,10 +54,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
-    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist);
+    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist, this.labels.getLanguages());
 
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
-        ValuelistUtil.getValueLabel(valuelist, valueId);
+        ValuelistUtil.getValueLabel(valuelist, valueId, this.labels.getLanguages());
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -81,7 +82,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
-        const { label, description } = Labeled.getLabelAndDescription(this.field);
+        const { label, description } = this.labels.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
     }

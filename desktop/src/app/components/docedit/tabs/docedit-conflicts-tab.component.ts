@@ -8,6 +8,7 @@ import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { formatContent } from './format-content';
+import { Labels } from '../../services/labels';
 
 const moment = require('moment');
 
@@ -37,6 +38,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
+                private labels: Labels,
                 private i18n: I18n) {}
 
 
@@ -51,7 +53,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         (value: string) => this.decimalPipe.transform(value)
     );
 
-    public getLabel = (field: any) => Labeled.getLabel(field);
+    public getLabel = (field: any) => this.labels.get(field);
 
 
     async ngOnChanges() {
@@ -220,7 +222,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
-                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
+                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName, this.labels.getLanguages());
             }
 
             const fd = projectConfiguration
@@ -241,7 +243,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         for (let relationName of differingRelationsNames) {
             differingFields.push({
                 name: relationName,
-                label: projectConfiguration.getRelationDefinitionLabel(relationName),
+                label: projectConfiguration.getRelationDefinitionLabel(relationName, this.labels.getLanguages()),
                 type: 'relation',
                 rightSideWinning: false
             });

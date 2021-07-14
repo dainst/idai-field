@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Category, Labeled } from 'idai-field-core';
-import {keysValues} from 'tsfun';
+import { keysValues } from 'tsfun';
+import { Labels } from '../../services/labels';
 
 
 @Component({
@@ -14,7 +15,11 @@ export class CategoryPreviewComponent {
 
     @Input() category: Category|undefined;
 
-    public getLabel = (value: any) => Labeled.getLabel(value);
+
+    constructor(private labels: Labels) {}
+
+
+    public getLabel = (value: any) => this.labels.get(value);
 
     public getLabels = (field: any /* TODO any*/) => keysValues(field);
 }

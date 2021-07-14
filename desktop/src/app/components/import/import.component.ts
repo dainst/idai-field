@@ -22,6 +22,7 @@ import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+import {Labels} from '../services/labels';
 
 
 @Component({
@@ -63,7 +64,8 @@ export class ImportComponent implements OnInit {
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
-                private menuService: Menus) {
+                private menuService: Menus,
+                private labels: Labels) {
 
         this.resetOperationIfNecessary();
     }
@@ -71,7 +73,7 @@ export class ImportComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document);
 
-    public getCategoryLabel = (category: Category) => Labeled.getLabel(category);
+    public getCategoryLabel = (category: Category) => this.labels.get(category);
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 

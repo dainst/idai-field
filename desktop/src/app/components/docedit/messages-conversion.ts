@@ -14,7 +14,8 @@ import { MsgWithParams } from '../messages/msg-with-params';
 export module MessagesConversion {
 
     export function convertMessage(msgWithParams: MsgWithParams,
-                                   projectConfiguration: ProjectConfiguration): MsgWithParams {
+                                   projectConfiguration: ProjectConfiguration,
+                                   languages: string[]): MsgWithParams {
 
         if (msgWithParams.length === 0) return [M.APP_ERROR_GENERIC_SAVE_ERROR];
 
@@ -35,55 +36,55 @@ export module MessagesConversion {
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
-            msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
-            msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+            msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
+            msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
         }
 
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;
-                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;
-                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             }
         }
 
         if (msg === ValidationErrors.INVALID_DATING_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES;
-                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE;
-                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             }
         }
 
         if (msg === ValidationErrors.INVALID_DIMENSION_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES;
-                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE;
-                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             }
         }
 
         if (msg === ValidationErrors.INVALID_DECIMAL_SEPARATORS) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS;
-                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR;
-                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
-                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1]);
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2], languages);
+                msgWithParams[1] = projectConfiguration.getLabelForCategory(msgWithParams[1], languages);
             }
         }
 
@@ -92,11 +93,12 @@ export module MessagesConversion {
 
 
     function replaceFieldNamesWithLabels(fieldNames: string, typeName: string,
-                                         projectConfiguration: ProjectConfiguration): string {
+                                         projectConfiguration: ProjectConfiguration,
+                                         languages: string[]): string {
 
         return fieldNames
             .split(', ')
-            .map(fieldName => projectConfiguration.getFieldDefinitionLabel(typeName, fieldName))
+            .map(fieldName => projectConfiguration.getFieldDefinitionLabel(typeName, fieldName, languages))
             .join(', ');
     }
 }

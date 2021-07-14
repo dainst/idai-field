@@ -96,11 +96,12 @@ export class ProjectConfiguration {
      * Should be used only from within components.
      *
      * @param relationName
+     * @param languages
      * @returns {string}
      */
-    public getRelationDefinitionLabel(relationName: string): string {
+    public getRelationDefinitionLabel(relationName: string, languages: string[]): string {
 
-        return Category.getLabel(relationName, this.relations);
+        return Category.getLabel(relationName, this.relations, languages);
     }
 
 
@@ -175,12 +176,12 @@ export class ProjectConfiguration {
     }
 
 
-    public getLabelForCategory(categoryName: string): string {
+    public getLabelForCategory(categoryName: string, languages: string[]): string {
 
         const category: Category|undefined = this.getCategory(categoryName);
         if (!category) return '';
 
-        return Labeled.getLabel(category);
+        return Labeled.getLabel(category, languages);
     }
 
 
@@ -214,17 +215,18 @@ export class ProjectConfiguration {
      *
      * @param categoryName
      * @param fieldName
+     * @param languages
      * @returns {string}
      * @throws {string} with an error description in case the category is not defined.
      */
-    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
+    public getFieldDefinitionLabel(categoryName: string, fieldName: string, languages): string {
 
         const fieldDefinitions = this.getFieldDefinitions(categoryName);
         if (fieldDefinitions.length === 0) {
             throw 'No category definition found for category \'' + categoryName + '\'';
         }
 
-        return Category.getLabel(fieldName, fieldDefinitions);
+        return Category.getLabel(fieldName, fieldDefinitions, languages);
     }
 
 

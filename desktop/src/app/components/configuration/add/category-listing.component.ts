@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Category, Labeled } from 'idai-field-core';
 import {keysValues} from 'tsfun';
+import {Labels} from '../../services/labels';
 
 
 @Component({
@@ -17,9 +18,13 @@ export class CategoryListingComponent {
 
     @Output() onCategorySelected = new EventEmitter<Category>();
 
+
+    constructor(private labels: Labels) {}
+
+
     public selectCategory = (category: Category) => this.onCategorySelected.emit(category);
 
-    public getLabel = (value: any) => Labeled.getLabel(value);
+    public getLabel = (value: any) => this.labels.get(value);
 
     public getLabels = (category: Category) => keysValues(category.label);
 }

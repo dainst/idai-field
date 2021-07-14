@@ -3,6 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
 import { FieldDefinition, Category, Labeled, Named, InPlace } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
+import {Labels} from '../services/labels';
 
 
 @Component({
@@ -29,7 +30,10 @@ export class CategoryPickerComponent {
     @Output() onEditCategory: EventEmitter<Category> = new EventEmitter<Category>();
 
 
-    public getCategoryLabel = (category: Category): string => Labeled.getLabel(category);
+    constructor(private labels: Labels) {}
+
+
+    public getCategoryLabel = (category: Category): string => this.labels.get(category);
 
     public isCreateButtonVisible = (category: Category): boolean =>
         this.showCreateButtons && category.userDefinedSubcategoriesAllowed;

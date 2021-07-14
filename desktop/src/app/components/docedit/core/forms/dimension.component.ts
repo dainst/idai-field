@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Dimension, FieldDefinition, Resource, ValuelistUtil } from 'idai-field-core';
 import { clone } from 'tsfun';
 import { UtilTranslations } from '../../../../core/util/util-translations';
+import {Labels} from '../../../services/labels';
 
 
 type DimensionInEditing = { original: Dimension, clone: Dimension };
@@ -26,7 +27,8 @@ export class DimensionComponent {
 
 
     constructor(private decimalPipe: DecimalPipe,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private labels: Labels) {}
 
 
     public createNewDimension() {
@@ -65,7 +67,7 @@ export class DimensionComponent {
 
     public getPositionValueLabel(valueId: string): string {
 
-        return ValuelistUtil.getValueLabel(this.field['positionValues'], valueId);
+        return ValuelistUtil.getValueLabel(this.field['positionValues'], valueId, this.labels.getLanguages());
     }
 
 

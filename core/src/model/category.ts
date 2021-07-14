@@ -110,10 +110,10 @@ export namespace Category {
     }
 
 
-    export function getLabel(fieldName: string, fields: Array<any>): string {
+    export function getLabel(fieldName: string, fields: Array<any>, languages: string[]): string {
 
         for (let field of fields) {
-            if (field.name === fieldName) return Labeled.getLabel(field);
+            if (field.name === fieldName) return Labeled.getLabel(field, languages);
         }
         return fieldName;
     }

@@ -7,6 +7,7 @@ import { MessagesConversion } from '../../docedit/messages-conversion';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { NavigationService } from '../../../core/resources/navigation/navigation-service';
 import { Messages } from '../../messages/messages';
+import {Labels} from '../../services/labels';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class RowComponent implements AfterViewInit {
                 private datastore: Datastore,
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
-                private changeDetectorRef: ChangeDetectorRef) {}
+                private changeDetectorRef: ChangeDetectorRef,
+                private labels: Labels) {}
 
 
     public moveDocument = () => this.resourcesComponent.moveDocuments([this.document]);
@@ -59,7 +61,7 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getCategoryLabel = () => Labeled.getLabel(this.categoriesMap[this.document.resource.category]);
+    public getCategoryLabel = () => this.labels.get(this.categoriesMap[this.document.resource.category]);
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier
@@ -112,7 +114,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIdentifierIsUnique(this.document);
             await this.validator.assertIsRecordedInTargetsExist(this.document);
         } catch(msgWithParams) {
-            this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration));
+            this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels.getLanguages()));
             await this.restoreIdentifier(this.document);
             this.changeDetectorRef.detectChanges();
             return;

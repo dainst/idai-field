@@ -18,7 +18,7 @@ describe('ValuelistUtil', () => {
             id: '1'
         };
 
-        expect(ValuelistUtil.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(ValuelistUtil.getOrderedValues(valuelist, ['de'])).toEqual(['2', '4', '3', '1'])
     });
 
 
@@ -35,6 +35,6 @@ describe('ValuelistUtil', () => {
             id: '1'
         };
 
-        expect(ValuelistUtil.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(ValuelistUtil.getOrderedValues(valuelist, ['de'])).toEqual(['2', '4', '3', '1'])
     });
 });

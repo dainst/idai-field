@@ -30,7 +30,7 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
 
-        return valuelist[valueId]?.labels;
+        return valuelist.values[valueId]?.labels;
     }
 
 

@@ -36,7 +36,8 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: FieldDefinition, projectDocument: Document,
+    export function getValuelist(field: FieldDefinition, 
+                                 projectDocument: Document,
                                  parentResource?: Resource): ValuelistDefinition {
 
         const valuelist: ValuelistDefinition|string[] = field.valuelist

@@ -104,7 +104,7 @@ export class DoceditComponent {
         this.documentHolder.setDocument(document);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName, this.labels.getLanguages());
+            this.labels.getFieldDefinitionLabel(document.resource.category, fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();
@@ -295,7 +295,7 @@ export class DoceditComponent {
             this.messages.add([
                 M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
                 invalidRelations
-                    .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName, this.labels.getLanguages()))
+                    .map((relationName: string) => this.labels.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
         }

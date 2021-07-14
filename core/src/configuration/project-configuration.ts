@@ -1,6 +1,6 @@
 import { filter, flow, includedIn, is, isEmpty, Map, map, not, on, Pair } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../model';
-import { Forest, isTopLevelItemOrChildThereof, I18N, Name, Named, Tree } from '../tools';
+import { Forest, isTopLevelItemOrChildThereof, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
@@ -89,19 +89,6 @@ export class ProjectConfiguration {
     public getRelationDefinitionsForRangeCategory(categoryName: string): Array<RelationDefinition> {
 
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
-    }
-
-
-    /**
-     * Should be used only from within components.
-     *
-     * @param relationName
-     * @param languages
-     * @returns {string}
-     */
-    public getRelationDefinitionLabel(relationName: string, languages: string[]): string {
-
-        return Category.getLabel(relationName, this.relations, languages);
     }
 
 
@@ -197,27 +184,6 @@ export class ProjectConfiguration {
     public isMandatory(categoryName: string, fieldName: string): boolean {
 
         return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);
-    }
-
-
-    /**
-     * Gets the label for the field if it is defined.
-     * Otherwise it returns the fields definitions name.
-     *
-     * @param categoryName
-     * @param fieldName
-     * @param languages
-     * @returns {string}
-     * @throws {string} with an error description in case the category is not defined.
-     */
-    public getFieldDefinitionLabel(categoryName: string, fieldName: string, languages): string {
-
-        const fieldDefinitions = this.getFieldDefinitions(categoryName);
-        if (fieldDefinitions.length === 0) {
-            throw 'No category definition found for category \'' + categoryName + '\'';
-        }
-
-        return Category.getLabel(fieldName, fieldDefinitions, languages);
     }
 
 

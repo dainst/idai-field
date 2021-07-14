@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader, createContextIndependentCategories } from 'idai-field-core';
+    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader, createContextIndependentCategories, Labels } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
@@ -23,7 +23,6 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
 import { Modals } from '../services/modals';
 import { nop } from 'tsfun';
 import { ConfigurationIndex } from '../../core/configuration/configuration-index';
-import { Labels } from '../services/labels';
 
 
 export type InputType = {

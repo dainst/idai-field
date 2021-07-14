@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Category } from 'idai-field-core';
+import { Category, Labels } from 'idai-field-core';
 import {keysValues} from 'tsfun';
-import {Labels} from '../../services/labels';
 
 
 @Component({

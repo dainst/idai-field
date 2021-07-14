@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Document, FieldDefinition } from 'idai-field-core';
-import {Labels} from '../../services/labels';
+import { Document, FieldDefinition, Labels } from 'idai-field-core';
 
 
 @Component({

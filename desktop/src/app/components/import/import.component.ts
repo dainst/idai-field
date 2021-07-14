@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
-    RelationsManager, ProjectCategories } from 'idai-field-core';
+    RelationsManager, ProjectCategories, Labels } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
@@ -22,7 +22,6 @@ import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
-import {Labels} from '../services/labels';
 
 
 @Component({

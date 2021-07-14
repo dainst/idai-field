@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Named,
-    Resource, Document, GroupDefinition, InPlace, Groups} from 'idai-field-core';
+    Resource, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext } from '../services/menu-context';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
@@ -15,7 +15,6 @@ import { GroupEditorModalComponent } from './editor/group-editor-modal.component
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import {ErrWithParams} from '../../core/import/import/import-documents';
 import {Modals} from '../services/modals';
-import {Labels} from '../services/labels';
 
 
 @Component({

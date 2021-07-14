@@ -2,8 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } fro
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone } from 'tsfun';
 import { Document, ProjectConfiguration, FieldDefinition, Group,
-    ProjectCategories } from 'idai-field-core';
-import {Labels} from '../../services/labels';
+    ProjectCategories, Labels } from 'idai-field-core';
 
 
 @Component({

@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import {Labels} from '../../../../services/labels';
-import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil } from 'idai-field-core';
+import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil, Labels } from 'idai-field-core';
 import { is, on } from 'tsfun';
 
 

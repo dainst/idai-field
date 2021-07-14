@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Labels } from '../../../../services/labels';
-import { Category, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
+import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
     ProjectConfiguration, Query, Relations, Resource, ValuelistUtil } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';

@@ -1,9 +1,14 @@
-import { ProjectConfiguration, Tree } from 'idai-field-core';
-import {Labels} from '../../../../src/app/components/services/labels';
-import {Languages} from '../../../../src/app/components/services/languages';
+import {Tree} from '../../src/tools/forest';
+import {ProjectConfiguration} from '../../src/configuration/project-configuration';
+import {Labels} from '../../src/services/labels';
 
 
 describe('Labels', () => {
+
+    class Languages {
+
+        public get() { return ['de'] }
+    }
 
     it('should get label for category', () => {
 

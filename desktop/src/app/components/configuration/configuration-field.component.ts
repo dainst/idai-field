@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
-    ValuelistUtil } from 'idai-field-core';
+    ValuelistUtil, Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import { Labels } from '../services/labels';
 
 
 const locale: string = typeof window !== 'undefined'

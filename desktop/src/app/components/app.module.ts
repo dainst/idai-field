@@ -44,7 +44,7 @@ import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { Modals } from './services/modals';
 import { Languages } from './services/languages';
-import { Labels } from './services/labels';
+import { Labels } from 'idai-field-core';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';

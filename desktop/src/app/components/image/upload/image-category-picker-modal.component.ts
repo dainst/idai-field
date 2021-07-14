@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, ProjectConfiguration, Category } from 'idai-field-core';
-import {Labels} from '../../services/labels';
+import { Document, ProjectConfiguration, Category, Labels } from 'idai-field-core';
 
 
 @Component({

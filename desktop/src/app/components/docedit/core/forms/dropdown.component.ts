@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, FieldDefinition, Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
+import { Datastore, Labels, FieldDefinition, Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
-import {Labels} from '../../../services/labels';
 
 
 @Component({

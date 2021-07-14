@@ -1,7 +1,6 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
-import { Category, I18N, ProjectConfiguration, StringUtils } from 'idai-field-core';
-import { Labels } from '../services/labels';
+import { Category, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
 type Color = string;
 type Character = string;

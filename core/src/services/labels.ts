@@ -1,5 +1,6 @@
-import { Languages } from './languages';
-import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { Category } from '../model/category';
+import { I18N } from '../tools/i18n';
 
 
 /**
@@ -8,7 +9,7 @@ import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
 export class Labels {
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private languages: Languages) {}
+                private languages: { get(): string[] }) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {

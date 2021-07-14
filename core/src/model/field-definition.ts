@@ -1,4 +1,4 @@
-import { I18nString } from '../tools/i18n';
+import { I18N } from '../tools/i18n';
 import { ValuelistDefinition } from './valuelist-definition';
 
 
@@ -10,10 +10,10 @@ export interface FieldDefinition {
     name: string;
     inputType: FieldDefinition.InputType;
     inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
-    label?: I18nString;
-    description?: I18nString;
-    defaultLabel?: I18nString;
-    defaultDescription?: I18nString;
+    label?: I18N.String;
+    description?: I18N.String;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
     positionValues?: ValuelistDefinition;

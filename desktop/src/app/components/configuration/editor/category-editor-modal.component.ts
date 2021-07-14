@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { I18nString } from 'idai-field-core';
+import { I18N } from 'idai-field-core';
 import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
@@ -80,13 +80,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    protected getLabel(): I18nString {
+    protected getLabel(): I18N.String {
 
         return this.category.label;
     }
 
 
-    protected getDescription(): I18nString {
+    protected getDescription(): I18N.String {
 
         return this.category.description;
     }

@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, I18nString, Group } from 'idai-field-core';
+import { Category, FieldDefinition, I18N, Group } from 'idai-field-core';
 import { CustomLanguageConfigurations,
     LanguageConfigurationUtil } from '../../../../src/app/core/configuration/language-configuration-util';
 
@@ -8,27 +8,27 @@ import { CustomLanguageConfigurations,
  */
  describe('LanguageConfigurationUtil', () => {
 
-    const categoryLabel: I18nString = {
+    const categoryLabel: I18N.String = {
         de: 'Test-Kategorie',
         en: 'Test category'
     };
 
-    const categoryDescription: I18nString = {
+    const categoryDescription: I18N.String = {
         de: 'Beschreibungstext der Kategorie',
         en: 'Category description text'
     };
 
-    const fieldLabel: I18nString = {
+    const fieldLabel: I18N.String = {
         de: 'Test-Feld',
         en: 'Test field'
     };
 
-    const fieldDescription: I18nString = {
+    const fieldDescription: I18N.String = {
         de: 'Beschreibungstext des Feldes',
         en: 'Field description text'
     };
 
-    const groupLabel: I18nString = {
+    const groupLabel: I18N.String = {
         de: 'Test-Gruppe',
         en: 'Test group'
     };
@@ -82,12 +82,12 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Neues Label',
             en: 'New label'
         };
 
-        const editedDescription: I18nString = {
+        const editedDescription: I18N.String = {
             de: 'Neue Beschreibung',
             en: 'New description'
         };
@@ -125,12 +125,12 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Neues Label',
             en: 'New label'
         };
 
-        const editedDescription: I18nString = {
+        const editedDescription: I18N.String = {
             de: 'Neue Beschreibung',
             en: 'New description'
         };
@@ -158,7 +158,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Neues Label',
             en: 'New label'
         };
@@ -207,11 +207,11 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Altes Label'
         };
 
-        const editedDescription: I18nString = {};
+        const editedDescription: I18N.String = {};
 
         LanguageConfigurationUtil.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
@@ -250,11 +250,11 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Altes Label'
         };
 
-        const editedDescription: I18nString = {};
+        const editedDescription: I18N.String = {};
 
         LanguageConfigurationUtil.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
@@ -284,7 +284,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Altes Label'
         };
 
@@ -319,11 +319,11 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Test-Feld'
         };
 
-        const editedDescription: I18nString = {
+        const editedDescription: I18N.String = {
             de: 'Beschreibungstext des Feldes'
         };
 
@@ -352,11 +352,11 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Test-Kategorie'
         };
 
-        const editedDescription: I18nString = {
+        const editedDescription: I18N.String = {
             de: 'Beschreibungstext der Kategorie'
         };
 
@@ -381,7 +381,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        const editedLabel: I18nString = {
+        const editedLabel: I18N.String = {
             de: 'Test-Gruppe'
         };
 

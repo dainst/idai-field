@@ -1,9 +1,6 @@
 import { clone } from 'tsfun';
 import { Named } from './named';
 
-// TODO push down into I18N as I18N.String
-export type I18nString = { [languageCode: string]: string };
-
 
 /**
  * @author Thomas Kleinke
@@ -11,16 +8,14 @@ export type I18nString = { [languageCode: string]: string };
  */
 export namespace I18N {
 
-    export const LABEL = 'label';
-    export const DESCRIPTION = 'description';
+    export type String = { [languageCode: string]: string };
 
-
-    export interface Labeled { label?: I18nString }
+    export interface Labeled { label?: String }
 
     export interface LabeledValue extends Named, Labeled {};
 
 
-    export function mergeI18nStrings(original: I18nString|undefined, toAdd: I18nString): I18nString {
+    export function mergeI18nStrings(original: String|undefined, toAdd: String): String {
 
         return Object.keys(toAdd).reduce((result, language) => {
             result[language] = toAdd[language];
@@ -45,7 +40,7 @@ export namespace I18N {
         return language
             ? {
                 label: labeledValue.label[language],
-                description: labeledValue?.[DESCRIPTION]?.[language]
+                description: labeledValue?.['description']?.[language]
             }
             : { 
                 label: 
@@ -62,7 +57,7 @@ export namespace I18N {
      * undefined
      * ```
      */
-    export function getTranslation(labels: I18nString, languages: string[]): string|undefined {
+    export function getTranslation(labels: String, languages: string[]): string|undefined {
 
         if (!labels) return undefined;
 
@@ -71,7 +66,7 @@ export namespace I18N {
     }
 
 
-    function getLanguage(labels: I18nString, languages: string[]): string|undefined {
+    function getLanguage(labels: String, languages: string[]): string|undefined {
 
         return languages.find(languageCode => labels[languageCode] !== undefined);
     }

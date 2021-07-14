@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, Group, I18nString, InPlace, LanguageConfiguration } from 'idai-field-core';
+import { Category, FieldDefinition, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -10,7 +10,7 @@ export type CustomLanguageConfigurations = { [language: string]: LanguageConfigu
 export module LanguageConfigurationUtil {
 
     export function updateCustomLanguageConfigurations(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                       editedLabel: I18nString, editedDescription?: I18nString,
+                                                       editedLabel: I18N.String, editedDescription?: I18N.String,
                                                        category?: Category, field?: FieldDefinition,
                                                        group?: Group) {
 
@@ -36,7 +36,7 @@ export module LanguageConfigurationUtil {
 
 
     function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                      section: 'label'|'description', editedI18nString: I18nString,
+                                                      section: 'label'|'description', editedI18nString: I18N.String,
                                                       category: Category, field?: FieldDefinition, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {

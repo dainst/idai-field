@@ -1,6 +1,6 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
-import { ConfigurationDocument, I18nString, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
+import { ConfigurationDocument, I18N, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -17,10 +17,10 @@ export abstract class ConfigurationEditorModalComponent {
     public category: Category;
     public new: boolean = false;
 
-    public label: I18nString;
-    public description?: I18nString;
-    public clonedLabel: I18nString;
-    public clonedDescription?: I18nString;
+    public label: I18N.String;
+    public description?: I18N.String;
+    public clonedLabel: I18N.String;
+    public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
@@ -165,9 +165,9 @@ export abstract class ConfigurationEditorModalComponent {
     }
 
 
-    protected abstract getLabel(): I18nString;
+    protected abstract getLabel(): I18N.String;
 
-    protected abstract getDescription(): I18nString|undefined;
+    protected abstract getDescription(): I18N.String|undefined;
 
     protected abstract updateCustomLanguageConfigurations();
 }

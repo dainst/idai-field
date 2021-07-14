@@ -1,4 +1,4 @@
-import { I18nString } from '../tools/i18n';
+import { I18N } from '../tools/i18n';
 
 
 export type ValuelistId = string;
@@ -41,6 +41,6 @@ export module ValuelistDefinition {
 
 export interface ValueDefinition {
 
-    labels?: I18nString,
+    labels?: I18N.String,
     references?: { [referenceKey: string]: string },
 }

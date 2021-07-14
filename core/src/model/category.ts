@@ -1,5 +1,5 @@
 import { flatten, flow, map, to } from 'tsfun';
-import { I18N, I18nString } from '../tools/i18n';
+import { I18N } from '../tools/i18n';
 import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
 import { Group } from './group';
@@ -47,10 +47,10 @@ export interface Category extends Named {
     
     groups: Array<Group>;
     
-    label: I18nString;
-    description: I18nString;
-    defaultLabel?: I18nString;
-    defaultDescription?: I18nString;
+    label: I18N.String;
+    description: I18N.String;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
 
     color?: string;
     defaultColor?: string;

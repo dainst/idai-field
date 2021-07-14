@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18nString } from 'idai-field-core';
+import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../services/menus';
@@ -146,13 +146,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    protected getLabel(): I18nString {
+    protected getLabel(): I18N.String {
 
         return this.field.label;
     }
 
 
-    protected getDescription(): I18nString {
+    protected getDescription(): I18N.String {
 
         return this.field.description;
     }

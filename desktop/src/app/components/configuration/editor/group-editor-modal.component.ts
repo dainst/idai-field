@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
-import { Group, GroupDefinition, I18nString } from 'idai-field-core';
+import { Group, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -63,13 +63,13 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    protected getLabel(): I18nString {
+    protected getLabel(): I18N.String {
 
         return this.group.label;
     }
 
 
-    protected getDescription(): I18nString {
+    protected getDescription(): I18N.String {
 
         return undefined;
     }

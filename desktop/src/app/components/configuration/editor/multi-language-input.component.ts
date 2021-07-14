@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { subtract } from 'tsfun';
-import { I18nString } from 'idai-field-core';
+import { I18N } from 'idai-field-core';
 import { Language, LanguagesUtil } from '../../../core/util/languages-util';
 
 
@@ -12,9 +12,9 @@ import { Language, LanguagesUtil } from '../../../core/util/languages-util';
 * @author Thomas Kleinke
  */
 export class MultiLanguageInputComponent implements OnChanges {
-    
-    @Input() translations: I18nString;
-    @Input() defaultTranslations: I18nString;
+
+    @Input() translations: I18N.String;
+    @Input() defaultTranslations: I18N.String;
     @Input() disabled: boolean = false;
 
     public languages: { [languageCode: string]: Language };
@@ -33,7 +33,7 @@ export class MultiLanguageInputComponent implements OnChanges {
     ngOnChanges() {
 
         this.languages = LanguagesUtil.getAvailableLanguages();
-        this.reset();   
+        this.reset();
     }
 
 

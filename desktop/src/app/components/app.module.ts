@@ -102,8 +102,8 @@ registerLocaleData(localeIt, 'it');
         Languages,
         {
             provide: Labels,
-            useFactory: function(projectConfiguration: ProjectConfiguration, languages: Languages) { return new Labels(projectConfiguration, languages); },
-            deps: [ProjectConfiguration, Languages]
+            useFactory: function(languages: Languages) { return new Labels(languages); },
+            deps: [Languages]
         },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },

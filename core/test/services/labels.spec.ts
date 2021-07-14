@@ -21,7 +21,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(undefined, new Languages());
+        const labels = new Labels(new Languages());
 
         expect(labels.getFieldDefinitionLabel(category, 'aField')).toBe('Ein Feld');
     });
@@ -38,7 +38,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(undefined, new Languages());
+        const labels = new Labels(new Languages());
         expect(labels.getFieldDefinitionLabel(category,'aField')).toBe('aField');
     });
 });

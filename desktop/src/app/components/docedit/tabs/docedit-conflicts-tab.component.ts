@@ -242,7 +242,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         for (let relationName of differingRelationsNames) {
             differingFields.push({
                 name: relationName,
-                label: this.labels.getRelationDefinitionLabel(relationName),
+                label: this.labels.getFieldDefinitionLabel(projectConfiguration.getCategory(document.resource.category), relationName),
                 type: 'relation',
                 rightSideWinning: false
             });

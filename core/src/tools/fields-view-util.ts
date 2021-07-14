@@ -1,6 +1,5 @@
 import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
     L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
-import { I18N } from './i18n';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
@@ -14,7 +13,7 @@ import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
 import { ValuelistDefinition } from '../model/valuelist-definition';
 import { Named } from './named';
-import { ValuelistUtil } from './valuelist-util';
+import { Labels } from '../services';
 
 
 type FieldContent = any;
@@ -56,13 +55,13 @@ export module FieldsViewUtil {
     export function getValue(fieldContent: any, 
                              fieldName: string, 
                              projectConfiguration: ProjectConfiguration,
-                             languages: string[],
+                             labels: Labels,
                              valuelist?: ValuelistDefinition): any {
 
         return fieldName === Resource.CATEGORY
-            ? I18N.getLabel(projectConfiguration.getCategory(fieldContent), languages)
+            ? labels.get(projectConfiguration.getCategory(fieldContent))
             : valuelist
-                ? ValuelistUtil.getValueLabel(valuelist, fieldContent, languages)
+                ? labels.getValueLabel(valuelist, fieldContent)
                 : isString(fieldContent)
                     ? fieldContent
                         .replace(/^\s+|\s+$/g, '')
@@ -95,22 +94,24 @@ export module FieldsViewUtil {
     export async function getGroupsForResource(resource: Resource,
                                                projectConfiguration: ProjectConfiguration,
                                                datastore: Datastore,
+                                               labels: Labels,
                                                languages?: string[]): Promise<Array<FieldsViewGroup>> {
 
         const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
 
         return await aFlow(
             FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
-            putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, languages),
+            putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
             filter(shouldBeDisplayed)
         );
     }
 
 
-    export function getObjectLabel(object: any, field: FieldsViewField,
+    export function getObjectLabel(object: any, 
+                                   field: FieldsViewField,
                                    getTranslation: (key: string) => string,
                                    formatDecimal: (value: number) => string,
-                                   languages: string[]): string {
+                                   labels: Labels): string {
 
         if (object.label) {
             return object.label;
@@ -124,7 +125,7 @@ export module FieldsViewUtil {
                 object,
                 formatDecimal,
                 getTranslation,
-                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition, languages)
+                labels.getValueLabel(field.positionValues, object.measurementPosition)
             );
         } else if (object.quotation) {
             return Literature.generateLabel(
@@ -134,7 +135,7 @@ export module FieldsViewUtil {
             return OptionalRange.generateLabel(
                 object,
                 getTranslation,
-                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value, languages)
+                (value: string) => labels.getValueLabel(field.valuelist, value)
             );
         } else {
             return object;
@@ -145,7 +146,7 @@ export module FieldsViewUtil {
 
 function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
                                            relationTargets: Map<Array<Document>>,
-                                           languages?: string[]): Mapping {
+                                           labels: Labels): Mapping {
 
     const fieldContent: Mapping<FieldDefinition, FieldContent>
         = compose(to(Named.NAME), getFieldContent(resource));
@@ -156,7 +157,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 map(pairWith(fieldContent)),
                 filter(on(R, isDefined)),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
-                map(makeField(projectConfiguration, relationTargets, languages)),
+                map(makeField(projectConfiguration, relationTargets, labels)),
                 flatten() as any /* TODO review typing*/
             )
         )
@@ -166,27 +167,27 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
 
 function makeField(projectConfiguration: ProjectConfiguration, 
                    relationTargets: Map<Array<Document>>,
-                   languages: string[]) {
+                   labels: Labels) {
 
     return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return (field.inputType === FieldDefinition.InputType.RELATION
                 || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
             ? {
-                label: I18N.getLabel(field, languages),
+                label: labels.get(field),
                 type: 'relation',
                 targets: relationTargets[field.name]
             }
             : {
-                label: I18N.getLabel(field, languages),
+                label: labels.get(field),
                 value: isArray(fieldContent)
                     ? fieldContent.map((fieldContent: any) =>
                         FieldsViewUtil.getValue(
-                            fieldContent, field.name, projectConfiguration, languages, field.valuelist
+                            fieldContent, field.name, projectConfiguration, labels, field.valuelist
                         )
                     )
                     : FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, languages, field.valuelist
+                        fieldContent, field.name, projectConfiguration, labels, field.valuelist
                     ),
                 type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
                 valuelist: field.valuelist,

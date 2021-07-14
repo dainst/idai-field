@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Dimension, Labels, FieldDefinition, Resource, ValuelistUtil } from 'idai-field-core';
+import { Dimension, Labels, FieldDefinition, Resource } from 'idai-field-core';
 import { clone } from 'tsfun';
 import { UtilTranslations } from '../../../../core/util/util-translations';
 
@@ -66,7 +66,7 @@ export class DimensionComponent {
 
     public getPositionValueLabel(valueId: string): string {
 
-        return ValuelistUtil.getValueLabel(this.field['positionValues'], valueId, this.labels.getLanguages());
+        return this.labels.getValueLabel(this.field['positionValues'], valueId);
     }
 
 

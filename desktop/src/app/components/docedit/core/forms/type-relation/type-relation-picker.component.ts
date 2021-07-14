@@ -142,7 +142,7 @@ export class TypeRelationPickerComponent {
 
         const usedCriteria = await this.getUsedCatalogCriteria();
 
-        this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory, this.labels.getLanguages())
+        this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory, this.labels)
             .filter(on(Named.NAME, includedIn(usedCriteria)));
 
         this.fetchCatalogs();
@@ -239,7 +239,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private static getConfiguredCriteria(typeCatalogCategory: Category, languages: string[]): Array<Criterion> {
+    private static getConfiguredCriteria(typeCatalogCategory: Category, labels: Labels): Array<Criterion> {
 
         const valuelistDefinition =
             typeCatalogCategory
@@ -249,8 +249,8 @@ export class TypeRelationPickerComponent {
                 .find(Named.onName(is(CRITERION)))
                 .valuelist;
 
-        return ValuelistUtil.getOrderedValues(valuelistDefinition, languages)
-            .map(pairWith(name => ValuelistUtil.getValueLabel(valuelistDefinition, name, languages)))
+        return labels.getOrderedValues(valuelistDefinition)
+            .map(pairWith(name => labels.getValueLabel(valuelistDefinition, name)))
             .map(([name, label]) => ({ name, label }));
     }
     // TODO use curry or provide curried variant of getValueLabel

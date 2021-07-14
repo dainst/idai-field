@@ -49,7 +49,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
         revision.resource,
         field,
         (key: string) => this.utilTranslations.getTranslation(key),
-        (value: string) => this.decimalPipe.transform(value)
+        (value: string) => this.decimalPipe.transform(value),
+        this.labels
     );
 
     public getLabel = (field: any) => this.labels.get(field);

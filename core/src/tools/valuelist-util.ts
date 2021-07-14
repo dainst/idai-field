@@ -4,7 +4,6 @@ import { FieldDefinition } from '../model/field-definition';
 import { Resource } from '../model/resource';
 import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
 import { I18N } from './i18n';
-import { SortUtil } from './sort-util';
 
 
 /**
@@ -29,10 +28,9 @@ export module ValuelistUtil {
     }
 
 
-    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string, languages: string[]): string {
+    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
 
-        const label: string|undefined = I18N.getTranslation(valuelist.values[valueId]?.labels, languages);
-        return label ?? valueId;
+        return valuelist[valueId]?.labels;
     }
 
 
@@ -66,31 +64,6 @@ export module ValuelistUtil {
             }
         : { values: {}, id: id };
     }
-
-
-    export function getOrderedValues(valuelist: ValuelistDefinition, languages: string[]): string[] {
-
-        return Object.keys(valuelist.values).sort(
-            valuelist.order
-                ? sortByCustomOrder(valuelist.order)
-                : sortAlphanumerically(valuelist, languages)
-        );
-    }
-
-
-    const sortByCustomOrder = (order: string[]) => (valueA: string, valueB: string): number => {
-
-        return order.indexOf(valueA) - order.indexOf(valueB);
-    };
-
-
-    const sortAlphanumerically = (valuelist: ValuelistDefinition, languages: string[]) => (valueA: string, valueB: string): number => {
-
-        return SortUtil.alnumCompare(
-            getValueLabel(valuelist, valueA, languages).toLowerCase(),
-            getValueLabel(valuelist, valueB, languages).toLowerCase()
-        );
-    };
 
 
     function getValuesOfParentField(valuelist: ValuelistDefinition, fieldName: string,

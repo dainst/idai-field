@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
-    ValuelistUtil, Labels } from 'idai-field-core';
+    Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
@@ -39,7 +39,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private i18n: I18n, private labels: Labels) {}
+    constructor(private labels: Labels) {}
 
 
     ngOnChanges() {
@@ -53,10 +53,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
-    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist, this.labels.getLanguages());
+    public getValues = (valuelist: ValuelistDefinition) => this.labels.getOrderedValues(valuelist);
 
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
-        ValuelistUtil.getValueLabel(valuelist, valueId, this.labels.getLanguages());
+        this.labels.getValueLabel(valuelist, valueId);
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 

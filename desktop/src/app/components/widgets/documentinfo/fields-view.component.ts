@@ -44,7 +44,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (!this.resource) return;
 
-        this.groups = await FieldsViewUtil.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore);
+        this.groups = await FieldsViewUtil.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore, this.labels);
     }
 
 
@@ -77,7 +77,7 @@ export class FieldsViewComponent implements OnChanges {
             field,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value),
-            this.labels.getLanguages()
+            this.labels
         );
     }
 }

@@ -1,4 +1,6 @@
 import { Category } from '../model/category';
+import { ValuelistDefinition } from '../model/valuelist-definition';
+import { SortUtil, ValuelistUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 
 
@@ -17,6 +19,15 @@ export class Labels {
         return I18N.getLabel(labeledValue, this.languages.get());
     }
 
+    
+    public getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
+
+        const label = ValuelistUtil.getValueLabel(valuelist, valueId);
+
+        const translation: string|undefined = I18N.getTranslation(label, this.languages.get());
+        return translation ?? valueId;
+    }
+
 
     public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
@@ -33,9 +44,27 @@ export class Labels {
     }
 
 
-    // TODO remove
-    public getLanguages() {
+    public getOrderedValues(valuelist: ValuelistDefinition): string[] {
 
-        return this.languages.get();
+        return Object.keys(valuelist.values).sort(
+            valuelist.order
+                ? this.sortByCustomOrder(valuelist.order)
+                : this.sortAlphanumerically(valuelist)
+        );
     }
+
+
+    private sortByCustomOrder = (order: string[]) => (valueA: string, valueB: string): number => {
+
+        return order.indexOf(valueA) - order.indexOf(valueB);
+    };
+
+
+    private sortAlphanumerically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
+
+        return SortUtil.alnumCompare(
+            this.getValueLabel(valuelist, valueA).toLowerCase(),
+            this.getValueLabel(valuelist, valueB).toLowerCase()
+        );
+    };
 }

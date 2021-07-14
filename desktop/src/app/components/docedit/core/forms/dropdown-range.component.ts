@@ -27,9 +27,9 @@ export class DropdownRangeComponent {
                 private labels: Labels) {}
 
 
-    public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist, this.labels.getLanguages()) : [];
+    public getValues = () => this.valuelist ? this.labels.getOrderedValues(this.valuelist) : [];
 
-    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId, this.labels.getLanguages());
+    public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
 
     public activateEnd = () => this.endActivated = true;
 

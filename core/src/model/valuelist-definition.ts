@@ -41,6 +41,6 @@ export module ValuelistDefinition {
 
 export interface ValueDefinition {
 
-    labels?: I18N.String,
+    labels?: I18N.String, // TODO this should be called label, for consistency, for example with Category
     references?: { [referenceKey: string]: string },
 }

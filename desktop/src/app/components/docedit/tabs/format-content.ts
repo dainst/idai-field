@@ -1,4 +1,4 @@
-import { Dating, Dimension, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
+import { Dating, Dimension, Labels, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
 import { flow, isArray, isObject, isString } from 'tsfun';
 
 const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
@@ -11,19 +11,21 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource, field: any,
-        getTranslation: (key: string) => string,
-        transform: (value: any) => string|null): InnerHTML {
+export function formatContent(resource: Resource,
+                              field: any,
+                              getTranslation: (key: string) => string,
+                              transform: (value: any) => string|null,
+                              labels: Labels): InnerHTML {
 
     const fieldContent = resource[field.name];
 
     return isArray(fieldContent)
         ? flow(fieldContent,
-            convertArray(field, getTranslation, transform),
+            convertArray(field, getTranslation, transform, labels),
             formatArray)
         : isObject(fieldContent)
         ? flow(fieldContent,
-            convertObject(field, getTranslation),
+            convertObject(field, getTranslation, labels),
             formatObject)
         : formatSingleValue(fieldContent, field, getTranslation);
 }
@@ -57,14 +59,14 @@ const formatSingleValue = (fieldContent: any, field: any, getTranslation: (key: 
 };
 
 
-const convertObject = (field: any, getTranslation: (key: string) => string) =>
+const convertObject = (field: any, getTranslation: (key: string) => string, labels: Labels) =>
         (fieldContent: any) => {
 
     if (field.inputType === 'dropdownRange' && OptionalRange.buildIsOptionalRange(isString)(fieldContent)) {
         return OptionalRange.generateLabel(
             fieldContent,
             getTranslation,
-            (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value, ELECTRON_CONFIG_LANGUAGES)
+            (value: string) => labels.getValueLabel(field.valuelist, value)
         );
     } else {
         return JSON.stringify(fieldContent);
@@ -72,20 +74,20 @@ const convertObject = (field: any, getTranslation: (key: string) => string) =>
 };
 
 
-const convertArray = (field: any, getTranslation: (key: string) => string, transform: (value: any) => string|null) =>
+const convertArray = (field: any, getTranslation: (key: string) => string, transform: (value: any) => string|null, labels: Labels) =>
         (fieldContent: Array<any>): Array<string> => {
 
     return fieldContent.map(element => {
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
-                ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition, ELECTRON_CONFIG_LANGUAGES));
+                labels.getValueLabel(field.positionValues, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation);
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, getTranslation)
         } else if (isString(element)) {
-            return ValuelistUtil.getValueLabel(field.valuelist, element, ELECTRON_CONFIG_LANGUAGES);
+            return labels.getValueLabel(field.valuelist, element);
         } else {
             return JSON.stringify(element);
         }

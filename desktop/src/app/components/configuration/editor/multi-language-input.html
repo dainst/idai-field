@@ -28,9 +28,8 @@
         <option *ngFor="let languageCode of unusedLanguages"
                 [value]="languageCode">{{getLanguageLabel(languageCode)}}</option>
     </select>
-    <input [(ngModel)]="newTranslationText"
-           type="text" class="form-control language-input" [disabled]="disabled">
-    <button class="btn btn-success" [disabled]="disabled || !isNewTranslationValid()" type="button"
+    <button class="btn btn-success" type="button"
+            [disabled]="disabled || !newTranslationLanguage" 
             (click)="addNewTranslation()">
         <span class="mdi mdi-plus"></span>
     </button>

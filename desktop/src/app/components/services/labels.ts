@@ -1,30 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Languages } from './languages';
 import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
 
-const CONFIGURED_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
-    ? window.require('@electron/remote').getGlobal('config').languages
-    : ['de'];
 
-
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */
 export class Labels {
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private languages: Languages) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
 
-        return I18N.getLabel(labeledValue, CONFIGURED_LANGUAGES);
+        return I18N.getLabel(labeledValue, this.languages.get());
     }
 
 
     public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
 
-        return I18N.getLabelAndDescription(labeledValue, CONFIGURED_LANGUAGES);
+        return I18N.getLabelAndDescription(labeledValue, this.languages.get());
     }
 
 
@@ -45,18 +41,19 @@ export class Labels {
             throw 'No category definition found for category \'' + categoryName + '\'';
         }
 
-        return Category.getLabel(fieldName, fieldDefinitions, CONFIGURED_LANGUAGES);
+        return Category.getLabel(fieldName, fieldDefinitions, this.languages.get());
     }
 
 
     public getRelationDefinitionLabel(relationName: string): string {
 
-        return Category.getLabel(relationName, this.projectConfiguration.getAllRelationDefinitions(), CONFIGURED_LANGUAGES);
+        return Category.getLabel(relationName, this.projectConfiguration.getAllRelationDefinitions(), this.languages.get());
     }
 
 
+    // TODO remove
     public getLanguages() {
 
-        return CONFIGURED_LANGUAGES;
+        return this.languages.get();
     }
 }

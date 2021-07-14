@@ -43,6 +43,7 @@ import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { Modals } from './services/modals';
+import { Languages } from './services/languages';
 import { Labels } from './services/labels';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModalComponent } from './navbar/projects-modal.component';
@@ -98,7 +99,12 @@ registerLocaleData(localeIt, 'it');
     ],
     providers: [
         Modals,
-        Labels,
+        Languages,
+        {
+            provide: Labels,
+            useFactory: function(projectConfiguration: ProjectConfiguration, languages: Languages) { return new Labels(projectConfiguration, languages); },
+            deps: [ProjectConfiguration, Languages]
+        },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },

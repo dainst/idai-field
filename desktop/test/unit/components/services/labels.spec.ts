@@ -1,5 +1,6 @@
 import { ProjectConfiguration, Tree } from 'idai-field-core';
 import {Labels} from '../../../../src/app/components/services/labels';
+import {Languages} from '../../../../src/app/components/services/languages';
 
 
 describe('Labels', () => {
@@ -18,7 +19,7 @@ describe('Labels', () => {
         } as any;
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[category, []]]), []]);
-        const labels = new Labels(configuration);
+        const labels = new Labels(configuration, new Languages());
 
         expect(labels.getFieldDefinitionLabel('T', 'aField')).toBe('Ein Feld');
     });
@@ -37,7 +38,7 @@ describe('Labels', () => {
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[ category, []]]), []]);
 
-        const labels = new Labels(configuration);
+        const labels = new Labels(configuration, new Languages());
         expect(labels.getFieldDefinitionLabel('T','aField')).toBe('aField');
     });
 
@@ -45,7 +46,7 @@ describe('Labels', () => {
     it('should throw an error if field is not defined', () => {
 
         const configuration: ProjectConfiguration = new ProjectConfiguration([[], []]);
-        const labels = new Labels(configuration);
+        const labels = new Labels(configuration, new Languages());
 
         expect(() => {
             labels.getFieldDefinitionLabel('UndefinedCategory', 'someField');

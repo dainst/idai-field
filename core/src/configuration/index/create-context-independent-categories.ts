@@ -1,6 +1,6 @@
-import { Map, clone, values, remove, isUndefined, on, is, filter, not, keysValues, curry, flow } from 'tsfun';
+import { Map, clone, remove, isUndefined, on, is, filter, not, keysValues, curry, flow } from 'tsfun';
 import { Category, FieldDefinition, RelationDefinition } from '../../model';
-import {Named} from '../../tools';
+import { Named } from '../../tools';
 import { Tree } from '../../tools/forest';
 import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
 import { addSourceField } from '../boot/add-source-field';

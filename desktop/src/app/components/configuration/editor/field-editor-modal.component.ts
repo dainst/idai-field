@@ -46,6 +46,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public getClonedFieldDefinition = () => this.getClonedCategoryDefinition().fields[this.field.name];
+
+
     public initialize() {
 
         super.initialize();
@@ -59,7 +62,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             );
             groups.find(group => group.name === this.groupName).fields.push(this.field.name);
             this.getClonedCategoryDefinition().groups = groups;
-        } else if (!this.getClonedCategoryDefinition().fields[this.field.name]) {
+        } else if (!this.getClonedFieldDefinition()) {
             this.getClonedCategoryDefinition().fields[this.field.name] = {};
         }
 
@@ -70,7 +73,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        if (isEmpty(this.getClonedCategoryDefinition().fields[this.field.name])) {
+        if (isEmpty(this.getClonedFieldDefinition())) {
             delete this.getClonedCategoryDefinition().fields[this.field.name];
         }
 
@@ -80,14 +83,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getInputType() {
 
-        return this.getClonedCategoryDefinition().fields[this.field.name].inputType
+        return this.getClonedFieldDefinition().inputType
             ?? this.field.inputType;
     }
 
 
     public setInputType(newInputType: string) {
 
-        this.getClonedCategoryDefinition().fields[this.field.name].inputType = newInputType;
+        this.getClonedFieldDefinition().inputType = newInputType;
     }
 
 
@@ -110,8 +113,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isChanged(): boolean {
 
         return this.new
-            || this.getCustomCategoryDefinition().fields[this.field.name]?.inputType !==
-                this.getClonedCategoryDefinition().fields[this.field.name]?.inputType
+            || this.getClonedFieldDefinition()?.inputType !==
+               this.getClonedFieldDefinition()?.inputType
             || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);

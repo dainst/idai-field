@@ -394,7 +394,7 @@ export class ConfigurationComponent implements OnInit {
                     this.settingsProvider.getSettings().username
                 ) as ConfigurationDocument;
             } catch (errWithParams) {
-                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels.getLanguages()));
+                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));
                 return;
             }
             this.projectConfiguration.update(newProjectConfiguration);

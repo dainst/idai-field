@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
 
-const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
+const CONFIGURED_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
     ? window.require('@electron/remote').getGlobal('config').languages
     : ['de'];
 
@@ -17,14 +17,14 @@ export class Labels {
 
     public get(labeledValue: I18N.LabeledValue): string {
 
-        return I18N.getLabel(labeledValue, ELECTRON_CONFIG_LANGUAGES);
+        return I18N.getLabel(labeledValue, CONFIGURED_LANGUAGES);
     }
 
 
     public getLabelAndDescription(labeledValue: I18N.LabeledValue)
             : { label: string, description?: string } {
 
-        return I18N.getLabelAndDescription(labeledValue, ELECTRON_CONFIG_LANGUAGES);
+        return I18N.getLabelAndDescription(labeledValue, CONFIGURED_LANGUAGES);
     }
 
 
@@ -45,18 +45,18 @@ export class Labels {
             throw 'No category definition found for category \'' + categoryName + '\'';
         }
 
-        return Category.getLabel(fieldName, fieldDefinitions, ELECTRON_CONFIG_LANGUAGES);
+        return Category.getLabel(fieldName, fieldDefinitions, CONFIGURED_LANGUAGES);
     }
 
 
     public getRelationDefinitionLabel(relationName: string): string {
 
-        return Category.getLabel(relationName, this.projectConfiguration.getAllRelationDefinitions(), ELECTRON_CONFIG_LANGUAGES);
+        return Category.getLabel(relationName, this.projectConfiguration.getAllRelationDefinitions(), CONFIGURED_LANGUAGES);
     }
 
 
     public getLanguages() {
 
-        return ELECTRON_CONFIG_LANGUAGES;
+        return CONFIGURED_LANGUAGES;
     }
 }

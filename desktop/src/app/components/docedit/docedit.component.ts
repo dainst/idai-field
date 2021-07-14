@@ -208,7 +208,7 @@ export class DoceditComponent {
         }
 
         this.messages.add((errorWithParams.length > 0
-            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels.getLanguages())
+            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
             : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
     }
 

@@ -222,7 +222,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
-                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName, this.labels.getLanguages());
+                label = this.labels.getFieldDefinitionLabel(document.resource.category, fieldName);
             }
 
             const fd = projectConfiguration
@@ -243,7 +243,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         for (let relationName of differingRelationsNames) {
             differingFields.push({
                 name: relationName,
-                label: projectConfiguration.getRelationDefinitionLabel(relationName, this.labels.getLanguages()),
+                label: this.labels.getRelationDefinitionLabel(relationName),
                 type: 'relation',
                 rightSideWinning: false
             });

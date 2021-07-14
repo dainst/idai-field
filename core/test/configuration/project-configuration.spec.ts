@@ -37,52 +37,6 @@ describe('ProjectConfiguration', () => {
     };
 
 
-    it('should get label for category', () => {
-
-        const category = {
-            name: 'T',
-            groups: [{
-                name: 'A',
-                fields: [{
-                    name: 'aField',
-                    label: { de: 'Ein Feld' }
-                }]
-            }]
-        } as any;
-
-        const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[category, []]]), []]);
-
-        expect(configuration.getFieldDefinitionLabel('T', 'aField', ['de'])).toBe('Ein Feld');
-    });
-
-
-    it('should get default label if not defined', () => {
-
-        const category = {
-            name: 'T',
-            groups: [{
-                fields: [{
-                    name: 'aField'
-                }]
-            }]
-        } as any;
-
-        const configuration: ProjectConfiguration = new ProjectConfiguration([Tree.buildForest([[ category, []]]), []]);
-
-        expect(configuration.getFieldDefinitionLabel('T','aField', ['de'])).toBe('aField');
-    });
-
-
-    it('should throw an error if field is not defined', () => {
-
-        const configuration: ProjectConfiguration = new ProjectConfiguration([[], []]);
-
-        expect(() => {
-            configuration.getFieldDefinitionLabel('UndefinedCategory', 'someField', ['de']);
-        }).toThrow();
-    });
-
-
     it('should let categories inherit fields from parent categories', () => {
 
         const configuration: ProjectConfiguration

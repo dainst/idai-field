@@ -40,7 +40,9 @@
     },
     "Sample:default": {
       "color": "#cef500",
-      "hidden": ["weight"],
+      "hidden": [
+        "weight"
+      ],
       "fields": {
         "descriptionSample": {
           "inputType": "text"
@@ -117,7 +119,9 @@
       }
     },
     "Photo:default": {
-      "commons": ["date"],
+      "commons": [
+        "date"
+      ],
       "fields": {
         "imageSubject": {
           "inputType": "radio"
@@ -132,7 +136,9 @@
       }
     },
     "Drawing:default": {
-      "commons": ["date"],
+      "commons": [
+        "date"
+      ],
       "fields": {
         "imageSubject": {
           "inputType": "radio"
@@ -146,7 +152,7 @@
       },
       "valuelists": {
         "imageSubject": "Photo-imageSubject-kalapodi",
-        "drawingType":  "Drawing-drawingType-kalapodi"
+        "drawingType": "Drawing-drawingType-kalapodi"
       }
     },
     "Metal:default": {
@@ -381,5 +387,49 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "Floor",
+    "Planum",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "PlasterFragment",
+    "Mollusk",
+    "BrickCluster",
+    "PotteryCluster",
+    "Inscription",
+    "Sample",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

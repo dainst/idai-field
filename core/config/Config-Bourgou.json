@@ -52,24 +52,36 @@
       "fields": {},
       "hidden": []
     },
-  "Find:default": {
-      "hidden": ["bibliography", "catalogueNumber", "conditionPercent", "hasRestoration", "storageInventoryNumber",
-      "condition", "conditionAmount", "weight"],
+    "Find:default": {
+      "hidden": [
+        "bibliography",
+        "catalogueNumber",
+        "conditionPercent",
+        "hasRestoration",
+        "storageInventoryNumber",
+        "condition",
+        "conditionAmount",
+        "weight"
+      ],
       "commons": [
         "dating"
       ],
       "fields": {
-        "amountDescription":{
+        "amountDescription": {
           "inputType": "radio"
         },
-      "sampleStatus": {"inputType": "radio"},
-      "sampleComm": {"inputType": "input"} 
+        "sampleStatus": {
+          "inputType": "radio"
+        },
+        "sampleComm": {
+          "inputType": "input"
+        }
       },
       "valuelists": {
         "period": "periods-bourgou",
         "amountDescription": "Find-amountDescription-bourgou",
-      "sampleStatus": "Find-samplePl-bourgou",
-      "storagePlace": "Find-Store-bourgou"
+        "sampleStatus": "Find-samplePl-bourgou",
+        "storagePlace": "Find-Store-bourgou"
       }
     },
     "Feature:default": {
@@ -170,10 +182,45 @@
     },
     "Pottery:default": {
       "commons": [],
-      "hidden": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal",
-      "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsPercent", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "decorationDescription",
-    "breakStructure", "residueAnalysis", "purpose", "clayColorInside", "clayHardness", "coatInside", "coatOutside", "formDescription", "manufacturing", "manufacturingMethod", "objectType", "temper",
-    "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific", "comment", "clayColorOutside", "sample"],
+      "hidden": [
+        "amountSherdsWall",
+        "amountSherdsRim",
+        "amountSherdsBase",
+        "amountSherdsHandles",
+        "amountSherdsLip",
+        "amountSherdsPedestal",
+        "amountSherdsRimBase",
+        "amountSherdsRimShoulder",
+        "amountSherdsShoulder",
+        "amountSherdsOther",
+        "amountSherdsPercent",
+        "amountSherdsLid",
+        "clayColorBreakMunsell",
+        "clayColorInsideMunsell",
+        "clayColorOutsideMunsell",
+        "hasCoat",
+        "decorationDescription",
+        "breakStructure",
+        "residueAnalysis",
+        "purpose",
+        "clayColorInside",
+        "clayHardness",
+        "coatInside",
+        "coatOutside",
+        "formDescription",
+        "manufacturing",
+        "manufacturingMethod",
+        "objectType",
+        "temper",
+        "temperAmount",
+        "temperParticles",
+        "temperTypeClay",
+        "vesselForm",
+        "vesselFormSpecific",
+        "comment",
+        "clayColorOutside",
+        "sample"
+      ],
       "fields": {
         "vesselpart": {
           "inputType": "checkboxes"
@@ -190,16 +237,16 @@
         "specificType": {
           "inputType": "radio"
         },
-      "decorationTechnique": {
-        "inputType": "checkboxes"
-        },       
+        "decorationTechnique": {
+          "inputType": "checkboxes"
+        },
         "rimTreatmentType": {
-        "inputType": "checkboxes"
-        },    
+          "inputType": "checkboxes"
+        },
         "typeNumber": {
           "inputType": "dropdown"
-      }
-    },    
+        }
+      },
       "valuelists": {
         "vesselpart": "Pottery-vesselpart-bourgou",
         "materialType": "Pottery-materialType-bourgou",
@@ -209,12 +256,12 @@
         "coatColorOutside": "Pottery-coatColor-bourgou",
         "coatInsideType": "Pottery-coatTpe-bourgou",
         "coatOutsideType": "Pottery-coatTpe-bourgou",
-      "decorationTechnique": "Brick-decorationTechnique-bourgou",
-      "clayColorOutside": "Pottery-coatColor-bourgou",
-      "clayColorBreak": "Pottery-coatColor-bourgou",
-      "rimTreatmentType": "Pottery-rimTreatment-bourgou",
-      "typeNumber": "Pottery-typeNumber-bourgou",	  
-      "provenance": "provenance-bourgou"
+        "decorationTechnique": "Brick-decorationTechnique-bourgou",
+        "clayColorOutside": "Pottery-coatColor-bourgou",
+        "clayColorBreak": "Pottery-coatColor-bourgou",
+        "rimTreatmentType": "Pottery-rimTreatment-bourgou",
+        "typeNumber": "Pottery-typeNumber-bourgou",
+        "provenance": "provenance-bourgou"
       }
     },
     "Grave:default": {
@@ -412,5 +459,48 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "Floor",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "PlasterFragment",
+    "Mollusk",
+    "Inscription",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Wall_surface",
+    "Other",
+    "Drilling",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

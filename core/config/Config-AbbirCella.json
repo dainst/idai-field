@@ -37,11 +37,11 @@
     "Building:default": {
       "hidden": [],
       "fields": {},
-      "valuelists":{
+      "valuelists": {
         "buildingCategory": "Building-buildingCategory-Abbircella",
         "condition": "Architecture-condition-Abbircella",
         "conditionAmount": "Architecture-conditionAmount-Abbircella",
-        "period":"periods-Abbircella-1"
+        "period": "periods-Abbircella-1"
       }
     },
     "BuildingPart:default": {
@@ -53,26 +53,26 @@
       "commons": [
         "dating"
       ],
-    "valuelists": {
-      "period": "periods-Abbircella-1",
-      "drawn": "Feature-drawn-Abbircella",
-      "photographed": "Feature-drawn-Abbircella",
-      "conditionAmount": "Architecture-conditionAmount-Abbircella",
-      "storagePlace": "Find-storagePlace-Abbircella",
-      "condition":"Architecture-condition-Abbircella"
-    },
+      "valuelists": {
+        "period": "periods-Abbircella-1",
+        "drawn": "Feature-drawn-Abbircella",
+        "photographed": "Feature-drawn-Abbircella",
+        "conditionAmount": "Architecture-conditionAmount-Abbircella",
+        "storagePlace": "Find-storagePlace-Abbircella",
+        "condition": "Architecture-condition-Abbircella"
+      },
       "fields": {
         "drawn": {
           "inputType": "radio"
         },
         "photographed": {
           "inputType": "radio"
+        }
       }
-    }
     },
     "Feature:default": {
       "hidden": [],
-      "commons":[],
+      "commons": [],
       "valuelists": {
         "period": "periods-Abbircella-1",
         "stratigraphicReliability": "Feature-stratigraphicReliability-Abbircella",
@@ -140,10 +140,10 @@
     "Inscription:default": {
       "hidden": [],
       "fields": {},
-      "valuelists":{
-        "condition":"Architecture-condition-Abbircella",
-        "conditionAmount":"Architecture-conditionAmount-Abbircella",
-        "period":"periods-Abbircella-1",
+      "valuelists": {
+        "condition": "Architecture-condition-Abbircella",
+        "conditionAmount": "Architecture-conditionAmount-Abbircella",
+        "period": "periods-Abbircella-1",
         "objectType": "Inscription-objectType-Abbircella"
       }
     },
@@ -172,10 +172,10 @@
       "commons": [],
       "fields": {
         "decoration": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "conjoinedWith": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "interpretation": {
           "inputType": "text"
@@ -185,9 +185,9 @@
         },
         "walling": {
           "inputType": "dropdown"
-        }  
+        }
       },
-      "valuelists":{
+      "valuelists": {
         "wallClassification": "Architecture-wallClassification-Abbircella",
         "wallType": "Architecture-wallType-Abbircella",
         "construction": "Architecture-construction-Abbircella",
@@ -217,7 +217,7 @@
           "inputType": "text"
         },
         "complete": {
-          "inputType":"boolean"
+          "inputType": "boolean"
         },
         "geologicalComponents": {
           "inputType": "text"
@@ -232,7 +232,7 @@
           "inputType": "text"
         }
       },
-      "valuelists":{
+      "valuelists": {
         "orientation": "orientation-Abbircella",
         "consistency": "Layer-consistency-Abbircella",
         "soilType": "Layer-soilType-Abbircella",
@@ -243,7 +243,7 @@
       "hidden": [
         "distinguishingCriteria"
       ],
-      "commons":[
+      "commons": [
         "orientation",
         "dimensionHeight",
         "dimensionThickness",
@@ -260,16 +260,16 @@
           "inputType": "radio"
         }
       },
-      "valuelists":{
+      "valuelists": {
         "orientation": "orientation-Abbircella",
         "mortarColor": "colors-Abbircella-2",
         "mortarConsistency": "Architecture-mortarConsistency-Abbircella",
         "floorClassification": "Floor-floorClassification-Abbircella",
         "layerClassification": "Layer-layerClassification-Abbircella",
         "consistency": "Layer-consistency-Abbircella",
-        "mortarBinder":"Architecture-mortarBinder-Abbircella",
-        "condition":"Architecture-condition-Abbircella",
-        "conditionAmount":"Architecture-conditionAmount-Abbircella"
+        "mortarBinder": "Architecture-mortarBinder-Abbircella",
+        "condition": "Architecture-condition-Abbircella",
+        "conditionAmount": "Architecture-conditionAmount-Abbircella"
       }
     },
     "Pottery:default": {
@@ -320,10 +320,10 @@
           "inputType": "checkboxes"
         }
       },
-      "valuelists":{
+      "valuelists": {
         "mortarBinder": "Architecture-mortarBinder-Abbircella",
         "mortarColor": "colors-Abbircella-2",
-        "mortarConsistency":"Architecture-mortarConsistency-Abbircella",
+        "mortarConsistency": "Architecture-mortarConsistency-Abbircella",
         "color": "colors-Abbircella-1",
         "plasterComponents": "PlasterFragment-plasterComponents-Abbircella"
       }
@@ -334,7 +334,7 @@
     },
     "Sample:default": {
       "hidden": [],
-      "commons" :[
+      "commons": [
         "dating"
       ],
       "fields": {
@@ -354,7 +354,7 @@
           "inputType": "dropdown"
         }
       },
-      "valuelists":{
+      "valuelists": {
         "sampleMaterial": "Sample-sampleMaterial-Abbircella",
         "sampleType": "Sample-sampleType-Abbircella"
       }
@@ -363,11 +363,11 @@
       "hidden": [
         "featureForm"
       ],
-      "commons":[
+      "commons": [
         "orientation",
         "dimensionHeight",
         "spatialLocation"
-          ],
+      ],
       "fields": {
         "modeOfFormation": {
           "inputType": "input"
@@ -386,17 +386,17 @@
       }
     },
     "WallCladding": {
-      "hidden":[
+      "hidden": [
         "jointsCondition",
         "jointsType",
         "dimensionWidth"
       ],
-      "commons":[
+      "commons": [
         "orientation",
         "dimensionHeight",
         "dimensionThickness",
-        "spatialLocation"   
-          ],
+        "spatialLocation"
+      ],
       "fields": {
         "conditionComment": {
           "inputType": "input"
@@ -465,7 +465,7 @@
         "period": "periods-Abbircella-1",
         "blockTreatment": "Architecture-blockTreatment-Abbircella",
         "buildingTechnique": "Architecture-buildingTechnique-Abbircella",
-        "condition":"Architecture-condition-Abbircella",
+        "condition": "Architecture-condition-Abbircella",
         "conditionAmount": "Architecture-conditionAmount-Abbircella",
         "constructionDetails": "Wall_surface-constructionDetails-Abbircella",
         "jointsCondition": "Wall_surface-jointsCondition-Meninx",
@@ -485,5 +485,46 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Architecture",
+    "Floor",
+    "Negative",
+    "WallCladding",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "PlasterFragment",
+    "Mollusk",
+    "Inscription",
+    "Sample",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

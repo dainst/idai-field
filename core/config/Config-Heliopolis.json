@@ -5,15 +5,36 @@
       "fields": {}
     },
     "Operation:default": {
-      "hidden": ["area", "spatialLocation", "processor", "supervisor", "diaryAbstract"],
+      "hidden": [
+        "area",
+        "spatialLocation",
+        "processor",
+        "supervisor",
+        "diaryAbstract"
+      ],
       "fields": {}
     },
     "Place:default": {
-      "hidden": ["gazId", "siteClassification", "dating", "placeName", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
+      "hidden": [
+        "gazId",
+        "siteClassification",
+        "dating",
+        "placeName",
+        "findspotClassification",
+        "modernIntervention",
+        "excavationHistory",
+        "buildingResearchHistory",
+        "buildingHistory",
+        "findSituation"
+      ],
       "fields": {}
     },
     "Trench:default": {
-      "hidden": ["dimensionVerticalExtent", "trenchComment", "diary"],
+      "hidden": [
+        "dimensionVerticalExtent",
+        "trenchComment",
+        "diary"
+      ],
       "fields": {
         "squareNumber": {
           "inputType": "input"
@@ -22,8 +43,27 @@
     },
     "Feature:default": {
       "color": "green",
-      "hidden": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "diary", "description", "area", "beginningDate", "endDate", "dimensionWidth", "dimensionLength", "period"],
-      "commons": ["date", "dating", "spatialLocation", "literature"],
+      "hidden": [
+        "color",
+        "hasDisturbance",
+        "featureForm",
+        "featureBorders",
+        "comparison",
+        "diary",
+        "description",
+        "area",
+        "beginningDate",
+        "endDate",
+        "dimensionWidth",
+        "dimensionLength",
+        "period"
+      ],
+      "commons": [
+        "date",
+        "dating",
+        "spatialLocation",
+        "literature"
+      ],
       "fields": {
         "unitNumber": {
           "inputType": "input"
@@ -78,59 +118,77 @@
     },
     "Find:default": {
       "color": "red",
-      "hidden": ["description", "period", "dimensionPerimeter", "amount", "catalogueNumber", "bibliography", "comparison", "conditionComment", "conditionPercent", "hasRestoration", "storageInventoryNumber", "weight", "condition", "conditionAmount", "storagePlace"],
-      "commons": ["literature"],
+      "hidden": [
+        "description",
+        "period",
+        "dimensionPerimeter",
+        "amount",
+        "catalogueNumber",
+        "bibliography",
+        "comparison",
+        "conditionComment",
+        "conditionPercent",
+        "hasRestoration",
+        "storageInventoryNumber",
+        "weight",
+        "condition",
+        "conditionAmount",
+        "storagePlace"
+      ],
+      "commons": [
+        "literature"
+      ],
       "fields": {
         "findNumber": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "findNumberOld1": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "findNumberOld2": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "objectType": {
-          "inputType":"radio"
+          "inputType": "radio"
         },
         "objectTypeOther": {
           "inputType": "input"
         },
         "material": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "materialColour": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "drawingsAuthorDateFilenameOriginalfolder": {
-          "inputType":"text"
+          "inputType": "text"
         },
         "vectorfileAuthorFilename": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "photosAuthorFilenames": {
-          "inputType":"text"
+          "inputType": "text"
         },
         "model3DAuthorFolder": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "scannedFindsheetAuthorFilenameOriginalfolder": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "findDescription": {
           "inputType": "text"
         },
         "inscriptionHieroglyphicSigns": {
-          "inputType":"text"
+          "inputType": "text"
         },
         "inscriptionTransliteration": {
-          "inputType":"text"
+          "inputType": "text"
         },
         "inscriptionTranslation": {
-          "inputType":"text"
+          "inputType": "text"
         },
         "colourPigmentsPreserved": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "preservation": {
           "inputType": "radio"
@@ -145,13 +203,13 @@
           "inputType": "radio"
         },
         "jointTo": {
-          "inputType":"input"
+          "inputType": "input"
         },
         "remarks": {
           "inputType": "text"
         },
         "currentLocation": {
-          "inputType":"radio"
+          "inputType": "radio"
         },
         "currentLocationOther": {
           "inputType": "input"
@@ -242,5 +300,20 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Place",
+    "Feature",
+    "Find",
+    "Image",
+    "Drawing",
+    "Photo",
+    "Unitsheet",
+    "Findsheet",
+    "TypeCatalog",
+    "Type"
+  ]
 }

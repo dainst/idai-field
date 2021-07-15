@@ -543,5 +543,32 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Place",
+    "Feature",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Mollusk",
+    "KnappingWasteProduct",
+    "KnappedCore",
+    "FragmentOfDrill",
+    "FragmentOfCuttingtool",
+    "FragmentOfHammertool",
+    "FragmentOfChopper",
+    "FragmentofCoating",
+    "FragmentofStonevessel",
+    "FragmentOfBead",
+    "RawMaterial",
+    "Inscription",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

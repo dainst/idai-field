@@ -20,7 +20,7 @@
         "siteClassification": "Place-siteClassification-Postumii"
       },
       "fields": {
-        "placeCondition" : {
+        "placeCondition": {
           "inputType": "text"
         }
       }
@@ -622,5 +622,36 @@
         "organicMaterialCollection": "OrganicMaterial-Collection-Postumii"
       }
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Place",
+    "Feature",
+    "Layer",
+    "Architecture",
+    "Floor",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Coin",
+    "PlasterFragment",
+    "FindCollection",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

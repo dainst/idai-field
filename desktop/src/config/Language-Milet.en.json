@@ -15,17 +15,14 @@
     "dimensionThickness": {
       "label": "Thickness / Wall Thickness",
       "description": "Thickness of the object, for Pottery: Wall thickness of fragment."
-    },
-    "spatialLocation": {
-      "label": "DONT enter anything here, I have no idea why it is here"
     }
   },
   "fields": {
     "category": {
       "label": "Category"
     },
-    "isEquivalentTo": {
-      "label": "identical with"
+    "AreaShorthand": {
+        "label": "Abbreviation of Excavation Area"
     },
     "identifier": {
       "label": "Name / ID (unique)",
@@ -104,18 +101,14 @@
     }
   },
   "categories": {
-    "Operation": {
-      "fields": {
-        "AreaShorthand": {
-          "label": "Abbreviation of Excavation Area"
-        }
-      }
-    },
     "Trench": {
-      "label": "Excavation-Area"
-    },
-    "Feature": {
-      "label": "Trench",
+      "label": "Trench"
+  },
+  "Place": {
+      "label": "Place / Area"
+  },
+  "Feature": {
+      "label": "Stratigraphical Unit",
       "fields": {
         "hasDisturbance": {
           "label": "Disturbed",
@@ -201,14 +194,6 @@
         "layerDatingIndication": {
           "label": "Dating Elements",
           "description": "Elaborate on the basis of this contexts dating as recorded in the 'Time' tab under 'Period'. (See corresponding field on paper form.)"
-        }
-      }
-    },
-    "StrUnit": {
-      "label": "Stratigraphical Unit",
-      "fields": {
-        "unitNotes": {
-          "label": "Notes"
         }
       }
     },

@@ -1,7 +1,6 @@
 import { sameset } from 'tsfun';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
-import { Forest, Named, Tree } from '../../src/tools';
-import { Category } from '../../src/model';
+import { Named, Tree } from '../../src/tools';
 
 
 describe('ProjectConfiguration', () => {

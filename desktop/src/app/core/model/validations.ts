@@ -1,7 +1,7 @@
 import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange, Category, Tree} from 'idai-field-core';
-import {FieldGeometry, ProjectConfiguration, Named, FieldDefinition, RelationDefinition} from 'idai-field-core';
+import {FieldGeometry, ProjectConfiguration, Named, Field, RelationDefinition} from 'idai-field-core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 
@@ -75,7 +75,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            FieldDefinition.InputType.DATING,
+            Field.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
             (dating: any) =>
                 Dating.isValid_deprecated(dating)
@@ -90,7 +90,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            FieldDefinition.InputType.DIMENSION,
+            Field.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) =>
                 Dimension.isValid_deprecated(dimension)
@@ -105,7 +105,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            FieldDefinition.InputType.LITERATURE,
+            Field.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
             and(Literature.isLiterature, Literature.isValid));
     }
@@ -227,7 +227,7 @@ export module Validations {
                                          projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
-        const fieldDefinitions: Array<FieldDefinition>
+        const fieldDefinitions: Array<Field>
             = Category.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
@@ -263,9 +263,9 @@ export module Validations {
     export function validateDefinedFields(resource: Resource|NewResource,
                                           projectConfiguration: ProjectConfiguration): string[] {
 
-        const projectFields: Array<FieldDefinition> =
+        const projectFields: Array<Field> =
             Category.getFields(projectConfiguration.getCategory(resource.category));
-        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition];
+        const defaultFields: Array<Field> = [{ name: 'relations' } as Field];
 
         const definedFields: Array<any> = projectFields.concat(defaultFields);
 
@@ -322,7 +322,7 @@ export module Validations {
                                           validationFunction: (value: string, inputType: string) => boolean,
                                           numericInputTypes: string[]): string[] {
 
-        const projectFields: Array<FieldDefinition> =
+        const projectFields: Array<Field> =
             Category.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 

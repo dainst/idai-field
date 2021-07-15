@@ -1,7 +1,7 @@
-import { Tree, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
+import { Tree, Field, ProjectConfiguration } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
 import { Validations } from '../../../../src/app/core/model/validations';
-import InputType = FieldDefinition.InputType;
+import InputType = Field.InputType;
 
 
 /**

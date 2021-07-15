@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, Category, Name } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, Category, Name } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration, Labels } from 'idai-field-core';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
@@ -38,7 +38,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
 export class DoceditComponent {
 
     public activeGroup: string;
-    public fieldDefinitions: Array<FieldDefinition>|undefined;
+    public fieldDefinitions: Array<Field>|undefined;
     public groups: Array<Group>|undefined;
 
     public parentLabel: string|undefined = undefined;
@@ -61,7 +61,7 @@ export class DoceditComponent {
 
     public isLoading = () => this.loading.isLoading('docedit');
 
-    public getFieldDefinitionLabel: (_: string) => string;
+    public getFieldLabel: (_: string) => string;
 
     public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.documentHolder.clonedDocument));
 
@@ -102,11 +102,11 @@ export class DoceditComponent {
 
         this.documentHolder.setDocument(document);
 
-        this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.labels.getFieldDefinitionLabel(this.projectConfiguration.getCategory(document), fieldName);
+        this.getFieldLabel = (fieldName: string) =>
+            this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
-        this.updateFieldDefinitions();
+        this.updateFields();
     }
 
 
@@ -115,7 +115,7 @@ export class DoceditComponent {
         const { invalidFields, invalidRelations } = this.documentHolder.changeCategories(newCategory);
         this.showCategoryChangeFieldsWarning(invalidFields);
         this.showCategoryChangeRelationsWarning(newCategory, invalidRelations);
-        this.updateFieldDefinitions();
+        this.updateFields();
     }
 
 
@@ -174,7 +174,7 @@ export class DoceditComponent {
     }
 
 
-    private updateFieldDefinitions() {
+    private updateFields() {
 
         this.fieldDefinitions = Category.getFields(
             this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)
@@ -282,7 +282,7 @@ export class DoceditComponent {
             this.messages.add([
                 M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS,
                 invalidFields
-                    .map(this.getFieldDefinitionLabel)
+                    .map(this.getFieldLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
             ]);
         }
@@ -297,7 +297,7 @@ export class DoceditComponent {
             this.messages.add([
                 M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
                 invalidRelations
-                    .map((relationName: string) => this.labels.getFieldDefinitionLabel(category, relationName))
+                    .map((relationName: string) => this.labels.getFieldLabel(category, relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
         }

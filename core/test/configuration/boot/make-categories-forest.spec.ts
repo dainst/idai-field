@@ -1,5 +1,5 @@
 import { ConfigurationErrors, makeCategoryForest } from '../../../src/configuration/boot';
-import { Category, FieldDefinition, FieldResource, Groups, RelationDefinition, Resource } from '../../../src/model';
+import { Category, Field, FieldResource, Groups, RelationDefinition, Resource } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 
 
@@ -19,7 +19,7 @@ describe('makeCategoriesForest', () => {
                 categoryName: A,
                 parent: P,
                 description: { 'de': '' },
-                fields: { a: { inputType: FieldDefinition.InputType.INPUT, visible: true } },
+                fields: { a: { inputType: Field.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['a'] }
                 ]
@@ -28,7 +28,7 @@ describe('makeCategoriesForest', () => {
                 name: P,
                 categoryName: P,
                 description: { 'de': '' },
-                fields: { p: { inputType: FieldDefinition.InputType.INPUT, visible: true } },
+                fields: { p: { inputType: Field.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['p'] }
                 ]
@@ -100,10 +100,10 @@ describe('makeCategoriesForest', () => {
                 description: { 'de': '' },
                 fields: {
                     shortDescription: {
-                        inputType: FieldDefinition.InputType.INPUT,
+                        inputType: Field.InputType.INPUT,
                     },
                     identifier: {
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 },
                 groups: [

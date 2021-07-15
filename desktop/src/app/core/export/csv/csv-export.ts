@@ -1,7 +1,7 @@
 import {flow, includedIn, isDefined, isNot, isnt, map, cond,
     dense, compose, remove} from 'tsfun';
 import {Resource} from 'idai-field-core';
-import {FieldResource, StringUtils, Relations, FieldDefinition} from 'idai-field-core';
+import {FieldResource, StringUtils, Relations, Field} from 'idai-field-core';
 import {CSVMatrixExpansion} from './csv-matrix-expansion';
 import {CsvExportUtils} from './csv-export-utils';
 import {CsvExportConsts, Heading, HeadingsAndMatrix} from './csv-export-consts';
@@ -30,7 +30,7 @@ export module CSVExport {
      * @param relations
      */
     export function createExportable(resources: Array<FieldResource>,
-                                     fieldDefinitions: Array<FieldDefinition>,
+                                     fieldDefinitions: Array<Field>,
                                      relations: Array<string>) {
 
         const headings: string[] = makeHeadings(fieldDefinitions, relations);
@@ -53,7 +53,7 @@ export module CSVExport {
     }
 
 
-    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: string[]) {
+    function makeHeadings(fieldDefinitions: Array<Field>, relations: string[]) {
 
         return extractExportableFields(fieldDefinitions)
             .concat(
@@ -81,7 +81,7 @@ export module CSVExport {
     }
 
 
-    function extractExportableFields(fieldDefinitions: Array<FieldDefinition>): string[] {
+    function extractExportableFields(fieldDefinitions: Array<Field>): string[] {
 
         let fieldNames = getUsableFieldNames(fieldDefinitions.map(_ => _.name));
         const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);

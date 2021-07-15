@@ -6,7 +6,7 @@ import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
-import { FieldDefinition } from '../model/field-definition';
+import { Field } from '../model/field';
 import { BaseGroup, Group } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
@@ -69,7 +69,7 @@ export module FieldsViewUtil {
     }
 
 
-    export const isVisibleField: Predicate<FieldDefinition> = on(FieldDefinition.VISIBLE, is(true));
+    export const isVisibleField: Predicate<Field> = on(Field.VISIBLE, is(true));
 
 
     export const shouldBeDisplayed: Predicate<FieldsViewGroup> =
@@ -132,7 +132,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                                            relationTargets: Map<Array<Document>>,
                                            labels: Labels): Mapping {
 
-    const fieldContent: Mapping<FieldDefinition, FieldContent>
+    const fieldContent: Mapping<Field, FieldContent>
         = compose(to(Named.NAME), getFieldContent(resource));
 
     return map(
@@ -153,10 +153,10 @@ function makeField(projectConfiguration: ProjectConfiguration,
                    relationTargets: Map<Array<Document>>,
                    labels: Labels) {
 
-    return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
+    return function([field, fieldContent]: [Field, FieldContent]): FieldsViewField {
 
-        return (field.inputType === FieldDefinition.InputType.RELATION
-                || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
+        return (field.inputType === Field.InputType.RELATION
+                || field.inputType === Field.InputType.INSTANCE_OF)
             ? {
                 label: labels.get(field),
                 type: 'relation',

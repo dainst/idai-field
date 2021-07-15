@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, Valuelist,
+import { Category, ConfigurationDocument, CustomFieldDefinition, Field, Valuelist,
     Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
@@ -22,7 +22,7 @@ const locale: string = typeof window !== 'undefined'
 export class ConfigurationFieldComponent implements OnChanges {
 
     @Input() category: Category;
-    @Input() field: FieldDefinition;
+    @Input() field: Field;
     @Input() configurationDocument: ConfigurationDocument;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;

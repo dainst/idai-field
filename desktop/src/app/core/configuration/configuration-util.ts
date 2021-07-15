@@ -1,5 +1,5 @@
 import { flatten, to } from 'tsfun';
-import { Category, CustomCategoryDefinition, FieldDefinition, FieldResource, Resource,
+import { Category, CustomCategoryDefinition, Field, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
 import { LanguageConfigurationUtil } from './language-configuration-util';
 
@@ -14,14 +14,14 @@ export module ConfigurationUtil {
 
     export const isHidden = (customCategoryDefinition?: CustomCategoryDefinition,
                              parentCustomCategoryDefinition?: CustomCategoryDefinition) =>
-            (field: FieldDefinition): boolean => {
+            (field: Field): boolean => {
 
         return (customCategoryDefinition?.hidden ?? []).includes(field.name) ||
             (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }
 
 
-    export function isParentField(category: Category, field: FieldDefinition): boolean {
+    export function isParentField(category: Category, field: Field): boolean {
 
         if (!category.parentCategory) return false;
 
@@ -81,7 +81,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function deleteField(category: Category, field: FieldDefinition,
+    export function deleteField(category: Category, field: Field,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);

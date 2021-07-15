@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone } from 'tsfun';
-import { Document, ProjectConfiguration, FieldDefinition, Group,
+import { Document, ProjectConfiguration, Field, Group,
     ProjectCategories, Labels } from 'idai-field-core';
 
 
@@ -18,7 +18,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @ViewChild('editor', { static: false }) rootElement: ElementRef;
 
     @Input() document: any;
-    @Input() fieldDefinitions: Array<FieldDefinition>;
+    @Input() fieldDefinitions: Array<Field>;
     @Input() originalGroups: Array<Group>;
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
@@ -74,11 +74,11 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
                 && !ProjectCategories.getImageCategoryNames(
                     this.projectConfiguration.getCategoryForest()).includes(this.document.resource.category))
             || (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0;
+            || this.getFields(groupName).filter(field => field.editable).length > 0;
     }
 
 
-    public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
+    public getFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
     }

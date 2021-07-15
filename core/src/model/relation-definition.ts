@@ -1,10 +1,10 @@
-import { FieldDefinition } from './field-definition';
+import { Field } from './field';
 
 
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition extends FieldDefinition {
+export interface RelationDefinition extends Field {
 
     domain: string[];
     range: string[];

@@ -1,6 +1,6 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
 import { RelationsUtil } from '../relations-utils';
-import { Category, FieldDefinition, Group, Groups, RelationDefinition, Resource } from '../../model';
+import { Category, Field, Group, Groups, RelationDefinition, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
@@ -69,7 +69,7 @@ const createGroups = (relationDefinitions: Array<RelationDefinition>) => (catego
 function completeStemGroup(category: Category) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-    const fieldsNotInGroups: Array<FieldDefinition> = Object.keys(category[TEMP_FIELDS])
+    const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])
         .filter(fieldName => !fieldsInGroups.includes(fieldName)
             && (category[TEMP_FIELDS][fieldName].visible || category[TEMP_FIELDS][fieldName].editable))
         .map(fieldName => category[TEMP_FIELDS][fieldName]);
@@ -144,7 +144,7 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
 }
 
 
-function makeChildFields(category: Category, child: Category): Array<FieldDefinition> {
+function makeChildFields(category: Category, child: Category): Array<Field> {
 
     try {
         const childFields = child[TEMP_FIELDS];
@@ -157,8 +157,8 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 }
 
 
-function getCombinedFields(parentFields: Array<FieldDefinition>,
-                           childFields: Array<FieldDefinition>): Array<FieldDefinition> {
+function getCombinedFields(parentFields: Array<Field>,
+                           childFields: Array<Field>): Array<Field> {
 
     const fields = clone(parentFields);
 

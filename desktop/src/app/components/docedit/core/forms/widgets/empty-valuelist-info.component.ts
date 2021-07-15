@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, FieldDefinition, ProjectConfiguration, Resource, ValuelistUtil, Labels, Category, Named } from 'idai-field-core';
-import { is, on } from 'tsfun';
+import { Datastore, Field, ProjectConfiguration, Resource, ValuelistUtil, Labels, Category, Named } from 'idai-field-core';
+import { is } from 'tsfun';
 
 
 type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
@@ -16,7 +16,7 @@ type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
 export class EmptyValuelistInfoComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() field: FieldDefinition;
+    @Input() field: Field;
 
     public infoType: EmptyValuelistInfoType;
 
@@ -36,7 +36,7 @@ export class EmptyValuelistInfoComponent implements OnChanges {
 
         if (!this.field.valuelistFromProjectField) return '';
 
-        const field: FieldDefinition| undefined =
+        const field: Field| undefined =
             Category.getFields(this.projectConfiguration.getCategory('Project'))
                 .find(Named.onName(is(this.field.valuelistFromProjectField)));
 

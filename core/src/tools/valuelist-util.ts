@@ -1,6 +1,6 @@
 import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
 import { Document } from '../model/document';
-import { FieldDefinition } from '../model/field-definition';
+import { Field } from '../model/field';
 import { Resource } from '../model/resource';
 import { ValueDefinition, Valuelist } from '../model/valuelist';
 
@@ -27,7 +27,7 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: FieldDefinition, 
+    export function getValuelist(field: Field, 
                                  projectDocument: Document,
                                  parentResource?: Resource): Valuelist {
 

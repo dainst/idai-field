@@ -1,5 +1,5 @@
 import { createContextIndependentCategories } from '../../../src/configuration/index/create-context-independent-categories';
-import { FieldDefinition } from '../../../src/model/field-definition';
+import { Field } from '../../../src/model/field';
 
 
 describe('createContextIndependentCategories', () => {
@@ -13,7 +13,7 @@ describe('createContextIndependentCategories', () => {
                     groups: [],
                     fields: {
                         identifier: { 
-                            inputType: FieldDefinition.InputType.INPUT,
+                            inputType: Field.InputType.INPUT,
                         }
                     }
                 }
@@ -34,8 +34,8 @@ describe('createContextIndependentCategories', () => {
                     categoryName: 'Pottery',
                     parent: 'Find',
                     groups: [{ name: 'group-a', fields: ['a', 'c'] }],
-                    fields: { a: { inputType: FieldDefinition.InputType.INPUT },
-                              c: { inputType: FieldDefinition.InputType.INPUT } },
+                    fields: { a: { inputType: Field.InputType.INPUT },
+                              c: { inputType: Field.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},
@@ -46,8 +46,8 @@ describe('createContextIndependentCategories', () => {
                     categoryName: 'Pottery',
                     parent: 'Find',
                     groups: [{ name: 'group-b', fields: ['c', 'b'] }],
-                    fields: { b: { inputType: FieldDefinition.InputType.INPUT },
-                              c: { inputType: FieldDefinition.InputType.INPUT } },
+                    fields: { b: { inputType: Field.InputType.INPUT },
+                              c: { inputType: Field.InputType.INPUT } },
                     createdBy: '',
                     creationDate: '',
                     description: {},

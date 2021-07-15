@@ -3,7 +3,7 @@ import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singlet
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { Category } from '../model/category';
-import { FieldDefinition } from '../model/field-definition';
+import { Field } from '../model/field';
 
 
 export interface IndexDefinition {
@@ -141,7 +141,7 @@ export module ConstraintIndex {
     }
 
 
-    export function addIndexDefinitionsForField(index: ConstraintIndex, field: FieldDefinition) {
+    export function addIndexDefinitionsForField(index: ConstraintIndex, field: Field) {
 
         if (!field.constraintIndexed) return;
 
@@ -269,7 +269,7 @@ export module ConstraintIndex {
     }
 
 
-    export function getIndexType(field: FieldDefinition): string {
+    export function getIndexType(field: Field): string {
 
         switch (field.inputType) {
             case 'checkboxes':
@@ -293,25 +293,25 @@ export module ConstraintIndex {
     }
 
 
-    function getFieldsToIndex(categories: Array<Category>): Array<FieldDefinition> {
+    function getFieldsToIndex(categories: Array<Category>): Array<Field> {
 
         return flow(categories,
             map(Category.getFields),
             flatten(),
             getUniqueFields,
-            filter<FieldDefinition>(to(FieldDefinition.CONSTRAINTINDEXED))
+            filter<Field>(to(Field.CONSTRAINTINDEXED))
         );
     }
 
 
-    function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+    function getUniqueFields(fields: Array<Field>): Array<Field> {
 
         return clone(
-            fields.filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
+            fields.filter((field: Field, index: number, self: Array<Field>) => {
                 return self.indexOf(
-                    self.find((f: FieldDefinition) => {
+                    self.find((f: Field) => {
                         return resultsInSameIndexDefinition(f, field);
-                    }) as FieldDefinition
+                    }) as Field
                 ) === index;
             })
         );
@@ -344,7 +344,7 @@ export module ConstraintIndex {
     }
 
 
-    function resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
+    function resultsInSameIndexDefinition(field1: Field, field2: Field): boolean {
 
         return field1.name === field2.name
             && field1.constraintIndexed === field2.constraintIndexed
@@ -352,7 +352,7 @@ export module ConstraintIndex {
     }
 
 
-    function makeIndexDefinitions(field: FieldDefinition)
+    function makeIndexDefinitions(field: Field)
             : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
         return flatten([
@@ -362,10 +362,10 @@ export module ConstraintIndex {
     }
 
 
-    function makeIndexDefinitionForField(field: FieldDefinition,
+    function makeIndexDefinitionForField(field: Field,
                                          indexType: string): Array<{ name: string, indexDefinition: IndexDefinition }> {
 
-        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
+        if (field.inputType === Field.InputType.DROPDOWNRANGE) {
             return [
                 {
                     name: field.name + '.value'+ ':' + indexType,

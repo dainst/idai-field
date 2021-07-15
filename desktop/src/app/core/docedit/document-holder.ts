@@ -1,4 +1,4 @@
-import { Category, Document, Datastore, FieldDefinition, NewDocument, Resource} from 'idai-field-core';
+import { Category, Document, Datastore, Field, NewDocument, Resource} from 'idai-field-core';
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Validations } from '../model/validations';
@@ -139,7 +139,7 @@ export class DocumentHolder {
         const category: Category = this.projectConfiguration.getCategory(this.clonedDocument);
 
         for (let fieldName in this.clonedDocument.resource) {
-            const field: FieldDefinition|undefined
+            const field: Field|undefined
                 = Category.getFields(category).find(field => field.name === fieldName);
             if (!field) continue;
 

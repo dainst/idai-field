@@ -23,7 +23,7 @@ describe('Labels', () => {
 
         const labels = new Labels(getLanguages);
 
-        expect(labels.getFieldDefinitionLabel(category, 'aField')).toBe('Ein Feld');
+        expect(labels.getFieldLabel(category, 'aField')).toBe('Ein Feld');
     });
 
 
@@ -39,7 +39,7 @@ describe('Labels', () => {
         } as any;
 
         const labels = new Labels(getLanguages);
-        expect(labels.getFieldDefinitionLabel(category,'aField')).toBe('aField');
+        expect(labels.getFieldLabel(category,'aField')).toBe('aField');
     });
 
 

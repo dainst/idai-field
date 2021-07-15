@@ -36,7 +36,7 @@ export class Labels {
     }
 
 
-    public getFieldDefinitionLabel(category: Category, fieldName: string): Label {
+    public getFieldLabel(category: Category, fieldName: string): Label {
 
         const label = Category.getFieldLabelValue(category, fieldName);
         if (!label) return undefined;

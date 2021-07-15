@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { any, is, compose, map, to, Predicate } from 'tsfun';
-import { FieldDefinition, Category, Named, InPlace, Labels } from 'idai-field-core';
+import { Field, Category, Named, InPlace, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 
 
@@ -95,8 +95,8 @@ export class CategoryPickerComponent {
 
     public hasCustomFields: Predicate<Category> = compose(
         Category.getFields,
-        map(to(FieldDefinition.SOURCE)),
-        any(is(FieldDefinition.Source.CUSTOM))
+        map(to(Field.SOURCE)),
+        any(is(Field.Source.CUSTOM))
     );
 
 

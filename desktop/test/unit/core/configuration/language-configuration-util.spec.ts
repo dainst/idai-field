@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, I18N, Group } from 'idai-field-core';
+import { Category, Field, I18N, Group } from 'idai-field-core';
 import { CustomLanguageConfigurations,
     LanguageConfigurationUtil } from '../../../../src/app/core/configuration/language-configuration-util';
 
@@ -48,7 +48,7 @@ import { CustomLanguageConfigurations,
         color: '#fff'
     };
 
-    const field: FieldDefinition = {
+    const field: Field = {
         name: 'testField',
         label: fieldLabel,
         defaultLabel: fieldLabel,

@@ -7,7 +7,7 @@ export { Document, toResourceId } from './document';
 export { FeatureDocument } from './feature-document';
 export { FeatureRelations } from './feature-relations';
 export { FeatureResource } from './feature-resource';
-export { FieldDefinition } from './field-definition';
+export { Field } from './field';
 export { FieldDocument } from './field-document';
 export { FieldGeometry, FieldGeometryType } from './field-geometry';
 export { FieldRelations } from './field-relations';

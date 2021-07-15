@@ -2,7 +2,7 @@ import {Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {FieldDefinition} from '../../model/field-definition';
+import {Field} from '../../model/field';
 
 
 export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>,
@@ -10,10 +10,10 @@ export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>
                                customCategories: Map<CustomCategoryDefinition>|undefined,
                                commonFields: Map<any>|undefined) {
 
-    setFieldSourceOnCategories(builtInCategories, FieldDefinition.Source.BUILTIN);
-    setFieldSourceOnCategories(libraryCategories, FieldDefinition.Source.LIBRARY);
-    if (customCategories) setFieldSourceOnCategories(customCategories, FieldDefinition.Source.CUSTOM);
-    if (commonFields) setFieldSourceOnFields(commonFields, FieldDefinition.Source.COMMON);
+    setFieldSourceOnCategories(builtInCategories, Field.Source.BUILTIN);
+    setFieldSourceOnCategories(libraryCategories, Field.Source.LIBRARY);
+    if (customCategories) setFieldSourceOnCategories(customCategories, Field.Source.CUSTOM);
+    if (commonFields) setFieldSourceOnFields(commonFields, Field.Source.COMMON);
 }
 
 

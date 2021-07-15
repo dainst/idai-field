@@ -1,6 +1,6 @@
-import { ConstraintIndex } from "../../src/index/constraint-index";
-import { IndexItem } from "../../src/index/index-item";
-import { FieldDefinition } from "../../src/model/field-definition";
+import { ConstraintIndex } from '../../src/index/constraint-index';
+import { IndexItem } from '../../src/index/index-item';
+import { Field } from "../../src/model/field";
 import { doc as helpersDoc } from "../test-helpers";
 
 
@@ -582,7 +582,7 @@ describe('ConstraintIndex', () => {
                         fields: [
                             {
                                 name: 'period',
-                                inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+                                inputType: Field.InputType.DROPDOWNRANGE,
                                 constraintIndexed: true
                             }]
                     }

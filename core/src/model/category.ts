@@ -1,7 +1,7 @@
 import { filter, flatten, flow, is, isEmpty, map, not, on, to } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Name, Named } from '../tools/named';
-import { FieldDefinition } from './field-definition';
+import { Field } from './field';
 import { Group } from './group';
 
 
@@ -98,12 +98,12 @@ export namespace Category {
     }
 
 
-    export function getFields(category: Category): Array<FieldDefinition> {
+    export function getFields(category: Category): Array<Field> {
 
         return flow(
             category.groups,
             Object.values,
-            map(to<Array<FieldDefinition>>(Group.FIELDS)),
+            map(to<Array<Field>>(Group.FIELDS)),
             flatten()
         );
     }
@@ -145,7 +145,7 @@ export namespace Category {
 
     export function isMandatoryField(category: Category, fieldName: string): boolean {
 
-        return hasProperty(category, fieldName, FieldDefinition.MANDATORY);
+        return hasProperty(category, fieldName, Field.MANDATORY);
     }
 
 

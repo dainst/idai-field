@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, Relations, InPlace } from 'idai-field-core';
+import { Category, Field, Relations, InPlace } from 'idai-field-core';
 import { Dating, Dimension, Resource } from 'idai-field-core';
 import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
@@ -31,10 +31,10 @@ export function convertFieldTypes(category: Category) {
 
         for (const fieldName of fields(resource)) {
 
-            const fieldDefinition = Category.getFields(category).find(on(FieldDefinition.NAME, is(fieldName)));
-            if (!fieldDefinition) continue;
+            const field = Category.getFields(category).find(on(Field.NAME, is(fieldName)));
+            if (!field) continue;
 
-            const inputType = fieldDefinition.inputType as unknown as FieldType;
+            const inputType = field.inputType as unknown as FieldType;
             if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
         }
 

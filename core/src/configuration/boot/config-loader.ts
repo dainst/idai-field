@@ -1,7 +1,7 @@
 import { clone, Map, map } from 'tsfun';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
-import { FieldDefinition } from '../../model/field-definition';
+import { Field } from '../../model/field';
 import { RelationDefinition } from '../../model/relation-definition';
 import { Valuelist } from '../../model/valuelist';
 import { addKeyAsProp } from '../../tools';
@@ -46,7 +46,7 @@ export class ConfigLoader {
     public async go(commonFields: { [fieldName: string]: any },
                     builtinCategories: Map<BuiltinCategoryDefinition>,
                     relations: Array<RelationDefinition>,
-                    extraFields: {[fieldName: string]: FieldDefinition },
+                    extraFields: {[fieldName: string]: Field },
                     username: string,
                     customConfigurationName?: string|undefined,
                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
@@ -89,7 +89,7 @@ export class ConfigLoader {
                                     commonFields: any,
                                     builtinCategories: Map<BuiltinCategoryDefinition>,
                                     relations: Array<RelationDefinition>,
-                                    extraFields: { [fieldName: string]: FieldDefinition },
+                                    extraFields: { [fieldName: string]: Field },
                                     username: string,
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18N, ProjectCategories } from 'idai-field-core';
+import { CustomCategoryDefinition, Field, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../services/menus';
@@ -23,7 +23,7 @@ import { LanguageConfigurationUtil } from '../../../core/configuration/language-
  */
 export class FieldEditorModalComponent extends ConfigurationEditorModalComponent {
 
-    public field: FieldDefinition|undefined;
+    public field: Field|undefined;
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
@@ -132,7 +132,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
 
     public isConstraintIndexOptionShown(): boolean {
-        
+
         return this.category.name !== 'Project'
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     };

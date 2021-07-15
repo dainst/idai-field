@@ -78,13 +78,6 @@ export module FieldsViewUtil {
     );
 
 
-    export function getGroups(category: Category) {
-
-        return map(category.groups, 
-                   group => assoc(FieldsViewGroup.SHOWN, group.name === Groups.STEM, group));
-    }
-
-
     export async function getGroupsForResource(resource: Resource,
                                                projectConfiguration: ProjectConfiguration,
                                                datastore: Datastore,
@@ -93,7 +86,7 @@ export module FieldsViewUtil {
         const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
 
         return await aFlow(
-            FieldsViewUtil.getGroups(projectConfiguration.getCategory(resource.category)),
+            projectConfiguration.getCategory(resource.category).groups,
             putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
             filter(shouldBeDisplayed)
         );

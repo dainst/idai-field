@@ -1,14 +1,13 @@
 import { aFlow, assoc, compose, isEmpty, filter, flatten, 
     is, isArray, isDefined, isObject, isString, L, map, 
-    Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
+    Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
-import { Category } from '../model/category';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
-import { BaseGroup, Group, Groups } from '../model/group';
+import { BaseGroup, Group } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
@@ -73,9 +72,8 @@ export module FieldsViewUtil {
     export const isVisibleField: Predicate<FieldDefinition> = on(FieldDefinition.VISIBLE, is(true));
 
 
-    export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(
-        on(FieldsViewGroup.FIELDS, not(isEmpty))
-    );
+    export const shouldBeDisplayed: Predicate<FieldsViewGroup> =
+        on(FieldsViewGroup.FIELDS, not(isEmpty));
 
 
     export async function getGroupsForResource(resource: Resource,

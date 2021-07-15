@@ -1,6 +1,6 @@
-import { includedIn, Map, on, Pair, isString } from 'tsfun';
+import { includedIn, on, Pair, isString } from 'tsfun';
 import { Category, RelationDefinition, Document } from '../model';
-import { Forest, isTopLevelItemOrChildThereof, Name, Named, Tree } from '../tools';
+import { Forest, isTopLevelItemOrChildThereof, Name, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
@@ -23,33 +23,31 @@ export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefin
  */
 export class ProjectConfiguration {
 
-    private categoryForest: Forest<Category>;
+    private categories: Forest<Category>;
+    
     private relations: Array<RelationDefinition>;
-
-    // internal use only, we deliberately don't provide accessor for this any longer
-    // use getCategory, getCategoryForest, getCategoriesArray instead
-    private categoriesMap: Map<Category>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoryForest = categories;
+        this.categories = categories;
         this.relations = relations || [];
-        this.categoriesMap = Named.arrayToMap(Tree.flatten(categories));
     }
 
 
     public update(newProjectConfiguration: ProjectConfiguration) {
 
-        this.categoryForest = newProjectConfiguration.categoryForest;
+        this.categories = newProjectConfiguration.categories;
         this.relations = newProjectConfiguration.relations;
-        this.categoriesMap = newProjectConfiguration.categoriesMap; // TODO use find in category forest
     }
 
 
-    public getAllRelationDefinitions(): Array<RelationDefinition> {
+    public getCategoryForest(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
 
-        return this.relations;
+        return selectedTopLevelCategories.length === 0
+            ? this.categories
+            : this.categories.filter(
+                on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
 
@@ -60,30 +58,27 @@ export class ProjectConfiguration {
     public getCategory(document: Document): Category|undefined
     public getCategory(arg) {
 
-        const key = isString(arg) 
+        const name = isString(arg) 
             ? (arg as Name) 
             : (arg as Document).resource.category;
         
-        return this.categoriesMap[key];
+        return Tree.find(this.categories, category => category.name === name)?.item;
     }
 
 
-    public getCategoryForest(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
+    public getRelations(): Array<RelationDefinition> {
 
-        return selectedTopLevelCategories.length === 0
-            ? this.categoryForest
-            : this.categoryForest.filter(
-                on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
+        return this.relations;
     }
 
 
-    public getRelationDefinitionsForDomainCategory(categoryName: string): Array<RelationDefinition> {
+    public getRelationsForDomainCategory(categoryName: string): Array<RelationDefinition> {
 
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
     }
 
 
-    public getRelationDefinitionsForRangeCategory(categoryName: string): Array<RelationDefinition> {
+    public getRelationsForRangeCategory(categoryName: string): Array<RelationDefinition> {
 
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
     }
@@ -96,7 +91,7 @@ export class ProjectConfiguration {
     public isAllowedRelationDomainCategory(domainCategoryName: string, rangeCategoryName: string,
                                            relationName: string): boolean {
 
-        const relationDefinitions = this.getRelationDefinitionsForRangeCategory(rangeCategoryName);
+        const relationDefinitions = this.getRelationsForRangeCategory(rangeCategoryName);
 
         for (let relationDefinition of relationDefinitions) {
             if (relationName === relationDefinition.name
@@ -110,7 +105,7 @@ export class ProjectConfiguration {
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {
 
-        return Tree.flatten(this.categoryForest)
+        return Tree.flatten(this.categories)
             .filter(category => {
                 return this.isAllowedRelationDomainCategory(
                     category.name, rangeCategoryName, relationName
@@ -124,7 +119,7 @@ export class ProjectConfiguration {
     public getAllowedRelationRangeCategories(relationName: string,
                                              domainCategoryName: string): Array<Category> {
 
-        return Tree.flatten(this.categoryForest)
+        return Tree.flatten(this.categories)
             .filter(category => {
                 return this.isAllowedRelationDomainCategory(
                     domainCategoryName, category.name, relationName
@@ -145,6 +140,6 @@ export class ProjectConfiguration {
     public isSubcategory(category: Name, superCategoryName: string): boolean {
 
         if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
-        return isTopLevelItemOrChildThereof(this.categoryForest, category, superCategoryName);
+        return isTopLevelItemOrChildThereof(this.categories, category, superCategoryName);
     }
 }

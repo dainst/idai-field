@@ -100,7 +100,7 @@ export module Importer {
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryForest()).filter(isnt('Place'));
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
-        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
+        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getRelations());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);

@@ -2,12 +2,11 @@ import { Document, toResourceId,  } from '../model/document';
 import { Relations } from '../model/relations';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
-import { Name } from "../tools/named";
+import { Name, Named } from "../tools/named";
 import { flatMap, flow, subtract, to } from 'tsfun';
 import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 
-const NAME = 'name';
 
 /**
  * Architecture note: This class deals with automatic
@@ -28,7 +27,7 @@ export class ConnectedDocsWriter {
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration) {
 
-        this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
+        this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getRelations());
     }
 
 
@@ -71,18 +70,18 @@ export class ConnectedDocsWriter {
     }
 
 
-    private getRelationDefinitionNames() {
+    private getRelationNames() {
 
         return this.projectConfiguration
-            .getAllRelationDefinitions()
-            .map(to(NAME));
+            .getRelations()
+            .map(Named.toName);
     }
 
 
     private async getExistingConnectedDocs(documents: Array<Document>) {
 
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
-            documents, this.getRelationDefinitionNames());
+            documents, this.getRelationNames());
 
         return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
             console.warn('connected document not found', id);
@@ -93,7 +92,7 @@ export class ConnectedDocsWriter {
     private async getExistingConnectedDocsForRemove(document: Document) {
 
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
-            [document], this.getRelationDefinitionNames());
+            [document], this.getRelationNames());
 
         const liesWithinTargets = Relations.getAllTargets(document.resource.relations, ['liesWithin']);
         const recordedInTargets = Relations.getAllTargets(document.resource.relations, ['isRecordedIn']);

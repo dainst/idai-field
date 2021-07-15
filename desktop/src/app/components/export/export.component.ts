@@ -214,7 +214,7 @@ export class ExportComponent implements OnInit {
                 this.getOperationIdForMode(),
                 this.selectedCategory,
                 this.projectConfiguration
-                    .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
+                    .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)

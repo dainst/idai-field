@@ -146,7 +146,6 @@ export class BuiltInConfiguration {
         Operation: {
             supercategory: true,
             abstract: true,
-            required: true,
             fields: {
                 geometry: {
                     inputType: FieldDefinition.InputType.GEOMETRY,
@@ -441,7 +440,6 @@ export class BuiltInConfiguration {
         },
         TypeCatalog: {
             supercategory: true,
-            required: true,
             fields: {
                 criterion: {
                     inputType: FieldDefinition.InputType.DROPDOWN,
@@ -462,7 +460,6 @@ export class BuiltInConfiguration {
         Type: {
             supercategory: true,
             mustLieWithin: true,
-            required: true,
             fields: {},
             groups: [
                 {

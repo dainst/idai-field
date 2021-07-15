@@ -113,7 +113,7 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO return categories, not names
+    // TODO return categories, not names; review relationship with the method one below
     public getOverviewCategoryNames(): Array<Name> {
 
         return flow(this.categories,
@@ -124,15 +124,13 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO return categories, not names; review duplication with the method one above
-    public getOverviewCategories(): Array<Name> {
+    public getOverviewCategories(): Array<Category> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
-            remove(Named.onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
-            map(Named.toName) as any
-        );
+            remove(Named.onName(is('Operation')))
+        ) as any;
     }
 
 

@@ -38,7 +38,7 @@ const PouchDB = window.require('pouchdb-browser');
             provide: CategoryConverter,
             useFactory: function(projectConfiguration: ProjectConfiguration) {
 
-                return new CategoryConverter(projectConfiguration.getCategoryForest());
+                return new CategoryConverter(projectConfiguration);
             },
             deps: [ProjectConfiguration]
         },

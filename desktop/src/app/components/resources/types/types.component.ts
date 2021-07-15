@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager,
-    ProjectCategories } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager, ProjectConfiguration } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
@@ -75,6 +74,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,
+                private projectConfiguration: ProjectConfiguration,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -308,7 +308,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, Relations.Image.ISDEPICTEDIN)) {
             return [document.resource.relations[Relations.Image.ISDEPICTEDIN][0]];
-        } else if (TypesComponent.isCatalogOrType(document)) {
+        } else if (this.isCatalogOrType(document)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];
@@ -327,8 +327,8 @@ export class TypesComponent extends BaseList implements OnChanges {
     }
 
 
-    private static isCatalogOrType(document: FieldDocument): boolean {
+    private isCatalogOrType(document: FieldDocument): boolean {
 
-        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category);
+        return this.projectConfiguration.getTypeCategoryNames().includes(document.resource.category);
     }
 }

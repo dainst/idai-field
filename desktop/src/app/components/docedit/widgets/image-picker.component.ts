@@ -7,7 +7,6 @@ import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {ProjectConfiguration} from 'idai-field-core';
 import { getImageSuggestions } from '../../../core/docedit/widgets/get-image-suggestions';
-import { ProjectCategories } from 'idai-field-core';
 
 
 @Component({
@@ -161,7 +160,7 @@ export class ImagePickerComponent implements OnInit {
 
     private getQuery() {
 
-        const categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
+        const categories = this.projectConfiguration.getImageCategoryNames()
         return {
             categories: categories,
             offset: this.currentOffset,

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDocument, ProjectCategories, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
@@ -78,8 +78,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         if (this.isReadonly()) return false;
         return this.contextMenu.documents.length === 1
-            && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryForest(), this.contextMenu.documents[0].resource.category)
+            && this.projectConfiguration.isGeometryCategory(
+                this.contextMenu.documents[0].resource.category)
             && !this.contextMenu.documents[0].resource.geometry;
     }
 
@@ -88,8 +88,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         if (this.isReadonly()) return false;
         return this.contextMenu.documents.length === 1
-            && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryForest(), this.contextMenu.documents[0].resource.category)
+            && this.projectConfiguration.isGeometryCategory(
+                this.contextMenu.documents[0].resource.category)
             && this.contextMenu.documents[0].resource.geometry !== undefined;
     }
 

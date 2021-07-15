@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, Datastore, FieldDocument, Query, ProjectCategories, ProjectConfiguration,
+import { Category, Datastore, FieldDocument, Query, ProjectConfiguration,
     RelationsManager, Labels, Document, Tree} from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
@@ -319,7 +319,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryForest())
+                categories: this.projectConfiguration.getOperationCategoryNames()
             })).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

@@ -1,21 +1,21 @@
-import { includedIn, on, Pair, isString } from 'tsfun';
+import { includedIn, on, Pair, isString, flow, map, filter, remove, is } from 'tsfun';
 import { Category, RelationDefinition, Document } from '../model';
-import { Forest, isTopLevelItemOrChildThereof, Name, Tree } from '../tools';
+import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
 import { RelationsUtil } from '../configuration/relations-utils';
 
 
 export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefinition>>;
 
+const TYPE_CATALOG = 'TypeCatalog';
+const TYPE = 'Type';
+const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
+
 
 /**
- * ProjectConfiguration maintains the current projects properties.
- * Amongst them is the set of categories for the current project,
- * which ProjectConfiguration provides to its clients.
- *
- * Within a project, objects of the available categories can get created,
- * where every name is a configuration of different fields.
- *
+ * For naming of document types (for example "ConcreteField"-XYZ, "Image"-XYZ)
+ * see document.ts
+ * 
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -141,5 +141,133 @@ export class ProjectConfiguration {
 
         if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
         return isTopLevelItemOrChildThereof(this.categories, category, superCategoryName);
+    }
+
+
+    public isGeometryCategory(category: Name): boolean {
+
+        return !isTopLevelItemOrChildThereof(this.categories, category,
+            'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
+    }
+
+
+    // TODO remove; just return categories
+    public getRegularCategoryNames(): Array<Name> {
+
+        return flow(this.categories,
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
+            Tree.flatten,
+            map(Named.toName)
+        );
+    }
+
+
+    public getConcreteFieldCategories(): Array<Category> {
+
+        return flow(this.categories,
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
+            Tree.flatten
+        );
+    }
+
+
+    // TODO remove; just return categories
+    public getConcreteFieldCategoryNames(): Array<Name> {
+
+        return this.getConcreteFieldCategories().map(Named.toName);
+    }
+
+
+    public getFieldCategories(): Array<Category> {
+
+        return flow(this.categories,
+            removeTrees('Image', 'Project'),
+            Tree.flatten
+        );
+    }
+
+
+    // TODO remove; just return categories
+    public getFieldCategoryNames(): Array<Name> {
+
+        return this.getFieldCategories().map(Named.toName);
+    }
+
+
+    public getOverviewCategoryNames(): Array<Name> {
+
+        return flow(this.categories,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            map(Named.toName)
+        );
+    }
+
+
+    public getOverviewCategories(): Array<Name> {
+
+        return flow(this.categories,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            remove(Named.onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
+            map(Named.toName) as any
+        );
+    }
+
+
+    public getOverviewToplevelCategories(): Array<Category> {
+
+        return flow(this.categories,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
+        );
+    }
+
+
+    public getTypeCategories(): Array<Category> {
+
+        return flow(this.categories,
+            filterTrees('Type', 'TypeCatalog'),
+            Tree.flatten
+        );
+    }
+
+
+    public getTypeCategoryNames(): Array<Name> {
+
+        return TYPE_CATALOG_AND_TYPE;
+    }
+
+
+    public getImageCategoryNames(): Array<Name> {
+
+        return flow(this.categories,
+            filterTrees('Image'),
+            Tree.flatten,
+            map(Named.toName)
+        );
+    }
+
+
+    public getFeatureCategoryNames(): string[] {
+
+        return this.getSuperCategoryNames('Feature');
+    }
+
+
+    public getOperationCategoryNames(): string[] {
+
+        return this.getSuperCategoryNames('Operation');
+    }
+
+
+    private getSuperCategoryNames(superCategoryName: string) {
+
+        return flow(
+            this.categories,
+            filterTrees(superCategoryName),
+            Tree.flatten,
+            map(Named.toName));
     }
 }

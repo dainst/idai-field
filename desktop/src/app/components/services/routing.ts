@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatastoreErrors } from 'idai-field-core';
 import { Document } from 'idai-field-core';
-import { ProjectCategories } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../core/resources/view/view-facade';
 
@@ -139,9 +138,9 @@ export class Routing {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryForest()).includes(document.resource.category)
+        return this.projectConfiguration.getOverviewCategoryNames().includes(document.resource.category)
             ? 'project'
-            : ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
+            : this.projectConfiguration.getTypeCategoryNames().includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

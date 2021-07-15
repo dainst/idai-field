@@ -1,16 +1,15 @@
-import { ProjectCategories } from '../configuration/project-categories';
-import { Category } from '../model';
+import {ProjectConfiguration} from '../configuration';
 import { Document } from '../model/document';
 import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
-import { Forest } from '../tools/forest';
+import {  Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
 import { Migrator } from './migrator';
 
 
 export class CategoryConverter {
 
-    constructor(private categories: Forest<Category>) { }
+    constructor(private projectConfiguration: ProjectConfiguration) { }
 
 
     public convert(document: Document): Document {
@@ -20,15 +19,15 @@ export class CategoryConverter {
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
 
         // TODO review after 2.19 released
-        if (this.categories) {
+        if (Tree.flatten(this.projectConfiguration.getCategoryForest()).length > 0) {
 
-            if (ProjectCategories.getImageCategoryNames(this.categories)
+            if (this.projectConfiguration.getImageCategoryNames()
                 .includes(convertedDocument.resource.category)) {
                     InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Image.DEPICTS], []);
                 } else {
                     InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.RECORDEDIN], []);
 
-                    if (ProjectCategories.getFeatureCategoryNames(this.categories)
+                    if (this.projectConfiguration.getFeatureCategoryNames()
                         .includes(convertedDocument.resource.category)) {
                             InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
                             InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);

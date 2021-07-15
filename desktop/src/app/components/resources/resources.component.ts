@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { Document, FieldDocument, FieldGeometry, Category, ProjectCategories,
+import { Document, FieldDocument, FieldGeometry, Category,
     ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { Routing } from '../services/routing';
@@ -131,11 +131,11 @@ export class ResourcesComponent implements OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? ProjectCategories.getConcreteFieldCategories(this.projectConfiguration.getCategoryForest())
+                ? this.projectConfiguration.getConcreteFieldCategories()
                     .filter(category => !category.parentCategory)
-                : ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryForest());
+                : this.projectConfiguration.getOverviewToplevelCategories();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryForest());
+            this.filterOptions = this.projectConfiguration.getTypeCategories();
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',

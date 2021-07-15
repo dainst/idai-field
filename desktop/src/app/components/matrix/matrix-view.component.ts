@@ -21,7 +21,6 @@ import CUTS = Relations.Position.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Menus } from '../services/menus';
-import { ProjectCategories } from 'idai-field-core';
 
 const Viz = require('viz.js');
 
@@ -194,7 +193,7 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
-        const categories = ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryForest());
+        const categories = this.projectConfiguration.getFeatureCategoryNames();
 
         const result = await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': trench.resource.id },

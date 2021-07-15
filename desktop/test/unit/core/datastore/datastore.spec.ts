@@ -1,4 +1,4 @@
-import { CategoryConverter, createCategory, Datastore, doc, DocumentCache } from 'idai-field-core';
+import { CategoryConverter, createCategory, Datastore, doc, DocumentCache, ProjectConfiguration } from 'idai-field-core';
 
 
 /**
@@ -15,12 +15,14 @@ describe('Datastore', () => {
 
         const categories = [createCategory('Find')];
 
+        const projectConfiguration = new ProjectConfiguration([categories, []]);
+
         const documentCache = new DocumentCache();
         return new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new CategoryConverter(categories));
+            new CategoryConverter(projectConfiguration));
     }
 
 

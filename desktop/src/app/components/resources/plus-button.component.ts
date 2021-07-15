@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChil
 import { Category, Datastore, FieldDocument, Name, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
-import { ProjectCategories } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../core/resources/view/view-facade';
 import { M } from '../messages/m';
@@ -62,7 +61,7 @@ export class PlusButtonComponent implements OnChanges {
 
 
     public isGeometryCategory = (category: Name) =>
-        ProjectCategories.isGeometryCategory(this.projectConfiguration.getCategoryForest(), category);
+        this.projectConfiguration.isGeometryCategory(category);
 
 
     ngOnChanges() {
@@ -199,8 +198,8 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryForest()).includes(category.name)
-                    : ProjectCategories.getTypeCategoryNames().includes(category.name))) {
+                    ? this.projectConfiguration.getOverviewCategories().includes(category.name)
+                    : this.projectConfiguration.getTypeCategoryNames().includes(category.name))) {
                 return false;
             }
         }

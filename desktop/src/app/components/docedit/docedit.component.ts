@@ -37,7 +37,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
  */
 export class DoceditComponent {
 
-    public activeGroup: string = Groups.STEM;
+    public activeGroup: string;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
     public groups: Array<Group>|undefined;
 
@@ -180,6 +180,7 @@ export class DoceditComponent {
             this.documentHolder.clonedDocument.resource.category
         );
         this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)).groups;
+        if (this.groups.length > 0) this.activeGroup = this.groups[0].name;
     }
 
 

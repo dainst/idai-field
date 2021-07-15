@@ -352,7 +352,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private setPathOptions(path: L.Path, document: FieldDocument, type: 'polyline'|'polygon') {
 
         const style: L.PathOptions = {
-            color: this.projectConfiguration.getCategory(document.resource.category).color,
+            color: this.projectConfiguration.getCategory(document).color,
             weight: type === 'polyline' ? 2 : 1,
             opacity: this.getSelection().includes(document) ? 1 : 0.5
         };
@@ -378,7 +378,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private setPathOptionsForParentDocument(path: L.Path, document: FieldDocument) {
 
         path.setStyle({
-            color: this.projectConfiguration.getCategory(document.resource.category).color,
+            color: this.projectConfiguration.getCategory(document).color,
             weight: 2,
             dashArray: '5, 5, 1, 5',
             opacity: 0.2,
@@ -475,7 +475,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected getMarkerOptions(document: FieldDocument): L.CircleMarkerOptions {
 
-        const color = this.projectConfiguration.getCategory(document.resource.category).color;
+        const color = this.projectConfiguration.getCategory(document).color;
 
         return {
             fillColor: color,

@@ -63,7 +63,7 @@ export class DoceditComponent {
 
     public getFieldDefinitionLabel: (_: string) => string;
 
-    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.documentHolder.clonedDocument.resource.category));
+    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.documentHolder.clonedDocument));
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -103,7 +103,7 @@ export class DoceditComponent {
         this.documentHolder.setDocument(document);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.labels.getFieldDefinitionLabel(this.projectConfiguration.getCategory(document.resource.category), fieldName);
+            this.labels.getFieldDefinitionLabel(this.projectConfiguration.getCategory(document), fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();
@@ -179,7 +179,7 @@ export class DoceditComponent {
         this.fieldDefinitions = this.projectConfiguration.getFieldDefinitions(
             this.documentHolder.clonedDocument.resource.category
         );
-        this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument.resource.category)).groups;
+        this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)).groups;
     }
 
 

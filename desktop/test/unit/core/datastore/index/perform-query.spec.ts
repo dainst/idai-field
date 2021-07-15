@@ -21,7 +21,7 @@ describe('performQuery', () => {
             IndexerConfiguration.configureIndexers(projectConfiguration);
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
-        categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategoryForest()) as any);
+        categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()) as any);
     });
 
 

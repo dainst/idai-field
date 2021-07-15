@@ -164,7 +164,7 @@ export class PlusButtonComponent implements OnChanges {
                 this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
         } else {
-            for (let category of Tree.flatten(projectConfiguration.getCategoryForest())) {
+            for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {

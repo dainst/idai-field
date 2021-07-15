@@ -415,7 +415,7 @@ describe('ConfigLoader', () => {
                 [], {}, undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategoryForest()))['B:0']
+            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()))['B:0']
                 .groups[0].fields
                 .find(field => field.name == 'fieldB1').inputType)
                 .toEqual('boolean');
@@ -554,7 +554,7 @@ describe('ConfigLoader', () => {
                 undefined, 'User'
             );
 
-            const result = Named.arrayToMap<Category>(Tree.flatten(pconf.getCategoryForest()));
+            const result = Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()));
 
             expect(result['A'].name).toEqual('A');
             expect(result['A'].groups[0].name).toBe(Groups.STEM);
@@ -614,7 +614,7 @@ describe('ConfigLoader', () => {
                 [], {}, undefined, 'User'
             );
 
-            expect(Tree.flatten(pconf.getCategoryForest()).length).toBe(2);
+            expect(Tree.flatten(pconf.getCategories()).length).toBe(2);
             expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
             expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('fieldA1');
             expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('fieldA2');

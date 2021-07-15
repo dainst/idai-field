@@ -195,7 +195,7 @@ export class ImportComponent implements OnInit {
     public updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
-            Tree.flatten(this.projectConfiguration.getCategoryForest()), this.getCategoriesToExclude()
+            Tree.flatten(this.projectConfiguration.getCategories()), this.getCategoriesToExclude()
         );
 
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
@@ -359,7 +359,7 @@ export class ImportComponent implements OnInit {
     private getCategoryFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
-            const category: Category|undefined = Tree.flatten(this.projectConfiguration.getCategoryForest())
+            const category: Category|undefined = Tree.flatten(this.projectConfiguration.getCategories())
                 .find(category => category.name.toLowerCase() === segment.toLowerCase());
             if (category) return category;
         }

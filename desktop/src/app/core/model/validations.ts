@@ -252,8 +252,8 @@ export module Validations {
 
         if (!resource.category) return false;
         return Tree.flatten(projectConfiguration
-            .getCategoryForest())
-            .some(on(Named.NAME, is(resource.category)));
+            .getCategories())
+            .some(Named.onName(is(resource.category)));
     }
 
 

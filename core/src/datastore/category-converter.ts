@@ -20,7 +20,7 @@ export class CategoryConverter {
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
 
         // TODO review after 2.19 released
-        if (Tree.flatten(this.projectConfiguration.getCategoryForest()).length > 0) {
+        if (Tree.flatten(this.projectConfiguration.getCategories()).length > 0) {
 
             if (this.projectConfiguration.getImageCategories().map(Named.toName)
                 .includes(convertedDocument.resource.category)) {

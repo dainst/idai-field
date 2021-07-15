@@ -366,7 +366,7 @@ export class ConfigurationComponent implements OnInit {
 
     private loadCategories() {
 
-        this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategoryForest())
+        this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
         if (this.selectedCategory) {

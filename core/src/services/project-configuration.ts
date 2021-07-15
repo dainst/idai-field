@@ -41,7 +41,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryForest(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
+    public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
 
         return selectedTopLevelCategories.length === 0
             ? this.categories

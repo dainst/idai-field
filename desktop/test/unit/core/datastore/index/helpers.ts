@@ -5,7 +5,7 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategoryForest']
+        ['getCategories']
     );
 
     const defaultFieldConfiguration = {
@@ -24,7 +24,7 @@ export function createMockProjectConfiguration(): any {
         }]
     };
 
-    projectConfiguration.getCategoryForest.and.returnValue([
+    projectConfiguration.getCategories.and.returnValue([
         { item: update('name', 'category1', defaultFieldConfiguration), trees: [] },
         { item: update('name', 'category2', defaultFieldConfiguration), trees: [] },
         { item: update('name', 'category3', defaultFieldConfiguration), trees: [] },

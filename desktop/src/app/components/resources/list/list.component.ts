@@ -34,7 +34,7 @@ export class ListComponent extends BaseList implements OnChanges {
         super(resourcesComponent, viewFacade, loading, menuService);
 
         // TODO review if we couln't just make use of getCategory()
-        this.categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategoryForest()));
+        this.categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()));
     }
 
 

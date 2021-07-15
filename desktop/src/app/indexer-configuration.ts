@@ -24,13 +24,13 @@ export module IndexerConfiguration {
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
-        }, Tree.flatten(projectConfiguration.getCategoryForest()));
+        }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            Tree.flatten(projectConfiguration.getCategoryForest()),
+            Tree.flatten(projectConfiguration.getCategories()),
             showWarnings
         );
 

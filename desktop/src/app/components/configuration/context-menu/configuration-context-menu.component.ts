@@ -54,6 +54,6 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
         return (!this.contextMenu.field || this.contextMenu.field.source === 'custom')
             && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
-                || !this.contextMenu.category.mandatory);
+                || !this.contextMenu.category.required);
     }
 }

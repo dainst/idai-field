@@ -147,7 +147,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public async editProject(activeGroup: string = 'stem') {
+    public async editProject(activeGroup?: string) {
 
         this.menuService.setContext(MenuContext.DOCEDIT);
 

@@ -180,7 +180,7 @@ export class DoceditComponent {
             this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)
         );
         this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)).groups;
-        if (this.groups.length > 0) this.activeGroup = this.groups[0].name;
+        if (!this.activeGroup && this.groups.length > 0) this.activeGroup = this.groups[0].name;
     }
 
 

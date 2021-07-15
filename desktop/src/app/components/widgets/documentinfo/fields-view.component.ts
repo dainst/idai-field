@@ -18,7 +18,7 @@ import { UtilTranslations } from '../../../core/util/util-translations';
 export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() openSection: string | undefined = Groups.STEM;
+    @Input() openSection: string|undefined;
     @Input() expandAllGroups: boolean = false;
 
     @Output() onSectionToggled = new EventEmitter<string | undefined>();
@@ -45,6 +45,7 @@ export class FieldsViewComponent implements OnChanges {
         if (!this.resource) return;
 
         this.groups = await FieldsViewUtil.getGroupsForResource(this.resource, this.projectConfiguration, this.datastore, this.labels);
+        if (!this.openSection && this.groups.length > 0) this.openSection = this.groups[0].name;
     }
 
 

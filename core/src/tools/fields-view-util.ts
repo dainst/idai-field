@@ -22,7 +22,6 @@ type FieldContent = any;
 
 export interface FieldsViewGroup extends BaseGroup {
 
-    shown: boolean;
     fields: Array<FieldsViewField>;
 }
 
@@ -53,7 +52,7 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-    export function getValue(fieldContent: any, 
+    export function getValue(fieldContent: any,
                              fieldName: string, 
                              projectConfiguration: ProjectConfiguration,
                              labels: Labels,

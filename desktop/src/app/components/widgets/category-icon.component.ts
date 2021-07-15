@@ -55,7 +55,7 @@ export class CategoryIconComponent implements OnChanges {
     private determineColorForCategory() {
 
         this.color = isString(this.category)
-            ? this.projectConfiguration.getColorForCategory(this.category)
+            ? Category.getColorForCategory(this.projectConfiguration.getCategory(this.category))
             : this.category.color;
     }
 }

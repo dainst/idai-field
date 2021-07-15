@@ -131,6 +131,19 @@ export namespace Category {
     }
 
 
+    // TODO remove or make private and make sure color is always set at runtime; simplify call in category-icon.component
+    export function getColorForCategory(category: Category): string {
+
+        return category.color ?? '#cccccc';
+    }
+
+
+    export function getTextColorForCategory(category: Category): string {
+
+        return Category.isBrightColor(getColorForCategory(category)) ? '#000000' : '#ffffff';
+    }
+
+
     export function isBrightColor(color: Color): boolean {
 
         color = color.substring(1); // strip #

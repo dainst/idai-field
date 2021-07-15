@@ -62,6 +62,7 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO make version with gets category for document, which makes most calls simpler
     /**
      * @return Category, including children field
      */
@@ -163,18 +164,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getColorForCategory(categoryName: string): string {
-
-        return this.getCategoryColors()[categoryName] ?? '#cccccc';
-    }
-
-
-    public getTextColorForCategory(categoryName: string): string {
-
-        return Category.isBrightColor(this.getColorForCategory(categoryName)) ? '#000000' : '#ffffff';
-    }
-
-
+    // TODO remove
     public getCategoryColors() {
 
         return map(_ => _.color, this.categoriesMap);

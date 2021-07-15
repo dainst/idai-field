@@ -16,9 +16,10 @@ describe('DotBuilder', () => {
     beforeAll(() => {
 
         mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
-            ['getColorForCategory', 'getTextColorForCategory']);
-        mockProjectConfiguration.getColorForCategory.and.returnValue('#ffffff');
-        mockProjectConfiguration.getTextColorForCategory.and.returnValue('#000000');
+            ['getCategory']);
+        mockProjectConfiguration.getCategory.and.returnValue({
+            color: '#000000',
+        })
     });
 
 

@@ -1,5 +1,5 @@
-import { filter, flow, includedIn, is, isEmpty, Map, map, not, on, Pair } from 'tsfun';
-import { Category, FieldDefinition, RelationDefinition } from '../model';
+import { includedIn, Map, on, Pair, isString } from 'tsfun';
+import { Category, FieldDefinition, RelationDefinition, Document } from '../model';
 import { Forest, isTopLevelItemOrChildThereof, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
@@ -62,13 +62,18 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO make version with gets category for document, which makes most calls simpler
     /**
      * @return Category, including children field
      */
-    public getCategory(category: Name): Category|undefined {
+    public getCategory(category: Name): Category|undefined;
+    public getCategory(document: Document): Category|undefined
+    public getCategory(arg) {
 
-        return this.categoriesMap[category];
+        const key = isString(arg) 
+            ? (arg as Name) 
+            : (arg as Document).resource.category;
+        
+        return this.categoriesMap[key];
     }
 
 
@@ -153,6 +158,7 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO move to Category
     /**
      * @param categoryName
      * @returns {any[]} the fields definitions for the category.

@@ -5,7 +5,7 @@ import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
-import {FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore} from 'idai-field-core'
+import {FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named} from 'idai-field-core'
 
 
 /**
@@ -63,9 +63,9 @@ export class ResourcesStateManager {
     public getOverviewCategoryNames = (): string[] => this.projectConfiguration
         .getOverviewCategoryNames();
 
-    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategoryNames();
+    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategories().map(Named.toName);
 
-    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeCategoryNames();
+    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeCategories().map(Named.toName);
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 

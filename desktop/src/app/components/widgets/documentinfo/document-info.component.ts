@@ -1,5 +1,5 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
-import {Document} from 'idai-field-core';
+import {Document, Named} from 'idai-field-core';
 import {FieldDocument, Groups} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 
@@ -60,7 +60,7 @@ export class DocumentInfoComponent implements DoCheck {
 
     public isImageDocument() {
 
-        return this.projectConfiguration.getImageCategoryNames().includes(this.document.resource.category);
+        return this.projectConfiguration.getImageCategories().map(Named.toName).includes(this.document.resource.category);
     }
 
 

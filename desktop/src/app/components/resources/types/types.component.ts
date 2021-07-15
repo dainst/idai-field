@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager, ProjectConfiguration } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, RelationsManager, ProjectConfiguration, Named } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
@@ -329,6 +329,6 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private isCatalogOrType(document: FieldDocument): boolean {
 
-        return this.projectConfiguration.getTypeCategoryNames().includes(document.resource.category);
+        return this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category);
     }
 }

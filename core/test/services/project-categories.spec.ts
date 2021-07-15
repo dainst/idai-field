@@ -98,7 +98,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getRegularCategoryNames(),
+                projectConfiguration.getRegularCategories().map(Named.toName),
                 ['Inscription', 'Find', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -108,7 +108,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getImageCategoryNames(),
+                projectConfiguration.getImageCategories().map(Named.toName),
                 ['Image', 'Drawing'])
         ).toBeTruthy();
     });
@@ -158,7 +158,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getFeatureCategoryNames(),
+                projectConfiguration.getFeatureCategories().map(Named.toName),
                 ['Feature', 'Architecture'])
         ).toBeTruthy();
     });

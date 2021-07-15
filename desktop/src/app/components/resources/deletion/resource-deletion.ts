@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set, to } from 'tsfun';
-import { FieldDocument, ProjectConfiguration, RelationsManager } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { ImageRelationsManager } from '../../../core/model/image-relations-manager';
@@ -79,7 +79,7 @@ export class ResourceDeletion {
 
     private isImportedCatalog = (document: FieldDocument) => {
 
-        return this.projectConfiguration.getTypeCategoryNames().includes(document.resource.category)
+        return this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
             && document.project !== undefined;
     }
 

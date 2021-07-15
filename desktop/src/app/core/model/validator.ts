@@ -1,4 +1,4 @@
-import { FindResult, Relations, Query } from 'idai-field-core';
+import { FindResult, Relations, Query, Named } from 'idai-field-core';
 import { Document, NewDocument, ProjectConfiguration} from 'idai-field-core';
 import { isnt, on } from 'tsfun';
 import { ValidationErrors } from './validation-errors';
@@ -90,7 +90,8 @@ export class Validator {
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
         return this.projectConfiguration
-            .getRegularCategoryNames()
+            .getRegularCategories()
+            .map(Named.toName)
             .includes(document.resource.category);
     }
 

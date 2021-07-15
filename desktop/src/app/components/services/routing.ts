@@ -2,7 +2,7 @@ import { Observable, Observer } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatastoreErrors } from 'idai-field-core';
+import { DatastoreErrors, Named } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../core/resources/view/view-facade';
@@ -140,7 +140,7 @@ export class Routing {
 
         return this.projectConfiguration.getOverviewCategoryNames().includes(document.resource.category)
             ? 'project'
-            : this.projectConfiguration.getTypeCategoryNames().includes(document.resource.category)
+            : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

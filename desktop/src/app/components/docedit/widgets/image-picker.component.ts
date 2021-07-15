@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { err, isOk, ok } from 'tsfun';
-import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
+import {Datastore, FieldDocument, ImageDocument, Named} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
@@ -160,7 +160,7 @@ export class ImagePickerComponent implements OnInit {
 
     private getQuery() {
 
-        const categories = this.projectConfiguration.getImageCategoryNames()
+        const categories = this.projectConfiguration.getImageCategories().map(Named.toName)
         return {
             categories: categories,
             offset: this.currentOffset,

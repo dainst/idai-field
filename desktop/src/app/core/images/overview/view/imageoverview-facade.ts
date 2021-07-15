@@ -1,5 +1,5 @@
 import * as tsfun from 'tsfun';
-import {ImageDocument, Query} from 'idai-field-core';
+import {ImageDocument, Named, Query} from 'idai-field-core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {ProjectConfiguration} from 'idai-field-core';
@@ -186,7 +186,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            categories: this.projectConfiguration.getImageCategoryNames()
+            categories: this.projectConfiguration.getImageCategories().map(Named.toName)
         };
     }
 

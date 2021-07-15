@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is} from 'tsfun';
-import {Datastore, FeatureDocument, FieldDocument, Document} from 'idai-field-core';
+import {Datastore, FeatureDocument, FieldDocument, Document, Named} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 import {Loading} from '../widgets/loading';
@@ -193,7 +193,7 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
-        const categories = this.projectConfiguration.getFeatureCategoryNames();
+        const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
         const result = await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': trench.resource.id },

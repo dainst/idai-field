@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
-    RelationsManager, Labels, Tree } from 'idai-field-core';
+    RelationsManager, Labels, Tree, Named } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
@@ -249,7 +249,7 @@ export class ImportComponent implements OnInit {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(this.projectConfiguration.getImageCategoryNames());
+            : BASE_EXCLUSION.concat(this.projectConfiguration.getImageCategories().map(Named.toName));
     }
 
 
@@ -277,7 +277,7 @@ export class ImportComponent implements OnInit {
             {
                 settings: this.settingsProvider.getSettings(),
                 projectConfiguration: this.projectConfiguration,
-                overviewCategoryNames: this.projectConfiguration.getOperationCategoryNames() // TODO review
+                overviewCategoryNames: this.projectConfiguration.getOperationCategories().map(Named.toName) // TODO review
             },
             () => this.idGenerator.generateId(),
             options,
@@ -347,7 +347,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: this.projectConfiguration.getOperationCategoryNames()
+                categories: this.projectConfiguration.getOperationCategories().map(Named.toName)
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

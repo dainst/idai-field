@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration,
-    ON_RESOURCE_ID, ResourceId, toResourceId, RelationsManager } from 'idai-field-core';
+    ON_RESOURCE_ID, ResourceId, toResourceId, RelationsManager, Named } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to, isnt, not, rest, first } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import DEPICTS = Relations.Image.DEPICTS;
@@ -63,7 +63,7 @@ export class ImageRelationsManager {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
         const [imageDocuments, nonImageDocuments] = separate(documents,
-                document => this.projectConfiguration.getImageCategoryNames().includes(document.resource.category));
+                document => this.projectConfiguration.getImageCategories().map(Named.toName).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = [];
@@ -113,7 +113,7 @@ export class ImageRelationsManager {
     public async unlink(...selectedImages: Array<ImageDocument>);
     public async unlink(...documents: Array<Document>) {
 
-        const imageDocumentNames = this.projectConfiguration.getImageCategoryNames();
+        const imageDocumentNames = this.projectConfiguration.getImageCategories().map(Named.toName);
         const isImageDocument = document => imageDocumentNames.includes(document.resource.category);
 
         if (rest(documents).some(not(isImageDocument))) {

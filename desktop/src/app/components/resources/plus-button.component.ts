@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, Datastore, FieldDocument, Name, Tree } from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Name, Named, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
@@ -199,7 +199,7 @@ export class PlusButtonComponent implements OnChanges {
         } else {
             if (!(this.viewFacade.isInOverview()
                     ? this.projectConfiguration.getOverviewCategories().includes(category.name)
-                    : this.projectConfiguration.getTypeCategoryNames().includes(category.name))) {
+                    : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(category.name))) {
                 return false;
             }
         }

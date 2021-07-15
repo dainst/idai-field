@@ -9,7 +9,6 @@ export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefin
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
-const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
 /**
@@ -88,7 +87,8 @@ export class ProjectConfiguration {
      * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
      * which has the given range category & name
      */
-    public isAllowedRelationDomainCategory(domainCategoryName: string, rangeCategoryName: string,
+    public isAllowedRelationDomainCategory(domainCategoryName: string, 
+                                           rangeCategoryName: string,
                                            relationName: string): boolean {
 
         const relationDefinitions = this.getRelationsForRangeCategory(rangeCategoryName);
@@ -151,13 +151,11 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO remove; just return categories
-    public getRegularCategoryNames(): Array<Name> {
+    public getRegularCategories(): Array<Category> {
 
         return flow(this.categories,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
-            Tree.flatten,
-            map(Named.toName)
+            Tree.flatten
         );
     }
 
@@ -171,13 +169,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO remove; just return categories
-    public getConcreteFieldCategoryNames(): Array<Name> {
-
-        return this.getConcreteFieldCategories().map(Named.toName);
-    }
-
-
     public getFieldCategories(): Array<Category> {
 
         return flow(this.categories,
@@ -187,13 +178,7 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO remove; just return categories
-    public getFieldCategoryNames(): Array<Name> {
-
-        return this.getFieldCategories().map(Named.toName);
-    }
-
-
+    // TODO return categories, not names
     public getOverviewCategoryNames(): Array<Name> {
 
         return flow(this.categories,
@@ -204,6 +189,7 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO return categories, not names; review duplication with the method one above
     public getOverviewCategories(): Array<Name> {
 
         return flow(this.categories,
@@ -228,46 +214,38 @@ export class ProjectConfiguration {
     public getTypeCategories(): Array<Category> {
 
         return flow(this.categories,
-            filterTrees('Type', 'TypeCatalog'),
+            filterTrees(TYPE, TYPE_CATALOG),
             Tree.flatten
         );
     }
 
 
-    public getTypeCategoryNames(): Array<Name> {
-
-        return TYPE_CATALOG_AND_TYPE;
-    }
-
-
-    public getImageCategoryNames(): Array<Name> {
+    public getImageCategories(): Array<Category> {
 
         return flow(this.categories,
             filterTrees('Image'),
-            Tree.flatten,
-            map(Named.toName)
+            Tree.flatten
         );
     }
 
 
-    public getFeatureCategoryNames(): string[] {
+    public getFeatureCategories(): Array<Category> {
 
-        return this.getSuperCategoryNames('Feature');
+        return this.getSuperCategories('Feature');
     }
 
 
-    public getOperationCategoryNames(): string[] {
+    public getOperationCategories(): Array<Category> {
 
-        return this.getSuperCategoryNames('Operation');
+        return this.getSuperCategories('Operation');
     }
 
 
-    private getSuperCategoryNames(superCategoryName: string) {
+    private getSuperCategories(superCategoryName: string) {
 
         return flow(
             this.categories,
             filterTrees(superCategoryName),
-            Tree.flatten,
-            map(Named.toName));
+            Tree.flatten);
     }
 }

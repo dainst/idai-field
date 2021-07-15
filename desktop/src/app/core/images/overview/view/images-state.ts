@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-field-core';
+import {Named, Query} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 
 
@@ -70,7 +70,7 @@ export class ImagesState {
 
         if (this.query) {
             this.query.q = '';
-            this.query.categories = this.projectConfiguration.getImageCategoryNames();
+            this.query.categories = this.projectConfiguration.getImageCategories().map(Named.toName);
         }
 
         this.customConstraints = {};

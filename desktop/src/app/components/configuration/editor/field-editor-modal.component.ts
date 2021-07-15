@@ -79,7 +79,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedCategoryDefinition().fields[this.field.name];
         }
 
-        super.save();
+        super.save(this.isConstraintIndexedChanged());
     }
 
 
@@ -136,13 +136,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition().inputType
             || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
-            || this.getCustomFieldDefinition()?.constraintIndexed !== this.getClonedFieldDefinition().constraintIndexed
+            || this.isConstraintIndexedChanged()
+            || !equal(this.label)(this.clonedLabel)
+            || !equal(this.description)(this.clonedDescription);
+    }
+
+
+    private isConstraintIndexedChanged(): boolean {
+
+        return this.getCustomFieldDefinition()?.constraintIndexed !== this.getClonedFieldDefinition().constraintIndexed
             || (this.getCustomFieldDefinition()?.constraintIndexed === undefined
                 && this.getClonedFieldDefinition().constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
-                && this.getClonedFieldDefinition().constraintIndexed === undefined)
-            || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description)(this.clonedDescription);
+                && this.getClonedFieldDefinition().constraintIndexed === undefined);
     }
 
 

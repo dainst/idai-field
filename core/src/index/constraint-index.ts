@@ -1,11 +1,9 @@
-import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
-    subtract,
-    clone} from 'tsfun';
-import {Document} from '../model/document';
-import {Resource} from '../model/resource';
+import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
+    subtract, clone } from 'tsfun';
+import { Document } from '../model/document';
+import { Resource } from '../model/resource';
 import { Category } from '../model/category';
 import { FieldDefinition } from '../model/field-definition';
-import { ObjectUtils } from '../tools/object-utils';
 
 
 export interface IndexDefinition {
@@ -140,6 +138,17 @@ export module ConstraintIndex {
         return indexItems
             ? Object.keys(indexItems).length
             : 0;
+    }
+
+
+    export function addIndexDefinitionsForField(index: ConstraintIndex, field: FieldDefinition) {
+
+        if (!field.constraintIndexed) return;
+
+        makeIndexDefinitions(field).forEach(item => {
+            index.indexDefinitions[item.name] = item.indexDefinition;
+            getIndex(index, item.indexDefinition)[item.indexDefinition.path] = {};
+        });
     }
 
 

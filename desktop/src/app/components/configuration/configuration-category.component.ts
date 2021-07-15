@@ -13,8 +13,8 @@ import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import {ErrWithParams} from '../../core/import/import/import-documents';
-import {Modals} from '../services/modals';
+import { ErrWithParams } from '../../core/import/import/import-documents';
+import { Modals } from '../services/modals';
 
 
 @Component({

@@ -1,5 +1,6 @@
 import { Observable, Observer } from 'rxjs';
 import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
+import { FieldDefinition } from '../model';
 import { Category } from '../model/category';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
@@ -111,6 +112,12 @@ export class IndexFacade {
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
         return ConstraintIndex.getWithDescendants(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+    
+    public addConstraintIndexDefinitionsForField(field: FieldDefinition) {
+
+        ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
     }
 
 

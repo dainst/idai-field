@@ -31,7 +31,7 @@
         "siteClassification": "Place-siteClassification-Selinunt"
       },
       "fields": {
-        "placeCondition" : {
+        "placeCondition": {
           "inputType": "text"
         }
       }
@@ -791,5 +791,48 @@
         "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
       }
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "Bedrock",
+    "ProcessUnit",
+    "Interface",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "PlasterFragment",
+    "Mollusk",
+    "FindCollection",
+    "Inscription",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

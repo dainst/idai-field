@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { nop } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader, createContextIndependentCategories, Labels } from 'idai-field-core';
+    getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
+    createContextIndependentCategories, Labels, IndexFacade } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
@@ -21,7 +23,6 @@ import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { Modals } from '../services/modals';
-import { nop } from 'tsfun';
 import { ConfigurationIndex } from '../../core/configuration/configuration-index';
 
 
@@ -76,8 +77,10 @@ export class ConfigurationComponent implements OnInit {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument)
-        : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(configurationDocument);
+    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string)
+        : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(
+            configurationDocument, reindexCategory
+        );
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -90,6 +93,7 @@ export class ConfigurationComponent implements OnInit {
                 private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
                 private labels: Labels,
+                private indexFacade: IndexFacade,
                 private i18n: I18n) {}
 
 
@@ -316,14 +320,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteCategory(category: Category) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
-            category, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
+                category, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }
@@ -331,14 +335,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteGroup(category: Category, group: Group) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-            category, group, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
+                category, group, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }
@@ -346,14 +350,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteField(category: Category, field: FieldDefinition) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-            category, field, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
+                category, field, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }
@@ -372,8 +376,8 @@ export class ConfigurationComponent implements OnInit {
     }
 
 
-    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument)
-            : Promise<ErrWithParams|undefined> {
+    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
+                                                   reindexCategory?: string): Promise<ErrWithParams|undefined> {
 
         let newProjectConfiguration;
         try {
@@ -397,6 +401,7 @@ export class ConfigurationComponent implements OnInit {
                 return;
             }
             this.projectConfiguration.update(newProjectConfiguration);
+            if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
@@ -404,6 +409,20 @@ export class ConfigurationComponent implements OnInit {
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
+    }
+
+
+    private async reindex(category: Category) {
+
+        Category.getFields(category).forEach(field => {
+            this.indexFacade.addConstraintIndexDefinitionsForField(field)
+        });
+
+        const documents: Array<Document> = (await this.datastore.find(
+            { categories: [category.name] }
+        )).documents
+
+        await this.indexFacade.putMultiple(documents);
     }
 
 

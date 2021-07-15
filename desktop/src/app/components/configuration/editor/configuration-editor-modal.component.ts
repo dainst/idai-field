@@ -23,7 +23,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument) =>
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
 
     public saving: boolean;
@@ -88,14 +88,15 @@ export abstract class ConfigurationEditorModalComponent {
     }
 
 
-    public async save() {
+    public async save(reindex?: boolean) {
 
         this.saving = true;
         this.updateCustomLanguageConfigurations();
 
-        const optionalErrWithParams =
-            await this.saveAndReload(
-                this.clonedConfigurationDocument);
+        const optionalErrWithParams = await this.saveAndReload(
+            this.clonedConfigurationDocument,
+            reindex ? this.category.name : undefined
+        );
 
         if (optionalErrWithParams) {
             // TODO Show user-readable error messages

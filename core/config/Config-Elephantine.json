@@ -35,8 +35,18 @@
     },
     "Feature:default": {
       "color": "black",
-      "hidden": ["endDate", "beginningDate", "color", "hasDisturbance", "featureForm", "featureBorders"],
-      "commons": ["date", "literature"],
+      "hidden": [
+        "endDate",
+        "beginningDate",
+        "color",
+        "hasDisturbance",
+        "featureForm",
+        "featureBorders"
+      ],
+      "commons": [
+        "date",
+        "literature"
+      ],
       "valuelists": {
         "period": "periods-elephantine",
         "featureSamples": "featureSamples-elephantine"
@@ -105,7 +115,9 @@
     },
     "Image:default": {
       "hidden": [],
-      "commons": ["date"],
+      "commons": [
+        "date"
+      ],
       "valuelists": {},
       "fields": {}
     },
@@ -177,5 +189,39 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Survey",
+    "Place",
+    "Feature",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "PlasterFragment",
+    "Mollusk",
+    "Inscription",
+    "Sample",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

@@ -69,5 +69,12 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Place",
+    "Image",
+    "TypeCatalog",
+    "Type"
+  ]
 }

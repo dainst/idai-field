@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
     Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';

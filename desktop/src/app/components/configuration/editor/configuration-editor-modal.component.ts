@@ -23,7 +23,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: Category) =>
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
 
     public saving: boolean;
@@ -95,7 +95,7 @@ export abstract class ConfigurationEditorModalComponent {
 
         const optionalErrWithParams = await this.saveAndReload(
             this.clonedConfigurationDocument,
-            reindex ? this.category : undefined
+            reindex ? this.category.name : undefined
         );
 
         if (optionalErrWithParams) {

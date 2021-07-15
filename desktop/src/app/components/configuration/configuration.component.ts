@@ -77,7 +77,7 @@ export class ConfigurationComponent implements OnInit {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: Category)
+    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string)
         : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(
             configurationDocument, reindexCategory
         );
@@ -377,7 +377,7 @@ export class ConfigurationComponent implements OnInit {
 
 
     private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
-                                                   reindexCategory?: Category): Promise<ErrWithParams|undefined> {
+                                                   reindexCategory?: string): Promise<ErrWithParams|undefined> {
 
         let newProjectConfiguration;
         try {
@@ -401,7 +401,7 @@ export class ConfigurationComponent implements OnInit {
                 return;
             }
             this.projectConfiguration.update(newProjectConfiguration);
-            if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory.name));
+            if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }

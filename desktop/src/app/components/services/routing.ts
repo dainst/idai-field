@@ -138,7 +138,7 @@ export class Routing {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return this.projectConfiguration.getOperationAndPlace().includes(document.resource.category)
+        return this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)
             ? 'project'
             : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
                 ? 'types'

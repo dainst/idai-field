@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
+import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId, Named } from 'idai-field-core';
 import { isnt } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { Validations } from '../../../model/validations';
@@ -96,7 +96,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (this.projectConfiguration.getOperationAndPlace()
+        if (this.projectConfiguration.getOverviewCategories().map(Named.toName)
                 .includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];

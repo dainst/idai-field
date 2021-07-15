@@ -1,4 +1,4 @@
-import { includedIn, on, Pair, isString, flow, map, filter, remove, is } from 'tsfun';
+import { includedIn, on, Pair, isString, flow, filter, remove, is } from 'tsfun';
 import { Category, Relation, Document } from '../model';
 import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
@@ -113,18 +113,16 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO remove; let caller fetch them one by one
-    public getOperationAndPlace(): Array<Name> {
+    public getOverviewCategories(): Array<Category> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
-            Tree.flatten,
-            map(Named.toName)
+            Tree.flatten
         );
     }
 
 
-    public getOverviewCategories(): Array<Category> {
+    public getConreteOverviewCategories(): Array<Category> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),

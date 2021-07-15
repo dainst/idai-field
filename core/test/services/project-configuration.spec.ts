@@ -133,27 +133,27 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    it('getOverviewCategories', () => {
+    it('getOverviewConcreteOverviewCategories', () => {
 
         expect(
             sameset(
-                projectConfiguration.getOverviewCategories().map(Named.toName),
+                projectConfiguration.getConreteOverviewCategories().map(Named.toName),
                 ['Trench', 'Place'])
         ).toBeTruthy();
     });
 
 
-    it('getOverviewCategoryNames', () => {
+    it('getOverviewCategories', () => {
 
         expect(
             sameset(
-                projectConfiguration.getOperationAndPlace(),
+                projectConfiguration.getOverviewCategories().map(Named.toName),
                 ['Operation', 'Trench', 'Place'])
         ).toBeTruthy();
     });
 
 
-    it('getFeatureCategoryNames', () => {
+    it('getFeatureCategories', () => {
 
         expect(
             sameset(

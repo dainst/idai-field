@@ -1,5 +1,5 @@
 import { Document } from '../../src/model/document';
-import { RelationsManager } from '../../src/model/relations-manager';
+import { RelationsManager } from '../../src/services/relations-manager';
 import { ProjectConfiguration } from '../../src/configuration/project-configuration';
 
 

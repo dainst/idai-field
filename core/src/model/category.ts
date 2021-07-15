@@ -52,7 +52,7 @@ export interface Category extends Named {
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
 
-    color?: string;
+    color?: string; // TODO make sure it is always set and make non-optional
     defaultColor?: string;
 }
 
@@ -131,16 +131,15 @@ export namespace Category {
     }
 
 
-    // TODO remove or make private and make sure color is always set at runtime; simplify call in category-icon.component
-    export function getColorForCategory(category: Category): string {
+    export function getTextColorForCategory(category: Category): string {
 
-        return category.color ?? '#cccccc';
+        return Category.isBrightColor(getColor(category)) ? '#000000' : '#ffffff';
     }
 
 
-    export function getTextColorForCategory(category: Category): string {
+    function getColor(category: Category): string {
 
-        return Category.isBrightColor(getColorForCategory(category)) ? '#000000' : '#ffffff';
+        return category.color ?? '#cccccc';
     }
 
 

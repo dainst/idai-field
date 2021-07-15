@@ -246,9 +246,9 @@ export module DotBuilder {
 
             return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
                 + ' [id="node-' + document.resource.id + '" fillcolor="'
-                + Category.getColorForCategory(projectConfiguration.getCategory(document.resource.category))
+                + projectConfiguration.getCategory(document.resource.category).color
                 + '" color="'
-                + Category.getColorForCategory(projectConfiguration.getCategory(document.resource.category))
+                + projectConfiguration.getCategory(document.resource.category).color
                 + '" fontcolor="'
                 + Category.getTextColorForCategory(projectConfiguration.getCategory(document.resource.category))
                 + '"] ';

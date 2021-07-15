@@ -1,4 +1,4 @@
-import { RelationDefinition, Valuelist } from '../../model';
+import { Relation, Valuelist } from '../../model';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
@@ -14,7 +14,7 @@ export module ConfigurationValidation {
     const POSITION_VALUELIST_INPUT_TYPES = ['dimension'];
 
 
-    export function findMissingRelationType(relations: Array<RelationDefinition>,
+    export function findMissingRelationType(relations: Array<Relation>,
                                             categoryNames: string[]): Array<Array<string>> {
 
         let msgs: string[][] = [];

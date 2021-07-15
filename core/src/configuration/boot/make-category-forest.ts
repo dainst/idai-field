@@ -1,6 +1,6 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
 import { RelationsUtil } from '../relations-utils';
-import { Category, Field, Group, Groups, RelationDefinition, Resource } from '../../model';
+import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
@@ -15,7 +15,7 @@ const TEMP_GROUPS = 'tempGroups';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export const makeCategoryForest = (relationDefinitions: Array<RelationDefinition>) =>
+export const makeCategoryForest = (relationDefinitions: Array<Relation>) =>
         (categories: any): Forest<Category> => {
 
     const [parentDefs, childDefs] =
@@ -42,9 +42,9 @@ export const makeCategoryForest = (relationDefinitions: Array<RelationDefinition
 export const generateEmptyList = () => []; // to make sure getting a new instance every time this is called
 
 
-const createGroups = (relationDefinitions: Array<RelationDefinition>) => (category: Category): Category => {
+const createGroups = (relationDefinitions: Array<Relation>) => (category: Category): Category => {
 
-    const categoryRelations: Array<RelationDefinition> = RelationsUtil.getRelationDefinitions(
+    const categoryRelations: Array<Relation> = RelationsUtil.getRelationDefinitions(
         relationDefinitions, category.name
     );
 

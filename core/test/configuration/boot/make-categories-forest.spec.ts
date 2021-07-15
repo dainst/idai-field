@@ -1,5 +1,5 @@
 import { ConfigurationErrors, makeCategoryForest } from '../../../src/configuration/boot';
-import { Category, Field, FieldResource, Groups, RelationDefinition, Resource } from '../../../src/model';
+import { Category, Field, FieldResource, Groups, Relation, Resource } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 
 
@@ -112,7 +112,7 @@ describe('makeCategoriesForest', () => {
             }
         };
 
-        const relations: Array<RelationDefinition> = [{
+        const relations: Array<Relation> = [{
             name: 'relation',
             domain: ['T'],
             range: ['X'],

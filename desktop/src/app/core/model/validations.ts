@@ -1,7 +1,7 @@
-import {is, isArray, on, Predicate, isString, and} from 'tsfun';
+import {is, isArray, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange, Category, Tree} from 'idai-field-core';
-import {FieldGeometry, ProjectConfiguration, Named, Field, RelationDefinition} from 'idai-field-core';
+import {FieldGeometry, ProjectConfiguration, Named, Field, Relation} from 'idai-field-core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 
@@ -294,7 +294,7 @@ export module Validations {
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<RelationDefinition> = projectConfiguration
+        const fields: Array<Relation> = projectConfiguration
             .getRelationsForDomainCategory(resource.category);
         const invalidFields: Array<any> = [];
 

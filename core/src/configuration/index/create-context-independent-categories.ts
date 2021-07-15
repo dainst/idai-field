@@ -1,5 +1,5 @@
 import { Map, clone, remove, isUndefined, on, is, filter, not, keysValues, curry, flow } from 'tsfun';
-import { Category, Field, RelationDefinition } from '../../model';
+import { Category, Field, Relation } from '../../model';
 import { Named } from '../../tools';
 import { Tree } from '../../tools/forest';
 import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
@@ -17,7 +17,7 @@ import { LibraryCategoryDefinition } from '../model/library-category-definition'
  * @author Daniel de Oliveira
  */
 export function createContextIndependentCategories(builtinCategories: Map<BuiltinCategoryDefinition>,
-                                                   builtInRelations: Array<RelationDefinition>,
+                                                   builtInRelations: Array<Relation>,
                                                    libraryCategories: Map<LibraryCategoryDefinition>,
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
                                                    : Array<Category> {

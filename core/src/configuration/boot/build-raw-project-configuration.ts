@@ -1,7 +1,7 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
     isUndefinedOrEmpty, not, curry } from 'tsfun';
-import { RelationDefinition, Category } from '../../model';
+import { Relation, Category } from '../../model';
 import { Valuelist } from '../../model/valuelist';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -38,7 +38,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              commonFields: Map<any> = {},
                                              valuelistsConfiguration: Map<Valuelist> = {},
                                              extraFields: Map<any> = {},
-                                             relations: Array<RelationDefinition> = [],
+                                             relations: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity): RawProjectConfiguration {
@@ -75,7 +75,7 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
                            categoriesOrder: string[],
-                           relations: Array<RelationDefinition>): Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
+                           relations: Array<Relation>): Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
 
     return compose(
         setCategoryNames,

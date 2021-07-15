@@ -148,7 +148,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getOverviewCategoryNames(),
+                projectConfiguration.getOperationAndPlace(),
                 ['Operation', 'Trench', 'Place'])
         ).toBeTruthy();
     });

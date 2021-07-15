@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import { isEmpty } from 'tsfun';
-import { RelationDefinition, Resource } from 'idai-field-core';
+import { Relation, Resource } from 'idai-field-core';
 
 
 /**
@@ -13,7 +13,7 @@ import { RelationDefinition, Resource } from 'idai-field-core';
 export class RelationPickerGroupComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() relationDefinition: RelationDefinition;
+    @Input() relationDefinition: Relation;
 
     public relations: any;
 

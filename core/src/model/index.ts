@@ -24,7 +24,7 @@ export { NewImageResource } from './new-image-resource';
 export { NewResource } from './new-resource';
 export { OptionalRange } from './optional-range';
 export { Query } from './query';
-export { Relation as RelationDefinition } from './relation';
+export { Relation } from './relation';
 export { Relations } from './relations';
 export { Resource } from './resource';
 export { Valuelist as Valuelist } from './valuelist';

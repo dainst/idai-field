@@ -1,11 +1,11 @@
 import { includedIn, on, Pair, isString, flow, map, filter, remove, is } from 'tsfun';
-import { Category, RelationDefinition, Document } from '../model';
+import { Category, Relation, Document } from '../model';
 import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
 import { RelationsUtil } from '../configuration/relations-utils';
 
 
-export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<Forest<Category>, Array<Relation>>;
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -24,7 +24,7 @@ export class ProjectConfiguration {
 
     private categories: Forest<Category>;
     
-    private relations: Array<RelationDefinition>;
+    private relations: Array<Relation>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
@@ -113,8 +113,8 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO return categories, not names; review relationship with the method one below
-    public getOverviewCategoryNames(): Array<Name> {
+    // TODO remove; let caller fetch them one by one
+    public getOperationAndPlace(): Array<Name> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
@@ -174,19 +174,19 @@ export class ProjectConfiguration {
     }
 
 
-    public getRelations(): Array<RelationDefinition> {
+    public getRelations(): Array<Relation> {
 
         return this.relations;
     }
 
 
-    public getRelationsForDomainCategory(categoryName: string): Array<RelationDefinition> {
+    public getRelationsForDomainCategory(categoryName: string): Array<Relation> {
 
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
     }
 
 
-    public getRelationsForRangeCategory(categoryName: string): Array<RelationDefinition> {
+    public getRelationsForRangeCategory(categoryName: string): Array<Relation> {
 
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
     }

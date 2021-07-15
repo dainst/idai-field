@@ -1,5 +1,5 @@
 import { isUndefinedOrEmpty } from 'tsfun';
-import { Document, Resource, Datastore, RelationDefinition } from 'idai-field-core';
+import { Document, Resource, Datastore, Relation } from 'idai-field-core';
 import { getSuggestions } from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
 import { RelationPicker } from './relation-picker';
 
@@ -10,7 +10,7 @@ import { RelationPicker } from './relation-picker';
 export class DefaultRelationPicker extends RelationPicker {
 
     constructor(private resource: Resource,
-                private relationDefinition: RelationDefinition,
+                private relationDefinition: Relation,
                 private datastore: Datastore,
                 private relationIndex: number) {
 

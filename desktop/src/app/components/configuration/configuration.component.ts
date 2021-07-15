@@ -415,7 +415,7 @@ export class ConfigurationComponent implements OnInit {
     private async reindex(category: Category) {
 
         Category.getFields(category).forEach(field => {
-            this.indexFacade.addIndexDefinitionsForField(field)
+            this.indexFacade.addConstraintIndexDefinitionsForField(field)
         });
 
         const documents: Array<Document> = (await this.datastore.find(

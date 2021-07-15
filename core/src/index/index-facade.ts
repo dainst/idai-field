@@ -115,7 +115,7 @@ export class IndexFacade {
     }
 
     
-    public addIndexDefinitionsForField(field: FieldDefinition) {
+    public addConstraintIndexDefinitionsForField(field: FieldDefinition) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
     }

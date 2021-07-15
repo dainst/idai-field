@@ -65,71 +65,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getRelations(): Array<RelationDefinition> {
-
-        return this.relations;
-    }
-
-
-    public getRelationsForDomainCategory(categoryName: string): Array<RelationDefinition> {
-
-        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
-    }
-
-
-    public getRelationsForRangeCategory(categoryName: string): Array<RelationDefinition> {
-
-        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
-    }
-
-
-    /**
-     * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
-     * which has the given range category & name
-     */
-    public isAllowedRelationDomainCategory(domainCategoryName: string, 
-                                           rangeCategoryName: string,
-                                           relationName: string): boolean {
-
-        const relationDefinitions = this.getRelationsForRangeCategory(rangeCategoryName);
-
-        for (let relationDefinition of relationDefinitions) {
-            if (relationName === relationDefinition.name
-                && relationDefinition.domain.indexOf(domainCategoryName) > -1) return true;
-        }
-
-        return false;
-    }
-
-
-    public getAllowedRelationDomainCategories(relationName: string,
-                                              rangeCategoryName: string): Array<Category> {
-
-        return Tree.flatten(this.categories)
-            .filter(category => {
-                return this.isAllowedRelationDomainCategory(
-                    category.name, rangeCategoryName, relationName
-                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
-                    category.parentCategory.name, rangeCategoryName, relationName
-                ));
-            });
-    }
-
-
-    public getAllowedRelationRangeCategories(relationName: string,
-                                             domainCategoryName: string): Array<Category> {
-
-        return Tree.flatten(this.categories)
-            .filter(category => {
-                return this.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.name, relationName
-                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.parentCategory.name, relationName
-                ));
-            });
-    }
-
-
     public getHierarchyParentCategories(categoryName: string): Array<Category> {
 
         return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
@@ -238,6 +173,71 @@ export class ProjectConfiguration {
     public getOperationCategories(): Array<Category> {
 
         return this.getSuperCategories('Operation');
+    }
+
+
+    public getRelations(): Array<RelationDefinition> {
+
+        return this.relations;
+    }
+
+
+    public getRelationsForDomainCategory(categoryName: string): Array<RelationDefinition> {
+
+        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
+    }
+
+
+    public getRelationsForRangeCategory(categoryName: string): Array<RelationDefinition> {
+
+        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
+    }
+
+
+    /**
+     * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
+     * which has the given range category & name
+     */
+    public isAllowedRelationDomainCategory(domainCategoryName: string, 
+                                           rangeCategoryName: string,
+                                           relationName: string): boolean {
+
+        const relationDefinitions = this.getRelationsForRangeCategory(rangeCategoryName);
+
+        for (let relationDefinition of relationDefinitions) {
+            if (relationName === relationDefinition.name
+                && relationDefinition.domain.indexOf(domainCategoryName) > -1) return true;
+        }
+
+        return false;
+    }
+
+
+    public getAllowedRelationDomainCategories(relationName: string,
+                                              rangeCategoryName: string): Array<Category> {
+
+        return Tree.flatten(this.categories)
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    category.name, rangeCategoryName, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    category.parentCategory.name, rangeCategoryName, relationName
+                ));
+            });
+    }
+
+
+    public getAllowedRelationRangeCategories(relationName: string,
+                                             domainCategoryName: string): Array<Category> {
+
+        return Tree.flatten(this.categories)
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.name, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.parentCategory.name, relationName
+                ));
+            });
     }
 
 

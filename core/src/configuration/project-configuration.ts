@@ -164,13 +164,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO remove
-    public getCategoryColors() {
-
-        return map(_ => _.color, this.categoriesMap);
-    }
-
-
     public isMandatory(categoryName: string, fieldName: string): boolean {
 
         return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);

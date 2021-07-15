@@ -289,7 +289,7 @@ export class EditableMapComponent extends LayerMapComponent {
             templineStyle: { color: 'blue', weight: 1 },
             hintlineStyle: { color: 'blue', weight: 1, dashArray: '5' },
             pathOptions: {
-                color: this.categoryColors[this.selectedDocument.resource.category],
+                color: this.projectConfiguration.getCategory(this.selectedDocument.resource.category).color,
                 weight: drawMode === 'Line' ? 2 : 1
             },
             tooltips: false

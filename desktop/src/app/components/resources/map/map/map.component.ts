@@ -41,16 +41,12 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected markersLayerGroup: L.LayerGroup;
 
     protected bounds: any[] = []; // in fact L.LatLng[], but leaflet typings are incomplete
-    protected categoryColors: { [categoryName: string]: string } = {};
 
     private canvasRenderer: L.Canvas = L.canvas({ padding: 1 });
 
 
-    constructor(projectConfiguration: ProjectConfiguration,
-                protected zone: NgZone) {
-
-        this.categoryColors = projectConfiguration.getCategoryColors();
-    }
+    constructor(protected projectConfiguration: ProjectConfiguration,
+                protected zone: NgZone) {}
 
 
     public ngAfterViewInit() {
@@ -356,7 +352,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private setPathOptions(path: L.Path, document: FieldDocument, type: 'polyline'|'polygon') {
 
         const style: L.PathOptions = {
-            color: this.categoryColors[document.resource.category],
+            color: this.projectConfiguration.getCategory(document.resource.category).color,
             weight: type === 'polyline' ? 2 : 1,
             opacity: this.getSelection().includes(document) ? 1 : 0.5
         };
@@ -382,7 +378,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private setPathOptionsForParentDocument(path: L.Path, document: FieldDocument) {
 
         path.setStyle({
-            color: this.categoryColors[document.resource.category],
+            color: this.projectConfiguration.getCategory(document.resource.category).color,
             weight: 2,
             dashArray: '5, 5, 1, 5',
             opacity: 0.2,
@@ -479,7 +475,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected getMarkerOptions(document: FieldDocument): L.CircleMarkerOptions {
 
-        const color: string = this.categoryColors[document.resource.category];
+        const color = this.projectConfiguration.getCategory(document.resource.category).color;
 
         return {
             fillColor: color,

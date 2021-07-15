@@ -1,6 +1,6 @@
 import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
-    Resource, OptionalRange, Category} from 'idai-field-core';
+    Resource, OptionalRange, Category, Tree} from 'idai-field-core';
 import {FieldGeometry, ProjectConfiguration, Named, FieldDefinition, RelationDefinition} from 'idai-field-core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
@@ -251,8 +251,8 @@ export module Validations {
                                      projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.category) return false;
-        return projectConfiguration
-            .getCategoriesArray()
+        return Tree.flatten(projectConfiguration
+            .getCategoryForest())
             .some(on(Named.NAME, is(resource.category)));
     }
 

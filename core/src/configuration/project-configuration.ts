@@ -23,7 +23,6 @@ export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefin
  */
 export class ProjectConfiguration {
 
-    private categoriesArray: Array<Category>;
     private categoryForest: Forest<Category>;
     private relations: Array<RelationDefinition>;
 
@@ -35,30 +34,22 @@ export class ProjectConfiguration {
     constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoryForest = categories;
-        this.categoriesArray = Tree.flatten<Category>(categories) || [];
         this.relations = relations || [];
-        this.categoriesMap = Named.arrayToMap(this.categoriesArray);
+        this.categoriesMap = Named.arrayToMap(Tree.flatten(categories));
     }
 
 
     public update(newProjectConfiguration: ProjectConfiguration) {
 
-        this.categoriesArray = newProjectConfiguration.categoriesArray;
         this.categoryForest = newProjectConfiguration.categoryForest;
         this.relations = newProjectConfiguration.relations;
-        this.categoriesMap = newProjectConfiguration.categoriesMap;
+        this.categoriesMap = newProjectConfiguration.categoriesMap; // TODO use find in category forest
     }
 
 
     public getAllRelationDefinitions(): Array<RelationDefinition> {
 
         return this.relations;
-    }
-
-
-    public getCategoriesArray(): Array<Category> {
-
-        return this.categoriesArray;
     }
 
 
@@ -119,7 +110,7 @@ export class ProjectConfiguration {
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {
 
-        return this.getCategoriesArray()
+        return Tree.flatten(this.categoryForest)
             .filter(category => {
                 return this.isAllowedRelationDomainCategory(
                     category.name, rangeCategoryName, relationName
@@ -133,7 +124,7 @@ export class ProjectConfiguration {
     public getAllowedRelationRangeCategories(relationName: string,
                                              domainCategoryName: string): Array<Category> {
 
-        return this.getCategoriesArray()
+        return Tree.flatten(this.categoryForest)
             .filter(category => {
                 return this.isAllowedRelationDomainCategory(
                     domainCategoryName, category.name, relationName

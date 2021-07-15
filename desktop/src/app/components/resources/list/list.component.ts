@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FieldDocument, Named, Category} from 'idai-field-core';
+import {FieldDocument, Named, Category, Tree} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
@@ -32,7 +32,9 @@ export class ListComponent extends BaseList implements OnChanges {
                 menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
-        this.categoriesMap = Named.arrayToMap(projectConfiguration.getCategoriesArray());
+
+        // TODO review if we couln't just make use of getCategory()
+        this.categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategoryForest()));
     }
 
 

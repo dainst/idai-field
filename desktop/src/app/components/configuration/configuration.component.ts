@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, FieldDefinition, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
-    createContextIndependentCategories, Labels, IndexFacade } from 'idai-field-core';
+    createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Messages } from '../messages/messages';
@@ -366,7 +366,7 @@ export class ConfigurationComponent implements OnInit {
 
     private loadCategories() {
 
-        this.topLevelCategoriesArray = this.projectConfiguration.getCategoriesArray()
+        this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategoryForest())
             .filter(category => !category.parentCategory);
 
         if (this.selectedCategory) {

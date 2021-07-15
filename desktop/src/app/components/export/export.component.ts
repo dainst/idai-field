@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, FieldDocument, Query, ProjectCategories, ProjectConfiguration,
-    RelationsManager, Labels, Document} from 'idai-field-core';
+    RelationsManager, Labels, Document, Tree} from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -100,7 +100,7 @@ export class ExportComponent implements OnInit {
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.find,
             this.getOperationIdForMode(),
-            this.projectConfiguration.getCategoriesArray()
+            Tree.flatten(this.projectConfiguration.getCategoryForest())
         );
 
         if (this.categoryCounts.length > 0) this.selectedCategory = this.categoryCounts[0][0];

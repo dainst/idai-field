@@ -1,5 +1,6 @@
-import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
-    L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
+import { aFlow, assoc, compose, isEmpty, filter, flatten, 
+    is, isArray, isDefined, isObject, isString, L, map, 
+    Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Category } from '../model/category';
@@ -78,29 +79,22 @@ export module FieldsViewUtil {
     );
 
 
-    export function getGroups(category: string, categories: Map<Category>) {
+    export function getGroups(category: Category) {
 
-        return flow(category,
-            lookup(categories),
-            to(Category.GROUPS),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroup.SHOWN,
-                    group.name === Groups.STEM)(group)
-            ));
+        return map(category.groups, 
+                   group => assoc(FieldsViewGroup.SHOWN, group.name === Groups.STEM, group));
     }
 
 
     export async function getGroupsForResource(resource: Resource,
                                                projectConfiguration: ProjectConfiguration,
                                                datastore: Datastore,
-                                               labels: Labels,
-                                               languages?: string[]): Promise<Array<FieldsViewGroup>> {
+                                               labels: Labels): Promise<Array<FieldsViewGroup>> {
 
         const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
 
         return await aFlow(
-            FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
+            FieldsViewUtil.getGroups(projectConfiguration.getCategory(resource.category)),
             putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
             filter(shouldBeDisplayed)
         );

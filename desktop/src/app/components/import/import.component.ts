@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
-    RelationsManager, ProjectCategories, Labels } from 'idai-field-core';
+    RelationsManager, ProjectCategories, Labels, Tree } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
@@ -195,7 +195,7 @@ export class ImportComponent implements OnInit {
     public updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
-            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
+            Tree.flatten(this.projectConfiguration.getCategoryForest()), this.getCategoriesToExclude()
         );
 
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
@@ -358,7 +358,7 @@ export class ImportComponent implements OnInit {
     private getCategoryFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
-            const category: Category|undefined = this.projectConfiguration.getCategoriesArray()
+            const category: Category|undefined = Tree.flatten(this.projectConfiguration.getCategoryForest())
                 .find(category => category.name.toLowerCase() === segment.toLowerCase());
             if (category) return category;
         }

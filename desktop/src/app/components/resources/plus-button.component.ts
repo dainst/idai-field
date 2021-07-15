@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, Datastore, FieldDocument, Name } from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Name, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
 import { ProjectCategories } from 'idai-field-core';
@@ -165,7 +165,7 @@ export class PlusButtonComponent implements OnChanges {
                 this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
         } else {
-            for (let category of projectConfiguration.getCategoriesArray()) {
+            for (let category of Tree.flatten(projectConfiguration.getCategoryForest())) {
                 if (this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {

@@ -1,4 +1,4 @@
-import { flatten, flow, is, map, to } from 'tsfun';
+import { filter, flatten, flow, is, isEmpty, map, not, on, to } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Name, Named } from '../tools/named';
 import { FieldDefinition } from './field-definition';
@@ -143,6 +143,12 @@ export namespace Category {
     }
 
 
+    export function isMandatoryField(category: Category, fieldName: string): boolean {
+
+        return hasProperty(category, fieldName, FieldDefinition.MANDATORY);
+    }
+
+
     export function isBrightColor(color: Color): boolean {
 
         color = color.substring(1); // strip #
@@ -177,5 +183,15 @@ export namespace Category {
             hash |= 0; // Convert to 32bit integer
         }
         return hash;
+    }
+
+
+    function hasProperty(category: Category, fieldName: string, propertyName: string) {
+
+        return flow(
+            Category.getFields(category),
+            filter(on(Named.NAME, is(fieldName))),
+            filter(on(propertyName, is(true))),
+            not(isEmpty));
     }
 }

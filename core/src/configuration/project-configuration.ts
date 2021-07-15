@@ -162,22 +162,4 @@ export class ProjectConfiguration {
         if (!this.getCategory(categoryName)) return [];
         return Category.getFields(this.getCategory(categoryName));
     }
-
-
-    public isMandatory(categoryName: string, fieldName: string): boolean {
-
-        return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);
-    }
-
-
-    private hasProperty(categoryName: string, fieldName: string, propertyName: string) {
-
-        if (!this.getCategory(categoryName)) return false;
-
-        return flow(
-            Category.getFields(this.getCategory(categoryName)),
-            filter(on(Named.NAME, is(fieldName))),
-            filter(on(propertyName, is(true))),
-            not(isEmpty));
-    }
 }

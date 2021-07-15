@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { isBoolean } from 'tsfun';
-import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Groups,
+import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
 

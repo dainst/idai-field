@@ -4,7 +4,7 @@ import { Field } from './field';
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition extends Field {
+export interface Relation extends Field {
 
     domain: string[];
     range: string[];
@@ -13,7 +13,7 @@ export interface RelationDefinition extends Field {
 }
 
 
-export module RelationDefinition {
+export module Relation {
 
     export const DOMAIN = 'domain';
     export const RANGE = 'range';

@@ -1,5 +1,5 @@
 import { intersection, subtract } from 'tsfun';
-import { RelationDefinition } from '../../model/relation-definition';
+import { Relation } from '../../model/relation';
 
 
 /**
@@ -11,7 +11,7 @@ import { RelationDefinition } from '../../model/relation-definition';
  */
 export class PrePreprocessConfigurationValidator {
 
-    private static evaluateRelationDomain(relation: RelationDefinition, appConfiguration: any) {
+    private static evaluateRelationDomain(relation: Relation, appConfiguration: any) {
 
         if (intersection([relation.domain, this.imageCategories(appConfiguration)]).length > 0) {
             return (['image category/isRecordedIn must not be defined manually', relation] as any);

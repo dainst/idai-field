@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { Field } from '../model/field';
 import { Groups } from '../model/group';
-import { RelationDefinition } from '../model/relation-definition';
+import { Relation } from '../model/relation';
 import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
 
 
@@ -543,7 +543,7 @@ export class BuiltInConfiguration {
     };
 
 
-    public builtInRelations: Array<RelationDefinition> = [
+    public builtInRelations: Array<Relation> = [
         {
             name: 'depicts',
             domain: ['Image:inherit'],

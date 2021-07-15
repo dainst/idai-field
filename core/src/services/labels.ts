@@ -1,5 +1,5 @@
 import { Category } from '../model/category';
-import { ValuelistDefinition } from '../model/valuelist-definition';
+import { Valuelist } from '../model/valuelist';
 import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 
@@ -20,9 +20,9 @@ export class Labels {
     }
 
     
-    public getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
+    public getValueLabel(valuelist: Valuelist, valueId: string): string {
 
-        const label = ValuelistDefinition.getValueLabel(valuelist, valueId);
+        const label = Valuelist.getValueLabel(valuelist, valueId);
 
         const translation: string|undefined = I18N.getTranslation(label, this.getLanguages());
         return translation ?? valueId;
@@ -44,13 +44,13 @@ export class Labels {
     }
 
 
-    public orderKeysByLabels(valuelist: ValuelistDefinition): string[] {
+    public orderKeysByLabels(valuelist: Valuelist): string[] {
 
-        return ValuelistDefinition.orderKeysByLabels(valuelist, this.sortAlphanumerically);
+        return Valuelist.orderKeysByLabels(valuelist, this.sortAlphanumerically);
     }
 
 
-    private sortAlphanumerically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
+    private sortAlphanumerically = (valuelist: Valuelist) => (valueA: string, valueB: string): number => {
 
         return SortUtil.alnumCompare(
             this.getValueLabel(valuelist, valueA).toLowerCase(),

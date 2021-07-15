@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Labels, FieldDefinition, Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
+import { Datastore, Labels, FieldDefinition, Resource, Valuelist, ValuelistUtil } from 'idai-field-core';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 
 
@@ -17,7 +17,7 @@ export class DropdownComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() field: FieldDefinition;
 
-    public valuelist: ValuelistDefinition;
+    public valuelist: Valuelist;
 
 
     constructor(private datastore: Datastore,

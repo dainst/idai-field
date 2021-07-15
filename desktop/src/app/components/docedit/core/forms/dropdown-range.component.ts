@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Datastore, OptionalRange, Resource, ValuelistDefinition, ValuelistUtil, Labels } from 'idai-field-core';
+import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 
@@ -18,7 +18,7 @@ export class DropdownRangeComponent {
     @Input() resource: Resource;
     @Input() field: any;
 
-    public valuelist: ValuelistDefinition;
+    public valuelist: Valuelist;
 
     private endActivated: boolean = false;
 

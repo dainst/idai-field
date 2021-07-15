@@ -1,5 +1,5 @@
 import { I18N } from '../tools/i18n';
-import { ValuelistDefinition } from './valuelist-definition';
+import { Valuelist } from './valuelist';
 
 
 /**
@@ -14,9 +14,9 @@ export interface FieldDefinition extends I18N.LabeledValue {
     description?: I18N.String;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
-    valuelist?: ValuelistDefinition;
+    valuelist?: Valuelist;
     valuelistFromProjectField?: string;
-    positionValues?: ValuelistDefinition;
+    positionValues?: Valuelist;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
     fulltextIndexed?: boolean;

@@ -1,4 +1,4 @@
-import { RelationDefinition, ValuelistDefinition } from '../../model';
+import { RelationDefinition, Valuelist } from '../../model';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
@@ -91,7 +91,7 @@ export module ConfigurationValidation {
     }
 
 
-    function isValidValuelist(valuelist: ValuelistDefinition|undefined): boolean {
+    function isValidValuelist(valuelist: Valuelist|undefined): boolean {
 
         return valuelist
             && valuelist.values

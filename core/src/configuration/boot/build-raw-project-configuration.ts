@@ -2,7 +2,7 @@ import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
     isUndefinedOrEmpty, not, curry } from 'tsfun';
 import { RelationDefinition, Category } from '../../model';
-import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Valuelist } from '../../model/valuelist';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
@@ -36,7 +36,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              libraryCategories: Map<LibraryCategoryDefinition>,
                                              customCategories: Map<CustomCategoryDefinition> = {},
                                              commonFields: Map<any> = {},
-                                             valuelistsConfiguration: Map<ValuelistDefinition> = {},
+                                             valuelistsConfiguration: Map<Valuelist> = {},
                                              extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
@@ -119,7 +119,7 @@ function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) 
 }
 
 
-function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<ValuelistDefinition>)
+function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelist>)
     : Mapping<Map<TransientCategoryDefinition>> {
 
     return map(
@@ -136,7 +136,7 @@ function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelis
 }
 
 
-function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<ValuelistDefinition>) {
+function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Valuelist>) {
 
     return (fd: TransientFieldDefinition) =>
         flow(fd,

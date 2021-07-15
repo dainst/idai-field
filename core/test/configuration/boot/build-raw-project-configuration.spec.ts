@@ -2,7 +2,7 @@ import { Map, left, to } from 'tsfun';
 import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
 import { BuiltinCategoryDefinition, CustomCategoryDefinition,
     LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { Category, FieldDefinition, Groups, ValuelistDefinition } from '../../../src/model';
+import { Category, FieldDefinition, Groups, Valuelist } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 import InputType = FieldDefinition.InputType;
 
@@ -951,7 +951,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const valuelistsConfiguration: Map<ValuelistDefinition> = {
+        const valuelistsConfiguration: Map<Valuelist> = {
             '123': {
                 values: {
                     'one': { label: { de: 'Eins', en: 'One' } },

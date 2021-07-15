@@ -27,7 +27,7 @@ export { Query } from './query';
 export { RelationDefinition } from './relation-definition';
 export { Relations } from './relations';
 export { Resource } from './resource';
-export { ValuelistDefinition } from './valuelist-definition';
+export { Valuelist as Valuelist } from './valuelist';
 export { ConfigurationDocument } from './configuration-document';
 export { ConfigurationResource } from './configuration-resource';
 export { ConnectedDocsWriter } from '../services/connected-docs-writer';

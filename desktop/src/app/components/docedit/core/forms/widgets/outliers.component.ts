@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Resource, ValuelistDefinition, ValuelistUtil } from 'idai-field-core';
+import { Resource, Valuelist, ValuelistUtil } from 'idai-field-core';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class OutliersComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
-    @Input() valuelist: ValuelistDefinition;
+    @Input() valuelist: Valuelist;
 
 
     public getOutliers(): string[]|undefined {

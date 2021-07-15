@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {ValuelistDefinition} from '../../model/valuelist-definition';
+import {Valuelist} from '../../model/valuelist';
 import {Name, Named} from '../../tools/named';
 import {BuiltinCategoryDefinition, BuiltinFieldDefinition} from './builtin-category-definition';
 import {LibraryFieldDefinition, LibraryCategoryDefinition} from './library-category-definition';
@@ -21,7 +21,7 @@ export module TransientCategoryDefinition {
 
 export interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldDefinition, Named {
 
-    valuelist?: ValuelistDefinition;
+    valuelist?: Valuelist;
     valuelistId?: string,
     valuelistFromProjectField?: string;
     source?: 'builtin'|'library'|'custom'|'common';

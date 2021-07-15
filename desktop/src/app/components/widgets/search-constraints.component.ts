@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
-import { Category, ConstraintIndex, Datastore, FieldDefinition, ProjectConfiguration, ValuelistDefinition,
+import { Category, ConstraintIndex, Datastore, FieldDefinition, ProjectConfiguration, Valuelist,
     ValuelistUtil, Labels } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
@@ -57,9 +57,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: ValuelistDefinition) => this.labels.orderKeysByLabels(valuelist);
+    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
 
-    public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
+    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
         this.labels.getValueLabel(valuelist, valueId);
 
 
@@ -204,7 +204,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public async getValuelist(field: FieldDefinition): Promise<ValuelistDefinition> {
+    public async getValuelist(field: FieldDefinition): Promise<Valuelist> {
 
         return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
     }
@@ -260,7 +260,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             return false;
         }
 
-        const valuelist: ValuelistDefinition = await this.getValuelist(field);
+        const valuelist: Valuelist = await this.getValuelist(field);
         return !Object.keys(valuelist.values).includes(this.getCustomConstraints()[constraintName]);
     }
 

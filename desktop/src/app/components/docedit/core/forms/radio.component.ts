@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Resource, ValuelistDefinition, ValuelistUtil, Labels } from 'idai-field-core';
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 
 
@@ -18,7 +18,7 @@ export class RadioComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() field: any;
 
-    public valuelist: ValuelistDefinition;
+    public valuelist: Valuelist;
 
 
     constructor(private datastore: Datastore,

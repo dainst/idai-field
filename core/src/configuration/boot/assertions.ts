@@ -5,7 +5,7 @@ import { CustomCategoryDefinition } from '../model/custom-category-definition';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
-import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Valuelist } from '../../model/valuelist';
 import { Named } from '../../tools/named';
 
 
@@ -15,7 +15,7 @@ export module Assertions {
                                       libraryCategories: Map<LibraryCategoryDefinition>,
                                       customCategories: Map<CustomCategoryDefinition>,
                                       commonFields: Map<any>,
-                                      valuelistsConfiguration: Map<ValuelistDefinition>) {
+                                      valuelistsConfiguration: Map<Valuelist>) {
 
         assertCategoriesAndValuelistsStructurallyValid(Object.keys(builtInCategories), libraryCategories, customCategories, valuelistsConfiguration);
         assertSubtypingIsLegal(builtInCategories, libraryCategories);
@@ -131,7 +131,7 @@ export module Assertions {
     function assertCategoriesAndValuelistsStructurallyValid(builtInCategories: string[],
                                                             libraryCategories: Map<LibraryCategoryDefinition>,
                                                             customCategories: Map<CustomCategoryDefinition>,
-                                                            valuelistDefinitions: Map<ValuelistDefinition>) {
+                                                            valuelistDefinitions: Map<Valuelist>) {
 
         const assertLibraryCategoryValid = LibraryCategoryDefinition.makeAssertIsValid(builtInCategories);
         const assertCustomCategoryValid = CustomCategoryDefinition.makeAssertIsValid(
@@ -141,7 +141,7 @@ export module Assertions {
         keysValues(libraryCategories).forEach(assertLibraryCategoryValid);
         keysValues(customCategories).forEach(assertCustomCategoryValid);
         forEach(valuelistDefinitions, (vd, vdId) => {
-            const result = ValuelistDefinition.assertIsValid(vd);
+            const result = Valuelist.assertIsValid(vd);
             if (result !== undefined && result.length > 1 && result[0] === 'missing') {
                 throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, result[1], vdId];
             }

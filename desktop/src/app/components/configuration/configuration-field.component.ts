@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, ValuelistDefinition,
+import { Category, ConfigurationDocument, CustomFieldDefinition, FieldDefinition, Valuelist,
     Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';
 import { ConfigurationUtil } from '../../core/configuration/configuration-util';
@@ -50,11 +50,11 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
-    public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
+    public getValuelistDescription = (valuelist: Valuelist) => valuelist.description?.[locale];
 
-    public getValues = (valuelist: ValuelistDefinition) => this.labels.orderKeysByLabels(valuelist);
+    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
 
-    public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
+    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
         this.labels.getValueLabel(valuelist, valueId);
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;

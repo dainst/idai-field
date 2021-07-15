@@ -3,7 +3,7 @@ import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { FieldDefinition } from '../../model/field-definition';
 import { RelationDefinition } from '../../model/relation-definition';
-import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Valuelist } from '../../model/valuelist';
 import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
@@ -219,10 +219,10 @@ export class ConfigLoader {
     }
 
 
-    private readValuelistsConfiguration(path: string): Map<ValuelistDefinition> {
+    private readValuelistsConfiguration(path: string): Map<Valuelist> {
 
         const valuelistsConfiguration = this.configReader.read(path);
-        map((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
+        map((definition: Valuelist, id: string) => definition.id = id, valuelistsConfiguration);
 
         return valuelistsConfiguration;
     }

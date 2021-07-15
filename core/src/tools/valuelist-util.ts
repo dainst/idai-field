@@ -2,7 +2,7 @@ import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
 import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
 import { Resource } from '../model/resource';
-import { ValueDefinition, ValuelistDefinition } from '../model/valuelist-definition';
+import { ValueDefinition, Valuelist } from '../model/valuelist';
 
 
 /**
@@ -13,7 +13,7 @@ export module ValuelistUtil {
 
     export function getValuesNotIncludedInValuelist(resource: Resource|undefined,
                                                     fieldName: string|undefined,
-                                                    valuelist: ValuelistDefinition): string[]|undefined {
+                                                    valuelist: Valuelist): string[]|undefined {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 
@@ -29,9 +29,9 @@ export module ValuelistUtil {
 
     export function getValuelist(field: FieldDefinition, 
                                  projectDocument: Document,
-                                 parentResource?: Resource): ValuelistDefinition {
+                                 parentResource?: Resource): Valuelist {
 
-        const valuelist: ValuelistDefinition|string[] = field.valuelist
+        const valuelist: Valuelist|string[] = field.valuelist
             ? field.valuelist
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
 
@@ -43,7 +43,7 @@ export module ValuelistUtil {
 
 
     export function getValuelistFromProjectField(fieldName: string,
-                                                 projectDocument: Document): ValuelistDefinition {
+                                                 projectDocument: Document): Valuelist {
 
         const id = 'project-' + fieldName;
         const field: string[]|undefined = projectDocument.resource[fieldName];
@@ -59,13 +59,13 @@ export module ValuelistUtil {
     }
 
 
-    function getValuesOfParentField(valuelist: ValuelistDefinition, 
+    function getValuesOfParentField(valuelist: Valuelist, 
                                     fieldName: string,
-                                    parentResource: Resource): ValuelistDefinition {
+                                    parentResource: Resource): Valuelist {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];
 
-        const result: ValuelistDefinition = clone(valuelist);
+        const result: Valuelist = clone(valuelist);
         result.values = filter((_, key: string) => {
             return parentValues.includes(key);
         })(valuelist.values) as { [key: string]: ValueDefinition };

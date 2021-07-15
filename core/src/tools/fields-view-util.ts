@@ -12,7 +12,7 @@ import { BaseGroup, Group, Groups } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
-import { ValuelistDefinition } from '../model/valuelist-definition';
+import { Valuelist } from '../model/valuelist';
 import { Named } from './named';
 import { Labels } from '../services';
 
@@ -31,8 +31,8 @@ export interface FieldsViewField {
     label: string;
     type: 'default'|'array'|'object'|'relation';
     value?: string|string[]; // TODO add object types
-    valuelist?: ValuelistDefinition;
-    positionValues?: ValuelistDefinition;
+    valuelist?: Valuelist;
+    positionValues?: Valuelist;
     targets?: Array<Document>;
 }
 
@@ -56,7 +56,7 @@ export module FieldsViewUtil {
                              fieldName: string, 
                              projectConfiguration: ProjectConfiguration,
                              labels: Labels,
-                             valuelist?: ValuelistDefinition): any {
+                             valuelist?: Valuelist): any {
 
         return fieldName === Resource.CATEGORY
             ? labels.get(projectConfiguration.getCategory(fieldContent))

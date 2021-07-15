@@ -7,7 +7,7 @@ import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
 import { FieldDefinition } from '../model/field-definition';
-import { BaseGroup, Group, Groups } from '../model/group';
+import { BaseGroup, Group } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
@@ -21,7 +21,6 @@ type FieldContent = any;
 
 export interface FieldsViewGroup extends BaseGroup {
 
-    shown: boolean;
     fields: Array<FieldsViewField>;
 }
 
@@ -52,7 +51,7 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-    export function getValue(fieldContent: any, 
+    export function getValue(fieldContent: any,
                              fieldName: string, 
                              projectConfiguration: ProjectConfiguration,
                              labels: Labels,
@@ -78,16 +77,12 @@ export module FieldsViewUtil {
     );
 
 
-    export function getGroups(category: string, categories: Map<Category>) {
+    export function getGroups(category: string, categories: Map<Category>): Array<FieldsViewGroup> {
 
         return flow(category,
             lookup(categories),
-            to(Category.GROUPS),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroup.SHOWN,
-                    group.name === Groups.STEM)(group)
-            ));
+            to(Category.GROUPS)
+        );
     }
 
 

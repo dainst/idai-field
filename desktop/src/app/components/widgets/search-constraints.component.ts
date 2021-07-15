@@ -316,7 +316,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private async updateFields() {
 
         const fields: Array<FieldDefinition> = this.defaultFields
-            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.category)))
+            .concat(clone(Category.getFields(this.projectConfiguration.getCategory(this.category))))
             .filter(field => field.constraintIndexed && this.getSearchInputType(field));
 
         for (let field of fields) {
@@ -408,7 +408,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField;
 
-        return this.projectConfiguration.getFieldDefinitions(this.category)
+        return Category.getFields(this.projectConfiguration.getCategory(this.category))
             .find(field => field.name === fieldName) as FieldDefinition;
     }
 

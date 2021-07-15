@@ -228,7 +228,7 @@ export module Validations {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<FieldDefinition>
-            = projectConfiguration.getFieldDefinitions(resource.category);
+            = Category.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
             if (Category.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
@@ -263,8 +263,8 @@ export module Validations {
     export function validateDefinedFields(resource: Resource|NewResource,
                                           projectConfiguration: ProjectConfiguration): string[] {
 
-        const projectFields: Array<FieldDefinition> = projectConfiguration
-            .getFieldDefinitions(resource.category);
+        const projectFields: Array<FieldDefinition> =
+            Category.getFields(projectConfiguration.getCategory(resource.category));
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition];
 
         const definedFields: Array<any> = projectFields.concat(defaultFields);
@@ -322,8 +322,8 @@ export module Validations {
                                           validationFunction: (value: string, inputType: string) => boolean,
                                           numericInputTypes: string[]): string[] {
 
-        const projectFields: Array<FieldDefinition> = projectConfiguration
-            .getFieldDefinitions(resource.category);
+        const projectFields: Array<FieldDefinition> =
+            Category.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
@@ -447,7 +447,7 @@ export module Validations {
                                    inputType: string,
                                    isValid: (object: any, options?: any) => boolean): string[] {
 
-        return projectConfiguration.getFieldDefinitions(resource.category)
+        return Category.getFields(projectConfiguration.getCategory(resource.category))
             .filter(field => field.inputType === inputType)
             .filter(field => resource[field.name] !== undefined)
             .filter(field => !isValid(resource[field.name], field.inputTypeOptions?.validation))

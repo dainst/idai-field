@@ -34,10 +34,16 @@ describe('FieldConverter', () => {
             }
         };
 
-        const pc = jasmine.createSpyObj('ProjectConfiguration', ['getFieldDefinitions']);
-        pc.getFieldDefinitions.and.returnValue(
-            [{ name: 'dimensionHeight', inputType: 'dimension' },
-                { name: 'dating', inputType: 'dating' }]);
+        const pc = jasmine.createSpyObj('ProjectConfiguration', ['getCategory']);
+        pc.getCategory.and.returnValue({
+            groups: [{
+                name: 'stem',
+                fields:
+                    [{ name: 'dimensionHeight', inputType: 'dimension' },
+                     { name: 'dating', inputType: 'dating' }]
+
+            }]
+        });
 
         const result = FieldConverter.preprocessDocument(pc)(document);
         expect(result.resource['dimensionHeight'][0]['value']).toBeUndefined();

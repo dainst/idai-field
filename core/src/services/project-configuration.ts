@@ -41,15 +41,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
-
-        return selectedTopLevelCategories.length === 0
-            ? this.categories
-            : this.categories.filter(
-                on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
-    }
-
-
     /**
      * @return Category, including children field
      */
@@ -62,6 +53,15 @@ export class ProjectConfiguration {
             : (arg as Document).resource.category;
         
         return Tree.find(this.categories, category => category.name === name)?.item;
+    }
+
+
+    public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
+
+        return selectedTopLevelCategories.length === 0
+            ? this.categories
+            : this.categories.filter(
+                on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
 

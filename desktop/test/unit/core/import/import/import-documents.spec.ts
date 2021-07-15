@@ -15,7 +15,7 @@ describe('importDocuments', () => {
     let context: any;
     let validator;
     let importFunction;
-    let operationCategoryNames = ['Trench'];
+    let operationCategories = ['Trench'];
 
     const zero = {
         resource: {
@@ -77,7 +77,7 @@ describe('importDocuments', () => {
         };
 
         context = {
-            operationCategoryNames,
+            operationCategories,
             inverseRelationsMap: {},
             settings: { username: 'user1'} as Settings
         }

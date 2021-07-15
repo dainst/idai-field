@@ -41,7 +41,7 @@ export interface ImportServices {
 
 export interface ImportContext {
 
-    operationCategoryNames: string[];
+    operationCategories: string[];
     inverseRelationsMap: InverseRelationsMap;
     settings: Settings;
 }
@@ -116,7 +116,7 @@ async function importDocuments(services: ImportServices,
         const targetDocuments = await processRelations(
             processedDocuments,
             services.validator,
-            context.operationCategoryNames,
+            context.operationCategories,
             helpers.get,
             context.inverseRelationsMap,
             options

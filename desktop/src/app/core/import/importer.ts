@@ -48,7 +48,7 @@ export interface ImporterContext {
 
     settings: Settings;
     projectConfiguration: ProjectConfiguration;
-    overviewCategoryNames: Name[];
+    operationCategories: Name[];
 }
 
 
@@ -98,7 +98,7 @@ export module Importer {
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
-        const operationCategoryNames = context.overviewCategoryNames.filter(isnt('Place'));
+        const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getRelations());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
@@ -111,7 +111,7 @@ export module Importer {
             case 'geojson-gazetteer':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
                 break;
@@ -119,14 +119,14 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false, useIdentifiersInRelations: true });
                 break;
             default: // native | csv
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     {
                         mergeMode: options.mergeMode,

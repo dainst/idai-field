@@ -277,7 +277,7 @@ export class ImportComponent implements OnInit {
             {
                 settings: this.settingsProvider.getSettings(),
                 projectConfiguration: this.projectConfiguration,
-                overviewCategoryNames: this.projectConfiguration.getOperationCategories().map(Named.toName) // TODO review
+                operationCategories: this.projectConfiguration.getOperationCategories().map(Named.toName) // TODO review
             },
             () => this.idGenerator.generateId(),
             options,

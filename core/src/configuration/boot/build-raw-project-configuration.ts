@@ -10,7 +10,7 @@ import { CustomCategoryDefinition } from '../model/custom-category-definition';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
-import { RawProjectConfiguration } from '../project-configuration';
+import { RawProjectConfiguration } from '../../services/project-configuration';
 import { addExtraFields } from './add-extra-fields';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';

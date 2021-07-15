@@ -1,4 +1,4 @@
-import { ProjectConfiguration } from '../../src/configuration/project-configuration';
+import { ProjectConfiguration } from '../../src/services/project-configuration';
 import { Tree } from '../../src/tools';
 
 

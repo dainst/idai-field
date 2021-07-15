@@ -1,8 +1,8 @@
 import { includedIn, on, Pair, isString } from 'tsfun';
 import { Category, RelationDefinition, Document } from '../model';
 import { Forest, isTopLevelItemOrChildThereof, Name, Tree } from '../tools';
-import { ConfigurationErrors } from './boot/configuration-errors';
-import { RelationsUtil } from './relations-utils';
+import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
+import { RelationsUtil } from '../configuration/relations-utils';
 
 
 export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefinition>>;

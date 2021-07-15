@@ -8,7 +8,7 @@ import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { Relations } from '../model/relations';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/new-document';
-import { ProjectConfiguration } from '../configuration/project-configuration'
+import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import {Query } from '../model/query'
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;

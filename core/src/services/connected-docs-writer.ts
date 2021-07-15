@@ -5,7 +5,7 @@ import { updateRelations } from './update-relations';
 import { Name, Named } from "../tools/named";
 import { flatMap, flow, subtract, to } from 'tsfun';
 import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { ProjectConfiguration } from './project-configuration';
 
 
 /**

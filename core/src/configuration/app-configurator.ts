@@ -1,7 +1,7 @@
 import { ConfigurationDocument } from '../model';
 import { ConfigLoader } from './boot/config-loader';
 import { BuiltInConfiguration } from './built-in-configuration';
-import { ProjectConfiguration } from './project-configuration';
+import { ProjectConfiguration } from '../services/project-configuration';
 
 
 /**

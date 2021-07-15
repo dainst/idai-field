@@ -1,7 +1,7 @@
 import { aFlow, assoc, compose, isEmpty, filter, flatten, 
     is, isArray, isDefined, isObject, isString, L, map, 
     Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';

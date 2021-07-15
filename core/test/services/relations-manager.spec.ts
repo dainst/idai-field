@@ -1,6 +1,6 @@
 import { Document } from '../../src/model/document';
 import { RelationsManager } from '../../src/services/relations-manager';
-import { ProjectConfiguration } from '../../src/configuration/project-configuration';
+import { ProjectConfiguration } from '../../src/services/project-configuration';
 
 
 /**

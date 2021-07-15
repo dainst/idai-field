@@ -10,7 +10,7 @@ import { BuiltinCategoryDefinition } from '../model/builtin-category-definition'
 import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
-import { ProjectConfiguration } from '../project-configuration';
+import { ProjectConfiguration } from '../../services/project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
 import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';

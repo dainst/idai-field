@@ -62,6 +62,7 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO make version with gets category for document, which makes most calls simpler
     /**
      * @return Category, including children field
      */
@@ -160,41 +161,5 @@ export class ProjectConfiguration {
 
         if (!this.getCategory(categoryName)) return [];
         return Category.getFields(this.getCategory(categoryName));
-    }
-
-
-    public getColorForCategory(categoryName: string): string {
-
-        return this.getCategoryColors()[categoryName] ?? '#cccccc';
-    }
-
-
-    public getTextColorForCategory(categoryName: string): string {
-
-        return Category.isBrightColor(this.getColorForCategory(categoryName)) ? '#000000' : '#ffffff';
-    }
-
-
-    public getCategoryColors() {
-
-        return map(_ => _.color, this.categoriesMap);
-    }
-
-
-    public isMandatory(categoryName: string, fieldName: string): boolean {
-
-        return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);
-    }
-
-
-    private hasProperty(categoryName: string, fieldName: string, propertyName: string) {
-
-        if (!this.getCategory(categoryName)) return false;
-
-        return flow(
-            Category.getFields(this.getCategory(categoryName)),
-            filter(on(Named.NAME, is(fieldName))),
-            filter(on(propertyName, is(true))),
-            not(isEmpty));
     }
 }

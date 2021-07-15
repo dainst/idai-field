@@ -1,6 +1,6 @@
 import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
-    Resource, OptionalRange} from 'idai-field-core';
+    Resource, OptionalRange, Category} from 'idai-field-core';
 import {FieldGeometry, ProjectConfiguration, Named, FieldDefinition, RelationDefinition} from 'idai-field-core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
@@ -231,7 +231,7 @@ export module Validations {
             = projectConfiguration.getFieldDefinitions(resource.category);
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (projectConfiguration.isMandatory(resource.category, fieldDefinition.name)) {
+            if (Category.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
                 if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
                     missingFields.push(fieldDefinition.name);
                 }

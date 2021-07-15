@@ -1,4 +1,4 @@
-import {Document} from 'idai-field-core';
+import {Document, Category} from 'idai-field-core';
 import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not} from 'tsfun';
 import {Edges} from './edges-builder';
 import {ProjectConfiguration} from 'idai-field-core';
@@ -246,11 +246,11 @@ export module DotBuilder {
 
             return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
                 + ' [id="node-' + document.resource.id + '" fillcolor="'
-                + projectConfiguration.getColorForCategory(document.resource.category)
+                + projectConfiguration.getCategory(document.resource.category).color
                 + '" color="'
-                + projectConfiguration.getColorForCategory(document.resource.category)
+                + projectConfiguration.getCategory(document.resource.category).color
                 + '" fontcolor="'
-                + projectConfiguration.getTextColorForCategory(document.resource.category)
+                + Category.getTextColorForCategory(projectConfiguration.getCategory(document.resource.category))
                 + '"] ';
         }
     }

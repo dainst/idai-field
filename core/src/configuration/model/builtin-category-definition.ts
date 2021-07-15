@@ -15,7 +15,7 @@ export interface BuiltinCategoryDefinition extends BaseCategoryDefinition {
     groups: Array<BaseGroupDefinition>;
     supercategory?: boolean,
     userDefinedSubcategoriesAllowed?: boolean,
-    mandatory?: boolean;
+    required?: boolean;
 
     /**
      * If set to true, a resource of this category can only be created inside another

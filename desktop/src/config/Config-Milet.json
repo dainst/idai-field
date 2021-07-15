@@ -8,7 +8,15 @@
   },
   "Place:default": {
     "hidden": [],
-    "fields": {}
+    "color": "blue",
+    "fields": {
+      "AreaShorthand": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "AreaShorthand": "Operation-AreaShorthand-milet"
+    }
   },
   "Operation:default": {
     "hidden": [],
@@ -38,6 +46,7 @@
     "fields": {}
   },
   "Trench:default": {
+    "color": "#121009",
     "hidden": ["trenchComment"],
     "fields": {}
   },
@@ -49,7 +58,7 @@
     }
   },
   "Feature": {
-    "color": "#121009",
+    "color": "#d52228",
     "commons": [
       "period",
       "dating",
@@ -184,16 +193,6 @@
       "localization": "localization-milet"
     }
   },
-  "StrUnit": {
-    "parent": "Feature",
-    "color": "#d52228",
-    "hidden": [],
-    "fields": {
-      "unitNotes": {
-        "inputType": "text"
-      }
-    }
-  },
   "Building": {
     "hidden": [
       "buildingCategorySpecific", 
@@ -284,7 +283,6 @@
       "period",
       "dating",
       "dimensionHeight",
-      "dimensionHeight",
       "dimensionLength",
       "dimensionWidth",
       "dimensionPerimeter",
@@ -355,7 +353,6 @@
   },
   "Pottery": {
     "parent": "Find",
-    "hidden": ["condition", "conditionAmount", "conditionComment", "dimensionHeight"],
     "commons": ["provenance"],
     "fields": {
       "potteryGroup": {

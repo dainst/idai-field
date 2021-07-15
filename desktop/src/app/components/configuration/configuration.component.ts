@@ -29,6 +29,7 @@ import { ConfigurationIndex } from '../../core/configuration/configuration-index
 export type InputType = {
     name: string;
     label: string;
+    searchable?: boolean;
 };
 
 
@@ -56,17 +57,17 @@ export class ConfigurationComponent implements OnInit {
     private configurationIndex: ConfigurationIndex = {};
 
     public availableInputTypes: Array<InputType> = [
-        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }) },
+        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true },
         { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }) },
         { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }) },
-        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }) },
-        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }) },
-        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }) },
-        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }) },
-        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }) },
-        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }) },
-        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }) },
-        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }) },
+        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true },
+        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true },
+        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true },
+        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true },
+        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true },
+        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true },
+        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }), searchable: true },
+        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }), searchable: true },
         { name: 'dating', label: this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' }) },
         { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }) },
         { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }) },

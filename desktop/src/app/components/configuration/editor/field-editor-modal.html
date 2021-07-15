@@ -19,7 +19,8 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body">
-    <div class="configuration-editor-section form-group">
+    <div *ngIf="hideable || isConstraintIndexOptionShown()"
+            class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
             Grundeinstellungen
         </div>
@@ -36,7 +37,7 @@
                 </label>
             </div>
         </div>
-        <div class="row">
+        <div *ngIf="isConstraintIndexOptionShown()" class="row">
             <div class="col-auto">
                 <span i18n="@@configuration.allowFieldSpecificSearch">Feldspezifische Suche erlauben</span>
             </div>

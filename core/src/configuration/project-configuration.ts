@@ -1,5 +1,5 @@
 import { includedIn, Map, on, Pair, isString } from 'tsfun';
-import { Category, FieldDefinition, RelationDefinition, Document } from '../model';
+import { Category, RelationDefinition, Document } from '../model';
 import { Forest, isTopLevelItemOrChildThereof, Name, Named, Tree } from '../tools';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
@@ -155,17 +155,5 @@ export class ProjectConfiguration {
 
         if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
         return isTopLevelItemOrChildThereof(this.categoryForest, category, superCategoryName);
-    }
-
-
-    // TODO move to Category
-    /**
-     * @param categoryName
-     * @returns {any[]} the fields definitions for the category.
-     */
-    public getFieldDefinitions(categoryName: string): FieldDefinition[] {
-
-        if (!this.getCategory(categoryName)) return [];
-        return Category.getFields(this.getCategory(categoryName));
     }
 }

@@ -320,14 +320,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteCategory(category: Category) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
-            category, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
+                category, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }
@@ -335,14 +335,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteGroup(category: Category, group: Group) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-            category, group, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
+                category, group, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }
@@ -350,14 +350,14 @@ export class ConfigurationComponent implements OnInit {
 
     private async deleteField(category: Category, field: FieldDefinition) {
 
-        const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-            category, field, this.configurationDocument
-        );
-
         try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
+                category, field, this.configurationDocument
+            );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
+            console.error(errWithParams);
             this.messages.add(errWithParams);
         }
     }

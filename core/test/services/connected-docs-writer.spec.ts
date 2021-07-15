@@ -1,6 +1,6 @@
 import { ProjectConfiguration } from '../../src/configuration/project-configuration';
 import { Document } from '../../src/model/document';
-import { ConnectedDocsWriter } from '../../src/model/connected-docs-writer'
+import { ConnectedDocsWriter } from '../../src/services/connected-docs-writer'
 
 
 /**

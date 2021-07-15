@@ -1,5 +1,5 @@
-import { Document, toResourceId,  } from './document';
-import { Relations } from './relations';
+import { Document, toResourceId,  } from '../model/document';
+import { Relations } from '../model/relations';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
 import { Name } from "../tools/named";

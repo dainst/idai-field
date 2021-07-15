@@ -2,18 +2,18 @@
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to, not
 } from 'tsfun';
-import { Document } from './document';
+import { Document } from '../model/document';
 import { DatastoreErrors } from '../datastore/datastore-errors'
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
-import { Relations } from './relations';
+import { Relations } from '../model/relations';
 import { ConnectedDocsWriter } from './connected-docs-writer'
-import { NewDocument } from './new-document';
+import { NewDocument } from '../model/new-document';
 import { ProjectConfiguration } from '../configuration/project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
-import {Query } from './query'
+import {Query } from '../model/query'
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 import {Name} from '../tools';
-import {Resource} from './resource';
+import {Resource} from '../model/resource';
 
 
 

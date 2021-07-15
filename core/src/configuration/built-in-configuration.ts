@@ -1138,10 +1138,6 @@ export class BuiltInConfiguration {
                     gazId: {
                         inputType: FieldDefinition.InputType.UNSIGNEDINT,
                         constraintIndexed: true
-                    },
-                    geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
-                        visible: false
                     }
                 },
                 groups: [

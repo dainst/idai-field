@@ -1,17 +1,13 @@
 {
     "categories": {
-        "Operation": {
-            "fields": {
-                "AreaShorthand": {
-                    "label": "Abréviation de la zone de fouille"
-                }
-            }
-        },
         "Trench": {
-            "label": "Aire de fouille / Zone de fouille"
+            "label": "Tranchée / Secteur"
+        },
+        "Place": {
+            "label": "Lieu / Zone"
         },
         "Feature": {
-            "label": "Tranchée / Secteur",
+            "label": "Unité stratigraphique",
             "fields": {
                 "hasDisturbance": {
                     "label": "Perturbé",
@@ -97,14 +93,6 @@
                 "layerDatingIndication": {
                     "label": "Eléments de datation",
                     "description": "Elaborer sur la base de la datation de ce contexte telle qu'enregistrée dans le champs 'Time/Temps/?' sous 'Période'. (Voir le champ correspondant dans le formulaire)"
-                }
-            }
-        },
-        "StrUnit": {
-            "label": "Unité stratigraphique",
-            "fields": {
-                "unitNotes": {
-                    "label": "Notes"
                 }
             }
         },

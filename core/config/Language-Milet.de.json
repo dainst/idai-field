@@ -1,18 +1,13 @@
 {
   "categories": {
-    "Operation": {
-      "fields": {
-        "AreaShorthand": {
-          "label": "Kürzel Grabungsareal",
-          "description": "Mit welchem Kürzel werden Identifikatoren und Funde aus Grabungen in diesem Areal versehen?"
-        }
-      }
-    },
     "Trench": {
-      "label": "Grabungsareal"
+      "label": "Schnitt"
+    },
+    "Place": {
+      "label": "Ort / Areal"
     },
     "Feature": {
-      "label": "Schnitt",
+      "label": "Stratigraphische Einheit",
       "fields": {
         "hasDisturbance": {
           "label": "Störung",
@@ -98,14 +93,6 @@
         "layerDatingIndication": {
           "label": "Datierende Elemente",
           "description": "Erläuterung der Basis für die Datierung. Nach dem Papierformular: 'Datierende Elemente, Erläuterung'. Sollte zusätzlich zu der und im Bezug auf die Grobdatierung im Reiter 'Zeit' ausgefüllt werden."
-        }
-      }
-    },
-    "StrUnit": {
-      "label": "Stratigraphische Einheit",
-      "fields": {
-        "unitNotes": {
-          "label": "Notizen"
         }
       }
     },

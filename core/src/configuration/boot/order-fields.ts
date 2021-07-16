@@ -1,5 +1,5 @@
 import { map } from 'tsfun';
-import { FieldDefinition } from '../../model/field-definition';
+import { Field } from '../../model/field';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model';
 
 
@@ -19,9 +19,9 @@ export function orderFields(orderConfiguration: any){
 
 
 function getOrderedFields(category: TransientCategoryDefinition, 
-                          orderConfiguration: any): Array<FieldDefinition> {
+                          orderConfiguration: any): Array<Field> {
 
-    const fields: Array<FieldDefinition> = [];
+    const fields: Array<Field> = [];
 
     if (!category.fields) return fields;
 

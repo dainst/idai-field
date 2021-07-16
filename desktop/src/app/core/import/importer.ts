@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Category, Document, Datastore } from 'idai-field-core';
+import { Category, Document, Datastore, Name } from 'idai-field-core';
 import { isnt } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { makeInverseRelationsMap } from 'idai-field-core';
-import { ProjectCategories } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../model/image-relations-manager';
@@ -49,6 +48,7 @@ export interface ImporterContext {
 
     settings: Settings;
     projectConfiguration: ProjectConfiguration;
+    operationCategories: Name[];
 }
 
 
@@ -98,9 +98,9 @@ export module Importer {
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
-        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryForest()).filter(isnt('Place'));
+        const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
-        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
+        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getRelations());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);
@@ -111,7 +111,7 @@ export module Importer {
             case 'geojson-gazetteer':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
                 break;
@@ -119,14 +119,14 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false, useIdentifiersInRelations: true });
                 break;
             default: // native | csv
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     {
                         mergeMode: options.mergeMode,

@@ -1,8 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, Datastore, FieldDocument, Name } from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Name, Named, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
-import { ProjectCategories } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../core/resources/view/view-facade';
 import { M } from '../messages/m';
@@ -62,7 +61,7 @@ export class PlusButtonComponent implements OnChanges {
 
 
     public isGeometryCategory = (category: Name) =>
-        ProjectCategories.isGeometryCategory(this.projectConfiguration.getCategoryForest(), category);
+        this.projectConfiguration.isGeometryCategory(category);
 
 
     ngOnChanges() {
@@ -165,7 +164,7 @@ export class PlusButtonComponent implements OnChanges {
                 this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
         } else {
-            for (let category of projectConfiguration.getCategoriesArray()) {
+            for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
@@ -199,8 +198,8 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryForest()).includes(category.name)
-                    : ProjectCategories.getTypeCategoryNames().includes(category.name))) {
+                    ? this.projectConfiguration.getConreteOverviewCategories().map(Named.toName).includes(category.name)
+                    : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(category.name))) {
                 return false;
             }
         }

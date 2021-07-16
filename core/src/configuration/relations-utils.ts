@@ -1,4 +1,4 @@
-import { RelationDefinition } from '../model';
+import { Relation } from '../model';
 
 
 /**
@@ -8,11 +8,11 @@ import { RelationDefinition } from '../model';
  */
 export module RelationsUtil {
 
-    export function getRelationDefinitions(relations: Array<RelationDefinition>,
+    export function getRelationDefinitions(relations: Array<Relation>,
                                            categoryName: string,
                                            isRangeCategory: boolean = false) {
 
-        const availableRelationFields: Array<RelationDefinition> = [];
+        const availableRelationFields: Array<Relation> = [];
 
         for (let relationField of relations) {
             const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;

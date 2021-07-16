@@ -1,17 +1,17 @@
-import { aFlow, assoc, compose, isEmpty, filter, flatten, flow, is, isArray, isDefined, isObject, isString,
-    L, lookup, map, Map, Mapping, on, or, pairWith, Predicate, R, to, not } from 'tsfun';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { aFlow, assoc, compose, isEmpty, filter, flatten, 
+    is, isArray, isDefined, isObject, isString, L, map, 
+    Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
+import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
-import { Category } from '../model/category';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
-import { FieldDefinition } from '../model/field-definition';
+import { Field } from '../model/field';
 import { BaseGroup, Group } from '../model/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
-import { ValuelistDefinition } from '../model/valuelist-definition';
+import { Valuelist } from '../model/valuelist';
 import { Named } from './named';
 import { Labels } from '../services';
 
@@ -30,8 +30,8 @@ export interface FieldsViewField {
     label: string;
     type: 'default'|'array'|'object'|'relation';
     value?: string|string[]; // TODO add object types
-    valuelist?: ValuelistDefinition;
-    positionValues?: ValuelistDefinition;
+    valuelist?: Valuelist;
+    positionValues?: Valuelist;
     targets?: Array<Document>;
 }
 
@@ -55,7 +55,7 @@ export module FieldsViewUtil {
                              fieldName: string, 
                              projectConfiguration: ProjectConfiguration,
                              labels: Labels,
-                             valuelist?: ValuelistDefinition): any {
+                             valuelist?: Valuelist): any {
 
         return fieldName === Resource.CATEGORY
             ? labels.get(projectConfiguration.getCategory(fieldContent))
@@ -69,33 +69,22 @@ export module FieldsViewUtil {
     }
 
 
-    export const isVisibleField: Predicate<FieldDefinition> = on(FieldDefinition.VISIBLE, is(true));
+    export const isVisibleField: Predicate<Field> = on(Field.VISIBLE, is(true));
 
 
-    export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(
-        on(FieldsViewGroup.FIELDS, not(isEmpty))
-    );
-
-
-    export function getGroups(category: string, categories: Map<Category>): Array<FieldsViewGroup> {
-
-        return flow(category,
-            lookup(categories),
-            to(Category.GROUPS)
-        );
-    }
+    export const shouldBeDisplayed: Predicate<FieldsViewGroup> =
+        on(FieldsViewGroup.FIELDS, not(isEmpty));
 
 
     export async function getGroupsForResource(resource: Resource,
                                                projectConfiguration: ProjectConfiguration,
                                                datastore: Datastore,
-                                               labels: Labels,
-                                               languages?: string[]): Promise<Array<FieldsViewGroup>> {
+                                               labels: Labels): Promise<Array<FieldsViewGroup>> {
 
         const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
 
         return await aFlow(
-            FieldsViewUtil.getGroups(resource.category, Named.arrayToMap(projectConfiguration.getCategoriesArray())),
+            projectConfiguration.getCategory(resource.category).groups,
             putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
             filter(shouldBeDisplayed)
         );
@@ -143,7 +132,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                                            relationTargets: Map<Array<Document>>,
                                            labels: Labels): Mapping {
 
-    const fieldContent: Mapping<FieldDefinition, FieldContent>
+    const fieldContent: Mapping<Field, FieldContent>
         = compose(to(Named.NAME), getFieldContent(resource));
 
     return map(
@@ -164,10 +153,10 @@ function makeField(projectConfiguration: ProjectConfiguration,
                    relationTargets: Map<Array<Document>>,
                    labels: Labels) {
 
-    return function([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
+    return function([field, fieldContent]: [Field, FieldContent]): FieldsViewField {
 
-        return (field.inputType === FieldDefinition.InputType.RELATION
-                || field.inputType === FieldDefinition.InputType.INSTANCE_OF)
+        return (field.inputType === Field.InputType.RELATION
+                || field.inputType === Field.InputType.INSTANCE_OF)
             ? {
                 label: labels.get(field),
                 type: 'relation',

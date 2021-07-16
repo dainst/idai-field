@@ -1,4 +1,4 @@
-import {ValuelistDefinition} from '../../src/model/valuelist-definition';
+import {Valuelist} from '../../src/model/valuelist';
 import {Labels} from '../../src/services/labels';
 
 
@@ -23,7 +23,7 @@ describe('Labels', () => {
 
         const labels = new Labels(getLanguages);
 
-        expect(labels.getFieldDefinitionLabel(category, 'aField')).toBe('Ein Feld');
+        expect(labels.getFieldLabel(category, 'aField')).toBe('Ein Feld');
     });
 
 
@@ -39,13 +39,13 @@ describe('Labels', () => {
         } as any;
 
         const labels = new Labels(getLanguages);
-        expect(labels.getFieldDefinitionLabel(category,'aField')).toBe('aField');
+        expect(labels.getFieldLabel(category,'aField')).toBe('aField');
     });
 
 
     it('sort values alphanumerically', () => {
 
-        const valuelist: ValuelistDefinition = {
+        const valuelist: Valuelist = {
             values: {
                 '1': { label: { de: 'B300' } },
                 '2': { label: { de: 'A3' } },
@@ -63,7 +63,7 @@ describe('Labels', () => {
     // TODO move to valuelist-definition.spec
     it('sort values by custom order', () => {
 
-        const valuelist: ValuelistDefinition = {
+        const valuelist: Valuelist = {
             values: {
                 '1': { label: { de: 'A' } },
                 '2': { label: { de: 'B' } },

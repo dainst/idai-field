@@ -47,7 +47,7 @@ export module MessagesConversion {
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;
-                msgWithParams[2] = labels.getFieldDefinitionLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             }
         }
@@ -59,7 +59,7 @@ export module MessagesConversion {
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE;
-                msgWithParams[2] = labels.getFieldDefinitionLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             }
         }
@@ -71,7 +71,7 @@ export module MessagesConversion {
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE;
-                msgWithParams[2] = labels.getFieldDefinitionLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             }
         }
@@ -83,7 +83,7 @@ export module MessagesConversion {
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR;
-                msgWithParams[2] = labels.getFieldDefinitionLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             }
         }
@@ -99,7 +99,7 @@ export module MessagesConversion {
 
         return fields
             .split(', ')
-            .map(fieldName => labels.getFieldDefinitionLabel(projectConfiguration.getCategory(category), fieldName))
+            .map(fieldName => labels.getFieldLabel(projectConfiguration.getCategory(category), fieldName))
             .join(', ');
     }
 }

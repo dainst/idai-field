@@ -1,7 +1,7 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Datastore, FieldDefinition, ProjectConfiguration, Labels } from 'idai-field-core';
+import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../core/images/overview/view/imageoverview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
@@ -19,7 +19,7 @@ import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.com
  */
 export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsComponent {
 
-    protected defaultFields: Array<FieldDefinition> = [
+    protected defaultFields: Array<Field> = [
         {
             name: 'depicts',
             inputType: 'default',
@@ -40,7 +40,7 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
     }
 
 
-    public getFieldLabel(field: FieldDefinition): string {
+    public getFieldLabel(field: Field): string {
 
         return field.name === 'depicts'
             ? this.i18n({

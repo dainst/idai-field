@@ -1,4 +1,4 @@
-import { RelationDefinition } from '../../model/relation-definition';
+import { Relation } from '../../model/relation';
 
 
 /**
@@ -8,6 +8,6 @@ export interface ConfigurationDefinition {
 
     identifier: string
     categories: any;
-    relations: Array<RelationDefinition>;
+    relations: Array<Relation>;
     groups?: any;
 }

@@ -1,7 +1,7 @@
 import {flow, left, reverse} from 'tsfun';
 import {Dating, Dimension, Literature, OptionalRange} from 'idai-field-core';
 import {CSVExpansion} from './csv-expansion';
-import {FieldDefinition} from 'idai-field-core';
+import {Field} from 'idai-field-core';
 import {H, HeadingsAndMatrix} from './csv-export-consts';
 import {CsvExportUtils} from './csv-export-utils';
 import {CSVHeadingsExpansion} from './csv-headings-expansion';
@@ -23,7 +23,7 @@ export module CSVMatrixExpansion {
     const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 2);
 
 
-    export function expandOptionalRangeVal(fieldDefinitions: Array<FieldDefinition>) {
+    export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
@@ -55,7 +55,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
+    export function expandDimension(fieldDefinitions: Array<Field>) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 

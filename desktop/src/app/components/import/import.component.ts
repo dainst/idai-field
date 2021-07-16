@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
-    RelationsManager, ProjectCategories, Labels } from 'idai-field-core';
+    RelationsManager, Labels, Tree, Named } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
@@ -195,7 +195,7 @@ export class ImportComponent implements OnInit {
     public updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
-            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
+            Tree.flatten(this.projectConfiguration.getCategories()), this.getCategoriesToExclude()
         );
 
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
@@ -249,7 +249,7 @@ export class ImportComponent implements OnInit {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()));
+            : BASE_EXCLUSION.concat(this.projectConfiguration.getImageCategories().map(Named.toName));
     }
 
 
@@ -276,7 +276,8 @@ export class ImportComponent implements OnInit {
             },
             {
                 settings: this.settingsProvider.getSettings(),
-                projectConfiguration: this.projectConfiguration
+                projectConfiguration: this.projectConfiguration,
+                operationCategories: this.projectConfiguration.getOperationCategories().map(Named.toName) // TODO review
             },
             () => this.idGenerator.generateId(),
             options,
@@ -346,7 +347,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryForest())
+                categories: this.projectConfiguration.getOperationCategories().map(Named.toName)
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -358,7 +359,7 @@ export class ImportComponent implements OnInit {
     private getCategoryFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
-            const category: Category|undefined = this.projectConfiguration.getCategoriesArray()
+            const category: Category|undefined = Tree.flatten(this.projectConfiguration.getCategories())
                 .find(category => category.name.toLowerCase() === segment.toLowerCase());
             if (category) return category;
         }

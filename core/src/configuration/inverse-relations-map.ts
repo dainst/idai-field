@@ -1,5 +1,5 @@
 import { flow } from 'tsfun';
-import {RelationDefinition} from '../model';
+import {Relation} from '../model';
 import {assocReduce,toPair} from '../tools';
 
 
@@ -14,7 +14,7 @@ export type InverseRelationsMap = {
 }
 
 
-export function makeInverseRelationsMap(relationDefinitions: Array<RelationDefinition>) {
+export function makeInverseRelationsMap(relationDefinitions: Array<Relation>) {
 
     return flow(
         relationDefinitions,

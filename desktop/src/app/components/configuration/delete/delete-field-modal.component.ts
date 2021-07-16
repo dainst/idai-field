@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDefinition } from 'idai-field-core';
+import { Field } from 'idai-field-core';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { FieldDefinition } from 'idai-field-core';
  */
 export class DeleteFieldModalComponent {
 
-    public field: FieldDefinition;
+    public field: Field;
 
 
     constructor(public activeModal: NgbActiveModal) {}

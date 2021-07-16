@@ -1,13 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { err, isOk, ok } from 'tsfun';
-import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
+import {Datastore, FieldDocument, ImageDocument, Named} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {ProjectConfiguration} from 'idai-field-core';
 import { getImageSuggestions } from '../../../core/docedit/widgets/get-image-suggestions';
-import { ProjectCategories } from 'idai-field-core';
 
 
 @Component({
@@ -161,7 +160,7 @@ export class ImagePickerComponent implements OnInit {
 
     private getQuery() {
 
-        const categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
+        const categories = this.projectConfiguration.getImageCategories().map(Named.toName)
         return {
             categories: categories,
             offset: this.currentOffset,

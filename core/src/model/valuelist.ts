@@ -9,7 +9,7 @@ export type Valuelists = { [fieldName: string]: ValuelistId }
 /**
  * @author Daniel de Oliveira
  */
-export interface ValuelistDefinition {
+export interface Valuelist {
 
     id: string;
     values: { [key: string]: ValueDefinition }
@@ -27,17 +27,17 @@ export interface ValuelistDefinition {
 }
 
 
-export module ValuelistDefinition {
+export module Valuelist {
 
-    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): I18N.String|undefined {
+    export function getValueLabel(valuelist: Valuelist, valueId: string): I18N.String|undefined {
 
         return valuelist.values[valueId]?.label;
     }
 
 
     // TODO review why we return keys instead of labels
-    export function orderKeysByLabels(valuelist: ValuelistDefinition, 
-                                      alternativeComparator: (valuelist: ValuelistDefinition) => 
+    export function orderKeysByLabels(valuelist: Valuelist, 
+                                      alternativeComparator: (valuelist: Valuelist) => 
                                                              (a: string, b: string) => number): string[] {
 
         return Object.keys(valuelist.values).sort(
@@ -53,7 +53,7 @@ export module ValuelistDefinition {
     };
     
 
-    export function assertIsValid(valuelistDefinition: ValuelistDefinition) {
+    export function assertIsValid(valuelistDefinition: Valuelist) {
 
         if (valuelistDefinition.description === undefined) return ['missing', 'description'];
         if (valuelistDefinition.createdBy === undefined) return ['missing', 'createdBy'];

@@ -1,4 +1,4 @@
-import { Constraint, Query, Datastore, RelationDefinition } from 'idai-field-core';
+import { Constraint, Query, Datastore, Relation } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
 
 export const MAX_SUGGESTIONS: number = 5;
@@ -8,7 +8,7 @@ export const MAX_SUGGESTIONS: number = 5;
  * @author Thomas Kleinke
  */
 export async function getSuggestions(datastore: Datastore, resource: Resource,
-                                     relationDefinition: RelationDefinition,
+                                     relationDefinition: Relation,
                                      idSearchString?: string): Promise<Array<Document>> {
 
     return (await datastore.find(
@@ -17,7 +17,7 @@ export async function getSuggestions(datastore: Datastore, resource: Resource,
 }
 
 
-function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
+function makeQuery(resource: Resource, relationDefinition: Relation,
                    idSearchString?: string): Query {
 
     return {
@@ -31,7 +31,7 @@ function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
 
 
 function makeConstraints(resource: Resource,
-                         relationDefinition: RelationDefinition): { [constraintName: string]: Constraint } {
+                         relationDefinition: Relation): { [constraintName: string]: Constraint } {
 
     const constraints: { [constraintName: string]: Constraint } = {
         'id:match': {
@@ -55,7 +55,7 @@ function makeConstraints(resource: Resource,
  *      - Resources which are already targets of the relation
  *      - Resources which are targets of the inverse relation
  */
-function getForbiddenIds(resource: Resource, relationDefinition: RelationDefinition): string[] {
+function getForbiddenIds(resource: Resource, relationDefinition: Relation): string[] {
 
     let ids: string[] = [resource.id]
         .concat(resource.relations[relationDefinition.name])

@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { addRelations } from '../../../src/configuration/boot';
 import { LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { RelationDefinition } from '../../../src/model';
+import { Relation } from '../../../src/model';
 
 
 /**
@@ -39,7 +39,7 @@ describe('addRelations', () => {
 
     it('add an extra relation', () => {
 
-        const extraRelation: RelationDefinition = {
+        const extraRelation: Relation = {
             name: 'R',
             domain: ['domainA'],
             range : ['rangeA'],
@@ -57,7 +57,7 @@ describe('addRelations', () => {
 
     it('overwrite relation for a part of a domain', () => {
 
-        const r1: RelationDefinition = {
+        const r1: Relation = {
             name: 'R',
             domain: ['domainA', 'domainB', 'domainC'],
             range : ['rangeA'],
@@ -65,7 +65,7 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        const r2: RelationDefinition = {
+        const r2: Relation = {
             name: 'R',
             domain: ['domainB', 'domainC'],
             range : ['rangeB'],
@@ -87,7 +87,7 @@ describe('addRelations', () => {
 
     it('overwrite relation with inheritance for a part of a domain', () => {
 
-        const r1: RelationDefinition = {
+        const r1: Relation = {
             name: 'R',
             domain: ['T1:inherit'],
             range : ['rangeA'],
@@ -95,7 +95,7 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        const r2: RelationDefinition = {
+        const r2: Relation = {
             name: 'R',
             domain: ['T1:inherit'],
             range: ['rangeA', 'rangeB', 'rangeC'],
@@ -116,7 +116,7 @@ describe('addRelations', () => {
 
     it('replace range ALL with all categories except the domain categories', () => {
 
-        const r: RelationDefinition = {
+        const r: Relation = {
             name: 'R',
             domain: ['T2', 'T3'],
             range: [],
@@ -135,7 +135,7 @@ describe('addRelations', () => {
 
     it('should replace domain ALL with all categories except the range categories', () => {
 
-        const r: RelationDefinition = {
+        const r: Relation = {
             name: 'R',
             domain: [],
             range: ['T2', 'T3'],
@@ -154,7 +154,7 @@ describe('addRelations', () => {
 
     it('should replace range :inherit with all subcategories', () => {
 
-        const r: RelationDefinition = { name: 'R',
+        const r: Relation = { name: 'R',
             domain: [ 'T3' ],
             range: [ 'T1:inherit' ],
             editable: false,
@@ -176,7 +176,7 @@ describe('addRelations', () => {
 
     it('should replace domain :inherit with all subcategories', () => {
 
-        const r: RelationDefinition = {
+        const r: Relation = {
             name: 'R',
             domain: ['T1:inherit'],
             range: ['T3'],
@@ -200,7 +200,7 @@ describe('addRelations', () => {
     // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
     it('should exclude the category and subcategories when using :inherit and total range', () => {
 
-        const r: RelationDefinition = {
+        const r: Relation = {
             name: 'R',
             domain: ['T1:inherit'],
             range: [],

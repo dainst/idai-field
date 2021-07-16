@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Document, FieldDefinition, Labels } from 'idai-field-core';
+import { Document, Field, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { Document, FieldDefinition, Labels } from 'idai-field-core';
  */
 export class EditFormGroup implements OnChanges {
 
-    @Input() fieldDefinitions: Array<FieldDefinition>;
+    @Input() fieldDefinitions: Array<Field>;
     @Input() document: Document;
 
     public labels: { [name: string]: string };
@@ -28,7 +28,7 @@ export class EditFormGroup implements OnChanges {
     }
 
 
-    public shouldShow(field: FieldDefinition): boolean {
+    public shouldShow(field: Field): boolean {
 
         return field !== undefined && field.editable === true;
     }

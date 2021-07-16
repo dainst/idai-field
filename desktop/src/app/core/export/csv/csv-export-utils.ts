@@ -1,7 +1,7 @@
 import {dense, drop, flow, indices, is, on, first,
     take, prepend, clone, append, reduce, compose, cond, isEmpty, Mapping} from 'tsfun';
 import {Resource} from 'idai-field-core';
-import {FieldResource, FieldDefinition} from 'idai-field-core';
+import {FieldResource, Field} from 'idai-field-core';
 import {CsvExportConsts} from './csv-export-consts';
 import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
@@ -26,13 +26,13 @@ export module CsvExportUtils {
      * ->
      * [1, 2]
      */
-    export function getIndices(fieldDefinitions: Array<FieldDefinition>, inputType: string)
+    export function getIndices(fields: Array<Field>, inputType: string)
         : (headings: string[]) => number[] {
 
         return indices((heading: string) => {
 
             if (heading.includes(OBJECT_SEPARATOR)) return false;
-            const field = fieldDefinitions.find(on(FieldDefinition.NAME, is(heading)));
+            const field = fields.find(on(Field.NAME, is(heading)));
             if (!field) return false;
 
             return field.inputType === inputType;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, Datastore, FieldDocument, Query, ProjectCategories, ProjectConfiguration,
-    RelationsManager, Labels, Document} from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Query, ProjectConfiguration,
+    RelationsManager, Labels, Document, Tree, Named} from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -100,7 +100,7 @@ export class ExportComponent implements OnInit {
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.find,
             this.getOperationIdForMode(),
-            this.projectConfiguration.getCategoriesArray()
+            Tree.flatten(this.projectConfiguration.getCategories())
         );
 
         if (this.categoryCounts.length > 0) this.selectedCategory = this.categoryCounts[0][0];
@@ -214,7 +214,7 @@ export class ExportComponent implements OnInit {
                 this.getOperationIdForMode(),
                 this.selectedCategory,
                 this.projectConfiguration
-                    .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
+                    .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
@@ -319,7 +319,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryForest())
+                categories: this.projectConfiguration.getOperationCategories().map(Named.toName)
             })).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

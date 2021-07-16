@@ -1,11 +1,10 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {Datastore, FieldDocument} from 'idai-field-core';
+import {Datastore, FieldDocument, Named} from 'idai-field-core';
 import {Routing} from '../../services/routing';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Query} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
-import {ProjectCategories} from 'idai-field-core';
 
 @Component({
     selector: 'search-suggestions',
@@ -124,8 +123,8 @@ export class SearchSuggestionsComponent implements OnChanges {
         return this.viewFacade.getFilterCategories().length > 0
             ? this.viewFacade.getFilterCategories()
             : this.viewFacade.isInTypesManagement()
-                ? ProjectCategories.getTypeCategoryNames()
-                : ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryForest());
+                ? this.projectConfiguration.getTypeCategories().map(Named.toName)
+                : this.projectConfiguration.getConcreteFieldCategories().map(Named.toName);
     }
 
 

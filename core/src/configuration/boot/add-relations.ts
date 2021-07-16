@@ -1,5 +1,5 @@
 import { isEmpty, not, on, subtract } from 'tsfun';
-import { RelationDefinition } from '../../model/relation-definition';
+import { Relation } from '../../model/relation';
 import { Named } from '../../tools/named';
 
 
@@ -7,7 +7,7 @@ import { Named } from '../../tools/named';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function addRelations(extraRelations: Array<RelationDefinition>) {
+export function addRelations(extraRelations: Array<Relation>) {
 
     return (configuration: [any, any]) => {
 
@@ -16,7 +16,7 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
         if (!relations) return;
 
         for (let extraRelation of extraRelations) {
-            expandInherits(categories, extraRelation, RelationDefinition.DOMAIN);
+            expandInherits(categories, extraRelation, Relation.DOMAIN);
 
             relations
                 .filter(on(Named.NAME)(extraRelation))
@@ -24,13 +24,13 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
                     relation.domain = subtract(extraRelation.domain)(relation.domain)
                 });
             relations = relations
-                .filter(not(on(RelationDefinition.DOMAIN, isEmpty)));
+                .filter(not(on(Relation.DOMAIN, isEmpty)));
 
             relations.splice(0,0, extraRelation);
 
-            expandInherits(categories, extraRelation, RelationDefinition.RANGE);
-            expandOnEmpty(categories, extraRelation, RelationDefinition.RANGE);
-            expandOnEmpty(categories, extraRelation, RelationDefinition.DOMAIN);
+            expandInherits(categories, extraRelation, Relation.RANGE);
+            expandOnEmpty(categories, extraRelation, Relation.RANGE);
+            expandOnEmpty(categories, extraRelation, Relation.DOMAIN);
         }
 
         return [categories, relations];
@@ -39,7 +39,7 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
 
 
 function expandInherits(categories: any,
-                        extraRelation: RelationDefinition, itemSet: string) {
+                        extraRelation: Relation, itemSet: string) {
 
     if (!extraRelation) return;
     if (!(extraRelation as any)[itemSet]) return;
@@ -67,14 +67,14 @@ function expandInherits(categories: any,
 
 
 function expandOnEmpty(categories: any,
-                       extraRelation_: RelationDefinition, itemSet: string) {
+                       extraRelation_: Relation, itemSet: string) {
 
     const extraRelation: any = extraRelation_;
 
     if (not(isEmpty)(extraRelation[itemSet])) return;
 
-    let opposite = RelationDefinition.RANGE;
-    if (itemSet === RelationDefinition.RANGE) opposite = RelationDefinition.DOMAIN;
+    let opposite = Relation.RANGE;
+    if (itemSet === Relation.RANGE) opposite = Relation.DOMAIN;
 
     extraRelation[itemSet] = [];
     for (let categoryName of Object.keys(categories)) {

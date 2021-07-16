@@ -34,7 +34,7 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
 
         const items1 = indexFacade.find(
-            { categories: ['Type'], sort: { matchCategory: 'SomeFindCategory'} /* query is designed to trigger Type-based sort */
+            { categories: ['Type'], sort: { matchCategory: 'SomeFindCategory' } /* query is designed to trigger Type-based sort */
             });
         expect(items1).toEqual(['id0', 'id1']);
 

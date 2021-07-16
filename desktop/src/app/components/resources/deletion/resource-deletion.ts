@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set, to } from 'tsfun';
-import { FieldDocument, RelationsManager, ProjectCategories } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { ImageRelationsManager } from '../../../core/model/image-relations-manager';
@@ -16,7 +16,8 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
-                private imageRelationsManager: ImageRelationsManager) {}
+                private imageRelationsManager: ImageRelationsManager,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public async delete(documents: Array<FieldDocument>) {
@@ -47,7 +48,7 @@ export class ResourceDeletion {
 
     private async performDeletion(documents: Array<FieldDocument>, deleteRelatedImages: boolean) {
 
-        if (documents.find(ResourceDeletion.isImportedCatalog) || deleteRelatedImages) {
+        if (documents.find(this.isImportedCatalog) || deleteRelatedImages) {
             await this.imageRelationsManager.remove(documents);
         } else {
             for (const document of documents) {
@@ -76,9 +77,9 @@ export class ResourceDeletion {
     }
 
 
-    private static isImportedCatalog(document: FieldDocument) {
+    private isImportedCatalog = (document: FieldDocument) => {
 
-        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
+        return this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
             && document.project !== undefined;
     }
 

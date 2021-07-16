@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, FieldDefinition, Group, Named,
+import { Category, ConfigurationDocument, CustomCategoryDefinition, Field, Group, Named,
     Resource, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
 import { MenuContext } from '../services/menu-context';
@@ -39,7 +39,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
-    @Output() onEditField: EventEmitter<FieldDefinition> = new EventEmitter<FieldDefinition>();
+    @Output() onEditField: EventEmitter<Field> = new EventEmitter<Field>();
 
     public selectedGroup: string;
     public label: string;
@@ -76,7 +76,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
-    public isHidden = (field: FieldDefinition) =>
+    public isHidden = (field: Field) =>
         ConfigurationUtil.isHidden(this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition())(field);
 
 
@@ -96,20 +96,20 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
 
     public hasCustomFields: Predicate<Group> = compose(
-        to<Array<FieldDefinition>>(Group.FIELDS),
+        to<Array<Field>>(Group.FIELDS),
         map(_ => _.source),
-        any(is(FieldDefinition.Source.CUSTOM))
+        any(is(Field.Source.CUSTOM))
     );
 
 
-    public getFields(): Array<FieldDefinition> {
+    public getFields(): Array<Field> {
 
         return this.getGroups()
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .fields
             .filter(
                 and(
-                    on(FieldDefinition.NAME, not(includedIn(this.permanentlyHiddenFields))),
+                    on(Field.NAME, not(includedIn(this.permanentlyHiddenFields))),
                     or(
                         () => this.showHiddenFields,
                         not(ConfigurationUtil.isHidden(

@@ -1,6 +1,6 @@
 import { Named } from '../tools/named';
 import { I18N } from '../tools/i18n';
-import { FieldDefinition } from './field-definition';
+import { Field } from './field';
 import { Relations } from './relations';
 
 
@@ -44,7 +44,7 @@ export module Groups {
 
 export interface Group extends BaseGroup {
 
-    fields: Array<FieldDefinition>;
+    fields: Array<Field>;
 }
 
 

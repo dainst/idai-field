@@ -1,5 +1,5 @@
 import { Map } from 'tsfun';
-import { Valuelists } from '../../model/valuelist-definition';
+import { Valuelists } from '../../model/valuelist';
 import { Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';

@@ -1,6 +1,6 @@
 import { Observable, Observer } from 'rxjs';
 import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
-import { FieldDefinition } from '../model';
+import { Field } from '../model';
 import { Category } from '../model/category';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
@@ -115,7 +115,7 @@ export class IndexFacade {
     }
 
     
-    public addConstraintIndexDefinitionsForField(field: FieldDefinition) {
+    public addConstraintIndexDefinitionsForField(field: Field) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
     }

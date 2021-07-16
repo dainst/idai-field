@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
-import { FieldDefinition } from '../model/field-definition';
+import { Field } from '../model/field';
 import { Groups } from '../model/group';
-import { RelationDefinition } from '../model/relation-definition';
+import { Relation } from '../model/relation';
 import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
 
 
@@ -13,99 +13,99 @@ export class BuiltInConfiguration {
 
     public commonFields = {
         period: {
-            inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+            inputType: Field.InputType.DROPDOWNRANGE,
             constraintIndexed: true
         },
         dating: {
-            inputType: FieldDefinition.InputType.DATING,
+            inputType: Field.InputType.DATING,
         },
         diary: {
-            inputType: FieldDefinition.InputType.INPUT,
+            inputType: Field.InputType.INPUT,
             constraintIndexed: true
         },
         area: {
-            inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
+            inputType: Field.InputType.UNSIGNEDFLOAT,
             constraintIndexed: true
         },
         dimensionLength: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionWidth: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionHeight: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionDiameter: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionPerimeter: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionThickness: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         dimensionVerticalExtent: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             inputTypeOptions: { validation: { permissive: true } },
             positionValuelistId: 'position-values-edge-default'
         },
         dimensionOther: {
-            inputType: FieldDefinition.InputType.DIMENSION,
+            inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
         beginningDate: {
-            inputType: FieldDefinition.InputType.DATE,
+            inputType: Field.InputType.DATE,
         },
         endDate: {
-            inputType: FieldDefinition.InputType.DATE,
+            inputType: Field.InputType.DATE,
         },
         supervisor: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
+            inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
             constraintIndexed: true
         },
         processor: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
+            inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
             constraintIndexed: true
         },
         campaign: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
+            inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
             constraintIndexed: true
         },
         draughtsmen: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
+            inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
             constraintIndexed: true
         },
         description: {
-            inputType: FieldDefinition.InputType.TEXT
+            inputType: Field.InputType.TEXT
         },
         date: {
-            inputType: FieldDefinition.InputType.DATE
+            inputType: Field.InputType.DATE
         },
         spatialLocation: {
-            inputType: FieldDefinition.InputType.INPUT
+            inputType: Field.InputType.INPUT
         },
         provenance: {
-            inputType: FieldDefinition.InputType.DROPDOWN,
+            inputType: Field.InputType.DROPDOWN,
             constraintIndexed: true
         },
         orientation: {
-            inputType: FieldDefinition.InputType.DROPDOWN,
+            inputType: Field.InputType.DROPDOWN,
             constraintIndexed: true
         },
         literature: {
-            inputType: FieldDefinition.InputType.LITERATURE
+            inputType: Field.InputType.LITERATURE
         }
     };
     
@@ -115,21 +115,21 @@ export class BuiltInConfiguration {
             required: true,
             fields: {
                 identifier: {
-                    inputType: FieldDefinition.InputType.INPUT,
+                    inputType: Field.InputType.INPUT,
                     editable: false,
                     visible: false
                 },
                 shortName: {
-                    inputType: FieldDefinition.InputType.INPUT
+                    inputType: Field.InputType.INPUT
                 },
                 coordinateReferenceSystem: {
-                    inputType: FieldDefinition.InputType.DROPDOWN
+                    inputType: Field.InputType.DROPDOWN
                 },
                 staff: {
-                    inputType: FieldDefinition.InputType.MULTIINPUT
+                    inputType: Field.InputType.MULTIINPUT
                 },
                 campaigns: {
-                    inputType: FieldDefinition.InputType.MULTIINPUT
+                    inputType: Field.InputType.MULTIINPUT
                 }
             },
             groups: [
@@ -148,7 +148,7 @@ export class BuiltInConfiguration {
             abstract: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -208,11 +208,11 @@ export class BuiltInConfiguration {
         Place: {
             fields: {
                 gazId: {
-                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    inputType: Field.InputType.UNSIGNEDINT,
                     constraintIndexed: true
                 },
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -247,7 +247,7 @@ export class BuiltInConfiguration {
             userDefinedSubcategoriesAllowed: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -266,7 +266,7 @@ export class BuiltInConfiguration {
         RoomWall: {
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -286,7 +286,7 @@ export class BuiltInConfiguration {
         RoomFloor: {
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -306,7 +306,7 @@ export class BuiltInConfiguration {
         RoomCeiling: {
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -328,7 +328,7 @@ export class BuiltInConfiguration {
             userDefinedSubcategoriesAllowed: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -348,7 +348,7 @@ export class BuiltInConfiguration {
             userDefinedSubcategoriesAllowed: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -369,14 +369,14 @@ export class BuiltInConfiguration {
             fields: {
                 // TODO Use common field?
                 period: {
-                    inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+                    inputType: Field.InputType.DROPDOWNRANGE,
                     constraintIndexed: true
                 },
                 dating: {
-                    inputType: FieldDefinition.InputType.DATING,
+                    inputType: Field.InputType.DATING,
                 },
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -400,7 +400,7 @@ export class BuiltInConfiguration {
             userDefinedSubcategoriesAllowed: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -423,7 +423,7 @@ export class BuiltInConfiguration {
             mustLieWithin: true,
             fields: {
                 geometry: {
-                    inputType: FieldDefinition.InputType.GEOMETRY,
+                    inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
@@ -442,7 +442,7 @@ export class BuiltInConfiguration {
             supercategory: true,
             fields: {
                 criterion: {
-                    inputType: FieldDefinition.InputType.DROPDOWN,
+                    inputType: Field.InputType.DROPDOWN,
                     constraintIndexed: true
                 }
             },
@@ -478,28 +478,28 @@ export class BuiltInConfiguration {
             required: true,
             fields: {
                 height: {
-                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    inputType: Field.InputType.UNSIGNEDINT,
                     editable: false
                 },
                 width: {
-                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    inputType: Field.InputType.UNSIGNEDINT,
                     editable: false
                 },
                 // The originalFilename gets used as an inital resource.identifier
                 // when the image gets uploaded. However, users can change the identifier,
                 // which is why we store the originalFilename separately
                 originalFilename: {
-                    inputType: FieldDefinition.InputType.INPUT,
+                    inputType: Field.InputType.INPUT,
                     visible: false,
                     editable: false
                 },
                 georeference: {
-                    inputType: FieldDefinition.InputType.NONE,
+                    inputType: Field.InputType.NONE,
                     visible: false,
                     editable: false
                 },
                 featureVectors: {
-                    inputType: FieldDefinition.InputType.NONE,
+                    inputType: Field.InputType.NONE,
                     visible: false,
                     editable: false
                 }
@@ -523,27 +523,27 @@ export class BuiltInConfiguration {
             editable: false,
             visible: false,
             source: 'builtin'
-        } as FieldDefinition,
+        } as Field,
         category: {
             visible: true,
             editable: false,
             source: 'builtin'
-        } as FieldDefinition,
+        } as Field,
         shortDescription: {
             visible: true,
             editable: true,
             fulltextIndexed: true
-        } as FieldDefinition,
+        } as Field,
         identifier: {
             visible: false,
             editable: true,
             mandatory: true,
             fulltextIndexed: true
-        } as FieldDefinition
+        } as Field
     };
 
 
-    public builtInRelations: Array<RelationDefinition> = [
+    public builtInRelations: Array<Relation> = [
         {
             name: 'depicts',
             domain: ['Image:inherit'],
@@ -894,7 +894,7 @@ export class BuiltInConfiguration {
                 parent: 'Feature',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -917,7 +917,7 @@ export class BuiltInConfiguration {
                 color: '#ffff99',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -936,7 +936,7 @@ export class BuiltInConfiguration {
                 color: '#08519c',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY
+                        inputType: Field.InputType.GEOMETRY
                     }
                 },
                 groups: [
@@ -975,7 +975,7 @@ export class BuiltInConfiguration {
                 color: '#08306b',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -995,7 +995,7 @@ export class BuiltInConfiguration {
                 parent: 'ProcessUnit',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -1014,7 +1014,7 @@ export class BuiltInConfiguration {
                 color: '#6600cc',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -1033,7 +1033,7 @@ export class BuiltInConfiguration {
                 color: '#45ff95',
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -1112,7 +1112,7 @@ export class BuiltInConfiguration {
                 abstract: false,
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -1133,7 +1133,7 @@ export class BuiltInConfiguration {
                 parent: 'Operation',
                 fields: {
                     gazId: {
-                        inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                        inputType: Field.InputType.UNSIGNEDINT,
                         constraintIndexed: true
                     }
                 },
@@ -1158,10 +1158,10 @@ export class BuiltInConfiguration {
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
                     diameterPercentage: {
-                        inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
+                        inputType: Field.InputType.UNSIGNEDFLOAT,
                     },
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
@@ -1190,7 +1190,7 @@ export class BuiltInConfiguration {
                 userDefinedSubcategoriesAllowed: false,
                 fields: {
                     geometry: {
-                        inputType: FieldDefinition.InputType.GEOMETRY,
+                        inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },

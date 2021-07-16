@@ -1,4 +1,4 @@
-import { doc, RelationDefinition, Document } from 'idai-field-core';
+import { doc, Relation, Document } from 'idai-field-core';
 import { getSuggestions,
     MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
 
@@ -24,7 +24,7 @@ describe('getSuggestions', () => {
             = doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
 
-        const relationDefinition: RelationDefinition = {
+        const relationDefinition: Relation = {
             name: 'relation',
             domain: [],
             range: ['RangeCategory1', 'RangeCategory2'],
@@ -59,7 +59,7 @@ describe('getSuggestions', () => {
         document.resource.relations['relation'] = ['id2', 'id3'];
         document.resource.relations['inverse'] = ['id4', 'id5'];
 
-        const relationDefinition: RelationDefinition = {
+        const relationDefinition: Relation = {
             name: 'relation',
             inverse: 'inverse',
             domain: [],
@@ -96,7 +96,7 @@ describe('getSuggestions', () => {
         document.resource.relations['relation'] = [''];
         document.resource.relations['isRecordedIn'] = ['operationId'];
 
-        const relationDefinition: RelationDefinition = {
+        const relationDefinition: Relation = {
             name: 'relation',
             domain: [],
             range: ['RangeCategory'],
@@ -132,7 +132,7 @@ describe('getSuggestions', () => {
         document.resource.relations['relation'] = [''];
         delete document.resource.id;
 
-        const relationDefinition: RelationDefinition = {
+        const relationDefinition: Relation = {
             name: 'relation',
             domain: [],
             range: ['RangeCategory'],

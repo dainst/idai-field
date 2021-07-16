@@ -2,7 +2,7 @@ import { Map } from 'tsfun';
 import { Assertions, ConfigurationErrors } from '../../../src/configuration/boot';
 import { BuiltinCategoryDefinition, CustomCategoryDefinition,
     LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { FieldDefinition } from '../../../src/model';
+import { Field } from '../../../src/model';
 
 
 describe('Assertions', () => {
@@ -11,7 +11,7 @@ describe('Assertions', () => {
 
        const commonFields = {
            aCommon: {
-               inputType: FieldDefinition.InputType.INPUT,
+               inputType: Field.InputType.INPUT,
                valuelistFromProjectField: 'abc'
            }
        };

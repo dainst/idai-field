@@ -1,7 +1,7 @@
 import {flatten} from 'tsfun';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Tree, TreeList} from '../../app/core/util/tree-list';
-import {ValueDefinition, ValuelistDefinition} from '../../app/core/configuration/model/valuelist-definition';
+import {ValueDefinition, Valuelist} from '../../app/core/configuration/model/valuelist-definition';
 import {COMMON_FIELDS} from '../../app/core/configuration/app-configurator';
 
 const fs = require('fs');
@@ -105,7 +105,7 @@ function addFieldConcept(field: any, commonField: boolean, concepts: { [id: stri
 }
 
 
-function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: string]: Concept },
+function addValuelistConcept(valuelist: Valuelist, concepts: { [id: string]: Concept },
                              projectName: string, parent: Concept) {
 
     const concept: Concept = {

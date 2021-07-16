@@ -5,7 +5,7 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategoriesArray']
+        ['getCategories']
     );
 
     const defaultFieldConfiguration = {
@@ -24,12 +24,12 @@ export function createMockProjectConfiguration(): any {
         }]
     };
 
-    projectConfiguration.getCategoriesArray.and.returnValue([
-        update('name', 'category1', defaultFieldConfiguration),
-        update('name', 'category2', defaultFieldConfiguration),
-        update('name', 'category3', defaultFieldConfiguration),
-        update('name', 'Find', defaultFieldConfiguration),
-        update('name', 'Type', defaultFieldConfiguration)
+    projectConfiguration.getCategories.and.returnValue([
+        { item: update('name', 'category1', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'category2', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'category3', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'Find', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'Type', defaultFieldConfiguration), trees: [] }
     ]);
 
     return projectConfiguration;

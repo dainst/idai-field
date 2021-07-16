@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { mergeWithCustomCategories } from '../../../src/configuration/boot';
 import { CustomCategoryDefinition, TransientCategoryDefinition } from '../../../src/configuration/model';
-import { FieldDefinition } from '../../../src/model';
+import { Field } from '../../../src/model';
 
 
 describe('mergeWithCustomCategories', () => {
@@ -20,7 +20,7 @@ describe('mergeWithCustomCategories', () => {
                 fields: {
                     f1: {
                         name: 'f1',
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 },
                 groups: []
@@ -31,15 +31,15 @@ describe('mergeWithCustomCategories', () => {
             'A:default': {
                 fields: {
                     f2: {
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 }
             }
         };
 
         const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
-        expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
-        expect(result['A:default'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
+        expect(result['A:default'].fields['f1'].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['A:default'].fields['f2'].inputType).toEqual(Field.InputType.INPUT);
     });
 
 
@@ -57,7 +57,7 @@ describe('mergeWithCustomCategories', () => {
                 fields: {
                     f1: {
                         name: 'f1',
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 },
                 groups: []
@@ -69,15 +69,15 @@ describe('mergeWithCustomCategories', () => {
                 parent: 'A:default',
                 fields: {
                     f2: {
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 }
             }
         };
 
         const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
-        expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
-        expect(result['A:child'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
+        expect(result['A:default'].fields['f1'].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['A:child'].fields['f2'].inputType).toEqual(Field.InputType.INPUT);
     });
 
 
@@ -95,7 +95,7 @@ describe('mergeWithCustomCategories', () => {
                 fields: {
                     f1: {
                         name: 'f1',
-                        inputType: FieldDefinition.InputType.INPUT
+                        inputType: Field.InputType.INPUT
                     }
                 },
                 groups: []

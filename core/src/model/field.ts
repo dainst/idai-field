@@ -1,22 +1,22 @@
 import { I18N } from '../tools/i18n';
-import { ValuelistDefinition } from './valuelist-definition';
+import { Valuelist } from './valuelist';
 
 
 /**
  * @author Daniel de Oliveira
  */
-export interface FieldDefinition extends I18N.LabeledValue {
+export interface Field extends I18N.LabeledValue {
 
     name: string;
-    inputType: FieldDefinition.InputType;
+    inputType: Field.InputType;
     inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
     label?: I18N.String;
     description?: I18N.String;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
-    valuelist?: ValuelistDefinition;
+    valuelist?: Valuelist;
     valuelistFromProjectField?: string;
-    positionValues?: ValuelistDefinition;
+    positionValues?: Valuelist;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
     fulltextIndexed?: boolean;
@@ -24,11 +24,11 @@ export interface FieldDefinition extends I18N.LabeledValue {
     defaultConstraintIndexed?: boolean;
     mandatory?: true;
     allowOnlyValuesOfParent?: true;
-    source?: FieldDefinition.SOURCE_TYPES;
+    source?: Field.SOURCE_TYPES;
 }
 
 
-export module FieldDefinition {
+export module Field {
 
     export type SOURCE_TYPES = 'builtin'|'library' |'custom' |'common';
 

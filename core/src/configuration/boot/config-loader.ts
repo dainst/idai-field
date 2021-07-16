@@ -1,16 +1,16 @@
 import { clone, Map, map } from 'tsfun';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
-import { FieldDefinition } from '../../model/field-definition';
-import { RelationDefinition } from '../../model/relation-definition';
-import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Field } from '../../model/field';
+import { Relation } from '../../model/relation';
+import { Valuelist } from '../../model/valuelist';
 import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
-import { ProjectConfiguration } from '../project-configuration';
+import { ProjectConfiguration } from '../../services/project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
 import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';
@@ -45,8 +45,8 @@ export class ConfigLoader {
 
     public async go(commonFields: { [fieldName: string]: any },
                     builtinCategories: Map<BuiltinCategoryDefinition>,
-                    relations: Array<RelationDefinition>,
-                    extraFields: {[fieldName: string]: FieldDefinition },
+                    relations: Array<Relation>,
+                    extraFields: {[fieldName: string]: Field },
                     username: string,
                     customConfigurationName?: string|undefined,
                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
@@ -88,8 +88,8 @@ export class ConfigLoader {
     private async loadConfiguration(libraryCategories: Map<LibraryCategoryDefinition>,
                                     commonFields: any,
                                     builtinCategories: Map<BuiltinCategoryDefinition>,
-                                    relations: Array<RelationDefinition>,
-                                    extraFields: { [fieldName: string]: FieldDefinition },
+                                    relations: Array<Relation>,
+                                    extraFields: { [fieldName: string]: Field },
                                     username: string,
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
@@ -219,10 +219,10 @@ export class ConfigLoader {
     }
 
 
-    private readValuelistsConfiguration(path: string): Map<ValuelistDefinition> {
+    private readValuelistsConfiguration(path: string): Map<Valuelist> {
 
         const valuelistsConfiguration = this.configReader.read(path);
-        map((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
+        map((definition: Valuelist, id: string) => definition.id = id, valuelistsConfiguration);
 
         return valuelistsConfiguration;
     }

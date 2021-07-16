@@ -1,4 +1,4 @@
-import { Tree, FieldDefinition, ProjectConfiguration } from 'idai-field-core';
+import { Tree, Field, ProjectConfiguration } from 'idai-field-core';
 import { ImportValidator } from '../../../../../src/app/core/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
@@ -23,8 +23,8 @@ describe('ImportValidator', () => {
                     { name: 'mandatory', mandatory: true },
                     { name: 'number1', label: 'number1', inputType: 'float' },
                     { name: 'number2', label: 'number2', inputType: 'float' },
-                    { name: 'ddr', label: 'DropdownRange', inputType: FieldDefinition.InputType.DROPDOWNRANGE },
-                    { name: 'ddr2', label: 'DropdownRange2', inputType: FieldDefinition.InputType.DROPDOWNRANGE }
+                    { name: 'ddr', label: 'DropdownRange', inputType: Field.InputType.DROPDOWNRANGE },
+                    { name: 'ddr2', label: 'DropdownRange2', inputType: Field.InputType.DROPDOWNRANGE }
                 ]}]
             }, []],
           [ {

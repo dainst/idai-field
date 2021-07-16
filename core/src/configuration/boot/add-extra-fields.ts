@@ -1,9 +1,9 @@
 import {clone, Map, update} from 'tsfun';
-import {FieldDefinition} from '../../model/field-definition';
+import {Field} from '../../model/field';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 
 
-export function addExtraFields(extraFields: Map<FieldDefinition>) {
+export function addExtraFields(extraFields: Map<Field>) {
 
     return (configuration: Map<TransientCategoryDefinition>) => {
 
@@ -17,7 +17,7 @@ export function addExtraFields(extraFields: Map<FieldDefinition>) {
 }
 
 
-function addExtraFieldsToCategory(extraFields: Map<FieldDefinition>) {
+function addExtraFieldsToCategory(extraFields: Map<Field>) {
 
     return (categoryDefinition: TransientCategoryDefinition) => {
 
@@ -30,7 +30,7 @@ function addExtraFieldsToCategory(extraFields: Map<FieldDefinition>) {
 
 
 function _addExtraFields(categoryDefinition: TransientCategoryDefinition,
-                         extraFields: { [fieldName: string]: FieldDefinition }) {
+                         extraFields: { [fieldName: string]: Field }) {
 
     for (let extraFieldName of Object.keys(extraFields)) {
         let fieldAlreadyPresent = false;

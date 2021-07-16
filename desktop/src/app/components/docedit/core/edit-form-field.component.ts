@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-field-core';
-import {FieldDefinition} from 'idai-field-core';
+import {Field} from 'idai-field-core';
 
 
 @Component({
@@ -14,5 +14,5 @@ import {FieldDefinition} from 'idai-field-core';
 export class EditFormFieldComponent {
 
     @Input() resource: Resource;
-    @Input() field: FieldDefinition;
+    @Input() field: Field;
 }

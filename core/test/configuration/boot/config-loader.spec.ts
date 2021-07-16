@@ -2,7 +2,7 @@ import { Map } from 'tsfun';
 import { ConfigLoader, ConfigurationDefinition, ConfigurationErrors } from '../../../src/configuration/boot';
 import { CustomCategoryDefinition } from '../../../src/configuration/model';
 import { Category, Groups } from '../../../src/model';
-import { Named } from '../../../src/tools';
+import { Named, Tree } from '../../../src/tools';
 
 
 /**
@@ -198,10 +198,10 @@ describe('ConfigLoader', () => {
             fail(err);
         }
 
-        expect((pconf.getRelationDefinitionsForDomainCategory('A') as any)[0].range).toContain('B1');
-        expect((pconf.getRelationDefinitionsForDomainCategory('A1') as any)[0].range).toContain('B');
-        expect((pconf.getRelationDefinitionsForDomainCategory('A2') as any)[0].range).toContain('B2');
-        expect((pconf.getRelationDefinitionsForDomainCategory('C') as any)[0].range).toContain('D');
+        expect((pconf.getRelationsForDomainCategory('A') as any)[0].range).toContain('B1');
+        expect((pconf.getRelationsForDomainCategory('A1') as any)[0].range).toContain('B');
+        expect((pconf.getRelationsForDomainCategory('A2') as any)[0].range).toContain('B2');
+        expect((pconf.getRelationsForDomainCategory('C') as any)[0].range).toContain('D');
 
         done();
     });
@@ -238,7 +238,7 @@ describe('ConfigLoader', () => {
             fail(err);
         }
 
-        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
+        expect(pconf.getRelationsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
 
         done();
     });
@@ -298,8 +298,8 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('B').label.de).toEqual('B__');
         expect(pconf.getCategory('C').label).toEqual({});
 
-        expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label.de).toEqual('r1_');
-        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toEqual({});
+        expect(pconf.getRelationsForDomainCategory('A')[1].label.de).toEqual('r1_');
+        expect(pconf.getRelationsForDomainCategory('A')[0].label).toEqual({});
 
         done();
     });
@@ -415,7 +415,7 @@ describe('ConfigLoader', () => {
                 [], {}, undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0']
+            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()))['B:0']
                 .groups[0].fields
                 .find(field => field.name == 'fieldB1').inputType)
                 .toEqual('boolean');
@@ -554,7 +554,7 @@ describe('ConfigLoader', () => {
                 undefined, 'User'
             );
 
-            const result = Named.arrayToMap<Category>(pconf.getCategoriesArray());
+            const result = Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()));
 
             expect(result['A'].name).toEqual('A');
             expect(result['A'].groups[0].name).toBe(Groups.STEM);
@@ -614,7 +614,7 @@ describe('ConfigLoader', () => {
                 [], {}, undefined, 'User'
             );
 
-            expect(pconf.getCategoriesArray().length).toBe(2);
+            expect(Tree.flatten(pconf.getCategories()).length).toBe(2);
             expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
             expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('fieldA1');
             expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('fieldA2');

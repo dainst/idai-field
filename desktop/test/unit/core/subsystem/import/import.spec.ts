@@ -40,7 +40,7 @@ describe('Import/Subsystem', () => {
 
         return await Importer.doImport(
             services,
-            { settings: {} as any,  projectConfiguration: _projectConfiguration },
+            { settings: {} as any,  projectConfiguration: _projectConfiguration, operationCategories: [] },
             () => { id++; return id.toString(); },
             options,
             documents);

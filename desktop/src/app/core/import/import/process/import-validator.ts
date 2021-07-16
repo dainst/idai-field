@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
-import { is, isnt, on } from 'tsfun';
-import { ProjectCategories } from 'idai-field-core';
+import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId, Named } from 'idai-field-core';
+import { isnt } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { Validations } from '../../../model/validations';
 import { Validator } from '../../../model/validator';
@@ -50,9 +49,7 @@ export class ImportValidator extends Validator {
 
         for (const resource of resources) {
 
-            const category = this.projectConfiguration.getCategoriesArray().find(
-                on('name', is(resource.category))
-            );
+            const category = this.projectConfiguration.getCategory(resource.category);
             if (!category) {
                 console.error('Category not found', resource.category);
                 continue;
@@ -99,7 +96,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryForest())
+        if (this.projectConfiguration.getOverviewCategories().map(Named.toName)
                 .includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];

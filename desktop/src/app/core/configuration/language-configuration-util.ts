@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
+import { Category, Field, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -11,7 +11,7 @@ export module LanguageConfigurationUtil {
 
     export function updateCustomLanguageConfigurations(customLanguageConfigurations: CustomLanguageConfigurations,
                                                        editedLabel: I18N.String, editedDescription?: I18N.String,
-                                                       category?: Category, field?: FieldDefinition,
+                                                       category?: Category, field?: Field,
                                                        group?: Group) {
 
         updateCustomLanguageConfigurationSection(
@@ -37,7 +37,7 @@ export module LanguageConfigurationUtil {
 
     function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                       section: 'label'|'description', editedI18nString: I18N.String,
-                                                      category: Category, field?: FieldDefinition, group?: Group) {
+                                                      category: Category, field?: Field, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {
             handleNewTextInCustomLanguageConfigurationSection(
@@ -59,7 +59,7 @@ export module LanguageConfigurationUtil {
     function handleNewTextInCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                                section: 'label'|'description', newText: string,
                                                                languageCode: string, category: Category,
-                                                               field?: FieldDefinition, group?: Group) {
+                                                               field?: Field, group?: Group) {
 
         const definition = group ?? field ?? category;
 

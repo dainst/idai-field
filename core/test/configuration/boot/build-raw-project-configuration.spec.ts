@@ -2,9 +2,9 @@ import { Map, left, to } from 'tsfun';
 import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
 import { BuiltinCategoryDefinition, CustomCategoryDefinition,
     LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { Category, FieldDefinition, Groups, ValuelistDefinition } from '../../../src/model';
+import { Category, Field, Groups, Valuelist } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
-import InputType = FieldDefinition.InputType;
+import InputType = Field.InputType;
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -951,7 +951,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const valuelistsConfiguration: Map<ValuelistDefinition> = {
+        const valuelistsConfiguration: Map<Valuelist> = {
             '123': {
                 values: {
                     'one': { label: { de: 'Eins', en: 'One' } },
@@ -1183,13 +1183,13 @@ describe('buildRawProjectConfiguration', () => {
     it('source field', () => {
 
         const commonFields = {
-            aCommon: { inputType: FieldDefinition.InputType.INPUT }
+            aCommon: { inputType: Field.InputType.INPUT }
         };
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: FieldDefinition.InputType.TEXT }
+                    field1: { inputType: Field.InputType.TEXT }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] }
@@ -1203,7 +1203,7 @@ describe('buildRawProjectConfiguration', () => {
                 commons: ['aCommon'],
                 valuelists: {},
                 fields: {
-                    field2: { inputType: FieldDefinition.InputType.TEXT }
+                    field2: { inputType: Field.InputType.TEXT }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
@@ -1219,7 +1219,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:0': {
                 fields: {
                     field2: {},
-                    field3: { inputType: FieldDefinition.InputType.TEXT }
+                    field3: { inputType: Field.InputType.TEXT }
                 }
             }
         };
@@ -1229,11 +1229,11 @@ describe('buildRawProjectConfiguration', () => {
             {}, {}
         );
 
-        expect(result['A'].groups[0].fields[0].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result['A'].groups[0].fields[0].source).toBe(Field.Source.BUILTIN);
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
-        expect(result['A'].groups[1].fields[0].source).toBe(FieldDefinition.Source.COMMON);
-        expect(result['A'].groups[1].fields[1].source).toBe(FieldDefinition.Source.LIBRARY);
-        expect(result['A'].groups[1].fields[2].source).toBe(FieldDefinition.Source.CUSTOM);
+        expect(result['A'].groups[1].fields[0].source).toBe(Field.Source.COMMON);
+        expect(result['A'].groups[1].fields[1].source).toBe(Field.Source.LIBRARY);
+        expect(result['A'].groups[1].fields[2].source).toBe(Field.Source.CUSTOM);
         expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });
 
@@ -1245,8 +1245,8 @@ describe('buildRawProjectConfiguration', () => {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
-                    field1: { inputType: FieldDefinition.InputType.TEXT },
-                    field2: { inputType: FieldDefinition.InputType.TEXT }
+                    field1: { inputType: Field.InputType.TEXT },
+                    field2: { inputType: Field.InputType.TEXT }
                 },
                 groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
             }
@@ -1254,14 +1254,14 @@ describe('buildRawProjectConfiguration', () => {
 
         const customCategories: Map<CustomCategoryDefinition> = {
             A: {
-                fields: { field3: { inputType: FieldDefinition.InputType.TEXT } },
+                fields: { field3: { inputType: Field.InputType.TEXT } },
                 groups: [
                     { name: Groups.STEM, fields: ['field1', 'field2'] },
                     { name: Groups.PARENT, fields: ['field3'] }
                 ]
             },
             B: {
-                parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT } },
+                parent: 'A', fields: { field4: { inputType: Field.InputType.TEXT } },
                 groups: [
                     { name: Groups.STEM, fields: ['field1', 'field2'] },
                     { name: Groups.PARENT, fields: ['field3'] },

@@ -1,4 +1,4 @@
-import { FieldDefinition, fieldDoc, Relations } from 'idai-field-core';
+import { Field, fieldDoc, Relations } from 'idai-field-core';
 import { CSVExport } from '../../../../../src/app/core/export/csv/csv-export';
 
 
@@ -11,7 +11,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
             if (fieldName.startsWith('period')) inputType = 'dropdownRange';
 
             return { name: fieldName, inputType: inputType }
-        }) as Array<FieldDefinition>;
+        }) as Array<Field>;
 }
 
 

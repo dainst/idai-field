@@ -112,7 +112,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
-    const categoryConverter = new CategoryConverter(projectConfiguration.getCategoryForest());
+    const categoryConverter = new CategoryConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);

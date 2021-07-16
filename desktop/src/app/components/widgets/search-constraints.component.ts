@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
-import { Category, ConstraintIndex, Datastore, FieldDefinition, ProjectConfiguration, ValuelistDefinition,
+import { Category, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
     ValuelistUtil, Labels } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
@@ -27,8 +27,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     @Input() category: string;
 
-    public fields: Array<FieldDefinition>;
-    public selectedField: FieldDefinition|undefined;
+    public fields: Array<Field>;
+    public selectedField: Field|undefined;
     public searchTerm: string = '';
     public constraintListItems: Array<ConstraintListItem> = [];
     public showConstraintsMenu: boolean = false;
@@ -36,7 +36,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private stopListeningToKeyDownEvents: Function|undefined;
 
-    protected defaultFields: Array<FieldDefinition>;
+    protected defaultFields: Array<Field>;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
     private static dropdownInputTypes: string[] = ['dropdown', 'dropdownRange', 'checkboxes', 'radio'];
@@ -57,9 +57,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: ValuelistDefinition) => this.labels.orderKeysByLabels(valuelist);
+    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
 
-    public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
+    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
         this.labels.getValueLabel(valuelist, valueId);
 
 
@@ -77,7 +77,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getSearchInputType(field: FieldDefinition|undefined): SearchInputType|undefined {
+    public getSearchInputType(field: Field|undefined): SearchInputType|undefined {
 
         if (!field) return undefined;
 
@@ -155,7 +155,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getFieldLabel(field: FieldDefinition): string {
+    public getFieldLabel(field: Field): string {
 
         if (field.name.endsWith('.value')) {
             return this.getDropdownRangeLabel(field);
@@ -204,7 +204,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public async getValuelist(field: FieldDefinition): Promise<ValuelistDefinition> {
+    public async getValuelist(field: Field): Promise<Valuelist> {
 
         return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
     }
@@ -243,7 +243,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private async isInvalidConstraint(constraintName: string): Promise<boolean> {
 
-        const field: FieldDefinition|undefined
+        const field: Field|undefined
             = this.getField(SearchConstraintsComponent.getFieldName(constraintName));
         if (!field) return true;
 
@@ -251,7 +251,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private async isInvalidConstraintValue(constraintName: string, field: FieldDefinition): Promise<boolean> {
+    private async isInvalidConstraintValue(constraintName: string, field: Field): Promise<boolean> {
 
         if (!field.inputType
             || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
@@ -260,7 +260,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             return false;
         }
 
-        const valuelist: ValuelistDefinition = await this.getValuelist(field);
+        const valuelist: Valuelist = await this.getValuelist(field);
         return !Object.keys(valuelist.values).includes(this.getCustomConstraints()[constraintName]);
     }
 
@@ -315,8 +315,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private async updateFields() {
 
-        const fields: Array<FieldDefinition> = this.defaultFields
-            .concat(clone(Category.getFields(this.projectConfiguration.getCategory(this.category))))
+        const categoryFields = this.category
+            ? clone(Category.getFields(this.projectConfiguration.getCategory(this.category)))
+            : [];
+
+        const fields: Array<Field> = this.defaultFields
+            .concat(categoryFields)
             .filter(field => field.constraintIndexed && this.getSearchInputType(field));
 
         for (let field of fields) {
@@ -330,7 +334,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private configureDropdownRangeFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+    private configureDropdownRangeFields(fields: Array<Field>): Array<Field> {
 
         fields = clone(fields);
 
@@ -345,7 +349,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getDropdownRangeLabel(field: FieldDefinition): string {
+    private getDropdownRangeLabel(field: Field): string {
 
         const fieldLabel: string = this.labels.get(field);
 
@@ -354,14 +358,14 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getDropdownRangeEndLabel(field: FieldDefinition): string {
+    private getDropdownRangeEndLabel(field: Field): string {
 
         return this.labels.get(field)
             + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
     }
 
 
-    private addDropdownRangeEndField(fields: Array<FieldDefinition>, dropdownRangeField: FieldDefinition) {
+    private addDropdownRangeEndField(fields: Array<Field>, dropdownRangeField: Field) {
 
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
             name: dropdownRangeField.name + '.endValue',
@@ -403,13 +407,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getField(fieldName: string): FieldDefinition {
+    private getField(fieldName: string): Field|undefined {
 
-        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
+        const defaultField: Field|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField;
 
-        return Category.getFields(this.projectConfiguration.getCategory(this.category))
-            .find(field => field.name === fieldName) as FieldDefinition;
+        const category = this.projectConfiguration.getCategory(this.category);
+        if (!category) return undefined;
+
+        return Category.getFields(category)
+            .find(field => field.name === fieldName) as Field;
     }
 
 
@@ -417,7 +424,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
 
-        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
+        const defaultField: Field|undefined = this.getDefaultField(fieldName);
         if (defaultField) return this.getFieldLabel(defaultField);
 
         const baseFieldName = fieldName.includes('.')
@@ -425,7 +432,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             : fieldName;
 
         const field = clone(Category.getFields(this.projectConfiguration.getCategory(this.category))
-            .find(on(FieldDefinition.NAME, is(baseFieldName))));
+            .find(on(Field.NAME, is(baseFieldName))));
 
         if (!field) throw 'Illegal state: Field "' + fieldName + '" does not exist!';
 
@@ -435,7 +442,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getIndexType(field: FieldDefinition, searchTerm: string) {
+    private getIndexType(field: Field, searchTerm: string) {
 
         return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
             ? 'exist'
@@ -443,7 +450,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getDefaultField(fieldName: string): FieldDefinition|undefined {
+    private getDefaultField(fieldName: string): Field|undefined {
 
         return this.defaultFields.find(field => field.name === fieldName);
     }

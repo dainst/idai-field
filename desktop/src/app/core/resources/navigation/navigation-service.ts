@@ -66,7 +66,7 @@ export class NavigationService {
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         return (this.projectConfiguration
-            .getRelationDefinitionsForRangeCategory(document.resource.category)
+            .getRelationsForRangeCategory(document.resource.category)
             .map(relationDefinition => relationDefinition.name)
             .indexOf('liesWithin') !== -1);
     }

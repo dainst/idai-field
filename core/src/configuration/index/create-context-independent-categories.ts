@@ -1,5 +1,5 @@
 import { Map, clone, remove, isUndefined, on, is, filter, not, keysValues, curry, flow } from 'tsfun';
-import { Category, FieldDefinition, RelationDefinition } from '../../model';
+import { Category, Field, Relation } from '../../model';
 import { Named } from '../../tools';
 import { Tree } from '../../tools/forest';
 import { applyLanguagesToCategory, makeCategoryForest } from '../boot';
@@ -17,7 +17,7 @@ import { LibraryCategoryDefinition } from '../model/library-category-definition'
  * @author Daniel de Oliveira
  */
 export function createContextIndependentCategories(builtinCategories: Map<BuiltinCategoryDefinition>,
-                                                   builtInRelations: Array<RelationDefinition>,
+                                                   builtInRelations: Array<Relation>,
                                                    libraryCategories: Map<LibraryCategoryDefinition>,
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
                                                    : Array<Category> {
@@ -38,7 +38,7 @@ export function createContextIndependentCategories(builtinCategories: Map<Builti
     for (const [name, category] of keysValues(result)) {
 
         category.fields = filter(category.fields, 
-            on(FieldDefinition.SOURCE, is(FieldDefinition.Source.LIBRARY)));
+            on(Field.SOURCE, is(Field.Source.LIBRARY)));
 
         applyLanguagesToCategory(languageConfigurations, category, category.categoryName);
         category[Named.NAME] = name;

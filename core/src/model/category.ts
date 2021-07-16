@@ -112,16 +112,6 @@ export namespace Category {
     } 
 
 
-    // TODO replace with getFieldLabel
-    export function getLabel(fieldName: string, fields: Array<Named>, languages: string[]): string {
-
-        for (let field of fields) {
-            if (field.name === fieldName) return I18N.getLabel(field, languages);
-        }
-        return fieldName;
-    }
-
-
     export function getNamesOfCategoryAndSubcategories(category: Category): string[] {
 
         return [category.name].concat(category.children.map(to(Named.NAME)));

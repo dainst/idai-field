@@ -41,7 +41,7 @@ export namespace Relations {
         export const CUTS = 'cuts';                       //
         export const CUTBY = 'isCutBy';               //
 
-        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW, EQUIVALENT];
+        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW];
     }
 
 
@@ -67,7 +67,6 @@ export namespace Relations {
     export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
 
 
-    // To be used later
     // Used to signal sameness in a generic manner, for example in order to say
     // two resources, recorded in different operations, are the same
     export const SAME_AS = 'isSameAs';

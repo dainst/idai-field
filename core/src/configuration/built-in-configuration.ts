@@ -1,5 +1,5 @@
 import { Map } from 'tsfun';
-import { Field } from '../model';
+import { Field, Relations } from '../model';
 import { Groups } from '../model';
 import { Relation } from '../model/configuration/relation';
 import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
@@ -383,15 +383,15 @@ export class BuiltInConfiguration {
             groups: [
                 {
                     name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
+                    fields: ['identifier', 'category', 'shortDescription', Relations.SAME_AS]
                 },
                 {
                     name: Groups.POSITION,
-                    fields: ['geometry', 'isBelow', 'isAbove', 'isEquivalentTo', 'borders', 'cuts', 'isCutBy']
+                    fields: ['geometry'].concat(Relations.Position.ALL)
                 },
                 {
                     name: Groups.TIME,
-                    fields: ['period', 'dating', 'isBefore', 'isAfter', 'isContemporaryWith']
+                    fields: ['period', 'dating'].concat(Relations.Time.ALL)
                 }
             ]
         },
@@ -601,11 +601,19 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
-            name: 'isEquivalentTo',
-            inverse: 'isEquivalentTo',
+            name: Relations.SAME_AS,
+            inverse: Relations.SAME_AS,
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: Relations.SAME_AS,
+            inverse: Relations.SAME_AS,
+            domain: ['Find:inherit'],
+            range: ['Find:inherit'],
             editable: true,
             visible: true,
             inputType: 'relation'

@@ -231,7 +231,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -284,7 +284,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -391,7 +391,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -563,7 +563,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "isSameAs"]
       },
       {
         "name": "parent",
@@ -763,7 +763,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -905,7 +905,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "isSameAs"]
       },
       {
         "name": "parent",
@@ -1082,7 +1082,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "isSameAs"]
       },
       {
         "name": "parent",
@@ -1156,7 +1156,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "isSameAs"]
       },
       {
         "name": "parent",
@@ -1231,7 +1231,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "isSameAs"]
       },
       {
         "name": "parent",
@@ -1562,7 +1562,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -1701,7 +1701,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -1811,7 +1811,7 @@
       {
         "name": "stem",
         "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-          "endDate"]
+          "endDate", "sameAs"]
       },
       {
         "name": "parent",
@@ -1890,7 +1890,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -2073,7 +2073,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -2254,7 +2254,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -2344,7 +2344,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -2454,7 +2454,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",
@@ -2515,7 +2515,7 @@
     "groups": [
       {
         "name": "stem",
-        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
       },
       {
         "name": "identification",

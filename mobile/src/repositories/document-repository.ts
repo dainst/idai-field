@@ -85,7 +85,7 @@ const buildDatastore = async (
         projectConfiguration: ProjectConfiguration
     ): Promise<[Datastore, ChangesStream]> => {
 
-    const indexFacade = buildIndexFacade(Tree.flatten<Category>(categories));
+    const indexFacade = buildIndexFacade(Tree.flatten(categories));
     const documentCache = new DocumentCache();
     const converter = new CategoryConverter(projectConfiguration);
 
@@ -114,7 +114,7 @@ const buildIndexFacade = (categories: Category[]): IndexFacade => {
         'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
         'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
         'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
-        /* eslint-enble max-len */
+        /* eslint-enable max-len */
     }, categories);
 
     return new IndexFacade(

@@ -59,8 +59,15 @@ export module Group {
 
     export const FIELDS = 'fields';
 
+    
     export function create(name: string) {
 
         return { name: name, fields: [] };
+    }
+
+
+    export function toFields(group: Group) {
+
+        return group.fields;
     }
 }

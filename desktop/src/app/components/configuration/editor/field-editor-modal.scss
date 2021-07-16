@@ -1,0 +1,9 @@
+.field-editor-modal-body {
+  #constraint-indexed-switch div span {
+    user-select: none;
+
+    &.disabled {
+      color: grey;
+    }
+  }
+}

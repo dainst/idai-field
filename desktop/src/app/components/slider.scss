@@ -32,6 +32,16 @@
   transition: .4s;
 }
 
+.switch.disabled {
+  .slider:before {
+    background-color: #e6e6e6;
+  }
+
+  input:checked + .slider {
+    background-color: #8d9a8c;
+  }
+}
+
 input:checked + .slider {
   background-color: $greenbgr;
 }

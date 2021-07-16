@@ -1,14 +1,15 @@
-import {Map} from 'tsfun';
-import {ValuelistDefinition} from '../../model/valuelist-definition';
-import {Name, Named} from '../../tools/named';
-import {BuiltinCategoryDefinition, BuiltinFieldDefinition} from './builtin-category-definition';
-import {LibraryFieldDefinition, LibraryCategoryDefinition} from './library-category-definition';
+import { Map } from 'tsfun';
+import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { Name, Named } from '../../tools/named';
+import { BuiltinCategoryDefinition, BuiltinFieldDefinition } from './builtin-category-definition';
+import { LibraryFieldDefinition, LibraryCategoryDefinition } from './library-category-definition';
 
 
 export interface TransientCategoryDefinition extends BuiltinCategoryDefinition, LibraryCategoryDefinition, Named {
 
     libraryId?: Name,
     fields: Map<TransientFieldDefinition>;
+    defaultColor?: string;
 }
 
 

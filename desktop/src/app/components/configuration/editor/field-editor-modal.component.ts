@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18N, ProjectCategories } from 'idai-field-core';
+import { CustomCategoryDefinition, FieldDefinition, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../core/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../services/menus';
@@ -114,7 +114,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public toggleConstraintIndexed() {
 
-        if (!this.field.defaultConstraintIndexed) {
+        if (this.field.defaultConstraintIndexed === undefined) {
             this.getClonedFieldDefinition().constraintIndexed = !this.getClonedFieldDefinition().constraintIndexed;
         } else if (this.getClonedFieldDefinition().constraintIndexed === undefined) {
             this.getClonedFieldDefinition().constraintIndexed = !this.field.defaultConstraintIndexed;

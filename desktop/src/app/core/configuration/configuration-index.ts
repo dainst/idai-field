@@ -32,7 +32,7 @@ export namespace ConfigurationIndex {
 
         return set(keysValues(index)
             .filter(([categoryName, _]) =>
-                categoryName.toLocaleLowerCase().startsWith(searchTerm))
+                categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
             .map(right))
             .filter(category =>
                 category[Category.PARENT_CATEGORY].name === parentCategory);

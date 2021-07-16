@@ -79,13 +79,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedCategoryDefinition().fields[this.field.name];
         }
 
-        super.save(this.isConstraintIndexedChanged());
+        await super.save(this.isConstraintIndexedChanged());
     }
 
 
     public getInputType() {
 
-        return this.getClonedFieldDefinition().inputType
+        return this.getClonedFieldDefinition()?.inputType
             ?? this.field.inputType;
     }
 
@@ -129,8 +129,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isConstraintIndexed() {
 
-        return this.getClonedFieldDefinition().constraintIndexed
-            || (this.getClonedFieldDefinition().constraintIndexed !== false && this.field.constraintIndexed);
+        return this.getClonedFieldDefinition()?.constraintIndexed
+            || (this.getClonedFieldDefinition()?.constraintIndexed !== false && this.field.constraintIndexed);
     }
 
 
@@ -145,7 +145,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isChanged(): boolean {
 
         return this.new
-            || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition().inputType
+            || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
             || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
@@ -155,11 +155,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isConstraintIndexedChanged(): boolean {
 
-        return this.getCustomFieldDefinition()?.constraintIndexed !== this.getClonedFieldDefinition().constraintIndexed
+        return this.getCustomFieldDefinition()?.constraintIndexed !== this.getClonedFieldDefinition()?.constraintIndexed
             || (this.getCustomFieldDefinition()?.constraintIndexed === undefined
-                && this.getClonedFieldDefinition().constraintIndexed === false)
+                && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
-                && this.getClonedFieldDefinition().constraintIndexed === undefined);
+                && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
     }
 
 

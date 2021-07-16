@@ -47,7 +47,7 @@
                    (click)="selectedGroup = group.name"
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
-                    <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
+                    <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>
@@ -81,7 +81,7 @@
                                      [availableInputTypes]="availableInputTypes"
                                      [contextMenu]="contextMenu"
                                      (onEdit)="onEditField.emit(field)">
-                    <span *ngIf="allowDragAndDrop" class="mdi mdi-menu" cdkDragHandle></span>
+                    <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>
                     <configuration-field-drag-element [field]="field"

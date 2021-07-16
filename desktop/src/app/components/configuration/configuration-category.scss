@@ -51,12 +51,12 @@ configuration-category {
           text-overflow: ellipsis;
           white-space: nowrap;
 
-          .mdi-menu {
+          .mdi-drag {
             color: #848484;
             margin-right: 5px;
           }
 
-          &.active .mdi-menu {
+          &.active .mdi-drag {
             color: #fff;
           }
         }
@@ -90,14 +90,14 @@ configuration-category {
       .card-header {
         height: 55px;
 
-        .mdi-menu {
+        .mdi-drag {
           color: #848484;
           position: relative;
           top: 3px;
           right: 6px;
         }
     
-        &.parent-element .mdi-menu {
+        &.parent-element .mdi-drag {
           top: unset;
           bottom: 2px;
         }

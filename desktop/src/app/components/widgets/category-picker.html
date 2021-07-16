@@ -20,7 +20,7 @@
                 (click)="pickCategory(parentCategory)"
                 (dblclick)="onEditCategory.emit(parentCategory)"
                 (contextmenu)="openContextMenu($event, parentCategory)">
-                <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
+                <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
                 <category-icon [category]="parentCategory.name" size="30"></category-icon>
                 <div class="category-label">
                     {{getCategoryLabel(parentCategory)}}
@@ -62,7 +62,7 @@
                     (click)="pickCategory(childCategory)"
                     (dblclick)="onEditCategory.emit(childCategory)"
                     (contextmenu)="openContextMenu($event, childCategory)">
-                    <span *ngIf="allowChangingOrder" class="mdi mdi-menu" cdkDragHandle></span>
+                    <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
                     <category-icon [category]="childCategory.name" size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}

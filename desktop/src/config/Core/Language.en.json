@@ -51,8 +51,8 @@
     "isBelow": {
       "label": "Below"
     },
-    "isEquivalentTo": {
-      "label": "Equivalent to"
+    "isSameAs": {
+      "label": "Same as"
     },
     "cuts": {
       "label": "Cuts"

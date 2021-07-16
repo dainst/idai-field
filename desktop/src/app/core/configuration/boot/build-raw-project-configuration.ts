@@ -160,6 +160,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
                 group = Group.create(groupName);
                 (category.groups as any)[groupName] = group;
             }
+
             group.relations.push(relation);
         }
         return category;

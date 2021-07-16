@@ -1,6 +1,6 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
     separate, detach, map, update, reduce, clone} from 'tsfun';
-import {Named, Tree, CategoryDefinition, ObjectUtils, Forest, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
+import {Named, Tree, CategoryDefinition, Forest, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {linkParentAndChildInstances} from '../category-forest';
 import {ConfigurationErrors} from './configuration-errors';

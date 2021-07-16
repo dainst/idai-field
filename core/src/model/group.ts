@@ -28,7 +28,8 @@ export module Groups {
     export function getGroupNameForRelation(relationName: string): string|undefined {
 
         if (Relations.Hierarchy.ALL.includes(relationName)
-                || Relations.Image.ALL.includes(relationName)) {
+                || Relations.Image.ALL.includes(relationName)
+                || Relations.SAME_AS.includes(relationName)) {
             return STEM;
         } else if (Relations.Time.ALL.includes(relationName)) {
             return TIME;

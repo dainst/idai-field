@@ -51,8 +51,8 @@
     "isBelow": {
       "label": "Liegt unter"
     },
-    "isEquivalentTo": {
-      "label": "Gleich wie"
+    "isSameAs": {
+      "label": "Identisch mit"
     },
     "cuts": {
       "label": "Schneidet"

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
-import {FieldDefinition, RelationDefinition, Groups} from 'idai-field-core';
+import {FieldDefinition, RelationDefinition, Groups, Relations} from 'idai-field-core';
 import {BuiltinCategoryDefinition} from './model/builtin-category-definition';
 
 
@@ -354,12 +354,18 @@ export class AppConfigurator {
             sameMainCategoryResource: true
         },
         {
-            name: 'isEquivalentTo',
-            inverse: 'isEquivalentTo',
+            name: Relations.SAME_AS,
+            inverse: Relations.SAME_AS,
             label: '',
             domain: ['Feature:inherit'],
-            range: ['Feature:inherit'],
-            sameMainCategoryResource: true
+            range: ['Feature:inherit']
+        },
+        {
+            name: Relations.SAME_AS,
+            inverse: Relations.SAME_AS,
+            label: '',
+            domain: ['Find:inherit'],
+            range: ['Find:inherit']
         },
         {
             name: 'isContemporaryWith',

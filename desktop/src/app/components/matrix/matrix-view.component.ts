@@ -12,7 +12,6 @@ import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder'
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Relations} from 'idai-field-core';
 import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
-import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
 import IS_BEFORE = Relations.Time.BEFORE;
 import IS_AFTER = Relations.Time.AFTER;
 import IS_ABOVE = Relations.Position.ABOVE;
@@ -246,6 +245,9 @@ export class MatrixViewComponent implements OnInit {
 
         return relationsMode === 'temporal'
             ? { above: [IS_AFTER], below: [IS_BEFORE], sameRank: IS_CONTEMPORARY_WITH }
-            : { above: [IS_ABOVE, CUTS], below: [IS_BELOW, IS_CUT_BY], sameRank: IS_EQUIVALENT_TO };
+            : { above: [IS_ABOVE, CUTS],
+                below: [IS_BELOW, IS_CUT_BY],
+                // sameRank: IS_EQUIVALENT_TO TODO review
+            };
     }
 }

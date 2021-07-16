@@ -14,7 +14,7 @@ export type GraphRelationsConfiguration = {
 
     above: string[];
     below: string[];
-    sameRank?: string;
+    sameRank: string[];
 }
 
 
@@ -216,7 +216,7 @@ export module EdgesBuilder {
         } else if (pathType === 'below') {
             return relations.below;
         } else {
-            return relations.sameRank ? [relations.sameRank] : [];
+            return relations.sameRank;
         }
     }
 }

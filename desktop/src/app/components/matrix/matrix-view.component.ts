@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty, on, is, map} from 'tsfun';
+import {isEmpty, on, is} from 'tsfun';
 import {Datastore, FeatureDocument, FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -17,6 +17,7 @@ import IS_AFTER = Relations.Time.AFTER;
 import IS_ABOVE = Relations.Position.ABOVE;
 import IS_BELOW = Relations.Position.BELOW;
 import IS_CUT_BY = Relations.Position.CUTBY;
+import SAME_AS = Relations.SAME_AS;
 import CUTS = Relations.Position.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import {MenuContext, MenuService} from '../menu-service';
@@ -244,10 +245,14 @@ export class MatrixViewComponent implements OnInit {
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 
         return relationsMode === 'temporal'
-            ? { above: [IS_AFTER], below: [IS_BEFORE], sameRank: IS_CONTEMPORARY_WITH }
+            ? {
+                above: [IS_AFTER],
+                below: [IS_BEFORE],
+                sameRank: [IS_CONTEMPORARY_WITH, SAME_AS]
+            }
             : { above: [IS_ABOVE, CUTS],
                 below: [IS_BELOW, IS_CUT_BY],
-                // sameRank: IS_EQUIVALENT_TO TODO review
+                sameRank: [SAME_AS]
             };
     }
 }

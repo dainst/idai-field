@@ -1,4 +1,5 @@
 <ul class="category-picker list-group"
+    [class.dragging]="dragging"
     cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
     (cdkDropListDropped)="onDrop($event)">
     <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
@@ -8,7 +9,9 @@
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
     </li>
     <span *ngFor="let parentCategory of topLevelCategoriesArray"
-          cdkDrag cdkDragBoundary=".category-picker" cdkDragLockAxis="y">
+          cdkDrag cdkDragBoundary=".category-picker" cdkDragLockAxis="y"
+          (cdkDragStarted)="dragging = true"
+          (cdkDragEnded)="dragging = false">
         <li class="list-group-item popover-item parent-category"
             [ngClass]="{
                 'selected-category': selectedCategories && selectedCategories.indexOf(parentCategory.name) > -1,
@@ -50,6 +53,8 @@
             (cdkDropListDropped)="onDrop($event, parentCategory)">
             <li *ngFor="let childCategory of parentCategory.children"
                 cdkDrag cdkDragBoundary=".category-children-list" cdkDragLockAxis="y"
+                (cdkDragStarted)="dragging = true"
+                (cdkDragEnded)="dragging = false"
                 class="list-group-item popover-item child-category"
                 [ngClass]="{
                     'selected-category': selectedCategories && selectedCategories.indexOf(childCategory.name) > -1,

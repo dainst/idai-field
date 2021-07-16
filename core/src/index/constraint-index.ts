@@ -2,8 +2,8 @@ import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singlet
     subtract, clone } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
-import { Category } from '../model/category';
-import { Field } from '../model/field';
+import { Category } from '../model';
+import { Field } from '../model';
 
 
 export interface IndexDefinition {

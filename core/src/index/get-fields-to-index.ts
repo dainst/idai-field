@@ -1,5 +1,5 @@
 import { Map } from 'tsfun';
-import { Category } from '../model/category';
+import { Category } from '../model';
 
 
 export function getFieldsToIndex(categoriesMap: Map<Category>, categoryName: string): string[] {

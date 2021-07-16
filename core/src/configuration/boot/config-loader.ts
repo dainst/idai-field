@@ -1,9 +1,9 @@
 import { clone, Map, map } from 'tsfun';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
-import { Field } from '../../model/field';
-import { Relation } from '../../model/relation';
-import { Valuelist } from '../../model/valuelist';
+import { Field } from '../../model';
+import { Relation } from '../../model/configuration/relation';
+import { Valuelist } from '../../model';
 import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';

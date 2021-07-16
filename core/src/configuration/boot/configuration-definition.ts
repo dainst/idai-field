@@ -1,4 +1,4 @@
-import { Relation } from '../../model/relation';
+import { Relation } from '../../model/configuration/relation';
 
 
 /**

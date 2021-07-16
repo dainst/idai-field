@@ -2,7 +2,7 @@ import {Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {Field} from '../../model/field';
+import {Field} from '../../model';
 
 
 export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>,

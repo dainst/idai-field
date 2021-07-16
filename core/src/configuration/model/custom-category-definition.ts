@@ -1,5 +1,5 @@
 import { includedIn, isNot, Map, throws } from 'tsfun';
-import { Valuelists } from '../../model/valuelist';
+import { Valuelists } from '../../model';
 import { Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';

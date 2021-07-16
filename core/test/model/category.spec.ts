@@ -1,13 +1,9 @@
-import { ProjectConfiguration } from '../../src/services/project-configuration';
-import { Tree } from '../../src/tools';
-
+import { Category } from '../../src/model';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import { Category } from '../../src/model/category';
-
 describe('Category', () => {
     
     it('getFields', () => {

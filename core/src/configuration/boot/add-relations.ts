@@ -1,5 +1,5 @@
 import { isEmpty, not, on, subtract } from 'tsfun';
-import { Relation } from '../../model/relation';
+import { Relation } from '../../model/configuration/relation';
 import { Named } from '../../tools/named';
 
 

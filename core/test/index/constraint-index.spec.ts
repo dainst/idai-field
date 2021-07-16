@@ -1,7 +1,7 @@
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexItem } from '../../src/index/index-item';
-import { Field } from "../../src/model/field";
-import { doc as helpersDoc } from "../test-helpers";
+import { Field } from '../../src/model';
+import { doc as helpersDoc } from '../test-helpers';
 
 
 const doc = (id: string, category: string = 'category') =>

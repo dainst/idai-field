@@ -1,5 +1,5 @@
-import { Category } from '../../model/category';
-import { Groups } from '../../model/group';
+import { Category } from '../../model';
+import { Groups } from '../../model';
 import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 

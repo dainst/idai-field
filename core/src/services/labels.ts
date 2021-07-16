@@ -1,5 +1,5 @@
-import { Category } from '../model/category';
-import { Valuelist } from '../model/valuelist';
+import { Category } from '../model';
+import { Valuelist } from '../model';
 import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 

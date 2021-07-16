@@ -1,6 +1,6 @@
 import { filter, flow, values, is, isEmpty, not, on, to, flatMap } from 'tsfun';
-import { I18N } from '../tools/i18n';
-import { Name, Named } from '../tools/named';
+import { I18N } from '../../tools/i18n';
+import { Name, Named } from '../../tools/named';
 import { Field } from './field';
 import { Group } from './group';
 

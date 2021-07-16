@@ -2,7 +2,7 @@ import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn,
     keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
     isUndefinedOrEmpty, not, curry } from 'tsfun';
 import { Relation, Category } from '../../model';
-import { Valuelist } from '../../model/valuelist';
+import { Valuelist } from '../../model';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';

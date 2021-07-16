@@ -10,10 +10,10 @@ import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/new-document';
 import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
-import {Query } from '../model/query'
+import { Query } from '../model/query'
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
-import {Name} from '../tools';
-import {Resource} from '../model/resource';
+import { Name } from '../tools';
+import { Resource } from '../model/resource';
 
 
 

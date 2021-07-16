@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
-import { Field } from '../model/field';
-import { Groups } from '../model/group';
-import { Relation } from '../model/relation';
+import { Field } from '../model';
+import { Groups } from '../model';
+import { Relation } from '../model/configuration/relation';
 import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
 
 

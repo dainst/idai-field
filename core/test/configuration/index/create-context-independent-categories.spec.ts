@@ -1,5 +1,5 @@
 import { createContextIndependentCategories } from '../../../src/configuration/index/create-context-independent-categories';
-import { Field } from '../../../src/model/field';
+import { Field } from '../../../src/model';
 
 
 describe('createContextIndependentCategories', () => {

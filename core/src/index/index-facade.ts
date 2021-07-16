@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
 import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
 import { Field } from '../model';
-import { Category } from '../model/category';
+import { Category } from '../model';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
 import { Resource } from '../model/resource';

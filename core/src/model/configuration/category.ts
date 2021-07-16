@@ -1,6 +1,6 @@
-import { filter, flatten, flow, is, isEmpty, map, not, on, to } from 'tsfun';
-import { I18N } from '../tools/i18n';
-import { Name, Named } from '../tools/named';
+import { filter, flow, values, is, isEmpty, not, on, to, flatMap } from 'tsfun';
+import { I18N } from '../../tools/i18n';
+import { Name, Named } from '../../tools/named';
 import { Field } from './field';
 import { Group } from './group';
 
@@ -100,12 +100,9 @@ export namespace Category {
 
     export function getFields(category: Category): Array<Field> {
 
-        return flow(
-            category.groups,
-            Object.values,
-            map(to<Array<Field>>(Group.FIELDS)),
-            flatten()
-        );
+        return flatMap(
+            values(category.groups), 
+            Group.toFields);
     }
 
 
@@ -113,16 +110,6 @@ export namespace Category {
 
         return getFields(category)?.find(Named.onName(is(field)));
     } 
-
-
-    // TODO replace with getFieldLabel
-    export function getLabel(fieldName: string, fields: Array<Named>, languages: string[]): string {
-
-        for (let field of fields) {
-            if (field.name === fieldName) return I18N.getLabel(field, languages);
-        }
-        return fieldName;
-    }
 
 
     export function getNamesOfCategoryAndSubcategories(category: Category): string[] {

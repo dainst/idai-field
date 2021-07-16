@@ -1,9 +1,9 @@
-import { Document, toResourceId,  } from '../model/document';
+import { flatMap, flow, subtract } from 'tsfun';
+import { Document, toResourceId  } from '../model/document';
 import { Relations } from '../model/relations';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
-import { Name, Named } from "../tools/named";
-import { flatMap, flow, subtract, to } from 'tsfun';
+import { Name, Named } from '../tools/named';
 import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
 import { ProjectConfiguration } from './project-configuration';
 

@@ -1,7 +1,7 @@
-import { Named } from '../tools/named';
-import { I18N } from '../tools/i18n';
+import { Named } from '../../tools/named';
+import { I18N } from '../../tools/i18n';
 import { Field } from './field';
-import { Relations } from './relations';
+import { Relations } from '../relations';
 
 
 export interface GroupDefinition {
@@ -59,8 +59,15 @@ export module Group {
 
     export const FIELDS = 'fields';
 
+    
     export function create(name: string) {
 
         return { name: name, fields: [] };
+    }
+
+
+    export function toFields(group: Group) {
+
+        return group.fields;
     }
 }

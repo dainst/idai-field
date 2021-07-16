@@ -1,8 +1,8 @@
 import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
 import { Document } from '../model/document';
-import { Field } from '../model/field';
+import { Field } from '../model';
 import { Resource } from '../model/resource';
-import { ValueDefinition, Valuelist } from '../model/valuelist';
+import { ValuelistValue, Valuelist } from '../model';
 
 
 /**
@@ -50,7 +50,7 @@ export module ValuelistUtil {
 
         return field && isArray(field)
             ? {
-                values: field.reduce((values: { [fieldId: string]: ValueDefinition }, fieldName: string) => {
+                values: field.reduce((values: { [fieldId: string]: ValuelistValue }, fieldName: string) => {
                     values[fieldName] = {};
                     return values;
                 }, {}), id: id
@@ -68,7 +68,7 @@ export module ValuelistUtil {
         const result: Valuelist = clone(valuelist);
         result.values = filter((_, key: string) => {
             return parentValues.includes(key);
-        })(valuelist.values) as { [key: string]: ValueDefinition };
+        })(valuelist.values) as { [key: string]: ValuelistValue };
 
         return result;
     }

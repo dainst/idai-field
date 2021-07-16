@@ -1,4 +1,5 @@
-import { I18N } from '../tools/i18n';
+import { I18N } from '../../tools/i18n';
+import {ValuelistValue} from './valuelist-value';
 
 
 export type ValuelistId = string;
@@ -12,7 +13,7 @@ export type Valuelists = { [fieldName: string]: ValuelistId }
 export interface Valuelist {
 
     id: string;
-    values: { [key: string]: ValueDefinition }
+    values: { [key: string]: ValuelistValue }
 
     description?: { [language: string]: string }
     createdBy?: string;
@@ -60,10 +61,4 @@ export module Valuelist {
         if (valuelistDefinition.creationDate === undefined) return ['missing', 'creationDate'];
         return undefined;
     }
-}
-
-
-export interface ValueDefinition extends I18N.Labeled {
-
-    references?: { [referenceKey: string]: string },
 }

@@ -1,5 +1,5 @@
 import { Map } from 'tsfun';
-import { Valuelist } from '../../model/valuelist';
+import { Valuelist } from '../../model';
 import { Name, Named } from '../../tools/named';
 import { BuiltinCategoryDefinition, BuiltinFieldDefinition } from './builtin-category-definition';
 import { LibraryFieldDefinition, LibraryCategoryDefinition } from './library-category-definition';

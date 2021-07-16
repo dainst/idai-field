@@ -1,5 +1,5 @@
 import { map } from 'tsfun';
-import { Field } from '../../model/field';
+import { Field } from '../../model';
 import { TransientCategoryDefinition, TransientFieldDefinition } from '../model';
 
 

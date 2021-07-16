@@ -1,4 +1,4 @@
-import {Valuelist} from '../../src/model/valuelist';
+import {Valuelist} from '../../src/model';
 import {Labels} from '../../src/services/labels';
 
 

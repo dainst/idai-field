@@ -39,7 +39,7 @@
             <div class="basic-settings-label">
                 <span i18n="@@configuration.showField">Feld anzeigen</span>
             </div>
-            <div class="basic-settings-input">
+            <div>
                 <label class="switch">
                     <input type="checkbox"
                         [checked]="!hidden"
@@ -55,7 +55,7 @@
                 <span i18n="@@configuration.allowFieldSpecificSearch"
                       [class.disabled]="!isConstraintIndexOptionEnabled()">Feldspezifische Suche erlauben</span>
             </div>
-            <div class="basic-settings-input">
+            <div>
                 <label class="switch" [class.disabled]="!isConstraintIndexOptionEnabled()">
                     <input type="checkbox"
                         [checked]="isConstraintIndexed()"

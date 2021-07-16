@@ -6,12 +6,12 @@ import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
-import { Field } from '../model';
-import { BaseGroup, Group } from '../model';
+import { BaseGroup, Group } from '../model/configuration/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
-import { Valuelist } from '../model';
+import { Valuelist } from '../model/configuration/valuelist';
+import { Field } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
 

@@ -35,11 +35,11 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
             Grundeinstellungen
         </div>
-        <div *ngIf="hideable" class="row">
-            <div class="col-auto">
+        <div *ngIf="hideable">
+            <div class="basic-settings-label">
                 <span i18n="@@configuration.showField">Feld anzeigen</span>
             </div>
-            <div class="col-auto">
+            <div class="basic-settings-input">
                 <label class="switch">
                     <input type="checkbox"
                         [checked]="!hidden"
@@ -48,14 +48,14 @@
                 </label>
             </div>
         </div>
-        <div id="constraint-indexed-switch" class="row"
+        <div id="constraint-indexed-switch"
              ngbTooltip="{{getConstraintIndexedTooltip()}}"
              container="body">
-            <div class="col-auto">
+            <div class="basic-settings-label">
                 <span i18n="@@configuration.allowFieldSpecificSearch"
                       [class.disabled]="!isConstraintIndexOptionEnabled()">Feldspezifische Suche erlauben</span>
             </div>
-            <div class="col-auto">
+            <div class="basic-settings-input">
                 <label class="switch" [class.disabled]="!isConstraintIndexOptionEnabled()">
                     <input type="checkbox"
                         [checked]="isConstraintIndexed()"

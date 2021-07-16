@@ -18,9 +18,20 @@
     </button>
 </div>
 
-<div class="modal-body configuration-editor-modal-body">
-    <div *ngIf="hideable || isConstraintIndexOptionShown()"
-            class="configuration-editor-section form-group">
+<div class="modal-body configuration-editor-modal-body field-editor-modal-body">
+    <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+            i18n="@@configuration.field.inputType">Eingabetyp</div>
+        <select (change)="setInputType($event.target.value)" [disabled]="hidden"
+                class="form-control">
+            <option *ngFor="let inputType of availableInputTypes"
+                    value="{{inputType.name}}"
+                    [selected]="getInputType() === inputType.name">
+                {{inputType.label}}
+            </option>
+        </select>
+    </div>
+    <div class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
             Grundeinstellungen
         </div>
@@ -37,14 +48,16 @@
                 </label>
             </div>
         </div>
-        <div *ngIf="isConstraintIndexOptionShown()" class="row">
+        <div id="constraint-indexed-switch" class="row">
             <div class="col-auto">
-                <span i18n="@@configuration.allowFieldSpecificSearch">Feldspezifische Suche erlauben</span>
+                <span i18n="@@configuration.allowFieldSpecificSearch"
+                      [class.disabled]="!isConstraintIndexOptionEnabled()">Feldspezifische Suche erlauben</span>
             </div>
             <div class="col-auto">
-                <label class="switch">
+                <label class="switch" [class.disabled]="!isConstraintIndexOptionEnabled()">
                     <input type="checkbox"
                         [checked]="isConstraintIndexed()"
+                        [disabled]="!isConstraintIndexOptionEnabled()"
                         (change)="toggleConstraintIndexed()">
                     <span class="slider round"></span>
                 </label>
@@ -64,17 +77,5 @@
         </div>
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="field.defaultDescription" [disabled]="hidden"></multi-language-input>
-    </div>
-    <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
-        <div class="configuration-editor-section-title"
-            i18n="@@configuration.field.inputType">Eingabetyp</div>
-        <select (change)="setInputType($event.target.value)" [disabled]="hidden"
-                class="form-control">
-            <option *ngFor="let inputType of availableInputTypes"
-                    value="{{inputType.name}}"
-                    [selected]="getInputType() === inputType.name">
-                {{inputType.label}}
-            </option>
-        </select>
     </div>
 </div>

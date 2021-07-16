@@ -134,6 +134,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isConstraintIndexOptionShown(): boolean {
 
         return this.category.name !== 'Project'
+            && (this.field.source === 'custom' || this.field.defaultConstraintIndexed)
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     };
 

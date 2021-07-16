@@ -40,6 +40,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
     @Output() onEditField: EventEmitter<Field> = new EventEmitter<Field>();
+    @Output() onDragging: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public selectedGroup: string;
     public label: string;

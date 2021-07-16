@@ -53,7 +53,9 @@ export class ConfigurationComponent implements OnInit {
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
+    public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+
     private configurationIndex: ConfigurationIndex = {};
 
     public availableInputTypes: Array<InputType> = [

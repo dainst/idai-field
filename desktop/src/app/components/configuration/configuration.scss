@@ -10,6 +10,11 @@
 @import './add/category-listing.scss';
 
 .project-configuration {
+  
+  &.dragging {
+    cursor: grabbing !important;
+  }
+
   .sidebar {
     height: calc(100vh - 100px);
     overflow-y: auto;

@@ -48,7 +48,9 @@
                 </label>
             </div>
         </div>
-        <div id="constraint-indexed-switch" class="row">
+        <div id="constraint-indexed-switch" class="row"
+             ngbTooltip="{{getConstraintIndexedTooltip()}}"
+             container="body">
             <div class="col-auto">
                 <span i18n="@@configuration.allowFieldSpecificSearch"
                       [class.disabled]="!isConstraintIndexOptionEnabled()">Feldspezifische Suche erlauben</span>

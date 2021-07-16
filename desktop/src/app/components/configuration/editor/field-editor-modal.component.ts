@@ -142,6 +142,29 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     };
 
 
+    public getConstraintIndexedTooltip(): string {
+
+       if (this.category.name === 'Project') {
+            return this.i18n({
+                id: 'configuration.fieldSpecificSearch.notAllowedForProjectFields',
+                value: 'Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.'
+            });
+        } else if (!this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable) {
+            return this.i18n({
+                id: 'configuration.fieldSpecificSearch.notAllowedForInputType',
+                value: 'Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.'
+            });
+        } else if (this.field.source !== 'custom' && !this.field.defaultConstraintIndexed) {
+            return this.i18n({
+                id: 'configuration.fieldSpecificSearch.changingNotAllowed',
+                value: 'Die Einstellung kann für dieses Feld nicht geändert werden.'
+            });
+        } else {
+            return '';
+        }
+    }
+
+
     public isChanged(): boolean {
 
         return this.new

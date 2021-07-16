@@ -1,9 +1,13 @@
 .field-editor-modal-body {
-  #constraint-indexed-switch div span {
-    user-select: none;
+  #constraint-indexed-switch {
+    width: fit-content;
+    
+    div span {
+      user-select: none;
 
-    &.disabled {
-      color: grey;
+      &.disabled {
+        color: grey;
+      }
     }
   }
 }

@@ -9,7 +9,6 @@ import {
     forEach,
     intersect,
     isDefined,
-    isNot,
     isUndefinedOrEmpty,
     lookup,
     map,
@@ -28,7 +27,7 @@ import IS_ABOVE = Relations.Position.ABOVE;
 import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
 import IS_AFTER = Relations.Time.AFTER;
 import IS_BEFORE = Relations.Time.BEFORE;
-import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
+import SAME_AS = Relations.SAME_AS;
 
 
 /**
@@ -138,8 +137,8 @@ function assertNotBadlyInterrelated(document: Document) {
 
         if (relationName !== inverseRelationName) forbiddenRelations.push(inverseRelationName);
 
-        if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_EQUIVALENT_TO);
-        else if (IS_EQUIVALENT_TO === relationName) forbiddenRelations.push(IS_ABOVE, IS_BELOW);
+        // if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_EQUIVALENT_TO);
+        // else if (IS_EQUIVALENT_TO === relationName) forbiddenRelations.push(IS_ABOVE, IS_BELOW);
 
         if ([IS_BEFORE, IS_AFTER].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
         else if (IS_CONTEMPORARY_WITH === relationName) forbiddenRelations.push(IS_BEFORE, IS_AFTER);

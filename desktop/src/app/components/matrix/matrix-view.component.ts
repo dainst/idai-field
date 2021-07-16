@@ -11,13 +11,13 @@ import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder'
 import {ProjectConfiguration} from 'idai-field-core';
 import {Relations} from 'idai-field-core';
 import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
-import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
 import IS_BEFORE = Relations.Time.BEFORE;
 import IS_AFTER = Relations.Time.AFTER;
 import IS_ABOVE = Relations.Position.ABOVE;
 import IS_BELOW = Relations.Position.BELOW;
 import IS_CUT_BY = Relations.Position.CUTBY;
 import CUTS = Relations.Position.CUTS;
+import SAME_AS = Relations.SAME_AS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import { MenuContext } from '../services/menu-context';
 import { Menus } from '../services/menus';
@@ -244,7 +244,15 @@ export class MatrixViewComponent implements OnInit {
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 
         return relationsMode === 'temporal'
-            ? { above: [IS_AFTER], below: [IS_BEFORE], sameRank: IS_CONTEMPORARY_WITH }
-            : { above: [IS_ABOVE, CUTS], below: [IS_BELOW, IS_CUT_BY], sameRank: IS_EQUIVALENT_TO };
+            ? {
+                above: [IS_AFTER],
+                below: [IS_BEFORE],
+                sameRank: [IS_CONTEMPORARY_WITH, SAME_AS]
+            }
+            : {
+                above: [IS_ABOVE, CUTS],
+                below: [IS_BELOW, IS_CUT_BY],
+                sameRank: [SAME_AS]
+            };
     }
 }

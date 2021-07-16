@@ -35,7 +35,6 @@ export namespace Relations {
 
         export const BELOW = 'isBelow';                // is read off by a user by sight
         export const ABOVE = 'isAbove';                // is read off by a user by sight
-        export const EQUIVALENT = 'isEquivalentTo'; // a user's interpretation that two stratigraphical units (Feature) are the same
 
         export const BORDERS = 'borders';                 //
         export const CUTS = 'cuts';                       //
@@ -67,7 +66,7 @@ export namespace Relations {
     export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
 
 
-    // Used to signal sameness in a generic manner, for example in order to say
+    // Used to signal sameness (a claim of identity) in a generic manner, for example in order to say
     // two resources, recorded in different operations, are the same
     export const SAME_AS = 'isSameAs';
 

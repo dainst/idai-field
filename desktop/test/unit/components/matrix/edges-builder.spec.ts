@@ -11,7 +11,7 @@ describe('EdgesBuilder', () => {
     const defaultRelations: GraphRelationsConfiguration = {
         above: ['isAfter'],
         below: ['isBefore'],
-        sameRank: 'isContemporaryWith'
+        sameRank: ['isContemporaryWith']
     };
 
 
@@ -217,7 +217,7 @@ describe('EdgesBuilder', () => {
         const relations: GraphRelationsConfiguration = {
             above: ['isAbove', 'cuts'],
             below: ['isBelow', 'isCutBy'],
-            sameRank: 'isContemporaryWith'
+            sameRank: ['isContemporaryWith']
         };
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');

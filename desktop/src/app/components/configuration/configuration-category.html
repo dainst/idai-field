@@ -1,6 +1,6 @@
 <div [id]="'category-' + category.name"
-    (dblclick)="onEditCategory.emit()"
-    (contextmenu)="contextMenu.open($event, category)">
+     (dblclick)="onEditCategory.emit()"
+     (contextmenu)="contextMenu.open($event, category)">
     <div class="row" [class.custom-category]="category.source === 'custom'">
         <div class="col header header-left d-flex">
             <category-icon size="41" [category]="category"></category-icon>
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row configuration-category">
     <div class="col-2 groups">
         <ul class="flex-column groups-container"
             cdkDropList [cdkDropListDisabled]="!allowDragAndDrop"
@@ -74,7 +74,7 @@
             [cdkDropListConnectedTo]="getGroupListIds()"
             [cdkDropListDisabled]="!allowDragAndDrop">
             <div *ngFor="let field of getFields()" class="field-element"
-                 cdkDrag cdkDragBoundary="#project-configuration-content"
+                 cdkDrag cdkDragBoundary=".configuration-category"
                  (cdkDragStarted)="onDragging.emit(true)"
                  (cdkDragEnded)="onDragging.emit(false)"
                  [cdkDragData]="field.name">

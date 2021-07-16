@@ -13,6 +13,10 @@
   
   &.dragging {
     cursor: grabbing !important;
+
+    .mdi-drag {
+      cursor: grabbing !important;
+    }
   }
 
   .sidebar {

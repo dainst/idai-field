@@ -1,4 +1,17 @@
 category-picker {
+
+  .category-picker.dragging {
+    cursor: grabbing !important;
+
+    .list-group-item {
+      cursor: grabbing !important;
+
+      .mdi-drag {
+        cursor: grabbing !important;
+      }
+    }
+  }
+
   .list-group-item {
     border-top: 1px solid #eee !important;
     display: block;
@@ -100,6 +113,7 @@ category-picker {
     position: relative;
     right: 8px;
     color: #848484;
+    cursor: grab;
   }
 
   .cdk-drag-disabled {

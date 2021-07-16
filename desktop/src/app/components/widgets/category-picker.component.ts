@@ -21,6 +21,7 @@ export class CategoryPickerComponent {
     @Input() highlightCustomCategories: boolean = false;
     @Input() showCreateButtons: boolean = false;
     @Input() allowChangingOrder: boolean = false;
+    @Input() dragging: boolean = false;
     @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();

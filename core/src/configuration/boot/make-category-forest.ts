@@ -1,5 +1,4 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
-import { RelationsUtil } from '../relations-utils';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
 import { Forest, Named, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -44,7 +43,7 @@ export const generateEmptyList = () => []; // to make sure getting a new instanc
 
 const createGroups = (relationDefinitions: Array<Relation>) => (category: Category): Category => {
 
-    const categoryRelations: Array<Relation> = RelationsUtil.getRelationDefinitions(
+    const categoryRelations: Array<Relation> = Relation.getRelations(
         relationDefinitions, category.name
     );
 

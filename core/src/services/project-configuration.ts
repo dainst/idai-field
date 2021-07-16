@@ -2,7 +2,6 @@ import { includedIn, on, Pair, isString, flow, filter, remove, is } from 'tsfun'
 import { Category, Relation, Document } from '../model';
 import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
-import { RelationsUtil } from '../configuration/relations-utils';
 
 
 export type RawProjectConfiguration = Pair<Forest<Category>, Array<Relation>>;
@@ -180,13 +179,13 @@ export class ProjectConfiguration {
 
     public getRelationsForDomainCategory(categoryName: string): Array<Relation> {
 
-        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
+        return Relation.getRelations(this.relations, categoryName, false);
     }
 
 
     public getRelationsForRangeCategory(categoryName: string): Array<Relation> {
 
-        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
+        return Relation.getRelations(this.relations, categoryName, true);
     }
 
 

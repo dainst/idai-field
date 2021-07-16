@@ -35,39 +35,45 @@ configuration-category {
   }
 
   .groups {
-    padding-top: 1rem;
-    padding-left: 15px;
+    padding: 0;
     width: 240px;
+    
+    &.dragging {
+      cursor: grabbing !important;
+    }
 
     ul {
       width: 100%;
+      padding: 0;
+      list-style: none;
 
-      .nav {
+      .group-button {
         width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        color: #212529;
+        background-color: white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
-        .group-button {
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        &:hover,
+        &.active {
+          background-color: $list-item-hover-color !important;
+        }  
 
-          .mdi-drag {
-            color: #848484;
-            margin-right: 5px;
-          }
-
-          &.active .mdi-drag {
-            color: #fff;
-          }
+        .mdi-drag {
+          color: #848484;
+          margin-right: 5px;
         }
       }
     }
   }
   
   .content {
-    padding-top: 1rem;
     height: calc(100vh - 154px);
-    padding: 15px;
+    padding: 0;
 
     &.shortened {
       height: calc(100vh - 210px);
@@ -81,7 +87,7 @@ configuration-category {
 
     .card {
       margin-top: 10px;
-      margin-bottom: 01px;
+      margin-bottom: 10px;
 
       .value-col {
           height: 1.69rem;
@@ -95,6 +101,7 @@ configuration-category {
           position: relative;
           top: 3px;
           right: 6px;
+          cursor: grab;
         }
     
         &.parent-element .mdi-drag {
@@ -132,11 +139,7 @@ configuration-category {
     }
 
     .field-element:first-of-type .card {
-      margin-top: 1px;
-    }
-  
-    .field-element:last-of-type .card {
-      margin-bottom: 1px;
+      margin-top: 0;
     }
   }
 
@@ -151,7 +154,7 @@ configuration-category {
   }
 
   #add-field-button {
-    transform: translate(-20px, -30px);
+    transform: translate(-20px, -45px);
   }
 
   #add-group-button {

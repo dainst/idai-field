@@ -50,6 +50,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         mergeBuiltInWithLibraryCategories(builtInCategories, libraryCategories),
         Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
         Assertions.assertNoDuplicationInSelection(customCategories),
+        setDefaultConstraintIndexed,
         mergeWithCustomCategories(customCategories, Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
         eraseUnusedCategories(Object.keys(customCategories)),
         replaceCommonFields(commonFields),
@@ -88,6 +89,16 @@ function processCategories(validateFields: any,
 }
 
 
+function setDefaultConstraintIndexed(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
+
+    iterateOverFieldsOfCategories(categories, (categoryName, category, fieldName, field) => {
+        field.defaultConstraintIndexed = field.constraintIndexed === true;
+    });
+
+    return categories;
+}
+
+
 function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
 
     Object.keys(categories).forEach(categoryName => {
@@ -102,10 +113,9 @@ const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
-function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) {
+function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
 
-    iterateOverFieldsOfCategories(mergedCategories,
-        (categoryName, category, fieldName, field) => {
+    iterateOverFieldsOfCategories(mergedCategories, (categoryName, category, fieldName, field) => {
 
         if (category.valuelists && category.valuelists[fieldName]) {
             field.valuelistId = category.valuelists[fieldName];

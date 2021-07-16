@@ -114,7 +114,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public toggleConstraintIndexed() {
 
-        if (!this.field.defaultConstraintIndexed) {
+        if (this.field.defaultConstraintIndexed === undefined) {
             this.getClonedFieldDefinition().constraintIndexed = !this.getClonedFieldDefinition().constraintIndexed;
         } else if (this.getClonedFieldDefinition().constraintIndexed === undefined) {
             this.getClonedFieldDefinition().constraintIndexed = !this.field.defaultConstraintIndexed;
@@ -134,6 +134,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isConstraintIndexOptionShown(): boolean {
 
         return this.category.name !== 'Project'
+            && (this.field.source === 'custom' || this.field.defaultConstraintIndexed)
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     };
 

@@ -85,7 +85,7 @@ const buildDatastore = async (
         projectConfiguration: ProjectConfiguration
     ): Promise<[Datastore, ChangesStream]> => {
 
-    const indexFacade = buildIndexFacade(Tree.flatten<Category>(categories));
+    const indexFacade = buildIndexFacade(Tree.flatten(categories));
     const documentCache = new DocumentCache();
     const converter = new CategoryConverter(projectConfiguration);
 

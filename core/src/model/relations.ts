@@ -14,9 +14,6 @@ export interface Relations {
  */
 export namespace Relations {
 
-    import concatIf = Resource.concatIf;
-
-
     /**
      * Regarding stratigraphical units (Feature category)
      *
@@ -139,11 +136,11 @@ export namespace Relations {
 
         return Object.keys(relations1)
             .reduce(
-                concatIf(notBothEqual(relations1, relations2)),
+                Resource.concatIf(notBothEqual(relations1, relations2)),
                 []
             );
     }
 
-
+    
     const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !same(l[key], r[key]);
 }

@@ -1,9 +1,9 @@
 import {processRelations} from '../../../../../../src/app/core/import/import/process/process-relations';
 import {
-    Relations
+    Relation
 } from 'idai-field-core';
-import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
 import {
     ImportErrors,
@@ -487,7 +487,7 @@ describe('processRelations', () => {
     it('inverse relation not found', async done => {
 
         const doc = d('nf1', 'Feature', 'one');
-        doc.resource.relations[Relations.Position.BELOW] = ['17'];
+        doc.resource.relations[Relation.Position.BELOW] = ['17'];
 
         try {
             await processRelations([doc], validator, operationCategoryNames, get, relationInverses, {});

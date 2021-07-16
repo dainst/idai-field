@@ -1,7 +1,7 @@
 import { Named } from '../../tools/named';
 import { I18N } from '../../tools/i18n';
 import { Field } from './field';
-import { Relations } from '../relations';
+import {Relation} from './relation';
 
 
 export interface GroupDefinition {
@@ -26,14 +26,14 @@ export module Groups {
 
     export function getGroupNameForRelation(relationName: string): string|undefined {
 
-        if (Relations.Hierarchy.ALL.includes(relationName)
-                || Relations.Image.ALL.includes(relationName)) {
+        if (Relation.Hierarchy.ALL.includes(relationName)
+                || Relation.Image.ALL.includes(relationName)) {
             return STEM;
-        } else if (Relations.Time.ALL.includes(relationName)) {
+        } else if (Relation.Time.ALL.includes(relationName)) {
             return TIME;
-        } else if (Relations.Position.ALL.includes(relationName)) {
+        } else if (Relation.Position.ALL.includes(relationName)) {
             return POSITION;
-        } else if (Relations.Type.ALL.includes(relationName)) {
+        } else if (Relation.Type.ALL.includes(relationName)) {
             return IDENTIFICATION;
         } else {
             return undefined;

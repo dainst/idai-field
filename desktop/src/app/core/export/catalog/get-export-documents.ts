@@ -1,4 +1,4 @@
-import { Document, Relations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
+import { Document, Relation, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from 'idai-field-core';
@@ -51,7 +51,7 @@ function cleanImageDocuments(images: Array<Document>) {
     const relatedImageDocuments = [];
     for (let image of images) {
         image.resource.relations = {
-            depicts: image.resource.relations[Relations.Image.DEPICTS] // we know it depicts only catalog exclusive resources
+            depicts: image.resource.relations[Relation.Image.DEPICTS] // we know it depicts only catalog exclusive resources
         } as any;
         relatedImageDocuments.push(image);
     }
@@ -66,7 +66,7 @@ function cleanDocument(document: Document) {
     delete document['_id'];
     delete document[Document.CREATED];
     delete document[Document.MODIFIED];
-    delete document.resource.relations[Relations.Type.HASINSTANCE];
-    delete document.resource.relations[Relations.Hierarchy.RECORDEDIN];
+    delete document.resource.relations[Relation.Type.HASINSTANCE];
+    delete document.resource.relations[Relation.Hierarchy.RECORDEDIN];
     return document;
 }

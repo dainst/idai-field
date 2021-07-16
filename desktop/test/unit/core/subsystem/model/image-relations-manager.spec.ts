@@ -2,7 +2,7 @@ import {
     createApp, createHelpers,
     setupSyncTestDb
 } from '../subsystem-helper';
-import {Relations} from 'idai-field-core';
+import {Relation} from 'idai-field-core';
 
 
 describe('subsystem/image-relations-manager', () => {
@@ -188,12 +188,12 @@ describe('subsystem/image-relations-manager', () => {
                 ['i1', 'Image', ['tc1']]
             ]
         );
-        expect(documentsLookup['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
         await app.imageRelationsManager.remove([documentsLookup['i1']]);
 
         await helpers.expectDocuments('tc1');
         const tc1 = await app.datastore.get('tc1');
-        expect(tc1.resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined();
+        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
         done();
     });
 
@@ -227,15 +227,15 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined()
-        expect(documentsLookup['i1'].resource.relations[Relations.Image.DEPICTS]).toEqual([]);
+        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined()
+        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual([]);
 
         await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
 
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
-        expect(tc1.resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(i1.resource.relations[Relations.Image.DEPICTS]).toEqual(['tc1']);
+        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
         done();
     });
 
@@ -273,15 +273,15 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1'])
-        expect(documentsLookup['i1'].resource.relations[Relations.Image.DEPICTS]).toEqual(['tc1']);
+        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1'])
+        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
 
         await app.imageRelationsManager.unlink(documentsLookup['i1']);
 
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
-        expect(tc1.resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined();
-        expect(i1.resource.relations[Relations.Image.DEPICTS]).toEqual([]);
+        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
+        expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual([]);
         done();
     });
 
@@ -296,9 +296,9 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(documentsLookup['tc2'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(documentsLookup['i1'].resource.relations[Relations.Image.DEPICTS]).toEqual(['tc1', 'tc2']);
+        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup['tc2'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1', 'tc2']);
 
         await app.imageRelationsManager.unlink(documentsLookup['tc1'], documentsLookup['i1']);
 
@@ -306,9 +306,9 @@ describe('subsystem/image-relations-manager', () => {
         const tc2 = await app.datastore.get('tc2');
         const i1 = await app.datastore.get('i1');
 
-        expect(tc1.resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined();
-        expect(tc2.resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(i1.resource.relations[Relations.Image.DEPICTS]).toEqual(['tc2']);
+        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
+        expect(tc2.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc2']);
 
         done();
     });

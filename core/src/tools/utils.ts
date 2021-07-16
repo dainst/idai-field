@@ -1,5 +1,4 @@
 import { Associative, detach, identity, isArray, isDefined, Map, Pair } from 'tsfun';
-import { assocReduce } from './assoc-reduce';
 import { Named } from './named';
 
 

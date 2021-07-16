@@ -3,15 +3,15 @@ import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to, not
 } from 'tsfun';
 import { Document } from '../model/document';
+import {Relation} from '../model/configuration/relation';
 import { DatastoreErrors } from '../datastore/datastore-errors'
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
-import { Relations } from '../model/relations';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/new-document';
 import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { Name } from '../tools';
 import { Resource } from '../model/resource';
 
@@ -104,7 +104,7 @@ export class RelationsManager {
 
             return documents
                 .filter(
-                    on([Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.LIESWITHIN], 
+                    on([Document.RESOURCE, Resource.RELATIONS, Relation.Hierarchy.LIESWITHIN], 
                        not(isUndefinedOrEmpty)));
 
         } catch {
@@ -282,13 +282,13 @@ export class RelationsManager {
         const documents: Array<Document> = [];
 
         let current = document;
-        while (Document.hasRelations(current, Relations.Hierarchy.LIESWITHIN)
-               || Document.hasRelations(current, Relations.Hierarchy.RECORDEDIN)) {
+        while (Document.hasRelations(current, Relation.Hierarchy.LIESWITHIN)
+               || Document.hasRelations(current, Relation.Hierarchy.RECORDEDIN)) {
 
             const parent = await this.datastore.get(
-                Document.hasRelations(current, Relations.Hierarchy.LIESWITHIN)
-                    ? current.resource.relations[Relations.Hierarchy.LIESWITHIN][0]
-                    : current.resource.relations[Relations.Hierarchy.RECORDEDIN][0]
+                Document.hasRelations(current, Relation.Hierarchy.LIESWITHIN)
+                    ? current.resource.relations[Relation.Hierarchy.LIESWITHIN][0]
+                    : current.resource.relations[Relation.Hierarchy.RECORDEDIN][0]
             );
 
             documents.push(parent);

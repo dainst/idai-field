@@ -1,9 +1,9 @@
-import { FindResult, Relations, Query, Named } from 'idai-field-core';
+import { FindResult, Relation, Query, Named } from 'idai-field-core';
 import { Document, NewDocument, ProjectConfiguration} from 'idai-field-core';
 import { isnt, on } from 'tsfun';
 import { ValidationErrors } from './validation-errors';
 import { Validations } from './validations';
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
 /**

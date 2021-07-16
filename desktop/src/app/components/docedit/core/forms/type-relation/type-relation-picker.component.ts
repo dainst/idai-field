@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
-    ProjectConfiguration, Query, Relations, Resource, ValuelistUtil } from 'idai-field-core';
+    ProjectConfiguration, Query, Relations, Resource, Relation, ValuelistUtil } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
@@ -222,9 +222,9 @@ export class TypeRelationPickerComponent {
             },
             constraints: {}
         };
-        if (!isUndefinedOrEmpty(resource.relations[Relations.Type.INSTANCEOF])) {
+        if (!isUndefinedOrEmpty(resource.relations[Relation.Type.INSTANCEOF])) {
             (query.constraints as any)['id:match'] = {
-                value: resource.relations[Relations.Type.INSTANCEOF],
+                value: resource.relations[Relation.Type.INSTANCEOF],
                 subtract: true
             };
         }

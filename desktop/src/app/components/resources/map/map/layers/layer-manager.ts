@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FieldDocument, ImageDocument, Relations, InPlace, Datastore } from 'idai-field-core';
+import { FieldDocument, ImageDocument, Relation, InPlace, Datastore } from 'idai-field-core';
 import { Document, RelationsManager } from 'idai-field-core';
 import * as tsfun from 'tsfun';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
@@ -94,7 +94,7 @@ export class LayerManager {
 
         const layersToRemoveIds: string[] = group.layers.filter(layer => {
             return this.isActiveLayer(layer.resource.id)
-                && !document.resource.relations[Relations.Image.HASMAPLAYER]?.includes(layer.resource.id);
+                && !document.resource.relations[Relation.Image.HASMAPLAYER]?.includes(layer.resource.id);
         }).map(tsfun.to(['resource','id']));
 
         this.viewFacade.setActiveLayersIds(tsfun.subtract(layersToRemoveIds)(this.activeLayerIds));
@@ -130,7 +130,7 @@ export class LayerManager {
         if (!this.layerGroupInEditing) return;
 
         const relations: string[]
-            = this.originalLayerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] || [];
+            = this.originalLayerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER] || [];
         this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
 
         this.layerGroups[this.layerGroups.indexOf(this.layerGroupInEditing)] = this.originalLayerGroupInEditing;
@@ -143,10 +143,10 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] || [];
+        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER] || [];
         const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.concat(newLayers);
-        this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] = layerIds.concat(newLayerIds);
+        this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER] = layerIds.concat(newLayerIds);
     }
 
 
@@ -154,8 +154,8 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER]
-            = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER].filter(id => {
+        this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER]
+            = this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER].filter(id => {
                 return id !== layerToRemove.resource.id;
             });
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
@@ -170,7 +170,7 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const relations: string[] = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER];
+        const relations: string[] = this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER];
 
         InPlace.moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
         InPlace.moveInArray(relations, originalIndex, targetIndex);
@@ -218,8 +218,8 @@ export class LayerManager {
 
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        return Document.hasRelations(document, Relations.Image.HASMAPLAYER)
-            ? (await this.datastore.getMultiple(document.resource.relations[Relations.Image.HASMAPLAYER])) as Array<ImageDocument>
+        return Document.hasRelations(document, Relation.Image.HASMAPLAYER)
+            ? (await this.datastore.getMultiple(document.resource.relations[Relation.Image.HASMAPLAYER])) as Array<ImageDocument>
             : [];
     }
 

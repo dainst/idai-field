@@ -7,7 +7,7 @@ import {
     isUndefinedOrEmpty,
     not
 } from 'tsfun';
-import {Document, NewDocument, Relations} from 'idai-field-core';
+import {Document, NewDocument, Relation, Relations} from 'idai-field-core';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
 import {Get, Id} from '../types';
@@ -16,8 +16,8 @@ import {ImportOptions} from '../import-documents';
 import {InverseRelationsMap} from 'idai-field-core';
 import {makeLookups} from './make-lookups';
 import {inferRecordedIns} from './infer-recorded-ins';
-import RECORDEDIN = Relations.Hierarchy.RECORDEDIN;
-import LIESWITHIN = Relations.Hierarchy.LIESWITHIN;
+import RECORDEDIN = Relation.Hierarchy.RECORDEDIN;
+import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
 
 
 /**

@@ -1,5 +1,5 @@
 import { ResourceId } from '../src/constants';
-import { Category, FeatureDocument, Field, FieldDocument, Relations } from '../src/model';
+import { Category, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
 import { Document } from '../src/model/document';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
@@ -81,10 +81,10 @@ export function createDocuments(documents: NiceDocs) {
     }
     for (const [id, type, targets] of documents) {
         if (targets) {
-            if (type === 'Image') relationsLookup[id][Relations.Image.DEPICTS] = targets;
+            if (type === 'Image') relationsLookup[id][Relation.Image.DEPICTS] = targets;
 
             for (const target of targets) {
-                relationsLookup[target][type === 'Image' ? Relations.Image.ISDEPICTEDIN : Relations.Hierarchy.LIESWITHIN] = [id];
+                relationsLookup[target][type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN] = [id];
             }
         }
     }

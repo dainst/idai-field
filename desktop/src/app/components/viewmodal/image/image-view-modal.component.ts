@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
-import {Datastore, Document, FieldDocument, ImageDocument, Relations} from 'idai-field-core';
+import {Datastore, Document, FieldDocument, ImageDocument, Relation} from 'idai-field-core';
 import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
@@ -70,7 +70,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public isMainImage(imageDocument: ImageDocument): boolean {
 
-        return imageDocument.resource.id === this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN]?.[0];
+        return imageDocument.resource.id === this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN]?.[0];
     }
 
 
@@ -80,8 +80,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         const mainImageId: string = this.selected[0].resource.id;
 
-        this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN] = [mainImageId].concat(
-            this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN].filter(targetId => {
+        this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN] = [mainImageId].concat(
+            this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN].filter(targetId => {
                 return targetId !== mainImageId;
             })
         );

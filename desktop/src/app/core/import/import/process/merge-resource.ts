@@ -1,4 +1,4 @@
-import { Relations, typeOf } from 'idai-field-core';
+import { Relation, typeOf } from 'idai-field-core';
 import { NewResource, Resource } from 'idai-field-core';
 import {
     Associative, cond, detach, dropRightWhile,
@@ -54,7 +54,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                 overwriteOrDeleteProperties(
                     target.relations,
                     additional.relations,
-                    [Relations.Hierarchy.RECORDEDIN]))
+                    [Relation.Hierarchy.RECORDEDIN]))
             (target) as Resource;
 
     } catch (err) {

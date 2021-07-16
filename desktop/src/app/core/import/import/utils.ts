@@ -1,9 +1,9 @@
-import { Document, Lookup, Relations } from 'idai-field-core';
+import { Document, Lookup, Relation, Relations } from 'idai-field-core';
 import { aMap, same, on, isUndefinedOrEmpty, union } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportErrors as E } from './import-errors';
 import { Id, Identifier } from './types';
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
 export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on(['resource', 'id']), docs);

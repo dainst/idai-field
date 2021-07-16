@@ -1,7 +1,7 @@
 import {flow, includedIn, isDefined, isNot, isnt, map, cond,
     dense, compose, remove} from 'tsfun';
 import {Resource} from 'idai-field-core';
-import {FieldResource, StringUtils, Relations, Field} from 'idai-field-core';
+import {FieldResource, StringUtils, Relation, Field} from 'idai-field-core';
 import {CSVMatrixExpansion} from './csv-matrix-expansion';
 import {CsvExportUtils} from './csv-export-utils';
 import {CsvExportConsts, Heading, HeadingsAndMatrix} from './csv-export-consts';
@@ -58,9 +58,9 @@ export module CSVExport {
         return extractExportableFields(fieldDefinitions)
             .concat(
                 relations
-                    .filter(isNot(includedIn(Relations.Hierarchy.ALL)))
+                    .filter(isNot(includedIn(Relation.Hierarchy.ALL)))
                     .map(s => Resource.RELATIONS + OBJECT_SEPARATOR + s))
-            .concat(relations.find(includedIn(Relations.Hierarchy.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
+            .concat(relations.find(includedIn(Relation.Hierarchy.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
 

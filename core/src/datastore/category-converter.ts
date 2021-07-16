@@ -1,6 +1,6 @@
 import {ProjectConfiguration} from '../configuration';
+import {Relation} from '../model/configuration/relation';
 import { Document } from '../model/document';
-import { Relations } from '../model/relations';
 import { Resource } from '../model/resource';
 import {  Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
@@ -24,15 +24,15 @@ export class CategoryConverter {
 
             if (this.projectConfiguration.getImageCategories().map(Named.toName)
                 .includes(convertedDocument.resource.category)) {
-                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Image.DEPICTS], []);
+                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relation.Image.DEPICTS], []);
                 } else {
-                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.RECORDEDIN], []);
+                    InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relation.Hierarchy.RECORDEDIN], []);
 
                     if (this.projectConfiguration.getFeatureCategories().map(Named.toName)
                         .includes(convertedDocument.resource.category)) {
-                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
-                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);
-                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.CONTEMPORARY], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relation.Time.AFTER], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relation.Time.BEFORE], []);
+                            InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relation.Time.CONTEMPORARY], []);
                         }
                 }
         }

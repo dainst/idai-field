@@ -1,7 +1,7 @@
 import {
     Lookup, ResourceId,
 } from 'idai-field-core';
-import { Document, Relations } from 'idai-field-core';
+import { Document, Relation, Relations } from 'idai-field-core';
 import {
     isEmpty,
     filter,
@@ -22,12 +22,12 @@ import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith } from '../utils';
 import { setInverseRelationsForDbResources } from './set-inverse-relations-for-db-resources';
-import IS_BELOW = Relations.Position.BELOW;
-import IS_ABOVE = Relations.Position.ABOVE;
-import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
-import IS_AFTER = Relations.Time.AFTER;
-import IS_BEFORE = Relations.Time.BEFORE;
-import SAME_AS = Relations.SAME_AS;
+import IS_BELOW = Relation.Position.BELOW;
+import IS_ABOVE = Relation.Position.ABOVE;
+import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
+import IS_AFTER = Relation.Time.AFTER;
+import IS_BEFORE = Relation.Time.BEFORE;
+import SAME_AS = Relation.SAME_AS;
 
 
 /**
@@ -77,7 +77,7 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
         targetsLookup as any,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
-        Relations.UNIDIRECTIONAL);
+        Relation.UNIDIRECTIONAL);
 }
 
 
@@ -137,8 +137,8 @@ function assertNotBadlyInterrelated(document: Document) {
 
         if (relationName !== inverseRelationName) forbiddenRelations.push(inverseRelationName);
 
-        // if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_EQUIVALENT_TO);
-        // else if (IS_EQUIVALENT_TO === relationName) forbiddenRelations.push(IS_ABOVE, IS_BELOW);
+        // if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelation.push(IS_EQUIVALENT_TO);
+        // else if (IS_EQUIVALENT_TO === relationName) forbiddenRelation.push(IS_ABOVE, IS_BELOW);
 
         if ([IS_BEFORE, IS_AFTER].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
         else if (IS_CONTEMPORARY_WITH === relationName) forbiddenRelations.push(IS_BEFORE, IS_AFTER);

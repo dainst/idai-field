@@ -5,9 +5,9 @@ import {Find, Get} from './types';
 import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
-import {Relations} from 'idai-field-core';
-import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import {Relation} from 'idai-field-core';
+import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import {InverseRelationsMap} from 'idai-field-core';
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
@@ -140,7 +140,7 @@ async function importDocuments(services: ImportServices,
 
     } catch (errWithParams) {
         if (errWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
-                && ([LIES_WITHIN, RECORDED_IN].includes(errWithParams[2]))) errWithParams[2] = Relations.PARENT;
+                && ([LIES_WITHIN, RECORDED_IN].includes(errWithParams[2]))) errWithParams[2] = Relation.PARENT;
         return [errWithParams, undefined];
     }
 }

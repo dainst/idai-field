@@ -1,5 +1,5 @@
-import { Document, Datastore, Relations, Lookup, ON_RESOURCE_ID, RelationsManager } from 'idai-field-core';
-import { aMap, isArray, clone, isNot, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
+import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager } from 'idai-field-core';
+import { aMap, isArray, clone, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { makeDocumentsLookup } from './utils';
@@ -201,7 +201,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
     const removedDocuments = subtract(ON_RESOURCE_ID, importDocuments)(existingDocuments);
     const problems = [];
     for (const removedDocument of removedDocuments) {
-        if (!isUndefinedOrEmpty(removedDocument.resource.relations[Relations.Type.HASINSTANCE])) {
+        if (!isUndefinedOrEmpty(removedDocument.resource.relations[Relation.Type.HASINSTANCE])) {
             problems.push(removedDocument.resource.identifier);
         }
     }
@@ -257,9 +257,9 @@ function importOneDocument(services: ImportCatalogServices,
         }
 
         if (isTypeOrCatalog(existingDocument)) {
-            const oldRelations = clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
+            const oldRelations = clone(existingDocument.resource.relations[Relation.Type.HASINSTANCE]);
             updateDocument.resource = clone(document.resource);
-            if (oldRelations) updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
+            if (oldRelations) updateDocument.resource.relations[Relation.Type.HASINSTANCE] = oldRelations;
             await services.datastore.update(updateDocument, context.username);
         } else {
             await services.datastore.remove(existingDocument);
@@ -288,17 +288,17 @@ function assertRelationsValid(documents: Array<Document>) {
 
     for (const document of documents) {
         if (document.resource.category === 'TypeCatalog') {
-            if (!isUndefinedOrEmpty(document.resource.relations[Relations.Hierarchy.LIESWITHIN])
-                || !isUndefinedOrEmpty(document.resource.relations[Relations.Image.DEPICTS])) {
+            if (!isUndefinedOrEmpty(document.resource.relations[Relation.Hierarchy.LIESWITHIN])
+                || !isUndefinedOrEmpty(document.resource.relations[Relation.Image.DEPICTS])) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
         }
         if (document.resource.category === 'Type' ) {
-            if (!isArray(document.resource.relations[Relations.Hierarchy.LIESWITHIN])
-                || document.resource.relations[Relations.Hierarchy.LIESWITHIN].length !== 1) {
+            if (!isArray(document.resource.relations[Relation.Hierarchy.LIESWITHIN])
+                || document.resource.relations[Relation.Hierarchy.LIESWITHIN].length !== 1) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
-            const target = lookup[document.resource.relations[Relations.Hierarchy.LIESWITHIN][0]];
+            const target = lookup[document.resource.relations[Relation.Hierarchy.LIESWITHIN][0]];
             if (target === undefined
                 || (target.resource.category !== 'Type' && target.resource.category !== 'TypeCatalog')) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
@@ -306,24 +306,24 @@ function assertRelationsValid(documents: Array<Document>) {
         }
 
         if (document.resource.category === 'Type' || document.resource.category === 'TypeCatalog') {
-            if (!isUndefinedOrEmpty(document.resource.relations[Relations.Image.ISDEPICTEDIN])) {
-                for (const target_ of document.resource.relations[Relations.Image.ISDEPICTEDIN]) {
+            if (!isUndefinedOrEmpty(document.resource.relations[Relation.Image.ISDEPICTEDIN])) {
+                for (const target_ of document.resource.relations[Relation.Image.ISDEPICTEDIN]) {
                     const target = lookup[target_];
                     if (target === undefined
-                        || !target.resource.relations[Relations.Image.DEPICTS].includes(document.resource.id)) {
+                        || !target.resource.relations[Relation.Image.DEPICTS].includes(document.resource.id)) {
                         throw [ImportCatalogErrors.INVALID_RELATIONS];
                     }
                 }
             }
         }
         else {
-            if (isUndefinedOrEmpty(document.resource.relations[Relations.Image.DEPICTS])) {
+            if (isUndefinedOrEmpty(document.resource.relations[Relation.Image.DEPICTS])) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
-            for (const target_ of document.resource.relations[Relations.Image.DEPICTS]) {
+            for (const target_ of document.resource.relations[Relation.Image.DEPICTS]) {
                 const target = lookup[target_];
                 if (target === undefined
-                    || !target.resource.relations[Relations.Image.ISDEPICTEDIN].includes(document.resource.id)) {
+                    || !target.resource.relations[Relation.Image.ISDEPICTEDIN].includes(document.resource.id)) {
                     throw [ImportCatalogErrors.INVALID_RELATIONS];
                 }
             }

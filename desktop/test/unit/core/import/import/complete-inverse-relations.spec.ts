@@ -1,12 +1,12 @@
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {Relations, Document} from 'idai-field-core';
-import IS_BELOW = Relations.Position.BELOW;
-import IS_ABOVE = Relations.Position.ABOVE;
-import IS_AFTER = Relations.Time.AFTER;
-import IS_BEFORE = Relations.Time.BEFORE;
-import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
-import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
-import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
+import {Relation, Document} from 'idai-field-core';
+import IS_BELOW = Relation.Position.BELOW;
+import IS_ABOVE = Relation.Position.ABOVE;
+import IS_AFTER = Relation.Time.AFTER;
+import IS_BEFORE = Relation.Time.BEFORE;
+import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
+import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
 import {completeInverseRelations} from '../../../../../src/app/core/import/import/process/complete-inverse-relations';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 

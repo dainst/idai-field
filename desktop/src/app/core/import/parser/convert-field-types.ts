@@ -1,4 +1,4 @@
-import { Category, Field, Relations, InPlace } from 'idai-field-core';
+import { Category, Field, Relation, InPlace } from 'idai-field-core';
 import { Dating, Dimension, Resource } from 'idai-field-core';
 import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
@@ -38,7 +38,7 @@ export function convertFieldTypes(category: Category) {
             if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
         }
 
-        for (const relationName of Object.keys(resource.relations).filter(isnt(Relations.PARENT))) {
+        for (const relationName of Object.keys(resource.relations).filter(isnt(Relation.PARENT))) {
             if (resource.relations[relationName] === null) continue;
             resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
         }

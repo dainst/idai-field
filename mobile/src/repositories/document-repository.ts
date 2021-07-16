@@ -1,3 +1,4 @@
+import {ProjectConfiguration} from 'idai-field-core';
 import {
     Category,
 
@@ -23,7 +24,8 @@ export class DocumentRepository {
 
         const db = pouchdbManager.getDb();
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
-        const [datastore, changesStream] = await buildDatastore(categories, pouchdbDatastore, db, username);
+        const projectConfiguration = new ProjectConfiguration([categories, []]);
+        const [datastore, changesStream] = await buildDatastore(categories, pouchdbDatastore, db, username, projectConfiguration);
 
         return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
     }
@@ -79,12 +81,13 @@ const buildDatastore = async (
         categories: Forest<Category>,
         pouchdbDatastore: PouchdbDatastore,
         db: PouchDB.Database,
-        username: string
+        username: string,
+        projectConfiguration: ProjectConfiguration
     ): Promise<[Datastore, ChangesStream]> => {
 
     const indexFacade = buildIndexFacade(Tree.flatten<Category>(categories));
     const documentCache = new DocumentCache();
-    const converter = new CategoryConverter(categories);
+    const converter = new CategoryConverter(projectConfiguration);
 
     await Indexer.reindex(indexFacade, db, documentCache, converter);
 

@@ -17,16 +17,22 @@ export module ExportRunner {
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
-    export async function performExport(find: Find,
-                                        selectedOperationId: string|undefined,
+    export async function performExport(get: Get,
+                                        find: Find,
+                                        selectedOperationId: string|undefined, // TODO why can it be undefined?
                                         selectedCategory: Category, relations: string[],
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
+        const documents = [];
+        for (const operationId of (await getOperationIds(get, find, selectedOperationId))) {
+            if (!selectedOperationId) break; // TODO see above
+
+            documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
+        }
+
         return await aFlow(
-                selectedOperationId
-                    ? await fetchDocuments(find, selectedOperationId, selectedCategory)
-                    : [],
+                documents,
                 aMap(rewriteIdentifiers(getIdentifierForId)),
                 map(to(Document.RESOURCE)),
                 performExport(selectedCategory, relations));

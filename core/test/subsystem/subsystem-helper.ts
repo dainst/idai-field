@@ -117,9 +117,9 @@ export function createHelpers(app: CoreApp, user: Name = 'testuser') {
 function makeCreateDocuments(datastore: Datastore,
                              username: string) {
 
-    return async function create(documentsLookup: Lookup<Document>) {
+    return async function create(documents: NiceDocs) {
 
-        // const documentsLookup = createDocuments(documents);
+        const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
             await datastore.create(document, username);
         }

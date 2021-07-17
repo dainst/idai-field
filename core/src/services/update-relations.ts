@@ -4,7 +4,7 @@ import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { Relations } from '../model/relations'
 import { Name } from '../tools';
-import { InverseRelationsMap } from '../configuration';
+import { Relation } from '../model/configuration/relation';
 
 
 /**
@@ -25,7 +25,7 @@ import { InverseRelationsMap } from '../configuration';
  * @author Thomas Kleinke
  */
 export function updateRelations(document: Document, targetDocuments: Array<Document>,
-                                inverseRelationsMap: InverseRelationsMap,
+                                inverseRelationsMap: Relation.InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
     const cloneOfTargetDocuments = targetDocuments.map(Document.clone);

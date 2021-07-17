@@ -1,4 +1,7 @@
+import {flow} from 'tsfun';
+import {assocReduce} from '../../tools/assoc-reduce';
 import {Name} from '../../tools/named';
+import {toPair} from '../../tools/utils';
 import { Field } from './field';
 
 
@@ -132,5 +135,23 @@ export namespace Relation {
         }
 
         return availableRelationFields;
+    }
+
+
+    export type InverseRelationsMap = {
+
+        [_: string]:    // relation name for every defined relation, independent if it has an inverse or not
+            string      // inverse relation name, if existent
+            | undefined // for relations without inverse
+    }
+
+
+    export function makeInverseRelationsMap(relationDefinitions: Array<Relation>) {
+    
+        return flow(
+            relationDefinitions,
+            assocReduce(
+                toPair<string>('name', 'inverse'),
+                {}) as any) as InverseRelationsMap;
     }
 }

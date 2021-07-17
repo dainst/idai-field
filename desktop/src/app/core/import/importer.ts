@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Category, Document, Datastore, Name } from 'idai-field-core';
-import { isnt } from 'tsfun';
+import { Category, Document, Datastore, Name, Relation } from 'idai-field-core';
 import { M } from '../../components/messages/m';
-import { makeInverseRelationsMap } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../model/image-relations-manager';
@@ -100,7 +98,7 @@ export module Importer {
 
         const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
-        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getRelations());
+        const inverseRelationsMap = Relation.makeInverseRelationsMap(context.projectConfiguration.getRelations());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);

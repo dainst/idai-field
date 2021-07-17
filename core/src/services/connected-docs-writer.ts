@@ -1,10 +1,10 @@
 import { flatMap, flow, subtract } from 'tsfun';
 import { Document, toResourceId  } from '../model/document';
 import { Resource } from '../model/resource';
+import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
 import { Name, Named } from '../tools/named';
-import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
 import { ProjectConfiguration } from './project-configuration';
 
 
@@ -21,13 +21,13 @@ import { ProjectConfiguration } from './project-configuration';
  */
 export class ConnectedDocsWriter {
 
-    private inverseRelationsMap: InverseRelationsMap;
+    private inverseRelationsMap: Relation.InverseRelationsMap;
 
     constructor(
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration) {
 
-        this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getRelations());
+        this.inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
     }
 
 

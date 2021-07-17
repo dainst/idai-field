@@ -2,7 +2,6 @@ export { BuiltInConfiguration } from './built-in-configuration';
 export { AppConfigurator } from './app-configurator';
 export * from './boot';
 export { linkParentAndChildInstances } from './category-forest';
-export { InverseRelationsMap, makeInverseRelationsMap } from './inverse-relations-map';
 export * from './model';
 export { ProjectConfiguration } from '../services/project-configuration';
 export { getConfigurationName } from './project-configuration-names';

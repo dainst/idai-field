@@ -1,6 +1,5 @@
 import {Document} from 'idai-field-core';
 import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
-import {ObjectUtils} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 
 

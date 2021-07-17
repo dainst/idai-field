@@ -101,7 +101,7 @@ describe('Resource', () => {
         const relA = { a: ['1', '2'], b: ['1', '2'] };
         const relB = { b: ['2', '1'], a: ['2', '1'] };
         
-        expect(Resource.relationsEquivalent(relA)(relB)).toBeTruthy();
+        expect(Resource.relationsEquivalent({ relations: relA } as any)({ relations: relB } as any)).toBeTruthy();
     });
 
 
@@ -110,6 +110,6 @@ describe('Resource', () => {
         const relA = { a: undefined };
         const relB = { a: []};
 
-        expect(Resource.relationsEquivalent(relA)(relB)).toBeTruthy();
+        expect(Resource.relationsEquivalent({ relations: relA } as any)({ relations: relB } as any)).toBeTruthy();
     });
 });

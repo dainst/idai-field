@@ -88,10 +88,10 @@ export module Resource {
     }
 
 
-    export const relationsEquivalent = (r1: Relations) => (r2: Relations) => // Comparator, provide as lambda
+    export const relationsEquivalent = (r1: Resource) => (r2: Resource) => // Comparator, provide as lambda
         samemap(sameset,
-            remove(isUndefinedOrEmpty, r1),
-            remove(isUndefinedOrEmpty, r2));
+            remove(isUndefinedOrEmpty, r1.relations),
+            remove(isUndefinedOrEmpty, r2.relations));
 
 
     // TODO review; tests; maybe test getDifferingFields instead

@@ -137,4 +137,4 @@ function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTar
 }
 
 
-const documentsRelationsEquivalent = on([Document.RESOURCE, Resource.RELATIONS], Resource.relationsEquivalent);
+const documentsRelationsEquivalent = on(Document.RESOURCE, Resource.relationsEquivalent);

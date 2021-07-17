@@ -213,6 +213,7 @@ export class ExportComponent implements OnInit {
 
         try {
             await ExportRunner.performExport(
+                this.get,
                 this.find,
                 this.getOperationIdForMode(),
                 this.selectedCategory,

@@ -1,3 +1,4 @@
+import {Document} from '../../src/model/document';
 import {AppConfigurator} from '../../src/configuration/app-configurator';
 import {ConfigLoader} from '../../src/configuration/boot/config-loader';
 import {ConfigReader} from '../../src/configuration/boot/config-reader';
@@ -9,10 +10,15 @@ import { PouchdbManager } from '../../src/datastore/pouchdb/pouchdb-manager';
 import {ConstraintIndex} from '../../src/index/constraint-index';
 import {IndexFacade} from '../../src/index/index-facade';
 import {Tree} from '../../src/tools/forest';
+import {Lookup, makeLookup, Name} from '../../src/tools';
+import {RelationsManager} from '../../src/model';
+import {createDocuments, NiceDocs} from '../test-helpers';
 
 import PouchDB = require('pouchdb-node');
-import {Name} from '../../src/tools';
-import {RelationsManager} from '../../src/model';
+
+
+// TODO remove duplication with import/utils.ts
+export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup(['resource', 'id']);
 
 
 class IdGenerator {
@@ -93,4 +99,34 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         datastore,
         relationsManager
     };
+}
+
+
+export function createHelpers(app: CoreApp, user: Name = 'testuser') {
+
+    const createDocuments = makeCreateDocuments(
+        app.datastore, user);
+
+    return {
+        createDocuments
+    }
+}
+
+
+function makeCreateDocuments(datastore: Datastore,
+                             username: string) {
+
+    return async function create(documentsLookup: Lookup<Document>) {
+
+        // const documentsLookup = createDocuments(documents);
+        for (const document of Object.values(documentsLookup)) {
+            await datastore.create(document, username);
+        }
+
+        const storedDocuments = [];
+        for (const doc of Object.values(documentsLookup)) {
+            storedDocuments.push( await datastore.get(doc.resource.id) );
+        }
+        return makeDocumentsLookup(storedDocuments);
+    }
 }

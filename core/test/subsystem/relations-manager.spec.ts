@@ -1,21 +1,17 @@
-import {Document} from '../../src/model/document';
 import {FieldDocument} from '../../src/model/field-document';
-import {makeLookup} from '../../src/tools/transformers';
-import {Lookup} from '../../src/tools/utils';
-import { doc1 } from '../test-helpers';
-import { createCoreApp } from './subsystem-helper';
+import { createDocuments, doc1 } from '../test-helpers';
+import { createCoreApp, createHelpers, makeDocumentsLookup } from './subsystem-helper';
 
 
 describe('subsystem/relations-manager', () => {
 
-    // TODO remove duplication with import/utils.ts
-    const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup(['resource', 'id']);
-
     const user = 'testuser';
     let app;
+    let helpers;
 
     beforeEach(async done => {
         app = await createCoreApp();
+        helpers = await createHelpers(app);
         done();
     });
 
@@ -38,22 +34,23 @@ describe('subsystem/relations-manager', () => {
         const p1 = doc1('idp1', 'identifieridp1', 'Place') as FieldDocument;
         const p2 = doc1('idp2', 'identifieridp2', 'Place') as FieldDocument;
 
-        const d1 = doc1('id1', 'identifierid1', 'Trench') as FieldDocument;
-
         p2.resource.relations['liesWithin'] = ['idp1'];
-        d1.resource.relations['liesWithin'] = ['idp2'];
+        
+        const docs = createDocuments([
+            ['id1', 'Trench', ['id2']],
+            ['id2', 'Feature', ['id3']],
+            ['id3', 'Find', []],
+        ]);
+        docs['id1'].resource.relations['liesWithin'] = ['idp2'];
 
-        const d2 = doc1('id2', 'identifierid2', 'Feature') as FieldDocument;
-        d2.resource.relations['isRecordedIn'] = ['id1'];
-        const d3 = doc1('id3', 'identifierid3', 'Find') as FieldDocument;
-        d3.resource.relations['isRecordedIn'] = ['id1'];
-        d3.resource.relations['liesWithin'] = ['id2'];
+        // TODO review createDocuments and helpers.createDocuments
+        docs['id2'].resource.relations['isRecordedIn'] = ['id1'];
+        docs['id3'].resource.relations['isRecordedIn'] = ['id1'];
+        
+        await helpers.createDocuments(docs);
 
         await app.datastore.create(p1, user);
         await app.datastore.create(p2, user);
-        await app.datastore.create(d1, user);
-        await app.datastore.create(d2, user);
-        await app.datastore.create(d3, user);
 
         const results = makeDocumentsLookup(await app.relationsManager.get('idp1', { descendants: true }));
         expect(results['idp1'].resource.id).toBe('idp1');

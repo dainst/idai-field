@@ -1,6 +1,6 @@
 import { Category, Document, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
-import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
+import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
 
 /**
@@ -43,11 +43,46 @@ export module ExportRunner {
      * @param selectedOperationId
      * @param categoriesList
      */
-    export async function determineCategoryCounts(find: Find,
+    export async function determineCategoryCounts(get: Get,
+                                                  find: Find,
                                                   selectedOperationId: string|undefined,
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
+
+        const selectedOperation = await get(selectedOperationId);
+        if (selectedOperation.resource.category !== 'Place') {
+            return await determineCategoryCountsForSelectedOperation(
+                find, selectedOperationId, categoriesList
+            );
+        }
+
+        const results = (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
+            .documents
+            .filter(doc => doc.resource.category !== 'Place')
+            .map(doc => doc.resource.id);
+
+        const counts = {};
+        for (const id of results) {
+            const localCounts = await determineCategoryCountsForSelectedOperation(
+                find, id, categoriesList
+            );
+            for (const [cat, cnt] of localCounts) {
+                if (!counts[cat.name]) {
+                    counts[cat.name] = [cat, cnt];
+                } else {
+                    counts[cat.name] = [cat, cnt + counts[cat.name][1]]
+                }
+            }
+        }
+
+        return Object.values(counts);
+    }
+
+
+    async function determineCategoryCountsForSelectedOperation(find: Find,
+                                                               selectedOperationId: string|undefined,
+                                                               categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         const categories = getCategoriesWithoutExcludedCategories(
             categoriesList,
@@ -64,6 +99,7 @@ export module ExportRunner {
         }
         return resourceCategoryCounts.filter(([_category, count]) => count > 0);
     }
+
 
 
     function determineCategoryCountsForSchema(categoriesList: Array<Category>) {

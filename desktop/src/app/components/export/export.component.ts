@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, Datastore, FieldDocument, Query, ProjectConfiguration,
-    RelationsManager, Labels, Document, Tree, Named} from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
+    Resource, ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -77,6 +77,8 @@ export class ExportComponent implements OnInit {
 
     public find = (query: Query) => this.datastore.find(query);
 
+    private get = (id: Resource.Id) => this.datastore.get(id);
+
     public showOperations = () => this.format === 'csv' ? this.csvExportMode === 'complete' : this.format !== 'catalog';
 
     public showCatalogs = () => this.format === 'catalog';
@@ -98,6 +100,7 @@ export class ExportComponent implements OnInit {
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
+            this.get,
             this.find,
             this.getOperationIdForMode(),
             Tree.flatten(this.projectConfiguration.getCategories())

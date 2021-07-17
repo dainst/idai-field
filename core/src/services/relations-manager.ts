@@ -212,12 +212,47 @@ export class RelationsManager {
     }
 
 
-    private async findDescendants(document: Document, skipDocuments = false,
+    private async findDescendants(document: Document,
+                                  skipDocuments = false,
                                   idsToSubtract?: string[]): Promise<FindIdsResult> {
 
+        if (this.projectConfiguration.isSubcategory(document.resource.category, 'Place')) {
+            return await this.findPlaceDocsIds(document.resource.id, idsToSubtract);
+        }
         return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
             ? await this.findRecordedInDocsIds(document.resource.id, skipDocuments, idsToSubtract)
             : await this.findLiesWithinDocs(document.resource.id, skipDocuments, idsToSubtract);
+    }
+
+
+    private async findPlaceDocsIds(resourceId: string,
+                                   idsToSubtract: string[]) {
+
+        const docs = (await this.findLiesWithinDocs(resourceId, false, idsToSubtract) as FindResult).documents;
+        const overviewDocs = [];
+        const nonPlaceDocs = [];
+        for (const doc of docs) {
+            overviewDocs.push(doc);
+            if (!this.projectConfiguration.isSubcategory(doc.resource.category, 'Place')) {
+                nonPlaceDocs.push(await this.findRecordedInDocsIds(doc.resource.id, false, []));
+            }
+        }
+        const overviewDocAsFindIdResults =
+            overviewDocs.map(doc => (
+                {
+                    totalCount: 1,
+                    documents: [doc],
+                    ids: [doc.resource.id]
+                }
+            ));
+        const findIdResults = nonPlaceDocs.concat(overviewDocAsFindIdResults);
+        return findIdResults.reduce((acc, val) => (
+            {
+                ids: acc.ids.concat(val.ids),
+                totalCount: acc.totalCount + val.totalCount,
+                documents: acc.documents.concat(val.documents)
+            }
+        ));
     }
 
 

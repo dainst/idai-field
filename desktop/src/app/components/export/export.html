@@ -48,7 +48,7 @@
                                for="operationSelect"
                                i18n="@@export.operationSelect.label">Maßnahme</label>
                         <select id="operationSelect" class="form-control"
-                                [(ngModel)]="selectedOperationId"
+                                [(ngModel)]="selectedOperationOrPlaceId"
                                 (change)="setCategoryCounts()">
                             <option value="project"
                                     i18n="@@export.operationSelect.all">Keine Einschränkung</option>

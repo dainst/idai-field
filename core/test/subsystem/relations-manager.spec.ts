@@ -1,12 +1,12 @@
 import {FieldDocument} from '../../src/model/field-document';
 import { createDocuments, doc1 } from '../test-helpers';
-import { createCoreApp, createHelpers, makeDocumentsLookup } from './subsystem-helper';
+import { CoreApp, createCoreApp, createHelpers, makeDocumentsLookup } from './subsystem-helper';
 
 
 describe('subsystem/relations-manager', () => {
 
     const user = 'testuser';
-    let app;
+    let app: CoreApp;
     let helpers;
 
     beforeEach(async done => {

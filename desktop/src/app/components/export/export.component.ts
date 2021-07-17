@@ -322,8 +322,6 @@ export class ExportComponent implements OnInit {
             .map(Named.toName)
             .filter(name => name !== 'Operation');
 
-        console.log(categories);
-
         try {
             return (await this.datastore.find({
                 categories: categories

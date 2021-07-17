@@ -230,11 +230,11 @@ export class RelationsManager {
 
         const docs = (await this.findLiesWithinDocs(resourceId, false, idsToSubtract) as FindResult).documents;
         const overviewDocs = [];
-        const nonPlaceDocs = [];
+        const recordedDocs = [];
         for (const doc of docs) {
             overviewDocs.push(doc);
             if (!this.projectConfiguration.isSubcategory(doc.resource.category, 'Place')) {
-                nonPlaceDocs.push(await this.findRecordedInDocsIds(doc.resource.id, false, []));
+                recordedDocs.push(await this.findRecordedInDocsIds(doc.resource.id, false, []));
             }
         }
         const overviewDocAsFindIdResults =
@@ -245,7 +245,7 @@ export class RelationsManager {
                     ids: [doc.resource.id]
                 }
             ));
-        const findIdResults = nonPlaceDocs.concat(overviewDocAsFindIdResults);
+        const findIdResults = recordedDocs.concat(overviewDocAsFindIdResults);
         return findIdResults.reduce((acc, val) => (
             {
                 ids: acc.ids.concat(val.ids),

@@ -94,8 +94,8 @@ export class ConnectedDocsWriter {
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
             [document], this.getRelationNames());
 
-        const liesWithinTargets = Resource.getRelationTargets(document.resource.relations, ['liesWithin']);
-        const recordedInTargets = Resource.getRelationTargets(document.resource.relations, ['isRecordedIn']);
+        const liesWithinTargets = Resource.getRelationTargets(document.resource, ['liesWithin']);
+        const recordedInTargets = Resource.getRelationTargets(document.resource, ['isRecordedIn']);
 
         return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
             if (liesWithinTargets.includes(id) || recordedInTargets.includes(id)) {
@@ -125,7 +125,7 @@ export class ConnectedDocsWriter {
     private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         const getAllRelationTargetsForDoc = (doc: Document): string[] =>
-            Resource.getRelationTargets(doc.resource.relations, allowedRelations);
+            Resource.getRelationTargets(doc.resource, allowedRelations);
 
         return flow(
             documents,

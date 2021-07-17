@@ -40,6 +40,7 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO allow also to pass in multiple Names and receive multiple Categories
     /**
      * @return Category, including children field
      */

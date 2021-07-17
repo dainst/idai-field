@@ -90,7 +90,7 @@ describe('Resource', () => {
     it('removeEmpty', () => {
 
         const relations = { 'a': [], 'b': null, 'c': ['value'] };
-        Resource.removeEmptyRelations(relations);
+        Resource.removeEmptyRelations({ relations: relations } as any);
 
         expect(relations).toEqual({ 'c': ['value'] } as any);
     });

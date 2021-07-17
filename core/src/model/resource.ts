@@ -2,7 +2,6 @@ import { set, same, sameset, samemap, isnt, includedIn, flatMap, remove, isUndef
 import { Name } from '../tools/named';
 import { ObjectUtils } from '../tools/object-utils';
 import { NewResource } from './new-resource';
-import { Relations } from './relations';
 
 
 export interface Resource extends NewResource {
@@ -58,24 +57,24 @@ export module Resource {
     }
 
 
-    export function getRelationTargets(relations: Relations, allowedRelations?: Array<Name>): Array<Id> {
+    export function getRelationTargets(resource: Resource, allowedRelations?: Array<Name>): Array<Id> {
 
-        const ownKeys = Object.keys(relations)
-            .filter(prop => relations.hasOwnProperty(prop));
+        const ownKeys = Object.keys(resource.relations)
+            .filter(prop => resource.relations.hasOwnProperty(prop));
 
         const usableRelations = allowedRelations
             ? ownKeys.filter(includedIn(allowedRelations))
             : ownKeys;
 
-        return flatMap(usableRelations, (prop: string) => relations[prop as string]);
+        return flatMap(usableRelations, (prop: string) => resource.relations[prop as string]);
     }
 
 
-    export function removeEmptyRelations(relations: Relations) {
+    export function removeEmptyRelations(resource: Resource) {
 
-        Object.keys(relations)
-            .filter(key => relations[key] === null || relations[key].length === 0)
-            .forEach(key => delete relations[key]);
+        Object.keys(resource.relations)
+            .filter(key => resource.relations[key] === null || resource.relations[key].length === 0)
+            .forEach(key => delete resource.relations[key]);
     }
 
 

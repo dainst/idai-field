@@ -70,7 +70,6 @@ export function makeSureRelationStructuresExists(documents: Array<Document>) {
 }
 
 
-
 /**
  * Converts identifiers in relations to ids, if useIdentifiersInRelations is true.
  * Converts PARENT relations to LIES_WITHIN.
@@ -95,7 +94,7 @@ export async function preprocessRelations(documents: Array<Document>,
 
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier); // TODO do in makeSureRelationStructuresExist; rename that one
-        if (!permitDeletions) Resource.removeEmptyRelations(relations);
+        if (!permitDeletions) Resource.removeEmptyRelations(document.resource);
         if (useIdentifiersInRelations) {
             await rewriteIdentifiersInRelations(relations, helpers.find, identifierMap);
         } else {

@@ -17,17 +17,13 @@ import {
     to,
     not
 } from 'tsfun';
-import { InverseRelationsMap } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith } from '../utils';
 import { setInverseRelationsForDbResources } from './set-inverse-relations-for-db-resources';
-import IS_BELOW = Relation.Position.BELOW;
-import IS_ABOVE = Relation.Position.ABOVE;
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import IS_AFTER = Relation.Time.AFTER;
 import IS_BEFORE = Relation.Time.BEFORE;
-import SAME_AS = Relation.SAME_AS;
 
 
 /**
@@ -60,7 +56,7 @@ import SAME_AS = Relation.SAME_AS;
  */
 export function completeInverseRelations(documentsLookup: Lookup<Document>,
                                          targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
-                                         inverseRelationsMap: InverseRelationsMap,
+                                         inverseRelationsMap: Relation.InverseRelationsMap,
                                          assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                          mergeMode: boolean = false): Array<Document> {
 
@@ -83,7 +79,7 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
 
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
                                                documentsLookup: { [_: string]: Document },
-                                               inverseRelationsMap: InverseRelationsMap,
+                                               inverseRelationsMap: Relation.InverseRelationsMap,
                                                assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {

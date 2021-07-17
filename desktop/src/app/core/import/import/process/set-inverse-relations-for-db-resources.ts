@@ -1,7 +1,6 @@
 import { Lookup, ResourceId, updateRelations } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { Document, Relation } from 'idai-field-core';
 import { includedIn, is, isNot, keysValues, on } from 'tsfun';
-import { InverseRelationsMap } from 'idai-field-core';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith, unionOfDocuments } from '../utils';
 
@@ -22,7 +21,7 @@ import { assertInSameOperationWith, unionOfDocuments } from '../utils';
 export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
         targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
-        inverseRelationsMap: InverseRelationsMap,
+        inverseRelationsMap: Relation.InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Array<Document> {
 

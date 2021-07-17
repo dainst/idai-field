@@ -13,7 +13,6 @@ import {ImportErrors as E} from '../import-errors';
 import {Get, Id} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
-import {InverseRelationsMap} from 'idai-field-core';
 import {makeLookups} from './make-lookups';
 import {inferRecordedIns} from './infer-recorded-ins';
 import RECORDEDIN = Relation.Hierarchy.RECORDEDIN;
@@ -50,7 +49,7 @@ import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[],
                                        get: Get,
-                                       inverseRelationsMap: InverseRelationsMap,
+                                       inverseRelationsMap: Relation.InverseRelationsMap,
                                        { mergeMode, operationId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>

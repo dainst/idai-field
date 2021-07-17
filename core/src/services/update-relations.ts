@@ -79,9 +79,9 @@ function pruneInverseRelations(relations: Relations,
 
 
 function setInverseRelations(target: Resource, 
-                            resource: Resource,
-                            getInverse: (_: string) => string|undefined,
-                            hasInverseRelation: Predicate<string>) {
+                             resource: Resource,
+                             getInverse: (_: string) => string|undefined,
+                             hasInverseRelation: Predicate<string>) {
 
     flow(
         keys(resource.relations),

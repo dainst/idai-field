@@ -41,7 +41,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.1",
-    "tsfun": "5.5.16",
+    "tsfun": "5.5.37",
     "typescript": "3.8.3"
   },
   "scripts": {

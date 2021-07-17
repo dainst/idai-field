@@ -1,5 +1,4 @@
-import { set, same, sameset, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
-import { samemap } from 'tsfun/src/comparator'; // TODO review why this is not exported properly
+import { set, same, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
 import { Name } from '../tools/named';
 import { ObjectUtils } from '../tools/object-utils';
 import { NewResource } from './new-resource';

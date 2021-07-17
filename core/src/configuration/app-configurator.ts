@@ -13,7 +13,8 @@ export class AppConfigurator {
     constructor(private configLoader: ConfigLoader) {}
 
 
-    public async go(username: string, customConfigurationName: string|undefined,
+    public async go(username: string, 
+                    customConfigurationName: string|undefined,
                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         const builtInConfiguration: BuiltInConfiguration = new BuiltInConfiguration(customConfigurationName);

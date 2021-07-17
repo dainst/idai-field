@@ -52,6 +52,14 @@ export const doc = (sd, identifier?, category?, id?): Document => {
 };
 
 
+
+export const doc1 = (id, identifier, category): Document => {
+
+    return doc('', identifier, category, id);
+};
+
+
+
 /**
  * Document templates.
  *

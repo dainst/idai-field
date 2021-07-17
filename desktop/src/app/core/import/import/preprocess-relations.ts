@@ -1,5 +1,5 @@
 import { RESOURCE_DOT_ID } from 'idai-field-core';
-import { Document, Relations, Relation } from 'idai-field-core';
+import { Document, Relations, Relation, Resource } from 'idai-field-core';
 import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on, isObject } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportContext, ImportHelpers, ImportOptions } from './import-documents';
@@ -95,7 +95,7 @@ export async function preprocessRelations(documents: Array<Document>,
 
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier); // TODO do in makeSureRelationStructuresExist; rename that one
-        if (!permitDeletions) Relations.removeEmpty(relations);
+        if (!permitDeletions) Resource.removeEmptyRelations(relations);
         if (useIdentifiersInRelations) {
             await rewriteIdentifiersInRelations(relations, helpers.find, identifierMap);
         } else {

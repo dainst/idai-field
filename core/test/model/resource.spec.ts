@@ -3,9 +3,11 @@ import { Resource } from "../../src/model/resource";
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('Resource', () => {
 
+    /*
     it('compare', () => {
 
         expect(Resource.compare('field1', 'field1')).toBe(true);
@@ -32,5 +34,82 @@ describe('Resource', () => {
         expect(Resource.compare('field1', { field: 'value' })).toBe(false);
         expect(Resource.compare('field1', ['value1', 'value2'])).toBe(false);
         expect(Resource.compare({ field: 'value' }, ['value1', 'value2'])).toBe(false);
+    });
+    */
+
+
+    it('getDifferent - different order in relation', () => {
+
+        const rels1 = { a: ['1', '3', '7'] };
+        const rels2 = { a: ['7', '1', '3'] };
+
+        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
+        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+    });
+
+
+    it('getDifferent - one relation array has less elements', () => {
+
+        const rels1 = { a: ['1', '3', '7'] };
+        const rels2 = { a: ['1', '3'] };
+
+        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
+        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+    });
+
+
+    it('getDifferent - keys in different order', () => {
+
+        const rels1 = { a: ['1'], b: ['1'] };
+        const rels2 = { b: ['1'], a: ['1'] };
+
+        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual([]);
+        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual([]);
+    });
+
+
+    it('getDifferent - one relation array is missing', () => {
+
+        const rels1 = { a: ['1'] };
+        const rels2 = {};
+
+        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
+        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+    });
+
+
+    it('getDifferent - empty relations', () => {
+
+        const rels1 = {};
+        const rels2 = {};
+
+        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual([]);
+    });
+
+
+    it('removeEmpty', () => {
+
+        const relations = { 'a': [], 'b': null, 'c': ['value'] };
+        Resource.removeEmptyRelations(relations);
+
+        expect(relations).toEqual({ 'c': ['value'] } as any);
+    });
+
+
+    it('equivalent', () => {
+
+        const relA = { a: ['1', '2'], b: ['1', '2'] };
+        const relB = { b: ['2', '1'], a: ['2', '1'] };
+        
+        expect(Resource.relationsEquivalent(relA)(relB)).toBeTruthy();
+    });
+
+
+    it('equivalent - undefined or empty', () => {
+
+        const relA = { a: undefined };
+        const relB = { a: []};
+
+        expect(Resource.relationsEquivalent(relA)(relB)).toBeTruthy();
     });
 });

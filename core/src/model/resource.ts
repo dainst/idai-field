@@ -1,6 +1,9 @@
-import {set, sameset, isnt} from 'tsfun';
+import { set, same, sameset, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
+import { samemap } from 'tsfun/src/comparator'; // TODO review why this is not exported properly
+import { Name } from '../tools/named';
 import { ObjectUtils } from '../tools/object-utils';
-import {NewResource} from './new-resource';
+import { NewResource } from './new-resource';
+import { Relations } from './relations';
 
 
 export interface Resource extends NewResource {
@@ -32,38 +35,68 @@ export module Resource {
     }
 
 
-    export function hasRelations(resource: Resource, relationName: string): boolean {
+    export function getDifferingRelations(relations1: Relations, relations2: Relations): Name[] {
 
-        return resource.relations[relationName] && resource.relations[relationName].length > 0;
+        const differingRelationNames: Name[]
+            = findDifferingFieldsInRelations(relations1, relations2)
+                .concat(findDifferingFieldsInRelations(relations2, relations1));
+
+        return set(differingRelationNames);
     }
 
 
-    export function hasRelationTarget(resource: Resource, relationName: string, targetId: string): boolean {
+    export function hasRelations(resource: Resource, relation: Name): boolean {
 
-        if (!resource.relations[relationName]) return false;
-        return resource.relations[relationName].indexOf(targetId) > -1;
+        return resource.relations[relation] && resource.relations[relation].length > 0;
     }
 
 
-    function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
+    export function hasRelationTarget(resource: Resource, relation: Name, target: Id): boolean {
 
-        return Object.keys(resource1)
-            .filter(isnt('relations'))
+        if (!resource.relations[relation]) return false;
+        return resource.relations[relation].indexOf(target) > -1;
+    }
+
+
+    export function getRelationTargets(relations: Relations, allowedRelations?: Array<Name>): Array<Id> {
+
+        const ownKeys = Object.keys(relations)
+            .filter(prop => relations.hasOwnProperty(prop));
+
+        const usableRelations = allowedRelations
+            ? ownKeys.filter(includedIn(allowedRelations))
+            : ownKeys;
+
+        return flatMap(usableRelations, (prop: string) => relations[prop as string]);
+    }
+
+
+    export function removeEmptyRelations(relations: Relations) {
+
+        Object.keys(relations)
+            .filter(key => relations[key] === null || relations[key].length === 0)
+            .forEach(key => delete relations[key]);
+    }
+
+
+    function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {
+
+        return Object.keys(relations1)
             .reduce(
-                concatIf(notCompareInBoth(resource1, resource2)),
-                [] as string[]
+                concatIf(notBothEqual(relations1, relations2)),
+                []
             );
     }
 
 
-    const notCompareInBoth = (l: any, r: any) => (key: string) => !compare((l)[key], (r)[key]);
+    export const relationsEquivalent = (r1: Relations) => (r2: Relations) => // Comparator, provide as lambda
+        samemap(sameset,
+            remove(isUndefinedOrEmpty, r1),
+            remove(isUndefinedOrEmpty, r2));
 
 
-    export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
-        f(val) ? acc.concat([val as string]) : acc;
-
-
-    export function compare(value1: any, value2: any): boolean {
+    // TODO review; tests; maybe test getDifferingFields instead
+    function compare(value1: any, value2: any): boolean {
 
         if (value1 === undefined && value2 === undefined) return true;
         if ((value1 && !value2) || (!value1 && value2)) return false;
@@ -81,6 +114,24 @@ export module Resource {
     }
 
 
+    const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+        f(val) ? acc.concat([val as string]) : acc;
+
+    
+    function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
+
+        return Object.keys(resource1)
+            .filter(isnt(RELATIONS))
+            .reduce(
+                concatIf(notCompareInBoth(resource1, resource2)),
+                [] as string[]
+            );
+    }
+
+
+    const notCompareInBoth = (l: any, r: any) => (key: string) => !compare((l)[key], (r)[key]);
+
+
     function getType(value: any): string {
 
         return typeof value === 'object'
@@ -89,4 +140,7 @@ export module Resource {
                 : 'object'
             : 'flat';
     }
+
+    
+    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !same(l[key], r[key]);
 }

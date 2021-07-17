@@ -208,7 +208,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         const differingFieldsNames: string[]
             = Resource.getDifferingFields(document.resource, revision.resource);
         const differingRelationsNames: string[]
-            = Relations.getDifferent(document.resource.relations, revision.resource.relations);
+            = Resource.getDifferingRelations(document.resource.relations, revision.resource.relations);
 
         for (let fieldName of differingFieldsNames) {
             let type: string;

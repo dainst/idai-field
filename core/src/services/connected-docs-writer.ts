@@ -1,6 +1,6 @@
 import { flatMap, flow, subtract } from 'tsfun';
 import { Document, toResourceId  } from '../model/document';
-import { Relations } from '../model/relations';
+import { Resource } from '../model/resource';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './update-relations';
 import { Name, Named } from '../tools/named';
@@ -94,8 +94,8 @@ export class ConnectedDocsWriter {
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
             [document], this.getRelationNames());
 
-        const liesWithinTargets = Relations.getAllTargets(document.resource.relations, ['liesWithin']);
-        const recordedInTargets = Relations.getAllTargets(document.resource.relations, ['isRecordedIn']);
+        const liesWithinTargets = Resource.getRelationTargets(document.resource.relations, ['liesWithin']);
+        const recordedInTargets = Resource.getRelationTargets(document.resource.relations, ['isRecordedIn']);
 
         return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
             if (liesWithinTargets.includes(id) || recordedInTargets.includes(id)) {
@@ -125,7 +125,7 @@ export class ConnectedDocsWriter {
     private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         const getAllRelationTargetsForDoc = (doc: Document): string[] =>
-            Relations.getAllTargets(doc.resource.relations, allowedRelations);
+            Resource.getRelationTargets(doc.resource.relations, allowedRelations);
 
         return flow(
             documents,

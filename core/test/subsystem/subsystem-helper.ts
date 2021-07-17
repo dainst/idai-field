@@ -12,7 +12,7 @@ import {IndexFacade} from '../../src/index/index-facade';
 import {Tree} from '../../src/tools/forest';
 import {Lookup, makeLookup, Name} from '../../src/tools';
 import {RelationsManager} from '../../src/model';
-import {createDocuments, NiceDocs} from '../test-helpers';
+import {createDocuments, makeExpectDocuments, NiceDocs} from '../test-helpers';
 
 import PouchDB = require('pouchdb-node');
 
@@ -104,11 +104,12 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
 
 export function createHelpers(app: CoreApp, user: Name = 'testuser') {
 
-    const createDocuments = makeCreateDocuments(
-        app.datastore, user);
+    const createDocuments = makeCreateDocuments(app.datastore, user);
+    const expectDocuments = makeExpectDocuments(app.datastore);
 
     return {
-        createDocuments
+        createDocuments,
+        expectDocuments
     }
 }
 

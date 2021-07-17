@@ -1,6 +1,6 @@
 import {FieldDocument} from '../../src/model/field-document';
 import { createDocuments, doc1 } from '../test-helpers';
-import { CoreApp, createCoreApp, createHelpers, makeDocumentsLookup } from './subsystem-helper';
+import { CoreApp, createCoreApp, createHelpers } from './subsystem-helper';
 
 
 describe('subsystem/relations-manager', () => {
@@ -52,12 +52,7 @@ describe('subsystem/relations-manager', () => {
         await app.datastore.create(p1, user);
         await app.datastore.create(p2, user);
 
-        const results = makeDocumentsLookup(await app.relationsManager.get('idp1', { descendants: true }));
-        expect(results['idp1'].resource.id).toBe('idp1');
-        expect(results['idp2'].resource.id).toBe('idp2');
-        expect(results['id1'].resource.id).toBe('id1');
-        expect(results['id2'].resource.id).toBe('id2');
-        expect(results['id3'].resource.id).toBe('id3');
+        await helpers.expectDocuments('idp1', 'idp2', 'id1', 'id2', 'id3');
         done();
     });
 });

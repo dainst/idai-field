@@ -1,6 +1,8 @@
+import {sameset} from 'tsfun/src/comparator';
 import { ResourceId } from '../src/constants';
+import {Datastore} from '../src/datastore/datastore';
 import { Category, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
-import { Document } from '../src/model/document';
+import { Document, toResourceId } from '../src/model/document';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
 
@@ -127,3 +129,13 @@ export const createCategory = (name: string): Tree<Category> => ({
     },
     trees: []
 });
+
+
+export function makeExpectDocuments(datastore: Datastore) {
+
+    return async function expectDocuments(...resourceIds: string[]) {
+
+        const documents = (await datastore.find({})).documents;
+        expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
+    }
+}

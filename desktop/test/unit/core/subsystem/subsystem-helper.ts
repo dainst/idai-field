@@ -1,7 +1,7 @@
 import { sameset } from 'tsfun';
 import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, ResourceId,
-    SyncService, toResourceId } from 'idai-field-core';
+    SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -22,6 +22,7 @@ import { IndexerConfiguration } from '../../../../src/app/indexer-configuration'
 import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
 
 import PouchDB = require('pouchdb-node');
+import {makeExpectDocuments} from '../../../../../core/test/test-helpers';
 
 const fs = require('fs');
 
@@ -326,15 +327,6 @@ function makeUpdateDocument(datastore: Datastore, username: string) {
         const oldDocument = await datastore.get(id);
         callback(oldDocument);
         await datastore.update(oldDocument, username);
-    }
-}
-
-function makeExpectDocuments(datastore: Datastore) {
-
-    return async function expectDocuments(...resourceIds: string[]) {
-
-        const documents = (await datastore.find({})).documents;
-        expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
     }
 }
 

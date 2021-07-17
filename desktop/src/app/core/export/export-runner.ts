@@ -17,7 +17,8 @@ export module ExportRunner {
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
-    export async function performExport(find: Find, selectedOperationId: string|undefined,
+    export async function performExport(find: Find,
+                                        selectedOperationId: string|undefined,
                                         selectedCategory: Category, relations: string[],
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
@@ -49,21 +50,23 @@ export module ExportRunner {
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
+        if (selectedOperationId === 'project') return determineCategoryCountsForSelectedOperation(
+            find, selectedOperationId, categoriesList
+        );
 
-        const selectedOperation = await get(selectedOperationId);
-        if (selectedOperation.resource.category !== 'Place') {
-            return await determineCategoryCountsForSelectedOperation(
-                find, selectedOperationId, categoriesList
-            );
-        }
+        return determineCategoryCountsForMultipleOperations(
+            get, find, selectedOperationId, categoriesList
+        );
+    }
 
-        const results = (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
-            .documents
-            .filter(doc => doc.resource.category !== 'Place')
-            .map(doc => doc.resource.id);
+
+    async function determineCategoryCountsForMultipleOperations(get: Get,
+                                                                find: Find,
+                                                                selectedOperationId: string,
+                                                                categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         const counts = {};
-        for (const id of results) {
+        for (const id of (await getOperationIds(get, find, selectedOperationId))) {
             const localCounts = await determineCategoryCountsForSelectedOperation(
                 find, id, categoriesList
             );
@@ -100,6 +103,20 @@ export module ExportRunner {
         return resourceCategoryCounts.filter(([_category, count]) => count > 0);
     }
 
+
+
+    async function getOperationIds(get: Get,
+                                   find: Find,
+                                   selectedOperationId: string) {
+
+        const selectedOperation = await get(selectedOperationId);
+        return selectedOperation.resource.category !== 'Place'
+            ? selectedOperationId
+            : (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
+                .documents
+                .filter(doc => doc.resource.category !== 'Place')
+                .map(doc => doc.resource.id);
+    }
 
 
     function determineCategoryCountsForSchema(categoriesList: Array<Category>) {

@@ -1,3 +1,5 @@
+import {sameset} from 'tsfun';
+import {toResourceId} from '../../src/model';
 import {FieldDocument} from '../../src/model/field-document';
 import { createDocuments, doc1 } from '../test-helpers';
 import { CoreApp, createCoreApp, createHelpers } from './subsystem-helper';
@@ -39,9 +41,10 @@ describe('subsystem/relations-manager', () => {
             ['id3', 'Find', []],
         ]);
 
-        await helpers.expectDocuments('idp1', 'idp2', 'id1', 'id2', 'id3');
-
-        // TODO app.relationsManager.get('idp1', { }) with descendants
+        const results = await app.relationsManager.get('idp1', { descendants: true });
+        expect(sameset(['idp1', 'idp2', 'id1', 'id2', 'id3'], results.map(toResourceId))).toBeTruthy();
+        const results2 = await app.relationsManager.get('idp1', { descendants: true, toplevel: false });
+        expect(sameset(['idp2', 'id1', 'id2', 'id3'], results2.map(toResourceId))).toBeTruthy();
         done();
     });
 });

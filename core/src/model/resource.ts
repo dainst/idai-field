@@ -34,11 +34,12 @@ export module Resource {
     }
 
 
-    export function getDifferingRelations(relations1: Relations, relations2: Relations): Name[] {
+    export function getDifferingRelations(resource1: Resource, resource2: Resource): Name[] {
 
         const differingRelationNames: Name[]
-            = findDifferingFieldsInRelations(relations1, relations2)
-                .concat(findDifferingFieldsInRelations(relations2, relations1));
+            = findDifferingFieldsInRelations(resource1.relations, resource2.relations)
+                .concat(findDifferingFieldsInRelations(resource2.relations, resource1.relations));
+
 
         return set(differingRelationNames);
     }
@@ -88,7 +89,7 @@ export module Resource {
     }
 
 
-    export const relationsEquivalent = (r1: Resource) => (r2: Resource) => // Comparator, provide as lambda
+    export const relationsEquivalent = (r1: Resource) => (r2: Resource) =>
         samemap(sameset,
             remove(isUndefinedOrEmpty, r1.relations),
             remove(isUndefinedOrEmpty, r2.relations));

@@ -43,8 +43,8 @@ describe('Resource', () => {
         const rels1 = { a: ['1', '3', '7'] };
         const rels2 = { a: ['7', '1', '3'] };
 
-        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
-        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels1 } as any, { relations: rels2 } as any)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels2 } as any, { relations: rels1 } as any)).toEqual(['a']);
     });
 
 
@@ -53,8 +53,8 @@ describe('Resource', () => {
         const rels1 = { a: ['1', '3', '7'] };
         const rels2 = { a: ['1', '3'] };
 
-        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
-        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels1 } as any, { relations: rels2 } as any)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels2 } as any, { relations: rels1 } as any)).toEqual(['a']);
     });
 
 
@@ -63,8 +63,8 @@ describe('Resource', () => {
         const rels1 = { a: ['1'], b: ['1'] };
         const rels2 = { b: ['1'], a: ['1'] };
 
-        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual([]);
-        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual([]);
+        expect(Resource.getDifferingRelations({ relations: rels1 } as any, { relations: rels2 } as any)).toEqual([]);
+        expect(Resource.getDifferingRelations({ relations: rels2 } as any, { relations: rels1 } as any)).toEqual([]);
     });
 
 
@@ -73,8 +73,8 @@ describe('Resource', () => {
         const rels1 = { a: ['1'] };
         const rels2 = {};
 
-        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual(['a']);
-        expect(Resource.getDifferingRelations(rels2, rels1)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels1 } as any, { relations: rels2 } as any)).toEqual(['a']);
+        expect(Resource.getDifferingRelations({ relations: rels2 } as any, { relations: rels1 } as any)).toEqual(['a']);
     });
 
 
@@ -83,7 +83,7 @@ describe('Resource', () => {
         const rels1 = {};
         const rels2 = {};
 
-        expect(Resource.getDifferingRelations(rels1, rels2)).toEqual([]);
+        expect(Resource.getDifferingRelations({ relations: rels1 } as any, { relations: rels2 } as any)).toEqual([]);
     });
 
 

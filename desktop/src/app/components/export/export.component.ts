@@ -43,7 +43,7 @@ export class ExportComponent implements OnInit {
 
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: Category|undefined = undefined;
-    public selectedOperationId: string = 'project';
+    public selectedOperationOrPlaceId: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
@@ -86,7 +86,7 @@ export class ExportComponent implements OnInit {
 
         this.initializing = true;
 
-        this.operations = await this.fetchOperations();
+        this.operations = await this.fetchOperationsAndPlaces();
         this.catalogs = await this.fetchCatalogs();
         if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
         await this.setCategoryCounts();
@@ -127,7 +127,7 @@ export class ExportComponent implements OnInit {
 
     private getOperationIdForMode() {
 
-        return this.csvExportMode === 'complete' ? this.selectedOperationId : undefined;
+        return this.csvExportMode === 'complete' ? this.selectedOperationOrPlaceId : undefined;
     }
 
 
@@ -188,7 +188,7 @@ export class ExportComponent implements OnInit {
         await GeoJsonExporter.performExport(
             this.datastore,
             filePath,
-            this.selectedOperationId
+            this.selectedOperationOrPlaceId
         );
     }
 
@@ -199,7 +199,7 @@ export class ExportComponent implements OnInit {
             this.settingsProvider.getSettings(),
             await this.datastore.get('project'),
             filePath,
-            this.selectedOperationId
+            this.selectedOperationOrPlaceId
         );
     }
 
@@ -315,11 +315,18 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private async fetchOperations(): Promise<Array<FieldDocument>> {
+    private async fetchOperationsAndPlaces(): Promise<Array<FieldDocument>> {
+
+
+        const categories = this.projectConfiguration.getOverviewCategories()
+            .map(Named.toName)
+            .filter(name => name !== 'Operation');
+
+        console.log(categories);
 
         try {
             return (await this.datastore.find({
-                categories: this.projectConfiguration.getOperationCategories().map(Named.toName)
+                categories: categories
             })).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

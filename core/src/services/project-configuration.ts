@@ -189,22 +189,13 @@ export class ProjectConfiguration {
     }
 
 
-    /**
-     * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
-     * which has the given range category & name
-     */
-    public isAllowedRelationDomainCategory(domainCategoryName: string, 
-                                           rangeCategoryName: string,
-                                           relationName: string): boolean {
+    public isAllowedRelationDomainCategory(domainCategory: Name, 
+                                           rangeCategory: Name,
+                                           relation: Name): boolean {
 
-        const relationDefinitions = this.getRelationsForRangeCategory(rangeCategoryName);
-
-        for (let relationDefinition of relationDefinitions) {
-            if (relationName === relationDefinition.name
-                && relationDefinition.domain.indexOf(domainCategoryName) > -1) return true;
-        }
-
-        return false;
+        return Relation.isAllowedRelationDomainCategory(
+            this.relations, domainCategory, rangeCategory, relation
+        );
     }
 
 
@@ -213,10 +204,10 @@ export class ProjectConfiguration {
 
         return Tree.flatten(this.categories)
             .filter(category => {
-                return this.isAllowedRelationDomainCategory(
-                    category.name, rangeCategoryName, relationName
-                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
-                    category.parentCategory.name, rangeCategoryName, relationName
+                return Relation.isAllowedRelationDomainCategory(
+                    this.relations, category.name, rangeCategoryName, relationName
+                ) && (!category.parentCategory || !Relation.isAllowedRelationDomainCategory(
+                    this.relations, category.parentCategory.name, rangeCategoryName, relationName
                 ));
             });
     }
@@ -227,10 +218,10 @@ export class ProjectConfiguration {
 
         return Tree.flatten(this.categories)
             .filter(category => {
-                return this.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.name, relationName
-                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.parentCategory.name, relationName
+                return Relation.isAllowedRelationDomainCategory(
+                    this.relations, domainCategoryName, category.name, relationName
+                ) && (!category.parentCategory || !Relation.isAllowedRelationDomainCategory(
+                    this.relations, domainCategoryName, category.parentCategory.name, relationName
                 ));
             });
     }

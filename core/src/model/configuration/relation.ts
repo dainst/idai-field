@@ -1,3 +1,4 @@
+import {Name} from '../../tools/named';
 import { Field } from './field';
 
 
@@ -97,6 +98,26 @@ export namespace Relation {
 
 
     export const UNIDIRECTIONAL = Hierarchy.ALL;
+
+
+    /**
+     * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
+     * which has the given range category & name
+     */
+     export function isAllowedRelationDomainCategory(relations: Array<Relation>,
+                                                     domainCategory: Name, 
+                                                     rangeCategory: Name,
+                                                     relation: Name): boolean {
+
+        const relationDefinitions = getRelations(relations, rangeCategory, true);
+
+        for (let relationDefinition of relationDefinitions) {
+        if (relation === relationDefinition.name
+            && relationDefinition.domain.indexOf(domainCategory) > -1) return true;
+        }
+
+        return false;
+    }
 
 
     export function getRelations(relations: Array<Relation>,

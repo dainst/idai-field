@@ -1,15 +1,28 @@
-import {ImageRelations} from './image-relations';
 import {ImageResourceBase} from './image-resource-base';
 import {NewResource, Resource} from './resource';
 
 
+
+
 export interface NewImageResource extends NewResource, ImageResourceBase {
 
-    relations: ImageRelations;
+    
+
+    relations: ImageResource.Relations;
 }
 
 
 export interface ImageResource extends Resource, ImageResourceBase {
 
-    relations: ImageRelations;
+    
+    relations: ImageResource.Relations;
+}
+
+
+export namespace ImageResource {
+
+    export interface Relations extends Resource.Relations {
+
+        depicts: string[];
+    }
 }

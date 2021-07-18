@@ -1,7 +1,6 @@
 import { set, same, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
 import { Name } from '../tools/named';
 import { ObjectUtils } from '../tools/object-utils';
-import {Relations} from './relations';
 
 
 export interface NewResource {
@@ -9,7 +8,7 @@ export interface NewResource {
     id?: string;
     identifier: string;
     category: string;
-    relations: Relations;
+    relations: Resource.Relations;
     [propName: string]: any;
 }
 
@@ -25,6 +24,11 @@ export interface Resource extends NewResource {
 export module Resource {
 
     export type Id = string;
+
+    export interface Relations {
+        [propName: string]: string[];
+    }
+
     export const ID = 'id';
     export const CATEGORY = 'category';
     export const IDENTIFIER = 'identifier';

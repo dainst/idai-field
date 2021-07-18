@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, Datastore, FieldDocument, Name, Named, Tree } from 'idai-field-core';
+import { Category, Datastore, Resource, FieldDocument, Name, Named, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Relations } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../core/resources/view/view-facade';
 import { M } from '../messages/m';
@@ -175,9 +174,9 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private createRelations(): Relations {
+    private createRelations(): Resource.Relations {
 
-        const relations: Relations = {};
+        const relations: Resource.Relations = {};
         relations['isRecordedIn'] = this.isRecordedIn
             ? [this.isRecordedIn.resource.id]
             : [];

@@ -1,4 +1,4 @@
-import { Associative, detach, identity, isArray, isDefined, Map, Pair } from 'tsfun';
+import { Associative, detach, isArray, isDefined, Map, Pair } from 'tsfun';
 import { Named } from './named';
 
 

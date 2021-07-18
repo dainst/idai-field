@@ -1,5 +1,5 @@
 import { RESOURCE_DOT_ID } from 'idai-field-core';
-import { Document, Relations, Relation, Resource } from 'idai-field-core';
+import { Document, Relation, Resource } from 'idai-field-core';
 import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on, isObject } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportContext, ImportHelpers, ImportOptions } from './import-documents';
@@ -104,7 +104,7 @@ export async function preprocessRelations(documents: Array<Document>,
 }
 
 
-async function rewriteIdentifiersInRelations(relations: Relations,
+async function rewriteIdentifiersInRelations(relations: Resource.Relations,
                                              find: Find,
                                              identifierMap: IdentifierMap) {
 
@@ -120,7 +120,7 @@ async function rewriteIdentifiersInRelations(relations: Relations,
 }
 
 
-async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
+async function assertNoMissingRelationTargets(relations: Resource.Relations, get: Get) {
 
     return iterateRelationsInImport(relations,
         async (_: never, id: Id, __: never) => {
@@ -144,7 +144,7 @@ function assignIds(documents: Array<Document>,
 }
 
 
-function adjustRelations(document: Document, relations: Relations) {
+function adjustRelations(document: Document, relations: Resource.Relations) {
 
     assertHasNoHierarchicalRelations(document);
     const assertIsntArrayRelation = assertIsNotArrayRelation(document);
@@ -190,7 +190,7 @@ function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
 }
 
 
-function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
+function removeSelfReferencingIdentifiers(relations: Resource.Relations, resourceIdentifier: Identifier) {
 
     for (let relName of Object.keys(relations)) {
         if (relations[relName] === null) continue;

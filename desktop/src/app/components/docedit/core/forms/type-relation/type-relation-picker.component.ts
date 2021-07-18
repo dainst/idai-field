@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
-    ProjectConfiguration, Query, Relations, Resource, Relation, ValuelistUtil } from 'idai-field-core';
+    ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';

@@ -1,7 +1,7 @@
 import {
     Lookup, ResourceId,
 } from 'idai-field-core';
-import { Document, Relation, Relations } from 'idai-field-core';
+import { Document, Relation, Resource } from 'idai-field-core';
 import {
     isEmpty,
     filter,
@@ -158,7 +158,7 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
 
 function setInverse(resourceId: string, inverseRelationName: string) {
 
-    return (targetDocumentRelations: Relations) => {
+    return (targetDocumentRelations: Resource.Relations) => {
 
         if (isUndefinedOrEmpty(targetDocumentRelations[inverseRelationName])) {
             targetDocumentRelations[inverseRelationName] = [];

@@ -2,7 +2,6 @@ import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt,
     Pair, pairWith, Predicate, remove, to, update, values, zip, reduce, assoc, keys } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
-import { Relations } from '../model/relations'
 import { Name } from '../tools';
 import { Relation } from '../model/configuration/relation';
 
@@ -24,7 +23,8 @@ import { Relation } from '../model/configuration/relation';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function updateRelations(document: Document, targetDocuments: Array<Document>,
+export function updateRelations(document: Document, 
+                                targetDocuments: Array<Document>,
                                 inverseRelationsMap: Relation.InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
@@ -62,7 +62,7 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
  * ->
  * { b: ['7'] }
  */
-function pruneInverseRelations(relations: Relations,
+function pruneInverseRelations(relations: Resource.Relations,
                                resourceId: string,
                                setInverses: boolean,
                                hasInverseRelation: Predicate<String>) {

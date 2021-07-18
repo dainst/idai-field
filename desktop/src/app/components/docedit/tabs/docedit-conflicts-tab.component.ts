@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document, Datastore, Relations, Resource, Labels, Category } from 'idai-field-core';
+import { Document, Datastore, Resource, Labels, Category } from 'idai-field-core';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../messages/m';

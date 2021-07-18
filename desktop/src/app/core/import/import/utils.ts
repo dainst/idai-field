@@ -1,4 +1,4 @@
-import { Document, Lookup, Relation, Relations } from 'idai-field-core';
+import { Document, Lookup, Relation, Resource } from 'idai-field-core';
 import { aMap, same, on, isUndefinedOrEmpty, union } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportErrors as E } from './import-errors';
@@ -28,7 +28,7 @@ export function assertInSameOperationWith(document: Document) { return (targetDo
 
 
 export async function iterateRelationsInImport(
-    relations: Relations,
+    relations: Resource.Relations,
     asyncIterationFunction: (relation: string, idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
     for (let relation of Object.keys(relations)) {

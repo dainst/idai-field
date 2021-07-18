@@ -1,5 +1,5 @@
 import { intoObj } from 'idai-field-core';
-import { Document, Relations } from 'idai-field-core';
+import { Document, Resource } from 'idai-field-core';
 import { is, on, set, union } from 'tsfun';
 
 
@@ -113,7 +113,7 @@ export module EdgesBuilder {
     }
 
 
-    function getTargetIdAndRelationType(relations: Relations) {
+    function getTargetIdAndRelationType(relations: Resource.Relations) {
 
         return (relationType: string): Array<TargetAndRelationType> => {
 

@@ -1,5 +1,5 @@
 import {flow, map, update as updateD, assoc} from 'tsfun';
-import {Document, Resource, Relations} from 'idai-field-core';
+import {Document, Resource} from 'idai-field-core';
 import {Parser} from './parser';
 import {Category} from 'idai-field-core';
 import {convertCsvRows} from './convert-csv-rows';
@@ -16,7 +16,7 @@ export module CsvParser {
 
     const insertRelations = assoc(
             'relations',
-            (relations: Relations|undefined) => relations ? relations : {});
+            (relations: Resource.Relations|undefined) => relations ? relations : {});
 
 
     /**

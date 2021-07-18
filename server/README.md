@@ -10,7 +10,7 @@
 ### Preparations
 
   $ docker-compose up postgres
-  $ mix ecto.setup
+  $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
   $ npm install
  
 ### Run

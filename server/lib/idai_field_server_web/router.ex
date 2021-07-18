@@ -1,12 +1,15 @@
 defmodule IdaiFieldServerWeb.Router do
   use IdaiFieldServerWeb, :router
 
+  import IdaiFieldServerWeb.ProjectAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_project
   end
 
   pipeline :api do
@@ -39,5 +42,38 @@ defmodule IdaiFieldServerWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: IdaiFieldServerWeb.Telemetry
     end
+  end
+
+  ## Authentication routes
+
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser, :redirect_if_project_is_authenticated]
+
+    get "/projects/register", ProjectRegistrationController, :new
+    post "/projects/register", ProjectRegistrationController, :create
+    get "/projects/log_in", ProjectSessionController, :new
+    post "/projects/log_in", ProjectSessionController, :create
+    get "/projects/reset_password", ProjectResetPasswordController, :new
+    post "/projects/reset_password", ProjectResetPasswordController, :create
+    get "/projects/reset_password/:token", ProjectResetPasswordController, :edit
+    put "/projects/reset_password/:token", ProjectResetPasswordController, :update
+  end
+
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser, :require_authenticated_project]
+
+    get "/projects/settings", ProjectSettingsController, :edit
+    put "/projects/settings/update_password", ProjectSettingsController, :update_password
+    put "/projects/settings/update_email", ProjectSettingsController, :update_email
+    get "/projects/settings/confirm_email/:token", ProjectSettingsController, :confirm_email
+  end
+
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser]
+
+    delete "/projects/log_out", ProjectSessionController, :delete
+    get "/projects/confirm", ProjectConfirmationController, :new
+    post "/projects/confirm", ProjectConfirmationController, :create
+    get "/projects/confirm/:token", ProjectConfirmationController, :confirm
   end
 end

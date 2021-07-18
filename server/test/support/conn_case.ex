@@ -40,4 +40,30 @@ defmodule IdaiFieldServerWeb.ConnCase do
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  @doc """
+  Setup helper that registers and logs in projects.
+
+      setup :register_and_log_in_project
+
+  It stores an updated connection and a registered project in the
+  test context.
+  """
+  def register_and_log_in_project(%{conn: conn}) do
+    project = IdaiFieldServer.AccountsFixtures.project_fixture()
+    %{conn: log_in_project(conn, project), project: project}
+  end
+
+  @doc """
+  Logs the given `project` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_project(conn, project) do
+    token = IdaiFieldServer.Accounts.generate_project_session_token(project)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:project_token, token)
+  end
 end

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {settings} from 'cluster';
 import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
@@ -64,10 +65,16 @@ const PouchDB = window.require('pouchdb-browser');
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  documentConverter: CategoryConverter,
+                                 settingsProvider: SettingsProvider
             ): Datastore {
-                return new Datastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+                return new Datastore(
+                    pouchdbDatastore,
+                    indexFacade,
+                    documentCache,
+                    documentConverter,
+                    () => settingsProvider.getSettings().username);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
         }
     ]
 })

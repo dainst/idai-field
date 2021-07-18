@@ -31,7 +31,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async updateConnectedDocumentsForDocumentUpdate(document: Document, otherVersions: Array<Document>, user: Name) {
+    public async updateConnectedDocumentsForDocumentUpdate(document: Document, otherVersions: Array<Document>) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
@@ -42,11 +42,11 @@ export class ConnectedDocsWriter {
             true
         );
 
-        await this.updateDocs(docsToUpdate, user);
+        await this.updateDocs(docsToUpdate);
     }
 
 
-    public async updateConnectedDocumentsForDocumentRemove(document: Document, user: Name) {
+    public async updateConnectedDocumentsForDocumentRemove(document: Document) {
 
         const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
 
@@ -57,15 +57,15 @@ export class ConnectedDocsWriter {
             false
         );
 
-        await this.updateDocs(docsToUpdate, user);
+        await this.updateDocs(docsToUpdate);
     }
 
 
-    private async updateDocs(docsToUpdate: Array<Document>, user: Name) {
+    private async updateDocs(docsToUpdate: Array<Document>) {
 
         // Note that this does not update a document for being target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
-            await this.datastore.update(docToUpdate, user, undefined);
+            await this.datastore.update(docToUpdate, undefined);
         }
     }
 

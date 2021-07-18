@@ -181,7 +181,7 @@ registerLocaleData(localeIt, 'it');
                         projectConfiguration: ProjectConfiguration,
                         settingsProvider: SettingsProvider) =>
                             new RelationsManager(datastore, projectConfiguration,
-                                () => settingsProvider.getSettings().username /* fetch at runtime */),
+                                ),
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         ImageRelationsManager,

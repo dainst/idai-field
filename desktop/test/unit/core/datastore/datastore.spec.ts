@@ -22,7 +22,8 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new CategoryConverter(projectConfiguration));
+            new CategoryConverter(projectConfiguration),
+            () => 'u');
     }
 
 
@@ -182,7 +183,7 @@ describe('Datastore', () => {
         await ds.create({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        } } as any, 'u');
+        } } as any);
         mockIndexFacade.find.and.returnValues(['1']);
 
         const documents = (await ds.find({})).documents; // fetch from cache
@@ -194,8 +195,8 @@ describe('Datastore', () => {
 
     it('should limit the number of documents returned on find', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {}} } as any, 'u');
-        await ds.create({ resource: { id: '2', relations: {}} } as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {}} } as any);
+        await ds.create({ resource: { id: '2', relations: {}} } as any);
 
         mockIndexFacade.find.and.returnValues(['1', '2']);
 
@@ -209,9 +210,9 @@ describe('Datastore', () => {
 
     it('limit the number of documents and use an offset', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
-        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
-        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {} } } as any);
+        await ds.create({ resource: { id: '2', relations: {} } } as any);
+        await ds.create({ resource: { id: '3', relations: {} } } as any);
 
         mockIndexFacade.find.and.returnValues(['3','1','2']);
 
@@ -227,9 +228,9 @@ describe('Datastore', () => {
 
     it('offset excludes everything', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
-        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
-        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {} } } as any);
+        await ds.create({ resource: { id: '2', relations: {} } } as any);
+        await ds.create({ resource: { id: '3', relations: {} } } as any);
 
         mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
@@ -280,8 +281,8 @@ describe('Datastore', () => {
 
     it('should return only ids', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {}} } as any, 'u');
-        await ds.create({ resource: { id: '2', relations: {}} } as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {}} } as any);
+        await ds.create({ resource: { id: '2', relations: {}} } as any);
 
         mockIndexFacade.find.and.returnValues(['1', '2']);
 
@@ -301,7 +302,7 @@ describe('Datastore', () => {
         await ds.update({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        } } as any, 'u');
+        } } as any);
         const document = await ds.get('1'); // fetch from cache
         verifyIsDocument(document);
         done();
@@ -314,12 +315,12 @@ describe('Datastore', () => {
             id: '1',
             val: 'a',
             relations: {}
-        } } as any, 'u');
+        } } as any);
         await ds.update({ resource: { // trigger caching and reassigning of document
             id: '1',
             val: 'b',
             relations: {}
-        } } as any, 'u');
+        } } as any);
         const document = await ds.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
         verifyIsDocument(document);
@@ -334,7 +335,7 @@ describe('Datastore', () => {
         await ds.create({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        } } as any, 'u');
+        } } as any);
 
         const document = await ds.get('1'); // fetch from cache
         verifyIsDocument(document);
@@ -352,7 +353,7 @@ describe('Datastore', () => {
             return Promise.resolve(dd);
         });
 
-        await ds.create(doc1, 'u');
+        await ds.create(doc1);
         try {
             const documents = (await ds.find({ q: 'sd1' })).documents; // mockdb returns other instance
             expect((documents[0]).resource['identifier']).toBe('identifier1');
@@ -370,10 +371,10 @@ describe('Datastore', () => {
         let doc1 = doc('sd1', 'identifier1');
         let doc2;
 
-        await ds.create(doc1, 'u');
+        await ds.create(doc1);
         doc2 = doc('sd1', 'identifier_');
         doc2.resource.id = '1';
-        await ds.update(doc2, 'u');
+        await ds.update(doc2);
 
         const result = await ds.find({ q: 'sd1' }); // mockdb returns other instance
         expect((result.documents[0])['_rev']).toBe('2');

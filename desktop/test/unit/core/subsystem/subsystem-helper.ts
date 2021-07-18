@@ -116,7 +116,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     const categoryConverter = new CategoryConverter(projectConfiguration);
 
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);
+        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => settingsProvider.getSettings().username);
 
     const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
@@ -164,7 +164,6 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     const relationsManager = new RelationsManager(
         datastore,
         projectConfiguration,
-        () => settingsProvider.getSettings().username
     );
 
     const imageRelationsManager = new ImageRelationsManager(
@@ -304,7 +303,7 @@ function makeCreateDocuments(datastore: Datastore,
         const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
             if (project) document.project = project;
-            await datastore.create(document, username);
+            await datastore.create(document);
         }
         for (const [id, type, _] of documents) {
             if (type === 'Image') makeCreateImageInProjectImageDir(projectImageDir)(id);
@@ -326,7 +325,7 @@ function makeUpdateDocument(datastore: Datastore, username: string) {
 
         const oldDocument = await datastore.get(id);
         callback(oldDocument);
-        await datastore.update(oldDocument, username);
+        await datastore.update(oldDocument);
     }
 }
 

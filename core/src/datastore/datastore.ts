@@ -3,6 +3,7 @@ import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
 import { Query } from '../model/query';
+import { Name } from '../tools/named';
 import { CategoryConverter } from './category-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
@@ -59,7 +60,8 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter) {
+                private categoryConverter: CategoryConverter,
+                private getUser: () => Name) {
     }
 
 
@@ -74,22 +76,21 @@ export class Datastore {
      * otherwise they remain undefined.
      *
      * @param doc
-     * @param username
      * @returns {Promise<Document>} a document
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      * @throws [DOCUMENT_RESOURCE_ID_EXISTS] - if a document with doc.resource.id already exists
      * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws if resource.category is unknown
      */
-    public async create(document: NewDocument, username: string): Promise<Document> {
+    public async create(document: NewDocument): Promise<Document> {
 
-        return this.updateIndex(await this.datastore.create(document, username));
+        return this.updateIndex(await this.datastore.create(document, this.getUser()));
     }
 
 
-    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<Document>> {
+    public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        return (await this.datastore.bulkCreate(documents, username)).map(document => {
+        return (await this.datastore.bulkCreate(documents, this.getUser())).map(document => {
             return this.updateIndex(document);
         });
     }
@@ -99,7 +100,6 @@ export class Datastore {
      * Updates an existing document
      *
      * @param doc
-     * @param username
      * @param squashRevisionsIds
      * @returns {Promise<Document>} a document
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
@@ -108,15 +108,15 @@ export class Datastore {
      * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
      */
-    public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<Document> {
+    public async update(document: Document, squashRevisionsIds?: string[]): Promise<Document> {
 
-        return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
+        return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
 
 
-    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<Document>> {
+    public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
-        return (await this.datastore.bulkUpdate(documents, username)).map(document => {
+        return (await this.datastore.bulkUpdate(documents, this.getUser())).map(document => {
             return this.updateIndex(document);
         });
     }
@@ -264,7 +264,8 @@ export class Datastore {
     }
 
 
-    private async getDocumentsForIds(ids: string[], limit?: number,
+    private async getDocumentsForIds(ids: string[], 
+                                     limit?: number,
                                      offset?: number): Promise<{documents: Array<Document>, totalCount: number}> {
 
         let totalCount: number = ids.length;

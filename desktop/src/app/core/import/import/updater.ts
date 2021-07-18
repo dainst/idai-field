@@ -26,12 +26,14 @@ export module Updater {
     }
 
 
-    async function performRegular(documents: Array<NewDocument>, datastore: Datastore,
-                                                           username: string, updateMode: boolean): Promise<void> {
+    async function performRegular(documents: Array<NewDocument>,
+                                  datastore: Datastore,
+                                  username: string,
+                                  updateMode: boolean): Promise<void> {
 
         for (let document of documents) {
-            if (updateMode) await datastore.update(document as Document, username);
-            else await datastore.create(document, username);    // throws exception if an id already exists
+            if (updateMode) await datastore.update(document as Document);
+            else await datastore.create(document);    // throws exception if an id already exists
         }
     }
 
@@ -52,8 +54,8 @@ export module Updater {
             const docs = documents.slice(i*chunkSize,i*chunkSize+chunkSize);
             console.debug(`Bulk-importing part ${i+1}/${partsInTotal}`);
 
-            if (updateMode) await datastore.bulkUpdate(docs as Array<Document>, username);
-            else await datastore.bulkCreate(docs, username);    // throws exception if an id already exists
+            if (updateMode) await datastore.bulkUpdate(docs as Array<Document>);
+            else await datastore.bulkCreate(docs);    // throws exception if an id already exists
         }
     }
 }

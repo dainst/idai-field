@@ -70,9 +70,7 @@ describe('RelationsManager', () => {
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
-        persistenceManager = new RelationsManager(
-            mockDatastore, projectConfiguration, () => mockSettingsProvider.getSettings().username
-        );
+        persistenceManager = new RelationsManager(mockDatastore, projectConfiguration);
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
@@ -106,7 +104,7 @@ describe('RelationsManager', () => {
 
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
         await persistenceManager.update(doc);
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(doc, undefined);
         done();
     });
 
@@ -126,12 +124,12 @@ describe('RelationsManager', () => {
         expect(mockDatastore.update).toHaveBeenCalledWith(
             jasmine.objectContaining({
                 resource : jasmine.objectContaining({ id: '1' })
-            }), 'u', ['1-a']);
+            }), ['1-a']);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(
             jasmine.objectContaining({
                 resource : jasmine.objectContaining({ id: '2' })
-            }), 'u', undefined);
+            }), undefined);
 
         expect(doc.resource.relations['BelongsTo']).toBe(undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -149,7 +147,7 @@ describe('RelationsManager', () => {
 
         await persistenceManager.update(doc);
 
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc,  undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
         done();
     });
@@ -165,7 +163,7 @@ describe('RelationsManager', () => {
 
         await persistenceManager.remove(doc, { descendants: true });
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
-        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(mockDatastore.remove).not.toHaveBeenCalledWith(anotherRelatedDoc);
         expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
         done();
@@ -191,9 +189,9 @@ describe('RelationsManager', () => {
         await persistenceManager.remove(doc, { descendants: true });
 
         // do not update for beeing related to relatedDoc
-        expect(mockDatastore.update).not.toHaveBeenCalledWith(doc, 'u');
+        expect(mockDatastore.update).not.toHaveBeenCalledWith(doc);
         // this gets updates for beeing related to relatedDoc
-        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(anotherRelatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(doc);

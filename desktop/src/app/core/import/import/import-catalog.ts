@@ -252,7 +252,7 @@ function importOneDocument(services: ImportCatalogServices,
         const updateDocument = Document.clone(existingDocument ?? document);
 
         if (!existingDocument) {
-            await services.datastore.create(updateDocument, context.username);
+            await services.datastore.create(updateDocument);
             return updateDocument;
         }
 
@@ -260,10 +260,10 @@ function importOneDocument(services: ImportCatalogServices,
             const oldRelations = clone(existingDocument.resource.relations[Relation.Type.HASINSTANCE]);
             updateDocument.resource = clone(document.resource);
             if (oldRelations) updateDocument.resource.relations[Relation.Type.HASINSTANCE] = oldRelations;
-            await services.datastore.update(updateDocument, context.username);
+            await services.datastore.update(updateDocument);
         } else {
             await services.datastore.remove(existingDocument);
-            await services.datastore.create(updateDocument, context.username);
+            await services.datastore.create(updateDocument);
         }
         return updateDocument;
     }

@@ -12,7 +12,6 @@ import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
-import { Name } from '../tools';
 import { Resource } from '../model/resource';
 
 
@@ -30,8 +29,7 @@ export class RelationsManager {
 
     constructor(
         private datastore: Datastore,
-        private projectConfiguration: ProjectConfiguration,
-        private getUser: () => Name
+        private projectConfiguration: ProjectConfiguration
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -61,7 +59,7 @@ export class RelationsManager {
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash);
 
-        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.getUser());
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument);
         return persistedDocument;
     }
 
@@ -166,7 +164,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash), this.getUser());
+            updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
 
@@ -174,12 +172,12 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document, this.getUser());
+            document);
         await this.datastore.remove(document);
     }
 
 
-    private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
+    private async fixIsRecordedInInLiesWithinDocs(document: Document) {
 
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
@@ -193,7 +191,7 @@ export class RelationsManager {
         for (let docToCorrect of docsToCorrect) {
             const cloned = Document.clone(docToCorrect);
             cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
-            await this.datastore.update(cloned, username, undefined);
+            await this.datastore.update(cloned, undefined);
         }
     }
 
@@ -201,14 +199,11 @@ export class RelationsManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
-        const username = this.getUser;
-
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
-                username(),
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, username());
+            : this.datastore.create(document);
     }
 
 

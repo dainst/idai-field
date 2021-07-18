@@ -4,8 +4,6 @@ import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
 describe('subsystem/datastore', () => {
 
-    const user = 'testuser';
-
     let app: CoreApp;
 
     let helpers;
@@ -22,7 +20,7 @@ describe('subsystem/datastore', () => {
 
     it('hi', async done => {
 
-        await app.datastore.create(doc1('abc', 'Abc', 'Trench'), user);
+        await app.datastore.create(doc1('abc', 'Abc', 'Trench'));
 
         await helpers.expectDocuments('abc');
         done();
@@ -34,8 +32,8 @@ describe('subsystem/datastore', () => {
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
-        await app.datastore.create(image0, user);
-        await app.datastore.create(trench0, user);
+        await app.datastore.create(image0);
+        await app.datastore.create(trench0);
 
         try {
             const result = await app.datastore.find({ categories: ['Trench', 'Image'] });
@@ -52,8 +50,8 @@ describe('subsystem/datastore', () => {
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
-        await app.datastore.create(image0, user);
-        await app.datastore.create(trench0, user);
+        await app.datastore.create(image0);
+        await app.datastore.create(trench0);
 
         try {
             const result = await app.datastore.find({});
@@ -71,9 +69,9 @@ describe('subsystem/datastore', () => {
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
         const doc3 = doc('sd3', 'C-100', 'Find', '3');
 
-        await app.datastore.create(doc1, 'u');
-        await app.datastore.create(doc2, 'u');
-        await app.datastore.create(doc3, 'u');
+        await app.datastore.create(doc1);
+        await app.datastore.create(doc2);
+        await app.datastore.create(doc3);
 
         const { documents: documents1, totalCount: totalCount1 } =
             await app.datastore.find({ q: 'B-100', sort: { mode: 'default' }});

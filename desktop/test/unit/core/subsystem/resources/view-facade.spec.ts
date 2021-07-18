@@ -79,12 +79,12 @@ describe('ViewFacade/Subsystem', () => {
         featureDocument2 = fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        await datastore.create(trenchDocument1, 'u');
-        await datastore.create(trenchDocument2, 'u');
-        await datastore.create(findDocument1, 'u');
-        await datastore.create(findDocument2, 'u');
-        await datastore.create(featureDocument1, 'u');
-        await datastore.create(featureDocument2, 'u');
+        await datastore.create(trenchDocument1);
+        await datastore.create(trenchDocument2);
+        await datastore.create(findDocument1);
+        await datastore.create(findDocument2);
+        await datastore.create(featureDocument1);
+        await datastore.create(featureDocument2);
 
         changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
         changesStream.notifications.and.returnValue({
@@ -163,7 +163,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = fieldDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        await datastore.create(findDocument3, 'u');
+        await datastore.create(findDocument3);
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');

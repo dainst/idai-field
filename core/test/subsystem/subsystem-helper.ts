@@ -91,9 +91,9 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
 
     const categoryConverter = new CategoryConverter(projectConfiguration);
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);
+        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => user);
     
-    const relationsManager = new RelationsManager(datastore, projectConfiguration, () => user)
+    const relationsManager = new RelationsManager(datastore, projectConfiguration);
 
     return {
         datastore,
@@ -121,7 +121,7 @@ function makeCreateDocuments(datastore: Datastore,
 
         const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
-            await datastore.create(document, username);
+            await datastore.create(document);
         }
 
         const storedDocuments = [];

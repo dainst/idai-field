@@ -117,8 +117,8 @@ describe('subsystem/relations-manager', () => {
         t1.resource.relations = { isAfter: ['t2'], isRecordedIn: [] };
         t2.resource.relations = { isBefore: ['t1'], isRecordedIn: [] };
 
-        await app.datastore.create(t1, 'test');
-        t2 = await app.datastore.create(t2, 'test') as any;
+        await app.datastore.create(t1);
+        t2 = await app.datastore.create(t2) as any;
 
         const t2old = Document.clone(t2);
         t2.resource.relations['isBefore'] = [];
@@ -148,10 +148,10 @@ describe('subsystem/relations-manager', () => {
         tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
         t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
 
-        await app.datastore.create(tc1, 'test');
-        await app.datastore.create(t1, 'test');
-        await app.datastore.create(i1, 'test');
-        await app.datastore.create(i2, 'test');
+        await app.datastore.create(tc1);
+        await app.datastore.create(t1);
+        await app.datastore.create(i1);
+        await app.datastore.create(i2);
 
         expect((await app.datastore.find({})).documents.length).toBe(4);
 
@@ -185,13 +185,13 @@ describe('subsystem/relations-manager', () => {
         const d7 = doc('', 'identifierid7', 'Find', 'id7');
         d7.resource.relations['isDepictedIn'] = ['d6'];
 
-        await app.datastore.create(d1, 'user');
-        await app.datastore.create(d2, 'user');
-        await app.datastore.create(d3, 'user');
-        await app.datastore.create(d4, 'user');
-        await app.datastore.create(d5, 'user');
-        await app.datastore.create(d6, 'user');
-        await app.datastore.create(d7, 'user');
+        await app.datastore.create(d1);
+        await app.datastore.create(d2);
+        await app.datastore.create(d3);
+        await app.datastore.create(d4);
+        await app.datastore.create(d5);
+        await app.datastore.create(d6);
+        await app.datastore.create(d7);
 
         return [d1, d2, d3, d4, d5];
     }

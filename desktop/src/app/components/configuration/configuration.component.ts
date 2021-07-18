@@ -396,8 +396,7 @@ export class ConfigurationComponent implements OnInit {
         try {
             try {
                 this.configurationDocument = await this.datastore.update(
-                    configurationDocument,
-                    this.settingsProvider.getSettings().username
+                    configurationDocument
                 ) as ConfigurationDocument;
             } catch (errWithParams) {
                 this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));

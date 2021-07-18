@@ -58,42 +58,6 @@ describe('subsystem/relations-manager',() => {
         return [d1, d2, d3, d4, d5];
     }
 
-    // TODO implement top level filtering
-    // TODO impelment get multiple places
-    // TODO implement, or review idsToSubtract
-    it('get - place, trench, freature, find', async done => {
-
-        const username = app.settingsProvider.getSettings().username;
-
-        const p1 = doc('', 'identifieridp1', 'Place', 'idp1') as FieldDocument;
-        const p2 = doc('', 'identifieridp2', 'Place', 'idp2') as FieldDocument;
-
-        const d1 = doc('', 'identifierid1', 'Trench', 'id1') as FieldDocument;
-
-        p2.resource.relations['liesWithin'] = ['idp1'];
-        d1.resource.relations['liesWithin'] = ['idp2'];
-
-        const d2 = doc('', 'identifierid2', 'Feature', 'id2') as FieldDocument;
-        d2.resource.relations['isRecordedIn'] = ['id1'];
-        const d3 = doc('', 'identifierid3', 'Find', 'id3') as FieldDocument;
-        d3.resource.relations['isRecordedIn'] = ['id1'];
-        d3.resource.relations['liesWithin'] = ['id2'];
-
-        await app.datastore.create(p1, username);
-        await app.datastore.create(p2, username);
-        await app.datastore.create(d1, username);
-        await app.datastore.create(d2, username);
-        await app.datastore.create(d3, username);
-
-        const results = makeDocumentsLookup(await app.relationsManager.get('idp1', { descendants: true }));
-        expect(results['idp1'].resource.id).toBe('idp1');
-        expect(results['idp2'].resource.id).toBe('idp2');
-        expect(results['id1'].resource.id).toBe('id1');
-        expect(results['id2'].resource.id).toBe('id2');
-        expect(results['id3'].resource.id).toBe('id3');
-        done();
-    });
-
 
     it('get - only document', async done => {
 

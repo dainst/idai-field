@@ -1,7 +1,7 @@
 import { detach } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
-import { NewDocument } from '../model/new-document';
+import { NewDocument } from '../model/document';
 import { Query } from '../model/query';
 import { CategoryConverter } from './category-converter';
 import { DatastoreErrors } from './datastore-errors';

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Document } from '../../model/document';
-import { NewDocument } from '../../model/new-document';
+import { NewDocument } from '../../model/document';
 import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';

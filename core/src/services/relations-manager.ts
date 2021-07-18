@@ -7,7 +7,7 @@ import {Relation} from '../model/configuration/relation';
 import { DatastoreErrors } from '../datastore/datastore-errors'
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
-import { NewDocument } from '../model/new-document';
+import { NewDocument } from '../model/document';
 import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'

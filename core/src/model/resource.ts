@@ -1,8 +1,17 @@
 import { set, same, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
 import { Name } from '../tools/named';
 import { ObjectUtils } from '../tools/object-utils';
-import { NewResource } from './new-resource';
+import {Relations} from './relations';
 
+
+export interface NewResource {
+
+    id?: string;
+    identifier: string;
+    category: string;
+    relations: Relations;
+    [propName: string]: any;
+}
 
 export interface Resource extends NewResource {
 

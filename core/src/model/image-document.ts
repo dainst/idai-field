@@ -1,5 +1,16 @@
-import { Document } from './document';
-import { ImageResource } from './image-resource';
+import { Document, NewDocument } from './document';
+import { ImageResource, NewImageResource } from './image-resource';
+
+
+/**
+ * @author Daniel de Oliveira
+ */
+ export interface NewImageDocument extends NewDocument {
+
+    id?: string;
+    resource: NewImageResource;
+}
+
 
 /**
  * @author Daniel de Oliveira

@@ -1,12 +1,22 @@
 import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys, isUndefinedOrEmpty } from 'tsfun';
-import { Resource } from './resource';
-import { NewDocument } from './new-document';
+import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
 
 export type RevisionId = string;
 export type DocumentId = string;
 
+
+export interface NewDocument {
+
+    resource: NewResource;
+}
+
+
+export module NewDocument {
+
+    export const hasId = (doc: NewDocument) => doc.resource.id !== undefined;
+}
 
 /**
  * Document =

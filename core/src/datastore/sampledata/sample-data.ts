@@ -1,4 +1,4 @@
-import { NewDocument } from '../../model/new-document';
+import { NewDocument } from '../../model/document';
 import { SAMPLE_DATA_LABELS } from './sample-data-labels';
 
 

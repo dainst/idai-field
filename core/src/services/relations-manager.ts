@@ -64,6 +64,7 @@ export class RelationsManager {
     }
 
 
+    // TODO return as Tree
     /**
      * Gets one or more documents, possibly with documents connected via hierarchical relations.
      * 

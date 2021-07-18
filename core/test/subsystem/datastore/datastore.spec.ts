@@ -1,39 +1,32 @@
-import { doc } from 'idai-field-core';
-import { createApp, setupSyncTestDb } from '../subsystem-helper';
-
-import PouchDB = require('pouchdb-node');
+import { doc, doc1 } from '../../test-helpers';
+import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
 
-describe('subsystem/datastore/find', () => {
+describe('subsystem/datastore', () => {
+
+    const user = 'testuser';
+
+    let app: CoreApp;
+
+    let helpers;
 
     let image0;
     let trench0;
-    let datastore;
-
-    function expectErr1(err) {
-
-        if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf('Wrong') === -1) fail('Wrong Err - ' + err);
-    }
-
-
+    
     beforeEach(async done => {
-
-        await setupSyncTestDb();
-
-        const { datastore: d } = await createApp();
-        datastore = d;
-
-        spyOn(console, 'error');
+        app = await createCoreApp();
+        helpers = await createHelpers(app);
         done();
     });
 
 
-    afterEach(async done => {
+    it('hi', async done => {
 
-        await new PouchDB('testdb').destroy();
+        await app.datastore.create(doc1('abc', 'Abc', 'Trench'), user);
+
+        await helpers.expectDocuments('abc');
         done();
-    }, 5000);
+    });
 
 
     it('DocumentDatastore - do not throw and return everything with all categories', async done => {
@@ -41,11 +34,11 @@ describe('subsystem/datastore/find', () => {
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
-        await datastore.create(image0);
-        await datastore.create(trench0);
+        await app.datastore.create(image0, user);
+        await app.datastore.create(trench0, user);
 
         try {
-            const result = await datastore.find({ categories: ['Trench', 'Image'] });
+            const result = await app.datastore.find({ categories: ['Trench', 'Image'] });
             expect(result.documents.length).toBe(2);
         } catch (err) {
             fail(err);
@@ -59,11 +52,11 @@ describe('subsystem/datastore/find', () => {
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
 
-        await datastore.create(image0);
-        await datastore.create(trench0);
+        await app.datastore.create(image0, user);
+        await app.datastore.create(trench0, user);
 
         try {
-            const result = await datastore.find({});
+            const result = await app.datastore.find({});
             expect(result.documents.length).toBe(2);
         } catch (err) {
             fail(err);
@@ -78,12 +71,12 @@ describe('subsystem/datastore/find', () => {
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
         const doc3 = doc('sd3', 'C-100', 'Find', '3');
 
-        await datastore.create(doc1, 'u');
-        await datastore.create(doc2, 'u');
-        await datastore.create(doc3, 'u');
+        await app.datastore.create(doc1, 'u');
+        await app.datastore.create(doc2, 'u');
+        await app.datastore.create(doc3, 'u');
 
         const { documents: documents1, totalCount: totalCount1 } =
-            await datastore.find({ q: 'B-100', sort: { mode: 'default' }});
+            await app.datastore.find({ q: 'B-100', sort: { mode: 'default' }});
 
         expect(documents1.length).toBe(2);
         expect(totalCount1).toBe(2);
@@ -92,7 +85,7 @@ describe('subsystem/datastore/find', () => {
         expect(documents1[1].resource.id).toBe('2');
 
         const { documents: documents2, totalCount: totalCount2 } =
-            await datastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
+            await app.datastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
 
         expect(documents2.length).toBe(2);
         expect(totalCount2).toBe(2);

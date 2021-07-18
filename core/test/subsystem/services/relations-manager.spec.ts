@@ -1,6 +1,6 @@
 import {sameset} from 'tsfun';
-import {toResourceId} from '../../src/model';
-import { CoreApp, createCoreApp, createHelpers } from './subsystem-helper';
+import {toResourceId} from '../../../src/model';
+import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
 
 describe('subsystem/relations-manager', () => {

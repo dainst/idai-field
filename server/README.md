@@ -9,9 +9,11 @@
 
 ### Preparations
 
+  $ npm install
   $ docker-compose up postgres
   $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
-  $ npm install
+  $ docker-compose up couchdb
+  $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
  
 ### Run
 
@@ -19,6 +21,11 @@
   visit localhost:4000
   $ docker-compose run --entrypoint "mix phx.server" server # run inside Docker container
   visit localhost:4000
+
+## Connect iDAI.field Desktop
+
+Sync to couchdb (planned to go via server soon) by setting up a project `synctest` 
+and setting password to `abcdef`. Then activate sync.
 
 ## Development
 

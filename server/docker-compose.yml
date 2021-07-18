@@ -11,6 +11,11 @@ services:
 
   couchdb:
     image: couchdb:3
+    ports:
+      - "5984:5984"
+    environment:
+      - 'COUCHDB_USER=synctest'
+      - 'COUCHDB_PASSWORD=abcdef'
 
   server:
     build: .

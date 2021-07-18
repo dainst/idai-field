@@ -7,8 +7,8 @@ defmodule IdaiFieldServerWeb.FileSyncController do
   def index(conn, %{"project" => project}) do
 
     { email, password } = Plug.BasicAuth.parse_basic_auth(conn)
-    p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
 
+    p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
     IO.inspect p.email
 
     json(conn, %{project: project})

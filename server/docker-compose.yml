@@ -12,8 +12,16 @@ services:
   couchdb:
     image: couchdb:3
 
-  api:
+  server:
     build: .
     ports:
       - "4000:4000"
-
+    environment:
+      - IN_CONTAINER=true
+    volumes:
+      - "./config:/opt/src/server/config"
+      - "./resources:/opt/src/server/resources"
+      - "./lib:/opt/src/server/lib"
+      - "./test:/opt/src/server/test"
+      - "./assets:/opt/src/server/assets"
+      - "./_build:/opt/src/server/_build"

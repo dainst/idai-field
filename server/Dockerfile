@@ -1,8 +1,8 @@
 FROM elixir:latest
 
-COPY . /opt/src/api
+COPY . /opt/src/server
 
-WORKDIR "/opt/src/api"
+WORKDIR "/opt/src/server"
 
 RUN ["mix", "local.hex", "--force"]
 RUN ["mix", "local.rebar", "--force"]

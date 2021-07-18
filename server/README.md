@@ -1,20 +1,35 @@
 # IdaiFieldServer
 
-To start your Phoenix server:
+## Prerequisites
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+* Docker
+* docker-compose
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Getting started
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+### Preparations
 
-## Learn more
+  $ docker-compose up postgres
+  $ mix ecto.setup
+  $ npm install
+ 
+### Run
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+  $ mix phx.server                                          # run on your local machine
+  visit localhost:4000
+  $ docker-compose run --entrypoint "mix phx.server" server # run inside Docker container
+  visit localhost:4000
+
+## Development
+
+## Testing
+
+  $ mix test                                                # run on your local machine
+  $ docker-compose run --entrypoint "mix test" server       # run inside Docker container
+
+### Working with Containers
+
+Access mix and elixir inside container
+
+  $ docker-compose run --entrypoint "/bin/bash" server 
+  $ mix test

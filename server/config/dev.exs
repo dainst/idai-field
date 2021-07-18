@@ -5,7 +5,7 @@ config :idai_field_server, IdaiFieldServer.Repo,
   username: "postgres",
   password: "abcdef",
   database: "idai_field_server_dev",
-  hostname: "localhost",
+  hostname: (if System.get_env("IN_CONTAINER") == "true" do "postgres" else "localhost" end),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

@@ -7,9 +7,9 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :idai_field_server, IdaiFieldServer.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "abcdef",
   database: "idai_field_server_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  hostname: (if System.get_env("IN_CONTAINER") == "true" do "postgres" else "localhost" end),
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,

@@ -14,6 +14,8 @@ defmodule IdaiFieldServerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    get "/sync/*rest", IdaiFieldServerWeb.CouchDBController, :sync
   end
 
   scope "/", IdaiFieldServerWeb do

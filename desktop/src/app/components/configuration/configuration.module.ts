@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { ConfigurationComponent } from './configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
@@ -30,7 +29,6 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         FormsModule,
         NgbModule,
         WidgetsModule,
-        ColorPickerModule,
         DragDropModule
     ],
     declarations: [

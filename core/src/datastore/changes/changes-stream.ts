@@ -1,8 +1,8 @@
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';
-import { ResourceId } from '../../constants';
 import { IndexFacade } from '../../index/index-facade';
 import { Action } from '../../model/action';
+import { Resource } from '../../model/resource';
 import { Document, RevisionId } from '../../model/document';
 import { ObserverUtil } from '../../tools/observer-util';
 import { CategoryConverter } from '../category-converter';
@@ -120,7 +120,7 @@ export class ChangesStream {
     }
 
 
-    private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {
+    private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: Resource.Id) {
 
         return await aMap(revisionId => {
             return this.datastore.fetchRevision(resourceId, revisionId);

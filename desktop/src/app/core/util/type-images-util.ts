@@ -1,4 +1,4 @@
-import { Datastore, FieldDocument, Query, ResourceId } from 'idai-field-core';
+import { Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
 import { PLACEHOLDER } from '../images/row/image-row';
 
@@ -28,7 +28,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
+    function getLinkedImagesForTypeCatalog(resourceId: Resource.Id,
                                            datastore: Datastore): string[] {
 
         const query: Query = {
@@ -63,7 +63,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getLinkedImagesForType(resourceId: ResourceId,
+    function getLinkedImagesForType(resourceId: Resource.Id,
                                     datastore: Datastore): string[] {
 
         const query: Query = {

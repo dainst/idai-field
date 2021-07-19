@@ -1,4 +1,4 @@
-import { Lookup, ResourceId } from 'idai-field-core';
+import { Lookup, Resource } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { aMap, aReduce, compose, flatten, flow, isDefined, lookup, map, Pair, remove, subtract, union } from 'tsfun';
 import { ImportErrors as E } from '../import-errors';
@@ -8,7 +8,7 @@ import { makeDocumentsLookup } from '../utils';
 export async function makeLookups(documents: Array<Document>,
                                   get: (resourceId) => Promise<Document>,
                                   mergeMode: boolean)
-    : Promise<[Lookup<Document>, Lookup<[ResourceId[], Array<Document>]>]> {
+    : Promise<[Lookup<Document>, Lookup<[Array<Resource.Id>, Array<Document>]>]> {
 
     const documentsLookup = makeDocumentsLookup(documents);
 
@@ -16,7 +16,7 @@ export async function makeLookups(documents: Array<Document>,
         getTargetIds(mergeMode, get, documentsLookup), {}, documentsLookup);
     const targetDocumentsLookup = await aReduce(
         getTargetDocuments(get), {}, targetIdsLookup);
-    const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map(targetIdsLookup, (ids) => {
+    const targetsLookup: Lookup<[Array<Resource.Id>, Array<Document>]> = map(targetIdsLookup, (ids) => {
         return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
     });
 
@@ -27,13 +27,13 @@ export async function makeLookups(documents: Array<Document>,
 function getTargetDocuments(get: (_: string) => Promise<Document>) {
 
     return async (documentsById: Lookup<Document>,
-                  targetDocIdsPair: Pair<ResourceId[]>) => {
+                  targetDocIdsPair: Pair<Array<Resource.Id>>) => {
 
         const targetDocIds = union(targetDocIdsPair);
 
         await aMap(
             targetDocIds,
-            async (targetId: ResourceId) => {
+            async (targetId: Resource.Id) => {
                 if (!documentsById[targetId]) try {
                     documentsById[targetId] = Document.clone(await get(targetId));
                 } catch {
@@ -49,7 +49,7 @@ function getTargetIds(mergeMode: boolean,
                       get: (_: string) => Promise<Document>,
                       documentsById: Lookup<Document>) {
 
-    return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
+    return async (targetIdsMap: { [_: string]: [Array<Resource.Id>, Array<Resource.Id>] },
                   document: Document) => {
 
         let targetIds = targetIdsReferingToDbResources(document, documentsById);
@@ -62,7 +62,7 @@ function getTargetIds(mergeMode: boolean,
             }
             targetIdsMap[document.resource.id] = [
                 targetIds,
-                subtract<ResourceId>(targetIds)(
+                subtract<Resource.Id>(targetIds)(
                     targetIdsReferingToDbResources(oldVersion, documentsById)
                 )
             ];

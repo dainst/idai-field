@@ -1,5 +1,5 @@
 import { to } from 'tsfun';
-import { FieldResource, ResourceId, Document, Resource } from 'idai-field-core';
+import { FieldResource, Document, Resource } from 'idai-field-core';
 
 
 /**
@@ -9,12 +9,12 @@ export module ModelUtil {
 
     export function getRelationTargetId(document: Document,
                                         relationName: string,
-                                        index: number): ResourceId|undefined {
+                                        index: number): Resource.Id|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return to(index)(targetIds) as (ResourceId|undefined);
+        return to(index)(targetIds) as (Resource.Id|undefined);
     }
 
 

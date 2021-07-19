@@ -1,5 +1,5 @@
 import {
-    Lookup, ResourceId,
+    Lookup,
 } from 'idai-field-core';
 import { Document, Relation, Resource } from 'idai-field-core';
 import {
@@ -55,7 +55,7 @@ import IS_BEFORE = Relation.Time.BEFORE;
  * @author Daniel de Oliveira
  */
 export function completeInverseRelations(documentsLookup: Lookup<Document>,
-                                         targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
+                                         targetsLookup: Lookup<[Array<Resource.Id>, Array<Document>]>,
                                          inverseRelationsMap: Relation.InverseRelationsMap,
                                          assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                          mergeMode: boolean = false): Array<Document> {

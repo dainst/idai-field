@@ -1,4 +1,4 @@
-import { Lookup, ResourceId, updateRelations } from 'idai-field-core';
+import { Lookup, Resource, updateRelations } from 'idai-field-core';
 import { Document, Relation } from 'idai-field-core';
 import { includedIn, is, isNot, keysValues, on } from 'tsfun';
 import { AssertIsAllowedRelationDomainType } from '../types';
@@ -20,7 +20,7 @@ import { assertInSameOperationWith, unionOfDocuments } from '../utils';
  */
 export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
-        targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
+        targetsLookup: Lookup<[Array<Resource.Id>, Array<Document>]>,
         inverseRelationsMap: Relation.InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Array<Document> {
@@ -81,7 +81,7 @@ function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Arra
 
 
 
-function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Array<Document>) {
+function makeIdCategoryMap(targetIds: Array<Resource.Id>, documentTargetDocuments: Array<Document>) {
 
     return targetIds.reduce((acc, targetId) => {
         const lookedUp = documentTargetDocuments.find(on(['resource','id'], is(targetId)));

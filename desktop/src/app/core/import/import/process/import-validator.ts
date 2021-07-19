@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Document, Datastore, Relation, NewDocument, Query, Resource, ResourceId, Named } from 'idai-field-core';
+import { Document, Datastore, Relation, NewDocument, Query, Resource, Named } from 'idai-field-core';
 import { isnt } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { Validations } from '../../../model/validations';
@@ -195,7 +195,7 @@ export class ImportValidator extends Validator {
 
 
     public async isRecordedInTargetAllowedRelationDomainCategory(document: NewDocument,
-                                                                 operationId: ResourceId) {
+                                                                 operationId: Resource.Id) {
 
         const operation = await this.datastore.get(operationId);
         if (!this.projectConfiguration.isAllowedRelationDomainCategory(document.resource.category,

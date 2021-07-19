@@ -1,4 +1,4 @@
-import { Datastore, ResourceId, StringUtils, RelationsManager } from 'idai-field-core';
+import { Resource, StringUtils, RelationsManager } from 'idai-field-core';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { Settings } from '../../settings/settings';
 import { getExportDocuments } from './get-export-documents';
@@ -77,7 +77,7 @@ export module CatalogExporter {
 
 
     function copyImageFiles(imagesTargetPath: string,
-                            imageResourceIds: Array<ResourceId>,
+                            imageResourceIds: Array<Resource.Id>,
                             settings: Settings) {
 
         for (let image of imageResourceIds) {

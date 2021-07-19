@@ -17,5 +17,4 @@ export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
 // Types
 
-export type ResourceId = string;
 export type RevisionId = string;

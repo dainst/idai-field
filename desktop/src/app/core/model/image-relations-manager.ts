@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectConfiguration,
-    ON_RESOURCE_ID, ResourceId, toResourceId, RelationsManager, Named, } from 'idai-field-core';
+    ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to, isnt, not, rest, first } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import DEPICTS = Relation.Image.DEPICTS;
@@ -27,7 +27,7 @@ export class ImageRelationsManager {
                                  onlyExclusivelyRelated: boolean = false): Promise<Array<Document>> {
 
         const documentsIds = documents.map(toResourceId);
-        const idsOfRelatedDocuments: Array<ResourceId> = set(flatten(
+        const idsOfRelatedDocuments: Array<Resource.Id> = set(flatten(
             documents
                 .map(_ => _.resource.relations[ISDEPICTEDIN])
                 .filter(isDefined))

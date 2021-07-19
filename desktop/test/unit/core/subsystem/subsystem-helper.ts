@@ -1,6 +1,6 @@
 import { sameset } from 'tsfun';
 import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
-    Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, ResourceId,
+    Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
@@ -320,7 +320,7 @@ function makeCreateDocuments(datastore: Datastore,
 
 function makeUpdateDocument(datastore: Datastore, username: string) {
 
-    return async function updateDocument(id: ResourceId,
+    return async function updateDocument(id: Resource.Id,
                                          callback: (document: Document) => void) {
 
         const oldDocument = await datastore.get(id);
@@ -352,7 +352,7 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
 
 function makeGetDocument(datastore: Datastore) {
 
-    return async function getDocument(id: ResourceId) {
+    return async function getDocument(id: Resource.Id) {
 
         return await datastore.get(id);
     }

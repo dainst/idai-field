@@ -9,7 +9,7 @@ import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/document';
 import { ProjectConfiguration } from './project-configuration'
-import {  ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
+import {  ON_RESOURCE_ID, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { Resource } from '../model/resource';
@@ -70,9 +70,9 @@ export class RelationsManager {
      * 
      * @throws DatastoreErrors
      */
-    public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
-    public async get(id: ResourceId, options: { antecendants: true }): Promise<Array<Document>>
-    public async get(ids: Array<ResourceId>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
+    public async get(id: Resource.Id, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
+    public async get(id: Resource.Id, options: { antecendants: true }): Promise<Array<Document>>
+    public async get(ids: Array<Resource.Id>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
     public async get(ids_: any, options?: { descendants?: true, toplevel?: false, antecendants?: true }): Promise<any> {
 
         if (options?.antecendants) {

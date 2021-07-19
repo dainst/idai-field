@@ -1,4 +1,4 @@
-import { Document, Relation, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
+import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from 'idai-field-core';
@@ -9,9 +9,9 @@ export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-expor
 
 export async function getExportDocuments(relationsManager: RelationsManager,
                                          imageRelationsManager: ImageRelationsManager,
-                                         catalogId: ResourceId,
+                                         catalogId: Resource.Id,
                                          project: Name)
-    : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<ResourceId>]>> {
+    : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<Resource.Id>]>> {
 
     const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true })).map(Document.clone);
 

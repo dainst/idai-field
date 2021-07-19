@@ -1,8 +1,8 @@
 import {sameset} from 'tsfun/src/comparator';
-import { ResourceId } from '../src/constants';
 import {Datastore} from '../src/datastore/datastore';
 import { Category, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
 import { Document, toResourceId } from '../src/model/document';
+import { Resource } from '../src/model/resource';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
 
@@ -74,8 +74,8 @@ export const doc1 = (id, identifier, category): Document => {
  *     the documents it contains (via lies within of the targets pointing to the current one as their parent).
  */
 export type NiceDocs =
-    Array<[ResourceId, string, Array<string>]
-        |[ResourceId, string]>;
+    Array<[Resource.Id, string, Array<string>]
+        |[Resource.Id, string]>;
 
 
 export function createDocuments(documents: NiceDocs) {

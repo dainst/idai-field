@@ -4,8 +4,6 @@ import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
 
 
-export type Label = string; // move to I18N.Labeled
-
 /**
  * @author Daniel de Oliveira
  */
@@ -36,7 +34,7 @@ export class Labels {
     }
 
 
-    public getFieldLabel(category: Category, fieldName: string): Label {
+    public getFieldLabel(category: Category, fieldName: string): string {
 
         const label = Category.getFieldLabelValue(category, fieldName);
         if (!label) return undefined;

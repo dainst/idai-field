@@ -22,7 +22,10 @@ export class DeleteCategoryModalComponent {
 
     public hasCustomFields = (): boolean => Category.hasCustomFields(this.category);
 
-    public confirmDeletion = () => this.checkConfirmDeletionCategoryName() && this.activeModal.close();
+    public hasChildCategories = (): boolean => this.category.children.length > 0;
+
+    public confirmDeletion = () => (!this.hasCustomFields() || this.checkConfirmDeletionCategoryName())
+        && this.activeModal.close();
     
     public cancel = () => this.activeModal.dismiss('cancel');
 

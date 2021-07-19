@@ -14,7 +14,7 @@
 </div>
 
 <div class="modal-footer">
-    <div *ngIf="isDeletionAllowed()" id="create-field-button"
+    <div *ngIf="isDeletionAllowed()">
          class="btn btn-danger"
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>

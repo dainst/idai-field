@@ -3,8 +3,9 @@
 </div>
 
 <div id="delete-category-modal-body" class="modal-body">
-    <span *ngIf="!hasCustomFields()" i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
-    <div *ngIf="hasCustomFields()">
+    <span *ngIf="!hasCustomFields() && !hasChildCategories()"
+          i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
+    <div *ngIf="hasCustomFields() && !hasChildCategories()">
         <div *ngIf="hasCustomFields()" class="text-center alert alert-warning"
              i18n="@@configuration.deleteCategory.warning.changes">
             An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen.
@@ -20,10 +21,15 @@
                    (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
         </div>
     </div>
+    <div *ngIf="hasChildCategories()" class="text-center alert alert-warning"
+         i18n="configuration.deleteCategory.hasChildren">
+         Die Kategorie <code>{{category.name}}</code> kann nicht gelöscht werden, solange sie Unterkategorien besitzt.
+         Bitte entfernen Sie zunächst die Unterkategorien.
+    </div>
 </div>
 
 <div class="modal-footer">
-    <div id="create-field-button"
+    <div *ngIf="!hasChildCategories()"
          class="btn btn-danger"
          [ngClass]="{ 'disabled': hasCustomFields() && !this.checkConfirmDeletionCategoryName() }"
          (click)="confirmDeletion()">

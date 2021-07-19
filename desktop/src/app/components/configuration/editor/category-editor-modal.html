@@ -39,9 +39,10 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
         </div>
-        <div id="category-color"
-             [(colorPicker)]="getClonedCategoryDefinition().color"
-             [style.background]="getClonedCategoryDefinition().color"
-             [cpAlphaChannel]="'disabled'"></div>
+        <input id="category-color"
+               type="color"
+               class="form-control form-control-color"
+               [value]="getClonedCategoryDefinition().color"
+               (change)="getClonedCategoryDefinition().color = $event.srcElement.value">
     </div>
 </div>

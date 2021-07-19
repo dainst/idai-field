@@ -39,19 +39,6 @@ describe('subsystem/relations-manager', () => {
     });
 
 
-    it('get - only document', async done => {
-
-        await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type']
-        ]);
-
-        const result = await app.relationsManager.get('tc1');
-        expect(result.resource.id).toBe('tc1');
-        done();
-    });
-
-
     it('get - include descendants', async done => {
 
         await helpers.createDocuments([

@@ -102,7 +102,7 @@ export class ExportComponent implements OnInit {
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.get,
             this.find,
-            this.getOperationIdForMode(),
+            this.getExportContext(),
             this.projectConfiguration.getCategoriesArray()
         );
 
@@ -128,7 +128,7 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private getOperationIdForMode() {
+    private getExportContext(): ExportRunner.ExportContext {
 
         return this.csvExportMode === 'complete' ? this.selectedOperationOrPlaceId : undefined;
     }
@@ -216,7 +216,7 @@ export class ExportComponent implements OnInit {
                 this.get,
                 this.find,
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
-                this.getOperationIdForMode(),
+                this.getExportContext(),
                 this.selectedCategory,
                 this.projectConfiguration
                     .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)

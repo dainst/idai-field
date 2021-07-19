@@ -21,20 +21,17 @@ export module ExportRunner {
 
 
     /**
-     * @param get
-     * @param find
-     * @param context 'project' if the whole project is the context
-     *                undefined if only the schema is to be exported
-     * @param selectedCategory
-     * @param relations
-     * @param getIdentifierForId
-     * @param performExport
-     * @returns
+     * 'project', if the whole project is the context
+     * undefined, if only the schema is to be exported
+     * a resource id of a place or an operation, otherwise
      */
+    export type ExportContext = undefined | 'project' | Resource.Id;
+
+
     export async function performExport(get: Get,
                                         find: Find,
                                         getIdentifierForId: GetIdentifierForId,
-                                        context: undefined | 'project' | Resource.Id, // TODO empty for schema
+                                        context: ExportContext,
                                         selectedCategory: Category,
                                         relations: string[],
                                         performExport: PerformExport) {
@@ -76,24 +73,19 @@ export module ExportRunner {
     }
 
 
-    /**
-     * @param find
-     * @param selectedOperationId
-     * @param categoriesList
-     */
     export async function determineCategoryCounts(get: Get,
                                                   find: Find,
-                                                  selectedOperationId: string|undefined,
+                                                  context: ExportContext,
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
-        if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
-        if (selectedOperationId === PROJECT_CONTEXT) return determineCategoryCountsForSelectedOperation(
-            find, selectedOperationId, categoriesList
+        if (!context) return determineCategoryCountsForSchema(categoriesList);
+        if (context === PROJECT_CONTEXT) return determineCategoryCountsForSelectedOperation(
+            find, context, categoriesList
         );
 
-        const topLevelCounts = await determineCategoryCountsForToplevel(find, selectedOperationId, categoriesList);
+        const topLevelCounts = await determineCategoryCountsForToplevel(find, context, categoriesList);
         const recordedCounts = await determineCategoryCountsForMultipleOperations(
-            get, find, selectedOperationId, categoriesList
+            get, find, context, categoriesList
         );
         return topLevelCounts.concat(recordedCounts).filter(([_category, count]) => count > 0);
     }

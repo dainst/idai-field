@@ -95,7 +95,10 @@ export function createDocuments(documents: NiceDocs) {
             
             for (const target of targets) {
                 relationsLookup[target][type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN] = [id];
-                if (type === 'Trench') relationsLookup[target][Relation.Hierarchy.RECORDEDIN] = [id];
+                if (type === 'Trench') {
+                    relationsLookup[target][Relation.Hierarchy.RECORDEDIN] = [id];
+                    delete relationsLookup[target][Relation.Hierarchy.LIESWITHIN];
+                }
             }
         }
     }

@@ -215,12 +215,12 @@ export class ExportComponent implements OnInit {
             await ExportRunner.performExport(
                 this.get,
                 this.find,
+                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 this.getOperationIdForMode(),
                 this.selectedCategory,
                 this.projectConfiguration
                     .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
-                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );
         } catch(err) {

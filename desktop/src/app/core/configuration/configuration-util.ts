@@ -1,4 +1,4 @@
-import { flatten, to } from 'tsfun';
+import { flatten, isEmpty, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, Field, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
 import { LanguageConfigurationUtil } from './language-configuration-util';
@@ -105,5 +105,23 @@ export module ConfigurationUtil {
     export function isEditableGroup(group: Group): boolean {
 
         return group.name !== Groups.PARENT && group.name !== Groups.CHILD;
+    }
+
+
+    export function isCustomizedCategory(configurationDocument: ConfigurationDocument,
+                                         category: Category): boolean {
+
+        const customDefinition: CustomCategoryDefinition = configurationDocument.resource
+            .categories[category.libraryId ?? category.name];
+
+        return customDefinition.color !== undefined
+            || customDefinition.groups !== undefined
+            || (customDefinition.valuelists !== undefined && !isEmpty(customDefinition.valuelists))
+            || (customDefinition.fields !== undefined && !isEmpty(customDefinition.fields))
+            || (customDefinition.commons !== undefined && !isEmpty(customDefinition.commons))
+            || (customDefinition.hidden !== undefined && !isEmpty(customDefinition.hidden))
+            || LanguageConfigurationUtil.hasCustomTranslations(
+                configurationDocument.resource.languages, category
+            );
     }
 }

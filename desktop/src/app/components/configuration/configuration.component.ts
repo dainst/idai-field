@@ -281,6 +281,9 @@ export class ConfigurationComponent implements OnInit {
 
         componentInstance.category = category;
         componentInstance.labels = this.labels;
+        componentInstance.customized = ConfigurationUtil.isCustomizedCategory(
+            this.configurationDocument, category
+        );
 
         this.modals.awaitResult(result,
             () => this.deleteCategory(category),

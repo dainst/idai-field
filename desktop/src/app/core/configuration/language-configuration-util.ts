@@ -35,6 +35,15 @@ export module LanguageConfigurationUtil {
     }
 
 
+    export function hasCustomTranslations(customLanguageConfigurations: CustomLanguageConfigurations,
+                                          category: Category): boolean {
+        
+        return Object.values(customLanguageConfigurations).find(languageConfiguration => {
+            return languageConfiguration.categories?.[category.name];
+        }) !== undefined;
+    }
+
+
     function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                                       section: 'label'|'description', editedI18nString: I18N.String,
                                                       category: Category, field?: Field, group?: Group) {

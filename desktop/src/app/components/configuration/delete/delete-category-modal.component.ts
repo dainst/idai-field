@@ -13,6 +13,7 @@ export class DeleteCategoryModalComponent {
 
     public category: Category;
     public labels: Labels;
+    public customized: boolean;
 
     public confirmDeletionCategoryName: string;
 
@@ -20,11 +21,9 @@ export class DeleteCategoryModalComponent {
     constructor(public activeModal: NgbActiveModal) {}
 
 
-    public hasCustomFields = (): boolean => Category.hasCustomFields(this.category);
-
     public hasChildCategories = (): boolean => this.category.children.length > 0;
 
-    public confirmDeletion = () => (!this.hasCustomFields() || this.checkConfirmDeletionCategoryName())
+    public confirmDeletion = () => (!this.customized || this.checkConfirmDeletionCategoryName())
         && this.activeModal.close();
     
     public cancel = () => this.activeModal.dismiss('cancel');

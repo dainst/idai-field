@@ -23,6 +23,7 @@ const messageDictionary = {
         'menu.edit.paste': 'Einfügen',
         'menu.edit.selectAll': 'Alles auswählen',
         'menu.tools': 'Werkzeuge',
+        'menu.tools.configuration': 'Formularkonfiguration',
         'menu.tools.images': 'Bilderverwaltung',
         'menu.tools.types': 'Typenverwaltung',
         'menu.tools.matrix': 'Matrix',
@@ -34,8 +35,7 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Entwicklertools an/aus',
         'menu.window': 'Fenster',
         'menu.window.minimize': 'Minimieren',
-        'menu.help': 'Hilfe',
-        'menu.help.configuration': 'Formularkonfiguration',
+        'menu.help': 'Hilfe'
     },
     en: {
         'autoUpdate.available.title': 'Update available',
@@ -61,6 +61,7 @@ const messageDictionary = {
         'menu.edit.paste': 'Paste',
         'menu.edit.selectAll': 'Select all',
         'menu.tools': 'Tools',
+        'menu.tools.configuration': 'Form configuration',
         'menu.tools.images': 'Image management',
         'menu.tools.types': 'Type management',
         'menu.tools.matrix': 'Matrix',
@@ -72,8 +73,7 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Developer tools on/off',
         'menu.window': 'Window',
         'menu.window.minimize': 'Minimize',
-        'menu.help': 'Help',
-        'menu.help.configuration': 'Form configuration'
+        'menu.help': 'Help'
     },
     it: {
         'autoUpdate.available.title': 'Update disponibile',
@@ -99,6 +99,7 @@ const messageDictionary = {
         'menu.edit.paste': 'Incolla',
         'menu.edit.selectAll': 'Seleziona tutto',
         'menu.tools': 'Strumenti',
+        'menu.tools.configuration': 'Configurazione formulario',
         'menu.tools.images': 'Gestione immagini',
         'menu.tools.types': 'Gestione tipi',
         'menu.tools.matrix': 'Matrix',
@@ -110,8 +111,7 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Strumenti per sviluppatori on/off',
         'menu.window': 'Finestra',
         'menu.window.minimize': 'Riduci',
-        'menu.help': 'Aiuto',
-        'menu.help.configuration': 'Configurazione formulario',
+        'menu.help': 'Aiuto'
     }
 };
 

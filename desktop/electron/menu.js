@@ -80,6 +80,15 @@ const getTemplate = (mainWindow, context) => {
         label: messages.get('menu.tools'),
         submenu: [
         {
+            label: messages.get('menu.tools.configuration'),
+            accelerator: 'CmdOrCtrl+F',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
+            enabled: context === 'default'
+        },
+        {
+            type: 'separator'
+        },
+        {
             label: messages.get('menu.tools.images'),
             accelerator: 'CmdOrCtrl+B',
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
@@ -188,11 +197,6 @@ const getTemplate = (mainWindow, context) => {
             label: messages.get('menu.help'),
             accelerator: 'CmdOrCtrl+H',
             click: () => mainWindow.webContents.send('menuItemClicked', 'help'),
-            enabled: context === 'default'
-        }, {
-            label: messages.get('menu.help.configuration'),
-            accelerator: 'CmdOrCtrl+F',
-            click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
             enabled: context === 'default'
         }]
     }];

@@ -159,14 +159,17 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
-        const selectedGroup: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
+        const selectedGroupDefinition: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
+        const selectedGroup: Group = this.category.groups.find(group => group.name === this.selectedGroup);
 
         if (targetGroup) {
-            if (targetGroup.name === selectedGroup.name) return;
-            const fieldName: string = selectedGroup.fields.splice(event.previousIndex, 1)[0];
+            if (targetGroup.name === selectedGroupDefinition.name) return;
+            const fieldName: string = selectedGroupDefinition.fields.splice(event.previousIndex, 1)[0];
             const targetGroupDefinition: GroupDefinition = groups.find(group => group.name === targetGroup.name);
             targetGroupDefinition.fields.push(fieldName);
+            selectedGroup.fields.splice(event.previousIndex, 1)[0];
         } else {
+            InPlace.moveInArray(selectedGroupDefinition.fields, event.previousIndex, event.currentIndex);
             InPlace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
         }
 
@@ -180,6 +183,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             this.category, this.permanentlyHiddenFields
         );
         InPlace.moveInArray(groups, event.previousIndex, event.currentIndex);
+        InPlace.moveInArray(this.category.groups, event.previousIndex, event.currentIndex);
 
         await this.saveNewGroupsConfiguration(groups);
     }

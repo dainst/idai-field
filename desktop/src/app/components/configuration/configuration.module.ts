@@ -21,6 +21,7 @@ import { ConfigurationContextMenuComponent } from './context-menu/configuration-
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
+import { SaveModalComponent } from './save-modal.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         ConfigurationContextMenuComponent,
         DeleteFieldModalComponent,
         DeleteGroupModalComponent,
-        DeleteCategoryModalComponent
+        DeleteCategoryModalComponent,
+        SaveModalComponent
     ],
     exports: [
         ConfigurationComponent
@@ -62,7 +64,8 @@ import { DeleteCategoryModalComponent } from './delete/delete-category-modal.com
         CategoryEditorModalComponent,
         DeleteFieldModalComponent,
         DeleteGroupModalComponent,
-        DeleteCategoryModalComponent
+        DeleteCategoryModalComponent,
+        SaveModalComponent
     ]
 })
 

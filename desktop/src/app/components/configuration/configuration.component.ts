@@ -24,6 +24,8 @@ import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { Modals } from '../services/modals';
 import { ConfigurationIndex } from '../../core/configuration/configuration-index';
+import { SaveModalComponent } from './save-modal.component';
+import { Menus } from '../services/menus';
 
 
 export type InputType = {
@@ -50,7 +52,6 @@ export class ConfigurationComponent implements OnInit {
     public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
     public configurationDocument: ConfigurationDocument;
-    public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public allowDragAndDrop: boolean = true;
     public dragging: boolean = false;
@@ -97,6 +98,7 @@ export class ConfigurationComponent implements OnInit {
                 private configLoader: ConfigLoader,
                 private labels: Labels,
                 private indexFacade: IndexFacade,
+                private menus: Menus,
                 private i18n: I18n) {}
 
 
@@ -386,6 +388,13 @@ export class ConfigurationComponent implements OnInit {
     private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
                                                    reindexCategory?: string): Promise<ErrWithParams|undefined> {
 
+        const previousMenuContext: MenuContext = this.menus.getContext();
+
+        const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
+            SaveModalComponent,
+            MenuContext.MODAL
+        );
+
         let newProjectConfiguration;
         try {
              newProjectConfiguration = await this.appConfigurator.go(
@@ -394,6 +403,8 @@ export class ConfigurationComponent implements OnInit {
                 Document.clone(configurationDocument)
             );
         } catch (errWithParams) {
+            componentInstance.activeModal.close();
+            this.menus.setContext(previousMenuContext);
             return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
@@ -415,6 +426,9 @@ export class ConfigurationComponent implements OnInit {
         } catch (e) {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
+
+        componentInstance.activeModal.close();
+        this.menus.setContext(previousMenuContext);
     }
 
 

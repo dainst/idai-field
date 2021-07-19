@@ -6,10 +6,11 @@
     <span *ngIf="isDeletionAllowed()" i18n="configuration.deleteGroup.body">
         Möchten Sie die Gruppe <code>{{group.name}}</code> wirklich löschen?
     </span>
-    <span *ngIf="!isDeletionAllowed()" i18n="configuration.deleteGroup.notAllowed">
+    <div *ngIf="!isDeletionAllowed()" class="text-center alert alert-warning"
+          i18n="configuration.deleteGroup.notAllowed">
         Die Gruppe <code>{{group.name}}</code> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind.
         Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie.
-    </span>
+    </div>
 </div>
 
 <div class="modal-footer">

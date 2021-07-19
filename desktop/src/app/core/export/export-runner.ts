@@ -60,9 +60,11 @@ export module ExportRunner {
             find, selectedOperationId, categoriesList
         );
 
-        return determineCategoryCountsForMultipleOperations(
+        const topLevelCounts = await determineCategoryCountsForToplevel(find, selectedOperationId, categoriesList);
+        const recordedCounts = await determineCategoryCountsForMultipleOperations(
             get, find, selectedOperationId, categoriesList
         );
+        return topLevelCounts.concat(recordedCounts);
     }
 
 
@@ -89,6 +91,21 @@ export module ExportRunner {
     }
 
 
+    async function determineCategoryCountsForToplevel(find: Find,
+                                                      id: string, categoriesList): Promise<Array<CategoryCount>> {
+        const counts = [];
+        for (const category of ADD_EXCLUSION.map(name => categoriesList.find(cat => cat.name === name))) {
+            const query: Query = {
+                categories: [category.name],
+                constraints: {}
+            };
+            (query.constraints as any)['liesWithin:contain'] = id;
+            counts.push([category, (await find(query)).totalCount]);
+        }
+        return counts.filter(([_category, count]) => count > 0);
+    }
+
+
     async function determineCategoryCountsForSelectedOperation(find: Find,
                                                                selectedOperationId: string|undefined,
                                                                categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
@@ -110,14 +127,13 @@ export module ExportRunner {
     }
 
 
-
     async function getOperationIds(get: Get,
                                    find: Find,
                                    selectedOperationId: string) {
 
         const selectedOperation = await get(selectedOperationId);
         return selectedOperation.resource.category !== 'Place'
-            ? selectedOperationId
+            ? [selectedOperationId]
             : (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
                 .documents
                 .filter(doc => doc.resource.category !== 'Place')

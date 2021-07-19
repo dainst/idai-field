@@ -79,6 +79,21 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedCategoryDefinition().color !== this.currentColor;
     }
 
+    
+    public isRestoreColorButtonVisible(): boolean {
+        
+        return this.getClonedCategoryDefinition().color
+            !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor);
+    }
+
+
+    public restoreDefaultColor() {
+
+        this.getClonedCategoryDefinition().color = CategoryEditorModalComponent.getHexColor(
+            this.category.defaultColor
+        );
+    }
+
 
     protected getLabel(): I18N.String {
 

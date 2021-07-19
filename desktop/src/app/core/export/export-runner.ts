@@ -1,7 +1,8 @@
-import { Category, Document, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
+import { Category, Document, FieldDocument, FindResult, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
+const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
 
 /**
  * Fetches documents, rewrites identifiers in relations, triggering the export of the transformed docs.
@@ -13,22 +14,49 @@ import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './e
  */
 export module ExportRunner {
 
+    const PROJECT_CONTEXT = 'project';
+
     export const BASE_EXCLUSION = ['Operation', 'Project'];
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
+    /**
+     * 'project', if the whole project is the context
+     * undefined, if only the schema is to be exported
+     * a resource id of a place or an operation, otherwise
+     */
+    export type ExportContext = undefined | 'project' | Resource.Id;
+
+
     export async function performExport(get: Get,
                                         find: Find,
-                                        selectedOperationId: string|undefined, // TODO why can it be undefined?
-                                        selectedCategory: Category, relations: string[],
                                         getIdentifierForId: GetIdentifierForId,
+                                        context: ExportContext,
+                                        selectedCategory: Category,
+                                        relations: string[],
                                         performExport: PerformExport) {
 
         const documents = [];
-        for (const operationId of (await getOperationIds(get, find, selectedOperationId))) {
-            if (!selectedOperationId) break; // TODO see above
 
-            documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
+        if (context === undefined) {
+
+            // nop
+
+        } else if (context === PROJECT_CONTEXT) {
+
+            documents.push(...(await fetchDocuments(find, PROJECT_CONTEXT, selectedCategory)));
+
+        } else if (ADD_EXCLUSION.includes(selectedCategory.name)) {
+
+            documents.push(...(
+                await findLiesWithin(find, selectedCategory.name, context)).documents
+            );
+
+        } else {
+
+            for (const operationId of (await getOperationIds(get, find, context))) {
+                documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
+            }
         }
 
         return await aFlow(
@@ -45,24 +73,21 @@ export module ExportRunner {
     }
 
 
-    /**
-     * @param find
-     * @param selectedOperationId
-     * @param categoriesList
-     */
     export async function determineCategoryCounts(get: Get,
                                                   find: Find,
-                                                  selectedOperationId: string|undefined,
+                                                  context: ExportContext,
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
-        if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
-        if (selectedOperationId === 'project') return determineCategoryCountsForSelectedOperation(
-            find, selectedOperationId, categoriesList
+        if (!context) return determineCategoryCountsForSchema(categoriesList);
+        if (context === PROJECT_CONTEXT) return determineCategoryCountsForSelectedOperation(
+            find, context, categoriesList
         );
 
-        return determineCategoryCountsForMultipleOperations(
-            get, find, selectedOperationId, categoriesList
+        const topLevelCounts = await determineCategoryCountsForToplevel(find, context, categoriesList);
+        const recordedCounts = await determineCategoryCountsForMultipleOperations(
+            get, find, context, categoriesList
         );
+        return topLevelCounts.concat(recordedCounts).filter(([_category, count]) => count > 0);
     }
 
 
@@ -89,6 +114,16 @@ export module ExportRunner {
     }
 
 
+    async function determineCategoryCountsForToplevel(find: Find,
+                                                      id: string, categoriesList): Promise<Array<CategoryCount>> {
+        const counts = [];
+        for (const category of ADD_EXCLUSION.map(name => categoriesList.find(cat => cat.name === name))) {
+            counts.push([category, (await findLiesWithin(find, category.name, id)).totalCount]);
+        }
+        return counts;
+    }
+
+
     async function determineCategoryCountsForSelectedOperation(find: Find,
                                                                selectedOperationId: string|undefined,
                                                                categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
@@ -98,17 +133,16 @@ export module ExportRunner {
             BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION)
         );
 
-        const resourceCategoryCounts: Array<CategoryCount> = [];
+        const counts: Array<CategoryCount> = [];
         for (let category of categories) {
             const query = getQuery(category.name, selectedOperationId, 0);
-            resourceCategoryCounts.push([
+            counts.push([
                 category,
                 (await find(query)).totalCount
             ]);
         }
-        return resourceCategoryCounts.filter(([_category, count]) => count > 0);
+        return counts;
     }
-
 
 
     async function getOperationIds(get: Get,
@@ -117,7 +151,7 @@ export module ExportRunner {
 
         const selectedOperation = await get(selectedOperationId);
         return selectedOperation.resource.category !== 'Place'
-            ? selectedOperationId
+            ? [selectedOperationId]
             : (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
                 .documents
                 .filter(doc => doc.resource.category !== 'Place')
@@ -178,6 +212,19 @@ export module ExportRunner {
     }
 
 
+    export async function findLiesWithin(find: Find,
+                                         category: Name,
+                                         context: Resource.Id): Promise<FindResult> {
+
+        const query: Query = {
+            categories: [category],
+            constraints: {}
+        };
+        (query.constraints as any)[LIES_WITHIN_CONTAIN] = context;
+        return find(query);
+    }
+
+
     function getQuery(categoryName: string, selectedOperationId: string, limit?: number) {
 
         const query: Query = {
@@ -185,7 +232,7 @@ export module ExportRunner {
             constraints: {},
             limit: limit
         };
-        if (selectedOperationId !== 'project') {
+        if (selectedOperationId !== PROJECT_CONTEXT) {
             (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
         }
         return query;

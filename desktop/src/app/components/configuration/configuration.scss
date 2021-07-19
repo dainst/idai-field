@@ -5,9 +5,10 @@
 @import './editor/field-editor-modal';
 @import './editor/category-editor-modal';
 @import './editor/multi-language-input';
-@import './add/add-category-modal.scss';
-@import './add/category-preview.scss';
-@import './add/category-listing.scss';
+@import './add/add-category-modal';
+@import './delete/delete-category-modal';
+@import './add/category-preview';
+@import './add/category-listing';
 
 .project-configuration {
   

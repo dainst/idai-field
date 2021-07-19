@@ -2,13 +2,30 @@
     <h5 class="modal-title" i18n="@@configuration.deleteCategory.header">Kategorie löschen?</h5>
 </div>
 
-<div class="modal-body">
-    <span i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
+<div id="delete-category-modal-body" class="modal-body">
+    <span *ngIf="!hasCustomFields()" i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
+    <div *ngIf="hasCustomFields()">
+        <div *ngIf="hasCustomFields()" class="text-center alert alert-warning"
+             i18n="@@configuration.deleteCategory.warning.changes">
+            An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen.
+        </div>
+        <div id="confirm-delete-info" i18n="@@configuration.deleteCategory.confirmInfo">
+            Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen.
+        </div>
+        <div class="input-group">
+            <input id="delete-category-input"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="confirmDeletionCategoryName"
+                   (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">
     <div id="create-field-button"
          class="btn btn-danger"
+         [ngClass]="{ 'disabled': hasCustomFields() && !this.checkConfirmDeletionCategoryName() }"
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </div>

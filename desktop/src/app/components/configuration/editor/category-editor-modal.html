@@ -39,11 +39,15 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
         </div>
-        <input id="category-color"
+        <input *ngIf="getClonedCategoryDefinition().color" id="category-color"
                type="color"
                class="form-control form-control-color"
                [value]="getClonedCategoryDefinition().color"
                (change)="getClonedCategoryDefinition().color = $event.srcElement.value">
+        <input *ngIf="!getClonedCategoryDefinition().color" id="category-color"
+               type="color"
+               class="form-control form-control-color"
+               [value]="category.defaultColor">
         <button *ngIf="isRestoreColorButtonVisible()"
                 id="restore-color-button" class="btn btn-primary" type="button"
                 (click)="restoreDefaultColor()">

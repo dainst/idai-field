@@ -67,7 +67,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             delete this.getClonedCategoryDefinition().color;
         }
 
-        super.save();
+        await super.save();
     }
 
 
@@ -79,11 +79,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedCategoryDefinition().color !== this.currentColor;
     }
 
-    
+
     public isRestoreColorButtonVisible(): boolean {
         
         return this.getClonedCategoryDefinition().color
-            !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor);
+            && this.getClonedCategoryDefinition().color
+                !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor);
     }
 
 

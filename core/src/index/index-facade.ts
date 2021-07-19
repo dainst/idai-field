@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
+import { assoc, filter, flow, forEach, is, isDefined, isUndefinedOrEmpty, lookup, Map, on, separate, update, values } from 'tsfun';
 import { Field } from '../model';
 import { Category } from '../model';
 import { Document } from '../model/document';
@@ -55,8 +55,24 @@ export class IndexFacade {
      *   document.resource.identifier needs to be present, otherwise document gets not indexed
      */
     public put(document: Document) {
-
-        return this._put(document, false, true);
+        
+        // TODO migrate everything to isChildOf, then get rid of this adjustments
+        let adjusted = document;
+        if (!isUndefinedOrEmpty(adjusted.resource.relations['isRecordedIn'])) {
+            if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
+                adjusted = update(['resource', 'relations', 'isChildOf'], 
+                                 adjusted.resource.relations['liesWithin'], adjusted);
+            } else {
+                adjusted = update(['resource', 'relations', 'isChildOf'], 
+                                  adjusted.resource.relations['isRecordedIn'], adjusted);
+            }
+        } else {
+            if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
+                adjusted = update(['resource', 'relations', 'isChildOf'], 
+                                 adjusted.resource.relations['liesWithin'], adjusted);
+            }
+        }
+        return this._put(adjusted, false, true);
     }
 
 

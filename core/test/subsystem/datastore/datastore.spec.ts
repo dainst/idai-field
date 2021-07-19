@@ -92,4 +92,19 @@ describe('subsystem/datastore', () => {
         expect(documents2[1].resource.id).toBe('1');
         done();
     });
+
+
+    it('isChildOf', async done => {
+
+        await helpers.createDocuments([
+            ['id1', 'Trench', ['id2']],
+            ['id2', 'Feature', ['id3']],
+            ['id3', 'Find', []],
+        ]);
+
+        const result = await app.datastore.find({ 
+            constraints: { 'isChildOf:contain': { value: ['id1'], searchRecursively: true }}});
+        expect(result.ids).toEqual(['id2', 'id3']);
+        done();
+    });
 });

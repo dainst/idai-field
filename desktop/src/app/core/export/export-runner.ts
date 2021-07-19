@@ -1,7 +1,8 @@
-import { Category, Document, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
+import { Category, Document, FieldDocument, FindResult, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
+const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
 
 /**
  * Fetches documents, rewrites identifiers in relations, triggering the export of the transformed docs.
@@ -13,37 +14,50 @@ import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './e
  */
 export module ExportRunner {
 
+    const PROJECT_CONTEXT = 'project';
+
     export const BASE_EXCLUSION = ['Operation', 'Project'];
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
+    /**
+     * @param get
+     * @param find
+     * @param context 'project' if the whole project is the context
+     *                undefined if only the schema is to be exported
+     * @param selectedCategory
+     * @param relations
+     * @param getIdentifierForId
+     * @param performExport
+     * @returns
+     */
     export async function performExport(get: Get,
                                         find: Find,
-                                        selectedOperationId: string|undefined, // TODO why can it be undefined? (It can be `project`)
+                                        getIdentifierForId: GetIdentifierForId,
+                                        context: undefined | 'project' | Resource.Id, // TODO empty for schema
                                         selectedCategory: Category,
                                         relations: string[],
-                                        getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
         const documents = [];
 
-        if (selectedOperationId === 'project') {
+        if (context === undefined) {
 
-            documents.push(...(await fetchDocuments(find, 'project', selectedCategory)));
+            // nop
+
+        } else if (context === PROJECT_CONTEXT) {
+
+            documents.push(...(await fetchDocuments(find, PROJECT_CONTEXT, selectedCategory)));
 
         } else if (ADD_EXCLUSION.includes(selectedCategory.name)) {
 
-            const query: Query = {
-                categories: [selectedCategory.name],
-                constraints: {}
-            };
-            (query.constraints as any)['liesWithin:contain'] = selectedOperationId;
-            documents.push(...(await find(query)).documents);
+            documents.push(...(
+                await findLiesWithin(find, selectedCategory.name, context)).documents
+            );
 
         } else {
 
-            for (const operationId of (await getOperationIds(get, find, selectedOperationId))) {
-                // if (!selectedOperationId) break; // TODO see above
+            for (const operationId of (await getOperationIds(get, find, context))) {
                 documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
             }
         }
@@ -73,7 +87,7 @@ export module ExportRunner {
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
-        if (selectedOperationId === 'project') return determineCategoryCountsForSelectedOperation(
+        if (selectedOperationId === PROJECT_CONTEXT) return determineCategoryCountsForSelectedOperation(
             find, selectedOperationId, categoriesList
         );
 
@@ -81,7 +95,7 @@ export module ExportRunner {
         const recordedCounts = await determineCategoryCountsForMultipleOperations(
             get, find, selectedOperationId, categoriesList
         );
-        return topLevelCounts.concat(recordedCounts);
+        return topLevelCounts.concat(recordedCounts).filter(([_category, count]) => count > 0);
     }
 
 
@@ -112,14 +126,9 @@ export module ExportRunner {
                                                       id: string, categoriesList): Promise<Array<CategoryCount>> {
         const counts = [];
         for (const category of ADD_EXCLUSION.map(name => categoriesList.find(cat => cat.name === name))) {
-            const query: Query = {
-                categories: [category.name],
-                constraints: {}
-            };
-            (query.constraints as any)['liesWithin:contain'] = id;
-            counts.push([category, (await find(query)).totalCount]);
+            counts.push([category, (await findLiesWithin(find, category.name, id)).totalCount]);
         }
-        return counts.filter(([_category, count]) => count > 0);
+        return counts;
     }
 
 
@@ -132,15 +141,15 @@ export module ExportRunner {
             BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION)
         );
 
-        const resourceCategoryCounts: Array<CategoryCount> = [];
+        const counts: Array<CategoryCount> = [];
         for (let category of categories) {
             const query = getQuery(category.name, selectedOperationId, 0);
-            resourceCategoryCounts.push([
+            counts.push([
                 category,
                 (await find(query)).totalCount
             ]);
         }
-        return resourceCategoryCounts.filter(([_category, count]) => count > 0);
+        return counts;
     }
 
 
@@ -211,6 +220,19 @@ export module ExportRunner {
     }
 
 
+    export async function findLiesWithin(find: Find,
+                                         category: Name,
+                                         context: Resource.Id): Promise<FindResult> {
+
+        const query: Query = {
+            categories: [category],
+            constraints: {}
+        };
+        (query.constraints as any)[LIES_WITHIN_CONTAIN] = context;
+        return find(query);
+    }
+
+
     function getQuery(categoryName: string, selectedOperationId: string, limit?: number) {
 
         const query: Query = {
@@ -218,7 +240,7 @@ export module ExportRunner {
             constraints: {},
             limit: limit
         };
-        if (selectedOperationId !== 'project') {
+        if (selectedOperationId !== PROJECT_CONTEXT) {
             (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
         }
         return query;

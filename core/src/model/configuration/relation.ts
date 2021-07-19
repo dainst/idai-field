@@ -67,8 +67,8 @@ export namespace Relation {
      */
     export module Hierarchy {
 
-        export const RECORDEDIN = 'isRecordedIn';
-        export const LIESWITHIN = 'liesWithin';
+        export const RECORDEDIN = 'isRecordedIn';        // TODO get rid of this, in favor of isChildOf
+        export const LIESWITHIN = 'liesWithin';          // TODO get rid of this, in favor of isChildOf 
         export const ALL = [LIESWITHIN, RECORDEDIN];
     }
 

@@ -64,14 +64,12 @@ export class RelationsManager {
     }
 
 
-    // TODO return as Tree, let clients flatten the result, if necessary
+    // TODO remove; use datastore.search with isChildOf:contain constraint
     /**
      * Gets one or more documents, possibly with documents connected via hierarchical relations.
      * 
      * @throws DatastoreErrors
      */
-    public async get(id: ResourceId): Promise<Document>;
-    public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
     public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
     public async get(id: ResourceId, options: { antecendants: true }): Promise<Array<Document>>
     public async get(ids: Array<ResourceId>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>

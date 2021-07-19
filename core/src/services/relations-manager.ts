@@ -101,6 +101,7 @@ export class RelationsManager {
     }
 
 
+    // TODO review if our datastore can do this, too, via contraintIndex
     public async getAntescendants(id: Resource.Id): Promise<Array<Document>> {
 
         try {

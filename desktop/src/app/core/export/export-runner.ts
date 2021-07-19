@@ -19,16 +19,33 @@ export module ExportRunner {
 
     export async function performExport(get: Get,
                                         find: Find,
-                                        selectedOperationId: string|undefined, // TODO why can it be undefined?
-                                        selectedCategory: Category, relations: string[],
+                                        selectedOperationId: string|undefined, // TODO why can it be undefined? (It can be `project`)
+                                        selectedCategory: Category,
+                                        relations: string[],
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
         const documents = [];
-        for (const operationId of (await getOperationIds(get, find, selectedOperationId))) {
-            if (!selectedOperationId) break; // TODO see above
 
-            documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
+        if (selectedOperationId === 'project') {
+
+            documents.push(...(await fetchDocuments(find, 'project', selectedCategory)));
+
+        } else if (ADD_EXCLUSION.includes(selectedCategory.name)) {
+
+            const query: Query = {
+                categories: [selectedCategory.name],
+                constraints: {}
+            };
+            (query.constraints as any)['liesWithin:contain'] = selectedOperationId;
+            documents.push(...(await find(query)).documents);
+
+        } else {
+
+            for (const operationId of (await getOperationIds(get, find, selectedOperationId))) {
+                // if (!selectedOperationId) break; // TODO see above
+                documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
+            }
         }
 
         return await aFlow(

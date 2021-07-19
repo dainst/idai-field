@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category } from 'idai-field-core';
+import { Category, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -12,6 +12,8 @@ import { Category } from 'idai-field-core';
 export class DeleteCategoryModalComponent {
 
     public category: Category;
+    public labels: Labels;
+
     public confirmDeletionCategoryName: string;
 
 
@@ -24,5 +26,10 @@ export class DeleteCategoryModalComponent {
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
-    public checkConfirmDeletionCategoryName = () => this.confirmDeletionCategoryName === this.category.name;
+
+    public checkConfirmDeletionCategoryName(): boolean {
+        
+        return this.confirmDeletionCategoryName === this.category.name
+            || this.confirmDeletionCategoryName === this.labels.get(this.category);
+    };
 }

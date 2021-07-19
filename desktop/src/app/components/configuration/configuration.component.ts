@@ -280,6 +280,7 @@ export class ConfigurationComponent implements OnInit {
             );
 
         componentInstance.category = category;
+        componentInstance.labels = this.labels;
 
         this.modals.awaitResult(result,
             () => this.deleteCategory(category),

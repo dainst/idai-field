@@ -1,4 +1,4 @@
-import { filter, flow, values, is, isEmpty, not, on, to, flatMap } from 'tsfun';
+import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { Field } from './field';
@@ -127,6 +127,16 @@ export namespace Category {
     function getColor(category: Category): string {
 
         return category.color ?? '#cccccc';
+    }
+
+
+    export function hasCustomFields(category: Category): boolean {
+        
+        return compose(
+            Category.getFields,
+            map(to(Field.SOURCE)),
+            any(is(Field.Source.CUSTOM))
+        )(category);
     }
 
 

@@ -35,10 +35,12 @@ export class CategoryPickerComponent {
 
     public getCategoryLabel = (category: Category): string => this.labels.get(category);
 
+    public hasCustomFields = (category: Category): boolean => Category.hasCustomFields(category);
+
     public isCreateButtonVisible = (category: Category): boolean =>
         this.showCreateButtons && category.userDefinedSubcategoriesAllowed;
 
-    public openContextMenu = (event: MouseEvent, category: Category) => this.contextMenu?.open(event, category);
+    public openContextMenu = (event: MouseEvent, category: Category) => this.contextMenu?.open(event, category)
 
 
     public pickCategory(category: Category) {
@@ -92,13 +94,6 @@ export class CategoryPickerComponent {
 
 
     public isCustomCategory: Predicate<Category> = category => category.source === 'custom';
-
-
-    public hasCustomFields: Predicate<Category> = compose(
-        Category.getFields,
-        map(to(Field.SOURCE)),
-        any(is(Field.Source.CUSTOM))
-    );
 
 
     private getCategoriesOrder(): string[] {

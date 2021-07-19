@@ -15,6 +15,7 @@ import {RelationsManager} from '../../src/model';
 import {createDocuments, makeExpectDocuments, NiceDocs} from '../test-helpers';
 
 import PouchDB = require('pouchdb-node');
+import {basicIndexConfiguration} from '../../src/base-config';
 
 
 // TODO remove duplication with import/utils.ts
@@ -73,13 +74,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         undefined
     );
 
-    const createdConstraintIndex = ConstraintIndex.make({
-        'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
-        'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain', recursivelySearchable: true },
-        'liesWithin:exist': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'exist' },
-        'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
-        'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
-    }, Tree.flatten(projectConfiguration.getCategories()));
+    const createdConstraintIndex = ConstraintIndex.make(basicIndexConfiguration, Tree.flatten(projectConfiguration.getCategories()));
 
     const createdFulltextIndex = {};
     const createdIndexFacade = new IndexFacade(

@@ -158,8 +158,8 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-images':
                 await this.viewModalLauncher.openImageViewModal(document, 'edit');
-                this.loadImages(await this.relationsManager.get(
-                    document.resource.id, { antecendants: true }) as Array<FieldDocument>, true);
+                this.loadImages(await this.relationsManager.getAntescendants(
+                    document.resource.id) as Array<FieldDocument>, true);
                 break;
         }
     }
@@ -168,8 +168,8 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async openImageViewModal(document: Document) {
 
         await this.viewModalLauncher.openImageViewModal(document, 'view');
-        this.loadImages(await this.relationsManager.get(
-            document.resource.id, { antecendants: true }) as Array<FieldDocument>, true);
+        this.loadImages(await this.relationsManager.getAntescendants(
+            document.resource.id) as Array<FieldDocument>, true);
     }
 
 

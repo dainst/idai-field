@@ -71,22 +71,13 @@ export class RelationsManager {
      * @throws DatastoreErrors
      */
     public async get(id: Resource.Id, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
-    public async get(id: Resource.Id, options: { antecendants: true }): Promise<Array<Document>>
     public async get(ids: Array<Resource.Id>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
-    public async get(ids_: any, options?: { descendants?: true, toplevel?: false, antecendants?: true }): Promise<any> {
-
-        if (options?.antecendants) {
-            // any of these can be removed after implementing corresponding behaviour, if needed
-            if (isArray(ids_)) throw 'multiple ids not allowed with antecendants option';
-            if (options.descendants) throw 'do not use descendants with antecendants option';
-            if (options.toplevel) throw 'do not use toplevel with antecendants option';
-        }
+    public async get(ids_: any, options?: { descendants?: true, toplevel?: false }): Promise<any> {
 
         const ids = isArray(ids_) ? ids_ : [ids_];
         const returnSingleItem = 
             !isArray(ids_) 
-            && options?.descendants !== true 
-            && options?.antecendants !== true;
+            && options?.descendants !== true;
 
         try {
             const documents = [];
@@ -94,7 +85,6 @@ export class RelationsManager {
                 const document = await this.datastore.get(id);
                 documents.push(document);
                 if (options?.descendants === true) documents.push(...(await this.getDescendants(document)));
-                if (options?.antecendants === true) documents.push(...(await this.getAntecendants(document)));
             }
             if (returnSingleItem) return documents[0];
             if (options?.toplevel !== false) return documents;
@@ -106,6 +96,18 @@ export class RelationsManager {
 
         } catch {
             if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;
+            return [];
+        }
+    }
+
+
+    public async getAntescendants(id: Resource.Id): Promise<Array<Document>> {
+
+        try {
+            const document = await this.datastore.get(id);
+            return [document].concat((await this.getAntecendants(document)));
+        } catch {
+            console.error('error in relationsManager.getAntescendants()');
             return [];
         }
     }

@@ -1,5 +1,5 @@
-import {flatten, sameset} from 'tsfun';
-import {Document, FieldDocument, ImageDocument, toResourceId} from '../../../src/model';
+import {flatten} from 'tsfun';
+import {Document, FieldDocument, ImageDocument} from '../../../src/model';
 import {doc} from '../../test-helpers';
 import { CoreApp, createCoreApp, createHelpers, makeDocumentsLookup } from '../subsystem-helper';
 
@@ -40,7 +40,7 @@ describe('subsystem/relations-manager', () => {
             ['t1', 'Type']
         ]);
 
-        const results = await app.relationsManager.get('t1', { antecendants: true });
+        const results = await app.relationsManager.getAntescendants('t1');
         const lookup = makeDocumentsLookup(results);
         expect(lookup['tc1'].resource.id).toBe('tc1');
         expect(lookup['t1'].resource.id).toBe('t1');

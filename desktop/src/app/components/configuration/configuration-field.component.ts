@@ -63,6 +63,8 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public isCustomField = () => this.field.source === 'custom';
 
+    public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
+
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 

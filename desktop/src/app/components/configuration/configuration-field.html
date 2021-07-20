@@ -9,7 +9,7 @@
      (contextmenu)="!parentField && contextMenu.open($event, category, undefined, field)">
     <div class="card-header"
          [class.parent-element]="parentField"
-         [class.opened]="opened">
+         [class.opened]="opened || isContextMenuOpen()">
         <ng-content></ng-content>
         <category-icon *ngIf="parentField"
             [size]="28"

@@ -20,10 +20,11 @@
     padding: 12px;
     background-color: white;
     margin-bottom: 1px;
+    transition: background-color .25s ease;
 
     &.selected-suggestion {
       background-color: darken($list-item-hover-color, 5%);
-      transition: background-color .65s ease;
+      transition: background-color .5s ease;
     }
   }
 

@@ -22,7 +22,7 @@
 
       &:hover {
         background-color: darken($list-item-hover-color, 5%);
-        transition: background-color .65s ease;
+        transition: background-color .5s ease;
       }
 
       &:first-child {

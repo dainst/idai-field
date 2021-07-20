@@ -6,6 +6,7 @@ import { Query } from '../model/query';
 import { Resource } from '../model/resource';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
+import { adjustIsChildOf } from './adjust-is-child-of';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
@@ -55,7 +56,10 @@ export class IndexFacade {
      */
     public put(document: Document) {
 
-        return this._put(document, false, true);
+        // TODO migrate everything to isChildOf, then get rid of this adjustments
+        const adjusted = adjustIsChildOf(document);
+
+        return this._put(adjusted, false, true);
     }
 
 

@@ -1,7 +1,7 @@
 import { isUndefinedOrEmpty, update } from 'tsfun';
 import { Document } from '../model/document';
 
-// TODO migrate everything to isChildOf, then get rid of this adjustments
+
 export function adjustIsChildOf(document: Document): Document {
 
     if (!document.resource.relations) return document;

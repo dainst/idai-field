@@ -23,7 +23,7 @@ export class ResourceDeletion {
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount: number = await this.relationsManager.getDescendantsCount(...documents);
+        const descendantsCount = await this.getDescendantsCount(documents);
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -44,6 +44,16 @@ export class ResourceDeletion {
 
         await this.performDeletion(documents, deleteRelatedImages);
         deletionInProgressModalRef.close();
+    }
+
+
+    private async getDescendantsCount(documents: Array<FieldDocument>) {
+
+        let count = 0;
+        for (const document of documents) {
+            count += (await this.datastore.findIds(childrenOf(document.resource.id))).ids.length;
+        }
+        return count;
     }
 
 

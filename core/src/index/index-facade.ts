@@ -7,6 +7,7 @@ import { Query } from '../model/query';
 import { Resource } from '../model/resource';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
+import {adjustIsChildOf} from './adjust-is-child-of';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
@@ -57,21 +58,8 @@ export class IndexFacade {
     public put(document: Document) {
         
         // TODO migrate everything to isChildOf, then get rid of this adjustments
-        let adjusted = document;
-        if (!isUndefinedOrEmpty(adjusted.resource.relations['isRecordedIn'])) {
-            if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
-                adjusted = update(['resource', 'relations', 'isChildOf'], 
-                                 adjusted.resource.relations['liesWithin'], adjusted);
-            } else {
-                adjusted = update(['resource', 'relations', 'isChildOf'], 
-                                  adjusted.resource.relations['isRecordedIn'], adjusted);
-            }
-        } else {
-            if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
-                adjusted = update(['resource', 'relations', 'isChildOf'], 
-                                 adjusted.resource.relations['liesWithin'], adjusted);
-            }
-        }
+        const adjusted = adjustIsChildOf(document);
+        
         return this._put(adjusted, false, true);
     }
 

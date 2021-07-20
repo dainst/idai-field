@@ -11,9 +11,12 @@ configuration-field {
       height: 55px;
       background-color: #fff;
       border: none;
+      transition: background-color .25s ease;
 
-      &.opened {
-        background-color: initial;
+      &.opened,
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .5s ease;
       }
 
       .mdi-drag {
@@ -59,6 +62,7 @@ configuration-field {
 
     .card-body {
       padding-top: 0;
+      background-color: darken($list-item-hover-color, 5%);
 
       .list-group {
         color: initial;

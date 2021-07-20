@@ -1,4 +1,4 @@
-import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager } from 'idai-field-core';
+import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager, Resource, childrenOf } from 'idai-field-core';
 import { aMap, isArray, clone, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
@@ -48,7 +48,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
 
             if (isOwned(context, importCatalog)) {
                 await assertCatalogNotOwned(services, context, importCatalog);
-                await assertNoImagesOverwritten(services, context, importDocuments);
+                await assertNoImagesOverwritten(services, importDocuments);
                 for (const importDocument of importDocuments) {
                     delete importDocument.project;
                 }
@@ -65,7 +65,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
             const updateDocuments = await aMap(importDocuments,
-                importOneDocument(services, context, existingCatalogAndImageDocuments));
+                importOneDocument(services, existingCatalogAndImageDocuments));
 
             await removeRelatedImages(
                 services, updateDocuments, existingDocumentsRelatedImages);
@@ -127,7 +127,6 @@ async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
 
 
 async function assertNoImagesOverwritten(services: ImportCatalogServices,
-                                         context: ImportCatalogContext,
                                          importDocuments: Array<Document>) {
 
     for (const document of importDocuments) {
@@ -224,22 +223,33 @@ function getImportTypeCatalog(importDocuments: Array<Document>): Document {
 
 
 async function getExistingDocuments(services: ImportCatalogServices,
-                                    catalogResourceId: string)
-    : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
+                                    typeCatalog: Resource.Id)
+        : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
 
-    const catalogDocuments = await services.relationsManager.get(catalogResourceId, { descendants: true });
-    const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogDocuments);
+    const catalogAndTypes = await fetchExistingCatalogWithTypes(services, typeCatalog);
+    const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogAndTypes);
 
     return [
-        catalogDocuments,
+        catalogAndTypes,
         imageDocuments,
-        makeDocumentsLookup(catalogDocuments.concat(imageDocuments))
+        makeDocumentsLookup(catalogAndTypes.concat(imageDocuments))
     ];
 }
 
 
+async function fetchExistingCatalogWithTypes(services: ImportCatalogServices,
+                                             typeCatalog: Resource.Id)
+        : Promise<Array<Document>> {
+
+    try {
+        return [await services.datastore.get(typeCatalog)].concat(
+                (await services.datastore.find(childrenOf(typeCatalog))).documents
+            );
+    } catch /*(catalog) document not found*/ { return []; }
+}
+
+
 function importOneDocument(services: ImportCatalogServices,
-                           context: ImportCatalogContext,
                            existingDocuments: Lookup<Document>) {
 
     return async (document: Document) => {

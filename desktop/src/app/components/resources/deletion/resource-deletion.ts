@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set, to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
+import { childrenOf, Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { ImageRelationsManager } from '../../../core/model/image-relations-manager';
@@ -15,6 +15,7 @@ import { ImageRelationsManager } from '../../../core/model/image-relations-manag
 export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
+                private datastore: Datastore,
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -62,18 +63,12 @@ export class ResourceDeletion {
 
     private async getDescendants(documents: Array<FieldDocument>): Promise<Array<FieldDocument>> {
 
-        let descendants: Array<FieldDocument> = [];
-
+        const descendants: Array<FieldDocument> = [];
         for (let document of documents) {
-            descendants = descendants.concat(
-                await this.relationsManager.get(
-                    document.resource.id, { descendants: true, toplevel: false }
-                ) as Array<FieldDocument>
-            );
+            const result = await this.datastore.find(childrenOf(document.resource.id));
+            descendants.push(...result.documents as Array<FieldDocument>);
         }
-
-        return (set(descendants))
-            .filter(document => !documents.map(to(['resource','id'])).includes(document.resource.id));
+        return descendants;
     }
 
 

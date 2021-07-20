@@ -1,19 +1,21 @@
-import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
+import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId, Datastore, childrenOf } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
-import { RelationsManager } from 'idai-field-core';
 
 
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';
 
 
-export async function getExportDocuments(relationsManager: RelationsManager,
+export async function getExportDocuments(datastore: Datastore,
                                          imageRelationsManager: ImageRelationsManager,
-                                         catalogId: Resource.Id,
+                                         typeCatalog: Resource.Id,
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<Resource.Id>]>> {
 
-    const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true })).map(Document.clone);
+    // TODO why not fetching the documents before calling this function and then passing them in instead
+    const catalogAndTypes = (await datastore.find(childrenOf(typeCatalog)))
+        .documents
+        .map(Document.clone);
 
     const linkedImages = (await imageRelationsManager.getLinkedImages(catalogAndTypes)).map(Document.clone);
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);

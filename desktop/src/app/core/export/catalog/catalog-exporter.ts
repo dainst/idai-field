@@ -1,4 +1,4 @@
-import { Resource, StringUtils, RelationsManager } from 'idai-field-core';
+import { Resource, StringUtils, Datastore } from 'idai-field-core';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { Settings } from '../../settings/settings';
 import { getExportDocuments } from './get-export-documents';
@@ -21,14 +21,14 @@ export module CatalogExporter {
     /**
      * @throws an error if something goes wrong
      */
-    export async function performExport(relationsManager: RelationsManager,
+    export async function performExport(datastore: Datastore,
                                         imageRelationsManager: ImageRelationsManager,
                                         outputFilePath: string,
                                         catalogId: string,
                                         settings: Settings): Promise<void> {
 
         const [error, results] =
-            await getExportDocuments(relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
+            await getExportDocuments(datastore, imageRelationsManager, catalogId, settings.selectedProject);
         if (error !== undefined) throw error;
         const [exportDocuments, imageResourceIds] = results;
 

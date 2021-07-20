@@ -70,7 +70,6 @@ export class RelationsManager {
      * 
      * @throws DatastoreErrors
      */
-    public async get(id: Resource.Id, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
     public async get(ids: Array<Resource.Id>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
     public async get(ids_: any, options?: { descendants?: true, toplevel?: false }): Promise<any> {
 

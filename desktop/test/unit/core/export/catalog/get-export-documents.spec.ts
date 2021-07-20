@@ -1,3 +1,4 @@
+import {Datastore} from 'idai-field-core';
 import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED,
     getExportDocuments} from '../../../../../src/app/core/export/catalog/get-export-documents';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
@@ -5,14 +6,14 @@ import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/uti
 
 describe('getExportDocuments', () => {
 
-    let relationsManager;
+    let datastore: Datastore;
     let imageRelationsManager;
 
     let images;
 
     beforeEach(() => {
 
-        relationsManager = jasmine.createSpyObj('relationsManager', ['get']);
+        datastore = jasmine.createSpyObj('datastore', ['find']);
         imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['getLinkedImages']);
 
         images = [
@@ -45,7 +46,7 @@ describe('getExportDocuments', () => {
                 }
             }
         ];
-        relationsManager.get.and.returnValue([documents[0], documents[1]]);
+        (datastore as any).find.and.returnValue({ documents: [documents[0], documents[1]]});
         imageRelationsManager.getLinkedImages.and.returnValue(images);
     });
 
@@ -53,7 +54,7 @@ describe('getExportDocuments', () => {
     it('basic', async done => {
 
         const [_, [exportDocuments, imageResourceIds]] = await getExportDocuments(
-            relationsManager, imageRelationsManager, 'C1', 'test-project');
+            datastore, imageRelationsManager, 'C1', 'test-project');
         const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
         expect(exportDocuments.length).toBe(3);
         expect(exportDocumentsLookup['C1']['project']).toBe('test-project');
@@ -73,7 +74,7 @@ describe('getExportDocuments', () => {
         });
 
         const [error, _] = await getExportDocuments(
-            relationsManager, imageRelationsManager, 'C1', 'test-project');
+            datastore, imageRelationsManager, 'C1', 'test-project');
         expect(error[0]).toEqual(ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED);
         expect(error[1]).toEqual(images[0].resource.identifier);
         done();

@@ -18,21 +18,6 @@ describe('subsystem/relations-manager', () => {
     });
 
 
-    it('get - include descendants', async done => {
-
-        await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type']
-        ]);
-
-        const results = await app.relationsManager.get('tc1', { descendants: true });
-        const lookup = makeDocumentsLookup(results);
-        expect(lookup['tc1'].resource.id).toBe('tc1');
-        expect(lookup['t1'].resource.id).toBe('t1');
-        done();
-    });
-
-
     it('get - include antescendants', async done => {
 
         await helpers.createDocuments([
@@ -44,20 +29,6 @@ describe('subsystem/relations-manager', () => {
         const lookup = makeDocumentsLookup(results);
         expect(lookup['tc1'].resource.id).toBe('tc1');
         expect(lookup['t1'].resource.id).toBe('t1');
-        done();
-    });
-
-
-    it('get - only descendants', async done => {
-
-        await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type']
-        ]);
-
-        const results = await app.relationsManager.get('tc1', { descendants: true, toplevel: false });
-        expect(results.length).toBe(1);
-        expect(results[0].resource.id).toBe('t1');
         done();
     });
 

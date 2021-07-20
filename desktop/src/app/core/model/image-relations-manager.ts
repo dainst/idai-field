@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectConfiguration,
-    ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, } from 'idai-field-core';
+    ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, childrenOf, } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to, isnt, not, rest, first } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import DEPICTS = Relation.Image.DEPICTS;
@@ -68,12 +68,14 @@ export class ImageRelationsManager {
 
         const documentsToBeDeleted = [];
         for (const document of nonImageDocuments) {
-            const docsInclDescendants =
-                (await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false })).concat([document]);
-            documentsToBeDeleted.push(...docsInclDescendants);
+            const descendants = await this.fetchDescendants(document.resource.id);
+            documentsToBeDeleted.push(document, ...descendants);
             await this.relationsManager.remove(
                 document,
-                { descendants: true, descendantsToKeep: nonImageDocuments.filter(doc => doc !== document) }
+                {
+                    descendants: true,
+                    descendantsToKeep: nonImageDocuments.filter(doc => doc !== document)
+                }
             );
         }
 
@@ -151,6 +153,13 @@ export class ImageRelationsManager {
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
         }
         return leftovers;
+    }
+
+
+    private async fetchDescendants(id: Resource.Id)
+            : Promise<Array<Document>> {
+
+        return (await this.datastore.find(childrenOf(id))).documents;
     }
 
 

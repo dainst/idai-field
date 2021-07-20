@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
-    Resource, ProjectConfiguration, RelationsManager } from 'idai-field-core';
+    Resource, ProjectConfiguration } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -60,7 +60,6 @@ export class ExportComponent implements OnInit {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
-                private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
                 private labels: Labels) {}
 
@@ -166,7 +165,7 @@ export class ExportComponent implements OnInit {
 
         try {
             await CatalogExporter.performExport(
-                this.relationsManager,
+                this.datastore,
                 this.imageRelationsManager,
                 filePath,
                 this.selectedCatalogId,

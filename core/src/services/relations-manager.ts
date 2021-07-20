@@ -1,10 +1,9 @@
 
 import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to, not
+    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
 } from 'tsfun';
 import { Document } from '../model/document';
 import {Relation} from '../model/configuration/relation';
-import { DatastoreErrors } from '../datastore/datastore-errors'
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/document';
@@ -34,7 +33,6 @@ export class RelationsManager {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
 
-
     /**
      * Persists document and all the objects that are or have been in relation
      * with the object before the method call.
@@ -61,42 +59,6 @@ export class RelationsManager {
 
         await this.fixIsRecordedInInLiesWithinDocs(persistedDocument);
         return persistedDocument;
-    }
-
-
-    // TODO remove; use datastore.search with isChildOf:contain constraint
-    /**
-     * Gets one or more documents, possibly with documents connected via hierarchical relations.
-     * 
-     * @throws DatastoreErrors
-     */
-    public async get(ids: Array<Resource.Id>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
-    public async get(ids_: any, options?: { descendants?: true, toplevel?: false }): Promise<any> {
-
-        const ids = isArray(ids_) ? ids_ : [ids_];
-        const returnSingleItem = 
-            !isArray(ids_) 
-            && options?.descendants !== true;
-
-        try {
-            const documents = [];
-            for (const id of ids) {
-                const document = await this.datastore.get(id);
-                documents.push(document);
-                if (options?.descendants === true) documents.push(...(await this.getDescendants(document)));
-            }
-            if (returnSingleItem) return documents[0];
-            if (options?.toplevel !== false) return documents;
-
-            return documents
-                .filter(
-                    on([Document.RESOURCE, Resource.RELATIONS, Relation.Hierarchy.LIESWITHIN], 
-                       not(isUndefinedOrEmpty)));
-
-        } catch {
-            if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;
-            return [];
-        }
     }
 
 

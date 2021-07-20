@@ -8,25 +8,22 @@
     <ul #sidebar id="sidebar" class="resources-listing"
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
-            class="resources-listing-item resources-listing-item-wide"
-            (contextmenu)="contextMenu.open($event, getSelection())"
-            [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-            [class.conflicted]="document['_conflicts']"
-            [class.selected]="selectedDocument?.resource.id === document.resource.id"
-            [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
-            [id]="'resource-' + document.resource.identifier">
-
+             class="resources-listing-item resources-listing-item-wide"
+             (contextmenu)="contextMenu.open($event, getSelection())"
+             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
+             [class.conflicted]="document['_conflicts']"
+             [class.selected]="selectedDocument?.resource.id === document.resource.id"
+             [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
+             [id]="'resource-' + document.resource.identifier">
             <document-teaser (click)="select(document, $event)"
                              (contextmenu)="select(document, $event, false)"
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
-
             <list-button-group [document]="document"
                             [activePopoverMenu]="resourcesComponent.activePopoverMenu"
                             [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
                             (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
             </list-button-group>
-
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
             <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"

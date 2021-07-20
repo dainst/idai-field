@@ -130,10 +130,10 @@ $deactivated-button-color: lightgray;
     -ms-user-select: none;
     min-height: $item-height;
     height: $item-height;
+    transition: background-color .65s ease;
 
     &:hover {
       background-color: darken($list-item-hover-color, 5%);
-      transition: background-color .65s ease;
     }
   }
 

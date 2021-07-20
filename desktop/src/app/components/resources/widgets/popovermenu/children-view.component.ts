@@ -4,7 +4,6 @@ import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {ResourcesComponent} from '../../resources.component';
-import { map } from 'tsfun';
 
 
 @Component({
@@ -77,6 +76,6 @@ export class ChildrenViewComponent implements OnChanges {
 
         return (await this.datastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
-            }}, true)).documents as Array<FieldDocument>;
+            }})).documents as Array<FieldDocument>;
     }
 }

@@ -344,10 +344,7 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<FindResult> {
 
         try {
-            const ignoreCategories = !query.categories
-                && !(this.resourcesStateManager.isInOverview() && ResourcesState.isInExtendedSearchMode(this.resourcesStateManager.get()));
-            return await this.datastore.find(query, ignoreCategories);
-
+            return await this.datastore.find(query);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], ids: [], totalCount: 0 };

@@ -195,19 +195,13 @@ export class Datastore {
      * Perform a fulltext query
      * Find sorts the documents by identifier ascending
      * 
-     * @param query
-     * @param ignoreCategories to make queries faster, the facility to return only the
-     *   categories the datastore is supposed to return, can be turned off. This can make sense if
-     *   one performs constraint queries, where one knows that all documents returned are of
-     *   allowed categories, due to the nature of the relations to which the constraints refer.
-     * 
      * @param query the query object
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public async find(query: Query, ignoreCategories: boolean = false): Promise<FindResult> {
+    public async find(query: Query): Promise<FindResult> {
 
-        const { ids } = this.findIds(query, ignoreCategories);
+        const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
 
         return {
@@ -218,11 +212,8 @@ export class Datastore {
     }
 
 
-    public findIds(query: Query, ignoreCategories: boolean = false /* TODO review */): FindIdsResult {
-
-        if (!query.categories && !ignoreCategories) {
-            query = detach('categories', query);
-        }
+    // TODO merge into find
+    public findIds(query: Query): FindIdsResult {
 
         const orderedResults: string[] = this.getIds(query);
 

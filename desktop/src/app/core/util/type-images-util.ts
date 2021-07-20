@@ -35,7 +35,7 @@ export module TypeImagesUtil {
             constraints: { 'liesWithin:contain': resourceId }
         };
 
-        const resourceIds: string[] = datastore.findIds(query, true).ids;
+        const resourceIds: string[] = datastore.findIds(query).ids;
 
         return flow(
             resourceIds,
@@ -70,7 +70,7 @@ export module TypeImagesUtil {
             constraints: { 'isInstanceOf:contain': resourceId }
         };
 
-        const ids: string[] = datastore.findIds(query, true).ids;
+        const ids: string[] = datastore.findIds(query).ids;
         const result: string[] = [];
 
         for (let id of ids) {
@@ -89,7 +89,7 @@ export module TypeImagesUtil {
             sort: { mode: 'none' }
         };
 
-        const ids: string[] = datastore.findIds(query, true).ids;
+        const ids: string[] = datastore.findIds(query).ids;
 
         return ids.length > 0 ? ids[0] : undefined;
     }

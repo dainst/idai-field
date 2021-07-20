@@ -3,7 +3,7 @@ import { Category, Document, Datastore, Name, Relation } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../images/imagestore/imagestore';
-import { ImageRelationsManager } from '../model/image-relations-manager';
+import { ImageRelationsManager } from '../services/image-relations-manager';
 import { Settings } from '../settings/settings';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';

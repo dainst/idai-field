@@ -20,7 +20,7 @@ import { Imagestore } from '../core/images/imagestore/imagestore';
 import { PouchDbFsImagestore } from '../core/images/imagestore/pouch-db-fs-imagestore';
 import { ImportValidator } from '../core/import/import/process/import-validator';
 import { InitializationProgress } from '../core/initialization-progress';
-import { ImageRelationsManager } from '../core/model/image-relations-manager';
+import { ImageRelationsManager } from '../core/services/image-relations-manager';
 import { Validator } from '../core/model/validator';
 import { SettingsProvider } from '../core/settings/settings-provider';
 import { SettingsService } from '../core/settings/settings-service';

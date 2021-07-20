@@ -1,5 +1,5 @@
 import { Resource, StringUtils, Datastore } from 'idai-field-core';
-import { ImageRelationsManager } from '../../model/image-relations-manager';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Settings } from '../../settings/settings';
 import { getExportDocuments } from './get-export-documents';
 

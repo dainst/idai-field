@@ -4,7 +4,7 @@ import {MsgWithParams} from '../../components/messages/msg-with-params';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export module ProjectNameValidator {
+export namespace ProjectNameValidation {
 
     const PROJECT_NAME_MAX_LENGTH: number = 18;
 

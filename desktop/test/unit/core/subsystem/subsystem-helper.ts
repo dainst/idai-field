@@ -10,7 +10,7 @@ import { ImageDocumentsManager } from '../../../../src/app/core/images/overview/
 import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/view/imageoverview-facade';
 import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../../src/app/core/import/import/utils';
-import { ImageRelationsManager } from '../../../../src/app/core/model/image-relations-manager';
+import { ImageRelationsManager } from '../../../../src/app/core/services/image-relations-manager';
 import { Validator } from '../../../../src/app/core/model/validator';
 import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade';

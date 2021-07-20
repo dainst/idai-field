@@ -1,4 +1,4 @@
-import { ProjectNameValidator } from '../../../../src/app/core/model/project-name-validator';
+import { ProjectNameValidation } from '../../../../src/app/core/model/project-name-validation';
 
 
 /**
@@ -8,10 +8,10 @@ describe('ProjectNameValidator', () => {
 
     it('test project name similarity', () => {
 
-        expect(ProjectNameValidator.isSimilar('project', 'project-test')).toBe(true);
-        expect(ProjectNameValidator.isSimilar('project', 'test-project')).toBe(true);
-        expect(ProjectNameValidator.isSimilar('project-1', 'project-2')).toBe(true);
-        expect(ProjectNameValidator.isSimilar('one-project', 'other-project')).toBe(false);
-        expect(ProjectNameValidator.isSimilar('abc', 'xyz')).toBe(false);
+        expect(ProjectNameValidation.isSimilar('project', 'project-test')).toBe(true);
+        expect(ProjectNameValidation.isSimilar('project', 'test-project')).toBe(true);
+        expect(ProjectNameValidation.isSimilar('project-1', 'project-2')).toBe(true);
+        expect(ProjectNameValidation.isSimilar('one-project', 'other-project')).toBe(false);
+        expect(ProjectNameValidation.isSimilar('abc', 'xyz')).toBe(false);
     });
 });

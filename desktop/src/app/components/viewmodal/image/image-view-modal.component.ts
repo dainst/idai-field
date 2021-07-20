@@ -9,7 +9,7 @@ import {ViewModalComponent} from '../view-modal.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
 import { Menus } from '../../services/menus';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
-import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
+import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
 
 export namespace ImageViewModalComponent {
 

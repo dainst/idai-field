@@ -4,7 +4,7 @@ import { Document, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { reload } from '../../core/common/reload';
 import { StateSerializer } from '../../core/common/state-serializer';
-import { ProjectNameValidator } from '../../core/model/project-name-validator';
+import { ProjectNameValidation } from '../../core/model/project-name-validation';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';
@@ -115,7 +115,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
         const validationErrorMessage: MsgWithParams|undefined =
             ProjectNameValidatorMsgConversion.convert(
-                ProjectNameValidator.validate(this.newProject, this.getProjects())
+                ProjectNameValidation.validate(this.newProject, this.getProjects())
             );
         if (validationErrorMessage) return this.messages.add(validationErrorMessage);
 

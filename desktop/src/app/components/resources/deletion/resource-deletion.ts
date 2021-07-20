@@ -4,7 +4,7 @@ import { set, to } from 'tsfun';
 import { childrenOf, Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
-import { ImageRelationsManager } from '../../../core/model/image-relations-manager';
+import { ImageRelationsManager } from '../../../core/services/image-relations-manager';
 
 
 /**

@@ -73,6 +73,20 @@ configuration-field {
         }
       }
     }
+
+    &.custom {
+      .card-header,
+      .card-body {
+        background-color: darken(#fff3cd, 5%) !important;
+      }
+
+      .card-header {
+        &.opened,
+        &:hover:not(.parent-element) {
+          background-color: darken(#fff3cd, 5%) !important;
+        }
+      }
+    }
   }
 
   .text-white code {

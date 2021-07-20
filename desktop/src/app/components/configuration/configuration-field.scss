@@ -26,20 +26,11 @@ configuration-field {
         right: 6px;
         cursor: grab;
       }
-  
-      &.parent-element .mdi-drag {
-        top: unset;
-        bottom: 2px;
-      }
 
       .category-icon {
         position: relative;
-        top: 2px;
-        left: -6px;
-        margin-right: 2px;
-      }
-
-      &.parent-element .category-icon {
+        top: 5px;
+        right: 2px;
         margin-left: 12px;
       }
 
@@ -48,15 +39,6 @@ configuration-field {
       .mdi-alert-circle-outline {
         position: relative;
         top: 3px;
-      }
-  
-      &.parent-element {
-        b,
-        code,
-        .mdi-alert-circle-outline {
-          position: relative;
-          top: -2px;
-        }
       }
     }
 

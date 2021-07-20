@@ -11,9 +11,6 @@
          [class.parent-element]="parentField"
          [class.opened]="opened || isContextMenuOpen()">
         <ng-content></ng-content>
-        <category-icon *ngIf="parentField"
-            [size]="28"
-            [category]="category.parentCategory"></category-icon>
         <span *ngIf="isCustomField()"
             class="mdi mdi-alert-circle-outline"
             ngbTooltip="Projektspezifisches Feld"
@@ -22,6 +19,9 @@
         </span>
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
+        <category-icon *ngIf="parentField"
+                       [size]="19"
+                       [category]="category.parentCategory"></category-icon>
     </div>
 
     <div *ngIf="opened" class="card-body">

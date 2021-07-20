@@ -1,9 +1,8 @@
 <div *ngIf="field && category"
      [id]="'field-' + field.name"
      class="card"
-     [class.bg-warning]="isCustomField()"
-     [class.bg-secondary]="hidden"
-     [class.text-white]="hidden"
+     [class.custom]="isCustomField()"
+     [class.hidden-element]="hidden"
      (click)="!parentField && onOpen.emit()"
      (dblclick)="!parentField && onEdit.emit()"
      (contextmenu)="!parentField && contextMenu.open($event, category, undefined, field)">

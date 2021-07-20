@@ -1,19 +1,5 @@
-import {
-    Mapping,
-    Predicate,
-    isFunction,
-    first,
-    isNumber,
-    rest,
-    isObject,
-    isArray,
-    Pair,
-    to,
-    Path,
-    is,
-    zip, identity
-} from 'tsfun';
-import {Comparator} from 'tsfun';
+import { Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path, is, Comparator,
+    zip, identity } from 'tsfun';
 import { Named } from './named';
 
 

@@ -1,8 +1,8 @@
 <div *ngIf="field && category" class="card field-drag-element"
-     [class.bg-warning]="isCustomField()"
-     [class.bg-secondary]="hidden"
-     [class.text-white]="hidden">
-    <div class="card-header" [class.parent-element]="parentField">
+     [class.bg-warning]="isCustomField()">
+    <div class="card-header"
+         [class.parent-element]="parentField"
+         [class.hidden-element]="hidden">
         <category-icon *ngIf="parentField"
             [size]="28"
             [category]="category.parentCategory"></category-icon>

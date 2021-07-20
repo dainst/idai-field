@@ -64,6 +64,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 this.selectedGroup = this.category.groups[0].name;
             }
             this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();
+            this.openedFieldName = undefined;
         }
 
         this.updateLabelAndDescription();

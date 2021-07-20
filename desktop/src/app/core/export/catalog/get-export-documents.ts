@@ -12,7 +12,6 @@ export async function getExportDocuments(datastore: Datastore,
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<Resource.Id>]>> {
 
-    // TODO why not fetching the documents before calling this function and then passing them in instead
     const catalogAndTypes = (await datastore.find(childrenOf(typeCatalog)))
         .documents
         .map(Document.clone);

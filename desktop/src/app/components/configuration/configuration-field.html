@@ -2,7 +2,7 @@
      [id]="'field-' + field.name"
      class="card"
      [class.custom]="isCustomField()"
-     [class.hidden]="hidden"
+     [class.hidden-element]="hidden"
      (click)="!parentField && onOpen.emit()"
      (dblclick)="!parentField && onEdit.emit()"
      (contextmenu)="!parentField && contextMenu.open($event, category, undefined, field)">

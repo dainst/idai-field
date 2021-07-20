@@ -19,6 +19,14 @@ configuration-field {
         transition: background-color .5s ease;
       }
 
+      &.parent-element {
+        b,
+        code {
+          font-style: italic;
+          font-weight: normal;
+        }
+      }
+
       .mdi-drag {
         color: #848484;
         position: relative;
@@ -85,6 +93,16 @@ configuration-field {
         &:hover:not(.parent-element) {
           background-color: darken(#fff3cd, 5%) !important;
         }
+      }
+    }
+
+    &.hidden-element {
+      b,
+      code,
+      span,
+      .card-text,
+      .badge {
+        color: #ccc;
       }
     }
   }

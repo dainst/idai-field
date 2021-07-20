@@ -200,7 +200,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     protected updateCustomLanguageConfigurations() {
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription,
             this.category, this.field
         );

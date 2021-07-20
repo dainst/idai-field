@@ -77,7 +77,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
     protected updateCustomLanguageConfigurations() {
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(),
             this.clonedLabel, undefined, undefined, undefined, this.group
         );

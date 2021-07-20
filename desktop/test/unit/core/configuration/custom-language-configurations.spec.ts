@@ -92,7 +92,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
         };
 
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -135,7 +135,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
         };
 
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -163,7 +163,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
         };
 
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -212,7 +212,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
 
         const editedDescription: I18N.String = {};
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -255,7 +255,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
 
         const editedDescription: I18N.String = {};
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -287,7 +287,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             de: 'Altes Label'
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -326,7 +326,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             de: 'Beschreibungstext des Feldes'
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -359,7 +359,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             de: 'Beschreibungstext der Kategorie'
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -384,7 +384,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             de: 'Test-Gruppe'
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -430,7 +430,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             }
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             {},
             {},
@@ -464,7 +464,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             }
         };
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             customLanguageConfigurations,
             {},
             {},
@@ -516,7 +516,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/core/configurat
             }
         };
 
-        CustomLanguageConfigurations.deleteCategoryFromCustomLanguageConfigurations(
+        CustomLanguageConfigurations.deleteCategory(
             customLanguageConfigurations,
             category
         );

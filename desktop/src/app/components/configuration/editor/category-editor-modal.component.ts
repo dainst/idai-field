@@ -110,7 +110,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     protected updateCustomLanguageConfigurations() {
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category
         );
     }

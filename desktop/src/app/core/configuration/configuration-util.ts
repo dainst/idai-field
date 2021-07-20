@@ -54,7 +54,7 @@ export module ConfigurationUtil {
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         delete clonedConfigurationDocument.resource.categories[category.libraryId ?? category.name];
 
-        CustomLanguageConfigurations.deleteCategoryFromCustomLanguageConfigurations(
+        CustomLanguageConfigurations.deleteCategory(
             clonedConfigurationDocument.resource.languages, category
         );
 
@@ -75,7 +75,7 @@ export module ConfigurationUtil {
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
-            CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+            CustomLanguageConfigurations.update(
                 clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
             );
         }
@@ -97,7 +97,7 @@ export module ConfigurationUtil {
         );
         groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
 
-        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.update(
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
         );
 

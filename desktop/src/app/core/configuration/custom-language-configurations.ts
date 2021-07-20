@@ -9,25 +9,25 @@ export type CustomLanguageConfigurations = { [language: string]: LanguageConfigu
  */
 export module CustomLanguageConfigurations {
 
-    export function updateCustomLanguageConfigurations(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                       editedLabel: I18N.String, editedDescription?: I18N.String,
-                                                       category?: Category, field?: Field,
-                                                       group?: Group) {
+    export function update(customLanguageConfigurations: CustomLanguageConfigurations,
+                           editedLabel: I18N.String, editedDescription?: I18N.String,
+                           category?: Category, field?: Field,
+                           group?: Group) {
 
-        updateCustomLanguageConfigurationSection(
+        updateSection(
             customLanguageConfigurations, 'label', editedLabel, category, field, group
         );
 
         if (!group && editedDescription) {
-            updateCustomLanguageConfigurationSection(
+            updateSection(
                 customLanguageConfigurations, 'description', editedDescription, category, field
             );
         }
     }
 
 
-    export function deleteCategoryFromCustomLanguageConfigurations(
-            customLanguageConfigurations: CustomLanguageConfigurations, category: Category) {
+    export function deleteCategory(customLanguageConfigurations: CustomLanguageConfigurations,
+                                   category: Category) {
 
         Object.keys(customLanguageConfigurations).forEach(languageKey => {
             InPlace.removeFrom(customLanguageConfigurations, [languageKey, 'categories', category.name]);
@@ -44,12 +44,12 @@ export module CustomLanguageConfigurations {
     }
 
 
-    function updateCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                      section: 'label'|'description', editedI18nString: I18N.String,
-                                                      category: Category, field?: Field, group?: Group) {
+    function updateSection(customLanguageConfigurations: CustomLanguageConfigurations,
+                           section: 'label'|'description', editedI18nString: I18N.String, category: Category,
+                           field?: Field, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {
-            handleNewTextInCustomLanguageConfigurationSection(
+            handleNewTextInSection(
                 customLanguageConfigurations, section, editedI18nString[languageCode], languageCode, category,
                 field, group
             );
@@ -58,36 +58,34 @@ export module CustomLanguageConfigurations {
         Object.keys(customLanguageConfigurations)
             .filter(languageCode => !editedI18nString[languageCode])
             .forEach(languageCode => {
-                deleteFromCustomLanguageConfigurationSection(
+                deleteFromSection(
                     customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
                 );
             });
     }
 
 
-    function handleNewTextInCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                               section: 'label'|'description', newText: string,
-                                                               languageCode: string, category: Category,
-                                                               field?: Field, group?: Group) {
+    function handleNewTextInSection(customLanguageConfigurations: CustomLanguageConfigurations,
+                                    section: 'label'|'description', newText: string, languageCode: string,
+                                    category: Category, field?: Field, group?: Group) {
 
         const definition = group ?? field ?? category;
 
         if (newText === definition[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
-            deleteFromCustomLanguageConfigurationSection(
+            deleteFromSection(
                 customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
             );
         } else {
-            addToCustomLanguageConfigurationSection(
+            addToSection(
                 customLanguageConfigurations, section, newText, languageCode, category?.name, field?.name, group?.name
             );
         }
     }
 
 
-    function deleteFromCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                          section: 'label'|'description', languageCode: string,
-                                                          categoryName?: string, fieldName?: string,
-                                                          groupName?: string) {
+    function deleteFromSection(customLanguageConfigurations: CustomLanguageConfigurations,
+                               section: 'label'|'description', languageCode: string, categoryName?: string,
+                               fieldName?: string, groupName?: string) {
 
         InPlace.removeFrom(
             customLanguageConfigurations,
@@ -100,10 +98,9 @@ export module CustomLanguageConfigurations {
     }
 
 
-    function addToCustomLanguageConfigurationSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                                                     section: 'label'|'description', newText: string,
-                                                     languageCode: string, categoryName: string,
-                                                     fieldName?: string, groupName?: string) {
+    function addToSection(customLanguageConfigurations: CustomLanguageConfigurations,
+                          section: 'label'|'description', newText: string, languageCode: string,
+                          categoryName: string, fieldName?: string, groupName?: string) {
 
         InPlace.setOn(
             customLanguageConfigurations,

@@ -7,7 +7,7 @@ export type CustomLanguageConfigurations = { [language: string]: LanguageConfigu
 /**
  * @author Thomas Kleinke
  */
-export module LanguageConfigurationUtil {
+export module CustomLanguageConfigurations {
 
     export function updateCustomLanguageConfigurations(customLanguageConfigurations: CustomLanguageConfigurations,
                                                        editedLabel: I18N.String, editedDescription?: I18N.String,

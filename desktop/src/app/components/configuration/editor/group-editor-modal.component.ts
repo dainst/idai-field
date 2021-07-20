@@ -6,7 +6,7 @@ import { Group, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
-import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
+import { CustomLanguageConfigurations } from '../../../core/configuration/custom-language-configurations';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 
 
@@ -77,7 +77,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
     protected updateCustomLanguageConfigurations() {
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             this.getClonedLanguageConfigurations(),
             this.clonedLabel, undefined, undefined, undefined, this.group
         );

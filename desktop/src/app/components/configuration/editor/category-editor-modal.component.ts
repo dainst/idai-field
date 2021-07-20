@@ -6,7 +6,7 @@ import { I18N } from 'idai-field-core';
 import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { LanguageConfigurationUtil } from '../../../core/configuration/language-configuration-util';
+import { CustomLanguageConfigurations } from '../../../core/configuration/custom-language-configurations';
 
 
 @Component({
@@ -110,7 +110,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     protected updateCustomLanguageConfigurations() {
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category
         );
     }

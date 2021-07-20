@@ -1,7 +1,7 @@
 import { flatten, isEmpty, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, Field, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
-import { LanguageConfigurationUtil } from './language-configuration-util';
+import { CustomLanguageConfigurations } from './custom-language-configurations';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -54,7 +54,7 @@ export module ConfigurationUtil {
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         delete clonedConfigurationDocument.resource.categories[category.libraryId ?? category.name];
 
-        LanguageConfigurationUtil.deleteCategoryFromCustomLanguageConfigurations(
+        CustomLanguageConfigurations.deleteCategoryFromCustomLanguageConfigurations(
             clonedConfigurationDocument.resource.languages, category
         );
 
@@ -75,7 +75,7 @@ export module ConfigurationUtil {
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
-            LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+            CustomLanguageConfigurations.updateCustomLanguageConfigurations(
                 clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
             );
         }
@@ -97,7 +97,7 @@ export module ConfigurationUtil {
         );
         groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
         );
 
@@ -123,7 +123,7 @@ export module ConfigurationUtil {
             || (customDefinition.fields !== undefined && !isEmpty(customDefinition.fields))
             || (customDefinition.commons !== undefined && !isEmpty(customDefinition.commons))
             || (customDefinition.hidden !== undefined && !isEmpty(customDefinition.hidden))
-            || LanguageConfigurationUtil.hasCustomTranslations(
+            || CustomLanguageConfigurations.hasCustomTranslations(
                 configurationDocument.resource.languages, category
             );
     }

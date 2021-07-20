@@ -1,12 +1,11 @@
 import { Category, Field, I18N, Group } from 'idai-field-core';
-import { CustomLanguageConfigurations,
-    LanguageConfigurationUtil } from '../../../../src/app/core/configuration/language-configuration-util';
+import { CustomLanguageConfigurations} from '../../../../src/app/core/configuration/custom-language-configurations';
 
 
 /**
  * @author Thomas Kleinke
  */
- describe('LanguageConfigurationUtil', () => {
+ describe('CustomLanguageConfigurations', () => {
 
     const categoryLabel: I18N.String = {
         de: 'Test-Kategorie',
@@ -93,7 +92,7 @@ import { CustomLanguageConfigurations,
         };
 
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -136,7 +135,7 @@ import { CustomLanguageConfigurations,
         };
 
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -164,7 +163,7 @@ import { CustomLanguageConfigurations,
         };
 
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -213,7 +212,7 @@ import { CustomLanguageConfigurations,
 
         const editedDescription: I18N.String = {};
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -256,7 +255,7 @@ import { CustomLanguageConfigurations,
 
         const editedDescription: I18N.String = {};
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -288,7 +287,7 @@ import { CustomLanguageConfigurations,
             de: 'Altes Label'
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -327,7 +326,7 @@ import { CustomLanguageConfigurations,
             de: 'Beschreibungstext des Feldes'
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -360,7 +359,7 @@ import { CustomLanguageConfigurations,
             de: 'Beschreibungstext der Kategorie'
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             editedDescription,
@@ -385,7 +384,7 @@ import { CustomLanguageConfigurations,
             de: 'Test-Gruppe'
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             editedLabel,
             undefined,
@@ -431,7 +430,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             {},
             {},
@@ -465,7 +464,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+        CustomLanguageConfigurations.updateCustomLanguageConfigurations(
             customLanguageConfigurations,
             {},
             {},
@@ -517,7 +516,7 @@ import { CustomLanguageConfigurations,
             }
         };
 
-        LanguageConfigurationUtil.deleteCategoryFromCustomLanguageConfigurations(
+        CustomLanguageConfigurations.deleteCategoryFromCustomLanguageConfigurations(
             customLanguageConfigurations,
             category
         );

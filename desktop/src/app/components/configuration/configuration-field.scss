@@ -14,7 +14,7 @@ configuration-field {
       transition: background-color .25s ease;
 
       &.opened,
-      &:hover {
+      &:hover:not(.parent-element) {
         background-color: darken($list-item-hover-color, 5%);
         transition: background-color .5s ease;
       }

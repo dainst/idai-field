@@ -27,8 +27,10 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
+    @Input() opened: boolean = false;
 
     @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onOpen: EventEmitter<void> = new EventEmitter<void>();
 
     public parentField: boolean = false;
     public customFieldDefinitionClone: CustomFieldDefinition | undefined;

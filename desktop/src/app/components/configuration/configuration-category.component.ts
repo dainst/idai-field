@@ -45,6 +45,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public selectedGroup: string;
     public label: string;
     public description: string;
+    public openedFieldName: string;
 
     private permanentlyHiddenFields: string[];
 

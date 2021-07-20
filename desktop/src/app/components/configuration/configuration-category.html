@@ -84,7 +84,9 @@
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
                                      [contextMenu]="contextMenu"
-                                     (onEdit)="onEditField.emit(field)">
+                                     [opened]="openedFieldName === field.name"
+                                     (onEdit)="onEditField.emit(field)"
+                                     (onOpen)="openedFieldName = field.name">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>

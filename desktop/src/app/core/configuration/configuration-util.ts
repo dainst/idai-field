@@ -66,6 +66,7 @@ export module ConfigurationUtil {
 
 
     export function deleteGroup(category: Category, group: Group,
+                                otherCategories: Array<Category>,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
@@ -73,9 +74,11 @@ export module ConfigurationUtil {
             .categories[category.libraryId ?? category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
-        LanguageConfigurationUtil.updateCustomLanguageConfigurations(
-            clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
-        );
+        if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
+            LanguageConfigurationUtil.updateCustomLanguageConfigurations(
+                clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
+            );
+        }
 
         return clonedConfigurationDocument;
     }

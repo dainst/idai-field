@@ -346,7 +346,10 @@ export class ConfigurationComponent implements OnInit {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
-                category, group, this.configurationDocument
+                category,
+                group,
+                Tree.flatten(this.projectConfiguration.getCategories()).filter(c => c.name !== category.name),
+                this.configurationDocument
             );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {

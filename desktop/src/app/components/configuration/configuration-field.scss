@@ -1,33 +1,92 @@
 configuration-field {
-  .valuelist-description {
-    margin: 0 0.2rem 0.7rem;
-    font-size: 0.8rem;
-  }
+  .card {
+    margin-top: 1px;
+    margin-bottom: 1px;
 
-  .valuelist .value-badge {
-    overflow: hidden;
-    max-width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: default;
-    border: 1px solid white;
-
-    &:hover {
-      position: relative;
-      max-width: none;
-      z-index: 50;
-      border: 1px solid grey;
-      white-space: normal;
-      text-align: left;
+    .value-col {
+      height: 1.69rem;
     }
-  }
 
-  .list-group {
-    color: initial;
-  }
+    .card-header {
+      height: 55px;
+      background-color: #fff;
+      border: none;
 
-  .card-header {
-    height: 55px;
+      &.opened {
+        background-color: initial;
+      }
+
+      .mdi-drag {
+        color: #848484;
+        position: relative;
+        top: 3px;
+        right: 6px;
+        cursor: grab;
+      }
+  
+      &.parent-element .mdi-drag {
+        top: unset;
+        bottom: 2px;
+      }
+
+      .category-icon {
+        position: relative;
+        top: 2px;
+        left: -6px;
+        margin-right: 2px;
+      }
+
+      &.parent-element .category-icon {
+        margin-left: 12px;
+      }
+
+      b,
+      code,
+      .mdi-alert-circle-outline {
+        position: relative;
+        top: 3px;
+      }
+  
+      &.parent-element {
+        b,
+        code,
+        .mdi-alert-circle-outline {
+          position: relative;
+          top: -2px;
+        }
+      }
+    }
+
+    .card-body {
+      padding-top: 0;
+
+      .list-group {
+        color: initial;
+
+        .valuelist-description {
+          margin: 0 0.2rem 0.7rem;
+          font-size: 0.8rem;
+        }
+      
+        .valuelist .value-badge {
+          overflow: hidden;
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: default;
+          border: 1px solid white;
+      
+          &:hover {
+            position: relative;
+            max-width: none;
+            z-index: 50;
+            border: 1px solid grey;
+            white-space: normal;
+            text-align: left;
+          }
+        }
+      }
+    }
   }
 
   .text-white code {

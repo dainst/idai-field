@@ -84,63 +84,10 @@ configuration-category {
       height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
-    }
 
-    .card {
-      margin-top: 10px;
-      margin-bottom: 10px;
-
-      .value-col {
-          height: 1.69rem;
+      .field-element:first-of-type .card {
+        margin-top: 0;
       }
-
-      .card-header {
-        height: 55px;
-
-        .mdi-drag {
-          color: #848484;
-          position: relative;
-          top: 3px;
-          right: 6px;
-          cursor: grab;
-        }
-    
-        &.parent-element .mdi-drag {
-          top: unset;
-          bottom: 2px;
-        }
-
-        .category-icon {
-          position: relative;
-          top: 2px;
-          left: -6px;
-          margin-right: 2px;
-        }
-
-        &.parent-element .category-icon {
-          margin-left: 12px;
-        }
-
-        b,
-        code,
-        .mdi-alert-circle-outline {
-          position: relative;
-          top: 3px;
-        }
-    
-        &.parent-element {
-          b,
-          code,
-          .mdi-alert-circle-outline {
-            position: relative;
-            top: -2px;
-          }
-        }
-      }
-    }
-
-    .field-element:first-of-type .card {
-      margin-top: 0;
     }
   }
 

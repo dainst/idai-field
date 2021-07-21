@@ -132,33 +132,29 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async addGroup() {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
+        const [result] = this.modals.make<AddGroupModalComponent>(
+            AddGroupModalComponent,
+            MenuContext.MODAL
+        );
 
-        const modalReference: NgbModalRef = this.modals.open(AddGroupModalComponent);
-
-        try {
-            await this.createNewGroup(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-        }
+        await this.modals.awaitResult(result,
+            async groupName => await this.createNewGroup(groupName),
+            nop
+        );
     }
 
 
     public async addField() {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
+        const [result] = this.modals.make<AddFieldModalComponent>(
+            AddFieldModalComponent,
+            MenuContext.MODAL
+        );
 
-        const modalReference: NgbModalRef = this.modals.open(AddFieldModalComponent);
-
-        try {
-            await this.createNewField(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        } finally {
-            this.modals.resetMenuContext();
-        }
+        await this.modals.awaitResult(result,
+            async fieldName => await this.createNewField(fieldName),
+            nop
+        );
     }
 
 
@@ -240,7 +236,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -267,7 +263,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 

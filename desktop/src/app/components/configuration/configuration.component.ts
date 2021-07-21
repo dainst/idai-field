@@ -106,6 +106,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     async ngOnInit() {
 
         this.menus.setContext(MenuContext.CONFIGURATION);
+        this.modals.initialize(MenuContext.CONFIGURATION);
 
         this.loadCategories();
 
@@ -126,7 +127,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.modals.getMenuContext() === MenuContext.CONFIGURATION) {
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -304,8 +305,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async openDeleteGroupModal(category: Category, group: Group) {
 
-        this.modals.setMenuContext(MenuContext.MODAL);
-
         const [result, componentInstance] =
             this.modals.make<DeleteGroupModalComponent>(
                 DeleteGroupModalComponent,
@@ -400,8 +399,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
                                                    reindexCategory?: string): Promise<ErrWithParams|undefined> {
 
-        const previousMenuContext: MenuContext = this.menus.getContext();
-
         const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             SaveModalComponent,
             MenuContext.MODAL
@@ -415,8 +412,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 Document.clone(configurationDocument)
             );
         } catch (errWithParams) {
-            componentInstance.activeModal.close();
-            this.menus.setContext(previousMenuContext);
+            this.modals.closeModal(componentInstance);
             return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
@@ -439,8 +435,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
 
-        componentInstance.activeModal.close();
-        this.menus.setContext(previousMenuContext);
+        this.modals.closeModal(componentInstance);
     }
 
 

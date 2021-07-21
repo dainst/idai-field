@@ -7,11 +7,18 @@ import { Menus } from './menus';
 @Injectable()
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class Modals {
 
+    private menuContexts: Array<MenuContext> = [];
+
+
     constructor(private modalService: NgbModal,
                 private menuService: Menus) {}
+
+
+    public initialize = (menuContext: MenuContext) => this.menuContexts = [menuContext];
 
 
     /**
@@ -22,9 +29,10 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-    public make<MC, R = any>(modalClass: any, context: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
+    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
 
-        this.menuService.setContext(context);
+        this.menuService.setContext(menuContext);
+        this.menuContexts.push(menuContext);
 
         const options: NgbModalOptions = {
             backdrop: 'static',
@@ -40,43 +48,30 @@ export class Modals {
     }
 
 
-    public async awaitResult<R = any>(
-        result: Promise<R>,
-        onSuccess: () => void,
-        onFinish: () => void) {
+    public async awaitResult<R = any>(result: Promise<R>, onSuccess: (result: any) => void,
+                                      onFinish: () => void) {
 
         try {
-            await result;
-            await onSuccess();
+            await onSuccess(await result);
         } catch {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.restorePreviousMenuContext();
             onFinish();
         }
     }
 
 
-    public open(content: any, options?: NgbModalOptions): NgbModalRef {
-
-        return this.modalService.open(content, options);
+    public async closeModal(componentInstance: any) {
+        
+        this.restorePreviousMenuContext();
+        componentInstance.activeModal.close();
     }
 
 
-    public setMenuContext(context: MenuContext) {
+    private restorePreviousMenuContext() {
 
-        this.menuService.setContext(context);
-    }
-
-
-    public resetMenuContext() {
-
-        this.menuService.setContext(MenuContext.DEFAULT);
-    }
-
-
-    public getMenuContext() {
-
-        return this.menuService.getContext();
+        if (this.menuContexts.length > 1) this.menuContexts.pop();
+        this.menuService.setContext(this.menuContexts[this.menuContexts.length - 1]);
     }
 }

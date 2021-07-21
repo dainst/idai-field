@@ -45,6 +45,7 @@
                    cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"
                    [cdkDropListConnectedTo]="['fields-list']"
                    [class.active]="selectedGroup === group.name"
+                   [class.drop-target]="draggingField"
                    (click)="selectGroup(group)"
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
@@ -73,8 +74,8 @@
             [cdkDropListConnectedTo]="getGroupListIds()">
             <div *ngFor="let field of getFields()" class="field-element"
                  cdkDrag cdkDragBoundary=".configuration-category"
-                 (cdkDragStarted)="onDragging.emit(true)"
-                 (cdkDragEnded)="onDragging.emit(false)"
+                 (cdkDragStarted)="startDraggingField()"
+                 (cdkDragEnded)="stopDraggingField()"
                  [cdkDragData]="field.name">
                 <configuration-field [field]="field"
                                      [category]="category"

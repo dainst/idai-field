@@ -49,21 +49,26 @@ configuration-category {
 
       .group-button {
         width: 100%;
-        padding: 10px;
-        border: none;
+        padding: 7px;
+        border: dotted 3px transparent;
         border-radius: 0;
         color: #212529;
         background-color: white;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        transition: background-color .25s ease;
+        transition: background-color .25s ease, border .25s ease;
 
         &:hover,
         &.active {
           background-color: darken($list-item-hover-color, 5%) !important;
-          transition: background-color .5s ease;
-        }  
+          transition: background-color .5s ease, border .5s ease;
+        }
+
+        &.drop-target:hover {
+          background-color: #ccc !important;
+          border: dotted 3px #999;
+        }
 
         .mdi-drag {
           color: #848484;

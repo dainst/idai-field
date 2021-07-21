@@ -45,6 +45,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public label: string;
     public description: string;
     public openedFieldName: string;
+    public draggingField: boolean = false;
 
     private permanentlyHiddenFields: string[];
 
@@ -155,6 +156,20 @@ export class ConfigurationCategoryComponent implements OnChanges {
             async fieldName => await this.createNewField(fieldName),
             nop
         );
+    }
+
+
+    public startDraggingField() {
+
+        this.draggingField = true;
+        this.onDragging.emit(true);
+    }
+
+
+    public stopDraggingField() {
+
+        this.draggingField = false;
+        this.onDragging.emit(false);
     }
 
 

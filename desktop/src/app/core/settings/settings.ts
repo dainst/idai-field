@@ -20,6 +20,7 @@ export interface Settings {
     dbs: Array<string>;
     selectedProject: string;
     imagestorePath: string;
+    hideHiddenFieldsInConfigurationEditor: boolean;
 }
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppController } from '../core/app-controller';
@@ -7,8 +7,12 @@ import { UtilTranslations } from '../core/util/util-translations';
 import { Messages } from './messages/messages';
 import { Imagestore } from '../core/images/imagestore/imagestore';
 import { SettingsService } from '../core/settings/settings-service';
+import { SettingsProvider } from '../core/settings/settings-provider';
+import { Settings } from '../core/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
+
 
 @Component({
     selector: 'idai-field-app',
@@ -25,6 +29,8 @@ export class AppComponent {
 
     constructor(private messages: Messages,
                 private utilTranslations: UtilTranslations,
+                private settingsProvider: SettingsProvider,
+                private changeDetectorRef: ChangeDetectorRef,
                 private i18n: I18n,
                 router: Router,
                 menuService: Menus,
@@ -51,13 +57,18 @@ export class AppComponent {
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
+        this.listenToSettingsChangesFromMenu();
     }
 
 
-    private static preventDefaultDragAndDropBehavior() {
+    private listenToSettingsChangesFromMenu() {
 
-        document.addEventListener('dragover', event => event.preventDefault());
-        document.addEventListener('drop', event => event.preventDefault());
+        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+            const settings: Settings = this.settingsProvider.getSettings();
+            settings[setting] = newValue;
+            this.settingsProvider.setSettingsAndSerialize(settings);
+            this.changeDetectorRef.detectChanges();
+        });
     }
 
 
@@ -105,5 +116,12 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'false', this.i18n({ id: 'boolean.no', value: 'Nein' })
         );
+    }
+
+
+    private static preventDefaultDragAndDropBehavior() {
+
+        document.addEventListener('dragover', event => event.preventDefault());
+        document.addEventListener('drop', event => event.preventDefault());
     }
 }

@@ -228,7 +228,7 @@ const loadConfig = () => {
 
 const createMenu = () => {
 
-    const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow, menuContext));
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow, menuContext, global.config));
     electron.Menu.setApplicationMenu(menu);
 };
 

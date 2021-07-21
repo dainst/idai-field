@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
@@ -47,12 +47,11 @@ export type InputType = {
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ConfigurationComponent implements OnInit {
+export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public topLevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
     public configurationDocument: ConfigurationDocument;
-    public showHiddenFields: boolean = true;
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
@@ -100,8 +99,13 @@ export class ConfigurationComponent implements OnInit {
                 private menus: Menus,
                 private i18n: I18n) {}
 
+    
+    public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
+
 
     async ngOnInit() {
+
+        this.menus.setContext(MenuContext.CONFIGURATION);
 
         this.loadCategories();
 
@@ -114,9 +118,15 @@ export class ConfigurationComponent implements OnInit {
     }
 
 
+    ngOnDestroy() {
+
+        this.menus.setContext(MenuContext.DEFAULT);
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.modals.getMenuContext() === MenuContext.DEFAULT) {
+        if (event.key === 'Escape' && this.modals.getMenuContext() === MenuContext.CONFIGURATION) {
             await this.tabManager.openActiveTab();
         }
     }

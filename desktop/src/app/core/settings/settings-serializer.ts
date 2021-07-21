@@ -36,6 +36,7 @@ export class SettingsSerializer {
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['isSyncActive'] = settings.isSyncActive;
         configToWrite['hostPassword'] = settings.hostPassword;
+        configToWrite['hideHiddenFieldsInConfigurationEditor'] = settings.hideHiddenFieldsInConfigurationEditor;
 
         if (settings.syncTarget && (settings.syncTarget['password']
                 || settings.syncTarget['address'])) {

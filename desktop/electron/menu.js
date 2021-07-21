@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 const messages = require('./messages');
 
 
-const getTemplate = (mainWindow, context) => {
+const getTemplate = (mainWindow, context, config) => {
 
     const template = [{
         label: 'iDAI.field',
@@ -17,7 +17,7 @@ const getTemplate = (mainWindow, context) => {
             label: messages.get('menu.settings'),
             accelerator: 'CmdOrCtrl+,',
             click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         }]
     }, {
         label: messages.get('menu.file'),
@@ -26,19 +26,19 @@ const getTemplate = (mainWindow, context) => {
                 label: messages.get('menu.file.import'),
                 accelerator: 'CmdOrCtrl+I',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
-                enabled: context === 'default'
+                enabled: isDefaultContext(context)
             }, {
                 label: messages.get('menu.file.export'),
                 accelerator: 'CmdOrCtrl+E',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
-                enabled: context === 'default'
+                enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
             }, {
                 label: messages.get('menu.settings'),
                 accelerator: 'CmdOrCtrl+Alt+S',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
-                enabled: context === 'default'
+                enabled: isDefaultContext(context)
             },
             {
                 label: messages.get('menu.file.exit'),
@@ -77,13 +77,14 @@ const getTemplate = (mainWindow, context) => {
             role: 'selectall'
         }]
     }, {
+        name: 'tools',
         label: messages.get('menu.tools'),
         submenu: [
         {
             label: messages.get('menu.tools.configuration'),
             accelerator: 'CmdOrCtrl+F',
             click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         },
         {
             type: 'separator'
@@ -92,31 +93,32 @@ const getTemplate = (mainWindow, context) => {
             label: messages.get('menu.tools.images'),
             accelerator: 'CmdOrCtrl+B',
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         },
         {
             label: messages.get('menu.tools.types'),
             accelerator: 'CmdOrCtrl+T',
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         },
         {
             label: messages.get('menu.tools.matrix'),
             accelerator: 'CmdOrCtrl+Y',
             click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         }, {
             type: 'separator'
         }, {
             label: messages.get('menu.tools.backupCreation'),
             click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         }, {
             label: messages.get('menu.tools.backupLoading'),
             click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         }]
-    }, {
+    },
+    {
         label: messages.get('menu.view'),
         submenu: [{
             label: messages.get('menu.view.reload'),
@@ -145,7 +147,7 @@ const getTemplate = (mainWindow, context) => {
             }
         }, {
             label: messages.get('menu.view.toggleDeveloperTools'),
-            accelerator: (function () {
+            accelerator: (function() {
                 if (process.platform === 'darwin') {
                     return 'Alt+Command+I'
                 } else {
@@ -197,7 +199,7 @@ const getTemplate = (mainWindow, context) => {
             label: messages.get('menu.help'),
             accelerator: 'CmdOrCtrl+H',
             click: () => mainWindow.webContents.send('menuItemClicked', 'help'),
-            enabled: context === 'default'
+            enabled: isDefaultContext(context)
         }]
     }];
 
@@ -212,8 +214,32 @@ const getTemplate = (mainWindow, context) => {
         template.splice(0, 1);
     }
 
+    if (context === 'configuration') {
+        const index = template.indexOf(template.find(menu => menu.name === 'tools'));
+        template.splice(index + 1, 0, {
+            label: messages.get('menu.tools.configuration'),
+            submenu: [{
+                type: 'checkbox',
+                label: messages.get('menu.configuration.showHiddenFields'),
+                checked: !config.hideHiddenFieldsInConfigurationEditor,
+                click: () => {
+                    mainWindow.webContents.send(
+                        'settingChanged',
+                        'hideHiddenFieldsInConfigurationEditor',
+                        !config.hideHiddenFieldsInConfigurationEditor
+                    );
+                    config.hideHiddenFieldsInConfigurationEditor = !config.hideHiddenFieldsInConfigurationEditor;
+                },
+                enabled: isDefaultContext(context)
+            }]
+        });
+    }
+
     return template;
 };
+
+
+const isDefaultContext = context => ['default', 'configuration'].includes(context);
 
 
 module.exports = getTemplate;

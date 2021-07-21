@@ -124,6 +124,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
+    public selectGroup(group: Group) {
+
+        this.selectedGroup = group.name;
+        this.openedFieldName = undefined;
+    }
+
+
     public async addGroup() {
 
         this.modals.setMenuContext(MenuContext.MODAL);

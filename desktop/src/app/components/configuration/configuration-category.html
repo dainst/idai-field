@@ -46,7 +46,7 @@
                    [cdkDropListConnectedTo]="['fields-list']"
                    [cdkDropListDisabled]="!allowDragAndDrop"
                    [class.active]="selectedGroup === group.name"
-                   (click)="selectedGroup = group.name"
+                   (click)="selectGroup(group)"
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>

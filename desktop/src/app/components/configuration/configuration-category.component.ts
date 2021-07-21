@@ -30,7 +30,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() category: Category;
     @Input() configurationDocument: ConfigurationDocument;
     @Input() showHiddenFields: boolean = true;
-    @Input() allowDragAndDrop: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 

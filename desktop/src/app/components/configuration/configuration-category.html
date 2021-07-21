@@ -34,7 +34,7 @@
 <div class="row configuration-category">
     <div class="col-2 groups">
         <ul class="flex-column groups-container"
-            cdkDropList [cdkDropListDisabled]="!allowDragAndDrop"
+            cdkDropList
             (cdkDropListDropped)="onGroupDrop($event)">
             <li *ngFor="let group of getGroups()"
                 class="flex-column group-element"
@@ -44,12 +44,11 @@
                 <a [id]="'group-' + group.name" class="list-group-item group-button"
                    cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"
                    [cdkDropListConnectedTo]="['fields-list']"
-                   [cdkDropListDisabled]="!allowDragAndDrop"
                    [class.active]="selectedGroup === group.name"
                    (click)="selectGroup(group)"
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
-                    <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>
+                    <span class="mdi mdi-drag" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
                     <span *ngIf="hasCustomFields(group)"> *</span>
                 </a>
@@ -71,8 +70,7 @@
     <div class="col-10 content" [class.shortened]="description">
         <div id="fields-list" class="fields-container"
             cdkDropList (cdkDropListDropped)="onFieldDrop($event)"
-            [cdkDropListConnectedTo]="getGroupListIds()"
-            [cdkDropListDisabled]="!allowDragAndDrop">
+            [cdkDropListConnectedTo]="getGroupListIds()">
             <div *ngFor="let field of getFields()" class="field-element"
                  cdkDrag cdkDragBoundary=".configuration-category"
                  (cdkDragStarted)="onDragging.emit(true)"
@@ -87,7 +85,7 @@
                                      [opened]="openedFieldName === field.name"
                                      (onEdit)="onEditField.emit(field)"
                                      (onOpen)="openedFieldName = field.name">
-                    <span *ngIf="allowDragAndDrop" class="mdi mdi-drag" cdkDragHandle></span>
+                    <span class="mdi mdi-drag" cdkDragHandle></span>
                 </configuration-field>
                 <div *cdkDragPreview>
                     <configuration-field-drag-element [field]="field"

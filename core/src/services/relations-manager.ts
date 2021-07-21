@@ -64,11 +64,11 @@ export class RelationsManager {
 
 
     // TODO review if our datastore can do this, too, via contraintIndex
-    public async getAntescendants(id: Resource.Id): Promise<Array<Document>> {
+    public async getAntescendents(id: Resource.Id): Promise<Array<Document>> {
 
         try {
             const document = await this.datastore.get(id);
-            return [document].concat((await this.getAntecendants(document)));
+            return [document].concat((await this._getAntecendents(document)));
         } catch {
             console.error('error in relationsManager.getAntescendants()');
             return [];
@@ -228,7 +228,7 @@ export class RelationsManager {
     }
 
 
-    private async getAntecendants(document: Document): Promise<Array<Document>> {
+    private async _getAntecendents(document: Document): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
 

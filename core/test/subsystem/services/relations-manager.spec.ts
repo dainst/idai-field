@@ -25,7 +25,7 @@ describe('subsystem/relations-manager', () => {
             ['t1', 'Type']
         ]);
 
-        const results = await app.relationsManager.getAntescendants('t1');
+        const results = await app.relationsManager.getAntescendents('t1');
         const lookup = makeDocumentsLookup(results);
         expect(lookup['tc1'].resource.id).toBe('tc1');
         expect(lookup['t1'].resource.id).toBe('t1');

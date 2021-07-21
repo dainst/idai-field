@@ -1,8 +1,8 @@
 
 import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
+    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, set, subtract, to,
 } from 'tsfun';
-import { Document } from '../model/document';
+import { Document, toResourceId } from '../model/document';
 import {Relation} from '../model/configuration/relation';
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
@@ -12,7 +12,7 @@ import {  ON_RESOURCE_ID, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { Resource } from '../model/resource';
-import {childrenOf} from '../base-config';
+import { childrenOf } from '../base-config';
 
 
 
@@ -111,13 +111,30 @@ export class RelationsManager {
             return;
         }
 
-        const descendants = await this.getDescendants(document);
+        const descendants = await this._getDescendants(document);
         const documentsToBeDeleted =
             flow(descendants,
                 subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
                 append(document));
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
+    }
+
+    
+    // TODO review in 2.20.0, maybe factor out into a hierarchy util, in which this function just takes the find function
+    public async getDescendants<D extends Document>(documents: Array<D>): Promise<Array<D>> {
+
+        const documentsIds = documents.map(toResourceId);
+        const descendants: Array<D> = [];
+        for (let document of documents) {
+            const docs = (await this.datastore
+                    .find(childrenOf(document.resource.id))).documents
+                .filter(doc => !documentsIds.includes(doc.resource.id))
+
+            descendants.push(...docs as Array<D>);
+        }
+        const descendantsSet = set(on(['resource', 'id']), descendants); // documents may themselves appear as descendants in multiselect
+        return descendantsSet;
     }
 
 
@@ -201,7 +218,7 @@ export class RelationsManager {
     }
 
 
-    private async getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
+    private async _getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
 
         const results = [];
         for (const document of documents) {

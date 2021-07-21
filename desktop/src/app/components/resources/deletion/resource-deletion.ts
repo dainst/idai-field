@@ -21,7 +21,7 @@ export class ResourceDeletion {
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = (await this.imageRelationsManager.getDescendants(documents)).length;
+        const descendantsCount = (await this.relationsManager.getDescendants(documents)).length;
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -30,7 +30,7 @@ export class ResourceDeletion {
         modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
-            = (await this.imageRelationsManager.getDescendants(documents)).concat(documents);
+            = (await this.relationsManager.getDescendants(documents)).concat(documents);
         modalRef.componentInstance.relatedImagesCount
             = (await this.imageRelationsManager.getLinkedImages(documentsAndDescendants, true)).length;
 

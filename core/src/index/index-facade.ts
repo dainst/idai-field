@@ -56,11 +56,8 @@ export class IndexFacade {
      *   document.resource.identifier needs to be present, otherwise document gets not indexed
      */
     public put(document: Document) {
-        
-        // TODO migrate everything to isChildOf, then get rid of this adjustments
-        const adjusted = adjustIsChildOf(document);
-        
-        return this._put(adjusted, false, true);
+
+        return this._put(document, false, true);
     }
 
 
@@ -138,23 +135,26 @@ export class IndexFacade {
 
     private _put(document: Document, skipRemoval: boolean, notify: boolean) {
 
-        const item = this.getIndexItem(document);
+        // TODO migrate everything to isChildOf, then get rid of this adjustments
+        const doc = adjustIsChildOf(document);
+
+        const item = this.getIndexItem(doc);
         if (!item) return;
 
-        if (document.resource.category === TYPE) {
+        if (doc.resource.category === TYPE) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
             if (!skipRemoval) {
-                IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
+                IndexFacade.deleteAssociatedTypeItem(this.indexItems, doc);
             }
-            IndexFacade.createAssociatedTypeItem(this.indexItems, document, );
+            IndexFacade.createAssociatedTypeItem(this.indexItems, doc);
         }
 
-        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
-        FulltextIndex.put(this.fulltextIndex, document,
-            getFieldsToIndex(this.categoriesMap, document.resource.category), skipRemoval);
+        ConstraintIndex.put(this.constraintIndex, doc, skipRemoval);
+        FulltextIndex.put(this.fulltextIndex, doc,
+            getFieldsToIndex(this.categoriesMap, doc.resource.category), skipRemoval);
 
-        if (notify) ObserverUtil.notify(this.observers, document);
+        if (notify) ObserverUtil.notify(this.observers, doc);
     }
 
 

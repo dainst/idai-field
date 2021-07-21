@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { set, to } from 'tsfun';
-import { childrenOf, Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
+import { flow, size, subtract } from 'tsfun';
+import { childrenOf, Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, toResourceId } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { ImageRelationsManager } from '../../../core/services/image-relations-manager';
@@ -23,7 +23,7 @@ export class ResourceDeletion {
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = await this.getDescendantsCount(documents);
+        const descendantsCount = this.getDescendantsCount(documents);
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -47,13 +47,16 @@ export class ResourceDeletion {
     }
 
 
-    private async getDescendantsCount(documents: Array<FieldDocument>) {
+    private getDescendantsCount(selectedDocuments: Array<FieldDocument>): number {
 
-        let count = 0;
-        for (const document of documents) {
-            count += (await this.datastore.findIds(childrenOf(document.resource.id))).ids.length;
+        const ids = [];
+        for (const document of selectedDocuments) {
+            ids.push(...this.datastore.findIds(childrenOf(document.resource.id)).ids);
         }
-        return count;
+        const documentsIds = selectedDocuments.map(toResourceId);
+        return flow(ids,
+            subtract(documentsIds), // selected documents may appear as descendants in multiselect
+            size);
     }
 
 

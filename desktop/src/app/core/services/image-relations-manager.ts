@@ -66,23 +66,34 @@ export class ImageRelationsManager {
                 document => this.projectConfiguration.getImageCategories().map(Named.toName).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
-        const nonImageDocumentsIds = nonImageDocuments.map(toResourceId);
-        const documentsToBeDeleted = [];
-        for (const document of nonImageDocuments) {
-            const localDocumentsToBeDeleted = (await this.datastore
-                .find(childrenOf(document.resource.id))).documents
-            .filter(doc => !nonImageDocumentsIds.includes(doc.resource.id)) // those will be deleted when its their turn in the for loop
-            .concat([document]);
+        const descendantsOfNonImageDocuments = await this.getDescendants(nonImageDocuments);
+        const documentsToBeDeleted = descendantsOfNonImageDocuments.concat(nonImageDocuments);
 
-            documentsToBeDeleted.push(...localDocumentsToBeDeleted);
-            for (const doc of localDocumentsToBeDeleted) await this.relationsManager.remove(doc);
-        }
+        for (const d of descendantsOfNonImageDocuments) await this.relationsManager.remove(d);
+        for (const d of nonImageDocuments) await this.relationsManager.remove(d);
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
         for (let image of imagesToBeDeleted) {
             await this.imagestore.remove(image.resource.id);
             await this.datastore.remove(image);
         }
+    }
+
+
+    // TODO review in 2.20.0, maybe factor out into a hierarchy util, in which this function just takes the find function
+    public async getDescendants<D extends Document>(documents: Array<D>): Promise<Array<D>> {
+
+        const documentsIds = documents.map(toResourceId);
+        const descendants: Array<D> = [];
+        for (let document of documents) {
+            const docs = (await this.datastore
+                    .find(childrenOf(document.resource.id))).documents
+                .filter(doc => !documentsIds.includes(doc.resource.id))
+
+            descendants.push(...docs as Array<D>);
+        }
+        const descendantsSet = set(on(['resource', 'id']), descendants); // documents may themselves appear as descendants in multiselect
+        return descendantsSet;
     }
 
 

@@ -83,16 +83,14 @@ configuration-field {
     }
 
     &.custom {
-      .card-header,
-      .card-body {
-        background-color: darken(#fff3cd, 5%) !important;
+      .card-header {
+        background-color: #fff3cd !important;
       }
 
-      .card-header {
-        &.opened,
-        &:hover:not(.parent-element) {
+      .card-header.opened,
+      .card-header:hover:not(.parent-element),
+      .card-body {
           background-color: darken(#fff3cd, 5%) !important;
-        }
       }
     }
 

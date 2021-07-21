@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {childrenOf, Datastore, FieldDocument, toResourceId} from 'idai-field-core';
+import {FieldDocument} from 'idai-field-core';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {on, set} from 'tsfun';
 
 
 /**
@@ -18,13 +17,12 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
-                private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager) {}
 
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = (await this.imageRelationsManager.getDescendants(documents)).length;
+        const descendantsCount = (await this.relationsManager.getDescendants(documents)).length;
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -33,7 +31,7 @@ export class ResourceDeletion {
         modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
-            = (await this.imageRelationsManager.getDescendants(documents)).concat(documents);
+            = (await this.relationsManager.getDescendants(documents)).concat(documents);
         modalRef.componentInstance.relatedImagesCount
             = (await this.imageRelationsManager.getLinkedImages(documentsAndDescendants, true)).length;
 

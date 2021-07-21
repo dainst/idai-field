@@ -73,20 +73,17 @@ export class ImageRelationsManager {
                 document => ProjectCategories.getImageCategoryNames(this.categoryForest).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
+        const nonImageDocumentsIds = nonImageDocuments.map(toResourceId);
         const documentsToBeDeleted = [];
         for (const document of nonImageDocuments) {
 
-            const docsInclDescendants = (await this.datastore
+            const localDocumentsToBeDeleted = (await this.datastore
                         .find(childrenOf(document.resource.id))).documents
+                    .filter(doc => !nonImageDocumentsIds.includes(doc.resource.id)) // those will be deleted when its their turn in the for loop
                     .concat([document]);
 
-            documentsToBeDeleted.push(...docsInclDescendants);
-
-            // TODO we could have refactored `relationsManager.remove(document, { descendants: true})`
-            // to make use of `isChildOf`. But this has do be done properly because of its multiple call sites.
-            // So we do it here, locally, via `childrenOf`, and then loop over the results.
-            // A better implementation is in the making (for 2.20.0).
-            for (const doc of docsInclDescendants) await this.relationsManager.remove(doc);
+            documentsToBeDeleted.push(...localDocumentsToBeDeleted);
+            for (const doc of localDocumentsToBeDeleted) await this.relationsManager.remove(doc);
         }
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));

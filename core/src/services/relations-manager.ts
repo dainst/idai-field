@@ -12,6 +12,7 @@ import {  ON_RESOURCE_ID, RESOURCE_DOT_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { Resource } from '../model/resource';
+import {childrenOf} from '../base-config';
 
 
 
@@ -144,7 +145,7 @@ export class RelationsManager {
 
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
-        const findResult = await this.findLiesWithinDocs(document.resource.id, false) as FindResult;
+        const findResult = await this.findLiesWithinDocs(document.resource.id);
         const docsToCorrect =
             findResult
                 .documents
@@ -174,26 +175,11 @@ export class RelationsManager {
                                   skipDocuments = false,
                                   idsToSubtract?: string[]): Promise<FindIdsResult> {
 
-        return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
-            ? await this.findRecordedInDocsIds(document.resource.id, skipDocuments, idsToSubtract)
-            : await this.findLiesWithinDocs(document.resource.id, skipDocuments, idsToSubtract);
-    }
-
-
-    private async findRecordedInDocsIds(resourceId: string,
-                                        skipDocuments: boolean,
-                                        idsToSubtract?: string[]): Promise<FindIdsResult|FindResult> {
-
-        const query: Query = {
-            constraints: { 'isRecordedIn:contain': resourceId }
+        const query: Query = childrenOf(document.resource.id);
+        query.constraints['id:match'] = {
+            value: idsToSubtract,
+            subtract: true
         };
-
-        if (idsToSubtract) {
-            query.constraints['id:match'] = {
-                value: idsToSubtract,
-                subtract: true
-            }
-        }
 
         return skipDocuments
             ? this.datastore.findIds(query)
@@ -201,8 +187,7 @@ export class RelationsManager {
     }
 
 
-    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean,
-                                     idsToSubtract?: string[]): Promise<FindIdsResult|FindResult> {
+    private async findLiesWithinDocs(resourceId: string): Promise<FindResult> {
 
         const query: Query = {
             constraints: {
@@ -212,17 +197,7 @@ export class RelationsManager {
                 }
             }
         };
-
-        if (idsToSubtract) {
-            query.constraints['id:match'] = {
-                value: idsToSubtract,
-                subtract: true
-            }
-        }
-
-        return skipDocuments
-            ? this.datastore.findIds(query)
-            : await this.datastore.find(query);
+        return this.datastore.find(query);
     }
 
 

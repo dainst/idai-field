@@ -66,17 +66,16 @@ export class ImageRelationsManager {
                 document => this.projectConfiguration.getImageCategories().map(Named.toName).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
+        const nonImageDocumentsIds = nonImageDocuments.map(toResourceId);
         const documentsToBeDeleted = [];
         for (const document of nonImageDocuments) {
-            const descendants = await this.fetchDescendants(document.resource.id);
-            documentsToBeDeleted.push(document, ...descendants);
-            await this.relationsManager.remove(
-                document,
-                {
-                    descendants: true,
-                    descendantsToKeep: nonImageDocuments.filter(doc => doc !== document)
-                }
-            );
+            const localDocumentsToBeDeleted = (await this.datastore
+                .find(childrenOf(document.resource.id))).documents
+            .filter(doc => !nonImageDocumentsIds.includes(doc.resource.id)) // those will be deleted when its their turn in the for loop
+            .concat([document]);
+
+            documentsToBeDeleted.push(...localDocumentsToBeDeleted);
+            for (const doc of localDocumentsToBeDeleted) await this.relationsManager.remove(doc);
         }
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
@@ -153,13 +152,6 @@ export class ImageRelationsManager {
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
         }
         return leftovers;
-    }
-
-
-    private async fetchDescendants(id: Resource.Id)
-            : Promise<Array<Document>> {
-
-        return (await this.datastore.find(childrenOf(id))).documents;
     }
 
 

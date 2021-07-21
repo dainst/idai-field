@@ -1,7 +1,7 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
-    |'georeferenceEdit'|'configurationEdit';
+    |'georeferenceEdit'|'configurationEdit'|'configurationModal';
 
-
+    
 /**
  * @author Thomas Kleinke
  */
@@ -16,4 +16,5 @@ export module MenuContext {
     export const MAP_LAYERS_EDIT = 'mapLayersEdit';
     export const GEOREFERENCE_EDIT = 'georeferenceEdit';
     export const CONFIGURATION_EDIT = 'configurationEdit';
+    export const CONFIGURATION_MODAL = 'configurationModal';
 }

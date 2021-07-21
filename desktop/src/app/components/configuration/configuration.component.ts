@@ -202,7 +202,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         const [result, componentInstance] =
             this.modals.make<AddCategoryModalComponent>(
                 AddCategoryModalComponent,
-                MenuContext.MODAL,
+                MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
 
@@ -288,7 +288,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         const [result, componentInstance] =
             this.modals.make<DeleteCategoryModalComponent>(
                 DeleteCategoryModalComponent,
-                MenuContext.MODAL
+                MenuContext.CONFIGURATION_MODAL
             );
 
         componentInstance.category = category;
@@ -308,7 +308,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         const [result, componentInstance] =
             this.modals.make<DeleteGroupModalComponent>(
                 DeleteGroupModalComponent,
-                MenuContext.MODAL
+                MenuContext.CONFIGURATION_MODAL
             );
 
         componentInstance.group = group;
@@ -324,7 +324,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         const [result, componentInstance] =
             this.modals.make<DeleteFieldModalComponent>(
                 DeleteFieldModalComponent,
-                MenuContext.MODAL
+                MenuContext.CONFIGURATION_MODAL
             );
 
         componentInstance.field = field;
@@ -401,7 +401,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             SaveModalComponent,
-            MenuContext.MODAL
+            MenuContext.CONFIGURATION_MODAL
         );
 
         let newProjectConfiguration;

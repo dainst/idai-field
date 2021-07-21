@@ -142,7 +142,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     private async openEditSaveDialogModal() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        this.menuService.setContext(MenuContext.CONFIGURATION_MODAL);
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(

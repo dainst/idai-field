@@ -134,7 +134,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const [result] = this.modals.make<AddGroupModalComponent>(
             AddGroupModalComponent,
-            MenuContext.MODAL
+            MenuContext.CONFIGURATION_MODAL
         );
 
         await this.modals.awaitResult(result,
@@ -148,7 +148,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const [result] = this.modals.make<AddFieldModalComponent>(
             AddFieldModalComponent,
-            MenuContext.MODAL
+            MenuContext.CONFIGURATION_MODAL
         );
 
         await this.modals.awaitResult(result,

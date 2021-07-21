@@ -214,7 +214,7 @@ const getTemplate = (mainWindow, context, config) => {
         template.splice(0, 1);
     }
 
-    if (context === 'configuration') {
+    if (isConfigurationContext(context)) {
         const index = template.indexOf(template.find(menu => menu.name === 'tools'));
         template.splice(index + 1, 0, {
             label: messages.get('menu.tools.configuration'),
@@ -240,6 +240,10 @@ const getTemplate = (mainWindow, context, config) => {
 
 
 const isDefaultContext = context => ['default', 'configuration'].includes(context);
+
+
+const isConfigurationContext = context => ['configuration', 'configurationEdit', 'configurationModal']
+    .includes(context);
 
 
 module.exports = getTemplate;

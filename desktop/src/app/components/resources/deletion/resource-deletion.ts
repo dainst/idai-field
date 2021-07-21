@@ -6,7 +6,7 @@ import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import { append, flow, on, set, size, subtract } from 'tsfun';
+import {on, set} from 'tsfun';
 
 
 /**
@@ -24,7 +24,7 @@ export class ResourceDeletion {
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = this.getDescendantsCount(documents);
+        const descendantsCount = (await this.imageRelationsManager.getDescendants(documents)).length;
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -33,7 +33,7 @@ export class ResourceDeletion {
         modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
-            = (await this.getDescendants(documents)).concat(documents);
+            = (await this.imageRelationsManager.getDescendants(documents)).concat(documents);
         modalRef.componentInstance.relatedImagesCount
             = (await this.imageRelationsManager.getLinkedImages(documentsAndDescendants, true)).length;
 
@@ -48,45 +48,20 @@ export class ResourceDeletion {
     }
 
 
-    private getDescendantsCount(selectedDocuments: Array<FieldDocument>): number {
-
-        const ids = [];
-        for (const document of selectedDocuments) {
-            ids.push(...this.datastore.findIds(childrenOf(document.resource.id)).ids);
-        }
-        const documentsIds = selectedDocuments.map(toResourceId);
-        return flow(ids,
-            subtract(documentsIds), // selected documents may appear as descendants in multiselect, also subtract gives us a set of ids, which prevents double counts
-            size);
-    }
-
-
     private async performDeletion(documents: Array<FieldDocument>, deleteRelatedImages: boolean) {
 
+        if (deleteRelatedImages) {
+            await this.imageRelationsManager.remove(...documents);
+            return;
+        }
+        if (documents.length === 1 && ResourceDeletion.isImportedCatalog(documents[0])) {
+            await this.imageRelationsManager.remove(documents[0]);
+            return;
+        }
         for (const document of documents) {
-            if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
-                 await this.imageRelationsManager.remove(document);
-            } else {
-                 await this.relationsManager.remove(document,
-                     { descendants: true, descendantsToKeep: documents.filter(doc => doc !== document) });
-            }
+            await this.relationsManager.remove(document,
+                { descendants: true, descendantsToKeep: documents.filter(doc => doc !== document) });
         }
-    }
-
-
-    private async getDescendants(documents: Array<FieldDocument>): Promise<Array<FieldDocument>> {
-
-        const documentsIds = documents.map(toResourceId);
-        const descendants: Array<FieldDocument> = [];
-        for (let document of documents) {
-            const docs = (await this.datastore
-                    .find(childrenOf(document.resource.id))).documents
-                .filter(doc => !documentsIds.includes(doc.resource.id))
-
-            descendants.push(...docs as Array<FieldDocument>);
-        }
-        const descendantsSet = set(on(['resource', 'id']), descendants);
-        return descendantsSet;
     }
 
 

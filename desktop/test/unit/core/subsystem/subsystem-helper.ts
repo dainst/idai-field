@@ -20,9 +20,9 @@ import { SettingsService } from '../../../../src/app/core/settings/settings-serv
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
+import { makeExpectDocuments } from '../../../../../core/test/test-helpers';
 
 import PouchDB = require('pouchdb-node');
-import {makeExpectDocuments} from '../../../../../core/test/test-helpers';
 
 const fs = require('fs');
 

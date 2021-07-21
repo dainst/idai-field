@@ -134,7 +134,7 @@ export class RelationsManager {
 
 
     // TODO review in 2.20.0, maybe factor out into a hierarchy util, in which this function just takes the find function
-    public async getDescendants<D extends Document>(documents: Array<D>): Promise<Array<D>> {
+    public async getWithDescendants<D extends Document>(documents: Array<D>): Promise<Array<D>> {
 
         const documentsIds = documents.map(toResourceId);
         const descendants: Array<D> = [];
@@ -146,7 +146,7 @@ export class RelationsManager {
             descendants.push(...docs as Array<D>);
         }
         const descendantsSet = set(on(['resource', 'id']), descendants); // documents may themselves appear as descendants in multiselect
-        return descendantsSet;
+        return descendantsSet.concat(documents);
     }
 
 

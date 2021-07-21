@@ -73,12 +73,8 @@ export class ImageRelationsManager {
                 document => ProjectCategories.getImageCategoryNames(this.categoryForest).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
-        const descendantsOfNonImageDocuments = await this.relationsManager.getDescendants(nonImageDocuments);
-        const documentsToBeDeleted = descendantsOfNonImageDocuments.concat(nonImageDocuments);
-
-        for (const d of descendantsOfNonImageDocuments) await this.relationsManager.remove(d);
-        for (const d of nonImageDocuments) await this.relationsManager.remove(d);
-
+        const documentsToBeDeleted = await this.relationsManager.getWithDescendants(nonImageDocuments);
+        for (const d of documentsToBeDeleted) await this.relationsManager.remove(d);
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
         for (let image of imagesToBeDeleted) {
             await this.imagestore.remove(image.resource.id);

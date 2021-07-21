@@ -6,16 +6,16 @@ import { CategoryConverter } from '../../src/datastore/category-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { PouchdbDatastore } from '../../src/datastore/pouchdb/pouchdb-datastore';
-import {  PouchdbManager } from '../../src/datastore/pouchdb/pouchdb-manager';
+import { PouchdbManager } from '../../src/datastore/pouchdb/pouchdb-manager';
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexFacade } from '../../src/index/index-facade';
 import { Tree } from '../../src/tools/forest';
 import { Lookup, makeLookup, Name } from '../../src/tools';
 import { RelationsManager } from '../../src/model';
 import { createDocuments, makeExpectDocuments, NiceDocs } from '../test-helpers';
+import { basicIndexConfiguration } from '../../src/base-config';
 
 import PouchDB = require('pouchdb-node');
-import {basicIndexConfiguration} from '../../src/base-config';
 
 
 // TODO remove duplication with import/utils.ts
@@ -120,7 +120,7 @@ function makeCreateDocuments(datastore: Datastore) {
 
         const storedDocuments = [];
         for (const doc of Object.values(documentsLookup)) {
-            storedDocuments.push( await datastore.get(doc.resource.id) );
+            storedDocuments.push( await datastore.get(doc.resource.id));
         }
         return makeDocumentsLookup(storedDocuments);
     }

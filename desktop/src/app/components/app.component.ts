@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppController } from '../core/app-controller';
@@ -23,12 +23,11 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
-    constructor(router: Router,
-                private messages: Messages,
-                private renderer: Renderer2,
-                private menuService: Menus,
-                private i18n: I18n,
+    constructor(private messages: Messages,
                 private utilTranslations: UtilTranslations,
+                private i18n: I18n,
+                router: Router,
+                menuService: Menus,
                 appController: AppController,
                 imagestore: Imagestore,
                 settingsService: SettingsService) {

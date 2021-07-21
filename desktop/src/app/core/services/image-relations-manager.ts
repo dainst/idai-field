@@ -68,20 +68,14 @@ export class ImageRelationsManager {
 
         const nonImageDocumentsIds = nonImageDocuments.map(toResourceId);
         const documentsToBeDeleted = [];
-        const documentsToBeDeletedIds = [];
         for (const document of nonImageDocuments) {
             const localDocumentsToBeDeleted = (await this.datastore
                 .find(childrenOf(document.resource.id))).documents
             .filter(doc => !nonImageDocumentsIds.includes(doc.resource.id)) // those will be deleted when its their turn in the for loop
             .concat([document]);
 
-            for (const doc of localDocumentsToBeDeleted) {
-                if (documentsToBeDeletedIds.includes(doc.resource.id)) continue;    // may appear as a descendant of more than one document in multiselect
-
-                await this.relationsManager.remove(doc);
-                documentsToBeDeleted.push(doc);
-                documentsToBeDeletedIds.push(doc.resource.id);
-            }
+            documentsToBeDeleted.push(...localDocumentsToBeDeleted);
+            for (const doc of localDocumentsToBeDeleted) await this.relationsManager.remove(doc);
         }
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { flow, size, subtract } from 'tsfun';
+import { flow, on, set, size, subtract } from 'tsfun';
 import { childrenOf, Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, toResourceId } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
@@ -55,7 +55,7 @@ export class ResourceDeletion {
         }
         const documentsIds = selectedDocuments.map(toResourceId);
         return flow(ids,
-            subtract(documentsIds), // selected documents may appear as descendants in multiselect
+            subtract(documentsIds), // selected documents may appear as descendants in multiselect, also subtract gives us a set of ids, which prevents double counts
             size);
     }
 
@@ -76,12 +76,17 @@ export class ResourceDeletion {
 
     private async getDescendants(documents: Array<FieldDocument>): Promise<Array<FieldDocument>> {
 
+        const documentsIds = documents.map(toResourceId);
         const descendants: Array<FieldDocument> = [];
         for (let document of documents) {
-            const result = await this.datastore.find(childrenOf(document.resource.id));
-            descendants.push(...result.documents as Array<FieldDocument>);
+            const docs = (await this.datastore
+                    .find(childrenOf(document.resource.id))).documents
+                .filter(doc => !documentsIds.includes(doc.resource.id))
+
+            descendants.push(...docs as Array<FieldDocument>);
         }
-        return descendants;
+        const descendantsSet = set(on(['resource', 'id']), descendants);
+        return descendantsSet;
     }
 
 

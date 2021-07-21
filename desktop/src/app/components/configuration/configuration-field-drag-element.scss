@@ -10,13 +10,14 @@
     &.parent-element {
       .category-icon {
         position: relative;
-        right: 5px;
-        margin-right: 2px;
+        top: 2px;
+        right: 2px;
+        margin-left: 12px;
       }
 
       b, code {
-        position: relative;
-        bottom: 3px;
+        font-style: italic;
+        font-weight: normal;
       }
     }
 
@@ -24,6 +25,10 @@
       b, code {
         color: #ccc;
       }
+    }
+
+    &.custom-element {
+      background-color: #fff3cd;
     }
   }
 }

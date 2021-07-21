@@ -1,12 +1,12 @@
-<div *ngIf="field && category" class="card field-drag-element"
-     [class.bg-warning]="isCustomField()">
+<div *ngIf="field && category" class="card field-drag-element">
     <div class="card-header"
          [class.parent-element]="parentField"
-         [class.hidden-element]="hidden">
-        <category-icon *ngIf="parentField"
-            [size]="28"
-            [category]="category.parentCategory"></category-icon>
+         [class.hidden-element]="hidden"
+         [class.custom-element]="isCustomField()">
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
+        <category-icon *ngIf="parentField"
+                       [size]="19"
+                       [category]="category.parentCategory"></category-icon>
     </div>
 </div>

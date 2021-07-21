@@ -158,7 +158,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-images':
                 await this.viewModalLauncher.openImageViewModal(document, 'edit');
-                this.loadImages(await this.relationsManager.getAntescendants(
+                this.loadImages(await this.relationsManager.getAntescendents(
                     document.resource.id) as Array<FieldDocument>, true);
                 break;
         }
@@ -168,7 +168,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async openImageViewModal(document: Document) {
 
         await this.viewModalLauncher.openImageViewModal(document, 'view');
-        this.loadImages(await this.relationsManager.getAntescendants(
+        this.loadImages(await this.relationsManager.getAntescendents(
             document.resource.id) as Array<FieldDocument>, true);
     }
 

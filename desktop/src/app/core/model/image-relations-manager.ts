@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, childrenOf } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -75,10 +75,18 @@ export class ImageRelationsManager {
 
         const documentsToBeDeleted = [];
         for (const document of nonImageDocuments) {
-            const docsInclDescendants =
-                (await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false })).concat([document]);
+
+            const docsInclDescendants = (await this.datastore
+                        .find(childrenOf(document.resource.id))).documents
+                    .concat([document]);
+
             documentsToBeDeleted.push(...docsInclDescendants);
-            await this.relationsManager.remove(document, { descendants: true });
+
+            // TODO we could have refactored `relationsManager.remove(document, { descendants: true})`
+            // to make use of `isChildOf`. But this has do be done properly because of its multiple call sites.
+            // So we do it here, locally, via `childrenOf`, and then loop over the results.
+            // A better implementation is in the making (for 2.20.0).
+            for (const doc of docsInclDescendants) await this.relationsManager.remove(doc);
         }
 
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));

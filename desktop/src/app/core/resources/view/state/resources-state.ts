@@ -1,9 +1,9 @@
-import {flow, forEach, keys, lookup, map, values} from 'tsfun';
-import {FieldDocument} from 'idai-field-core';
-import {ViewState} from './view-state';
-import {NavigationPath} from './navigation-path';
-import {ViewContext} from './view-context';
-import {ResourcesViewMode} from '../view-facade';
+import { flow, forEach, keys, lookup, map, values } from 'tsfun';
+import { FieldDocument } from 'idai-field-core';
+import { ViewState } from './view-state';
+import { NavigationPath } from './navigation-path';
+import { ViewContext } from './view-context';
+import { ResourcesViewMode } from '../view-facade';
 
 
 /**

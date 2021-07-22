@@ -1,18 +1,17 @@
 
 import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
+    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract,
 } from 'tsfun';
 import { Document } from '../model/document';
-import {Relation} from '../model/configuration/relation';
+import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/document';
 import { ProjectConfiguration } from './project-configuration'
-import {  ON_RESOURCE_ID, RESOURCE_DOT_ID } from '../constants';
+import {  ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { childrenOf } from '../base-config';
-
 
 
 /**
@@ -84,7 +83,8 @@ export class RelationsManager {
             return;
         }
 
-        const descendants = await this._getDescendants(document);
+        const descendants = (await this.datastore.find(childrenOf(document.resource.id))).documents;
+
         const documentsToBeDeleted =
             flow(descendants,
                 subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
@@ -145,22 +145,6 @@ export class RelationsManager {
     }
 
 
-    private async findDescendants(document: Document,
-                                  skipDocuments = false,
-                                  idsToSubtract?: string[]): Promise<Datastore.FindIdsResult> {
-
-        const query: Query = childrenOf(document.resource.id);
-        query.constraints['id:match'] = {
-            value: idsToSubtract,
-            subtract: true
-        };
-
-        return skipDocuments
-            ? this.datastore.findIds(query)
-            : await this.datastore.find(query);
-    }
-
-
     private async findLiesWithinDocs(resourceId: string): Promise<Datastore.FindResult> {
 
         const query: Query = {
@@ -173,14 +157,4 @@ export class RelationsManager {
         };
         return this.datastore.find(query);
     }
-
-
-    private async _getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
-
-        const results = [];
-        for (const document of documents) {
-            results.push(...(await this.findDescendants(document) as Datastore.FindResult).documents);
-        }
-        return results;
-    }    
 }

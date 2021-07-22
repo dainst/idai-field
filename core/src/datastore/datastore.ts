@@ -145,7 +145,7 @@ export class Datastore {
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
@@ -181,7 +181,7 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public find = async (query: Query): Promise<Datastore.FindResult> => {
+    public find: Datastore.Find = async (query: Query): Promise<Datastore.FindResult> => {
 
         const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -200,7 +200,7 @@ export class Datastore {
      * @param query 
      * @returns 
      */
-    public findIds = (query: Query): Datastore.FindIdsResult => {
+    public findIds: Datastore.FindIds = (query: Query): Datastore.FindIdsResult => {
 
         const orderedResults: string[] = this.getIds(query);
 

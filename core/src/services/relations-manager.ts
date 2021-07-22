@@ -30,6 +30,7 @@ export class RelationsManager {
         private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration
     ) {
+        // TODO since this is a service used elsewhere, too, it should probably be passed as argument and not constructed here
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
 

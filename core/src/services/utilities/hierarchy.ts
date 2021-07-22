@@ -1,5 +1,9 @@
-import { Document, toResourceId, childrenOf, Relation, Resource, Datastore } from 'idai-field-core';
 import { on, set } from 'tsfun';
+import {childrenOf} from '../../base-config';
+import {Datastore} from '../../datastore/datastore';
+import {Relation} from '../../model/configuration/relation';
+import {toResourceId, Document} from '../../model/document';
+import {Resource} from '../../model/resource';
 
 /**
  * @author Daniel de Oliveira

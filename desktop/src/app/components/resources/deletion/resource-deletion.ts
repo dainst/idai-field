@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager} from 'idai-field-core';
+import {Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, Hierarchy} from 'idai-field-core';
 import {DeleteModalComponent} from './delete-modal.component';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
-import { Hierarchy } from '../../../core/services/utilities/hierarchy';
 
 
 /**

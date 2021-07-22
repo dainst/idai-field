@@ -1,7 +1,7 @@
 import { Document, Datastore, Relations, Lookup, ON_RESOURCE_ID } from 'idai-field-core';
 import { aMap, isArray, clone, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
-import { ImageRelationsManager } from '../../model/image-relations-manager';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
 import { makeDocumentsLookup } from './utils';
 

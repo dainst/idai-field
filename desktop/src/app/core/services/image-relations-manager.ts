@@ -4,7 +4,7 @@ import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to 
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Imagestore } from '../images/imagestore/imagestore';
-import { RelationsManager } from './relations-manager';
+import { RelationsManager } from '../model/relations-manager';
 import DEPICTS = Relations.Image.DEPICTS;
 import ISDEPICTEDIN = Relations.Image.ISDEPICTEDIN;
 

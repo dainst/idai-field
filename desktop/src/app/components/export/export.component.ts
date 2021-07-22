@@ -12,7 +12,7 @@ import { ExportRunner } from '../../core/export/export-runner';
 import { GeoJsonExporter } from '../../core/export/geojson-exporter';
 import { ShapefileExporter } from '../../core/export/shapefile-exporter';
 import { JavaToolExecutor } from '../../core/java/java-tool-executor';
-import { ImageRelationsManager } from '../../core/model/image-relations-manager';
+import { ImageRelationsManager } from '../../core/services/image-relations-manager';
 import { ModelUtil } from '../../core/model/model-util';
 import { RelationsManager } from '../../core/model/relations-manager';
 import { SettingsProvider } from '../../core/settings/settings-provider';

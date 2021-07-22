@@ -6,7 +6,7 @@ import { makeInverseRelationsMap } from '../configuration/inverse-relations-map'
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Imagestore } from '../images/imagestore/imagestore';
-import { ImageRelationsManager } from '../model/image-relations-manager';
+import { ImageRelationsManager } from '../services/image-relations-manager';
 import { RelationsManager } from '../model/relations-manager';
 import { Settings } from '../settings/settings';
 import { FieldConverter } from './field-converter';

@@ -9,7 +9,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
+import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/services/image-relations-manager';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import { FieldDocument } from 'idai-field-core';
 

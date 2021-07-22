@@ -4,7 +4,7 @@ import {FieldDocument} from 'idai-field-core';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
-import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
+import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 

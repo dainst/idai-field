@@ -3,6 +3,7 @@ import { on, set } from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export namespace Hierarchy {
 
@@ -20,6 +21,17 @@ export namespace Hierarchy {
         }
         const descendantsSet = set(on(['resource', 'id']), descendants); // documents may themselves appear as descendants in multiselect
         return descendantsSet.concat(documents);
+    }
+
+
+    export async function getParent(get: Get,
+                                    resource: Resource): Promise<Resource|undefined> {
+
+        return resource.relations['liesWithin'] && resource.relations['liesWithin'].length > 0
+            ? (await get(resource.relations.liesWithin[0])).resource
+            : resource.relations['isRecordedIn'] && resource.relations['isRecordedIn'].length > 0
+                ? (await get(resource.relations.isRecordedIn[0])).resource
+                : undefined;
     }
 
 

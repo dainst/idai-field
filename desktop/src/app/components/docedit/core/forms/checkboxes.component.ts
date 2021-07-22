@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import {Hierarchy} from '../../../../core/services/utilities/hierarchy';
 import { Datastore, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
-import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 
 @Component({
     selector: 'dai-checkboxes',
@@ -29,7 +29,7 @@ export class CheckboxesComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            await HierarchyUtil.getParent(this.resource, this.datastore)
+            await Hierarchy.getParent(id => this.datastore.get(id), this.resource)
         );
     }
 

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
+import {Hierarchy} from '../../../../core/services/utilities/hierarchy';
 import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
 import { isUndefinedOrEmpty } from 'tsfun';
-import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 
 const PROJECT = 'project';
 
@@ -39,7 +39,7 @@ export class DropdownRangeComponent {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get(PROJECT),
-            await HierarchyUtil.getParent(this.resource, this.datastore)
+            await Hierarchy.getParent(id => this.datastore.get(id), this.resource)
         );
     }
 

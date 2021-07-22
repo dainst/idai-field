@@ -1,6 +1,6 @@
 import {ProjectConfiguration, Datastore} from 'idai-field-core';
-import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
-import { Validator } from '../../../../src/app/core/model/validator';
+import { ValidationErrors } from '../../../../src/app/model/validation-errors';
+import { Validator } from '../../../../src/app/model/validator';
 
 
 /**

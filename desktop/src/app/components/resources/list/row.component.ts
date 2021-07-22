@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FieldDocument, Category, Datastore, RelationsManager, ProjectConfiguration, Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
-import { Validator } from '../../../core/model/validator';
+import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
 import { MessagesConversion } from '../../docedit/messages-conversion';
 import { ViewFacade } from '../../../core/resources/view/view-facade';

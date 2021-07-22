@@ -1,6 +1,6 @@
 import { DatastoreErrors, Name } from 'idai-field-core';
 import { ProjectConfiguration, Labels } from 'idai-field-core';
-import { ValidationErrors } from '../../core/model/validation-errors';
+import { ValidationErrors } from '../../model/validation-errors';
 import { M } from '../messages/m';
 import { MsgWithParams } from '../messages/msg-with-params';
 

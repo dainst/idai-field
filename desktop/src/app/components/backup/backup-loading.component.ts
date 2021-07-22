@@ -5,7 +5,7 @@ import {SettingsService} from '../../services/settings/settings-service';
 import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
-import {ProjectNameValidation} from '../../core/model/project-name-validation';
+import {ProjectNameValidation} from '../../model/project-name-validation';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';

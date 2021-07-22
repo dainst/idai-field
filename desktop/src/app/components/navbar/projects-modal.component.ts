@@ -4,7 +4,7 @@ import { Document, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { reload } from '../../services/reload';
 import { StateSerializer } from '../../services/state-serializer';
-import { ProjectNameValidation } from '../../core/model/project-name-validation';
+import { ProjectNameValidation } from '../../model/project-name-validation';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';

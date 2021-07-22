@@ -11,7 +11,7 @@ import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/vi
 import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../../src/app/core/import/import/utils';
 import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
-import { Validator } from '../../../../src/app/core/model/validator';
+import { Validator } from '../../../../src/app/model/validator';
 import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade';
 import { SyncTarget } from '../../../../src/app/services/settings/settings';

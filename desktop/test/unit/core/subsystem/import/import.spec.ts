@@ -2,7 +2,7 @@ import { Category, PouchdbManager } from 'idai-field-core';
 import { PouchdbServer } from '../../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../../src/app/core/import/importer';
-import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';
+import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
 import { createApp, createHelpers, setupSettingsService, setupSyncTestDb } from '../subsystem-helper';
 import PouchDB =  require('pouchdb-node');
 

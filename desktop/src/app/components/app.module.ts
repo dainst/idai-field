@@ -21,7 +21,7 @@ import { PouchDbFsImagestore } from '../services/imagestore/pouch-db-fs-imagesto
 import { ImportValidator } from '../core/import/import/process/import-validator';
 import { InitializationProgress } from '../core/initialization-progress';
 import { ImageRelationsManager } from '../services/image-relations-manager';
-import { Validator } from '../core/model/validator';
+import { Validator } from '../model/validator';
 import { SettingsProvider } from '../services/settings/settings-provider';
 import { SettingsService } from '../services/settings/settings-service';
 import { TabManager } from '../core/tabs/tab-manager';

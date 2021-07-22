@@ -2,7 +2,7 @@ import {is, isArray, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange, Category, Tree} from 'idai-field-core';
 import {FieldGeometry, ProjectConfiguration, Named, Field, Relation} from 'idai-field-core';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 
 

@@ -1,4 +1,4 @@
-import {MsgWithParams} from '../../components/messages/msg-with-params';
+import {MsgWithParams} from '../components/messages/msg-with-params';
 
 /**
  * @author Thomas Kleinke

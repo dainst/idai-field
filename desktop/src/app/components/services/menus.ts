@@ -35,7 +35,7 @@ export class Menus {
             await this.onMenuItemClicked(menuItem);
         });
 
-        this.setContext('default');
+        this.setContext(MenuContext.DEFAULT);
     }
 
 

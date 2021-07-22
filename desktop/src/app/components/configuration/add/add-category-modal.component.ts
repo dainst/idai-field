@@ -18,15 +18,10 @@ import { Modals } from '../../services/modals';
 export class AddCategoryModalComponent {
 
     public searchTerm: string = '';
-
     public configurationDocument: ConfigurationDocument;
-
     public parentCategory: Category;
-
     public selectedCategory: Category|undefined;
-
     public categories: Array<Category> = [];
-
     public configurationIndex: ConfigurationIndex = {};
 
     public saveAndReload: (configurationDocument: ConfigurationDocument) =>
@@ -49,7 +44,7 @@ export class AddCategoryModalComponent {
     }
 
 
-    public createCategory() {
+    public addSelectedCategory() {
 
         if (!this.selectedCategory) return;
 
@@ -57,7 +52,8 @@ export class AddCategoryModalComponent {
         configurationDocument.resource.categories[this.selectedCategory.name] = {
             fields: {},
             hidden: []
-        }
+        };
+
         try {
             this.saveAndReload(configurationDocument);
             this.activeModal.close();
@@ -86,12 +82,11 @@ export class AddCategoryModalComponent {
 
     public async createNewSubcategory() {
 
-        const [result, componentInstance] =
-            this.modals.make<CategoryEditorModalComponent>(
-                CategoryEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<CategoryEditorModalComponent>(
+            CategoryEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -101,6 +96,7 @@ export class AddCategoryModalComponent {
 
         this.modals.awaitResult(result,
             () => this.activeModal.close(),
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 }

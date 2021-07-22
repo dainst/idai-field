@@ -1,5 +1,5 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, ConnectedDocsWriter, createDocuments, Datastore,
+import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
@@ -161,10 +161,9 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         new SyncService(pouchdbManager)
     );
 
-    const connectedDocsWriter = new ConnectedDocsWriter(datastore, projectConfiguration);
     const relationsManager = new RelationsManager(
         datastore,
-        connectedDocsWriter
+        projectConfiguration,
     );
 
     const imageRelationsManager = new ImageRelationsManager(

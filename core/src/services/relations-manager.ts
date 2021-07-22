@@ -7,6 +7,7 @@ import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
 import { NewDocument } from '../model/document';
+import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
@@ -22,9 +23,15 @@ import { childrenOf } from '../base-config';
  */
 export class RelationsManager {
 
+    private connectedDocsWriter: ConnectedDocsWriter;
+
     constructor(
         private datastore: Datastore,
-        private connectedDocsWriter: ConnectedDocsWriter) {}
+        private projectConfiguration: ProjectConfiguration
+    ) {
+        // TODO since this is a service used elsewhere, too, it should probably be passed as argument and not constructed here
+        this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
+    }
 
     /**
      * Persists document and all the objects that are or have been in relation

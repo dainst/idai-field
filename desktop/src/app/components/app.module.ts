@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator, ConfigLoader, ConfigReader, ConnectedDocsWriter, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
@@ -176,16 +176,13 @@ registerLocaleData(localeIt, 'it');
             deps: [AppInitializerServiceLocator]
         },
         {
-            provide: ConnectedDocsWriter,
-            useFactory: (datastore: Datastore, projectConfiguration: ProjectConfiguration) =>
-                            new ConnectedDocsWriter(datastore, projectConfiguration),
-            deps: [Datastore, ProjectConfiguration]
-        },
-        {
             provide: RelationsManager,
-            useFactory: (datastore: Datastore, connectedDocsWriter: ConnectedDocsWriter) =>
-                            new RelationsManager(datastore, connectedDocsWriter),
-            deps: [Datastore, ConnectedDocsWriter]
+            useFactory: (datastore: Datastore,
+                        projectConfiguration: ProjectConfiguration,
+                        settingsProvider: SettingsProvider) =>
+                            new RelationsManager(datastore, projectConfiguration,
+                                ),
+            deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         ImageRelationsManager,
         {

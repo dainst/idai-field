@@ -2,7 +2,7 @@ import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Index
 import { AngularUtility } from '../angular/angular-utility';
 import { ImageConverter } from '../services/imagestore/image-converter';
 import { Imagestore } from '../services/imagestore/imagestore';
-import { InitializationProgress } from '../core/initialization-progress';
+import { InitializationProgress } from './initialization-progress';
 import { IndexerConfiguration } from '../indexer-configuration';
 import {SettingsService} from '../services/settings/settings-service';
 import {SettingsSerializer} from '../services/settings/settings-serializer';

@@ -24,16 +24,9 @@ import {Name, Named} from '../tools/named';
  */
 export class RelationsManager {
 
-    private relationNames: Array<Name>;
-    private inverseRelationsMap: Relation.InverseRelationsMap;
-
     constructor(
         private datastore: Datastore,
-        projectConfiguration: ProjectConfiguration
-    ) {
-        this.relationNames = projectConfiguration.getRelations().map(Named.toName);
-        this.inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
-    }
+        private projectConfiguration: ProjectConfiguration) {}
 
     /**
      * Persists document and all the objects that are or have been in relation
@@ -104,7 +97,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
-            this.datastore.update, this.datastore.get, this.relationNames, this.inverseRelationsMap, updated, [oldVersion].concat(revisionsToSquash));
+            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
 
@@ -112,7 +105,7 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await ConnectedDocsWriting.updateConnectedDocumentsForDocumentRemove(
-            this.datastore.update, this.datastore.get, this.relationNames, this.inverseRelationsMap, document);
+            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), document);
         await this.datastore.remove(document);
     }
 
@@ -158,5 +151,18 @@ export class RelationsManager {
             }
         };
         return this.datastore.find(query);
+    }
+
+
+    private getInverseRelationsMap(): Relation.InverseRelationsMap {
+
+        return Relation.makeInverseRelationsMap(this.projectConfiguration.getRelations());
+        
+    }
+
+
+    private getRelationNames(): Array<Name> {
+
+        return this.projectConfiguration.getRelations().map(Named.toName);
     }
 }

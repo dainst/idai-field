@@ -11,14 +11,14 @@ import { Menus } from './menus';
  */
 export class Modals {
 
-    private menuContexts: Array<MenuContext> = [];
+    private menuContextsStack: Array<MenuContext> = [];
 
 
     constructor(private modalService: NgbModal,
                 private menuService: Menus) {}
 
 
-    public initialize = (menuContext: MenuContext) => this.menuContexts = [menuContext];
+    public initialize = (menuContext: MenuContext) => this.menuContextsStack = [menuContext];
 
 
     /**
@@ -32,7 +32,7 @@ export class Modals {
     public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
 
         this.menuService.setContext(menuContext);
-        this.menuContexts.push(menuContext);
+        this.menuContextsStack.push(menuContext);
 
         const options: NgbModalOptions = {
             backdrop: 'static',
@@ -63,7 +63,7 @@ export class Modals {
 
 
     public async closeModal(componentInstance: any) {
-        
+
         this.restorePreviousMenuContext();
         componentInstance.activeModal.close();
     }
@@ -71,7 +71,7 @@ export class Modals {
 
     private restorePreviousMenuContext() {
 
-        if (this.menuContexts.length > 1) this.menuContexts.pop();
-        this.menuService.setContext(this.menuContexts[this.menuContexts.length - 1]);
+        if (this.menuContextsStack.length > 1) this.menuContextsStack.pop();
+        this.menuService.setContext(this.menuContextsStack[this.menuContextsStack.length - 1]);
     }
 }

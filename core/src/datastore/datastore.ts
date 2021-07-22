@@ -9,11 +9,15 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 
 
+export namespace Datastore {
 
-export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
+    export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
 
-export type Find = (query: Query) => Promise<FindResult>;
+    export type Find = (query: Query) => Promise<FindResult>;
+}
 
+
+// TODO move the following interfaces and modules into Datastore namespace, too.
 
 export interface FindIdsResult {
 

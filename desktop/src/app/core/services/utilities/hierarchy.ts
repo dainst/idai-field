@@ -1,4 +1,4 @@
-import { Document, toResourceId, childrenOf, Get, Find, Relation, Resource } from 'idai-field-core';
+import { Document, toResourceId, childrenOf, Relation, Resource, Datastore } from 'idai-field-core';
 import { on, set } from 'tsfun';
 
 /**
@@ -7,7 +7,7 @@ import { on, set } from 'tsfun';
  */
 export namespace Hierarchy {
 
-    export async function getWithDescendants<D extends Document>(find: Find,
+    export async function getWithDescendants<D extends Document>(find: Datastore.Find,
                                                                  documents: Array<D>)
             : Promise<Array<D>> {
 
@@ -24,7 +24,7 @@ export namespace Hierarchy {
     }
 
 
-    export async function getParent(get: Get,
+    export async function getParent(get: Datastore.Get,
                                     resource: Resource): Promise<Resource|undefined> {
 
         return resource.relations['liesWithin'] && resource.relations['liesWithin'].length > 0
@@ -36,7 +36,7 @@ export namespace Hierarchy {
 
 
     // TODO review if our datastore can do this, too, via contraintIndex
-    export async function getAntescendents(get: Get, id: Resource.Id): Promise<Array<Document>> {
+    export async function getAntescendents(get: Datastore.Get, id: Resource.Id): Promise<Array<Document>> {
 
         try {
             const document = await get(id);
@@ -48,7 +48,7 @@ export namespace Hierarchy {
     }
 
 
-    async function _getAntecendents(get: Get, document: Document): Promise<Array<Document>> {
+    async function _getAntecendents(get: Datastore.Get, document: Document): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
 

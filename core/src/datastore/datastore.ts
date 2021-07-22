@@ -136,7 +136,7 @@ export class Datastore {
 
 
     /**
-     * As lambda, to allow passing as Get (see companion namespace).
+     * As lambda, to allow passing as Get (see companion namespace below).
      * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
@@ -175,7 +175,7 @@ export class Datastore {
      * Perform a fulltext query
      * Find sorts the documents by identifier ascending
      * 
-     * As lambda, to allow passing as Find (see companion namespace).
+     * As lambda, to allow passing as Find (see companion namespace below).
      * 
      * @param query the query object
      * @returns {Promise<IdaiFieldFindResult>} result object
@@ -195,7 +195,7 @@ export class Datastore {
 
 
     /**
-     * As lambda, to allow passing as FindIds (see companion namespace).
+     * As lambda, to allow passing as FindIds (see companion namespace below).
      * 
      * @param query 
      * @returns 

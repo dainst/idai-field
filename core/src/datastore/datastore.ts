@@ -1,4 +1,3 @@
-import { detach } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
@@ -10,6 +9,8 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 
 
+
+export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
 
 export type Find = (query: Query) => Promise<FindResult>;
 
@@ -194,8 +195,6 @@ export class Datastore {
         return (await this.getDocumentsForIds(ids)).documents;
     }
 
-
-    
 
     /**
      * Perform a fulltext query

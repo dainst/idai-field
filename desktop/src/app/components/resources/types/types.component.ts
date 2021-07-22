@@ -18,6 +18,7 @@ import { ViewModalLauncher } from '../service/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
+import { Hierarchy } from '../../../core/services/utilities/hierarchy';
 
 
 @Component({
@@ -158,8 +159,8 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-images':
                 await this.viewModalLauncher.openImageViewModal(document, 'edit');
-                this.loadImages(await this.relationsManager.getAntescendents(
-                    document.resource.id) as Array<FieldDocument>, true);
+                this.loadImages(await Hierarchy.getAntescendents(
+                    id => this.datastore.get(id), document.resource.id) as Array<FieldDocument>, true);
                 break;
         }
     }
@@ -168,8 +169,8 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async openImageViewModal(document: Document) {
 
         await this.viewModalLauncher.openImageViewModal(document, 'view');
-        this.loadImages(await this.relationsManager.getAntescendents(
-            document.resource.id) as Array<FieldDocument>, true);
+        this.loadImages(await Hierarchy.getAntescendents(
+            id => this.datastore.get(id), document.resource.id) as Array<FieldDocument>, true);
     }
 
 

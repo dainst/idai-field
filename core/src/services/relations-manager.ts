@@ -63,19 +63,7 @@ export class RelationsManager {
     }
 
 
-    // TODO review if our datastore can do this, too, via contraintIndex
-    public async getAntescendents(id: Resource.Id): Promise<Array<Document>> {
-
-        try {
-            const document = await this.datastore.get(id);
-            return [document].concat((await this._getAntecendents(document)));
-        } catch {
-            console.error('error in relationsManager.getAntescendants()');
-            return [];
-        }
-    }
-
-
+    // TODO move to Hierarchy
     public async getDescendantsCount(...documents: Array<Document>): Promise<number> {
 
         const idsToSubtract: string[] = documents.map(to(RESOURCE_DOT_ID));
@@ -208,27 +196,5 @@ export class RelationsManager {
             results.push(...(await this.findDescendants(document) as FindResult).documents);
         }
         return results;
-    }
-
-
-    private async _getAntecendents(document: Document): Promise<Array<Document>> {
-
-        const documents: Array<Document> = [];
-
-        let current = document;
-        while (Document.hasRelations(current, Relation.Hierarchy.LIESWITHIN)
-               || Document.hasRelations(current, Relation.Hierarchy.RECORDEDIN)) {
-
-            const parent = await this.datastore.get(
-                Document.hasRelations(current, Relation.Hierarchy.LIESWITHIN)
-                    ? current.resource.relations[Relation.Hierarchy.LIESWITHIN][0]
-                    : current.resource.relations[Relation.Hierarchy.RECORDEDIN][0]
-            );
-
-            documents.push(parent);
-            current = parent;
-        }
-
-        return documents;
-    }
+    }    
 }

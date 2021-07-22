@@ -1,4 +1,4 @@
-import {updateRelations} from '../../src/services/update-relations';
+import {updateRelations} from '../../src/services/utilities/update-relations';
 
 
 /**

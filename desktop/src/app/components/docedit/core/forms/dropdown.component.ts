@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import {Hierarchy} from '../../../../core/services/utilities/hierarchy';
-import { Datastore, Labels, Field, Resource, Valuelist, ValuelistUtil } from 'idai-field-core';
+import { Datastore, Labels, Field, Resource, Valuelist, ValuelistUtil, Hierarchy } from 'idai-field-core';
 
 
 @Component({

@@ -3,7 +3,7 @@ import { Document, toResourceId  } from '../model/document';
 import { Resource } from '../model/resource';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
-import { updateRelations } from './update-relations';
+import { updateRelations } from './utilities/update-relations';
 import { Named } from '../tools/named';
 import { ProjectConfiguration } from './project-configuration';
 

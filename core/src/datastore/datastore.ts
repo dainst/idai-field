@@ -9,6 +9,10 @@ import { Converter } from './converter';
 import { DocumentCache } from './document-cache';
 
 
+
+export type Find = (query: Query) => Promise<FindResult>;
+
+
 export interface FindIdsResult {
 
     ids: string[];
@@ -190,6 +194,8 @@ export class Datastore {
         return (await this.getDocumentsForIds(ids)).documents;
     }
 
+
+    
 
     /**
      * Perform a fulltext query

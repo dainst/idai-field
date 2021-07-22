@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, childrenOf } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, Query } from 'idai-field-core';
+import { Hierarchy } from './utilities/hierarchy';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -73,7 +74,7 @@ export class ImageRelationsManager {
                 document => ProjectCategories.getImageCategoryNames(this.categoryForest).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
-        const documentsToBeDeleted = await this.relationsManager.getWithDescendants(nonImageDocuments);
+        const documentsToBeDeleted = await Hierarchy.getWithDescendants(q => this.datastore.find(q), nonImageDocuments);
         for (const d of documentsToBeDeleted) await this.relationsManager.remove(d);
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
         for (let image of imagesToBeDeleted) {

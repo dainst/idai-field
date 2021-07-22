@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument} from 'idai-field-core';
+import {Datastore, FieldDocument} from 'idai-field-core';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
+import { Hierarchy } from '../../../core/services/utilities/hierarchy';
 
 
 /**
@@ -17,12 +18,13 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
+                private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager) {}
 
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = (await this.relationsManager.getWithDescendants(documents))
+        const descendantsCount = (await Hierarchy.getWithDescendants(q => this.datastore.find(q), documents))
             .length - documents.length;
 
         const modalRef: NgbModalRef = this.modalService.open(
@@ -32,7 +34,7 @@ export class ResourceDeletion {
         modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
-            = (await this.relationsManager.getWithDescendants(documents));
+            = (await Hierarchy.getWithDescendants(q => this.datastore.find(q), documents));
         modalRef.componentInstance.relatedImagesCount
             = (await this.imageRelationsManager.getLinkedImages(documentsAndDescendants, true)).length;
 

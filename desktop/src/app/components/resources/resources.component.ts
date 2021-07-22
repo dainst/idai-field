@@ -11,7 +11,7 @@ import { M } from '../messages/m';
 import { MoveModalComponent } from './move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ResourceDeletion } from './deletion/resource-deletion';
-import { TabManager } from '../../core/tabs/tab-manager';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../core/resources/view/view-facade';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { MenuContext } from '../../services/menu-context';

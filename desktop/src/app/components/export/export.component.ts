@@ -11,7 +11,7 @@ import { ExportRunner } from '../../core/export/export-runner';
 import { GeoJsonExporter } from '../../core/export/geojson-exporter';
 import { ShapefileExporter } from '../../core/export/shapefile-exporter';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
-import { TabManager } from '../../core/tabs/tab-manager';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ExportModalComponent } from './export-modal.component';

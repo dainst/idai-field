@@ -7,7 +7,7 @@ import { ImagesState } from '../core/images/overview/view/images-state';
 import { ResourcesStateManager } from '../core/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';
-import { TabManager } from '../core/tabs/tab-manager';
+import { TabManager } from './tabs/tab-manager';
 import {Menus} from './menus';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

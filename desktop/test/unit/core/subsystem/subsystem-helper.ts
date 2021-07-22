@@ -17,7 +17,7 @@ import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade'
 import { SyncTarget } from '../../../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../../../src/app/services/settings/settings-provider';
 import { SettingsService } from '../../../../src/app/services/settings/settings-service';
-import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
+import { TabManager } from '../../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../../core/test/test-helpers';

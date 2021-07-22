@@ -9,7 +9,7 @@ import { ProjectConfiguration } from 'idai-field-core';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { ResourcesStateManager } from '../../core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../core/resources/view/view-facade';
-import { TabManager } from '../../core/tabs/tab-manager';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { DoceditModule } from '../docedit/docedit.module';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageViewerModule } from '../image/viewer/image-viewer.module';

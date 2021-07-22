@@ -4,7 +4,7 @@ import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
 import {IndexFacade} from 'idai-field-core';
-import {StateSerializer} from '../../services/state-serializer';
+import {StateSerializer} from '../state-serializer';
 
 
 /**

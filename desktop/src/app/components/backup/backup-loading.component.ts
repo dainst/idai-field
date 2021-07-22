@@ -6,7 +6,7 @@ import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
 import {ProjectNameValidation} from '../../model/project-name-validation';
-import {TabManager} from '../../core/tabs/tab-manager';
+import {TabManager} from '../../services/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import {SettingsProvider} from '../../services/settings/settings-provider';

@@ -4,7 +4,7 @@ import { nop } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
     createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
-import { TabManager } from '../../core/tabs/tab-manager';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';

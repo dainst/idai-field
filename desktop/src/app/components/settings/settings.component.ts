@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {equal} from 'tsfun';
 import {M} from '../messages/m';
-import {TabManager} from '../../core/tabs/tab-manager';
+import {TabManager} from '../../services/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../services/reload';
 import {Settings} from '../../services/settings/settings';

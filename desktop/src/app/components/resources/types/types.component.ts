@@ -7,7 +7,7 @@ import { Imagestore } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
-import { TabManager } from '../../../core/tabs/tab-manager';
+import { TabManager } from '../../../services/tabs/tab-manager';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';

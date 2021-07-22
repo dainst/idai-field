@@ -9,7 +9,7 @@ import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../services/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
-import { TabManager } from '../../core/tabs/tab-manager';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';

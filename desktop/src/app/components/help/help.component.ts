@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angu
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
-import {TabManager} from '../../core/tabs/tab-manager';
+import {TabManager} from '../../services/tabs/tab-manager';
 import {SettingsService} from '../../services/settings/settings-service';
 import {Menus} from '../../services/menus';
 import {MenuContext} from '../../services/menu-context';

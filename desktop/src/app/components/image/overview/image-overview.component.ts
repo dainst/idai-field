@@ -11,7 +11,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from 'idai-field-core';
-import {TabManager} from '../../../core/tabs/tab-manager';
+import {TabManager} from '../../../services/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';
 

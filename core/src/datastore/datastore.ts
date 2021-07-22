@@ -136,6 +136,8 @@ export class Datastore {
 
 
     /**
+     * As lambda, to allow passing as Get (see companion namespace).
+     * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
      * @param options to control implementation specific behaviour
@@ -143,7 +145,7 @@ export class Datastore {
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public async get(id: string, options?: { skipCache: boolean }): Promise<Document> {
+    public get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
@@ -173,11 +175,13 @@ export class Datastore {
      * Perform a fulltext query
      * Find sorts the documents by identifier ascending
      * 
+     * As lambda, to allow passing as Find (see companion namespace).
+     * 
      * @param query the query object
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public async find(query: Query): Promise<Datastore.FindResult> {
+    public find = async (query: Query): Promise<Datastore.FindResult> => {
 
         const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -190,8 +194,13 @@ export class Datastore {
     }
 
 
-    // TODO merge into find
-    public findIds(query: Query): Datastore.FindIdsResult {
+    /**
+     * As lambda, to allow passing as FindIds (see companion namespace).
+     * 
+     * @param query 
+     * @returns 
+     */
+    public findIds = (query: Query): Datastore.FindIdsResult => {
 
         const orderedResults: string[] = this.getIds(query);
 
@@ -330,6 +339,8 @@ export namespace Datastore {
     export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
 
     export type Find = (query: Query) => Promise<FindResult>;
+
+    export type FindIds = (query: Query) => FindIdsResult;
 
 
     export interface FindIdsResult {

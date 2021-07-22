@@ -5,7 +5,7 @@ import {
 import { Document } from '../model/document';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
-import { ConnectedDocsWriter } from './connected-docs-writer'
+import { ConnectedDocsWriting } from './utilities/connected-docs-writing'
 import { NewDocument } from '../model/document';
 import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID } from '../constants';
@@ -26,7 +26,6 @@ export class RelationsManager {
 
     private relationNames: Array<Name>;
     private inverseRelationsMap: Relation.InverseRelationsMap;
-    private connectedDocsWriter: ConnectedDocsWriter;
 
     constructor(
         private datastore: Datastore,
@@ -34,7 +33,6 @@ export class RelationsManager {
     ) {
         this.relationNames = projectConfiguration.getRelations().map(Named.toName);
         this.inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
-        this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore);
     }
 
     /**
@@ -105,16 +103,16 @@ export class RelationsManager {
         const revs = revisionsToSquash.map(_ => _._rev).filter(isDefined);
         const updated = await this.persistIt(document, revs);
 
-        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            this.relationNames, this.inverseRelationsMap, updated, [oldVersion].concat(revisionsToSquash));
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
+            this.datastore.update, this.datastore.get, this.relationNames, this.inverseRelationsMap, updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
 
 
     private async removeWithConnectedDocuments(document: Document) {
 
-        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            this.relationNames, this.inverseRelationsMap, document);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentRemove(
+            this.datastore.update, this.datastore.get, this.relationNames, this.inverseRelationsMap, document);
         await this.datastore.remove(document);
     }
 

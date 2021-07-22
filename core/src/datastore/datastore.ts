@@ -77,6 +77,8 @@ export class Datastore {
     /**
      * Updates an existing document
      *
+     * As lambda, to allow passing as Get (see companion namespace below).
+     * 
      * @param doc
      * @param squashRevisionsIds
      * @returns {Promise<Document>} a document
@@ -86,7 +88,7 @@ export class Datastore {
      * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
      */
-    public async update(document: Document, squashRevisionsIds?: string[]): Promise<Document> {
+    public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
         return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
@@ -341,6 +343,8 @@ export namespace Datastore {
     export type Find = (query: Query) => Promise<FindResult>;
 
     export type FindIds = (query: Query) => FindIdsResult;
+
+    export  type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
 
     export interface FindIdsResult {

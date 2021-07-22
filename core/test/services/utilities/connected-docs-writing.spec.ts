@@ -1,15 +1,15 @@
-import { ProjectConfiguration } from '../../src/services/project-configuration';
-import { Document } from '../../src/model/document';
-import { ConnectedDocsWriter } from '../../src/services/connected-docs-writer'
-import {Relation} from '../../src/model';
-import {Name, Named} from '../../src/tools';
+import { ProjectConfiguration } from '../../../src/services/project-configuration';
+import { Document } from '../../../src/model/document';
+import { ConnectedDocsWriting } from '../../../src/services/utilities/connected-docs-writing'
+import {Relation} from '../../../src/model';
+import {Name, Named} from '../../../src/tools';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('ConnectedDocsWriter', () => {
+describe('ConnectedDocsWriting', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [[] as any,
@@ -41,7 +41,6 @@ describe('ConnectedDocsWriter', () => {
     let mockDatastore;
     let inverseRelationsMap: Relation.InverseRelationsMap;
     let relationNames: Array<Name>;
-    let connectedDocsWriter: ConnectedDocsWriter;
     const id = 'abc';
 
     let doc: Document;
@@ -59,7 +58,6 @@ describe('ConnectedDocsWriter', () => {
         mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
         inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
         relationNames = projectConfiguration.getRelations().map(Named.toName);
-        connectedDocsWriter = new ConnectedDocsWriter(mockDatastore);
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
@@ -91,7 +89,8 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(relationNames, inverseRelationsMap, doc, [doc]);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
@@ -104,7 +103,8 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['isRecordedIn'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(relationNames, inverseRelationsMap, doc, [doc]);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
+                mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, undefined);
         done();
@@ -122,7 +122,8 @@ describe('ConnectedDocsWriter', () => {
         relatedDoc.resource.relations['Contains'] = ['1'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(relationNames, inverseRelationsMap, doc, [oldVersion as any]);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc, [oldVersion as any]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
 
@@ -137,7 +138,8 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(relationNames, inverseRelationsMap, doc, [doc]);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentUpdate(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
@@ -150,7 +152,8 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(relationNames, inverseRelationsMap, doc);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentRemove(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -163,7 +166,8 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['BelongsTo']=['nonexistent'];
 
         mockDatastore.get.and.returnValue(Promise.reject('not exists'));
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(relationNames, inverseRelationsMap, doc);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentRemove(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();
@@ -174,7 +178,8 @@ describe('ConnectedDocsWriter', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        await connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(relationNames, inverseRelationsMap, doc);
+        await ConnectedDocsWriting.updateConnectedDocumentsForDocumentRemove(
+            mockDatastore.update, mockDatastore.get, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();

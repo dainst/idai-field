@@ -18,14 +18,14 @@ import { Name } from '../../tools/named';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export namespace ConnectedDocsWriting {
+export namespace ConnectedDocs {
 
-    export async function updateConnectedDocumentsForDocumentUpdate(update: Datastore.Update,
-                                                                    get: Datastore.Get,
-                                                                    relationNames: Array<Name>,
-                                                                    inverseRelationsMap: Relation.InverseRelationsMap, 
-                                                                    document: Document, 
-                                                                    otherVersions: Array<Document>) {
+    export async function updateForUpdate(update: Datastore.Update,
+                                          get: Datastore.Get,
+                                          relationNames: Array<Name>,
+                                          inverseRelationsMap: Relation.InverseRelationsMap, 
+                                          document: Document, 
+                                          otherVersions: Array<Document>) {
 
         const connectedDocs = await getExistingConnectedDocs(get, relationNames, [document].concat(otherVersions));
 
@@ -40,11 +40,11 @@ export namespace ConnectedDocsWriting {
     }
 
 
-    export async function updateConnectedDocumentsForDocumentRemove(update: Datastore.Update,
-                                                                    get: Datastore.Get,
-                                                                    relationNames: Array<Name>,
-                                                                    inverseRelationsMap: Relation.InverseRelationsMap,
-                                                                    document: Document) {
+    export async function updateForRemove(update: Datastore.Update,
+                                          get: Datastore.Get,
+                                          relationNames: Array<Name>,
+                                          inverseRelationsMap: Relation.InverseRelationsMap,
+                                          document: Document) {
 
         const connectedDocs = await getExistingConnectedDocsForRemove(get, relationNames, document);
 

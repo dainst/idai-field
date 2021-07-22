@@ -28,6 +28,6 @@ export { Valuelists } from './configuration/valuelist';
 export { ValuelistValue } from './configuration/valuelist-value';
 export { ConfigurationDocument } from './configuration-document';
 export { ConfigurationResource } from './configuration-resource';
-export { ConnectedDocsWriting as ConnectedDocsWriter } from '../services/utilities/connected-docs-writing';
+export { ConnectedDocs as ConnectedDocsWriter } from '../services/utilities/connected-docs';
 export { updateRelations } from '../services/utilities/update-relations';
 export { RelationsManager } from '../services/relations-manager';

@@ -1,4 +1,4 @@
-import { FindResult, Relation, Query, Named } from 'idai-field-core';
+import { Datastore, Relation, Query, Named } from 'idai-field-core';
 import { Document, NewDocument, ProjectConfiguration} from 'idai-field-core';
 import { isnt, on } from 'tsfun';
 import { ValidationErrors } from './validation-errors';
@@ -15,7 +15,7 @@ import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 export class Validator {
 
     constructor(protected projectConfiguration: ProjectConfiguration,
-                protected find: (query: Query) => Promise<FindResult>) {}
+                protected find: (query: Query) => Promise<Datastore.FindResult>) {}
 
 
     /**

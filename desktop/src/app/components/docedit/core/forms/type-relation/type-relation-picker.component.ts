@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, FindResult, Named,
+import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
     ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
@@ -153,7 +153,7 @@ export class TypeRelationPickerComponent {
 
         return flow(
             await this.datastore.find({ categories: [TYPECATALOG] }),
-            to(FindResult.DOCUMENTS),
+            to(Datastore.FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
             prune as any

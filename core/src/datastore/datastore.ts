@@ -9,37 +9,6 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 
 
-export namespace Datastore {
-
-    export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
-
-    export type Find = (query: Query) => Promise<FindResult>;
-}
-
-
-// TODO move the following interfaces and modules into Datastore namespace, too.
-
-export interface FindIdsResult {
-
-    ids: string[];
-    totalCount: number;
-    queryId?: string;
-}
-
-
-export interface FindResult extends FindIdsResult {
-
-    documents: Array<Document>;
-}
-
-
-export module FindResult {
-
-    export const DOCUMENTS = 'documents';
-    export const TOTALCOUNT = 'totalCount';
-}
-
-
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:
@@ -208,7 +177,7 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public async find(query: Query): Promise<FindResult> {
+    public async find(query: Query): Promise<Datastore.FindResult> {
 
         const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -222,7 +191,7 @@ export class Datastore {
 
 
     // TODO merge into find
-    public findIds(query: Query): FindIdsResult {
+    public findIds(query: Query): Datastore.FindIdsResult {
 
         const orderedResults: string[] = this.getIds(query);
 
@@ -352,5 +321,34 @@ export class Datastore {
         });
 
         return documents;
+    }
+}
+
+
+export namespace Datastore {
+
+    export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
+
+    export type Find = (query: Query) => Promise<FindResult>;
+
+
+    export interface FindIdsResult {
+
+        ids: string[];
+        totalCount: number;
+        queryId?: string;
+    }
+
+
+    export interface FindResult extends FindIdsResult {
+
+        documents: Array<Document>;
+    }
+
+
+    export namespace FindResult {
+
+        export const DOCUMENTS = 'documents';
+        export const TOTALCOUNT = 'totalCount';
     }
 }

@@ -1,4 +1,4 @@
-import { Category, Document, FieldDocument, FindResult, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
+import { Category, Document, FieldDocument, Datastore, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
@@ -214,7 +214,7 @@ export module ExportRunner {
 
     export async function findLiesWithin(find: Find,
                                          category: Name,
-                                         context: Resource.Id): Promise<FindResult> {
+                                         context: Resource.Id): Promise<Datastore.FindResult> {
 
         const query: Query = {
             categories: [category],

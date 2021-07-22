@@ -1,9 +1,8 @@
-import { ChangesStream, Datastore, Document, FieldDocument, FindResult, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
+import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Loading } from '../../../components/widgets/loading';
-import { ModelUtil } from '../../model/model-util';
 import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
@@ -228,7 +227,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(): Promise<FindResult> {
+    public async createUpdatedDocumentList(): Promise<Datastore.FindResult> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
@@ -341,7 +340,7 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<FindResult> {
+    private async fetchDocuments(query: Query): Promise<Datastore.FindResult> {
 
         try {
             return await this.datastore.find(query);

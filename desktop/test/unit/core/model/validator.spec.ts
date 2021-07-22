@@ -1,5 +1,4 @@
-import {ProjectConfiguration} from 'idai-field-core';
-import { FindResult } from 'idai-field-core';
+import {ProjectConfiguration, Datastore} from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
 import { Validator } from '../../../../src/app/core/model/validator';
 
@@ -71,7 +70,7 @@ describe('Validator', () => {
 
     it('should report missing isRecordedInTarget', async done => {
 
-        const find = () => Promise.resolve({ documents: [] } as FindResult);
+        const find = () => Promise.resolve({ documents: [] } as Datastore.FindResult);
 
         const doc = { resource: { id: '1', identifier: '', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
 
@@ -90,7 +89,7 @@ describe('Validator', () => {
 
         const find = () =>
             Promise.resolve(
-                { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'eins' } }] } as unknown as FindResult
+                { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'eins' } }] } as unknown as Datastore.FindResult
             );
 
         const doc = {

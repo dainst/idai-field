@@ -36,7 +36,8 @@ export namespace Hierarchy {
 
 
     // TODO review if our datastore can do this, too, via contraintIndex
-    export async function getAntescendents(get: Datastore.Get, id: Resource.Id): Promise<Array<Document>> {
+    export async function getAntescendents(get: Datastore.Get,
+                                           id: Resource.Id): Promise<Array<Document>> {
 
         try {
             const document = await get(id);
@@ -48,7 +49,8 @@ export namespace Hierarchy {
     }
 
 
-    async function _getAntecendents(get: Datastore.Get, document: Document): Promise<Array<Document>> {
+    async function _getAntecendents(get: Datastore.Get,
+                                    document: Document): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
 

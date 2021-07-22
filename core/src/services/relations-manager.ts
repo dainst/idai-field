@@ -12,6 +12,7 @@ import {  ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { childrenOf } from '../base-config';
+import {Name, Named} from '../tools/named';
 
 
 /**
@@ -23,14 +24,17 @@ import { childrenOf } from '../base-config';
  */
 export class RelationsManager {
 
+    private relationNames: Array<Name>;
+    private inverseRelationsMap: Relation.InverseRelationsMap;
     private connectedDocsWriter: ConnectedDocsWriter;
 
     constructor(
         private datastore: Datastore,
-        private projectConfiguration: ProjectConfiguration
+        projectConfiguration: ProjectConfiguration
     ) {
-        // TODO since this is a service used elsewhere, too, it should probably be passed as argument and not constructed here
-        this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
+        this.relationNames = projectConfiguration.getRelations().map(Named.toName);
+        this.inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
+        this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore);
     }
 
     /**
@@ -102,7 +106,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash));
+            this.relationNames, this.inverseRelationsMap, updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
 
@@ -110,7 +114,7 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document);
+            this.relationNames, this.inverseRelationsMap, document);
         await this.datastore.remove(document);
     }
 

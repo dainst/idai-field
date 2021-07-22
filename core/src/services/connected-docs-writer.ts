@@ -4,8 +4,7 @@ import { Resource } from '../model/resource';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { updateRelations } from './utilities/update-relations';
-import { Named } from '../tools/named';
-import { ProjectConfiguration } from './project-configuration';
+import { Name } from '../tools/named';
 
 
 /**
@@ -21,24 +20,20 @@ import { ProjectConfiguration } from './project-configuration';
  */
 export class ConnectedDocsWriter {
 
-    private inverseRelationsMap: Relation.InverseRelationsMap;
-
-    constructor(
-        private datastore: Datastore,
-        private projectConfiguration: ProjectConfiguration) {
-
-        this.inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
-    }
+    constructor(private datastore: Datastore) {}
 
 
-    public async updateConnectedDocumentsForDocumentUpdate(document: Document, otherVersions: Array<Document>) {
+    public async updateConnectedDocumentsForDocumentUpdate(relationNames: Array<Name>,
+                                                           inverseRelationsMap: Relation.InverseRelationsMap, 
+                                                           document: Document, 
+                                                           otherVersions: Array<Document>) {
 
-        const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
+        const connectedDocs = await this.getExistingConnectedDocs(relationNames, [document].concat(otherVersions));
 
         const docsToUpdate = updateRelations(
             document,
             connectedDocs,
-            this.inverseRelationsMap,
+            inverseRelationsMap,
             true
         );
 
@@ -46,14 +41,16 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async updateConnectedDocumentsForDocumentRemove(document: Document) {
+    public async updateConnectedDocumentsForDocumentRemove(relationNames: Array<Name>,
+                                                           inverseRelationsMap: Relation.InverseRelationsMap,
+                                                           document: Document) {
 
-        const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
+        const connectedDocs = await this.getExistingConnectedDocsForRemove(relationNames, document);
 
         const docsToUpdate = updateRelations(
             document,
             connectedDocs,
-            this.inverseRelationsMap,
+            inverseRelationsMap,
             false
         );
 
@@ -70,18 +67,10 @@ export class ConnectedDocsWriter {
     }
 
 
-    private getRelationNames() {
-
-        return this.projectConfiguration
-            .getRelations()
-            .map(Named.toName);
-    }
-
-
-    private async getExistingConnectedDocs(documents: Array<Document>) {
+    private async getExistingConnectedDocs(relationNames: Array<Name>, documents: Array<Document>) {
 
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
-            documents, this.getRelationNames());
+            documents, relationNames);
 
         return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
             console.warn('connected document not found', id);
@@ -89,10 +78,10 @@ export class ConnectedDocsWriter {
     }
 
 
-    private async getExistingConnectedDocsForRemove(document: Document) {
+    private async getExistingConnectedDocsForRemove(relationNames: Array<Name>, document: Document) {
 
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
-            [document], this.getRelationNames());
+            [document], relationNames);
 
         const liesWithinTargets = Resource.getRelationTargets(document.resource, ['liesWithin']);
         const recordedInTargets = Resource.getRelationTargets(document.resource, ['isRecordedIn']);
@@ -122,7 +111,8 @@ export class ConnectedDocsWriter {
     }
 
 
-    private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
+    private static getUniqueConnectedDocumentsIds(documents: Array<Document>, 
+                                                  allowedRelations: string[]) {
 
         const getAllRelationTargetsForDoc = (doc: Document): string[] =>
             Resource.getRelationTargets(doc.resource, allowedRelations);

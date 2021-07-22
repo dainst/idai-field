@@ -10,15 +10,15 @@ import { CategoryCount } from '../../core/export/export-helper';
 import { ExportRunner } from '../../core/export/export-runner';
 import { GeoJsonExporter } from '../../core/export/geojson-exporter';
 import { ShapefileExporter } from '../../core/export/shapefile-exporter';
-import { JavaToolExecutor } from '../../core/java/java-tool-executor';
-import { ImageRelationsManager } from '../../core/services/image-relations-manager';
-import { SettingsProvider } from '../../core/settings/settings-provider';
+import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { TabManager } from '../../core/tabs/tab-manager';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ExportModalComponent } from './export-modal.component';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {ImageRelationsManager} from '../../services/image-relations-manager';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 

@@ -6,9 +6,9 @@ import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
-import {SettingsProvider} from '../../core/settings/settings-provider';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 
 @Component({

@@ -19,8 +19,8 @@ import IS_CUT_BY = Relation.Position.CUTBY;
 import CUTS = Relation.Position.CUTS;
 import SAME_AS = Relation.SAME_AS;
 import {TabManager} from '../../core/tabs/tab-manager';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
+import {MenuContext} from '../../services/menu-context';
+import {Menus} from '../../services/menus';
 
 const Viz = require('viz.js');
 

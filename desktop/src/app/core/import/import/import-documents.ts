@@ -10,7 +10,7 @@ import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
-import {Settings} from '../../settings/settings';
+import {Settings} from '../../../services/settings/settings';
 
 
 export interface ImportOptions {

@@ -2,11 +2,11 @@ import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@ang
 import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import L from 'leaflet';
-import { MenuContext } from '../../../services/menu-context';
-import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../services/menus';
 import { ProjectConfiguration } from 'idai-field-core';
-import { ImageContainer } from '../../../../core/images/imagestore/image-container';
-import { SettingsProvider } from '../../../../core/settings/settings-provider';
+import { ImageContainer } from '../../../../services/imagestore/image-container';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';

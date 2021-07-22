@@ -1,5 +1,5 @@
 import { ImageDocument, SampleDataLoaderBase } from 'idai-field-core';
-import { ImageConverter } from '../../../images/imagestore/image-converter';
+import {ImageConverter} from '../../../imagestore/image-converter';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

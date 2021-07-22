@@ -4,9 +4,9 @@ import {
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
 import { FieldDocument, FieldGeometry, PouchdbDatastore } from 'idai-field-core';
-import { Menus } from '../../../services/menus';
+import { Menus } from '../../../../services/menus';
 import { ProjectConfiguration } from 'idai-field-core';
-import { SettingsProvider } from '../../../../core/settings/settings-provider';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
 import { FieldMarker } from './field-marker';
 import { FieldPolygon } from './field-polygon';

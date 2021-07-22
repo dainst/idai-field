@@ -1,14 +1,14 @@
 import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
-import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
-import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
-import { ImageConverter } from '../core/images/imagestore/image-converter';
-import { Imagestore } from '../core/images/imagestore/imagestore';
+import { ImageConverter } from '../services/imagestore/image-converter';
+import { Imagestore } from '../services/imagestore/imagestore';
 import { InitializationProgress } from '../core/initialization-progress';
-import { Settings } from '../core/settings/settings';
-import { SettingsSerializer } from '../core/settings/settings-serializer';
-import { SettingsService } from '../core/settings/settings-service';
 import { IndexerConfiguration } from '../indexer-configuration';
+import {SettingsService} from '../services/settings/settings-service';
+import {SettingsSerializer} from '../services/settings/settings-serializer';
+import {Settings} from '../services/settings/settings';
+import {SampleDataLoader} from '../services/datastore/field/sampledata/sample-data-loader';
+import {PouchdbServer} from '../services/datastore/pouchdb/pouchdb-server';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

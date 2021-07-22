@@ -1,7 +1,7 @@
 import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { Document, Datastore, IndexFacade } from 'idai-field-core';
 import {ComponentHelpers} from '../component-helpers';
-import { Routing } from '../services/routing';
+import { Routing } from '../../services/routing';
 import { NavbarComponent } from './navbar.component';
 
 

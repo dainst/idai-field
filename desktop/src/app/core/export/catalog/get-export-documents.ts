@@ -1,6 +1,6 @@
 import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId, Datastore, childrenOf } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
-import { ImageRelationsManager } from '../../services/image-relations-manager';
+import { ImageRelationsManager } from '../../../services/image-relations-manager';
 
 
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';

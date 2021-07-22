@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {equal} from 'tsfun';
-import {SettingsService} from '../../core/settings/settings-service';
-import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
-import {reload} from '../../core/common/reload';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
-import {SettingsProvider} from '../../core/settings/settings-provider';
+import {reload} from '../../services/reload';
+import {Settings} from '../../services/settings/settings';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {SettingsService} from '../../services/settings/settings-service';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

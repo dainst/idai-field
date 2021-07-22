@@ -9,9 +9,9 @@ import { ImageOverviewComponent } from './image-overview.component';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
-import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../core/services/image-relations-manager';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
+import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../services/image-relations-manager';
 import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 

@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Category, Document, Datastore, Name, Relation } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
-import { Imagestore } from '../images/imagestore/imagestore';
-import { ImageRelationsManager } from '../services/image-relations-manager';
-import { Settings } from '../settings/settings';
+import { Imagestore } from '../../services/imagestore/imagestore';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';
 import { buildImportDocuments } from './import/import-documents';
@@ -22,6 +20,8 @@ import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
 import { Reader } from './reader/reader';
 import { ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
+import {Settings} from '../../services/settings/settings';
+import {ImageRelationsManager} from '../../services/image-relations-manager';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 

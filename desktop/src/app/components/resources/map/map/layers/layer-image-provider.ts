@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {Imagestore} from '../../../../../core/images/imagestore/imagestore';
-import {ImageContainer} from '../../../../../core/images/imagestore/image-container';
-import {BlobMaker} from '../../../../../core/images/imagestore/blob-maker';
+import {Imagestore} from '../../../../../services/imagestore/imagestore';
+import {ImageContainer} from '../../../../../services/imagestore/image-container';
+import {BlobMaker} from '../../../../../services/imagestore/blob-maker';
 
 
 @Injectable()

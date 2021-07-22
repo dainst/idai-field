@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
+import {SettingsProvider} from './settings/settings-provider';
 import {StateSerializer} from './state-serializer';
-import {SettingsProvider} from '../settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

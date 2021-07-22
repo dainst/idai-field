@@ -6,15 +6,10 @@ import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfigu
     RelationsManager, Labels, Tree, Named } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../core/export/export-runner';
-import { Imagestore } from '../../core/images/imagestore/imagestore';
+import { Imagestore } from '../../services/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';
-import { JavaToolExecutor } from '../../core/java/java-tool-executor';
-import { ImageRelationsManager } from '../../core/services/image-relations-manager';
-import { SettingsProvider } from '../../core/settings/settings-provider';
+import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { TabManager } from '../../core/tabs/tab-manager';
-import { ExtensionUtil } from '../../core/util/extension-util';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
@@ -22,6 +17,11 @@ import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+import {ImageRelationsManager} from '../../services/image-relations-manager';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
+import {ExtensionUtil} from '../../util/extension-util';
 
 
 @Component({

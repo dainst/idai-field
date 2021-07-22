@@ -1,5 +1,5 @@
 import {Reader} from './reader';
-import {JavaToolExecutor} from '../../java/java-tool-executor';
+import {JavaToolExecutor} from '../../../services/java/java-tool-executor';
 import {ReaderErrors} from './reader-errors';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

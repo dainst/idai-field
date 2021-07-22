@@ -2,10 +2,10 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-field-core';
 import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {Routing} from '../services/routing';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
 import {ImageRowItem} from '../../core/images/row/image-row';
+import {Routing} from '../../services/routing';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 
 /**

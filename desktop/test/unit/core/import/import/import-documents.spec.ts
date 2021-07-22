@@ -1,7 +1,7 @@
 import {identity} from 'tsfun';
 import {ImportErrors as E, ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {buildImportDocuments} from '../../../../../src/app/core/import/import/import-documents';
-import {Settings} from '../../../../../src/app/core/settings/settings';
+import {Settings} from '../../../../../src/app/services/settings/settings';
 
 
 /**

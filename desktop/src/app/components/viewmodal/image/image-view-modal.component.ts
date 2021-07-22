@@ -3,13 +3,13 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument, Relation} from 'idai-field-core';
-import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import { Menus } from '../../services/menus';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
-import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
+import {ImageRelationsManager} from '../../../services/image-relations-manager';
+import {Menus} from '../../../services/menus';
+import {Routing} from '../../../services/routing';
 
 export namespace ImageViewModalComponent {
 

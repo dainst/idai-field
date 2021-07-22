@@ -7,7 +7,7 @@ import { Datastore } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { Validator } from '../../core/model/validator';
-import { SettingsProvider } from '../../core/settings/settings-provider';
+import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageRowModule } from '../image/row/image-row.module';
 import { IdaiMessagesModule } from '../messages/idai-messages.module';

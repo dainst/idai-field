@@ -5,19 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChangesStream, Datastore, IndexFacade, SyncService } from 'idai-field-core';
-import { StandardStateSerializer } from '../../core/common/standard-state-serializer';
-import { StateSerializer } from '../../core/common/state-serializer';
 import { ProjectConfiguration } from 'idai-field-core';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { ResourcesStateManager } from '../../core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../core/resources/view/view-facade';
-import { SettingsProvider } from '../../core/settings/settings-provider';
 import { TabManager } from '../../core/tabs/tab-manager';
 import { DoceditModule } from '../docedit/docedit.module';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageViewerModule } from '../image/viewer/image-viewer.module';
 import { Messages } from '../messages/messages';
-import { Routing } from '../services/routing';
 import { Loading } from '../widgets/loading';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { BaseList } from './base-list';
@@ -51,6 +47,10 @@ import { ResourcesContextMenuComponent } from './widgets/resources-context-menu.
 import { ListButtonGroupComponent } from './widgets/list-button-group.component';
 import { ChildrenViewComponent } from './widgets/popovermenu/children-view.component';
 import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.component';
+import {Routing} from '../../services/routing';
+import {StandardStateSerializer} from '../../services/standard-state-serializer';
+import {StateSerializer} from '../../services/state-serializer';
+import {SettingsProvider} from '../../services/settings/settings-provider';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

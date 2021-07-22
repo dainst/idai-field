@@ -1,5 +1,5 @@
 import { clone } from 'tsfun';
-import { Settings } from '../../core/settings/settings';
+import {Settings} from './settings/settings';
 
 const CONFIGURED_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
     ? window.require('@electron/remote').getGlobal('config').languages

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-field-core';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
 

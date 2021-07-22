@@ -6,8 +6,8 @@ import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from '../../../core/images/row/image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
-import { BlobMaker } from '../../../core/images/imagestore/blob-maker';
-import { Imagestore } from '../../../core/images/imagestore/imagestore';
+import { BlobMaker } from '../../../services/imagestore/blob-maker';
+import { Imagestore } from '../../../services/imagestore/imagestore';
 
 
 const MAX_IMAGE_WIDTH = 600;

@@ -1,5 +1,5 @@
 import { Category, PouchdbManager } from 'idai-field-core';
-import { PouchdbServer } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
+import { PouchdbServer } from '../../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../../src/app/core/import/importer';
 import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';

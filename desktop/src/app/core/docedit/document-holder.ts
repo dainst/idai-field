@@ -3,7 +3,7 @@ import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isStrin
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Validations } from '../model/validations';
 import { Validator } from '../model/validator';
-import { trimFields } from '../util/trim-fields';
+import { trimFields } from '../../util/trim-fields';
 import { DoceditErrors } from './docedit-errors';
 import { DuplicationUtil } from './duplication-util';
 

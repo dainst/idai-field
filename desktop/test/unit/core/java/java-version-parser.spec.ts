@@ -1,4 +1,4 @@
-import {JavaVersionParser} from '../../../../src/app/core/java/java-version-parser';
+import {JavaVersionParser} from '../../../../src/app/services/java/java-version-parser';
 
 
 /**

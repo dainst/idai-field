@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Dimension, Labels, Field, Resource } from 'idai-field-core';
 import { clone } from 'tsfun';
-import { UtilTranslations } from '../../../../core/util/util-translations';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 type DimensionInEditing = { original: Dimension, clone: Dimension };

@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
+import {Menus} from '../../../services/menus';
+import {SettingsProvider} from '../../../services/settings/settings-provider';
 import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManager } from 'idai-field-core';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
-import { SettingsProvider } from '../../../core/settings/settings-provider';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { ResourcesComponent } from '../resources.component';
+import {MenuContext} from '../../../services/menu-context';
 
 
 @Component({

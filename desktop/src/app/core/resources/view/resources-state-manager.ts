@@ -1,6 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {ResourcesState} from './state/resources-state';
-import {StateSerializer} from '../../common/state-serializer';
+import {StateSerializer} from '../../../services/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {TabManager} from '../../tabs/tab-manager';

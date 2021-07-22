@@ -1,6 +1,6 @@
 import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import {BlobMaker} from '../../../services/imagestore/blob-maker';
 import { FieldDocument } from 'idai-field-core';
 
 @Component({

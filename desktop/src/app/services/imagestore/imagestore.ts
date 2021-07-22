@@ -1,5 +1,5 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { Settings } from '../../settings/settings';
+import {Settings} from '../settings/settings';
 
 
 /**

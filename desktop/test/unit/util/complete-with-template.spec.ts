@@ -1,4 +1,4 @@
-import {completeWithTemplate} from '../../../src/app/core/util/complete-with-template';
+import {completeWithTemplate} from '../../../src/app/util/complete-with-template';
 
 describe('completeWithTemplate', () => {
 

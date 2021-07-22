@@ -1,5 +1,9 @@
 import { Component, Input, OnChanges } from '@angular/core';
+<<<<<<< HEAD
 import { Datastore, Resource, Hierarchy, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
+=======
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
+>>>>>>> b60eb2891e7838e6b6a1c28c6b36d596d6759c77
 
 @Component({
     selector: 'dai-checkboxes',

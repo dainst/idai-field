@@ -2,7 +2,7 @@
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, set, subtract, to,
 } from 'tsfun';
-import { Document, toResourceId } from '../model/document';
+import { Document } from '../model/document';
 import {Relation} from '../model/configuration/relation';
 import { Datastore, FindIdsResult, FindResult } from '../datastore/datastore';
 import { ConnectedDocsWriter } from './connected-docs-writer'
@@ -118,23 +118,6 @@ export class RelationsManager {
                 append(document));
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
-    }
-
-    
-    // TODO review in 2.20.0, maybe factor out into a hierarchy util, in which this function just takes the find function
-    public async getWithDescendants<D extends Document>(documents: Array<D>): Promise<Array<D>> {
-
-        const documentsIds = documents.map(toResourceId);
-        const descendants: Array<D> = [];
-        for (let document of documents) {
-            const docs = (await this.datastore
-                    .find(childrenOf(document.resource.id))).documents
-                .filter(doc => !documentsIds.includes(doc.resource.id))
-
-            descendants.push(...docs as Array<D>);
-        }
-        const descendantsSet = set(on(['resource', 'id']), descendants); // documents may themselves appear as descendants in multiselect
-        return descendantsSet.concat(documents);
     }
 
 

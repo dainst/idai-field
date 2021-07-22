@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument, Named, ProjectConfiguration, RelationsManager } from 'idai-field-core';
-import { DeleteModalComponent } from './delete-modal.component';
-import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
-import { ImageRelationsManager } from '../../../core/services/image-relations-manager';
+import {Injectable} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager} from 'idai-field-core';
+import {DeleteModalComponent} from './delete-modal.component';
+import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
+import {ImageRelationsManager} from '../../../core/services/image-relations-manager';
+import { Hierarchy } from '../../../core/services/utilities/hierarchy';
 
 
 /**
@@ -15,13 +16,14 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
-                private imageRelationsManager: ImageRelationsManager,
-                private projectConfiguration: ProjectConfiguration) {}
+                private datastore: Datastore,
+                private projectConfiguration: ProjectConfiguration,
+                private imageRelationsManager: ImageRelationsManager) {}
 
 
     public async delete(documents: Array<FieldDocument>) {
 
-        const descendantsCount = (await this.relationsManager.getWithDescendants(documents))
+        const descendantsCount = (await Hierarchy.getWithDescendants(q => this.datastore.find(q), documents))
             .length - documents.length;
 
         const modalRef: NgbModalRef = this.modalService.open(
@@ -31,7 +33,7 @@ export class ResourceDeletion {
         modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
-            = (await this.relationsManager.getWithDescendants(documents));
+            = (await Hierarchy.getWithDescendants(q => this.datastore.find(q), documents));
         modalRef.componentInstance.relatedImagesCount
             = (await this.imageRelationsManager.getLinkedImages(documentsAndDescendants, true)).length;
 

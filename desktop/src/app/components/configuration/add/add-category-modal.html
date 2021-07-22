@@ -3,40 +3,35 @@
 </div>
 
 <div class="modal-body row add-category-modal-body">
-
     <div class="col-md-6">
-
         <input type="text"
-            id="category-name"
-            class="form-control"
-            [(ngModel)]="searchTerm"
-            (ngModelChange)="applyCategoryNameSearch()">
-        <div
-            id="create-new-category-button"
-            class="btn btn-success"
-            [class.disabled]="searchTerm.length === 0"
-            style="position: absolute; left: 10px"
-            (click)="createNewSubcategory()">
+               id="category-name"
+               class="form-control"
+               [(ngModel)]="searchTerm"
+               (ngModelChange)="applyCategoryNameSearch()">
+        <div id="create-new-category-button"
+             class="btn btn-success"
+             [class.disabled]="searchTerm.length === 0"
+             style="position: absolute; left: 10px"
+             (click)="createNewSubcategory()">
             <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzufügen</span>
         </div>
-        <category-listing
-            [category]="parentCategory"
-            [categories]="categories"
-            [searchTerm]="searchTerm"
-            (onCategorySelected)="selectCategory($event)">
+        <category-listing [category]="parentCategory"
+                          [categories]="categories"
+                          [searchTerm]="searchTerm"
+                          (onCategorySelected)="selectCategory($event)">
         </category-listing>
     </div>
     <div class="col-md-6">
-        <category-preview [category]="selectedCategory">
-        </category-preview>
+        <category-preview [category]="selectedCategory"></category-preview>
     </div>
 </div>
 
 <div class="modal-footer">
-    <div id="create-category-button"
+    <div id="add-category-button"
          class="btn btn-success"
          [class.disabled]="!selectedCategory"
-         (click)="createCategory()">
+         (click)="addSelectedCategory()">
         <span i18n="@@configuration.selectCategory">Kategorie auswählen</span>
     </div>
     <div id="cancel-add-category-modal-button"

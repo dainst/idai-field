@@ -1,6 +1,7 @@
 import { Document } from '../../src/model/document';
 import { RelationsManager } from '../../src/services/relations-manager';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
+import {ConnectedDocsWriter} from '../../src/model';
 
 
 /**
@@ -38,7 +39,8 @@ describe('RelationsManager', () => {
         ]]);
 
     let mockDatastore;
-    let persistenceManager;
+    let connectedDocsWriter: ConnectedDocsWriter;
+    let relationsManager: RelationsManager;
     const id = 'abc';
 
     let doc: Document;
@@ -70,7 +72,8 @@ describe('RelationsManager', () => {
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
-        persistenceManager = new RelationsManager(mockDatastore, projectConfiguration);
+        connectedDocsWriter = new ConnectedDocsWriter(mockDatastore, projectConfiguration);
+        relationsManager = new RelationsManager(mockDatastore, connectedDocsWriter);
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
@@ -103,7 +106,7 @@ describe('RelationsManager', () => {
     it('should save the base object', async done => {
 
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
-        await persistenceManager.update(doc);
+        await relationsManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledWith(doc, undefined);
         done();
     });
@@ -119,7 +122,7 @@ describe('RelationsManager', () => {
 
         relatedDoc.resource.relations['Contains'] = ['1'];
 
-        await persistenceManager.update(doc, doc, [squashVersion] as any);
+        await relationsManager.update(doc, doc, [squashVersion] as any);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(
             jasmine.objectContaining({
@@ -145,7 +148,7 @@ describe('RelationsManager', () => {
 
         mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create
 
-        await persistenceManager.update(doc);
+        await relationsManager.update(doc);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc,  undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
@@ -161,7 +164,7 @@ describe('RelationsManager', () => {
 
         findResult /* for isRecordedIn "1" */ = [relatedDoc];
 
-        await persistenceManager.remove(doc, { descendants: true });
+        await relationsManager.remove(doc, { descendants: true });
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(mockDatastore.remove).not.toHaveBeenCalledWith(anotherRelatedDoc);
@@ -186,7 +189,7 @@ describe('RelationsManager', () => {
             Promise.reject('not exists') // for relatedDoc already deleted, but still linked from anotherRelatedDoc
         );
 
-        await persistenceManager.remove(doc, { descendants: true });
+        await relationsManager.remove(doc, { descendants: true });
 
         // do not update for beeing related to relatedDoc
         expect(mockDatastore.update).not.toHaveBeenCalledWith(doc);
@@ -224,7 +227,7 @@ describe('RelationsManager', () => {
             return Promise.resolve(doc);
         });
 
-        await persistenceManager.update(doc);
+        await relationsManager.update(doc);
 
         expect(checked1 && checked2 && checked3).toBe(true);
         expect(relatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1'); // originals untouched
@@ -242,7 +245,7 @@ describe('RelationsManager', () => {
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [relatedDoc, anotherRelatedDoc] }));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
-        await persistenceManager.update(doc);
+        await relationsManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledTimes(1);
 
         done();
@@ -258,7 +261,7 @@ describe('RelationsManager', () => {
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [relatedDoc, anotherRelatedDoc] }));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
-        await persistenceManager.update(doc);
+        await relationsManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledTimes(2);
 
         done();

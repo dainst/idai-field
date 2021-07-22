@@ -11,7 +11,7 @@ import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexFacade } from '../../src/index/index-facade';
 import { Tree } from '../../src/tools/forest';
 import { Lookup, makeLookup, Name } from '../../src/tools';
-import { RelationsManager } from '../../src/model';
+import { ConnectedDocsWriter, RelationsManager } from '../../src/model';
 import { createDocuments, makeExpectDocuments, NiceDocs } from '../test-helpers';
 import { basicIndexConfiguration } from '../../src/base-config';
 
@@ -88,7 +88,8 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => user);
     
-    const relationsManager = new RelationsManager(datastore, projectConfiguration);
+    const connectedDocsWriter = new ConnectedDocsWriter(datastore, projectConfiguration);
+    const relationsManager = new RelationsManager(datastore, connectedDocsWriter);
 
     return {
         datastore,

@@ -63,21 +63,6 @@ export class RelationsManager {
     }
 
 
-    // TODO move to Hierarchy
-    public async getDescendantsCount(...documents: Array<Document>): Promise<number> {
-
-        const idsToSubtract: string[] = documents.map(to(RESOURCE_DOT_ID));
-
-        let count = 0;
-        for (const document of documents) {
-            count += !document.resource.id
-                ? 0
-                : (await this.findDescendants(document, true, idsToSubtract)).totalCount;
-        }
-        return count;
-    }
-
-
     /**
      * Removes the document from the datastore.
      *
@@ -109,7 +94,8 @@ export class RelationsManager {
     }
 
 
-    private async updateWithConnections(document: Document, oldVersion: Document,
+    private async updateWithConnections(document: Document, 
+                                        oldVersion: Document,
                                         revisionsToSquash: Array<Document>) {
 
         const revs = revisionsToSquash.map(_ => _._rev).filter(isDefined);

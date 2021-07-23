@@ -2684,17 +2684,11 @@
       "campaign",
       "area",
       "dimensionLength",
-      "dimensionWidth"
+      "dimensionWidth",
+      "dimensionVerticalExtent"
     ],
     "valuelists": {},
-    "fields": {
-      "dimensionVerticalExtent": {
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"
-        ]
-      }
-    },
+    "fields": {},
     "groups": [
       {
         "name": "stem",

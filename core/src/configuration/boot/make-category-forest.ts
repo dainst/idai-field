@@ -1,8 +1,8 @@
 import { flow, on, separate, detach, map, reduce, clone, flatten, set, Map, values, isUndefined, compose } from 'tsfun';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
-import { Forest, Tree } from '../../tools';
+import { Forest } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
-import {LibraryCategoryDefinition} from '../model';
+import { LibraryCategoryDefinition } from '../model';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 

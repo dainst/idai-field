@@ -1,4 +1,4 @@
-import { Tree, Field, ProjectConfiguration } from 'idai-field-core';
+import { Field, ProjectConfiguration, Forest } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
 import InputType = Field.InputType;
@@ -12,7 +12,7 @@ import InputType = Field.InputType;
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [Tree.buildForest(
+        [Forest.build(
             [[{
                 name: 'T',
                 groups: [{

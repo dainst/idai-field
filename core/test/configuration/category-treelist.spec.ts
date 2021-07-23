@@ -13,7 +13,7 @@ describe('CategoryForest', () => {
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: Forest<{ name: string, children: Array<T>}> = Tree.buildForest([
+        const t: Forest<{ name: string, children: Array<T>}> = Forest.build([
             [
                 parent,
                 [
@@ -58,7 +58,7 @@ describe('CategoryForest', () => {
         const child4 = { name: 'C4', parentCategory: parent2, children: [] };
         parent2.children = [child3,child4];
 
-        const t = Tree.buildForest([
+        const t = Forest.build([
             [
                 parent1,
                 [
@@ -122,7 +122,7 @@ describe('CategoryForest', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return Tree.buildForest([
+        return Forest.build([
             [
                 parent1,
                 [

@@ -12,7 +12,7 @@ describe('NamedForest', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return Tree.buildForest([
+        return Forest.build([
             [
                 parent1,
                 [
@@ -41,7 +41,7 @@ describe('NamedForest', () => {
 
     it('isTopLevelItemOrChildThereof', () => {
 
-        const categoryForest: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Forest.build([
             [
                 { name: 'Image' },
                 [
@@ -80,7 +80,7 @@ describe('NamedForest', () => {
 
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
-        const categoryForest: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Forest.build([
             [
                 { name: 'Image' },
                 [
@@ -115,7 +115,7 @@ describe('NamedForest', () => {
 
     it('removeTrees', () => {
 
-        const categoryForest: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Forest.build([
             [
                 { name: 'Image' },
                 [
@@ -169,7 +169,7 @@ describe('NamedForest', () => {
 
     it('filterTrees', () => {
 
-        const categoryForest: Forest<Named> = Tree.buildForest([
+        const categoryForest: Forest<Named> = Forest.build([
             [
                 { name: 'Image' },
                 [

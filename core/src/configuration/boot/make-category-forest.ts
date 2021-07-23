@@ -28,15 +28,15 @@ export const makeCategoryForest = (relationDefinitions: Array<Relation>, selecte
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        map(Tree.wrap)
+        Forest.wrap
     );
 
     return flow(
         childDefs,
         reduce(addChildCategory(selectedParentCategories), parentCategories),
-        Tree.mapForest(createGroups(relationDefinitions)),
-        Tree.mapForest(detach(TEMP_FIELDS)),
-        Tree.mapForest(detach(TEMP_GROUPS)),
+        Forest.map(createGroups(relationDefinitions)),
+        Forest.map(detach(TEMP_FIELDS)),
+        Forest.map(detach(TEMP_GROUPS)),
         linkParentAndChildInstances
     );
 }

@@ -1,4 +1,4 @@
-import { Document, Tree, ProjectConfiguration } from 'idai-field-core';
+import { Document, ProjectConfiguration, Forest } from 'idai-field-core';
 import { M } from '../../../../src/app/components/messages/m';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 
@@ -19,7 +19,7 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration([Tree.buildForest(
+        const pconf = new ProjectConfiguration([Forest.build(
             [
                 [{
                     name: 'Trench',

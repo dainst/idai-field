@@ -1,11 +1,11 @@
 import { sameset } from 'tsfun';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
-import { Named, Tree } from '../../src/tools';
+import { Forest, Named } from '../../src/tools';
 
 
 describe('ProjectConfiguration', () => {
 
-    const projectConfiguration = new ProjectConfiguration([Tree.buildForest([
+    const projectConfiguration = new ProjectConfiguration([Forest.build([
         [
             { name: 'Image' },
             [

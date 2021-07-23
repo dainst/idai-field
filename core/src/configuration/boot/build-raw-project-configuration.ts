@@ -88,7 +88,7 @@ function processCategories(validateFields: any,
     return compose(
         validateFields,
         makeCategoryForest(relations, selectedParentCategories),
-        Tree.mapForest(curry(setGroupLabels, languageConfigurations)),
+        Forest.map(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances
     );

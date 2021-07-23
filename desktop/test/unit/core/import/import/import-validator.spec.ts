@@ -1,4 +1,4 @@
-import { Tree, Field, ProjectConfiguration } from 'idai-field-core';
+import { Forest, Field, ProjectConfiguration } from 'idai-field-core';
 import { ImportValidator } from '../../../../../src/app/core/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
@@ -12,7 +12,7 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          Tree.buildForest([
+          Forest.build([
             [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [

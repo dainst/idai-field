@@ -1,10 +1,12 @@
 import { Map } from 'tsfun';
+import { Valuelists } from '../../model/configuration/valuelist';
 
 
 export interface BaseCategoryDefinition {
 
     fields: Map<BaseFieldDefinition>;
     groups?: Array<BaseGroupDefinition>;
+    valuelists?: Valuelists;
 }
 
 

@@ -13,16 +13,24 @@ export module Assertions {
 
     export function performAssertions(builtInCategories: Map<BuiltinCategoryDefinition>,
                                       libraryCategories: Map<LibraryCategoryDefinition>,
-                                      customCategories: Map<CustomCategoryDefinition>,
                                       commonFields: Map<any>,
-                                      valuelistsConfiguration: Map<Valuelist>) {
+                                      valuelistsConfiguration: Map<Valuelist>,
+                                      customCategories?: Map<CustomCategoryDefinition>) {
 
-        assertCategoriesAndValuelistsStructurallyValid(Object.keys(builtInCategories), libraryCategories, customCategories, valuelistsConfiguration);
+        assertCategoriesAndValuelistsStructurallyValid(
+            Object.keys(builtInCategories), libraryCategories, valuelistsConfiguration, customCategories
+        );
         assertSubtypingIsLegal(builtInCategories, libraryCategories);
-        assertSubtypingIsLegal(builtInCategories, customCategories);
+        
+        if (customCategories) {
+            assertSubtypingIsLegal(builtInCategories, customCategories);
+            assertNoCommonFieldInputTypeChanges(commonFields, customCategories);
+        }
+
         assertNoCommonFieldInputTypeChanges(commonFields, libraryCategories);
-        assertNoCommonFieldInputTypeChanges(commonFields, customCategories);
-        assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(commonFields, libraryCategories, customCategories);
+        assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(
+            commonFields, libraryCategories, customCategories ?? {}
+        );
         assertCategoryNamesConsistent(libraryCategories);
     }
 
@@ -130,8 +138,8 @@ export module Assertions {
 
     function assertCategoriesAndValuelistsStructurallyValid(builtInCategories: string[],
                                                             libraryCategories: Map<LibraryCategoryDefinition>,
-                                                            customCategories: Map<CustomCategoryDefinition>,
-                                                            valuelistDefinitions: Map<Valuelist>) {
+                                                            valuelistDefinitions: Map<Valuelist>,
+                                                            customCategories?: Map<CustomCategoryDefinition>) {
 
         const assertLibraryCategoryValid = LibraryCategoryDefinition.makeAssertIsValid(builtInCategories);
         const assertCustomCategoryValid = CustomCategoryDefinition.makeAssertIsValid(
@@ -139,7 +147,7 @@ export module Assertions {
         );
 
         keysValues(libraryCategories).forEach(assertLibraryCategoryValid);
-        keysValues(customCategories).forEach(assertCustomCategoryValid);
+        if (customCategories) keysValues(customCategories).forEach(assertCustomCategoryValid);
         forEach(valuelistDefinitions, (vd, vdId) => {
             const result = Valuelist.assertIsValid(vd);
             if (result !== undefined && result.length > 1 && result[0] === 'missing') {

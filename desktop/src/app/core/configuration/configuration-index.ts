@@ -28,13 +28,14 @@ export namespace ConfigurationIndex {
 
     export function find(index: ConfigurationIndex,
                          searchTerm: string,
-                         parentCategory: Name): Array<Category> {
+                         parentCategory?: Name): Array<Category> {
 
         return set(keysValues(index)
-            .filter(([categoryName, _]) =>
-                categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
+            .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
             .map(right))
-            .filter(category =>
-                category[Category.PARENT_CATEGORY].name === parentCategory);
+            .filter(category => {
+                return !parentCategory
+                    || (category.parentCategory && category.parentCategory.name === parentCategory);
+            });
     }
 }

@@ -1,4 +1,6 @@
-
+import { Map } from 'tsfun';
+import { Relation } from '../../model/configuration/relation';
+import { TransientCategoryDefinition } from '../model';
 import { LanguageConfiguration } from '../model/language-configuration';
 import { LanguageConfigurations } from '../model/language-configurations';
 import { applyLanguagesToCategory } from './apply-languages-to-category';
@@ -11,7 +13,7 @@ import { applyLanguagesToCategory } from './apply-languages-to-category';
  */
 export function applyLanguageConfigurations(languageConfigurations: LanguageConfigurations) {
 
-    return (configuration: [any, any]) => {
+    return (configuration: [Map<TransientCategoryDefinition>, Array<Relation>]) => {
 
         const [categories, relations] = configuration;
 
@@ -26,11 +28,10 @@ export function applyLanguageConfigurations(languageConfigurations: LanguageConf
 }
 
 
-function applyFields(languageConfigurations: LanguageConfigurations, categories: any) {
+function applyFields(languageConfigurations: LanguageConfigurations,
+                     categories: Map<TransientCategoryDefinition>) {
 
-    for (const categoryName of Object.keys(categories)) {
-        const category = categories[categoryName];
-
+    for (const category of Object.values(categories)) {
         for (const fieldName of Object.keys(category.fields)) {
             category.fields[fieldName].label = LanguageConfiguration.getI18nString(
                 languageConfigurations.complete,
@@ -53,7 +54,8 @@ function applyFields(languageConfigurations: LanguageConfigurations, categories:
 }
 
 
-function applyRelations(languageConfigurations: LanguageConfigurations, relations: any) {
+function applyRelations(languageConfigurations: LanguageConfigurations,
+                        relations: Array<Relation>) {
 
     for (const relation of relations) {
         relation.label = LanguageConfiguration.getI18nString(
@@ -68,11 +70,12 @@ function applyRelations(languageConfigurations: LanguageConfigurations, relation
 }
 
 
-function applyLanguagesToCategories(languageConfigurations: LanguageConfigurations, categories: any) {
+function applyLanguagesToCategories(languageConfigurations: LanguageConfigurations,
+                                    categories: Map<TransientCategoryDefinition>) {
 
-    for (const categoryName of Object.keys(categories)) {
+    for (const key of Object.keys(categories)) {
         
-        const category = categories[categoryName];
-        applyLanguagesToCategory(languageConfigurations, category, categoryName);
+        const category = categories[key];
+        applyLanguagesToCategory(languageConfigurations, category, category.categoryName ?? key);
     }
 }

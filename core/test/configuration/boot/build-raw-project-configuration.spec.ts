@@ -23,35 +23,7 @@ describe('buildRawProjectConfiguration', () => {
     }
 
 
-    it('auto-select parent if child defined',  () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                fields: {},
-                groups: []
-            }
-        };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            B: {
-                parent: 'A',
-                fields: {},
-                hidden: []
-            }
-        };
-        const result = buildRaw(
-            builtInCategories,
-            {},
-            customCategories
-        );
-
-        expect(result['A']).toBeDefined();
-        expect(result['B']).toBeDefined();
-    });
-
-
-    it('throw away category which is neither selected explicitly or as a parent',  () => {
+    it('throw away unselected categories',  () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
@@ -66,6 +38,10 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
         const customCategories: Map<CustomCategoryDefinition> = {
+            A: {
+                fields: {},
+                hidden: []
+            },
             B: {
                 parent: 'A',
                 fields: {},
@@ -81,6 +57,61 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
         expect(result['C']).toBeUndefined();
+    });
+
+
+    it('do not throw away any categories if no custom categories are provided',  () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            A: {
+                fields: {},
+                groups: []
+            },
+            B: {
+                fields: {},
+                groups: []
+            },
+            C: {
+                fields: {},
+                groups: []
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            B1: {
+                fields: {},
+                groups: [],
+                commons: [],
+                valuelists: {},
+                categoryName: 'B',
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
+            B2: {
+                fields: {},
+                groups: [],
+                commons: [],
+                valuelists: {},
+                categoryName: 'B',
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+
+        const result = buildRawArray(
+            builtInCategories,
+            libraryCategories
+        );
+
+        expect(result.length).toBe(5);
+        expect(result.find(category => category.libraryId === 'A')).toBeDefined();
+        expect(result.find(category => category.libraryId === 'B')).toBeDefined();
+        expect(result.find(category => category.libraryId === 'B1')).toBeDefined();
+        expect(result.find(category => category.libraryId === 'B2')).toBeDefined();
+        expect(result.find(category => category.libraryId === 'C')).toBeDefined();
     });
 
 
@@ -1365,6 +1396,10 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
+            P: {
+                fields: {},
+                hidden: [],
+            },
             C: {
                 fields: {},
                 parent: 'P',
@@ -1408,6 +1443,10 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
+            P: {
+                fields: {},
+                hidden: []
+            },
             C: {
                 fields: {},
                 parent: 'P'

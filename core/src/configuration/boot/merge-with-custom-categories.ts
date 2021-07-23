@@ -11,8 +11,8 @@ import { ConfigurationErrors } from './configuration-errors';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function mergeWithCustomCategories(customCategories: Map<CustomCategoryDefinition>,
-                                          assertInputTypePresentIfNotCommonField: Function) {
+export function mergeWithCustomCategories(assertInputTypePresentIfNotCommonField: Function,
+                                          customCategories: Map<CustomCategoryDefinition>) {
 
     return (selectableCategories: Map<TransientCategoryDefinition>) => {
 

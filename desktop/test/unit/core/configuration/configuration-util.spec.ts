@@ -9,7 +9,6 @@ import { ConfigurationUtil } from '../../../../src/app/core/configuration/config
 
     const category: Category = {
         name: 'TestCategory',
-        categoryName: 'TestCategory',
         label: {},
         defaultLabel: {},
         description: {},
@@ -23,7 +22,7 @@ import { ConfigurationUtil } from '../../../../src/app/core/configuration/config
     };
 
 
-    it('Check if catagory is customized', () => {
+    it('Check if category is customized', () => {
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {

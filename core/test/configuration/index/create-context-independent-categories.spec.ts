@@ -10,6 +10,7 @@ describe('createContextIndependentCategories', () => {
             {
                 Find: { 
                     supercategory: true,
+                    userDefinedSubcategoriesAllowed: true,
                     groups: [],
                     fields: {
                         identifier: { 
@@ -20,7 +21,17 @@ describe('createContextIndependentCategories', () => {
             },
             [],
             {
-                'Find:default': { // This should be selected // TODO implement, currently the default Find is selected
+                'Find:a': {
+                    categoryName: 'Find',
+                    groups: [],
+                    fields: {},
+                    createdBy: '',
+                    creationDate: '',
+                    description: {},
+                    valuelists: {},
+                    commons: []
+                },
+                'Find:b': {
                     categoryName: 'Find',
                     groups: [],
                     fields: {},
@@ -55,6 +66,10 @@ describe('createContextIndependentCategories', () => {
                     commons: []
                 }
             },
+            {},
+            {},
+            {},
+            ['Find:a'],
             {
                 de: [
                     // core - language conf
@@ -88,9 +103,27 @@ describe('createContextIndependentCategories', () => {
             }
         );
 
-        expect(result[0].groups[0].name).toEqual('group-a');
-        expect(result[0].groups[0].label['de']).toEqual('Group-a');
-        expect(result[1].groups[0].name).toEqual('group-b');
-        expect(result[1].groups[0].label['de']).toEqual('Group-b');
+        expect(result.length).toBe(5);
+
+        expect(result[0].name).toEqual('Find');
+        expect(result[0].libraryId).toEqual('Find');
+
+        expect(result[1].name).toEqual('Find');
+        expect(result[1].libraryId).toEqual('Find:a');
+
+        expect(result[2].name).toEqual('Pottery');
+        expect(result[2].libraryId).toEqual('Pottery:a');
+        expect(result[2].parentCategory.libraryId).toEqual('Find:a');
+        expect(result[2].groups[0].name).toEqual('group-a');
+        expect(result[2].groups[0].label['de']).toEqual('Group-a');
+
+        expect(result[3].name).toEqual('Pottery');
+        expect(result[3].libraryId).toEqual('Pottery:b');
+        expect(result[3].parentCategory.libraryId).toEqual('Find:a');
+        expect(result[3].groups[0].name).toEqual('group-b');
+        expect(result[3].groups[0].label['de']).toEqual('Group-b');
+
+        expect(result[4].name).toEqual('Find');
+        expect(result[4].libraryId).toEqual('Find:b');
     });
 });

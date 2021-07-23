@@ -1,6 +1,7 @@
-import { isEmpty, not, on, subtract } from 'tsfun';
+import { isEmpty, not, on, subtract, Map } from 'tsfun';
 import { Relation } from '../../model/configuration/relation';
 import { Named } from '../../tools/named';
+import { TransientCategoryDefinition } from '../model';
 
 
 /**
@@ -38,7 +39,7 @@ export function addRelations(extraRelations: Array<Relation>) {
 }
 
 
-function expandInherits(categories: any,
+function expandInherits(categories: Map<TransientCategoryDefinition>,
                         extraRelation: Relation, itemSet: string) {
 
     if (!extraRelation) return;
@@ -48,11 +49,10 @@ function expandInherits(categories: any,
     for (let item of (extraRelation as any)[itemSet]) {
 
         if (item.indexOf(':inherit') !== -1) {
-            for (let categoryName of Object.keys(categories)) {
-                const category = categories[categoryName];
-
+            for (let key of Object.keys(categories)) {
+                const category: TransientCategoryDefinition = categories[key];
                 if (category.parent === item.split(':')[0]) {
-                    itemsNew.push(categoryName);
+                    itemsNew.push(category.categoryName ?? key);
                 }
             }
             itemsNew.push(item.split(':')[0]);
@@ -77,7 +77,8 @@ function expandOnEmpty(categories: any,
     if (itemSet === Relation.RANGE) opposite = Relation.DOMAIN;
 
     extraRelation[itemSet] = [];
-    for (let categoryName of Object.keys(categories)) {
+    for (let key of Object.keys(categories)) {
+        const categoryName = categories[key].categoryName ?? key;
         if (extraRelation[opposite].indexOf(categoryName) === -1) {
             extraRelation[itemSet].push(categoryName);
         }

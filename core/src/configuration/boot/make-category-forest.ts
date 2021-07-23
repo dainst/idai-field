@@ -1,6 +1,6 @@
 import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
-import { Forest, Named, Tree } from '../../tools';
+import { Forest, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
@@ -9,12 +9,13 @@ import { ConfigurationErrors } from './configuration-errors';
 const TEMP_FIELDS = 'fields';
 const TEMP_GROUPS = 'tempGroups';
 
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export const makeCategoryForest = (relationDefinitions: Array<Relation>) =>
+export const makeCategoryForest = (relationDefinitions: Array<Relation>, selectedParentCategories?: string[]) =>
         (categories: any): Forest<Category> => {
 
     const [parentDefs, childDefs] =
@@ -23,22 +24,19 @@ export const makeCategoryForest = (relationDefinitions: Array<Relation>) =>
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        Named.mapToNamedArray as any,
-        map(category => ({ item: category, trees: []}))
+        Object.values,
+        map(category => ({ item: category, trees: [] }))
     );
 
     return flow(
         childDefs,
-        reduce(addChildCategory, parentCategories as any),
+        reduce(addChildCategory(selectedParentCategories), parentCategories as any),
         Tree.mapForest(createGroups(relationDefinitions)),
         Tree.mapForest(detach(TEMP_FIELDS)),
         Tree.mapForest(detach(TEMP_GROUPS)),
         linkParentAndChildInstances
     );
 }
-
-
-export const generateEmptyList = () => []; // to make sure getting a new instance every time this is called
 
 
 const createGroups = (relationDefinitions: Array<Relation>) => (category: Category): Category => {
@@ -98,12 +96,16 @@ function putCoreFieldsToHiddenGroup(category: Category) {
 }
 
 
-function addChildCategory(categoryTree: Forest<Category>,
-                          childDefinition: TransientCategoryDefinition): Forest<Category> {
+const addChildCategory = (selectedParentCategories?: string[]) =>
+                            (categoryTree: Forest<Category>,
+                             childDefinition: TransientCategoryDefinition): Forest<Category> => {
 
-    const found = categoryTree
-        .find(({ item: category }) => category.name === childDefinition.parent);
-    if (!found) throw 'project configuration error generic'; // TODO replace MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+    const found = categoryTree.find(({ item: category }) => {
+        return category.name === childDefinition.parent
+            && (!selectedParentCategories || selectedParentCategories.includes(category.libraryId));
+    });
+    if (!found) return categoryTree;
+    
     const { item: category, trees: trees } = found;
 
     const childCategory = buildCategoryFromDefinition(childDefinition);
@@ -119,7 +121,7 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;
     category.name = definition.name;
-    category.categoryName = definition.categoryName ?? definition.name;
+    category.libraryId = definition.libraryId;
     category.label = definition.label;
     category.source = definition.source;
     category.description = definition.description;
@@ -127,10 +129,9 @@ function buildCategoryFromDefinition(definition: any/* TransientCategoryDefiniti
     category.defaultDescription = definition.defaultDescription;
     category.groups = [];
     category.isAbstract = definition.abstract || false;
-    category.color = definition.color ?? Category.generateColorForCategory(category.categoryName);
-    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(category.categoryName);
+    category.color = definition.color ?? Category.generateColorForCategory(category.name);
+    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(category.name);
     category.children = [];
-    category.libraryId = definition.libraryId;
     category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;
     category.required = definition.required;
 

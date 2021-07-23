@@ -37,7 +37,7 @@ describe('mergeWithCustomCategories', () => {
             }
         };
 
-        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(() => true, customCategories)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(Field.InputType.INPUT);
         expect(result['A:default'].fields['f2'].inputType).toEqual(Field.InputType.INPUT);
     });
@@ -75,7 +75,7 @@ describe('mergeWithCustomCategories', () => {
             }
         };
 
-        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(() => true, customCategories)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(Field.InputType.INPUT);
         expect(result['A:child'].fields['f2'].inputType).toEqual(Field.InputType.INPUT);
     });
@@ -109,7 +109,7 @@ describe('mergeWithCustomCategories', () => {
             }
         };
 
-        const result = mergeWithCustomCategories(customCategories, () => true)(selectableCategories);
+        const result = mergeWithCustomCategories(() => true, customCategories)(selectableCategories);
         expect(result['A:default'].commons).toEqual(['a', 'b']);
     });
 });

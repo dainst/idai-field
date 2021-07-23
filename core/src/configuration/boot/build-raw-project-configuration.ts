@@ -1,6 +1,5 @@
 import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    keysValues, Map, map, Mapping, on, or, reduce, subtract, update as updateStruct, assoc,
-    isUndefinedOrEmpty, not, curry } from 'tsfun';
+    Map, map, Mapping, on, or, update as updateStruct, assoc, isUndefinedOrEmpty, not, curry } from 'tsfun';
 import { Relation, Category } from '../../model';
 import { Valuelist } from '../../model';
 import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
@@ -17,7 +16,7 @@ import { addSourceField } from './add-source-field';
 import { applyLanguageConfigurations } from './apply-language-configurations';
 import { Assertions } from './assertions';
 import { ConfigurationErrors } from './configuration-errors';
-import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
+import { iterateOverFieldsOfCategories } from './helpers';
 import { hideFields } from './hide-fields';
 import { makeCategoryForest } from './make-category-forest';
 import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
@@ -34,37 +33,43 @@ const CATEGORIES = 0;
  */
 export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCategoryDefinition>,
                                              libraryCategories: Map<LibraryCategoryDefinition>,
-                                             customCategories: Map<CustomCategoryDefinition> = {},
+                                             customCategories?: Map<CustomCategoryDefinition>,
                                              commonFields: Map<any> = {},
                                              valuelistsConfiguration: Map<Valuelist> = {},
                                              extraFields: Map<any> = {},
                                              relations: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
-                                             validateFields: any = identity): RawProjectConfiguration {
+                                             validateFields: any = identity,
+                                             selectedParentCategories?: string[]): RawProjectConfiguration {
 
-    Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
+    Assertions.performAssertions(builtInCategories, libraryCategories, commonFields, valuelistsConfiguration, customCategories);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
 
     return flow(
         mergeBuiltInWithLibraryCategories(builtInCategories, libraryCategories),
         Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
-        Assertions.assertNoDuplicationInSelection(customCategories),
+        cond(isDefined(customCategories), Assertions.assertNoDuplicationInSelection(customCategories)),
         setDefaultConstraintIndexed,
-        mergeWithCustomCategories(customCategories, Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
-        eraseUnusedCategories(Object.keys(customCategories)),
+        cond(isDefined(customCategories), mergeWithCustomCategories(
+            Assertions.assertInputTypePresentIfNotCommonField(commonFields), customCategories
+        )),
+        cond(isDefined(customCategories), eraseUnusedCategories(Object.keys(customCategories ?? {}))),
         replaceCommonFields(commonFields),
         insertValuelistIds,
         Assertions.assertValuelistIdsProvided,
-        hideFields(customCategories),
-        toCategoriesByFamilyNames,
+        cond(isDefined(customCategories), hideFields(customCategories)),
         replaceValuelistIdsWithValuelists(valuelistsConfiguration),
         addExtraFields(extraFields),
+        setCategoryNames,
         prepareRawProjectConfiguration,
         addRelations(relations),
         applyLanguageConfigurations(languageConfigurations),
-        updateStruct(CATEGORIES,
-            processCategories(validateFields, languageConfigurations, categoriesOrder, relations)
+        updateStruct(
+            CATEGORIES,
+            processCategories(
+                validateFields, languageConfigurations, categoriesOrder, relations, selectedParentCategories
+            )
         )
     );
 }
@@ -76,12 +81,13 @@ const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefi
 function processCategories(validateFields: any,
                            languageConfigurations: LanguageConfigurations,
                            categoriesOrder: string[],
-                           relations: Array<Relation>): Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
+                           relations: Array<Relation>,
+                           selectedParentCategories?: string[])
+                           : Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
 
     return compose(
-        setCategoryNames,
         validateFields,
-        makeCategoryForest(relations),
+        makeCategoryForest(relations, selectedParentCategories),
         Tree.mapForest(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances
@@ -101,8 +107,9 @@ function setDefaultConstraintIndexed(categories: Map<TransientCategoryDefinition
 
 function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
 
-    Object.keys(categories).forEach(categoryName => {
-        categories[categoryName].name = categoryName;
+    Object.keys(categories).forEach(key => {
+        const category: TransientCategoryDefinition = categories[key];
+        category.name = category.categoryName ?? key;
     });
 
     return categories;
@@ -163,20 +170,11 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
 
     return (categories: Map<TransientCategoryDefinition>) => {
 
-        const keysOfUnselectedCategories =
-            flow(
-                categories,
-                Object.keys,
-                filter(isNot(includedIn(selectedCategoriesNames)))
-            );
-
-        const parentNamesOfSelectedCategories: string[] = flow(
-            keysOfUnselectedCategories,
-            reduce(withDissoc, categories),
-            getDefinedParents
+        const categoriesToErase = flow(
+            categories,
+            Object.keys,
+            filter(isNot(includedIn(selectedCategoriesNames)))
         );
-
-        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories);
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
     }
 }
@@ -205,20 +203,4 @@ function replaceCommonFields(commonFields: Map<any>)
                 delete clonedMergedCategory.commons;
                 return clonedMergedCategory;
             })) as any;
-}
-
-
-function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDefinition>)
-        : Map<TransientCategoryDefinition> {
-
-    return flow(
-        transientCategories,
-        keysValues,
-        reduce(
-            (acc: any, [transientCategoryName, transientCategory]) => {
-                acc[transientCategory.categoryName
-                    ? transientCategory.categoryName
-                    : transientCategoryName] = transientCategory;
-                return acc;
-            }, {}));
 }

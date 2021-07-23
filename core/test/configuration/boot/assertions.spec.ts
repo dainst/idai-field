@@ -38,7 +38,7 @@ describe('Assertions', () => {
        };
 
        try {
-           Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, {});
+           Assertions.performAssertions(builtInCategories, libraryCategories, commonFields, {}, customCategories);
            fail();
        } catch (expected) {
            expect(expected).toEqual(

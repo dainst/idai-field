@@ -1,6 +1,6 @@
-import {Map, on, Predicate} from 'tsfun';
-import {makeLookup, mapToArray} from './transformers';
-import {sortStructArray} from './sort-struct-array';
+import { Map, on, Predicate } from 'tsfun';
+import { makeLookup, mapToArray } from './transformers';
+import { sortStructArray } from './sort-struct-array';
 import { SortUtil } from './sort-util';
 
 

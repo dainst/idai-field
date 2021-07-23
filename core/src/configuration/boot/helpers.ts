@@ -1,5 +1,5 @@
-import {compose, filter, isDefined, keysValues, map, Map, to} from 'tsfun';
-import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
+import { compose, filter, isDefined, keysValues, map, Map, to } from 'tsfun';
+import { TransientFieldDefinition, TransientCategoryDefinition } from '../model/transient-category-definition';
 
 
 export const getDefinedParents = compose(

@@ -16,7 +16,7 @@ describe('addRelations', () => {
     beforeEach(() => {
 
         t1 = {
-            categoryName: 'x1',
+            categoryName: 'T1',
             commons: [],
             parent: 'x',
             description: { 'de': '' },

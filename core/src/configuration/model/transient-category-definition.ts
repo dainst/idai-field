@@ -1,5 +1,6 @@
 import { Map } from 'tsfun';
 import { Valuelist } from '../../model';
+import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { BuiltinCategoryDefinition, BuiltinFieldDefinition } from './builtin-category-definition';
 import { LibraryFieldDefinition, LibraryCategoryDefinition } from './library-category-definition';
@@ -27,6 +28,10 @@ export interface TransientFieldDefinition extends BuiltinFieldDefinition, Librar
     valuelistFromProjectField?: string;
     source?: 'builtin'|'library'|'custom'|'common';
     defaultConstraintIndexed?: boolean;
+    label?: I18N.String;
+    description?: I18N.String;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
 }
 
 

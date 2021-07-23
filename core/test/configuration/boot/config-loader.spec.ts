@@ -16,7 +16,7 @@ describe('ConfigLoader', () => {
     let configReader;
     let pouchdbManager;
 
-    function applyConfig(customFieldsConfiguration = {},
+    function applyConfig(customCategoriesConfiguration = {},
                          languageConfiguration = {},
                          customLanguageConfiguration = {}) {
 
@@ -30,7 +30,7 @@ describe('ConfigLoader', () => {
         pouchdbManager.getDb.and.returnValue({
             get: (_: string) => Promise.resolve({
                 resource: {
-                    categories: customFieldsConfiguration,
+                    categories: customCategoriesConfiguration,
                     languages: { de: customLanguageConfiguration }
                 }
             })

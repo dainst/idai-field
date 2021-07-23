@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { nop } from 'tsfun';
+import { nop, to } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
     createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
@@ -457,14 +457,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         try {
             const builtInConfiguration = new BuiltInConfiguration('');
-            const config = await this.configReader.read('/Library/Categories.json');
+            const libraryCategories = await this.configReader.read('/Library/Categories.json');
+            const valuelists = await this.configReader.read('/Library/Valuelists.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
 
             const categories = createContextIndependentCategories(
                 builtInConfiguration.builtInCategories,
                 builtInConfiguration.builtInRelations,
-                config,
-                languages);
+                libraryCategories,
+                builtInConfiguration.commonFields,
+                builtInConfiguration.builtInFields,
+                valuelists,
+                this.topLevelCategoriesArray.map(to('libraryId')),
+                languages
+            );
 
             this.configurationIndex = ConfigurationIndex.create(categories);
 

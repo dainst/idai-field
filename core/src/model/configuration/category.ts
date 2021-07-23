@@ -5,12 +5,14 @@ import { Field } from './field';
 import { Group } from './group';
 
 
-export interface Category extends Named {
+export interface Category {
+
+    name: string;
 
     /**
      * For builtIn and library categories, the original identifier (possibly a map key).
      */
-    libraryId?: string; 
+    libraryId?: string;
 
     source?: 'builtin'|'library'|'custom';
 

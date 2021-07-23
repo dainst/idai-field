@@ -1,4 +1,4 @@
-import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set } from 'tsfun';
+import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set, Map } from 'tsfun';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
 import { Forest, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -16,21 +16,20 @@ const TEMP_GROUPS = 'tempGroups';
  * @author Sebastian Cuy
  */
 export const makeCategoryForest = (relationDefinitions: Array<Relation>, selectedParentCategories?: string[]) =>
-        (categories: any): Forest<Category> => {
+        (categories: Map<TransientCategoryDefinition>): Forest<Category> => {
 
     const [parentDefs, childDefs] =
-        separate<TransientCategoryDefinition>(on('parent', not(isDefined)), categories);
+        separate<TransientCategoryDefinition>(on('parent', not(isDefined)), Object.values(categories));
 
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        Object.values,
         map(category => ({ item: category, trees: [] }))
     );
 
     return flow(
         childDefs,
-        reduce(addChildCategory(selectedParentCategories), parentCategories as any),
+        reduce(addChildCategory(selectedParentCategories), parentCategories),
         Tree.mapForest(createGroups(relationDefinitions)),
         Tree.mapForest(detach(TEMP_FIELDS)),
         Tree.mapForest(detach(TEMP_GROUPS)),
@@ -109,7 +108,7 @@ const addChildCategory = (selectedParentCategories?: string[]) =>
     const { item: category, trees: trees } = found;
 
     const childCategory = buildCategoryFromDefinition(childDefinition);
-    (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
+    childCategory[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
     trees.push({ item: childCategory, trees: [] });
     return categoryTree;

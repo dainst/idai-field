@@ -1,3 +1,5 @@
+import { Map } from 'tsfun';
+import { TransientCategoryDefinition } from '../../../src/configuration';
 import { ConfigurationErrors, makeCategoryForest } from '../../../src/configuration/boot';
 import { Category, Field, FieldResource, Groups, Relation, Resource } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
@@ -13,13 +15,15 @@ describe('makeCategoriesForest', () => {
         const A = 'A';
         const P = 'P';
 
-        const confDef = {
+        const confDef: Map<TransientCategoryDefinition> = {
             A: {
                 name: A,
                 categoryName: A,
                 parent: P,
                 description: { 'de': '' },
-                fields: { a: { inputType: Field.InputType.INPUT, visible: true } },
+                createdBy: '',
+                creationDate: '',
+                fields: { a: { name: 'a', inputType: Field.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['a'] }
                 ]
@@ -28,7 +32,9 @@ describe('makeCategoriesForest', () => {
                 name: P,
                 categoryName: P,
                 description: { 'de': '' },
-                fields: { p: { inputType: Field.InputType.INPUT, visible: true } },
+                createdBy: '',
+                creationDate: '',
+                fields: { p: { name: 'p', inputType: Field.InputType.INPUT, visible: true } },
                 groups: [
                     { name: Groups.STEM, fields: ['p'] }
                 ]
@@ -55,24 +61,33 @@ describe('makeCategoriesForest', () => {
         const B = 'B';
         const P = 'P';
 
-        const confDef = {
+        const confDef: Map<TransientCategoryDefinition> = {
             A: {
                 name: A,
                 categoryName: A,
                 parent: P,
+                createdBy: '',
+                creationDate: '',
                 description: { 'de': '' },
-                fields: {}
+                fields: {},
+                groups: []
             }, B: {
                 name: B,
                 categoryName: B,
                 parent: P,
+                createdBy: '',
+                creationDate: '',
                 description: { 'de': '' },
-                fields: {}
+                fields: {},
+                groups: []
             }, P: {
                 name: P,
                 categoryName: P,
+                createdBy: '',
+                creationDate: '',
                 description: { 'de': '' },
-                fields: {}
+                fields: {},
+                groups: []
             }
         };
 
@@ -93,16 +108,20 @@ describe('makeCategoriesForest', () => {
 
         const T = 'T';
 
-        const confDef = {
+        const confDef: Map<TransientCategoryDefinition> = {
             T: {
                 name: T,
                 categoryName: T,
                 description: { 'de': '' },
+                createdBy: '',
+                creationDate: '',
                 fields: {
                     shortDescription: {
+                        name: 'shortDescription',
                         inputType: Field.InputType.INPUT,
                     },
                     identifier: {
+                        name: 'identifier',
                         inputType: Field.InputType.INPUT
                     }
                 },

@@ -33,12 +33,9 @@ export interface Category {
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
 
-    color?: string; // TODO make sure it is always set and make non-optional
-    defaultColor?: string;
+    color?: Category.Color; // TODO make sure it is always set and make non-optional
+    defaultColor?: Category.Color;
 }
-
-
-type Color = string;
 
 
 /**
@@ -47,6 +44,8 @@ type Color = string;
  * @author Daniel de Oliveira
  */
 export namespace Category {
+
+    export type Color = string;
 
     export const COLOR = 'color';
     export const PARENT_CATEGORY = 'parentCategory';

@@ -1,7 +1,8 @@
-import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set, Map } from 'tsfun';
+import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set, Map, values, isUndefined } from 'tsfun';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
 import { Forest, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
+import {LibraryCategoryDefinition} from '../model';
 import { TransientCategoryDefinition } from '../model/transient-category-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
@@ -19,7 +20,9 @@ export const makeCategoryForest = (relationDefinitions: Array<Relation>, selecte
         (categories: Map<TransientCategoryDefinition>): Forest<Category> => {
 
     const [parentDefs, childDefs] =
-        separate<TransientCategoryDefinition>(on('parent', not(isDefined)), Object.values(categories));
+            flow(categories,
+                values,
+                separate(on(LibraryCategoryDefinition.PARENT, isUndefined)));
 
     const parentCategories = flow(
         parentDefs,

@@ -37,6 +37,9 @@ export module Tree {
 
     export const toItem = to(Tree.ITEM);
 
+    export const wrap = <T>(item: T): Tree<T> => ({ item: item, trees: [] });
+
+
     // Implementation note:
     // Technically it would be no problem to have only a function mapTree
     // (making mapForest superfluous) which maps both Tree and Forest.

@@ -1,4 +1,4 @@
-import { isDefined, flow, on, separate, detach, map, reduce, clone, not, flatten, set, Map, values, isUndefined } from 'tsfun';
+import { flow, on, separate, detach, map, reduce, clone, flatten, set, Map, values, isUndefined } from 'tsfun';
 import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
 import { Forest, Tree } from '../../tools';
 import { linkParentAndChildInstances } from '../category-forest';
@@ -27,7 +27,7 @@ export const makeCategoryForest = (relationDefinitions: Array<Relation>, selecte
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        map(category => ({ item: category, trees: [] }))
+        map(Tree.wrap)
     );
 
     return flow(
@@ -118,29 +118,31 @@ const addChildCategory = (selectedParentCategories?: string[]) =>
 }
 
 
-function buildCategoryFromDefinition(definition: any/* TransientCategoryDefinition */): Category {
+function buildCategoryFromDefinition(definition: TransientCategoryDefinition): Category {
+
+    const def: any = definition;
 
     const category: any = {};
-    category.mustLieWithin = definition.mustLieWithin;
-    category.name = definition.name;
-    category.libraryId = definition.libraryId;
-    category.label = definition.label;
-    category.source = definition.source;
-    category.description = definition.description;
-    category.defaultLabel = definition.defaultLabel;
-    category.defaultDescription = definition.defaultDescription;
+    category.mustLieWithin = def.mustLieWithin;
+    category.name = def.name;
+    category.libraryId = def.libraryId;
+    category.label = def.label;
+    category.source = def.source;
+    category.description = def.description;
+    category.defaultLabel = def.defaultLabel;
+    category.defaultDescription = def.defaultDescription;
     category.groups = [];
-    category.isAbstract = definition.abstract || false;
-    category.color = definition.color ?? Category.generateColorForCategory(category.name);
-    category.defaultColor = definition.defaultColor ?? Category.generateColorForCategory(category.name);
+    category.isAbstract = def.abstract || false;
+    category.color = def.color ?? Category.generateColorForCategory(category.name);
+    category.defaultColor = def.defaultColor ?? Category.generateColorForCategory(category.name);
     category.children = [];
-    category.userDefinedSubcategoriesAllowed = definition.userDefinedSubcategoriesAllowed;
-    category.required = definition.required;
+    category.userDefinedSubcategoriesAllowed = def.userDefinedSubcategoriesAllowed;
+    category.required = def.required;
 
-    category[TEMP_FIELDS] = definition.fields || {};
+    category[TEMP_FIELDS] = def.fields || {};
     Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
 
-    category[TEMP_GROUPS] = definition.groups || [];
+    category[TEMP_GROUPS] = def.groups || [];
 
     return category as Category;
 }

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DatastoreErrors, Named } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../../core/resources/view/view-facade';
+import { ViewFacade } from '../../app/core/resources/view/view-facade';
 
 
 @Injectable()

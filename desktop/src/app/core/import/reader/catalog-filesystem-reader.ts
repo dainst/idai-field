@@ -1,7 +1,7 @@
 import {Reader} from './reader';
 import {ReaderErrors} from './reader-errors';
-import {Settings} from '../../settings/settings';
 import {APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP} from '../../export/catalog/catalog-exporter';
+import {Settings} from '../../../../app/services/settings/settings';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const extract = typeof window !== 'undefined' ? window.require('extract-zip') : require('extract-zip');

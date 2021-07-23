@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavbarComponent} from './navbar.component';
-import {SettingsProvider} from '../../core/settings/settings-provider';
+import {SettingsProvider} from '../../services/settings/settings-provider';
 
 
 @Component({

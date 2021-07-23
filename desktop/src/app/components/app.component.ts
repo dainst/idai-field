@@ -1,14 +1,14 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppController } from '../core/app-controller';
-import { Menus } from './services/menus';
-import { UtilTranslations } from '../core/util/util-translations';
+import { AppController } from '../services/app-controller';
+import { Menus } from '../services/menus';
+import { UtilTranslations } from '../util/util-translations';
 import { Messages } from './messages/messages';
-import { Imagestore } from '../core/images/imagestore/imagestore';
-import { SettingsService } from '../core/settings/settings-service';
-import { SettingsProvider } from '../core/settings/settings-provider';
-import { Settings } from '../core/settings/settings';
+import { Imagestore } from '../services/imagestore/imagestore';
+import { SettingsService } from '../services/settings/settings-service';
+import { SettingsProvider } from '../services/settings/settings-provider';
+import { Settings } from '../services/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;

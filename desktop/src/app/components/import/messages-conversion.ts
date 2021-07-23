@@ -1,5 +1,5 @@
 import {isArray} from 'tsfun';
-import {ValidationErrors} from '../../core/model/validation-errors';
+import {ValidationErrors} from '../../model/validation-errors';
 import {M} from '../messages/m';
 import {ImportErrors} from '../../core/import/import/import-errors';
 import {ParserErrors} from '../../core/import/parser/parser-errors';

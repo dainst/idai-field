@@ -1,25 +1,25 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, ConnectedDocsWriter, createDocuments, Datastore,
+import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
-import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
+import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
-import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
-import { PouchDbFsImagestore } from '../../../../src/app/core/images/imagestore/pouch-db-fs-imagestore';
+import { Imagestore } from '../../../../src/app/services/imagestore/imagestore';
+import { PouchDbFsImagestore } from '../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
 import { ImageDocumentsManager } from '../../../../src/app/core/images/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/view/imageoverview-facade';
 import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../../src/app/core/import/import/utils';
-import { ImageRelationsManager } from '../../../../src/app/core/services/image-relations-manager';
-import { Validator } from '../../../../src/app/core/model/validator';
+import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
+import { Validator } from '../../../../src/app/model/validator';
 import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade';
-import { SyncTarget } from '../../../../src/app/core/settings/settings';
-import { SettingsProvider } from '../../../../src/app/core/settings/settings-provider';
-import { SettingsService } from '../../../../src/app/core/settings/settings-service';
-import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
+import { SyncTarget } from '../../../../src/app/services/settings/settings';
+import { SettingsProvider } from '../../../../src/app/services/settings/settings-provider';
+import { SettingsService } from '../../../../src/app/services/settings/settings-service';
+import { TabManager } from '../../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
-import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
+import { StateSerializer } from '../../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../../core/test/test-helpers';
 
 import PouchDB = require('pouchdb-node');
@@ -161,10 +161,9 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         new SyncService(pouchdbManager)
     );
 
-    const connectedDocsWriter = new ConnectedDocsWriter(datastore, projectConfiguration);
     const relationsManager = new RelationsManager(
         datastore,
-        connectedDocsWriter
+        projectConfiguration,
     );
 
     const imageRelationsManager = new ImageRelationsManager(

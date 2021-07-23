@@ -4,10 +4,8 @@ import { nop, to } from 'tsfun';
 import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
     createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
-import { TabManager } from '../../core/tabs/tab-manager';
-import { MenuContext } from '../services/menu-context';
+import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
-import { SettingsProvider } from '../../core/settings/settings-provider';
 import { MessagesConversion } from '../docedit/messages-conversion';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
@@ -22,10 +20,12 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
 import { AddCategoryModalComponent } from './add/add-category-modal.component';
 import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { Modals } from '../services/modals';
 import { ConfigurationIndex } from '../../core/configuration/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
-import { Menus } from '../services/menus';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {Modals} from '../../services/modals';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 
 export type InputType = {
@@ -99,7 +99,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menus: Menus,
                 private i18n: I18n) {}
 
-    
+
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
 
 

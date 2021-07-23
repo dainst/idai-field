@@ -7,11 +7,11 @@ import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from 'idai-field-core';
-import {TabManager} from '../../../core/tabs/tab-manager';
+import {TabManager} from '../../../services/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';
 

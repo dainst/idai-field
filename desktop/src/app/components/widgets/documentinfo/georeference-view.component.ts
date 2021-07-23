@@ -5,10 +5,9 @@ import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
 import {MsgWithParams} from '../../messages/msg-with-params';
+import {Menus} from '../../../services/menus';
+import {MenuContext} from '../../../services/menu-context';
 
 
 @Component({
@@ -35,7 +34,6 @@ export class GeoreferenceViewComponent {
     constructor(private relationsManager: RelationsManager,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private settingsProvider: SettingsProvider,
                 private menuService: Menus) {}
 
 

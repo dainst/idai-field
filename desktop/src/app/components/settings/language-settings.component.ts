@@ -3,10 +3,10 @@ import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { InPlace } from 'idai-field-core';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
-import { Language, LanguagesUtil } from '../../core/util/languages-util';
+import { Languages, Language } from '../../services/languages';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 
 @Component({
@@ -49,7 +49,7 @@ export class LanguageSettingsComponent {
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent);
-        modalReference.componentInstance.languages = LanguagesUtil.getUnselectedLanguages(
+        modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
             this.languages, this.selectedLanguages
         );
 
@@ -65,7 +65,7 @@ export class LanguageSettingsComponent {
 
     private getAvailableLanguages(): { [languageCode: string]: Language } {
 
-        const availableLanguages: { [languageCode: string]: Language } = LanguagesUtil.getAvailableLanguages();
+        const availableLanguages: { [languageCode: string]: Language } = Languages.getAvailableLanguages();
 
         availableLanguages['it'].info = this.i18n({
             id: 'settings.languageInfo.it',

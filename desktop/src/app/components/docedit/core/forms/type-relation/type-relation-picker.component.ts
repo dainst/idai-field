@@ -5,7 +5,7 @@ import { Category, Labels, Constraint, Datastore, Document, FieldDocument, Field
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
-import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
+import { TypeImagesUtil } from '../../../../../util/type-images-util';
 
 
 const ALLCATALOGS = 'all-catalogs';

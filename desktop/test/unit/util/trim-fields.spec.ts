@@ -1,5 +1,5 @@
 import {Resource} from 'idai-field-core';
-import {trimFields} from '../../../src/app/core/util/trim-fields';
+import {trimFields} from '../../../src/app/util/trim-fields';
 
 
 /**

@@ -1,6 +1,6 @@
 import { Tree, Field, ProjectConfiguration } from 'idai-field-core';
-import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
-import { Validations } from '../../../../src/app/core/model/validations';
+import { ValidationErrors } from '../../../../src/app/model/validation-errors';
+import { Validations } from '../../../../src/app/model/validations';
 import InputType = Field.InputType;
 
 

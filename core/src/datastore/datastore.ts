@@ -77,6 +77,8 @@ export class Datastore {
     /**
      * Updates an existing document
      *
+     * As lambda, to allow passing as Get (see companion namespace below).
+     * 
      * @param doc
      * @param squashRevisionsIds
      * @returns {Promise<Document>} a document
@@ -86,7 +88,7 @@ export class Datastore {
      * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
      */
-    public async update(document: Document, squashRevisionsIds?: string[]): Promise<Document> {
+    public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
         return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
@@ -145,7 +147,7 @@ export class Datastore {
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
@@ -181,7 +183,7 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public find = async (query: Query): Promise<Datastore.FindResult> => {
+    public find: Datastore.Find = async (query: Query): Promise<Datastore.FindResult> => {
 
         const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -200,7 +202,7 @@ export class Datastore {
      * @param query 
      * @returns 
      */
-    public findIds = (query: Query): Datastore.FindIdsResult => {
+    public findIds: Datastore.FindIds = (query: Query): Datastore.FindIdsResult => {
 
         const orderedResults: string[] = this.getIds(query);
 
@@ -341,6 +343,8 @@ export namespace Datastore {
     export type Find = (query: Query) => Promise<FindResult>;
 
     export type FindIds = (query: Query) => FindIdsResult;
+
+    export  type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
 
     export interface FindIdsResult {

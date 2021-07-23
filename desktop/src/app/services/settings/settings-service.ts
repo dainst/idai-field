@@ -4,8 +4,8 @@ import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
-import { Imagestore } from '../images/imagestore/imagestore';
-import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
+import {Imagestore} from '../imagestore/imagestore';
+import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import { Settings } from './settings';
 import { SettingsProvider } from './settings-provider';
 

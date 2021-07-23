@@ -1,17 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource, RelationsManager,
+import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource,
     ProjectConfiguration, Named, Hierarchy } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
-import { Imagestore } from '../../../core/images/imagestore/imagestore';
+import { Imagestore } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
-import { TabManager } from '../../../core/tabs/tab-manager';
-import { TypeImagesUtil } from '../../../core/util/type-images-util';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
-import { Routing } from '../../services/routing';
+import { TabManager } from '../../../services/tabs/tab-manager';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';
@@ -19,6 +15,10 @@ import { ViewModalLauncher } from '../service/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
+import {Routing} from '../../../services/routing';
+import {Menus} from '../../../services/menus';
+import {MenuContext} from '../../../services/menu-context';
+import {TypeImagesUtil} from '../../../util/type-images-util';
 
 
 @Component({
@@ -69,7 +69,6 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private imagestore: Imagestore,
-                private relationsManager: RelationsManager,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: Routing,
                 private tabManager: TabManager,

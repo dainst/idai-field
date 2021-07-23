@@ -1,6 +1,6 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { to } from 'tsfun';
-import { Settings } from '../../settings/settings';
+import {Settings} from '../settings/settings';
 import { BlobMaker, BlobUrlSet } from './blob-maker';
 import { ImageConverter } from './image-converter';
 import { ImagestoreErrors } from './imagestore-errors';

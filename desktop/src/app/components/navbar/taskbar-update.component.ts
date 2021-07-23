@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {SettingsProvider} from '../../core/settings/settings-provider';
+import {SettingsProvider} from '../../services/settings/settings-provider';
 
 
 const ipcRenderer = typeof window !== 'undefined'

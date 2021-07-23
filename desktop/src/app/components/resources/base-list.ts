@@ -6,8 +6,8 @@ import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../core/resources/view/view-facade';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({

@@ -2,11 +2,11 @@ import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angu
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
-import {SettingsService} from '../../core/settings/settings-service';
-import {TabManager} from '../../core/tabs/tab-manager';
-import {Settings} from '../../core/settings/settings';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
+import {TabManager} from '../../services/tabs/tab-manager';
+import {SettingsService} from '../../services/settings/settings-service';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
+import {Settings} from '../../services/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 

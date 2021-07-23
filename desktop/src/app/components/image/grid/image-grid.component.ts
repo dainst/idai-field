@@ -3,9 +3,9 @@ import {flatten} from 'tsfun';
 import {Datastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {Imagestore} from '../../../services/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
-import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import {BlobMaker} from '../../../services/imagestore/blob-maker';
 
 
 const DROPAREA = 'droparea';

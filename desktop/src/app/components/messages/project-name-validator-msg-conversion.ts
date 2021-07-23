@@ -1,4 +1,4 @@
-import {ProjectNameValidation} from '../../core/model/project-name-validation';
+import {ProjectNameValidation} from '../../model/project-name-validation';
 import {M} from './m';
 import {MsgWithParams} from './msg-with-params';
 

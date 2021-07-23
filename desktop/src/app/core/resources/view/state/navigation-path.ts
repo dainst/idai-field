@@ -1,9 +1,9 @@
-import {takeWhile, on, is, takeUntil, isnt} from 'tsfun';
+import {takeWhile, on, is, takeUntil} from 'tsfun';
 import {Document} from 'idai-field-core';
 import {ViewContext} from './view-context';
 import {FieldDocument} from 'idai-field-core';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
-import {ModelUtil} from '../../../model/model-util';
+import {ModelUtil} from '../../../../model/model-util';
 
 
 /**

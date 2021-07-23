@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-field-core';
-import {ModelUtil} from '../../../../../core/model/model-util';
+import {ModelUtil} from '../../../../../model/model-util';
 import {ImageRowItem} from '../../../../../core/images/row/image-row';
-import {Imagestore} from '../../../../../core/images/imagestore/imagestore';
+import {Imagestore} from '../../../../../services/imagestore/imagestore';
 
 
 @Component({

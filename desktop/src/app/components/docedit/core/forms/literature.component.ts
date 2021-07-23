@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {is, remove, clone} from 'tsfun';
 import {Literature, Resource} from 'idai-field-core';
 import {Field} from 'idai-field-core';
-import {UtilTranslations} from '../../../../core/util/util-translations';
+import {UtilTranslations} from '../../../../util/util-translations';
 
 
 type LiteratureInEditing = { original: Literature, clone: Literature };

@@ -1,16 +1,17 @@
-
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract,
 } from 'tsfun';
 import { Document } from '../model/document';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
-import { ConnectedDocsWriter } from './connected-docs-writer'
+import { ConnectedDocs } from './utilities/connected-docs'
 import { NewDocument } from '../model/document';
+import { ProjectConfiguration } from './project-configuration'
 import {  ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { childrenOf } from '../base-config';
+import { Name, Named } from '../tools/named';
 
 
 /**
@@ -24,7 +25,7 @@ export class RelationsManager {
 
     constructor(
         private datastore: Datastore,
-        private connectedDocsWriter: ConnectedDocsWriter) {}
+        private projectConfiguration: ProjectConfiguration) {}
 
     /**
      * Persists document and all the objects that are or have been in relation
@@ -94,16 +95,16 @@ export class RelationsManager {
         const revs = revisionsToSquash.map(_ => _._rev).filter(isDefined);
         const updated = await this.persistIt(document, revs);
 
-        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash));
+        await ConnectedDocs.updateForUpdate(
+            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
 
 
     private async removeWithConnectedDocuments(document: Document) {
 
-        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
-            document);
+        await ConnectedDocs.updateForRemove(
+            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), document);
         await this.datastore.remove(document);
     }
 
@@ -149,5 +150,18 @@ export class RelationsManager {
             }
         };
         return this.datastore.find(query);
+    }
+
+
+    private getInverseRelationsMap(): Relation.InverseRelationsMap {
+
+        return Relation.makeInverseRelationsMap(this.projectConfiguration.getRelations());
+        
+    }
+
+
+    private getRelationNames(): Array<Name> {
+
+        return this.projectConfiguration.getRelations().map(Named.toName);
     }
 }

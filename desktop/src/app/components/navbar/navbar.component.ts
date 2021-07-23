@@ -1,15 +1,15 @@
 import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {TabManager} from '../../core/tabs/tab-manager';
-import {Tab} from '../../core/tabs/tab';
-import {TabUtil} from '../../core/tabs/tab-util';
+import {TabManager} from '../../services/tabs/tab-manager';
+import {Tab} from '../../services/tabs/tab';
+import {TabUtil} from '../../services/tabs/tab-util';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {SettingsProvider} from '../../core/settings/settings-provider';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
 import {ProjectsModalComponent} from './projects-modal.component';
+import {SettingsProvider} from '../../services/settings/settings-provider';
+import {Menus} from '../../services/menus';
+import {MenuContext} from '../../services/menu-context';
 
 
 @Component({

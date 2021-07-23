@@ -1,7 +1,7 @@
 import {ImageResource} from 'idai-field-core';
 import {Document} from 'idai-field-core';
-import {BlobMaker} from '../imagestore/blob-maker';
-import {ImageContainer} from '../imagestore/image-container';
+import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import {ImageContainer} from '../../../services/imagestore/image-container';
 
 
 /**

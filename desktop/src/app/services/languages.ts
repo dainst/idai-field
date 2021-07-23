@@ -1,8 +1,24 @@
 import { clone } from 'tsfun';
-import { Settings } from '../../core/settings/settings';
+import {Settings} from './settings/settings';
+
+const CONFIGURED_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
+    ? window.require('@electron/remote').getGlobal('config').languages
+    : ['de'];
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
+
+/**
+ * @author Daniel de Oliveira
+ */
+export class Languages {
+
+    public get() {
+
+        return CONFIGURED_LANGUAGES;
+    }
+}
 
 
 export type Language = {
@@ -11,11 +27,10 @@ export type Language = {
     isMainLanguage: boolean;
 }
 
-
 /**
  * @author Thomas Kleinke
  */
-export module LanguagesUtil {
+ export namespace Languages {
 
     export function getAvailableLanguages(): { [languageCode: string]: Language } {
 

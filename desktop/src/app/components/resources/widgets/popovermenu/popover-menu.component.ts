@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Document} from 'idai-field-core';
 import {PopoverMenu, ResourcesComponent} from '../../resources.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
-import {Routing} from '../../../services/routing';
+import {Routing} from '../../../../services/routing';
 import {ViewModalLauncher} from '../../service/view-modal-launcher';
 import { FieldDocument } from 'idai-field-core';
 

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {isUndefinedOrEmpty, not, rest} from 'tsfun';
 import {AngularUtility} from '../angular/angular-utility';
 import {getMessage} from './initialization-messages';
-import {reload} from './common/reload';
-import {SettingsService} from './settings/settings-service';
+import {reload} from '../services/reload';
+import {SettingsService} from '../services/settings/settings-service';
 
 
 type InitializationPhase =

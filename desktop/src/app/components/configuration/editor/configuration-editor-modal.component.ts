@@ -1,8 +1,8 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
 import { ConfigurationDocument, I18N, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';

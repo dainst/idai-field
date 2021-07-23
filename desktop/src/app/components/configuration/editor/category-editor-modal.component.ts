@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
 import { I18N } from 'idai-field-core';
-import { Menus } from '../../services/menus';
+import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { CustomLanguageConfigurations } from '../../../core/configuration/custom-language-configurations';
@@ -81,7 +81,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
 
     public isRestoreColorButtonVisible(): boolean {
-        
+
         return this.getClonedCategoryDefinition().color
             && this.getClonedCategoryDefinition().color
                 !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor);

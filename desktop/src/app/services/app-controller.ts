@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
-import { Menus } from '../components/services/menus';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
-import { ImageConverter } from './images/imagestore/image-converter';
-import { Imagestore } from './images/imagestore/imagestore';
-import { ImagesState } from './images/overview/view/images-state';
-import { ResourcesStateManager } from './resources/view/resources-state-manager';
+import { ImageConverter } from './imagestore/image-converter';
+import { Imagestore } from './imagestore/imagestore';
+import { ImagesState } from '../core/images/overview/view/images-state';
+import { ResourcesStateManager } from '../core/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
+import {Menus} from './menus';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');

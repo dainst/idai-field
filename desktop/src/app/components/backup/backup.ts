@@ -1,5 +1,5 @@
 import { Name } from 'idai-field-core';
-import { ProjectNameValidation } from '../../core/model/project-name-validation';
+import { ProjectNameValidation } from '../../model/project-name-validation';
 import { M } from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');

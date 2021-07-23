@@ -1,10 +1,10 @@
 import {Component, OnChanges, Input, OnInit} from '@angular/core';
 import {ImageDocument} from 'idai-field-core';
-import {ImageContainer} from '../../../core/images/imagestore/image-container';
-import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import {ImageContainer} from '../../../services/imagestore/image-container';
+import {BlobMaker} from '../../../services/imagestore/blob-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
 import {M} from '../../messages/m';
-import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {Imagestore} from '../../../services/imagestore/imagestore';
 import {Messages} from '../../messages/messages';
 
 

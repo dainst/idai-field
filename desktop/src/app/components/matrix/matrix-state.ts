@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {StateSerializer} from '../../core/common/state-serializer';
+import {StateSerializer} from '../../services/state-serializer';
 
 export type MatrixRelationsMode = 'temporal'|'spatial';
 export type MatrixLineMode = 'ortho'|'curved';

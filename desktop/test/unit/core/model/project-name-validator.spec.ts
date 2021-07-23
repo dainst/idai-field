@@ -1,4 +1,4 @@
-import { ProjectNameValidation } from '../../../../src/app/core/model/project-name-validation';
+import { ProjectNameValidation } from '../../../../src/app/model/project-name-validation';
 
 
 /**

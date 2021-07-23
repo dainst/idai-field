@@ -2,12 +2,12 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
 import {Datastore, Document} from 'idai-field-core';
-import {FieldDocument, ImageDocument} from 'idai-field-core'
+import {FieldDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
-import {Routing} from '../../services/routing';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ImageRowItem} from '../../../core/images/row/image-row';
-import {Menus} from '../../services/menus';
+import {Routing} from '../../../services/routing';
+import {Menus} from '../../../services/menus';
 
 
 @Component({

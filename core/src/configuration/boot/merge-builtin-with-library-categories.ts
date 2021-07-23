@@ -57,7 +57,9 @@ function merge(target: any, source: any) {
         for (let targetFieldName of Object.keys(target)) {
             if (targetFieldName === sourceFieldName) alreadyPresentInTarget = true;
         }
-        if (!alreadyPresentInTarget) target[sourceFieldName] = source[sourceFieldName];
+        if (!alreadyPresentInTarget || sourceFieldName === 'valuelists') {
+            target[sourceFieldName] = source[sourceFieldName];
+        }
     }
 
     if (source.libraryId) target.libraryId = source.libraryId;

@@ -132,6 +132,9 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.MULTIINPUT
                 }
             },
+            valuelists: {
+                coordinateReferenceSystem: 'coordinate-reference-system-default-1'
+            },
             groups: [
                 {
                     name: Groups.STEM,
@@ -455,7 +458,10 @@ export class BuiltInConfiguration {
                     name: Groups.IDENTIFICATION,
                     fields: ['criterion']
                 }
-            ]
+            ],
+            valuelists: {
+                criterion: 'TypeCatalog-criterion-default'
+            }
         },
         Type: {
             supercategory: true,

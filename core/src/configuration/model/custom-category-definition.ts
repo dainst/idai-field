@@ -1,5 +1,4 @@
 import { includedIn, isNot, Map, throws } from 'tsfun';
-import { Valuelists } from '../../model';
 import { Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';
@@ -11,7 +10,6 @@ import { BaseCategoryDefinition, BaseFieldDefinition } from './base-category-def
  */
 export interface CustomCategoryDefinition extends BaseCategoryDefinition {
 
-    valuelists?: Valuelists,
     commons?: string[];
     color?: string,
     hidden?: string[];

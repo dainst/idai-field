@@ -14,7 +14,6 @@ import { BaseCategoryDefinition, BaseFieldDefinition, BaseGroupDefinition } from
 export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
 
     color?: string,
-    valuelists: Valuelists;
     positionValuelists?: Valuelists;
     commons?: string[];
     parent?: string,

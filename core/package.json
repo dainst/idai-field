@@ -12,7 +12,8 @@
     "scripts": {
         "build": "rimraf dist && tsc -p .",
         "build:watch": "tsc -watch -p .",
-        "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
+        "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
+        "test:watch": "nodemon --ext js --exec 'jasmine JASMINE_CONFIG_PATH=test/jasmine.json'"
     },
     "dependencies": {
         "rxjs": "~6.5.4",
@@ -26,8 +27,9 @@
         "@types/pouchdb": "6.4.0",
         "@types/uuid": "^8.3.0",
         "jasmine": "2.5.2",
-        "pouchdb-node": "7.2.1",
         "jasmine-core": "~3.5.0",
+        "nodemon": "^2.0.12",
+        "pouchdb-node": "7.2.1",
         "rimraf": "2.6.2",
         "typescript": "~4.1.5"
     }

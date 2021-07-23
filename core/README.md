@@ -6,16 +6,17 @@ Generally there should be no need to build this package separately since its
 dependencies are installed and it is built when running `npm run bootstrap`
 and `npm run build` in the repository root.
 
-However, builds can manually be triggered with
+## Development
 
-    $ npm run build
+Trigger build manually, such that other projects have access to the latest changes
 
-or 
+    $ npm run build 
 
-    $ npm run build:watch
-
-to do it continuously.
-
-To run unit tests, use
+Run tests
 
     $ npm t
+
+Continuously watch and test
+
+    $1 npm run build:watch
+    $2 npm run test:watch

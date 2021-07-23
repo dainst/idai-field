@@ -4,17 +4,17 @@
 
 <div class="modal-body row add-category-modal-body">
     <div class="col-md-6">
-        <input type="text"
-               id="category-name"
-               class="form-control"
-               [(ngModel)]="searchTerm"
-               (ngModelChange)="applyCategoryNameSearch()">
-        <div id="create-new-category-button"
-             class="btn btn-success"
-             [class.disabled]="searchTerm.length === 0"
-             style="position: absolute; left: 10px"
-             (click)="createNewSubcategory()">
-            <span i18n="@@configuration.createNewCategory">Neue Kategorie hinzufügen</span>
+        <div class="input-group mb-2">
+            <input type="text"
+                   id="category-name"
+                   class="form-control"
+                   [(ngModel)]="searchTerm"
+                   (ngModelChange)="applyCategoryNameSearch()">
+            <button class="btn btn-success" type="button"
+                    [class.disabled]="searchTerm.length === 0"
+                    (click)="createNewSubcategory()">
+                <span class="mdi mdi-plus"></span>
+            </button>
         </div>
         <category-listing [category]="parentCategory"
                           [categories]="categories"

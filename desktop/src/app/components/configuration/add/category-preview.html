@@ -1,34 +1,32 @@
-<div id="category-preview">
-    <div *ngIf="category">
-        <h1>{{getLabel(category)}}</h1>
-        <div id="preview-inner" style="background-color: white">
-            <ul>
-                <li *ngFor="let group of category.groups">
+<div *ngIf="category" id="category-preview">
+    <h5>{{getLabel(category)}}</h5>
+    <div id="category-preview-inner">
+        <ul>
+            <li *ngFor="let group of category.groups">
+                <ul>
+                    <h3>{{getLabel(group)}}</h3>
+
                     <ul>
-                        <h3>{{getLabel(group)}}</h3>
-
-                        <ul>
-                            <li *ngFor="let labelEntry of getLabels(group.label)">
-                                {{labelEntry[0]}}:{{labelEntry[1]}}
-                            </li>
-                        </ul>
-
-                        <h5>Fields:</h5>
-                        <li *ngFor="let field of group.fields">
-
-                            {{field.name}}
-                            <ul>
-                                <li *ngFor="let labelEntry of getLabels(field.label)">
-                                    {{labelEntry[0]}}:{{labelEntry[1]}}
-                                </li>
-
-                            </ul>
-
-                            <hr>
+                        <li *ngFor="let labelEntry of getLabels(group.label)">
+                            {{labelEntry[0]}}:{{labelEntry[1]}}
                         </li>
                     </ul>
-                </li>
-            </ul>
-        </div>
+
+                    <h5>Fields:</h5>
+                    <li *ngFor="let field of group.fields">
+
+                        {{field.name}}
+                        <ul>
+                            <li *ngFor="let labelEntry of getLabels(field.label)">
+                                {{labelEntry[0]}}:{{labelEntry[1]}}
+                            </li>
+
+                        </ul>
+
+                        <hr>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>

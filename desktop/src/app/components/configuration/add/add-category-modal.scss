@@ -1,3 +1,12 @@
 .add-category-modal-body {
     height: calc(100vh - 200px);
+
+    input {
+        height: 39px;
+    }
+
+    category-preview {
+        display: block;
+        height: calc(100vh - 273px);
+    }
 }

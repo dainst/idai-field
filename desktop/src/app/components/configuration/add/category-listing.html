@@ -1,10 +1,9 @@
-Listing of subcategories of {{getLabel(category)}}
-<ul id="category-listing-inner"
+<ul id="category-listing"
     style="background-color: white">
     <li *ngFor="let category of categories"
         (click)="selectCategory(category)">
         <category-icon [category]="category" size="30"></category-icon>
-        {{getLabel(category)}}&nbsp;&nbsp;(Formular: {{category.name}})
+        {{getLabel(category)}} <code>{{category.name}}</code>
         <br>
         <h5 *ngIf="searchTerm !== ''">Labels:</h5>
         <ul>

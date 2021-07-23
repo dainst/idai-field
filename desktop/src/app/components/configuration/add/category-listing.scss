@@ -1,12 +1,13 @@
 category-listing {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 273px);
 
-    margin-top: 60px;
-    height: calc(100vh - 326px);
-    position: absolute;
-
-    #category-listing-inner {
+    #category-listing {
         height: 100%;
+        width: 100%;
         overflow: hidden;
         overflow-y: scroll;
+        list-style: none;
     }
 }

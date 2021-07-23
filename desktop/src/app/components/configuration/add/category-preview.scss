@@ -1,11 +1,13 @@
 #category-preview {
-
+    display: block;
+    width: 100%;
+    height: calc(100vh - 258px);
     background-color: white;
 
-    #preview-inner {
-
-        max-height: 65vh;
+    #category-preview-inner {
+        height: 100%;
         overflow: hidden;
         overflow-y: scroll;
+        background-color: white;
     }
 }

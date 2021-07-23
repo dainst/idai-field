@@ -19,10 +19,11 @@ const TEMP_GROUPS = 'tempGroups';
 export const makeCategoryForest = (relationDefinitions: Array<Relation>, selectedParentCategories?: string[]) =>
         (categories: Map<TransientCategoryDefinition>): Forest<Category> => {
 
-    const [parentDefs, childDefs] =
-            flow(categories,
-                values,
-                separate(on(LibraryCategoryDefinition.PARENT, isUndefined)));
+    const [parentDefs, childDefs] = flow(
+        categories,
+        values,
+        separate(on(LibraryCategoryDefinition.PARENT, isUndefined))
+    );
 
     const parentCategories = flow(
         parentDefs,

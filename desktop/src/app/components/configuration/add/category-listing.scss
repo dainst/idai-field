@@ -1,13 +1,22 @@
 category-listing {
-    display: block;
-    width: 100%;
-    height: calc(100vh - 273px);
+  display: block;
+  width: 100%;
+  height: calc(100vh - 273px);
 
-    #category-listing {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        overflow-y: scroll;
-        list-style: none;
+  #category-listing {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    list-style: none;
+
+    li {
+      padding: 5px;
+
+      .search-result-label {
+        font-style: italic;
+      }
     }
+  }
 }

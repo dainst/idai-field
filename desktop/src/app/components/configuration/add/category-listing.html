@@ -3,14 +3,10 @@
     <li *ngFor="let category of categories"
         (click)="selectCategory(category)">
         <category-icon [category]="category" size="30"></category-icon>
-        {{getLabel(category)}} <code>{{category.name}}</code>
-        <br>
-        <h5 *ngIf="searchTerm !== ''">Labels:</h5>
-        <ul>
-            <li *ngFor="let labelEntry of getLabels(category)">
-                {{labelEntry[0]}}:{{labelEntry[1]}}
-            </li>
-        </ul>
-        <hr>
+        {{getLabel(category)}}
+        <span *ngIf="getSearchResultLabel(category)" class="search-result-label">
+            ({{getSearchResultLabel(category)}})
+        </span>
+        <code>{{category.name}}</code>
     </li>
 </ul>

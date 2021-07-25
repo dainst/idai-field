@@ -1,32 +1,25 @@
 <div *ngIf="category" id="category-preview">
-    <h5>{{getLabel(category)}}</h5>
-    <div id="category-preview-inner">
-        <ul>
-            <li *ngFor="let group of category.groups">
-                <ul>
-                    <h3>{{getLabel(group)}}</h3>
-
-                    <ul>
-                        <li *ngFor="let labelEntry of getLabels(group.label)">
-                            {{labelEntry[0]}}:{{labelEntry[1]}}
-                        </li>
-                    </ul>
-
-                    <h5>Fields:</h5>
-                    <li *ngFor="let field of group.fields">
-
-                        {{field.name}}
-                        <ul>
-                            <li *ngFor="let labelEntry of getLabels(field.label)">
-                                {{labelEntry[0]}}:{{labelEntry[1]}}
-                            </li>
-
-                        </ul>
-
-                        <hr>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+    <div id="category-preview-header">
+        <category-icon [category]="category" size="30"></category-icon>
+        <span class="category-title">
+            <b>{{getLabel(category)}}</b>
+            <code>{{category.name}}</code>
+        </span>
     </div>
+    <ul id="groups-list">
+        <li *ngFor="let group of category.groups">
+            <span class="group-title">
+                <b>{{getLabel(group)}}</b>
+                <code>{{group.name}}</code>
+            </span>
+            <ul>
+                <li *ngFor="let field of group.fields">
+                    <span class="field-title">
+                        <span class="field-label">{{getLabel(field)}}</span>
+                        <code>{{field.name}}</code>
+                    </span>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>

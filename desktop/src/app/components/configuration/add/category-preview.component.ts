@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Category, Labels } from 'idai-field-core';
-import { keysValues } from 'tsfun';
 
 
 @Component({
@@ -9,6 +8,7 @@ import { keysValues } from 'tsfun';
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class CategoryPreviewComponent {
 
@@ -19,6 +19,4 @@ export class CategoryPreviewComponent {
 
 
     public getLabel = (value: any) => this.labels.get(value);
-
-    public getLabels = (field: any /* TODO any*/) => keysValues(field);
 }

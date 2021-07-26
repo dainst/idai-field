@@ -9,6 +9,14 @@
     position: relative;
     top: 5px;
     left: 5px;
+    height: 40px;
+
+    category-icon {
+      position: relative;
+      top: 2px;
+      margin-left: 4px;
+      margin-right: 3px;
+    }
     
     .category-title {
       b {
@@ -36,7 +44,7 @@
     background-color: white;
 
     li {
-      margin: 18px 6px;
+      margin: 4px 6px 18px 6px;
     }
 
     ul li {

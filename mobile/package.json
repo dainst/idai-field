@@ -8,7 +8,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
-    "testWatch": "jest --watch"
+    "testWatch": "jest --watch",
+    "build": "tsc -p ."
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",

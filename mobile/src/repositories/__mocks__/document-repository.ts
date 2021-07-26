@@ -1,4 +1,4 @@
-import { Document, FindResult, Query } from 'idai-field-core';
+import { Datastore, Document, Query } from 'idai-field-core';
 import { Observable } from 'rxjs';
 import { bu1 } from '../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../test_data/test_docs/lineBuilding';
@@ -23,7 +23,7 @@ export class DocumentRepository {
         return new DocumentRepository();
     }
 
-    find = jest.fn(async (_query: Query): Promise<FindResult> => {
+    find = jest.fn(async (_query: Query): Promise<Datastore.FindResult> => {
         
         return {
             ids,

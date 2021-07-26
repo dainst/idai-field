@@ -1,33 +1,33 @@
-import { FieldDefinition } from 'idai-field-core';
+import { Field } from 'idai-field-core';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FieldsBaseProps, FormBaseProps } from './common-props';
 import InputField from './InputField';
 
 interface EditFormFieldProps extends FormBaseProps {
-    fieldDefinition: FieldDefinition;
+    field: Field;
 }
 
-const EditFormField: React.FC<EditFormFieldProps> = ({ fieldDefinition, ...baseProps }) => {
+const EditFormField: React.FC<EditFormFieldProps> = ({ field, ...baseProps }) => {
 
     return (
     <View >
-        {renderInputField(baseProps, fieldDefinition)}
+        {renderInputField(baseProps, field)}
     </View>);
 };
 
-const renderInputField = (formBaseProps: FormBaseProps, fieldDefinition: FieldDefinition) => {
+const renderInputField = (formBaseProps: FormBaseProps, field: Field) => {
     
     const fieldProps: FieldsBaseProps = {
         ...formBaseProps,
-        name: fieldDefinition.name
+        name: field.name
     };
 
-    switch (fieldDefinition.inputType) {
+    switch (field.inputType) {
         case 'input':
             return <InputField { ...fieldProps } />;
         default:
-            return <Text>{fieldDefinition.name}</Text>;
+            return <Text>{field.name}</Text>;
     }
 };
 

@@ -109,6 +109,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
                     onParentSelected={ onParentSelected }
                     onHierarchyBack={ onHierarchyBack }
+                    languages={ languages }
                 />;
             } }
         >

@@ -110,12 +110,14 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 config={ config }
                 onAddCategory={ navigateAddCategory }
                 isInOverview={ isInOverview }
+                languages={ languages }
             />}
             { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
                 onRemoveDocument={ onRemoveDocument }
                 config={ config }
                 doc={ highlightedDoc }
+                languages={ languages }
                 />}
             <SearchBar { ...{
                 issueSearch,

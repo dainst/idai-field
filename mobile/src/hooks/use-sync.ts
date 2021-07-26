@@ -1,6 +1,6 @@
-import { Subscription } from 'core/node_modules/rxjs';
 import { PouchdbManager, SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
+import { Subscription } from 'rxjs';
 import { ToastType } from '../components/common/Toast/ToastProvider';
 import { ProjectSettings } from '../models/preferences';
 import { DocumentRepository } from '../repositories/document-repository';

@@ -1,17 +1,22 @@
-import { Document } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import IconButton, { IconButtonBaseProps } from './IconButton';
 
 interface DocumentButtonProps extends IconButtonBaseProps{
+    config: ProjectConfiguration;
     document: Document;
 }
 
 
-const DocumentButton: React.FC<DocumentButtonProps> = ({ document, ...btnProps }) => {
+const DocumentButton: React.FC<DocumentButtonProps> = ({ config, document, ...btnProps }) => {
 
+    const category = config.getCategory(document.resource.category);
+
+    if(!category) return null;
+    
     return <IconButton
-                text={ document.resource.identifier }
-                category={ document.resource.category }
+                category={ category }
+                config={ config }
                 { ...btnProps } />;
 };
 

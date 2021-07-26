@@ -1,7 +1,6 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SyncStatus } from 'idai-field-core';
-import { Preferences, ProjectSettings } from 'mobile/src/models/preferences';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { AppStackParamList } from '../../../App';
@@ -10,6 +9,7 @@ import usePouchdbManager from '../../hooks/use-pouchdb-manager';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import useToast from '../../hooks/use-toast';
+import { Preferences, ProjectSettings } from '../../models/preferences';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import Heading from '../common/Heading';
@@ -50,7 +50,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
     const repository = useRepository(
         preferences.username,
-        config?.getCategoryForest() || [],
+        config?.getCategories() || [],
         pouchdbManager,
     );
 

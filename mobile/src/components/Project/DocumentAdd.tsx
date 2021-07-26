@@ -1,10 +1,8 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { NewDocument } from 'core/dist';
 import {
-    Category, Document, FieldDefinition,
-    Group, LabelUtil,
-    NewResource, ProjectConfiguration, Relations
+    Category, Document, Field,
+    Group, I18N, NewDocument, NewResource, ProjectConfiguration, Resource
 } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
@@ -35,7 +33,7 @@ interface DocumentAddProps {
 }
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({
-        config, username, repository, navigation, languages, parentDoc, categoryName }) => {
+        config, repository, navigation, languages, parentDoc, categoryName }) => {
     
     const [category, setCategory] = useState<Category>();
     const [activeGroup, setActiveGroup] = useState<Group>();
@@ -79,7 +77,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
             const newDocument: NewDocument = {
                 resource: newResource
             };
-            repository.create(newDocument,username)
+            repository.create(newDocument)
                 .then(doc => {
                     showToast(ToastType.Success,`Created ${doc.resource.identifier}`);
                     setResourceToDefault();
@@ -101,9 +99,12 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
             <TitleBar
                 title={
                     <>
-                        <CategoryIcon category={ category.name } config={ config } size={ 25 } />
+                        <CategoryIcon
+                            category={ category }
+                            config={ config } size={ 25 }
+                            languages={ languages } />
                         <Heading style={ styles.heading }>
-                            Add {category.name} to { parentDoc.resource.identifier }
+                            Add {I18N.getLabel(category, languages)} to { parentDoc.resource.identifier }
                         </Heading>
                     </>
                 }
@@ -127,7 +128,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
                             key={ group.name } style={ styles.groupBtn }
                             onPress={ () => setActiveGroup(group) }>
                             <Text style={ styleGroupText(group, activeGroup) }>
-                                {LabelUtil.getLabel(group, languages)}
+                                {I18N.getLabel(group, languages)}
                             </Text>
                         </TouchableOpacity>))}
                 </Column>
@@ -137,7 +138,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
                             <EditFormField
                                 key={ fieldDef.name }
                                 setFunction={ updateResource }
-                                fieldDefinition={ fieldDef }
+                                field={ fieldDef }
                                 resource={ newResource } />)}
                 </Column>
             </Row>
@@ -150,13 +151,13 @@ const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
     group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
 
 
-const shouldShow = (field: FieldDefinition)=> field !== undefined && field.editable === true;
+const shouldShow = (field: Field)=> field !== undefined && field.editable === true;
 
 
-const createRelations = (parentDoc: Document): Relations => {
+const createRelations = (parentDoc: Document): Resource.Relations => {
 
     const parentDocIsOperation = () => isUndefinedOrEmpty(parentDoc.resource.relations.isRecordedIn);
-    const relations: Relations = { isRecordedIn:[] };
+    const relations: Resource.Relations = { isRecordedIn:[] };
     
     if(parentDocIsOperation()){
         relations['isRecordedIn'] = [parentDoc.resource.id];

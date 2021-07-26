@@ -1,4 +1,4 @@
-import { ProjectConfiguration } from 'idai-field-core';
+import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import CategoryIcon from './CategoryIcon';
@@ -6,19 +6,19 @@ import CategoryIcon from './CategoryIcon';
 export interface IconButtonBaseProps extends TouchableOpacityProps {
     size: number;
     config: ProjectConfiguration;
+    languages: string[];
 }
 
 interface IconButtonProps extends IconButtonBaseProps {
-    text: string
-    category: string;
+    category: Category;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ size, category, config, text, ...btnProps }) => {
+const IconButton: React.FC<IconButtonProps> = ({ size, category, config, languages, ...btnProps }) => {
 
     return <TouchableOpacity { ...btnProps } activeOpacity={ .9 }>
         <View style={ styles.container }>
-            <CategoryIcon config={ config } category={ category } size={ size } />
-            <Text style={ styles.title }>{ text }</Text>
+            <CategoryIcon config={ config } category={ category } size={ size } languages={ languages } />
+            <Text style={ styles.title }>{ I18N.getLabel(category, languages) }</Text>
         </View>
     </TouchableOpacity>;
 };

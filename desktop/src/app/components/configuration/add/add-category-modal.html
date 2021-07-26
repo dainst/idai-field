@@ -18,6 +18,7 @@
         </div>
         <category-listing [category]="parentCategory"
                           [categories]="categories"
+                          [selectedCategory]="selectedCategory"
                           [searchTerm]="searchTerm"
                           (onCategorySelected)="selectCategory($event)">
         </category-listing>

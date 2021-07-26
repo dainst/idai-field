@@ -12,7 +12,37 @@ category-listing {
     list-style: none;
 
     li {
+      height: 45px;
       padding: 5px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+      background-color: #fff;
+      border: none;
+      user-select: none;
+      transition: background-color .25s ease;
+
+      &.selected,
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .5s ease;
+      }
+
+      category-icon {
+        position: relative;
+        top: 2px;
+        margin-left: 4px;
+        margin-right: 10px;
+      }
+
+      .category-label,
+      code {
+        position: relative;
+        bottom: 2px;
+      }
+
+      .category-label {
+        margin-right: 6px;
+      }
 
       .search-result-label {
         font-style: italic;

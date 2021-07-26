@@ -8,11 +8,13 @@ import { Category, Labels } from 'idai-field-core';
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class CategoryListingComponent {
 
     @Input() category: Category;
     @Input() categories: Array<Category> = [];
+    @Input() selectedCategory: Category;
     @Input() searchTerm: string = '';
 
     @Output() onCategorySelected = new EventEmitter<Category>();

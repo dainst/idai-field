@@ -1,9 +1,9 @@
-<ul id="category-listing"
-    style="background-color: white">
+<ul id="category-listing" class="bg-light">
     <li *ngFor="let category of categories"
+        [class.selected]="selectedCategory === category"
         (click)="selectCategory(category)">
         <category-icon [category]="category" size="30"></category-icon>
-        {{getLabel(category)}}
+        <span class="category-label">{{getLabel(category)}}</span>
         <span *ngIf="getSearchResultLabel(category)" class="search-result-label">
             ({{getSearchResultLabel(category)}})
         </span>

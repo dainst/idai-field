@@ -7,7 +7,7 @@
         </span>
     </div>
     <ul id="groups-list">
-        <li *ngFor="let group of category.groups">
+        <li *ngFor="let group of getGroups()">
             <span class="group-title">
                 <b>{{getLabel(group)}}</b>
                 <code>{{group.name}}</code>

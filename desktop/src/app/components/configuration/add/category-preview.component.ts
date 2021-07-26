@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category, Labels } from 'idai-field-core';
+import { Category, Groups, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -19,4 +19,6 @@ export class CategoryPreviewComponent {
 
 
     public getLabel = (value: any) => this.labels.get(value);
+
+    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 }

@@ -28,9 +28,13 @@ export class CategoryListingComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
 
-    public getSearchResultLabel(category: Category): string {
+    public getSearchResultLabel(category: Category): string|undefined {
 
-        if (this.searchTerm === '') return '';
+        if (this.searchTerm === ''
+                || this.getLabel(category).toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())
+                || category.name.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())) {
+            return undefined;
+        }
 
         return Object.values(category.label).find(translation => {
             return translation.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase());

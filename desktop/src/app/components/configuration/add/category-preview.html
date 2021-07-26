@@ -2,24 +2,28 @@
     <div id="category-preview-header">
         <category-icon [category]="category" size="30"></category-icon>
         <span class="category-title">
-            <b>{{getLabel(category)}}</b>
+            <b>{{label}}</b>
             <code>{{category.name}}</code>
         </span>
+        <div *ngIf="category.createdBy" class="badge badge-primary">{{category.createdBy}}</div>
     </div>
-    <ul id="groups-list">
-        <li *ngFor="let group of getGroups()">
-            <span class="group-title">
-                <b>{{getLabel(group)}}</b>
-                <code>{{group.name}}</code>
-            </span>
-            <ul>
-                <li *ngFor="let field of group.fields">
-                    <span class="field-title">
-                        <span class="field-label">{{getLabel(field)}}</span>
-                        <code>{{field.name}}</code>
-                    </span>
-                </li>
-            </ul>
-        </li>
-    </ul>
+    <div id="category-preview-body">
+        <div *ngIf="description" id="category-description">{{description}}</div>
+        <ul id="groups-list">
+            <li *ngFor="let group of getGroups()">
+                <span class="group-title">
+                    <b>{{getLabel(group)}}</b>
+                    <code>{{group.name}}</code>
+                </span>
+                <ul>
+                    <li *ngFor="let field of group.fields">
+                        <span class="field-title">
+                            <span class="field-label">{{getLabel(field)}}</span>
+                            <code>{{field.name}}</code>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>

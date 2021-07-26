@@ -29,6 +29,18 @@
         bottom: 2px;
       }
     }
+
+    .badge {
+      margin-top: 8px;
+      margin-right: 19px;
+      float: right;
+      color: #fff;
+      background-color: #37588e;
+    }
+
+    #creation-date {
+      font-size: 12px;
+    }
   }
 
   ul {
@@ -36,32 +48,39 @@
     padding: 0;
   }
 
-  #groups-list {
+  #category-preview-body {
     height: calc(100% - 37px);
     margin: 5px;
     overflow: hidden;
     overflow-y: scroll;
     background-color: white;
-
-    li {
-      margin: 4px 6px 18px 6px;
+    
+    #category-description {
+      padding: 12px;
+      font-size: 14px;
     }
 
-    ul li {
-      margin: 3px 6px;
-    }
+    #groups-list {
+      li {
+        margin: 4px 6px 18px 6px;
+      }
 
-    code {
-      margin-left: 6px;
-    }
-
-    .field-title {
-      .field-label {
-        font-size: 14px;
+      ul li {
+        margin: 3px 6px;
       }
 
       code {
-        font-size: 12px;
+        margin-left: 6px;
+      }
+
+      .field-title {
+        .field-label {
+          font-size: 14px;
+        }
+
+        code {
+          font-size: 12px;
+        }
       }
     }
   }

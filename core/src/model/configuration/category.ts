@@ -32,6 +32,9 @@ export interface Category {
     description: I18N.String;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
+    
+    createdBy?: string,
+    creationDate?: Date;
 
     color?: Category.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: Category.Color;

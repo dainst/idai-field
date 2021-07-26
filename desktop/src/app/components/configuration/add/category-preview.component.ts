@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Category, Groups, Labels } from 'idai-field-core';
 
 
@@ -10,9 +10,12 @@ import { Category, Groups, Labels } from 'idai-field-core';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CategoryPreviewComponent {
+export class CategoryPreviewComponent implements OnChanges {
 
     @Input() category: Category|undefined;
+
+    public label: string;
+    public description: string;
 
 
     constructor(private labels: Labels) {}
@@ -21,4 +24,12 @@ export class CategoryPreviewComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
     public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
+
+
+    ngOnChanges() {
+
+        const { label, description } = this.labels.getLabelAndDescription(this.category);
+        this.label = label;
+        this.description = description;
+    }
 }

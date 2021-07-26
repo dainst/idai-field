@@ -140,6 +140,8 @@ function buildCategoryFromDefinition(definition: TransientCategoryDefinition): C
     category.isAbstract = def.abstract || false;
     category.color = def.color ?? Category.generateColorForCategory(category.name);
     category.defaultColor = def.defaultColor ?? Category.generateColorForCategory(category.name);
+    category.createdBy = def.createdBy;
+    category.creationDate = def.creationDate ? new Date(def.creationDate) : undefined;
     category.children = [];
     category.userDefinedSubcategoriesAllowed = def.userDefinedSubcategoriesAllowed;
     category.required = def.required;

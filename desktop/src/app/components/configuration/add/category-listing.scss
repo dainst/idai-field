@@ -35,17 +35,19 @@ category-listing {
       }
 
       .category-label,
+      .search-result-label,
       code {
         position: relative;
         bottom: 2px;
       }
 
-      .category-label {
-        margin-right: 6px;
+      code {
+        margin-left: 6px;
       }
 
       .search-result-label {
         font-style: italic;
+        font-size: 14px;
       }
     }
   }

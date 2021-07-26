@@ -4,9 +4,8 @@
         (click)="selectCategory(category)">
         <category-icon [category]="category" size="30"></category-icon>
         <span class="category-label">{{getLabel(category)}}</span>
-        <span *ngIf="getSearchResultLabel(category)" class="search-result-label">
-            ({{getSearchResultLabel(category)}})
-        </span>
+        <span *ngIf="getSearchResultLabel(category)"
+              class="search-result-label"> ({{getSearchResultLabel(category)}})</span>
         <code>{{category.name}}</code>
     </li>
 </ul>

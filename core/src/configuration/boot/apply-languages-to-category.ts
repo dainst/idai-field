@@ -15,14 +15,6 @@ export function applyLanguagesToCategory(languageConfigurations: LanguageConfigu
         languageConfigurations.default,
         'categories', categoryName, 'label'
     );
-    category.description = LanguageConfiguration.getI18nString(
-        languageConfigurations.complete,
-        'categories', categoryName, 'description'
-    );
-    category.defaultDescription = LanguageConfiguration.getI18nString(
-        languageConfigurations.default,
-        'categories', categoryName, 'description'
-    );
 
     for (const fieldName of Object.keys(category.fields)) {
         const field = category.fields[fieldName];

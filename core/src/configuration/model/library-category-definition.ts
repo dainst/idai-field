@@ -1,6 +1,6 @@
 import { Map } from 'tsfun';
 import { Valuelists } from '../../model';
-import { Name } from '../../tools';
+import { I18N, Name } from '../../tools';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
 import { ConfigurationErrors } from '../boot/configuration-errors';
 import { BaseCategoryDefinition, BaseFieldDefinition, BaseGroupDefinition } from './base-category-definition';
@@ -19,7 +19,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
     parent?: string,
     categoryName: string;
     libraryId?: string;
-    description: {[language: string]: string},
+    description: I18N.String,
     createdBy: string,
     creationDate: string;
     fields: Map<LibraryFieldDefinition>;

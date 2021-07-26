@@ -1,7 +1,7 @@
 #category-preview {
   display: block;
   width: 100%;
-  height: calc(100vh - 258px);
+  height: calc(100vh - 226px);
   background-color: white;
   user-select: none;
 
@@ -29,7 +29,7 @@
   }
 
   #groups-list {
-    height: 100%;
+    height: calc(100% - 37px);
     margin: 5px;
     overflow: hidden;
     overflow-y: scroll;

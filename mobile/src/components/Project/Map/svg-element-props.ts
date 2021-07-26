@@ -22,7 +22,7 @@ export const getDocumentFillOpacityPress = (
     isHighlighted: boolean,
     isSelected?: boolean,): ElementProps => {
     
-    const color = config.getColorForCategory(doc.resource.category);
+    const color = config.getCategory(doc.resource.category)?.color || 'black';
     const geoType = doc.resource.geometry.type;
     const opacity = 0.5;
     if(isSelected){

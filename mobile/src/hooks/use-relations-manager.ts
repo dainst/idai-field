@@ -13,7 +13,7 @@ const useRelationsManager = (
     useEffect(() => {
 
         if(datastore && projectConfiguration && username){
-            setRelationsManager(new RelationsManager(datastore, projectConfiguration, () => username));
+            setRelationsManager(new RelationsManager(datastore, projectConfiguration));
         }
     },[datastore, projectConfiguration, username]);
 

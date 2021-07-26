@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { ProjectConfiguration } from 'core/src/configuration/project-configuration';
-import { Document } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import Button from '../common/Button';
@@ -13,6 +12,7 @@ interface DocumentsListProps {
     documents: Document[];
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
+    languages: string[]
 }
 
 
@@ -21,6 +21,7 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
     documents,
     onDocumentSelected,
     onParentSelected,
+    languages
 }) => {
 
     const onDrillDown = (document: Document) => {
@@ -36,6 +37,7 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
                 document={ document }
                 onPress={ () => onDocumentSelected(document) }
                 size={ 25 }
+                languages={ languages }
             />
             <Button
                 variant="transparent"

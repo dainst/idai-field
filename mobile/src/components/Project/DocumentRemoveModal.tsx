@@ -13,6 +13,7 @@ interface RemoveModalProps {
     doc: Document | undefined;
     onClose: () => void;
     onRemoveDocument: (doc: Document | undefined) => void;
+    languages: string[]
 }
 
 const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
@@ -23,6 +24,9 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
     if(!props.doc) return null;
 
     const identifier = props.doc.resource.identifier;
+    const category = props.config.getCategory(props.doc.resource.category);
+
+    if(!category) return null;
     
     return (
         <Modal onRequestClose={ props.onClose } animationType="fade"
@@ -33,8 +37,8 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
                         title={
                             <>
                                 <CategoryIcon
-                                    category={ props.doc.resource.category }
-                                    config={ props.config } size={ 25 } />
+                                    category={ category }
+                                    config={ props.config } size={ 25 } languages={ props.languages } />
                                 <Heading style={ styles.heading }>Remove {identifier}</Heading>
                             </> }
                         left={ <Button

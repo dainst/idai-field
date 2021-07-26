@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'mobile/App';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppStackParamList } from '../../../App';
 import { Preferences } from '../../models/preferences';
 import Button from '../common/Button';
 import Column from '../common/Column';

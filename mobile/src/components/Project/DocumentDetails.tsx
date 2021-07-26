@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import {
-    Document, FieldsViewField, FieldsViewGroup, FieldsViewRelation, FieldsViewUtil, LabelUtil,
+    Document, FieldsViewField, FieldsViewGroup, FieldsViewUtil, I18N,
+    Labels,
     ProjectConfiguration
 } from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
@@ -34,7 +35,7 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
 
         if (!doc) return;
 
-        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore, languages)
+        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore, new Labels(() => languages))
             .then(setGroups);
     }, [doc, config, repository, languages]);
 
@@ -49,26 +50,28 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
 const renderGroup = (config: ProjectConfiguration,languages: string[]) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
-            <Text style={ styles.groupLabel }>{ LabelUtil.getLabel(group, languages) }</Text>
-            { group.fields.map(renderField(languages)) }
-            { group.relations.map(renderRelation( config)) }
+            <Text style={ styles.groupLabel }>{ I18N.getLabel(group, languages) }</Text>
+            { group.fields.map(renderField(languages, config)) }
         </View>;
 
 
-const renderField = (languages: string[]) =>
+const renderField = (languages: string[], config: ProjectConfiguration) =>
     (field: FieldsViewField) =>
         <Column style={ styles.fieldColumn } key={ field.label }>
             <Text style={ styles.fieldLabel }>{ field.label }</Text>
-            { renderFieldValue(field, field.value, languages) }
+            { renderFieldValue(field, field.value, languages, config) }
         </Column>;
 
 
-const renderFieldValue = (field: FieldsViewField, value: unknown, languages: string[]): ReactNode =>
-    field.type === 'default' && typeof value === 'string'
-        ? renderStringValue(value)
-        : field.type === 'array' && Array.isArray(value)
-            ? value.map(value => renderFieldValue(field, value, languages))
-            : renderObjectValue(value, field, languages);
+const renderFieldValue =
+        (field: FieldsViewField, value: unknown, languages: string[], config: ProjectConfiguration): ReactNode =>
+    field.type === 'relation'
+        ? field.targets?.map(renderRelationTarget( config, languages))
+        : field.type === 'default' && typeof value === 'string'
+            ? renderStringValue(value)
+            : field.type === 'array' && Array.isArray(value)
+                ? value.map(value => renderFieldValue(field, value, languages, config))
+                : renderObjectValue(value, field, languages);
 
 
 const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
@@ -80,20 +83,21 @@ const renderObjectValue = (value: unknown, field: FieldsViewField, languages: st
             value,
             field,
             getTranslation(languages),
-            (value: number) => value.toLocaleString(languages)
+            (value: number) => value.toLocaleString(languages),
+            new Labels(() => languages)
         ) }
     </Text>;
 
 
-const renderRelation = (config: ProjectConfiguration) =>
-    (relation: FieldsViewRelation) =>
-        <Column style={ styles.fieldColumn } key={ relation.label }>
-            <Text style={ styles.fieldLabel }>{ relation.label }</Text>
-            { relation.targets.map(renderRelationTarget( config)) }
-        </Column>;
+// const renderRelation = (config: ProjectConfiguration) =>
+//     (relation: FieldsViewRelation) =>
+//         <Column style={ styles.fieldColumn } key={ relation.label }>
+//             <Text style={ styles.fieldLabel }>{ relation.label }</Text>
+//             { relation.targets.map(renderRelationTarget( config)) }
+//         </Column>;
 
 
-const renderRelationTarget = (config: ProjectConfiguration) =>
+const renderRelationTarget = (config: ProjectConfiguration, languages: string[]) =>
     (target: Document) =>
         <DocumentButton
             key={ target.resource.id }
@@ -101,6 +105,7 @@ const renderRelationTarget = (config: ProjectConfiguration) =>
             config={ config }
             document={ target }
             size={ 20 }
+            languages={ languages }
         />;
 
 

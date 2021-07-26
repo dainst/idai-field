@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Document, ProjectConfiguration } from 'idai-field-core';
+import { Category, Document, ProjectConfiguration, Tree } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Modal, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import Button from '../common/Button';
@@ -17,6 +17,7 @@ interface AddModalProps {
     config: ProjectConfiguration;
     isInOverview: () => boolean;
     parentDoc?: Document;
+    languages: string[]
 }
 
 const AddModal: React.FC<AddModalProps> = (props) => {
@@ -41,7 +42,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
     
     useEffect(() => {
         const categories: Category[] = [];
-        props.config.getCategoriesArray().forEach(category => {
+        Tree.flatten(props.config.getCategories()).forEach(category => {
             if(isAllowedCategory(category) && (!category.parentCategory || !isAllowedCategory(category.parentCategory)))
                 categories.push(category);
         });
@@ -49,22 +50,26 @@ const AddModal: React.FC<AddModalProps> = (props) => {
     },[isAllowedCategory, props]);
 
     
-    const renderButton = (category: Category, style: ViewStyle, key?: string) => (
+    const renderButton = (category: Category, style: ViewStyle, languages: string[], key?: string) => (
         <CategoryButton
             config={ props.config } size={ ICON_SIZE }
-            category={ category.name }
+            category={ category }
             style={ style }
             key={ key }
+            languages={ languages }
             onPress={ () => props.onAddCategory(category.name, props.parentDoc) } />);
 
 
-    const renderCategoryChilds = (category: Category) => (
+    const renderCategoryChilds = (category: Category, languages: string[]) => (
         <View style={ categoryChildStyles.container }>
-            {category.children.map(category => renderButton(category,{ margin: 2.5 }, category.name))}
+            {category.children.map(category => renderButton(category,{ margin: 2.5 }, languages, category.name))}
         </View>);
-        
+    
 
     if(!props.parentDoc) return null;
+    const parentCategory = props.config.getCategory(props.parentDoc.resource.category);
+    if(!parentCategory) return null;
+    
 
     return (
         <Modal onRequestClose={ props.onClose } animationType="fade"
@@ -75,8 +80,8 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                         title={
                             <>
                                 <CategoryIcon
-                                    category={ props.parentDoc.resource.category }
-                                    config={ props.config } size={ 25 } />
+                                    category={ parentCategory }
+                                    config={ props.config } size={ 25 } languages={ props.languages } />
                                 <Heading style={ styles.heading }>
                                     Add child to { props.parentDoc?.resource.identifier }
                                 </Heading>
@@ -92,8 +97,8 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                     <ScrollView style={ styles.categories }>
                         {categories.map(category => (
                             <View key={ category.name } >
-                                {renderButton(category,{ margin: 5 })}
-                                {renderCategoryChilds(category)}
+                                {renderButton(category,{ margin: 5 }, props.languages)}
+                                {renderCategoryChilds(category, props.languages)}
                             </View>
                         ))}
                     </ScrollView>

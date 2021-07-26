@@ -1,11 +1,8 @@
-import {ProjectConfiguration} from 'idai-field-core';
 import {
-    Category,
-
-    CategoryConverter, ChangesStream,
-    ConstraintIndex, Datastore, Document, DocumentCache, FindResult,
-    Forest,
-    IdGenerator, Indexer, IndexFacade, NewDocument, PouchdbDatastore, PouchdbManager, Query, SyncProcess, Tree
+    Category, CategoryConverter, ChangesStream,
+    ConstraintIndex, Datastore, Document, DocumentCache,
+    Forest, IdGenerator, Indexer, IndexFacade, NewDocument,
+    PouchdbDatastore, PouchdbManager, ProjectConfiguration, Query, SyncProcess, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -35,12 +32,12 @@ export class DocumentRepository {
         this.pouchdbManager.destroyDb(project);
 
 
-    public create = (doc: Document | NewDocument, username: string): Promise<Document> =>
-        this.datastore.create(doc, username);
+    public create = (doc: Document | NewDocument): Promise<Document> =>
+        this.datastore.create(doc);
 
     
-    public update = (doc: Document, username: string): Promise<Document> =>
-        this.datastore.update(doc, username);
+    public update = (doc: Document): Promise<Document> =>
+        this.datastore.update(doc);
 
 
     public remove = (doc: Document): Promise<void> =>
@@ -51,7 +48,7 @@ export class DocumentRepository {
         this.datastore.get(resourceId);
 
     
-    public find = (query: Query): Promise<FindResult> =>
+    public find = (query: Query): Promise<Datastore.FindResult> =>
         this.datastore.find(query);
 
 
@@ -92,7 +89,7 @@ const buildDatastore = async (
     await Indexer.reindex(indexFacade, db, documentCache, converter);
 
     return [
-        new Datastore(pouchdbDatastore, indexFacade, documentCache, converter),
+        new Datastore(pouchdbDatastore, indexFacade, documentCache, converter, () => username),
         new ChangesStream(pouchdbDatastore, indexFacade, documentCache, converter, () => username)
     ];
 };

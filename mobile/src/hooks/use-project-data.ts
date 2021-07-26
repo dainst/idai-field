@@ -1,4 +1,4 @@
-import { Document, ProjectCategories, ProjectConfiguration, Query } from 'idai-field-core';
+import { Document, Named, ProjectConfiguration, Query } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { dropRight, last } from 'tsfun';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -21,7 +21,7 @@ const useProjectData = (
 ): ProjectData => {
 
     const [query, setQuery] = useState<Query>({
-        categories: ProjectCategories.getOperationCategoryNames(config.getCategoryForest()),
+        categories: config.getOperationCategories().map(Named.toName),
         constraints: {}
     });
     const documents = useSearch(repository, query);
@@ -33,8 +33,8 @@ const useProjectData = (
 
     useEffect(() => {
 
-        const operationCategories = ProjectCategories.getOperationCategoryNames(config.getCategoryForest());
-        const concreteCategories = ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest());
+        const operationCategories = config.getOperationCategories().map(Named.toName);
+        const concreteCategories = config.getConcreteFieldCategories().map(Named.toName);
         
         if (q) {
             setQuery({ q, categories: concreteCategories });

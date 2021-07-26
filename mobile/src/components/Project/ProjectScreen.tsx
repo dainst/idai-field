@@ -28,7 +28,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ currentProject, preferenc
 
     const repository = useRepository(
         preferences.username,
-        config?.getCategoryForest() || [],
+        config?.getCategories() || [],
         pouchdbManager,
     );
 

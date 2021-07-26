@@ -28,7 +28,7 @@ describe('DocumentRepository', () => {
 
     it('creates document', async () => {
 
-        const newDoc = await repository.create(doc('Test Document'), 'testuser');
+        const newDoc = await repository.create(doc('Test Document'));
 
         expect(newDoc.resource.shortDescription).toEqual('Test Document');
         expect(newDoc.created.user).toEqual('testuser');
@@ -38,7 +38,7 @@ describe('DocumentRepository', () => {
 
     it('get document after creation', async () => {
 
-        const testDoc = await repository.create(doc('Test Document'), 'testuser');
+        const testDoc = await repository.create(doc('Test Document'));
         const fetchedDoc = await repository.get(testDoc.resource.id);
 
         expect(fetchedDoc.resource).toEqual(testDoc.resource);
@@ -47,19 +47,19 @@ describe('DocumentRepository', () => {
     
     it('updates document', async () => {
         
-        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
-        testDoc.resource.shortDescription = 'Updated test document';
-        const updatedDoc = await repository.update(testDoc, 'testuser2');
+        const newShortDescription = 'Updated test document';
+        const testDoc = await repository.create(doc('Test Document'));
+        testDoc.resource.shortDescription = newShortDescription;
+        const updatedDoc = await repository.update(testDoc);
 
-        expect(updatedDoc.resource.shortDescription).toEqual('Updated test document');
-        expect(last(updatedDoc.modified)?.user).toEqual('testuser2');
+        expect(updatedDoc.resource.shortDescription).toEqual(newShortDescription);
         expect(last(updatedDoc.modified)?.date.getTime()).toBeGreaterThan(Date.now() - 1000);
     });
 
     
     it('removes document', async () => {
         
-        const testDoc = await repository.create(doc('Test Document'), 'testuser');
+        const testDoc = await repository.create(doc('Test Document'));
         await repository.remove(testDoc);
 
         return expect(repository.get(testDoc.resource.id)).rejects.toBeTruthy();
@@ -73,7 +73,7 @@ describe('DocumentRepository', () => {
             ['id2', 'Find'],
             ['id3', 'Find'],
         ]));
-        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        await Promise.all(docs.map(async d => await repository.create(d)));
         
         const { documents: foundDocs } = await repository.find({ constraints: { 'liesWithin:contain': 'id1' } });
         expect(foundDocs).toHaveLength(1);
@@ -88,7 +88,7 @@ describe('DocumentRepository', () => {
             doc('Tester Document', 'T2'),
             doc('Toast Document', 'T12'),
         ];
-        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        await Promise.all(docs.map(async d => await repository.create(d)));
         
         const { totalCount: count1 } = await repository.find({});
         expect(count1).toEqual(3);
@@ -108,7 +108,7 @@ describe('DocumentRepository', () => {
             doc('Tester Document', 'T2', 'Find'),
             doc('Toast Document', 'T12', 'Find'),
         ];
-        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        await Promise.all(docs.map(async d => await repository.create(d)));
         
         const { documents: foundDocs } = await repository.find({ categories: ['Feature'] });
         expect(foundDocs).toHaveLength(1);
@@ -122,7 +122,7 @@ describe('DocumentRepository', () => {
             repository.changed().subscribe(async d => resolve(d));
         });
 
-        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        const testDoc = await repository.create(doc('Test Document'));
         const changedDoc = await docChanged;
         expect(changedDoc.resource.id).toEqual(testDoc.resource.id);
     });
@@ -130,7 +130,7 @@ describe('DocumentRepository', () => {
 
     it('notifies of changes', async () => {
 
-        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        const testDoc = await repository.create(doc('Test Document'));
         // prevent docChanged from picking up creation
         await new Promise<void>(resolve => setTimeout(() => resolve(), 100));
         const docChanged = new Promise<Document>(resolve => {
@@ -138,7 +138,7 @@ describe('DocumentRepository', () => {
         });
 
         testDoc.resource.shortDescription = 'Toast Document';
-        await repository.update(testDoc, 'testuser1');
+        await repository.update(testDoc);
         const changedDoc = await docChanged;
         expect(changedDoc.resource.shortDescription).toEqual(testDoc.resource.shortDescription);
     });
@@ -146,7 +146,7 @@ describe('DocumentRepository', () => {
 
     it('notifies of deletion', async () => {
 
-        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        const testDoc = await repository.create(doc('Test Document'));
         const docDeleted = new Promise<Document>(resolve => {
             repository.deleted().subscribe(async d => resolve(d));
         });

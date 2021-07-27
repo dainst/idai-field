@@ -1,10 +1,10 @@
-import { keysValues, right, set } from 'tsfun';
+import { flatten, keysValues, right, set } from 'tsfun';
 import { Category, Name } from 'idai-field-core';
 
 
 export interface ConfigurationIndex {
 
-    [term: string]: any /* a unique CategoryDefinition per label, for now */
+    [term: string]: Array<Category>;
 }
 
 
@@ -19,7 +19,8 @@ export namespace ConfigurationIndex {
 
             const defaultLabel = category[Category.DEFAULT_LABEL];
             for (const label of Object.values(defaultLabel)) {
-                index[label as any] = category;
+                if (!index[label]) index[label] = [];
+                if (!index[label].includes(category)) index[label].push(category);
             }
             return index;
         }, {});
@@ -30,12 +31,12 @@ export namespace ConfigurationIndex {
                          searchTerm: string,
                          parentCategory?: Name): Array<Category> {
 
-        return set(keysValues(index)
+        return set(flatten(keysValues(index)
             .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
-            .map(right))
-            .filter(category => {
-                return (!parentCategory && !category.parentCategory)
-                    || (category.parentCategory && category.parentCategory.name === parentCategory);
-            });
+            .map(right)
+        )).filter(category => {
+            return (!parentCategory && !category.parentCategory)
+                || (category.parentCategory && category.parentCategory.name === parentCategory);
+        });
     }
 }

@@ -209,6 +209,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.init();
 
         this.modals.awaitResult(result,
@@ -230,6 +231,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.init();
 
         this.modals.awaitResult(result,

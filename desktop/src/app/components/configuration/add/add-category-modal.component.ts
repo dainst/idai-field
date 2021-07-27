@@ -17,6 +17,7 @@ import { Modals } from '../../../services/modals';
  */
 export class AddCategoryModalComponent {
 
+    public projectCategoryNames: string[];
     public searchTerm: string = '';
     public configurationDocument: ConfigurationDocument;
     public parentCategory: Category;
@@ -74,7 +75,7 @@ export class AddCategoryModalComponent {
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.categories).includes(
                     category.libraryId ?? category.name
-                )
+                ) && !this.projectCategoryNames.includes(category.name)
             );
 
         this.selectedCategory = this.categories?.[0];

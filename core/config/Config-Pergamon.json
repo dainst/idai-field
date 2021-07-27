@@ -9,7 +9,14 @@
       "hidden": []
     },
     "Survey:default": {
-      "fields": {},
+      "fields": {
+        "quantityFinds": {
+          "inputType": "text"
+        },
+        "naturalEnvironment": {
+          "inputType": "text"
+        }
+      },
       "hidden": []
     },
     "SurveyUnit:default": {
@@ -17,6 +24,12 @@
       "fields": {
         "hasFinds": {
           "inputType": "boolean"
+        },
+        "quantityFinds": {
+          "inputType": "text"
+        },
+        "naturalEnvironment": {
+          "inputType": "text"
         }
       }
     },

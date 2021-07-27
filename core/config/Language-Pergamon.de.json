@@ -1,5 +1,15 @@
 {
   "categories": {
+    "Survey": {
+      "fields": {
+        "quantityFinds": {
+          "label": "Quantität Funde"
+        },
+        "naturalEnvironment": {
+          "label": "natürliche Umwelt und moderne Eingriffe"
+        }
+      }
+    },
     "Find": {
       "fields": {
         "date": {
@@ -647,6 +657,12 @@
         "hasFinds": {
           "label": "Fundmaterial",
           "description": "Ist Fundmaterial vorhanden?"
+        },
+        "quantityFinds": {
+          "label": "Quantität Funde"
+        },
+        "naturalEnvironment": {
+          "label": "natürliche Umwelt und moderne Eingriffe"
         }
       }
     },

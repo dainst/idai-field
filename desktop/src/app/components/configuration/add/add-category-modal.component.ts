@@ -24,7 +24,7 @@ export class AddCategoryModalComponent {
     public categories: Array<Category> = [];
     public configurationIndex: ConfigurationIndex = {};
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument) =>
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
 
 
@@ -55,7 +55,7 @@ export class AddCategoryModalComponent {
         };
 
         try {
-            this.saveAndReload(configurationDocument);
+            this.saveAndReload(configurationDocument, this.selectedCategory.name);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }

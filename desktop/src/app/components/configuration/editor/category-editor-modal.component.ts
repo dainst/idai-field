@@ -67,7 +67,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             delete this.getClonedCategoryDefinition().color;
         }
 
-        await super.save();
+        await super.save(this.new);
     }
 
 

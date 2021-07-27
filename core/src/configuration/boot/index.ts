@@ -18,5 +18,4 @@ export { makeCategoryForest } from './make-category-forest';
 export { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
 export { mergeWithCustomCategories } from './merge-with-custom-categories';
 export { mergeFields } from './merge-fields';
-export { orderFields } from './order-fields';
 export { PrePreprocessConfigurationValidator } from './pre-preprocess-configuration-validator';

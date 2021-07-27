@@ -49,7 +49,7 @@ export class AddCategoryModalComponent {
         if (!this.selectedCategory) return;
 
         const configurationDocument = Document.clone(this.configurationDocument);
-        configurationDocument.resource.categories[this.selectedCategory.name] = {
+        configurationDocument.resource.categories[this.selectedCategory.libraryId] = {
             fields: {},
             hidden: []
         };

@@ -28,6 +28,8 @@ export class CategoryPreviewComponent implements OnChanges {
 
     ngOnChanges() {
 
+        if (!this.category) return;
+
         const { label, description } = this.labels.getLabelAndDescription(this.category);
         this.label = label;
         this.description = description;

@@ -29,6 +29,9 @@ jobs:
       - name: Build core
         run: npm run build
         working-directory: core
+      - name: Build mobile
+        run: npm run build
+        working-directory: mobile
       - name: Unit test mobile
         run:  npm test
         working-directory: mobile

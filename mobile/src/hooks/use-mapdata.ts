@@ -1,113 +1,62 @@
 import { Document, FieldGeometry, Query } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
-import { identityMatrix4, Matrix4 } from 'react-native-redash';
+import { Matrix4 } from 'react-native-redash';
+import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/GLMap/constants';
 import {
-    GeometryBoundings,
-    getGeometryBoundings,
-    getMinMaxCoords, setupTransformationMatrix,
-    ViewPort
-} from '../components/Project/Map/geo-svg';
-import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/geo-svg/constants';
-import { ViewBox } from '../components/Project/Map/geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
-import {
-    GeoMap,
-    getGeoMapArea, getGeoMapCoords,
-    getGeoMapDoc,
-    setGeoMapEntry, setupGeoMap
-} from '../components/Project/Map/geometry-map/geometry-map';
-import { SvgMapObject } from '../components/Project/Map/SvgMap/SvgMap';
+    GeometryBoundings, getGeometryBoundings,
+    getMinMaxCoords,
+    processTransform2d,
+    setupTransformationMatrix, ViewPort
+} from '../components/Project/Map/GLMap/geojson';
 import { DocumentRepository } from '../repositories/document-repository';
-import usePrevious from './use-previous';
 
 const searchQuery: Query = {
     q: '*',
     constraints: { 'geometry:exist': 'KNOWN' }
 };
 
+export interface CameraView {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+}
+
+type mapDataReturn = [Document[], Matrix4 | undefined, CameraView | undefined, (docId: string) => void];
+
+
 const useMapData = (
-    repository: DocumentRepository,
-    viewPort: ViewPort | undefined,
-    selectedDocIds: string[],
-    svgMapRef?: React.RefObject<SvgMapObject>):
-        [string[] | undefined, GeoMap | null, Matrix4 | undefined, (docId: string) => void ] => {
-    
-    const [transformMatrix, setTransformMatrix] = useState<Matrix4>(identityMatrix4);
-    const [geoDocuments, setGeoDocuments] = useState<Document[]>();
+        repository: DocumentRepository,
+        viewPort: ViewPort | undefined,
+        selectedDocumentIds: string[]): mapDataReturn => {
+
+    const [geoDocuments, setGeoDocuments] = useState<Document[]>([]);
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
+    const [transformMatrix, setTransformMatrix] = useState<Matrix4>();
+    const [cameraView, setCameraView] = useState<CameraView>();
 
-    const [documentsGeoMap, setDocumentsGeoMap] = useState<GeoMap | null>(null);
-    const [docIds, setDocIds] = useState<string[]>();
+    const focusMapOnDocumentIds = useCallback(async (docIds: string[]) => {
 
-
-    const previousSelectedDocIds = usePrevious(selectedDocIds);
-
-    const sortDocIdsByArea = useCallback(() => {
-
-        if(documentsGeoMap){
-            return Array.from(documentsGeoMap.keys()).sort((docAId,docBId) => {
-                const areaA = getGeoMapArea(documentsGeoMap, docAId);
-                const areaB = getGeoMapArea(documentsGeoMap, docBId);
-                if(areaA > areaB) return -1;
-                else if(areaA < areaB) return 1;
-                else return 0;
-            });
-        }
-    },[documentsGeoMap]);
-
-    const updateViewBox = useCallback((viewBox: ViewBox) => {
-
-        if(svgMapRef && svgMapRef.current)
-            svgMapRef.current.transformByViewBox(viewBox);
-    },[svgMapRef]);
-
-
-    const focusMapOnDocumentIds = useCallback((docIds: string[]) => {
-
-        //compute and set viewBox
-        if(!documentsGeoMap) return;
-        const fieldGeometries = docIds.map(docId => {
-            const doc = getGeoMapDoc(documentsGeoMap, docId);
-            if(doc && doc.resource.geometry)
-                return {
-                    type: doc.resource.geometry.type,
-                    coordinates: getGeoMapCoords(documentsGeoMap,docId)
-                } as FieldGeometry;
-            return null;
-        }).filter(doc => doc !== null) as FieldGeometry[];
+        if(!transformMatrix) return;
         
-        if(!fieldGeometries.length) return;
-        const { minX, minY, maxX, maxY } = getMinMaxCoords(fieldGeometries);
-        updateViewBox([
-            minX - viewBoxPaddingX,
-            minY - viewBoxPaddingY,
-            maxX - minX + 2 * viewBoxPaddingX,
-            maxY - minY + 2 * viewBoxPaddingY]);
-        
-    },[documentsGeoMap, updateViewBox]);
+        const geoDocs: FieldGeometry[] = [];
+        const docs = await repository.getMultiple(docIds);
+        docs.forEach(doc => {
+            if(doc.resource.geometry) geoDocs.push(doc.resource.geometry);
+        });
+        if(!geoDocs.length) return;
+        const { minX, minY, maxX, maxY } = getMinMaxCoords(geoDocs);
+        const [left, bottom] = processTransform2d(transformMatrix, [minX,minY]);
+        const [right, top] = processTransform2d(transformMatrix, [maxX,maxY]);
+        setCameraView({
+            left: left - viewBoxPaddingX,
+            right: right + viewBoxPaddingX,
+            bottom: bottom - viewBoxPaddingY,
+            top: top + viewBoxPaddingY });
+    },[repository,transformMatrix]);
 
+    const focusMapOnDocumentId = (docId: string) => focusMapOnDocumentIds([docId]);
 
-    const focusMapOnDocumentId = (docId: string): void => {
-        
-        if(!documentsGeoMap) return;
-
-        if(!documentsGeoMap.has(docId)) focusOnParentDoc(docId);
-        else focusMapOnDocumentIds([docId]);
-
-    };
-    
-    
-    const focusOnParentDoc = (docId: string) => {
-        
-        repository.get(docId).then(doc => {
-            const liesWithin = doc.resource.relations?.liesWithin ? doc.resource.relations?.liesWithin[0] : null;
-            const isRecordedIn = doc.resource.relations?.isRecordedIn ? doc.resource.relations?.isRecordedIn[0] : null;
-            if(liesWithin) return focusMapOnDocumentId(liesWithin);
-            else if(isRecordedIn) return focusMapOnDocumentId(isRecordedIn);
-            else return;
-            
-        }).catch(err => console.log('Document not found. Error:',err));
-    };
-   
 
     useEffect(() => {
 
@@ -116,52 +65,18 @@ const useMapData = (
                 setGeoDocuments(result.documents);
                 setGeometryBoundings(getGeometryBoundings(result.documents));
             }).catch(err => console.log('Document not found. Error:',err));
-    },[ repository]);
+    },[repository]);
+
+
+    useEffect(() => setTransformMatrix( setupTransformationMatrix(geometryBoundings,viewPort)),
+        [geometryBoundings, viewPort]);
 
 
     useEffect(() => {
-
-        if(viewPort) setTransformMatrix(setupTransformationMatrix(geometryBoundings, viewPort));
-    },[viewPort, geometryBoundings]);
+        focusMapOnDocumentIds(selectedDocumentIds);},[selectedDocumentIds, focusMapOnDocumentIds]);
 
 
-    useEffect(() => {
-
-        setDocumentsGeoMap(setupGeoMap(geoDocuments, transformMatrix));
-
-    },[geoDocuments, transformMatrix]);
-
-
-    useEffect(() => {
-
-        //set previously selected docs as not selected
-        if(documentsGeoMap){
-            if(previousSelectedDocIds){
-                previousSelectedDocIds.forEach(id => setGeoMapEntry(documentsGeoMap,id,'isSelected',false));
-            }
-            selectedDocIds.forEach(id => setGeoMapEntry(documentsGeoMap,id,'isSelected',true));
-            setDocIds(sortDocIdsByArea());
-        }
-
-    }, [previousSelectedDocIds, selectedDocIds, documentsGeoMap, sortDocIdsByArea]);
-    
-
-    useEffect(() => {
-
-        if(viewPort){
-            if(!selectedDocIds.length) updateViewBox([viewPort.x,viewPort.y,viewPort.width, viewPort.height]);
-            else focusMapOnDocumentIds(selectedDocIds);
-        }
-    },[selectedDocIds, viewPort, focusMapOnDocumentIds, updateViewBox]);
-    
-
-    return [
-        docIds,
-        documentsGeoMap,
-        transformMatrix,
-        focusMapOnDocumentId
-    ];
-    
+    return [geoDocuments, transformMatrix, cameraView, focusMapOnDocumentId];
 };
 
 

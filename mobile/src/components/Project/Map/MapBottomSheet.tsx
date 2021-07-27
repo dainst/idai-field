@@ -10,7 +10,7 @@ import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
 import DocumentDetails from '../DocumentDetails';
 interface MapBottomSheetProps {
-    document: Document | null;
+    document: Document | undefined;
     config: ProjectConfiguration;
     repository: DocumentRepository;
     languages: string[];

@@ -6,6 +6,7 @@ export interface Colors {
     transparent: string;
     lightgray: string;
     mellow: string;
+    containerBackground: string;
 }
 
 export const colors: Colors = {
@@ -15,7 +16,8 @@ export const colors: Colors = {
     danger: '#dc3545',
     transparent: 'transparent',
     lightgray: '#DDDDDD',
-    mellow: '#F8DE7E'
+    mellow: '#F8DE7E',
+    containerBackground: '#ececec'
 };
 
 
@@ -26,5 +28,6 @@ export const textColors: Colors = {
     danger: 'white',
     transparent: 'black',
     lightgray: 'black',
-    mellow: 'white'
+    mellow: 'white',
+    containerBackground: 'black'
 };

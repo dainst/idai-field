@@ -47,6 +47,10 @@ export class DocumentRepository {
     public get = (resourceId: string): Promise<Document> =>
         this.datastore.get(resourceId);
 
+        
+    public getMultiple = (resourceIds: string[]): Promise<Document[]> =>
+        this.datastore.getMultiple(resourceIds);
+
     
     public find = (query: Query): Promise<Datastore.FindResult> =>
         this.datastore.find(query);

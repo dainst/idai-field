@@ -17,13 +17,14 @@ import { Modals } from '../../../services/modals';
  */
 export class AddCategoryModalComponent {
 
-    public projectCategoryNames: string[];
-    public searchTerm: string = '';
+    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public parentCategory: Category;
+    public projectCategoryNames: string[];
+    
+    public searchTerm: string = '';
     public selectedCategory: Category|undefined;
     public categories: Array<Category> = [];
-    public configurationIndex: ConfigurationIndex = {};
 
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;

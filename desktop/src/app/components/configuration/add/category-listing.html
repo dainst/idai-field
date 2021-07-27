@@ -6,7 +6,7 @@
         <span class="category-label">{{getLabel(category)}}</span>
         <span *ngIf="getSearchResultLabel(category)"
               class="search-result-label"> ({{getSearchResultLabel(category)}})</span>
-        <code>{{category.name}}</code>
+        <code>{{category.libraryId}}</code>
         <div *ngIf="category.createdBy" class="badge badge-primary">{{category.createdBy}}</div>
     </li>
 </ul>

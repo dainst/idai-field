@@ -39,6 +39,18 @@ describe('DocumentRepository', () => {
     it('get document after creation', async () => {
 
         const testDoc = await repository.create(doc('Test Document'));
+        const testDoc2 = await repository.create(doc('Test Document2'));
+        const fetchedDocs = await repository.getMultiple([testDoc.resource.id, testDoc2.resource.id]);
+
+        expect(fetchedDocs.length).toBe(2);
+        expect(fetchedDocs[0].resource).toEqual(testDoc.resource);
+        expect(fetchedDocs[1].resource).toEqual(testDoc2.resource);
+    });
+
+
+    it('gets documents after creation', async () => {
+
+        const testDoc = await repository.create(doc('Test Document'));
         const fetchedDoc = await repository.get(testDoc.resource.id);
 
         expect(fetchedDoc.resource).toEqual(testDoc.resource);

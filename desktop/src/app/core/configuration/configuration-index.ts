@@ -10,6 +10,7 @@ export interface ConfigurationIndex {
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export namespace ConfigurationIndex {
 
@@ -17,11 +18,14 @@ export namespace ConfigurationIndex {
 
         return contextIndependentCategories.reduce((index, category) => {
 
-            const defaultLabel = category[Category.DEFAULT_LABEL];
-            for (const label of Object.values(defaultLabel)) {
-                if (!index[label]) index[label] = [];
-                if (!index[label].includes(category)) index[label].push(category);
+            const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
+            if (category.libraryId) terms.push(category.libraryId);
+
+            for (const term of terms) {
+                if (!index[term]) index[term] = [];
+                if (!index[term].includes(category)) index[term].push(category);
             }
+
             return index;
         }, {});
     }

@@ -10,7 +10,9 @@
                    class="form-control"
                    [(ngModel)]="searchTerm"
                    (ngModelChange)="applyCategoryNameSearch()">
-            <button class="btn btn-success" type="button"
+            <button *ngIf="parentCategory"
+                    type="button"
+                    class="btn btn-success"
                     [class.disabled]="searchTerm.length === 0"
                     (click)="createNewSubcategory()">
                 <span class="mdi mdi-plus"></span>

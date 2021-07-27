@@ -21,26 +21,38 @@
 
   .sidebar {
     height: calc(100vh - 51px);
-    overflow-y: auto;
-    overflow-x: hidden;
     padding: 0;
     margin: 0;
     background-color: $sidebar-bg-color;
-  }
 
-  category-picker {
-    .category-item {
-      transition: background-color .25s ease;
+    #category-picker-container {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      category-picker {
+        .category-item {
+          transition: background-color .25s ease;
+        }
+    
+        .category-item:hover,
+        .selected-category .category-item {
+          background-color: darken($list-item-hover-color, 5%) !important;
+          transition: background-color .5s ease;
+        }
+    
+        .list-group-item {
+          border-top: 1px solid #f8f9fa !important;
+        }
+      }
     }
 
-    .category-item:hover,
-    .selected-category .category-item {
-      background-color: darken($list-item-hover-color, 5%) !important;
-      transition: background-color .5s ease;
+    #add-supercategory-button {
+      position: absolute;
+      bottom: 6px;
+      transform: translate(-20px, 0);
+      left: 50%;
+      z-index: 1001;
     }
-
-    .list-group-item {
-      border-top: 1px solid #f8f9fa !important;
-    }
-  }
+  }  
 }

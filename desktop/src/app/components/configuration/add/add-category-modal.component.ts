@@ -70,7 +70,7 @@ export class AddCategoryModalComponent {
     public applyCategoryNameSearch() {
 
         this.categories = ConfigurationIndex
-            .find(this.configurationIndex, this.searchTerm, this.parentCategory.name)
+            .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.categories).includes(
                     category.libraryId ?? category.name

@@ -34,7 +34,7 @@ export namespace ConfigurationIndex {
             .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
             .map(right))
             .filter(category => {
-                return !parentCategory
+                return (!parentCategory && !category.parentCategory)
                     || (category.parentCategory && category.parentCategory.name === parentCategory);
             });
     }

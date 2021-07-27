@@ -6,19 +6,27 @@
     <div class="col">
         <div id="project-configuration-content" class="row">
             <div class="col-2 sidebar">
-                <category-picker *ngIf="topLevelCategoriesArray"
-                                [topLevelCategoriesArray]="topLevelCategoriesArray"
-                                [selectedCategories]="[selectedCategory.name]"
-                                [allowPickingAbstractCategories]="true"
-                                [highlightCustomCategories]="true"
-                                [showCreateButtons]="true"
-                                [allowChangingOrder]="true"
-                                [contextMenu]="contextMenu"
-                                [dragging]="dragging"
-                                (onCategoryPicked)="selectCategory($event)"
-                                (onEditCategory)="editCategory($event)"
-                                (onCreateSubcategory)="addSubcategory($event)"
-                                (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
+                <div id="category-picker-container">
+                    <category-picker *ngIf="topLevelCategoriesArray"
+                                    [topLevelCategoriesArray]="topLevelCategoriesArray"
+                                    [selectedCategories]="[selectedCategory.name]"
+                                    [allowPickingAbstractCategories]="true"
+                                    [highlightCustomCategories]="true"
+                                    [showCreateButtons]="true"
+                                    [allowChangingOrder]="true"
+                                    [contextMenu]="contextMenu"
+                                    [dragging]="dragging"
+                                    (onCategoryPicked)="selectCategory($event)"
+                                    (onEditCategory)="editCategory($event)"
+                                    (onCreateSubcategory)="addSubcategory($event)"
+                                    (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
+                    <div id="add-supercategory-button" class="circular-button green-button"
+                        (click)="addSupercategory()"
+                        ngbTooltip="Oberkategorie hinzufügen"
+                        i18n-ngbTooltip="@@configuration.addSupercategory">
+                        <span class="mdi mdi-plus"></span>
+                    </div>
+                </div>
             </div>
 
             <div class="col-10">

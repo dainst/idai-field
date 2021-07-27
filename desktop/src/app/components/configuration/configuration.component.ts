@@ -197,6 +197,26 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    public async addSupercategory() {
+
+        const [result, componentInstance] =
+            this.modals.make<AddCategoryModalComponent>(
+                AddCategoryModalComponent,
+                MenuContext.CONFIGURATION_MODAL,
+                'lg'
+            );
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.init();
+
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement());
+    }
+
+
     public async addSubcategory(parentCategory: Category) {
 
         const [result, componentInstance] =

@@ -1007,12 +1007,7 @@ export class BuiltInConfiguration {
             (this.builtInCategories as any)['Profile'] = {
                 color: '#c6dbef',
                 parent: 'ProcessUnit',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 groups: [
                     {
                         name: Groups.STEM,

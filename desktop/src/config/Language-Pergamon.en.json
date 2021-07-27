@@ -1,5 +1,15 @@
 {
   "categories": {
+    "Survey": {
+      "fields": {
+        "quantityFinds": {
+          "label": "Quantity finds"
+        },
+        "naturalEnvironment": {
+          "label": "Natural environment and modern interventions"
+        }
+      }
+    },
     "Find": {
       "fields":{
         "amount": {
@@ -544,6 +554,12 @@
       "fields": {
         "hasFinds": {
           "label": "Finds"
+        },
+        "quantityFinds": {
+          "label": "Quantity finds"
+        },
+        "naturalEnvironment": {
+          "label": "Natural environment and modern interventions"
         }
       }
     },

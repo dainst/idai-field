@@ -30,7 +30,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
     
     if(!coordinates) return;
 
-    const color = config.getColorForCategory(document.resource.category);
+    const color = config.getCategory(document.resource.category)?.color || 'black';
     const shapes: Shape[] = [];
     const parent = new Object3D();
 
@@ -90,7 +90,7 @@ export const lineStringToShape:
     if(!coordinates) return;
 
     const parent = new Object3D();
-    const color = config.getColorForCategory(document.resource.category);
+    const color = config.getCategory(document.resource.category)?.color || 'black';
     const geos: BufferGeometry[] = [];
 
     if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates));
@@ -139,7 +139,7 @@ export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, doc
   
     const [x,y] = processTransform2d(matrix,coordinates);
     const parent = new Object3D();
-    const color = config.getColorForCategory(document.resource.category);
+    const color = config.getCategory(document.resource.category)?.color || 'black';
     const radius = pointRadius;
     const segments = 30; //<-- Increase or decrease for more resolution
     
@@ -178,8 +178,9 @@ const isPosition1d = (coords: Position[] | Position[][]): coords is Position[] =
 const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
 const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
 
+
 const lineStringMaterial = (color: string, isSelected: boolean = false) =>
-    new LineBasicMaterial({ color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
+    new LineBasicMaterial({ color: color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
 
 
 const pointMaterial = (color: string, isSelected: boolean = false) =>

@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { is, to, Predicate } from 'tsfun';
-import { Category, Named, InPlace, Labels } from 'idai-field-core';
+import { is, Predicate } from 'tsfun';
+import { Category, InPlace, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
+import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class CategoryPickerComponent {
             );
         }
 
-        this.onOrderChanged.emit(this.getCategoriesOrder());
+        this.onOrderChanged.emit(ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray));
     }
 
 
@@ -94,14 +95,4 @@ export class CategoryPickerComponent {
 
 
     public isCustomCategory: Predicate<Category> = category => category.source === 'custom';
-
-
-    private getCategoriesOrder(): string[] {
-
-        return this.topLevelCategoriesArray.reduce((order, category) => {
-            order.push(category.name);
-            if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
-            return order;
-        }, []);
-    }
 }

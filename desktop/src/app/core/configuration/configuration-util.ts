@@ -48,6 +48,16 @@ export module ConfigurationUtil {
     }
 
 
+    export function getCategoriesOrder(topLevelCategoriesArray: Array<Category>): string[] {
+
+        return topLevelCategoriesArray.reduce((order, category) => {
+            order.push(category.name);
+            if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
+            return order;
+        }, []);
+    }
+
+
     export function deleteCategory(category: Category,
                                    customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 

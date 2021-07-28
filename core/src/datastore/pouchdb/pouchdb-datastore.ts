@@ -280,8 +280,7 @@ export class PouchdbDatastore {
         try {
             ObserverUtil.notify(this.changesObservers, await this.fetch(changeId));
         } catch (e) {
-            console.warn('Document from remote change not found or not valid', changeId);
-            throw e;
+            console.warn('PouchdbDatastore.handleNonDeletionChange: Document not found or not valid:', changeId, e);
         }
     }
 

@@ -70,6 +70,10 @@ export class AddCategoryModalComponent {
             hidden: []
         };
 
+        clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
+            clonedConfigurationDocument.resource.order, this.selectedCategory.name, this.parentCategory?.name
+        );
+
         try {
             this.saveAndReload(clonedConfigurationDocument, this.selectedCategory.name);
             this.activeModal.close();

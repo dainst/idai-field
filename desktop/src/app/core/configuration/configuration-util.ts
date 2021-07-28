@@ -1,4 +1,4 @@
-import { flatten, isEmpty, to } from 'tsfun';
+import { clone, flatten, isEmpty, to } from 'tsfun';
 import { Category, CustomCategoryDefinition, Field, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
 import { CustomLanguageConfigurations } from './custom-language-configurations';
@@ -55,6 +55,21 @@ export module ConfigurationUtil {
             if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
             return order;
         }, []);
+    }
+
+
+    export function addToCategoriesOrder(categoriesOrder: string[], newCategoryName: string,
+                                         parentCategoryName?: string): string[] {
+
+        const newOrder: string[] = clone(categoriesOrder);
+
+        if (parentCategoryName) {
+            newOrder.splice(newOrder.indexOf(parentCategoryName) + 1, 0, newCategoryName);
+        } else {
+            newOrder.push(newCategoryName);
+        }
+
+        return newOrder;
     }
 
 

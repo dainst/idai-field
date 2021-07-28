@@ -72,6 +72,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             delete this.getClonedCategoryDefinition().color;
         }
 
+        if (this.new) {
+            this.clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
+                this.clonedConfigurationDocument.resource.order,
+                this.category.name,
+                this.category.parentCategory?.name
+            );
+        }
+
         await super.save(this.new);
     }
 

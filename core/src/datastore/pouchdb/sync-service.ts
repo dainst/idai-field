@@ -23,6 +23,20 @@ export enum SyncStatus {
 }
 
 
+export namespace SyncProcess {
+
+    export function generateUrl(syncTarget: string, project: string, password: string) {
+
+        if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
+
+        return !password
+            ? syncTarget
+            : syncTarget.replace(/(https?):\/\//, '$1://' +
+                project + ':' + password + '@');
+    }
+}
+
+
 export namespace SyncStatus {
 
     export const getFromInfo = (info: any) =>
@@ -78,9 +92,8 @@ export class SyncService { // TODO rename, to something like PouchdbSyncManager,
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
-        const url = SyncService.generateSyncUrl(this.syncTarget, this.project, this.password);
-
-        // TODO review in how far we can simplyfy this (setupSync was formerly part of pouchdb-manager and now is private to sync-service)
+        const url = SyncProcess.generateUrl(this.syncTarget, this.project, this.password);
+        // TODO review in how far we can simplify this (setupSync was formerly part of pouchdb-manager and now is private to sync-service)
         const syncProcess = await this.setupSync(url, this.project);
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
@@ -122,7 +135,7 @@ export class SyncService { // TODO rename, to something like PouchdbSyncManager,
      */
     private async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
-        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
+        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
 
         let sync = this.pouchdbManager.getDb().sync(fullUrl, { live: true, retry: false, filter });
@@ -156,17 +169,5 @@ export class SyncService { // TODO rename, to something like PouchdbSyncManager,
             (handle as any).cancel();
         }
         this.syncHandles = [];
-    }
-
-
-    // TODO maybe make part of SyncProcess companion namespace: SyncProcess.generateUrl
-    private static generateSyncUrl(syncTarget: string, project: string, password: string) {
-
-        if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
-
-        return !password
-            ? syncTarget
-            : syncTarget.replace(/(https?):\/\//, '$1://' +
-                project + ':' + password + '@');
     }
 }

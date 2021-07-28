@@ -1,13 +1,13 @@
 import { Observable, Observer } from 'rxjs';
-import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
-import { ObserverUtil } from '../tools/observer-util';
+import { PouchdbManager } from '../../datastore/pouchdb/pouchdb-manager';
+import { ObserverUtil } from '../../tools/observer-util';
 import { SyncProcess, SyncStatus } from './sync-process';
 
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SyncService { // TODO rename, to something like PouchdbSyncManager, to be similar to PouchdbManager; merge sync package into pouchdb package
+export class SyncService { // TODO rename, to something like PouchdbSyncManager, to be similar to PouchdbManager
 
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;

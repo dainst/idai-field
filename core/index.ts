@@ -3,7 +3,6 @@ export * from './src/datastore';
 export * from './src/configuration';
 export * from './src/index';
 export * from './src/model';
-export * from './src/sync';
 export * from './src/tools';
 export * from './src/services';
 export * from './src/base-config';

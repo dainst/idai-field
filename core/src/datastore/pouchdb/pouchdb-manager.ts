@@ -1,18 +1,15 @@
-import { Observable, Observer } from 'rxjs';
-import { SyncProcess, SyncStatus } from '../../sync/sync-process';
 import { PouchDbFactory } from './types';
 
 
 /**
- * Manages the creation and synchronization of PouchDB instances.
+ * Manages the creation and destruction of PouchDB instances.
+ * 
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
 export class PouchdbManager {
 
     private db: PouchDB.Database;
-
-    private syncHandles = [];
 
 
     constructor(private pouchDbFactory: PouchDbFactory) {}
@@ -31,51 +28,6 @@ export class PouchdbManager {
      
         this.db = this.pouchDbFactory(dbName);
         return this.db;
-    }
-
-
-    /**
-     * Setup peer-to-peer syncing between this datastore and target.
-     * Changes to sync state will be published via the onSync*-Methods.
-     * @param url target datastore
-     * @param project
-     */
-    public async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
-
-        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
-        console.log('Start syncing');
-
-        let sync = this.db.sync(fullUrl, { live: true, retry: false, filter });
-
-        this.syncHandles.push(sync as never);
-        return {
-            url: url,
-            cancel: () => {
-                sync.cancel();
-                this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
-            },
-            observer: Observable.create((obs: Observer<SyncStatus>) => {
-                sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
-                    .on('paused', () => obs.next(SyncStatus.InSync))
-                    .on('active', () => obs.next(SyncStatus.Pulling))
-                    .on('complete', (info: any) => {
-                        obs.next(SyncStatus.Offline);
-                        obs.complete();
-                    })
-                    .on('error', (err: any) => obs.error(err));
-            })
-        };
-    }
-
-
-    public stopSync() {
-
-        console.log('Stop syncing');
-
-        for (let handle of this.syncHandles) {
-            (handle as any).cancel();
-        }
-        this.syncHandles = [];
     }
 
 

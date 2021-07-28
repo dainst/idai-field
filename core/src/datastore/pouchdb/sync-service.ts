@@ -56,7 +56,7 @@ export namespace SyncStatus {
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SyncService { // TODO rename, to something like PouchdbSyncManager, to be similar to PouchdbManager
+export class SyncService {
 
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;
@@ -93,7 +93,7 @@ export class SyncService { // TODO rename, to something like PouchdbSyncManager,
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
         const url = SyncProcess.generateUrl(this.syncTarget, this.project, this.password);
-        // TODO review in how far we can simplify this (setupSync was formerly part of pouchdb-manager and now is private to sync-service)
+        
         const syncProcess = await this.setupSync(url, this.project);
         syncProcess.observer.subscribe(
             status => this.setStatus(status),

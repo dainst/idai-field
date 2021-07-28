@@ -53,7 +53,7 @@ export class SyncService {
                 
                         console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
                 }
-                this.setStatus(err);
+                this.setStatus(syncStatus);
                 syncProcess.cancel();
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             }

@@ -65,7 +65,7 @@ export class PouchdbManager {
                         obs.next(SyncStatus.Offline);
                         obs.complete();
                     })
-                    .on('error', (err: any) => obs.error(SyncStatus.getFromError(err)));
+                    .on('error', (err: any) => obs.error(err));
             })
         };
     }

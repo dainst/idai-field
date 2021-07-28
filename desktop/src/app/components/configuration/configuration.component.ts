@@ -181,10 +181,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async setNewCategoriesOrder(newOrder: string[]) {
+    public async saveNewCategoriesOrder() {
 
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
-        clonedConfigurationDocument.resource.order = newOrder;
+        clonedConfigurationDocument.resource.order = ConfigurationUtil.getCategoriesOrder(
+            this.topLevelCategoriesArray
+        );
 
         try {
             await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);

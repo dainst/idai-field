@@ -19,7 +19,7 @@
                                     (onCategoryPicked)="selectCategory($event)"
                                     (onEditCategory)="editCategory($event)"
                                     (onCreateSubcategory)="addSubcategory($event)"
-                                    (onOrderChanged)="setNewCategoriesOrder($event)"></category-picker>
+                                    (onOrderChanged)="saveNewCategoriesOrder()"></category-picker>
                     <div id="add-supercategory-button" class="circular-button green-button"
                         (click)="addSupercategory()"
                         ngbTooltip="Oberkategorie hinzufügen"

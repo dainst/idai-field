@@ -27,7 +27,7 @@ export class CategoryPickerComponent {
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
     @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
-    @Output() onOrderChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Output() onOrderChanged: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditCategory: EventEmitter<Category> = new EventEmitter<Category>();
 
 
@@ -70,7 +70,7 @@ export class CategoryPickerComponent {
             );
         }
 
-        this.onOrderChanged.emit(ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray));
+        this.onOrderChanged.emit();
     }
 
 

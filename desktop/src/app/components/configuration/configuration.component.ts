@@ -214,7 +214,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
-        componentInstance.init();
+        componentInstance.initialize();
 
         this.modals.awaitResult(result,
             nop,
@@ -236,7 +236,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
-        componentInstance.init();
+        componentInstance.initialize();
 
         this.modals.awaitResult(result,
             nop,
@@ -324,7 +324,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.categoryToReplace = category;
-        componentInstance.init();
+        componentInstance.initialize();
 
         this.modals.awaitResult(result,
             nop,

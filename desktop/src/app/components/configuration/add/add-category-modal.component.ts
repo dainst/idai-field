@@ -11,7 +11,10 @@ import { ConfigurationUtil } from '../../../core/configuration/configuration-uti
 
 
 @Component({
-    templateUrl: './add-category-modal.html'
+    templateUrl: './add-category-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -36,9 +39,15 @@ export class AddCategoryModalComponent {
                 private modals: Modals) {}
 
 
-    public init() {
+    public initialize() {
 
         this.applyCategoryNameSearch();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 

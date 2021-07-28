@@ -4,7 +4,10 @@ import { Category, Labels } from 'idai-field-core';
 
 
 @Component({
-    templateUrl: './delete-category-modal.html'
+    templateUrl: './delete-category-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -27,6 +30,12 @@ export class DeleteCategoryModalComponent {
         && this.activeModal.close();
     
     public cancel = () => this.activeModal.dismiss('cancel');
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
 
 
     public checkConfirmDeletionCategoryName(): boolean {

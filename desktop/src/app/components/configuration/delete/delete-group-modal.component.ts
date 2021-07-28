@@ -4,7 +4,10 @@ import { Group } from 'idai-field-core';
 
 
 @Component({
-    templateUrl: './delete-group-modal.html'
+    templateUrl: './delete-group-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -15,6 +18,12 @@ export class DeleteGroupModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal) {}
+
+    
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
 
 
     public confirmDeletion() {

@@ -8,6 +8,10 @@ multi-language-input {
       height: 38px !important;
     }
 
+    .language-label {
+      user-select: none;
+    }
+
     .language-input {
       width: calc(100% - 242px);
     }

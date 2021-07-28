@@ -1,20 +1,21 @@
 import { Observable, Observer } from 'rxjs';
 import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
 import { ObserverUtil } from '../tools/observer-util';
-import { SyncStatus } from './sync-process';
-
+import { SyncProcess, SyncStatus } from './sync-process';
 
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SyncService {
+export class SyncService { // TODO rename, to something like PouchdbSyncManager, to be similar to PouchdbManager; merge sync package into pouchdb package
 
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;
     private project: string;
     private password: string = '';
     private currentSyncTimeout: any;
+
+    private syncHandles = [];
 
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
@@ -43,7 +44,9 @@ export class SyncService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
         const url = SyncService.generateSyncUrl(this.syncTarget, this.project, this.password);
-        const syncProcess = await this.pouchdbManager.setupSync(url, this.project);
+
+        // TODO review in how far we can simplyfy this (setupSync was formerly part of pouchdb-manager and now is private to sync-service)
+        const syncProcess = await this.setupSync(url, this.project);
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
@@ -64,7 +67,7 @@ export class SyncService {
     public stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this.pouchdbManager.stopSync();
+        this._stopSync();
         this.setStatus(SyncStatus.Offline);
     }
 
@@ -73,6 +76,51 @@ export class SyncService {
 
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
+    }
+
+
+    /**
+     * Setup peer-to-peer syncing between this datastore and target.
+     * Changes to sync state will be published via the onSync*-Methods.
+     * @param url target datastore
+     * @param project
+     */
+    private async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
+
+        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
+        console.log('Start syncing');
+
+        let sync = this.pouchdbManager.getDb().sync(fullUrl, { live: true, retry: false, filter });
+
+        this.syncHandles.push(sync as never);
+        return {
+            url: url,
+            cancel: () => {
+                sync.cancel();
+                this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
+            },
+            observer: Observable.create((obs: Observer<SyncStatus>) => {
+                sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
+                    .on('paused', () => obs.next(SyncStatus.InSync))
+                    .on('active', () => obs.next(SyncStatus.Pulling))
+                    .on('complete', (info: any) => {
+                        obs.next(SyncStatus.Offline);
+                        obs.complete();
+                    })
+                    .on('error', (err: any) => obs.error(err));
+            })
+        };
+    }
+
+
+    private _stopSync() {
+
+        console.log('Stop syncing');
+
+        for (let handle of this.syncHandles) {
+            (handle as any).cancel();
+        }
+        this.syncHandles = [];
     }
 
 

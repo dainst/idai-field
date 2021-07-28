@@ -22,16 +22,17 @@ import { ErrWithParams } from '../../core/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from '../../core/configuration/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {Modals} from '../../services/modals';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { Modals } from '../../services/modals';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 export type InputType = {
     name: string;
     label: string;
     searchable?: boolean;
+    customFields?: boolean;
 };
 
 
@@ -58,21 +59,21 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private configurationIndex: ConfigurationIndex = {};
 
     public availableInputTypes: Array<InputType> = [
-        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true },
-        { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }) },
-        { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }) },
-        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true },
-        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true },
-        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true },
-        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true },
-        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true },
-        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true },
-        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }), searchable: true },
-        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }), searchable: true },
-        { name: 'dating', label: this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' }) },
-        { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }) },
-        { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }) },
-        { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }) },
+        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
+        { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), customFields: true },
+        { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }), customFields: true },
+        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },
+        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true, customFields: true },
+        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true, customFields: true },
+        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true, customFields: true },
+        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true, customFields: true },
+        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true, customFields: true },
+        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }), searchable: true, customFields: true },
+        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }), searchable: true, customFields: true },
+        { name: 'dating', label: this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' }), customFields: true },
+        { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }), customFields: true },
+        { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }), customFields: true },
+        { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }), customFields: true },
         { name: 'geometry', label: this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' }) },
         { name: 'instanceOf', label: this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' }) },
         { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) },
@@ -299,7 +300,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.field = field;
-        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.availableInputTypes = field.source === 'custom'
+            ? this.availableInputTypes.filter(inputType => inputType.customFields)
+            : this.availableInputTypes;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,

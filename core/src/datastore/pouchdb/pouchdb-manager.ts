@@ -55,14 +55,14 @@ export class PouchdbManager {
                 this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
             },
             observer: Observable.create((obs: Observer<SyncStatus>) => {
-                sync.on('change', (info: any) => obs.next(getSyncStatusFromInfo(info)))
+                sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
                     .on('paused', () => obs.next(SyncStatus.InSync))
                     .on('active', () => obs.next(SyncStatus.Pulling))
                     .on('complete', (info: any) => {
                         obs.next(SyncStatus.Offline);
                         obs.complete();
                     })
-                    .on('error', (err: any) => obs.error(getSyncStatusFromError(err)));
+                    .on('error', (err: any) => obs.error(SyncStatus.getFromError(err)));
             })
         };
     }
@@ -107,15 +107,3 @@ export class PouchdbManager {
         return db;
     }
 }
-
-
-const getSyncStatusFromInfo = (info: any) =>
-    info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
-
-
-const getSyncStatusFromError = (err: any) =>
-    err.status === 401
-        ? err.reason === 'Name or password is incorrect.'
-            ? SyncStatus.AuthenticationError
-            : SyncStatus.AuthorizationError
-        : SyncStatus.Error;

@@ -47,6 +47,12 @@ export class SyncService {
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
+                const syncStatus = SyncStatus.getFromError(err);
+                if (syncStatus !== SyncStatus.AuthenticationError
+                    && syncStatus !== SyncStatus.AuthorizationError) {
+                
+                        console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                }
                 this.setStatus(err);
                 syncProcess.cancel();
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry

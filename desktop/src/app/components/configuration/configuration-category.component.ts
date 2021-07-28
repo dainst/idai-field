@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { and, any, compose, flatten, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, CustomCategoryDefinition, Field, Group, Named,
-    Resource, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
-import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../core/configuration/configuration-util';
+import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
+import { Category, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
+import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { InputType } from './configuration.component';
@@ -12,8 +11,8 @@ import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import { ErrWithParams } from '../../core/import/import/import-documents';
-import {MenuContext} from '../../services/menu-context';
-import {Modals} from '../../services/modals';
+import { MenuContext } from '../../services/menu-context';
+import { Modals } from '../../services/modals';
 
 
 @Component({
@@ -62,7 +61,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     || !this.category.groups.map(to(Named.NAME)).includes(this.selectedGroup)) {
                 this.selectedGroup = this.category.groups[0].name;
             }
-            this.permanentlyHiddenFields = this.getPermanentlyHiddenFields();
+            this.permanentlyHiddenFields = ConfigurationUtil.getPermanentlyHiddenFields(
+                this.configurationDocument, this.category
+            );
             this.openedFieldName = undefined;
         }
 
@@ -81,21 +82,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public isHidden = (field: Field) =>
         ConfigurationUtil.isHidden(this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition())(field);
 
+    public getCustomCategoryDefinition = () => ConfigurationUtil.getCustomCategoryDefinition(
+        this.configurationDocument, this.category
+    );
 
-    public getCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
-
-        return this.configurationDocument.resource.categories[this.category.libraryId ?? this.category.name];
-    }
-
-
-    public getParentCustomCategoryDefinition(): CustomCategoryDefinition|undefined {
-
-        return this.category.parentCategory
-            ? this.configurationDocument.resource
-                .categories[this.category.libraryId ?? this.category.parentCategory.name]
-            : undefined;
-    }
-
+    public getParentCustomCategoryDefinition = () => ConfigurationUtil.getParentCustomCategoryDefinition(
+        this.configurationDocument, this.category
+    );
 
     public hasCustomFields: Predicate<Group> = compose(
         to<Array<Field>>(Group.FIELDS),
@@ -286,22 +279,5 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const { label, description } = this.labels.getLabelAndDescription(this.category);
         this.label = label;
         this.description = description;
-    }
-
-
-    private getPermanentlyHiddenFields(): string[] {
-
-        const result: string[] = flatten(this.getGroups().map(to('fields')))
-            .filter(field => !field.visible
-                && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                && (this.category.source === 'custom' || !ConfigurationUtil.isHidden(
-                    this.getCustomCategoryDefinition(),
-                    this.getParentCustomCategoryDefinition()
-                )(field)))
-            .map(Named.toName);
-
-        if (this.category.name === 'Project') result.push(Resource.IDENTIFIER);
-
-        return result;
     }
 }

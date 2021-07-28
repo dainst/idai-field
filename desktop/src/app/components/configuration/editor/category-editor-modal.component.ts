@@ -7,6 +7,7 @@ import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { CustomLanguageConfigurations } from '../../../core/configuration/custom-language-configurations';
+import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 
 
 @Component({
@@ -50,7 +51,11 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             this.clonedConfigurationDocument.resource.categories[this.category.name] = {
                 color: '#000',
                 parent: this.category.parentCategory.name,
-                fields: {}
+                fields: {},
+                groups: ConfigurationUtil.createGroupsConfiguration(
+                    this.category,
+                    ConfigurationUtil.getPermanentlyHiddenFields(this.configurationDocument, this.category)
+                )
             }
         } else {
             if (!this.getClonedCategoryDefinition().color) {

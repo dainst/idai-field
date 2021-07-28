@@ -140,4 +140,40 @@ export module ConfigurationUtil {
                 configurationDocument.resource.languages, category
             );
     }
+
+
+    export function getPermanentlyHiddenFields(configurationDocument: ConfigurationDocument,
+                                               category: Category): string[] {
+
+        const groups: Array<Group> = category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
+
+        const result: string[] = flatten(groups.map(to('fields')))
+            .filter(field => !field.visible
+                && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
+                && (category.source === 'custom' || !ConfigurationUtil.isHidden(
+                    getCustomCategoryDefinition(configurationDocument, category),
+                    getParentCustomCategoryDefinition(configurationDocument, category)
+                )(field)))
+            .map(Named.toName);
+
+        if (category.name === 'Project') result.push(Resource.IDENTIFIER);
+
+        return result;
+    }
+
+
+    export function getCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
+                                                category: Category): CustomCategoryDefinition|undefined {
+
+        return configurationDocument.resource.categories[category.libraryId ?? category.name];
+    }
+
+
+    export function getParentCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
+                                                      category: Category): CustomCategoryDefinition|undefined {
+
+        return category.parentCategory
+            ? configurationDocument.resource.categories[category.libraryId ?? category.parentCategory.name]
+            : undefined;
+    }
 }

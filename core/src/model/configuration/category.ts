@@ -73,10 +73,14 @@ export namespace Category {
             label: {},
             defaultLabel: {},
             description: {},
-            defaultDescription: {},
+            defaultDescription: {}
         } as any /* TODO any */;
 
-        if (parentCategory) newCategory[PARENT_CATEGORY] = parentCategory;
+        if (parentCategory) {
+            newCategory.parentCategory = parentCategory;
+            newCategory.groups = parentCategory.groups;
+        }
+
         return newCategory;
     }
 

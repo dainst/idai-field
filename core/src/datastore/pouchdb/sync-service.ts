@@ -1,7 +1,42 @@
 import { Observable, Observer } from 'rxjs';
 import { PouchdbManager } from '../../datastore/pouchdb/pouchdb-manager';
 import { ObserverUtil } from '../../tools/observer-util';
-import { SyncProcess, SyncStatus } from './sync-process';
+
+
+export interface SyncProcess {
+
+    url: string;
+    cancel(): void;
+    observer: Observable<SyncStatus>;
+}
+
+
+export enum SyncStatus {
+
+    Offline = 'OFFLINE',
+    Pushing = 'PUSHING',
+    Pulling = 'PULLING',
+    InSync = 'IN_SYNC',
+    Error = 'ERROR',
+    AuthenticationError = 'AUTHENTICATION_ERROR',
+    AuthorizationError = 'AUTHORIZATION_ERROR'
+}
+
+
+export namespace SyncStatus {
+
+    export const getFromInfo = (info: any) =>
+    info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
+
+
+    export const getFromError = (err: any) =>
+        err.status === 401
+            ? err.reason === 'Name or password is incorrect.'
+                ? SyncStatus.AuthenticationError
+                : SyncStatus.AuthorizationError
+            : SyncStatus.Error;
+}
+
 
 /**
  * @author Thomas Kleinke
@@ -124,6 +159,7 @@ export class SyncService { // TODO rename, to something like PouchdbSyncManager,
     }
 
 
+    // TODO maybe make part of SyncProcess companion namespace: SyncProcess.generateUrl
     private static generateSyncUrl(syncTarget: string, project: string, password: string) {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;

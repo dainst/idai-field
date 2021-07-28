@@ -72,8 +72,7 @@ const useMapData = (
         [geometryBoundings, viewPort]);
 
 
-    useEffect(() => {
-        focusMapOnDocumentIds(selectedDocumentIds);},[selectedDocumentIds, focusMapOnDocumentIds]);
+    useEffect(() => {focusMapOnDocumentIds(selectedDocumentIds);},[selectedDocumentIds, focusMapOnDocumentIds]);
 
 
     return [geoDocuments, transformMatrix, cameraView, focusMapOnDocumentId];

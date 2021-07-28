@@ -33,14 +33,15 @@ export namespace ConfigurationIndex {
 
     export function find(index: ConfigurationIndex,
                          searchTerm: string,
-                         parentCategory?: Name): Array<Category> {
+                         parentCategory?: Name,
+                         onlySupercategories?: boolean): Array<Category> {
 
         return set(flatten(keysValues(index)
             .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
             .map(right)
         )).filter(category => {
-            return (!parentCategory && !category.parentCategory)
-                || (category.parentCategory && category.parentCategory.name === parentCategory);
+            return (!onlySupercategories || !category.parentCategory)
+                && (!parentCategory || category.parentCategory?.name === parentCategory);
         });
     }
 }

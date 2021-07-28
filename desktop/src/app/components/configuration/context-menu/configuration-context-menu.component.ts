@@ -4,7 +4,7 @@ import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 
 
-export type ConfigurationContextMenuAction = 'edit'|'delete';
+export type ConfigurationContextMenuAction = 'edit'|'swap'|'delete';
 
 
 @Component({
@@ -47,6 +47,14 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
         return !this.contextMenu.group
             || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group));
+    }
+
+
+    public isSwapOptionAvailable(): boolean {
+
+        return !this.contextMenu.group
+            && !this.contextMenu.field
+            && this.contextMenu.category.source !== 'custom';
     }
 
 

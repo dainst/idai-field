@@ -7,6 +7,7 @@ import { AngularUtility } from '../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
 import { ErrWithParams } from '../../../core/import/import/import-documents';
 import { Modals } from '../../../services/modals';
+import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
 
 
 @Component({
@@ -20,8 +21,9 @@ export class AddCategoryModalComponent {
     public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public parentCategory: Category;
-    public projectCategoryNames: string[];
-    
+    public categoryToReplace?: Category;
+    public projectCategoryNames?: string[];
+
     public searchTerm: string = '';
     public selectedCategory: Category|undefined;
     public categories: Array<Category> = [];
@@ -50,14 +52,17 @@ export class AddCategoryModalComponent {
 
         if (!this.selectedCategory) return;
 
-        const configurationDocument = Document.clone(this.configurationDocument);
-        configurationDocument.resource.categories[this.selectedCategory.libraryId] = {
+        const clonedConfigurationDocument = this.categoryToReplace
+            ? ConfigurationUtil.deleteCategory(this.categoryToReplace, this.configurationDocument, false)
+            : Document.clone(this.configurationDocument);
+
+        clonedConfigurationDocument.resource.categories[this.selectedCategory.libraryId] = {
             fields: {},
             hidden: []
         };
 
         try {
-            this.saveAndReload(configurationDocument, this.selectedCategory.name);
+            this.saveAndReload(clonedConfigurationDocument, this.selectedCategory.name);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }
@@ -72,11 +77,13 @@ export class AddCategoryModalComponent {
     public applyCategoryNameSearch() {
 
         this.categories = ConfigurationIndex
-            .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name)
+            .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
+                !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.categories).includes(
                     category.libraryId ?? category.name
-                ) && !this.projectCategoryNames.includes(category.name)
+                ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
+                && (!this.categoryToReplace || category.name === this.categoryToReplace.name)
             );
 
         this.selectedCategory = this.categories?.[0];

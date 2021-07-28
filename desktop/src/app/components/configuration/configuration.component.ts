@@ -164,6 +164,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                     this.editCategory(this.contextMenu.category);
                 }
                 break;
+            case 'swap':
+                this.swapCategoryForm(this.contextMenu.category);
+                break;
             case 'delete':
                 if (this.contextMenu.group) {
                     this.openDeleteGroupModal(this.contextMenu.category, this.contextMenu.group);
@@ -302,6 +305,28 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.modals.awaitResult(result,
             nop,
             () => AngularUtility.blurActiveElement());
+    }
+
+    
+    public swapCategoryForm(category: Category) {
+
+        const [result, componentInstance] =
+            this.modals.make<AddCategoryModalComponent>(
+                AddCategoryModalComponent,
+                MenuContext.CONFIGURATION_MODAL,
+                'lg'
+            );
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.categoryToReplace = category;
+        componentInstance.init();
+
+        this.modals.awaitResult(result,
+            nop,
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 

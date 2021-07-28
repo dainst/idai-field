@@ -10,7 +10,7 @@
                    class="form-control"
                    [(ngModel)]="searchTerm"
                    (ngModelChange)="applyCategoryNameSearch()">
-            <button *ngIf="parentCategory"
+            <button *ngIf="parentCategory && !categoryToReplace"
                     type="button"
                     class="btn btn-success"
                     [class.disabled]="searchTerm.length === 0"

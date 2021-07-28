@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, Named, ProjectConfiguration} from 'idai-field-core';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Document, Named, ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -23,8 +23,10 @@ export class DeleteModalComponent {
     public relatedImagesCount: number;
     public deleteRelatedImages: boolean = true;
 
+
     constructor(public activeModal: NgbActiveModal,
                 public projectConfiguration: ProjectConfiguration) {}
+
 
     public showDeleteDescendantWarningSingle = () =>
         this.descendantsCount === 1

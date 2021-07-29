@@ -8,10 +8,22 @@ import { Observable } from 'rxjs';
 
 export class DocumentRepository {
 
-    private constructor(private pouchdbManager: PouchdbManager,
-                        private pouchdbDatastore: PouchdbDatastore,
-                        public datastore: Datastore,
-                        private changesStream: ChangesStream) {}
+    private pouchdbManager: PouchdbManager;
+    private pouchdbDatastore: PouchdbDatastore;
+    private changesStream: ChangesStream;
+
+    public datastore: Datastore;
+
+    constructor(pouchdbManager: PouchdbManager,
+                pouchdbDatastore: PouchdbDatastore,
+                datastore: Datastore,
+                changesStream: ChangesStream
+    ) {
+        this.pouchdbManager = pouchdbManager;
+        this.pouchdbDatastore = pouchdbDatastore;
+        this.datastore = datastore;
+        this.changesStream = changesStream;
+    }
 
     public static async init(
         username: string,
@@ -22,7 +34,8 @@ export class DocumentRepository {
         const db = pouchdbManager.getDb();
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
         const projectConfiguration = new ProjectConfiguration([categories, []]);
-        const [datastore, changesStream] = await buildDatastore(categories, pouchdbDatastore, db, username, projectConfiguration);
+        const [datastore, changesStream] = await buildDatastore(
+            categories, pouchdbDatastore, db, username, projectConfiguration);
 
         return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
     }

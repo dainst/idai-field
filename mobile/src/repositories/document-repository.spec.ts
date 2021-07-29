@@ -1,6 +1,6 @@
 import {
     Category, createCategory, createDocuments, doc, Document, Forest,
-    PouchdbManager, SyncStatus
+    PouchdbDatastore, IdGenerator, SyncStatus
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
@@ -16,10 +16,10 @@ describe('DocumentRepository', () => {
     
     beforeEach(async () => {
         
-        const manager = new PouchdbManager((name: string) => new PouchDB(name));
-        await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
+        const datastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
+        await datastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
         const categories: Forest<Category> = [createCategory('Feature'), createCategory('Find')];
-        repository = await DocumentRepository.init('testuser', categories, manager);
+        repository = await DocumentRepository.init('testuser', categories, datastore);
     });
 
 

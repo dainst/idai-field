@@ -2,7 +2,7 @@ import {
     Category, CategoryConverter, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache,
     Forest, IdGenerator, Indexer, IndexFacade, NewDocument,
-    PouchdbDatastore, PouchdbManager, ProjectConfiguration, Query, SyncProcess, Tree
+    PouchdbDatastore, PouchdbManager, ProjectConfiguration, Query, SyncProcess, SyncService, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,7 @@ export class DocumentRepository {
     private pouchdbManager: PouchdbManager;
     private pouchdbDatastore: PouchdbDatastore;
     private changesStream: ChangesStream;
+    private syncService: SyncService;
 
     public datastore: Datastore;
 
@@ -23,12 +24,13 @@ export class DocumentRepository {
         this.pouchdbDatastore = pouchdbDatastore;
         this.datastore = datastore;
         this.changesStream = changesStream;
+        this.syncService = new SyncService(pouchdbManager);
     }
 
     public static async init(
         username: string,
         categories: Forest<Category>,
-        pouchdbManager: PouchdbManager,
+        pouchdbManager: PouchdbManager
     ) : Promise<DocumentRepository> {
 
         const db = pouchdbManager.getDb();
@@ -82,11 +84,11 @@ export class DocumentRepository {
 
 
     public setupSync = (url: string, project: string): Promise<SyncProcess> =>
-        this.pouchdbManager.setupSync(url, project, isNotAnImage);
+        this.syncService.setupSync(url, project, isNotAnImage);
 
 
     public stopSync = (): void =>
-        this.pouchdbManager.stopSync();
+        this.syncService._stopSync();
 
 }
 

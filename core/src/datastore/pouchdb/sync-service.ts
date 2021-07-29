@@ -127,13 +127,14 @@ export class SyncService {
     }
 
 
+    // TODO make private and use startSync
     /**
      * Setup peer-to-peer syncing between this datastore and target.
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
      * @param project
      */
-    private async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    public async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
@@ -161,7 +162,8 @@ export class SyncService {
     }
 
 
-    private _stopSync() {
+    // TODO make private and use stopSync
+    public _stopSync() {
 
         console.log('Stop syncing');
 

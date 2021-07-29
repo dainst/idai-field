@@ -30,9 +30,9 @@ describe('PouchdbDatastore', () => {
         }));
 
         datastore = new PouchdbDatastore(
-            pouchdbProxy,
-            idGenerator,
-            false);
+            _ => pouchdbProxy,
+            idGenerator);
+        datastore.createDbForTesting('test');
     });
 
 

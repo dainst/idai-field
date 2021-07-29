@@ -1,50 +1,47 @@
 import {
     Category, CategoryConverter, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache,
-    Forest, IdGenerator, Indexer, IndexFacade, NewDocument,
-    PouchdbDatastore, PouchdbManager, ProjectConfiguration, Query, SyncProcess, SyncService, Tree
+    Forest, Indexer, IndexFacade, NewDocument,
+    PouchdbDatastore, ProjectConfiguration, Query, SyncProcess, SyncService, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
 export class DocumentRepository {
 
-    private pouchdbManager: PouchdbManager;
     private pouchdbDatastore: PouchdbDatastore;
     private changesStream: ChangesStream;
     private syncService: SyncService;
 
     public datastore: Datastore;
 
-    constructor(pouchdbManager: PouchdbManager,
-                pouchdbDatastore: PouchdbDatastore,
+    constructor(pouchdbDatastore: PouchdbDatastore,
                 datastore: Datastore,
                 changesStream: ChangesStream
     ) {
-        this.pouchdbManager = pouchdbManager;
         this.pouchdbDatastore = pouchdbDatastore;
         this.datastore = datastore;
         this.changesStream = changesStream;
-        this.syncService = new SyncService(pouchdbManager);
+        this.syncService = new SyncService(pouchdbDatastore);
     }
+
 
     public static async init(
         username: string,
         categories: Forest<Category>,
-        pouchdbManager: PouchdbManager
+        pouchdbDatastore: PouchdbDatastore
     ) : Promise<DocumentRepository> {
 
-        const db = pouchdbManager.getDb();
-        const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
+        const db = pouchdbDatastore.getDb();
         const projectConfiguration = new ProjectConfiguration([categories, []]);
         const [datastore, changesStream] = await buildDatastore(
             categories, pouchdbDatastore, db, username, projectConfiguration);
 
-        return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
+        return new DocumentRepository(pouchdbDatastore, datastore, changesStream);
     }
 
 
     public destroy = (project: string): Promise<void> =>
-        this.pouchdbManager.destroyDb(project);
+        this.pouchdbDatastore.destroyDb(project);
 
 
     public create = (doc: Document | NewDocument): Promise<Document> =>

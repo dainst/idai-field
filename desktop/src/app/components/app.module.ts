@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
@@ -116,8 +116,8 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: ConfigLoader,
-            useFactory: function(configReader: ConfigReader, pouchdbManager: PouchdbManager) { return new ConfigLoader(configReader, pouchdbManager); },
-            deps: [ConfigReader, PouchdbManager]
+            useFactory: function(configReader: ConfigReader, pouchdbDatastore: PouchdbDatastore) { return new ConfigLoader(configReader, pouchdbDatastore); },
+            deps: [ConfigReader, PouchdbDatastore]
         },
         {
             provide: AppConfigurator,
@@ -133,7 +133,7 @@ registerLocaleData(localeIt, 'it');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [AppInitializerServiceLocator, SettingsService, PouchdbManager, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress],
+            deps: [AppInitializerServiceLocator, SettingsService, PouchdbDatastore, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress],
             useFactory: appInitializerFactory,
         },
         InitializationProgress,
@@ -146,10 +146,10 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: Imagestore,
-            useFactory: function(pouchdbManager: PouchdbManager, converter: ImageConverter, blobMaker: BlobMaker) {
+            useFactory: function(pouchdbManager: PouchdbDatastore, converter: ImageConverter, blobMaker: BlobMaker) {
                 return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDb());
             },
-            deps: [PouchdbManager, ImageConverter, BlobMaker]
+            deps: [PouchdbDatastore, ImageConverter, BlobMaker]
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
@@ -202,8 +202,8 @@ registerLocaleData(localeIt, 'it');
         { provide: MD, useClass: M},
         {
             provide: SyncService,
-            useFactory: (pouchdbManager: PouchdbManager) => new SyncService(pouchdbManager),
-            deps: [PouchdbManager]
+            useFactory: (pouchdbDatastore: PouchdbDatastore) => new SyncService(pouchdbDatastore),
+            deps: [PouchdbDatastore]
         },
         {
             provide: TabManager,

@@ -1,5 +1,5 @@
 import { clone, Map, map } from 'tsfun';
-import { PouchdbManager } from '../../datastore';
+import { PouchdbDatastore } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { Field } from '../../model';
 import { Relation } from '../../model/configuration/relation';
@@ -40,7 +40,7 @@ type CustomConfiguration = {
 export class ConfigLoader {
 
     constructor(private configReader: ConfigReader,
-                private pouchdbManager: PouchdbManager) {}
+                private pouchdbDatastore: PouchdbDatastore) {}
 
 
     public async go(commonFields: { [fieldName: string]: any },
@@ -152,7 +152,7 @@ export class ConfigLoader {
 
         let customConfiguration: ConfigurationDocument;
         try {
-            customConfiguration = await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
+            customConfiguration = await this.pouchdbDatastore.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
             return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
         }
@@ -175,7 +175,7 @@ export class ConfigLoader {
         const configuration: ConfigurationDocument
             = ConfigLoader.createConfigurationDocument(customConfiguration, languageConfigurations, username, rev);
         try {
-            await this.pouchdbManager.getDb().put(configuration);
+            await this.pouchdbDatastore.getDb().put(configuration);
             return configuration;
         } catch (err) {
             // TODO Throw msgWithParams

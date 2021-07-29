@@ -1,6 +1,6 @@
 import { Observable, Observer } from 'rxjs';
-import { PouchdbManager } from '../../datastore/pouchdb/pouchdb-manager';
 import { ObserverUtil } from '../../tools/observer-util';
+import {PouchdbDatastore} from './pouchdb-datastore';
 
 
 export interface SyncProcess {
@@ -69,7 +69,7 @@ export class SyncService {
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
 
-    public constructor(private pouchdbManager: PouchdbManager) {}
+    public constructor(private pouchdbDatastore: PouchdbDatastore) {}
 
 
     public getStatus = (): SyncStatus => this.status;
@@ -139,7 +139,7 @@ export class SyncService {
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
 
-        let sync = this.pouchdbManager.getDb().sync(fullUrl, { live: true, retry: false, filter });
+        let sync = this.pouchdbDatastore.getDb().sync(fullUrl, { live: true, retry: false, filter });
 
         this.syncHandles.push(sync as never);
         return {

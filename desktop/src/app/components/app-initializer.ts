@@ -1,4 +1,4 @@
-import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ImageConverter } from '../services/imagestore/image-converter';
 import { Imagestore } from '../services/imagestore/imagestore';
@@ -73,7 +73,7 @@ export class AppInitializerServiceLocator {
 export const appInitializerFactory = (
         serviceLocator: AppInitializerServiceLocator,
         settingsService: SettingsService,
-        pouchdbManager: PouchdbManager,
+        pouchdbDatastore: PouchdbDatastore,
         pouchdbServer: PouchdbServer,
         documentCache: DocumentCache,
         imageConverter: ImageConverter,
@@ -87,14 +87,14 @@ export const appInitializerFactory = (
 
     await setUpDatabase(settingsService, settings, progress);
 
-    imagestore.setDb(pouchdbManager.getDb());
+    imagestore.setDb(pouchdbDatastore.getDb());
 
-    await loadSampleData(settings, pouchdbManager.getDb(), imageConverter, progress);
+    await loadSampleData(settings, pouchdbDatastore.getDb(), imageConverter, progress);
 
     const services = await loadConfiguration(settingsService, progress);
     serviceLocator.init(services);
 
-    await loadDocuments(serviceLocator, pouchdbManager.getDb(), documentCache, progress);
+    await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
 
     return await AngularUtility.refresh(700);
 };

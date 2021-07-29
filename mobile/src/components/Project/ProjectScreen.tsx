@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import useConfiguration from '../../hooks/use-configuration';
-import usePouchdbManager from '../../hooks/use-pouchdb-manager';
+import usePouchdbManager from '../../hooks/use-pouchdb-datastore';
 import useRelationsManager from '../../hooks/use-relations-manager';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';

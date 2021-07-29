@@ -1,6 +1,6 @@
 import { sameset } from 'tsfun';
 import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
-    Document, DocumentCache, NiceDocs, PouchdbDatastore, PouchdbManager, Query, RelationsManager, Resource,
+    Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
@@ -37,17 +37,17 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbmanager, pouchdbserver, projectName = 'testdb') {
+export async function setupSettingsService(pouchdbdatastore, pouchdbserver, projectName = 'testdb') {
 
     const settingsProvider = new SettingsProvider();
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
-            undefined, undefined, pouchdbmanager.getDb()) as Imagestore,
-        pouchdbmanager,
+            undefined, undefined, pouchdbdatastore.getDb()) as Imagestore,
+        pouchdbdatastore,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbmanager)),
+        new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbdatastore)),
         undefined,
         settingsProvider
     );
@@ -96,20 +96,20 @@ export interface App {
 
 export async function createApp(projectName = 'testdb'): Promise<App> {
 
-    const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
     const pouchdbServer = new PouchdbServer();
 
+    const pouchdbDatastore = new PouchdbDatastore(
+        (name: string) => new PouchDB(name),
+        new IdGenerator());
+    pouchdbDatastore.createDbForTesting(projectName);
+    pouchdbDatastore.setupChangesEmitter();
+
     const { settingsService, projectConfiguration, settingsProvider } = await setupSettingsService(
-        pouchdbManager, pouchdbServer, projectName);
+        pouchdbDatastore, pouchdbServer, projectName);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    const pouchdbDatastore = new PouchdbDatastore(
-        pouchdbManager.getDb(),
-        new IdGenerator(),
-        true);
-
-    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbManager.getDb());
+    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbDatastore.getDb());
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
@@ -158,7 +158,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         undefined,
         createdIndexFacade,
         messages,
-        new SyncService(pouchdbManager)
+        new SyncService(pouchdbDatastore)
     );
 
     const relationsManager = new RelationsManager(

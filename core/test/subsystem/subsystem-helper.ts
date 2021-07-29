@@ -6,7 +6,6 @@ import { CategoryConverter } from '../../src/datastore/category-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { PouchdbDatastore } from '../../src/datastore/pouchdb/pouchdb-datastore';
-import { PouchdbManager } from '../../src/datastore/pouchdb/pouchdb-manager';
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexFacade } from '../../src/index/index-facade';
 import { Tree } from '../../src/tools/forest';
@@ -38,7 +37,9 @@ export interface CoreApp {
 
 export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'): Promise<CoreApp> {
 
-    const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
+    const pouchdbDatastore = new PouchdbDatastore(
+        (name: string) => new PouchDB(name),
+        new IdGenerator());
 
     const project = {
         _id: 'project',
@@ -53,18 +54,15 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         modified: [{ user: db, date: new Date() }]
     };
 
-    await pouchdbManager.createDb(db, project, true);
+    await pouchdbDatastore.createDb(db, project, true);
 
-    const pouchdbDatastore = new PouchdbDatastore(
-        pouchdbManager.getDb(),
-        new IdGenerator(),
-        false);
+    
 
     const documentCache = new DocumentCache();
     
     const configLoader = new ConfigLoader(
         new ConfigReader(), 
-        pouchdbManager,
+        pouchdbDatastore,
     );
 
     const appConfigurator = new AppConfigurator(configLoader);

@@ -1,7 +1,7 @@
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb-node');
-import { ConstraintIndex, Indexer, IndexFacade, PouchdbManager } from 'idai-field-core';
+import { ConstraintIndex, Indexer, IndexFacade, PouchdbDatastore } from 'idai-field-core';
 import { ImagestoreErrors } from '../../../../../src/app/services/imagestore/imagestore-errors';
 import { PouchDbFsImagestore } from '../../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
 
@@ -24,7 +24,7 @@ function str2ab(str: string): ArrayBuffer {
 describe('PouchDbFsImagestore', () => {
 
     let store: PouchDbFsImagestore;
-    let manager: PouchdbManager;
+    let datastore: PouchdbDatastore;
     const storeProjectPath = 'test/store/unittest/';
 
 
@@ -36,17 +36,17 @@ describe('PouchDbFsImagestore', () => {
         const mockConfigProvider =  jasmine.createSpyObj('configProvider', ['getProjectConfiguration']);
         mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer', ['add', 'clear']);
-        manager = new PouchdbManager((name: string) => new PouchDB(name));
+        datastore = new PouchdbDatastore((name: string) => new PouchDB(name), undefined);
 
         const mockConstraintIndexer = ConstraintIndex.make(
             {}, [] as any);
 
-        await manager.createDb('unittest', { _id: 'project', resource: { id: 'project' }}, false);
+        await datastore.createDb('unittest', { _id: 'project', resource: { id: 'project' }}, false);
 
         await Indexer.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false),
-                              manager.getDb(), null, null);
+                              datastore.getDb(), null, null);
 
-        store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, manager.getDb());
+        store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, datastore.getDb());
         await store.init({ imagestorePath: 'test/store/', selectedProject: 'unittest' } as any);
 
         done();

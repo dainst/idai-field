@@ -1,4 +1,4 @@
-import { PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import loadConfiguration from '../services/config/load-configuration';
 
@@ -6,18 +6,18 @@ const useConfiguration = (
     project: string,
     languages: string[],
     username: string,
-    pouchdbManager: PouchdbManager | undefined,
+    pouchdbDatastore: PouchdbDatastore | undefined,
 ): ProjectConfiguration | undefined => {
 
     const [config, setConfig] = useState<ProjectConfiguration>();
 
     useEffect(() => {
 
-        if (!pouchdbManager || !pouchdbManager.open || !project) return;
+        if (!pouchdbDatastore || !pouchdbDatastore.open || !project) return;
         
-        loadConfiguration(pouchdbManager, project, languages, username)
+        loadConfiguration(pouchdbDatastore, project, languages, username)
             .then(setConfig);
-    }, [pouchdbManager, pouchdbManager?.open, project, languages, username]);
+    }, [pouchdbDatastore, pouchdbDatastore?.open, project, languages, username]);
 
     return config;
 };

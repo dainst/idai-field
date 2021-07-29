@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { Document, PouchdbManager, Query } from 'idai-field-core';
+import { Document, PouchdbDatastore, Query } from 'idai-field-core';
 import { Observable } from 'rxjs';
 import { assoc } from 'tsfun';
 import { bu1 } from '../../test_data/test_docs/bu1';
@@ -15,7 +15,8 @@ describe('useSearch', () => {
 
     beforeEach(async () => {
         
-        repository = await DocumentRepository.init('test', [], new PouchdbManager(name => new PouchDB(name)));
+        repository = await DocumentRepository.init('test', [], 
+            new PouchdbDatastore(name => new PouchDB(name), { generateId: () => '1' }));
     });
 
     it('should trigger empty search when initialized', async () => {

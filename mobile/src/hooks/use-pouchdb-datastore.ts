@@ -1,10 +1,10 @@
-import { PouchdbManager, SampleDataLoaderBase } from 'idai-field-core';
+import { PouchdbDatastore, SampleDataLoaderBase, IdGenerator } from 'idai-field-core';
 import PouchDB from 'pouchdb-react-native';
 import { useEffect, useState } from 'react';
 
-const usePouchdbManager = (project: string): PouchdbManager | undefined => {
+const usePouchdbManager = (project: string): PouchdbDatastore | undefined => {
 
-    const [pouchdbManager, setPouchdbManager] = useState<PouchdbManager>();
+    const [pouchdbManager, setPouchdbManager] = useState<PouchdbDatastore>();
 
     useEffect(() => {
         
@@ -26,13 +26,14 @@ const usePouchdbManager = (project: string): PouchdbManager | undefined => {
 export default usePouchdbManager;
 
 
-const buildPouchDbManager = async (project: string): Promise<PouchdbManager> => {
+const buildPouchDbManager = async (project: string): Promise<PouchdbDatastore> => {
 
-    const manager = new PouchdbManager((name: string) => new PouchDB(name));
-    await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, project === 'test');
+    const datastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
+    await datastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, project === 'test');
+    datastore.setupChangesEmitter();
     if(project === 'test'){
         const loader = new SampleDataLoaderBase('en');
-        await loader.go(manager.getDb(), 'test');
+        await loader.go(datastore.getDb(), 'test');
     }
-    return manager;
+    return datastore;
 };

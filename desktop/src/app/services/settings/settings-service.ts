@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, getConfigurationName, Name, PouchdbManager, ProjectConfiguration, SyncService } from 'idai-field-core';
+import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
@@ -30,7 +30,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 export class SettingsService {
 
     constructor(private imagestore: Imagestore,
-                private pouchdbManager: PouchdbManager,
+                private pouchdbDatastore: PouchdbDatastore,
                 private pouchdbServer: PouchdbServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
@@ -43,7 +43,7 @@ export class SettingsService {
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
-            await this.pouchdbManager.createDb(
+            await this.pouchdbDatastore.createDb(
                 selectedProject,
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
                 destroyBeforeCreate
@@ -145,7 +145,7 @@ export class SettingsService {
 
         this.synchronizationService.stopSync();
 
-        await this.pouchdbManager.destroyDb(project);
+        await this.pouchdbDatastore.destroyDb(project);
         await this.settingsProvider.deleteProjectAndSerialize(project);
     }
 
@@ -156,7 +156,7 @@ export class SettingsService {
 
         await this.selectProject(project);
 
-        await this.pouchdbManager.createDb(
+        await this.pouchdbDatastore.createDb(
             project,
             SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
             destroyBeforeCreate

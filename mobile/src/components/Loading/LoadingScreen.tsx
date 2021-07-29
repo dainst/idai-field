@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { AppStackParamList } from '../../../App';
 import useConfiguration from '../../hooks/use-configuration';
-import usePouchdbManager from '../../hooks/use-pouchdb-manager';
+import usePouchdbManager from '../../hooks/use-pouchdb-datastore';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import useToast from '../../hooks/use-toast';

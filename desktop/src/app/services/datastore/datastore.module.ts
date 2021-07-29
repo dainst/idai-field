@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import {settings} from 'cluster';
-import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
@@ -30,10 +29,6 @@ const PouchDB = window.require('pouchdb-browser');
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
         },
-        {
-            provide: PouchdbManager,
-            useFactory: () => new PouchdbManager((name: string) => new PouchDB(name))
-        },
         PouchdbServer,
         {
             provide: CategoryConverter,
@@ -47,12 +42,11 @@ const PouchDB = window.require('pouchdb-browser');
         IdGenerator,
         {
             provide: PouchdbDatastore,
-            useFactory: function(pouchdbManager: PouchdbManager,
-                                 idGenerator: IdGenerator): PouchdbDatastore {
+            useFactory: function(idGenerator: IdGenerator): PouchdbDatastore {
 
-                return new PouchdbDatastore(pouchdbManager.getDb(), idGenerator);
+                return new PouchdbDatastore((name: string) => new PouchDB(name), idGenerator);
             },
-            deps: [PouchdbManager, IdGenerator]
+            deps: [IdGenerator]
         },
 
         // basic idai-field datastore

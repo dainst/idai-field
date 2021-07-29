@@ -11,7 +11,7 @@ import HomeScreen from './src/components/Home/HomeScreen';
 import LoadingScreen from './src/components/Loading/LoadingScreen';
 import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
-import usePouchdbManager from './src/hooks/use-pouchdb-manager';
+import usePouchdbManager from './src/hooks/use-pouchdb-datastore';
 import usePreferences from './src/hooks/use-preferences';
 
 export type AppStackParamList = {

@@ -5,6 +5,7 @@ import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
+import { PouchDbFactory } from './types';
 
 
 /**
@@ -13,6 +14,10 @@ import { IdGenerator } from './id-generator';
  * @author Thomas Kleinke
  */
 export class PouchdbDatastore {
+
+    private db: PouchDB.Database;
+
+    public open = true;
 
     private changesObservers = [];
     private deletedObservers = [];
@@ -25,20 +30,69 @@ export class PouchdbDatastore {
     private deletedOnes = [];
 
 
-    constructor(
-        private db: PouchDB.Database,
-        private idGenerator: IdGenerator,
-        setupChangesEmitter = true
-        ) {
+    constructor(private pouchDbFactory: PouchDbFactory,
+                private idGenerator: IdGenerator) {}
 
-        if (setupChangesEmitter) this.setupChangesEmitter();
+
+    public getDb = (): PouchDB.Database => this.db;
+
+    /**
+     * Destroys the db named dbName, if it is not the currently selected active database
+     * @throws if trying do delete the currently active database
+     */
+    public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
+
+
+    public createDbForTesting(dbName: string) {
+     
+        this.db = this.pouchDbFactory(dbName);
+        this.open = true;
+        return this.db;
     }
 
+    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
+
+
+    /**
+     * Creates a new database. Unless specified specifically
+     * with destroyBeforeCreate set to true,
+     * a possible existing database with the specified name will get used
+     * and not overwritten.
+     */
+    public async createDb(name: string, doc: any, destroyBeforeCreate: boolean): Promise<PouchDB.Database> {
+
+        let db = this.pouchDbFactory(name);
+
+        if (destroyBeforeCreate) {
+            await db.destroy();
+            db = this.pouchDbFactory(name);
+        }
+
+        try {
+            await db.get('project');
+        } catch {
+            // create project only if it does not exist,
+            // which can happen if the db already existed
+            await db.put(doc);
+        }
+
+        this.db = db;
+        this.open = true;
+
+        return db;
+    }
+
+    
+    public close() {
+        if (this.db) {
+            this.db.close();
+        }
+        this.open = false;
+    }
+    
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.changesObservers);
 
     public deletedNotifications = (): Observable<Document> => ObserverUtil.register(this.deletedObservers);
-
-    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
 
 
     /**
@@ -205,6 +259,35 @@ export class PouchdbDatastore {
     }
 
 
+    public setupChangesEmitter(): void {
+
+        this.db.changes({
+            live: true,
+            include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
+            conflicts: true,
+            since: 'now'
+        }).on('change', (change: any) => {
+            // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
+            // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
+
+            if (!change || !change.id) return;
+            if (change.id.indexOf('_design') === 0) return; // starts with _design
+
+            if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
+                ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
+                return;
+            }
+
+            this.handleNonDeletionChange(change.id);
+
+        }).on('complete', (info: any) => {
+            // console.debug('changes stream was canceled', info);
+        }).on('error', (err: any) => {
+            console.error('changes stream errored', err);
+        });
+    }
+
+
     private async performPut(document: Document) {
 
         const cleanedDocument = PouchdbDatastore.cleanUp(document);
@@ -243,35 +326,6 @@ export class PouchdbDatastore {
         } catch (err) {
             throw [DatastoreErrors.REMOVE_REVISIONS_ERROR, err];
         }
-    }
-
-
-    private setupChangesEmitter(): void {
-
-        this.db.changes({
-            live: true,
-            include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
-            conflicts: true,
-            since: 'now'
-        }).on('change', (change: any) => {
-            // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
-            // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
-
-            if (!change || !change.id) return;
-            if (change.id.indexOf('_design') === 0) return; // starts with _design
-
-            if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
-                return;
-            }
-
-            this.handleNonDeletionChange(change.id);
-
-        }).on('complete', (info: any) => {
-            // console.debug('changes stream was canceled', info);
-        }).on('error', (err: any) => {
-            console.error('changes stream errored', err);
-        });
     }
 
 

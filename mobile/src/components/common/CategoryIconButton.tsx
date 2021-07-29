@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import CategoryIcon from './CategoryIcon';
 
-export interface IconButtonProps extends TouchableOpacityProps {
+export interface CategoryIconButtonProps extends TouchableOpacityProps {
     size: number;
     config: ProjectConfiguration;
     languages: string[];
@@ -11,7 +11,7 @@ export interface IconButtonProps extends TouchableOpacityProps {
     label: string;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
+const CategoryIconButton: React.FC<CategoryIconButtonProps> = ({
     size,
     category,
     config,
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default IconButton;
+export default CategoryIconButton;

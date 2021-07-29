@@ -1,7 +1,7 @@
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
-import IconButton from './IconButton';
+import CategoryIconButton from './CategoryIconButton';
 
 interface DocumentButtonProps extends TouchableOpacityProps {
     size: number;
@@ -17,7 +17,7 @@ const DocumentButton: React.FC<DocumentButtonProps> = ({ config, document, ...bt
 
     if(!category) return null;
     
-    return <IconButton
+    return <CategoryIconButton
         category={ category }
         config={ config }
         label={ document.resource.identifier }

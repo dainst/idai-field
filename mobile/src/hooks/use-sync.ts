@@ -50,9 +50,9 @@ const setupSync = async (
 ): Promise<[Subscription] | undefined> => {
 
     if (connected && url && repository.syncService) {
-        
+
         repository.syncService.init(url, project, password);
-        repository.syncService.setupSync((doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type));
+        repository.syncService.startSync((doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type));
 
         // const syncProcess = await syncService.setupSync(url, project, password);
 // 

@@ -170,7 +170,7 @@ describe('DocumentRepository', () => {
 
     xit('syncs with server', async () => {
 
-        const sync = await repository.setupSync('https://test467:xxxxxxx@field.dainst.org/sync', 'test467');
+        const sync = await repository.syncService.startSync();
         const inSync = new Promise<boolean>((resolve, reject) => {
             sync.observer.subscribe(
                 status => {

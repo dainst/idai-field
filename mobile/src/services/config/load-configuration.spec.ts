@@ -1,4 +1,4 @@
-import { PouchdbManager } from 'idai-field-core';
+import { PouchdbDatastore, IdGenerator } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import loadConfiguration from './load-configuration';
 
@@ -9,12 +9,12 @@ describe('loadConfiguration()', () => {
     const project = 'testdb_config';
 
 
-    let pouchdbManager: PouchdbManager;
+    let pouchdbManager: PouchdbDatastore;
     
 
     beforeEach(() => {
-        pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
-        pouchdbManager.createDb_e2e(project);
+        pouchdbManager = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
+        pouchdbManager.createDbForTesting(project);
     });
 
 

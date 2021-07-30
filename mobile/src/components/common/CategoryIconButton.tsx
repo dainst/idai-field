@@ -6,7 +6,6 @@ import CategoryIcon from './CategoryIcon';
 export interface CategoryIconButtonProps extends TouchableOpacityProps {
     size: number;
     config: ProjectConfiguration;
-    languages: string[];
     category: Category;
     label: string;
 }
@@ -15,14 +14,13 @@ const CategoryIconButton: React.FC<CategoryIconButtonProps> = ({
     size,
     category,
     config,
-    languages,
     label,
     ...btnProps
 }) => {
 
     return <TouchableOpacity { ...btnProps } activeOpacity={ .9 }>
         <View style={ styles.container }>
-            <CategoryIcon config={ config } category={ category } size={ size } languages={ languages } />
+            <CategoryIcon config={ config } category={ category } size={ size } />
             <Text style={ styles.title }>{ label }</Text>
         </View>
     </TouchableOpacity>;

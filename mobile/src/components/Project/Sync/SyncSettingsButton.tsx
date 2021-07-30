@@ -1,25 +1,29 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { SyncStatus } from 'idai-field-core';
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { PreferencesContext } from '../../../contexts/preferences-context';
 import { ProjectSettings } from '../../../models/preferences';
 import Button from '../../common/Button';
 import SyncSettingsModal from './SyncSettingsModal';
 
 
 interface SyncSettingsButtonProps {
-    settings: ProjectSettings;
     status: SyncStatus;
-    setSettings: (settings: ProjectSettings) => void;
 }
 
 
-const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({
-    settings,
-    status,
-    setSettings
-}) => {
+const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ status }) => {
+
+    const preferences = useContext(PreferencesContext);
 
     const [showSettings, setShowSettings] = useState<boolean>(false);
+
+    const setSettings = useCallback((settings: ProjectSettings) => {
+
+        preferences.setProjectSettings(preferences.preferences.currentProject, settings);
+    }, [preferences]);
+
+    const settings = preferences.preferences.projects[preferences.preferences.currentProject];
 
     return <>
     

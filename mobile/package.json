@@ -119,6 +119,7 @@
         "always"
       ],
       "@typescript-eslint/no-inferrable-types": 0,
+      "@typescript-eslint/no-empty-function": "off",
       "max-len": [
         "warn",
         {

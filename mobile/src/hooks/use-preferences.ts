@@ -4,7 +4,7 @@ import { assoc, compose, detach, prepend, set, subtract, update } from 'tsfun';
 import { Preferences, ProjectSettings } from '../models/preferences';
 
 
-interface UsePreferences {
+export interface UsePreferences {
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     setUsername: (project: string) => void;
@@ -76,8 +76,9 @@ const savePreferences = async (preferences: Preferences) =>
     await AsyncStorage.setItem('preferences', JSON.stringify(preferences));
 
 
-const getDefaultPreferences = (): Preferences => ({
+export const getDefaultPreferences = (): Preferences => ({
     languages: ['en'], // TODO make language configurable
+    currentProject: '',
     username: '',
     recentProjects: [],
     projects: {}

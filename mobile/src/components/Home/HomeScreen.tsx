@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Preferences, ProjectSettings } from '../../models/preferences';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';
 import Column from '../common/Column';
@@ -13,59 +13,55 @@ import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
 
 interface HomeScreenProps {
-    preferences: Preferences;
-    setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
-    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
 }
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({
-    preferences,
-    setCurrentProject,
-    setProjectSettings,
     deleteProject,
     navigate,
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0]);
+    const preferences = useContext(PreferencesContext);
+
+    const [selectedProject, setSelectedProject] = useState<string>(preferences.preferences.recentProjects[0]);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
     const [isLoadModalOpen, setIsLoadModalOpen] = useState<boolean>(false);
 
-
-    useEffect(() => setSelectedProject(preferences.recentProjects[0]), [preferences.recentProjects]);
+    useEffect(() => {
+        
+        setSelectedProject(preferences.preferences.recentProjects[0]);
+    }, [preferences.preferences.recentProjects]);
     
-
     const openProject = useCallback((project: string) => {
 
         if (!project) return;
 
         setSelectedProject(project);
-        setCurrentProject(project);
+        preferences.setCurrentProject(project);
         navigate('ProjectScreen');
-    }, [navigate, setCurrentProject]);
-
+    }, [navigate, preferences]);
 
     const onDeleteProject = useCallback((project: string) => {
 
         deleteProject(project);
-        if (selectedProject === project) setSelectedProject(preferences.recentProjects[0]);
-    }, [selectedProject, setSelectedProject, deleteProject, preferences.recentProjects]);
+        if (selectedProject === project) setSelectedProject(preferences.preferences.recentProjects[0]);
+    }, [selectedProject, setSelectedProject, deleteProject, preferences.preferences.recentProjects]);
 
     const loadProject = useCallback((project: string, url: string, password: string) => {
 
         if(!project) return;
 
         setSelectedProject(project);
-        setCurrentProject(project);
-        setProjectSettings(project, { url, password, connected: true });
+        preferences.setCurrentProject(project);
+        preferences.setProjectSettings(project, { url, password, connected: true });
         navigate('LoadingScreen');
-    },[navigate, setCurrentProject,setProjectSettings]);
+    },[navigate, preferences]);
 
     
-    const usernameNotSet = () => preferences.username === '';
+    const usernameNotSet = () => preferences.preferences.username === '';
 
     return <>
         { isProjectModalOpen && <CreateProjectModal
@@ -96,10 +92,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     variant="transparent"
                 />
             </Row>
-            { preferences.recentProjects.length > 0 && renderRecentProjects(
+            { preferences.preferences.recentProjects.length > 0 && renderRecentProjects(
                 selectedProject,
                 setSelectedProject,
-                preferences.recentProjects,
+                preferences.preferences.recentProjects,
                 openProject,
                 setIsDeleteModalOpen,
                 usernameNotSet()

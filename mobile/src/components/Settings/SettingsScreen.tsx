@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppStackParamList } from '../../../App';
-import { Preferences } from '../../models/preferences';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import Button from '../common/Button';
 import Column from '../common/Column';
 import Heading from '../common/Heading';
@@ -14,22 +14,18 @@ import TitleBar from '../common/TitleBar';
 
 interface SettingsScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SettingsScreen'>;
-    preferences: Preferences;
-    setUsername: (username: string) => void;
 }
 
 
-const SettingsScreen: React.FC<SettingsScreenProps> = ({
-    navigation,
-    preferences,
-    setUsername
-}) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
-    const [usernameVal, setUsernameVal] = useState(preferences.username);
+    const preferences = useContext(PreferencesContext);
+
+    const [usernameVal, setUsernameVal] = useState(preferences.preferences.username);
 
     const saveSettings = () => {
 
-        setUsername(usernameVal);
+        preferences.setUsername(usernameVal);
         navigation.goBack();
     };
 

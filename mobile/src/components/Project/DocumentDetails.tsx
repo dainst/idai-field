@@ -4,8 +4,9 @@ import {
     Labels,
     ProjectConfiguration
 } from 'idai-field-core';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import useDocument from '../../hooks/use-document';
 import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
@@ -17,7 +18,6 @@ interface DocumentDetailsProps {
     config: ProjectConfiguration;
     repository: DocumentRepository;
     docId: string;
-    languages: string[];
 }
 
 
@@ -25,8 +25,9 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
     config,
     repository,
     docId,
-    languages,
 }) => {
+
+    const languages = useContext(PreferencesContext).preferences.languages;
 
     const doc = useDocument(repository, docId);
     const [groups, setGroups] = useState<FieldsViewGroup[]>();
@@ -47,7 +48,7 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({
 };
 
 
-const renderGroup = (config: ProjectConfiguration,languages: string[]) =>
+const renderGroup = (config: ProjectConfiguration, languages: string[]) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
             <Text style={ styles.groupLabel }>{ I18N.getLabel(group, languages) }</Text>
@@ -63,10 +64,14 @@ const renderField = (languages: string[], config: ProjectConfiguration) =>
         </Column>;
 
 
-const renderFieldValue =
-        (field: FieldsViewField, value: unknown, languages: string[], config: ProjectConfiguration): ReactNode =>
+const renderFieldValue = (
+    field: FieldsViewField,
+    value: unknown,
+    languages: string[],
+    config: ProjectConfiguration
+): ReactNode =>
     field.type === 'relation'
-        ? field.targets?.map(renderRelationTarget( config, languages))
+        ? field.targets?.map(renderRelationTarget(config))
         : field.type === 'default' && typeof value === 'string'
             ? renderStringValue(value)
             : field.type === 'array' && Array.isArray(value)
@@ -89,15 +94,7 @@ const renderObjectValue = (value: unknown, field: FieldsViewField, languages: st
     </Text>;
 
 
-// const renderRelation = (config: ProjectConfiguration) =>
-//     (relation: FieldsViewRelation) =>
-//         <Column style={ styles.fieldColumn } key={ relation.label }>
-//             <Text style={ styles.fieldLabel }>{ relation.label }</Text>
-//             { relation.targets.map(renderRelationTarget( config)) }
-//         </Column>;
-
-
-const renderRelationTarget = (config: ProjectConfiguration, languages: string[]) =>
+const renderRelationTarget = (config: ProjectConfiguration) =>
     (target: Document) =>
         <DocumentButton
             key={ target.resource.id }
@@ -105,7 +102,6 @@ const renderRelationTarget = (config: ProjectConfiguration, languages: string[])
             config={ config }
             document={ target }
             size={ 20 }
-            languages={ languages }
         />;
 
 

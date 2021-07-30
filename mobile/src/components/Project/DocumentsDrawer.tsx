@@ -24,7 +24,6 @@ interface DocumentsDrawerProps {
     onHomeButtonPressed: () => void;
     onSettingsButtonPressed: () => void;
     onHierarchyBack: () => void;
-    languages: string[];
 }
 
 
@@ -38,7 +37,6 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
     onHomeButtonPressed,
     onSettingsButtonPressed,
     onHierarchyBack,
-    languages,
     ...listProps
 }) => {
 
@@ -77,8 +75,7 @@ const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({
                                 >
                                     { () => <DocumentsList
                                                 { ...listProps }
-                                                documents={ documents }
-                                                languages={ languages } /> }
+                                                documents={ documents } /> }
                                 </Stack.Screen>
                             </Stack.Navigator>
                         </NavigationContainer>

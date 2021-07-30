@@ -12,7 +12,6 @@ interface DocumentsListProps {
     documents: Document[];
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
-    languages: string[]
 }
 
 
@@ -21,7 +20,6 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
     documents,
     onDocumentSelected,
     onParentSelected,
-    languages
 }) => {
 
     const onDrillDown = (document: Document) => {
@@ -37,7 +35,6 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
                 document={ document }
                 onPress={ () => onDocumentSelected(document) }
                 size={ 25 }
-                languages={ languages }
             />
             <Button
                 variant="transparent"

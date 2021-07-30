@@ -4,9 +4,10 @@ import {
     Category, Document, Field,
     Group, I18N, NewDocument, NewResource, ProjectConfiguration, Resource
 } from 'idai-field-core';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { colors } from '../../utils/colors';
@@ -24,23 +25,21 @@ type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'D
 
 interface DocumentAddProps {
     config: ProjectConfiguration;
-    username: string;
     repository: DocumentRepository;
     navigation: DocumentAddNav;
-    languages: string[];
     parentDoc: Document;
     categoryName: string;
 }
 
-const DocumentAdd: React.FC<DocumentAddProps> = ({
-        config, repository, navigation, languages, parentDoc, categoryName }) => {
+const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation, parentDoc, categoryName }) => {
     
+    const languages = useContext(PreferencesContext).preferences.languages;
+
     const [category, setCategory] = useState<Category>();
     const [activeGroup, setActiveGroup] = useState<Group>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
     const { showToast } = useToast();
-
 
     const setResourceToDefault = useCallback(() =>
         setNewResource({
@@ -49,10 +48,8 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
             category: categoryName
         }),[parentDoc, categoryName]);
    
-        
     useEffect(() => setResourceToDefault,[setResourceToDefault, category]);
 
-    
     useEffect(() => {
 
         if(newResource?.identifier) setSaveBtnEnabled(true);
@@ -70,7 +67,6 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
     const updateResource = (key: string, value: any) =>
         setNewResource(oldResource => oldResource && { ...oldResource, [key]: value });
 
-    
     const saveButtonHandler = () => {
         
         if(newResource){
@@ -102,7 +98,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
                         <CategoryIcon
                             category={ category }
                             config={ config } size={ 25 }
-                            languages={ languages } />
+                        />
                         <Heading style={ styles.heading }>
                             Add {I18N.getLabel(category, languages)} to { parentDoc.resource.identifier }
                         </Heading>
@@ -128,7 +124,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
                             key={ group.name } style={ styles.groupBtn }
                             onPress={ () => setActiveGroup(group) }>
                             <Text style={ styleGroupText(group, activeGroup) }>
-                                {I18N.getLabel(group, languages)}
+                                { I18N.getLabel(group, languages)}
                             </Text>
                         </TouchableOpacity>))}
                 </Column>

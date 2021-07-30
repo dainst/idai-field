@@ -4,7 +4,6 @@ import { Document, ProjectConfiguration, RelationsManager, SyncStatus } from 'id
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import useToast from '../../hooks/use-toast';
-import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { ToastType } from '../common/Toast/ToastProvider';
 import AddModal from './AddModal';
@@ -19,11 +18,8 @@ interface DocumentsMapProps {
     repository: DocumentRepository;
     documents: Document[];
     syncStatus: SyncStatus;
-    projectSettings: ProjectSettings;
     config: ProjectConfiguration;
     relationsManager: RelationsManager;
-    languages: string[];
-    setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
     isInOverview: () => boolean;
     selectDocument: (doc: Document) => void;
@@ -36,11 +32,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     repository,
     documents,
     syncStatus,
-    projectSettings,
     config,
     relationsManager,
-    languages,
-    setProjectSettings,
     issueSearch,
     isInOverview,
     selectDocument
@@ -103,25 +96,21 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
  
     return (
         <View style={ { flex: 1 } }>
-            {isAddModalOpen && <AddModal
+            { isAddModalOpen && <AddModal
                 onClose={ closeAddModal }
                 parentDoc={ highlightedDoc }
                 config={ config }
                 onAddCategory={ navigateAddCategory }
                 isInOverview={ isInOverview }
-                languages={ languages }
             />}
             { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
                 onRemoveDocument={ onRemoveDocument }
                 config={ config }
                 doc={ highlightedDoc }
-                languages={ languages }
                 />}
             <SearchBar { ...{
                 issueSearch,
-                projectSettings,
-                setProjectSettings,
                 syncStatus,
                 toggleDrawer,
                 onBarCodeScanned
@@ -131,7 +120,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     repository={ repository }
                     selectedDocumentIds={ useMemo(() => documents.map(doc => doc.resource.id),[documents]) }
                     config={ config }
-                    languages={ languages }
                     highlightedDocId={ route.params?.highlightedDocId }
                     addDocument={ handleAddDocument }
                     removeDocument={ openRemoveDocument }

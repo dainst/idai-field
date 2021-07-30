@@ -36,22 +36,16 @@ const Stack = createStackNavigator();
 
 export default function App(): ReactElement {
 
-    const {
-        preferences,
-        setCurrentProject,
-        setUsername,
-        setProjectSettings,
-        removeProject,
-    } = usePreferences();
+    const preferences = usePreferences();
 
     // TODO refactor
     const pouchdbManager = usePouchdbManager('');
 
     const deleteProject = useCallback(async (project: string) => {
     
-        removeProject(project);
+        preferences.removeProject(project);
         await pouchdbManager?.destroyDb(project);
-    }, [removeProject, pouchdbManager]);
+    }, [preferences, pouchdbManager]);
 
   
     if (preferences && pouchdbManager) {
@@ -60,34 +54,23 @@ export default function App(): ReactElement {
                 <ToastProvider>
                     <NavigationContainer>
                         <Stack.Navigator
-                            initialRouteName={ preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
+                            initialRouteName={ preferences.preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
                             screenOptions={ { headerShown: false } }
                         >
                             <Stack.Screen name="HomeScreen">
                                 { ({ navigation }) => <HomeScreen
-                                    preferences={ preferences }
-                                    setCurrentProject={ setCurrentProject }
-                                    setProjectSettings={ setProjectSettings }
                                     deleteProject={ deleteProject }
                                     navigate={ (screen: string) => navigation.navigate(screen) }
                                 /> }
                             </Stack.Screen>
                             <Stack.Screen name="ProjectScreen">
-                                { () => preferences.currentProject && <ProjectScreen
-                                    currentProject={ preferences.currentProject }
-                                    preferences={ preferences }
-                                    setProjectSettings={ setProjectSettings }
-                                /> }
+                                { () => preferences.preferences.currentProject && <ProjectScreen /> }
                             </Stack.Screen>
                             <Stack.Screen name="SettingsScreen">
-                                { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
+                                { (props) => <SettingsScreen { ...props } /> }
                             </Stack.Screen>
                             <Stack.Screen name="LoadingScreen">
-                                { ({ navigation }) => preferences.currentProject && <LoadingScreen
-                                    currentProject={ preferences.currentProject }
-                                    preferences={ preferences }
-                                    removeProject={ removeProject }
-                                    setProjectSettings={ setProjectSettings }
+                                { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
                                     navigation={ navigation }
                                 /> }
                             </Stack.Screen>

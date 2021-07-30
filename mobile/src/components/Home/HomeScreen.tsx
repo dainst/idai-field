@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
-import { Preferences, ProjectSettings } from '../../models/preferences';
 import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';
 import Column from '../common/Column';
@@ -14,10 +13,7 @@ import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
 
 interface HomeScreenProps {
-    preferences: Preferences;
-    setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;
-    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigate: (screen: string) => void;
 }
 

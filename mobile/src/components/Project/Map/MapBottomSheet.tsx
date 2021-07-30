@@ -1,5 +1,5 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { DocumentRepository } from '../../../repositories/document-repository';
@@ -11,7 +11,6 @@ import Row from '../../common/Row';
 import DocumentDetails from '../DocumentDetails';
 interface MapBottomSheetProps {
     document: Document | undefined;
-    config: ProjectConfiguration;
     repository: DocumentRepository;
     addDocument: (parentDoc: Document) => void;
     removeDocument: (doc: Document) => void;
@@ -20,7 +19,6 @@ interface MapBottomSheetProps {
 
 const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
-    config,
     repository,
     addDocument,
     removeDocument,
@@ -40,7 +38,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
             <Row style={ styles.buttonGroup }>
                 <DocumentButton
                     document={ document }
-                    config={ config }
                     disabled={ true }
                     size={ 30 }
                     style={ styles.docButton }
@@ -79,7 +76,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
             <Column style={ styles.container }>
                 <DocumentDetails
                     docId={ docId }
-                    config={ config }
                     repository={ repository }
                 />
             </Column>

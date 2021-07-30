@@ -124,7 +124,7 @@ export class SettingsService {
             settings.selectedProject,
             settings.syncTarget.password
         );
-        return this.synchronizationService.startSync();
+        return this.synchronizationService.startSyncWithRetry();
     }
 
 

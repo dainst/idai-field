@@ -1,11 +1,10 @@
-import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
+import { Category, I18N } from 'idai-field-core';
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { PreferencesContext } from '../../contexts/preferences-context';
 
 
 interface CategoryIconProps {
-    config: ProjectConfiguration;
     category: Category;
     size: number;
 }

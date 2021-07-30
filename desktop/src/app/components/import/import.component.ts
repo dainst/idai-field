@@ -236,7 +236,7 @@ export class ImportComponent implements OnInit {
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams));
         }
-        await this.synchronizationService.startSync();
+        await this.synchronizationService.startSyncWithRetry();
 
         uploadModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);

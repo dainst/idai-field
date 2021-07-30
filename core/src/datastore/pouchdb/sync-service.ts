@@ -23,36 +23,6 @@ export enum SyncStatus {
 }
 
 
-export namespace SyncProcess {
-
-    export function generateUrl(syncTarget: string, project: string, password: string) {
-
-        if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
-
-        // const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
-        return !password
-            ? syncTarget
-            : syncTarget.replace(/(https?):\/\//, '$1://' +
-                project + ':' + password + '@');
-    }
-}
-
-
-export namespace SyncStatus {
-
-    export const getFromInfo = (info: any) =>
-    info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
-
-
-    export const getFromError = (err: any) =>
-        err.status === 401
-            ? err.reason === 'Name or password is incorrect.'
-                ? SyncStatus.AuthenticationError
-                : SyncStatus.AuthorizationError
-            : SyncStatus.Error;
-}
-
-
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -87,57 +57,44 @@ export class SyncService {
     public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
-    public async startSync() {
+    public stopSync() {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+        console.log('Stop syncing');
+        for (let handle of this.syncHandles) (handle as any).cancel();
+        this.syncHandles = [];
+        this.setStatus(SyncStatus.Offline);
+    }
+
+
+    public async startSyncWithRetry() {
 
         if (!this.syncTarget || !this.project) return;
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
-        const syncProcess = await this.setupSync();
+        const syncProcess = await this.startSync();
         syncProcess.observer.subscribe(
-            status => this.setStatus(status),
-            err => {
-                const syncStatus = SyncStatus.getFromError(err);
-                if (syncStatus !== SyncStatus.AuthenticationError
-                    && syncStatus !== SyncStatus.AuthorizationError) {
-                
-                        console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
-                }
-                this.setStatus(syncStatus);
+            _ => {},
+            _ => {
                 syncProcess.cancel();
-                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
+                this.currentSyncTimeout = setTimeout(() => this.startSyncWithRetry(), 5000); // retry
             }
         );
     }
 
 
-    public stopSync() {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this._stopSync();
-        this.setStatus(SyncStatus.Offline);
-    }
-
-
-    public setStatus(status: SyncStatus) {
-
-        this.status = status;
-        ObserverUtil.notify(this.statusObservers, this.status);
-    }
-
-
-    // TODO make private and use startSync
     /**
      * Setup peer-to-peer syncing between this datastore and target.
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
      * @param project
      */
-    public async setupSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    public async startSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
         if (!this.syncTarget || !this.project) return;
 
-        const url = SyncProcess.generateUrl(this.syncTarget, this.project, this.password);
+        const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
 
         const fullUrl = url + '/' + (this.project === 'synctest' ? 'synctestremotedb' : this.project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
@@ -152,27 +109,61 @@ export class SyncService {
                 this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
             },
             observer: Observable.create((obs: Observer<SyncStatus>) => {
-                sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
-                    .on('paused', () => obs.next(SyncStatus.InSync))
-                    .on('active', () => obs.next(SyncStatus.Pulling))
+                sync.on('change', (info: any) => {
+                        this.setStatus(SyncService.getFromInfo(info));
+                    })
+                    .on('paused', () => {
+                        this.setStatus(SyncStatus.InSync);
+                    })
+                    .on('active', () => {
+                        this.setStatus(SyncStatus.Pulling);
+                    })
                     .on('complete', (info: any) => {
-                        obs.next(SyncStatus.Offline);
+                        this.setStatus(SyncStatus.Offline);
                         obs.complete();
                     })
-                    .on('error', (err: any) => obs.error(err));
+                    .on('error', (err: any) => {
+                        const syncStatus = SyncService.getFromError(err);
+                        if (syncStatus !== SyncStatus.AuthenticationError
+                            && syncStatus !== SyncStatus.AuthorizationError) {
+                                
+                                console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                            }
+                        this.setStatus(syncStatus);
+                        obs.error(err)
+                    });
             })
         };
     }
 
 
-    // TODO make private and use stopSync
-    public _stopSync() {
+    private setStatus(status: SyncStatus) {
 
-        console.log('Stop syncing');
-
-        for (let handle of this.syncHandles) {
-            (handle as any).cancel();
-        }
-        this.syncHandles = [];
+        this.status = status;
+        ObserverUtil.notify(this.statusObservers, this.status);
     }
+
+
+    private static generateUrl(syncTarget: string, project: string, password: string) {
+
+        if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
+
+        // const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
+        return !password
+            ? syncTarget
+            : syncTarget.replace(/(https?):\/\//, '$1://' +
+                project + ':' + password + '@');
+    }
+
+
+    private static getFromInfo = (info: any) =>
+        info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
+
+
+    private static getFromError = (err: any) =>
+        err.status === 401
+            ? err.reason === 'Name or password is incorrect.'
+                ? SyncStatus.AuthenticationError
+                : SyncStatus.AuthorizationError
+            : SyncStatus.Error;
 }

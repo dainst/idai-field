@@ -1,55 +1,56 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Document, ProjectConfiguration } from 'idai-field-core';
-import React, { useState } from 'react';
+import { Document } from 'idai-field-core';
+import React, { useContext, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
+import { ConfigurationContext } from '../../contexts/configuration-context';
 import Button from '../common/Button';
 import Card from '../common/Card';
 import CategoryIcon from '../common/CategoryIcon';
 import Heading from '../common/Heading';
 import Input from '../common/Input';
 import TitleBar from '../common/TitleBar';
+
+
 interface RemoveModalProps {
-    config: ProjectConfiguration
     doc: Document | undefined;
     onClose: () => void;
     onRemoveDocument: (doc: Document | undefined) => void;
 }
 
-const DocumentRemoveModal: React.FC<RemoveModalProps> = (props) => {
-    
+const DocumentRemoveModal: React.FC<RemoveModalProps> = ( { doc, onClose, onRemoveDocument }) => {
+
+    const config = useContext(ConfigurationContext);
+
     const [docValue, setDocValue] = useState<string>('');
 
+    if(!doc) return null;
 
-    if(!props.doc) return null;
-
-    const identifier = props.doc.resource.identifier;
-    const category = props.config.getCategory(props.doc.resource.category);
+    const identifier = doc.resource.identifier;
+    const category = config.getCategory(doc.resource.category);
 
     if(!category) return null;
     
     return (
-        <Modal onRequestClose={ props.onClose } animationType="fade"
+        <Modal onRequestClose={ onClose } animationType="fade"
             transparent visible={ true }>
             <View style={ styles.container }>
                 <Card style={ styles.card }>
                     <TitleBar
                         title={
                             <>
-                                <CategoryIcon
-                                    category={ category }
-                                    config={ props.config } size={ 25 } />
+                                <CategoryIcon category={ category }size={ 25 } />
                                 <Heading style={ styles.heading }>Remove {identifier}</Heading>
                             </> }
                         left={ <Button
                             title="Cancel"
                             variant="transparent"
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                            onPress={ props.onClose }
+                            onPress={ onClose }
                         /> }
                         right={ <Button
                             title={ 'Delete' }
                             variant={ 'danger' }
-                            onPress={ () => props.onRemoveDocument(props.doc) }
+                            onPress={ () => onRemoveDocument(doc) }
                             isDisabled={ docValue !== identifier }
                         /> }
                     />

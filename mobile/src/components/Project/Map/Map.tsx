@@ -1,4 +1,4 @@
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-mapdata';
@@ -10,7 +10,6 @@ import MapBottomSheet from './MapBottomSheet';
 
 interface NMapProps {
     repository: DocumentRepository;
-    config: ProjectConfiguration;
     selectedDocumentIds: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
@@ -47,7 +46,6 @@ const Map: React.FC<NMapProps> = (props) => {
         <View style={ styles.container } onLayout={ handleLayoutChange }>
 
             {(viewPort) && <GLMap
-                config={ props.config }
                 setHighlightedDocId={ setHighlightedDocFromId }
                 viewPort={ viewPort }
                 cameraView={ cameraView }
@@ -56,7 +54,6 @@ const Map: React.FC<NMapProps> = (props) => {
                 geoDocuments={ geoDocuments } />}
             <MapBottomSheet
                 document={ highlightedDoc }
-                config={ props.config }
                 repository={ props.repository }
                 addDocument={ props.addDocument }
                 removeDocument={ props.removeDocument }

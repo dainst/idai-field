@@ -6,6 +6,7 @@ import {
 } from 'idai-field-core';
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ConfigurationContext } from '../../contexts/configuration-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import useDocument from '../../hooks/use-document';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -15,18 +16,17 @@ import DocumentButton from '../common/DocumentButton';
 
 
 interface DocumentDetailsProps {
-    config: ProjectConfiguration;
     repository: DocumentRepository;
     docId: string;
 }
 
 
 const DocumentDetails: React.FC<DocumentDetailsProps> = ({
-    config,
     repository,
     docId,
 }) => {
 
+    const config = useContext(ConfigurationContext);
     const languages = useContext(PreferencesContext).preferences.languages;
 
     const doc = useDocument(repository, docId);
@@ -71,7 +71,7 @@ const renderFieldValue = (
     config: ProjectConfiguration
 ): ReactNode =>
     field.type === 'relation'
-        ? field.targets?.map(renderRelationTarget(config))
+        ? field.targets?.map(renderRelationTarget)
         : field.type === 'default' && typeof value === 'string'
             ? renderStringValue(value)
             : field.type === 'array' && Array.isArray(value)
@@ -94,15 +94,13 @@ const renderObjectValue = (value: unknown, field: FieldsViewField, languages: st
     </Text>;
 
 
-const renderRelationTarget = (config: ProjectConfiguration) =>
-    (target: Document) =>
-        <DocumentButton
-            key={ target.resource.id }
-            disabled={ true }
-            config={ config }
-            document={ target }
-            size={ 20 }
-        />;
+const renderRelationTarget = (target: Document) =>
+    <DocumentButton
+        key={ target.resource.id }
+        disabled={ true }
+        document={ target }
+        size={ 20 }
+    />;
 
 
 const getTranslation = (_languages: string[]) =>

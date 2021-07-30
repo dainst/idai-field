@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainerRef, RouteProp, StackActions } from '@react-navigation/native';
-import { Document, ProjectConfiguration, RelationsManager, SyncStatus } from 'idai-field-core';
+import { Document, RelationsManager, SyncStatus } from 'idai-field-core';
 import React, { useEffect, useRef, useState } from 'react';
 import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
@@ -30,7 +30,6 @@ const Drawer = createDrawerNavigator<DocumentsContainerDrawerParamList>();
 interface DocumentsContainerProps {
     repository: DocumentRepository;
     syncStatus: SyncStatus;
-    config: ProjectConfiguration;
     relationsManager: RelationsManager;
 }
 
@@ -41,15 +40,21 @@ type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     repository,
     syncStatus,
-    config,
     relationsManager,
 }) => {
 
     const [q, setQ] = useState<string>('');
-    const orientation = useOrientation();
-    const { documents, hierarchyPath,
-            pushToHierarchy, popFromHierarchy, isInOverview } = useProjectData(config, repository, q);
     const [hierarchyBack, setHierarchyBack] = useState<boolean>(false);
+
+    const orientation = useOrientation();
+
+    const {
+        documents,
+        hierarchyPath,
+        pushToHierarchy,
+        popFromHierarchy,
+        isInOverview
+    } = useProjectData(repository, q);
 
     const hierarchyNavigationRef = useRef<NavigationContainerRef>(null);
 
@@ -93,7 +98,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                 return <DocumentsDrawer
                     hierarchyNavigationRef={ hierarchyNavigationRef }
                     documents={ documents }
-                    config={ config }
                     currentParent={ last(hierarchyPath) }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
@@ -111,7 +115,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     documents={ documents }
                     issueSearch={ setQ }
                     syncStatus={ syncStatus }
-                    config={ config }
                     relationsManager={ relationsManager }
                     isInOverview={ isInOverview }
                     selectDocument={ handleSelectDocument } /> }
@@ -119,7 +122,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
-                    config={ config }
                     repository={ repository }
                     parentDoc={ route.params.parentDoc }
                     categoryName={ route.params.categoryName }

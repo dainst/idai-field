@@ -11,7 +11,8 @@ import HomeScreen from './src/components/Home/HomeScreen';
 import LoadingScreen from './src/components/Loading/LoadingScreen';
 import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
-import usePouchdbManager from './src/hooks/use-pouchdb-datastore';
+import { PreferencesContext } from './src/contexts/preferences-context';
+import usePouchdbDatastore from './src/hooks/use-pouchdb-datastore';
 import usePreferences from './src/hooks/use-preferences';
 
 export type AppStackParamList = {
@@ -39,45 +40,48 @@ export default function App(): ReactElement {
     const preferences = usePreferences();
 
     // TODO refactor
-    const pouchdbManager = usePouchdbManager('');
+    const pouchdbDatastore = usePouchdbDatastore('');
 
     const deleteProject = useCallback(async (project: string) => {
     
         preferences.removeProject(project);
-        await pouchdbManager?.destroyDb(project);
-    }, [preferences, pouchdbManager]);
+        await pouchdbDatastore?.destroyDb(project);
+    }, [preferences, pouchdbDatastore]);
 
+    const initialRouteName = preferences.preferences.currentProject ? 'ProjectScreen' : 'HomeScreen';
   
-    if (preferences && pouchdbManager) {
+    if (preferences && pouchdbDatastore) {
         return (
             <SafeAreaProvider>
-                <ToastProvider>
-                    <NavigationContainer>
-                        <Stack.Navigator
-                            initialRouteName={ preferences.preferences.currentProject ? 'ProjectScreen' : 'HomeScreen' }
-                            screenOptions={ { headerShown: false } }
-                        >
-                            <Stack.Screen name="HomeScreen">
-                                { ({ navigation }) => <HomeScreen
-                                    deleteProject={ deleteProject }
-                                    navigate={ (screen: string) => navigation.navigate(screen) }
-                                /> }
-                            </Stack.Screen>
-                            <Stack.Screen name="ProjectScreen">
-                                { () => preferences.preferences.currentProject && <ProjectScreen /> }
-                            </Stack.Screen>
-                            <Stack.Screen name="SettingsScreen">
-                                { (props) => <SettingsScreen { ...props } /> }
-                            </Stack.Screen>
-                            <Stack.Screen name="LoadingScreen">
-                                { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
-                                    navigation={ navigation }
-                                /> }
-                            </Stack.Screen>
-                        </Stack.Navigator>
-                    </NavigationContainer>
-                    <Toast />
-                </ToastProvider>
+                <PreferencesContext.Provider value={ preferences }>
+                    <ToastProvider>
+                        <NavigationContainer>
+                            <Stack.Navigator
+                                initialRouteName={ initialRouteName }
+                                screenOptions={ { headerShown: false } }
+                            >
+                                <Stack.Screen name="HomeScreen">
+                                    { ({ navigation }) => <HomeScreen
+                                        deleteProject={ deleteProject }
+                                        navigate={ (screen: string) => navigation.navigate(screen) }
+                                    /> }
+                                </Stack.Screen>
+                                <Stack.Screen name="ProjectScreen">
+                                    { () => preferences.preferences.currentProject && <ProjectScreen /> }
+                                </Stack.Screen>
+                                <Stack.Screen name="SettingsScreen">
+                                    { (props) => <SettingsScreen { ...props } /> }
+                                </Stack.Screen>
+                                <Stack.Screen name="LoadingScreen">
+                                    { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
+                                        navigation={ navigation }
+                                    /> }
+                                </Stack.Screen>
+                            </Stack.Navigator>
+                        </NavigationContainer>
+                        <Toast />
+                    </ToastProvider>
+                </PreferencesContext.Provider>
             </SafeAreaProvider>
         );
     } else {

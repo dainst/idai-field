@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { AppStackParamList } from '../../../App';
 import useConfiguration from '../../hooks/use-configuration';
-import usePouchdbManager from '../../hooks/use-pouchdb-datastore';
+import usePouchdbDatastore from '../../hooks/use-pouchdb-datastore';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import useToast from '../../hooks/use-toast';
@@ -39,7 +39,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
     const [status, setStatus] = useState<string>('');
     const { showToast } = useToast();
 
-    const pouchdbManager = usePouchdbManager(currentProject);
+    const pouchdbManager = usePouchdbDatastore(currentProject);
 
     const config = useConfiguration(
         currentProject,

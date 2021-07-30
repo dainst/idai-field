@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import Button from '../common/Button';
@@ -8,7 +8,6 @@ import Row from '../common/Row';
 
 
 interface DocumentsListProps {
-    config: ProjectConfiguration;
     documents: Document[];
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;
@@ -16,7 +15,6 @@ interface DocumentsListProps {
 
 
 const DocumentsList: React.FC<DocumentsListProps> = ({
-    config,
     documents,
     onDocumentSelected,
     onParentSelected,
@@ -31,7 +29,6 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
         { documents.map(document => <Row style={ styles.row } key={ document.resource.id }>
             <DocumentButton
                 style={ styles.documentButton }
-                config={ config }
                 document={ document }
                 onPress={ () => onDocumentSelected(document) }
                 size={ 25 }

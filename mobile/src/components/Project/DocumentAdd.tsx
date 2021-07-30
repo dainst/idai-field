@@ -2,11 +2,12 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Category, Document, Field,
-    Group, I18N, NewDocument, NewResource, ProjectConfiguration, Resource
+    Group, I18N, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
+import { ConfigurationContext } from '../../contexts/configuration-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -24,15 +25,15 @@ import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
 interface DocumentAddProps {
-    config: ProjectConfiguration;
     repository: DocumentRepository;
     navigation: DocumentAddNav;
     parentDoc: Document;
     categoryName: string;
 }
 
-const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigation, parentDoc, categoryName }) => {
+const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, parentDoc, categoryName }) => {
     
+    const config = useContext(ConfigurationContext);
     const languages = useContext(PreferencesContext).preferences.languages;
 
     const [category, setCategory] = useState<Category>();
@@ -95,10 +96,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ config, repository, navigatio
             <TitleBar
                 title={
                     <>
-                        <CategoryIcon
-                            category={ category }
-                            config={ config } size={ 25 }
-                        />
+                        <CategoryIcon category={ category } size={ 25 } />
                         <Heading style={ styles.heading }>
                             Add {I18N.getLabel(category, languages)} to { parentDoc.resource.identifier }
                         </Heading>

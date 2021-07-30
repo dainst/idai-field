@@ -1,11 +1,10 @@
-import { Category, ProjectConfiguration } from 'idai-field-core';
+import { Category } from 'idai-field-core';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import CategoryIcon from './CategoryIcon';
 
 export interface CategoryIconButtonProps extends TouchableOpacityProps {
     size: number;
-    config: ProjectConfiguration;
     category: Category;
     label: string;
 }
@@ -13,14 +12,13 @@ export interface CategoryIconButtonProps extends TouchableOpacityProps {
 const CategoryIconButton: React.FC<CategoryIconButtonProps> = ({
     size,
     category,
-    config,
     label,
     ...btnProps
 }) => {
 
     return <TouchableOpacity { ...btnProps } activeOpacity={ .9 }>
         <View style={ styles.container }>
-            <CategoryIcon config={ config } category={ category } size={ size } />
+            <CategoryIcon category={ category } size={ size } />
             <Text style={ styles.title }>{ label }</Text>
         </View>
     </TouchableOpacity>;

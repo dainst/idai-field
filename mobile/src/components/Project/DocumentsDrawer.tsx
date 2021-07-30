@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import React, { Ref } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from '../common/Button';
@@ -17,7 +17,6 @@ export type DocumentsDrawerStackParamList = {
 interface DocumentsDrawerProps {
     documents: Document[];
     currentParent?: Document;
-    config: ProjectConfiguration;
     hierarchyNavigationRef: Ref<NavigationContainerRef>,
     onDocumentSelected: (document: Document) => void;
     onParentSelected: (document: Document) => void;

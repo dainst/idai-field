@@ -26,7 +26,7 @@ export enum ObjectChildValues {
 
 
 export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
-        (matrix, scene,config, document,coordinates) => {
+        (matrix, scene, config, document,coordinates) => {
     
     if(!coordinates) return;
 

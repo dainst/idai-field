@@ -1,6 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, ProjectConfiguration, RelationsManager, SyncStatus } from 'idai-field-core';
+import { Document, RelationsManager, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import useToast from '../../hooks/use-toast';
@@ -18,7 +18,6 @@ interface DocumentsMapProps {
     repository: DocumentRepository;
     documents: Document[];
     syncStatus: SyncStatus;
-    config: ProjectConfiguration;
     relationsManager: RelationsManager;
     issueSearch: (q: string) => void;
     isInOverview: () => boolean;
@@ -32,7 +31,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     repository,
     documents,
     syncStatus,
-    config,
     relationsManager,
     issueSearch,
     isInOverview,
@@ -99,14 +97,12 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             { isAddModalOpen && <AddModal
                 onClose={ closeAddModal }
                 parentDoc={ highlightedDoc }
-                config={ config }
                 onAddCategory={ navigateAddCategory }
                 isInOverview={ isInOverview }
             />}
             { isDeleteModelOpen && <DocumentRemoveModal
                 onClose={ closeDeleteModal }
                 onRemoveDocument={ onRemoveDocument }
-                config={ config }
                 doc={ highlightedDoc }
                 />}
             <SearchBar { ...{
@@ -119,7 +115,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 <Map
                     repository={ repository }
                     selectedDocumentIds={ useMemo(() => documents.map(doc => doc.resource.id),[documents]) }
-                    config={ config }
                     highlightedDocId={ route.params?.highlightedDocId }
                     addDocument={ handleAddDocument }
                     removeDocument={ openRemoveDocument }

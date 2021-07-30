@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ConfigurationContext } from '../../contexts/configuration-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbManager from '../../hooks/use-pouchdb-datastore';
@@ -40,12 +41,13 @@ const ProjectScreen: React.FC = () => {
     );
 
     return (repository && config && relationsManager)
-        ? <DocumentsContainer
-            config={ config }
-            relationsManager={ relationsManager }
-            repository={ repository }
-            syncStatus={ syncStatus }
-        />
+        ? <ConfigurationContext.Provider value={ config }>
+            <DocumentsContainer
+                relationsManager={ relationsManager }
+                repository={ repository }
+                syncStatus={ syncStatus }
+            />
+        </ConfigurationContext.Provider>
         : null;
 };
 

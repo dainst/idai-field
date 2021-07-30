@@ -1,6 +1,7 @@
-import { Document, Named, ProjectConfiguration, Query } from 'idai-field-core';
-import { useEffect, useState } from 'react';
+import { Document, Named, Query } from 'idai-field-core';
+import { useContext, useEffect, useState } from 'react';
 import { dropRight, last } from 'tsfun';
+import { ConfigurationContext } from '../contexts/configuration-context';
 import { DocumentRepository } from '../repositories/document-repository';
 import useSearch from './use-search';
 
@@ -15,10 +16,11 @@ interface ProjectData {
 
 
 const useProjectData = (
-    config: ProjectConfiguration,
     repository: DocumentRepository,
     q: string
 ): ProjectData => {
+
+    const config = useContext(ConfigurationContext);
 
     const [query, setQuery] = useState<Query>({
         categories: config.getOperationCategories().map(Named.toName),

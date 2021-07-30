@@ -1,14 +1,6 @@
 import { Observable, Observer } from 'rxjs';
 import { ObserverUtil } from '../../tools/observer-util';
-import {PouchdbDatastore} from './pouchdb-datastore';
-
-
-export interface SyncProcess {
-
-    url: string;
-    cancel(): void;
-    observer: Observable<SyncStatus>;
-}
+import { PouchdbDatastore } from './pouchdb-datastore';
 
 
 export enum SyncStatus {
@@ -67,17 +59,17 @@ export class SyncService {
     }
 
 
-    public async startSyncWithRetry() {
+    public async startSyncWithRetry() { // TODO does not need to be async
 
         if (!this.syncTarget || !this.project) return;
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
-        const syncProcess = await this.startSync();
-        syncProcess.observer.subscribe(
+        this.startSync().subscribe(
             _ => {},
             _ => {
-                syncProcess.cancel();
+                for (let handle of this.syncHandles) (handle as any).cancel();
+                this.syncHandles = [];
                 this.currentSyncTimeout = setTimeout(() => this.startSyncWithRetry(), 5000); // retry
             }
         );
@@ -90,50 +82,47 @@ export class SyncService {
      * @param url target datastore
      * @param project
      */
-    public async startSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    public startSync(filter?: (doc: any) => boolean): Observable<SyncStatus> {
 
         if (!this.syncTarget || !this.project) return;
+        if (this.syncHandles.length > 0) {
+            console.warn('sync already running, will not \'startSync\' again'); // TODO this does not seem to be enough; from mobile, at startup, there are two calls to startSync, of which the second comes then presumably before we have a sync handle
+            return;
+        }
 
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
 
         const fullUrl = url + '/' + (this.project === 'synctest' ? 'synctestremotedb' : this.project); // TODO review if SyncProcess.generateUrl should do this, too
-        console.log('Start syncing');
+        console.log('Start syncing', fullUrl);
 
         let sync = this.pouchdbDatastore.getDb().sync(fullUrl, { live: true, retry: false, filter });
 
         this.syncHandles.push(sync as never);
-        return {
-            url: url,
-            cancel: () => {
-                sync.cancel();
-                this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
-            },
-            observer: Observable.create((obs: Observer<SyncStatus>) => {
-                sync.on('change', (info: any) => {
-                        this.setStatus(SyncService.getFromInfo(info));
-                    })
-                    .on('paused', () => {
-                        this.setStatus(SyncStatus.InSync);
-                    })
-                    .on('active', () => {
-                        this.setStatus(SyncStatus.Pulling);
-                    })
-                    .on('complete', (info: any) => {
-                        this.setStatus(SyncStatus.Offline);
-                        obs.complete();
-                    })
-                    .on('error', (err: any) => {
-                        const syncStatus = SyncService.getFromError(err);
-                        if (syncStatus !== SyncStatus.AuthenticationError
-                            && syncStatus !== SyncStatus.AuthorizationError) {
-                                
-                                console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
-                            }
-                        this.setStatus(syncStatus);
-                        obs.error(err)
-                    });
-            })
-        };
+        return Observable.create((obs: Observer<SyncStatus>) => {
+            sync.on('change', (info: any) => {
+                    this.setStatus(SyncService.getFromInfo(info));
+                })
+                .on('paused', () => {
+                    this.setStatus(SyncStatus.InSync);
+                })
+                .on('active', () => {
+                    this.setStatus(SyncStatus.Pulling);
+                })
+                .on('complete', (info: any) => {
+                    this.setStatus(SyncStatus.Offline);
+                    obs.complete();
+                })
+                .on('error', (err: any) => {
+                    const syncStatus = SyncService.getFromError(err);
+                    if (syncStatus !== SyncStatus.AuthenticationError
+                        && syncStatus !== SyncStatus.AuthorizationError) {
+                            
+                            console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                        }
+                    this.setStatus(syncStatus);
+                    obs.error(err);
+                });
+        });
     }
 
 

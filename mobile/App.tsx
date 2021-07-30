@@ -75,10 +75,6 @@ export default function App(): ReactElement {
                                 <Stack.Screen name="LoadingScreen">
                                     { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
                                         navigation={ navigation }
-                                        currentProject={ preferences.preferences.currentProject }
-                                        setProjectSettings={ preferences.setProjectSettings }
-                                        removeProject={ preferences.removeProject }
-                                        preferences={ preferences.preferences }
                                     /> }
                                 </Stack.Screen>
                             </Stack.Navigator>

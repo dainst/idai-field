@@ -1,15 +1,15 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SyncStatus } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { AppStackParamList } from '../../../App';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbDatastore from '../../hooks/use-pouchdb-datastore';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import useToast from '../../hooks/use-toast';
-import { Preferences, ProjectSettings } from '../../models/preferences';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import Heading from '../common/Heading';
@@ -20,43 +20,36 @@ import { ToastType } from '../common/Toast/ToastProvider';
 type DocumentAddNav = StackNavigationProp<AppStackParamList, 'LoadingScreen'>;
 
 interface LoadingScreenProps {
-    currentProject: string;
-    preferences: Preferences;
-    removeProject: (project: string) => void;
-    setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     navigation: DocumentAddNav;
 }
 
-const LoadingScreen: React.FC<LoadingScreenProps> = ({
-        currentProject,
-        preferences,
-        removeProject,
-        setProjectSettings,
-        navigation }) => {
+const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
+
+    const preferences = useContext(PreferencesContext);
 
     const [showSpinner, setShowSpinner] = useState<boolean>(false);
     const [showError, setShowError] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('');
     const { showToast } = useToast();
 
-    const pouchdbManager = usePouchdbDatastore(currentProject);
+    const pouchdbManager = usePouchdbDatastore(preferences.preferences.currentProject);
 
     const config = useConfiguration(
-        currentProject,
-        preferences.languages,
-        preferences.username,
+        preferences.preferences.currentProject,
+        preferences.preferences.languages,
+        preferences.preferences.username,
         pouchdbManager,
     );
 
     const repository = useRepository(
-        preferences.username,
+        preferences.preferences.username,
         config?.getCategories() || [],
         pouchdbManager,
     );
 
     const syncStatus = useSync(
-        currentProject,
-        preferences.projects[currentProject],
+        preferences.preferences.currentProject,
+        preferences.preferences.projects[preferences.preferences.currentProject],
         repository,
         pouchdbManager,
     );
@@ -73,16 +66,16 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 setStatus(syncStatus);
                 setShowSpinner(false);
                 setShowError(true);
-                removeProject(currentProject);
+                preferences.removeProject(preferences.preferences.currentProject);
         } else if(syncStatus === SyncStatus.Pulling) {
             setStatus('Loading....');
             setShowSpinner(true);
         } else if(syncStatus === SyncStatus.InSync) {
-            showToast(ToastType.Success, `Loaded ${currentProject}`);
+            showToast(ToastType.Success, `Loaded ${preferences.preferences.currentProject}`);
             navigation.navigate('HomeScreen');
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [syncStatus, currentProject]);
+    }, [syncStatus, preferences.preferences.currentProject]);
 
 
     const returnToHomeScreen = () => {
@@ -92,8 +85,11 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
 
     const disconnect = () => {
-        const currentSettings = preferences.projects[currentProject];
-        setProjectSettings(currentProject, { ...currentSettings, connected: false });
+        const currentSettings = preferences.preferences.projects[preferences.preferences.currentProject];
+        preferences.setProjectSettings(
+            preferences.preferences.currentProject,
+            { ...currentSettings, connected: false }
+        );
     };
 
     // Add header
@@ -101,7 +97,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
         <SafeAreaView style={ styles.container }>
             <TitleBar
                 title={
-                    <Heading>Loading {currentProject}</Heading>
+                    <Heading>Loading { preferences.preferences.currentProject }</Heading>
                 }
                 left={ <Button
                     variant="transparent"

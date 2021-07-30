@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Document, ProjectConfiguration, Tree } from 'idai-field-core';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Category, Document, Tree } from 'idai-field-core';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Modal, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import { ConfigurationContext } from '../../contexts/configuration-context';
 import Button from '../common/Button';
 import Card from '../common/Card';
 import CategoryButton from '../common/CategoryButton';
@@ -14,48 +15,49 @@ const ICON_SIZE = 30;
 interface AddModalProps {
     onAddCategory: (categoryName: string, parentDoc: Document | undefined) => void;
     onClose: () => void;
-    config: ProjectConfiguration;
     isInOverview: () => boolean;
     parentDoc?: Document;
 }
 
-const AddModal: React.FC<AddModalProps> = (props) => {
+const AddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isInOverview, parentDoc }) => {
+
+    const config = useContext(ConfigurationContext);
 
     const [categories, setCategories] = useState<Category[]>([]);
 
     const isAllowedCategory = useCallback( (category: Category) => {
 
-        if(category.name === 'Image' || !props.parentDoc) return false;
-        if(props.isInOverview()){
-            if (!props.config.isAllowedRelationDomainCategory(
-                category.name, props.parentDoc.resource.category, 'isRecordedIn')) return false;
+        if(category.name === 'Image' || !parentDoc) return false;
+        if(isInOverview()){
+            if (!config.isAllowedRelationDomainCategory(
+                category.name, parentDoc.resource.category, 'isRecordedIn')) return false;
             return !category.mustLieWithin;
         } else {
-            return props.config.isAllowedRelationDomainCategory(
+            return config.isAllowedRelationDomainCategory(
                 category.name,
-                props.parentDoc.resource.category, 'liesWithin');
+                parentDoc.resource.category, 'liesWithin');
         }
         
-    },[props]);
+    },[isInOverview, parentDoc, config]);
 
     
     useEffect(() => {
         const categories: Category[] = [];
-        Tree.flatten(props.config.getCategories()).forEach(category => {
+        Tree.flatten(config.getCategories()).forEach(category => {
             if(isAllowedCategory(category) && (!category.parentCategory || !isAllowedCategory(category.parentCategory)))
                 categories.push(category);
         });
         setCategories(categories);
-    },[isAllowedCategory, props]);
+    },[isAllowedCategory, config]);
 
     
     const renderButton = (category: Category, style: ViewStyle, key?: string) => (
         <CategoryButton
-            config={ props.config } size={ ICON_SIZE }
+            size={ ICON_SIZE }
             category={ category }
             style={ style }
             key={ key }
-            onPress={ () => props.onAddCategory(category.name, props.parentDoc) } />);
+            onPress={ () => onAddCategory(category.name, parentDoc) } />);
 
 
     const renderCategoryChilds = (category: Category) => (
@@ -64,13 +66,13 @@ const AddModal: React.FC<AddModalProps> = (props) => {
         </View>);
     
 
-    if(!props.parentDoc) return null;
-    const parentCategory = props.config.getCategory(props.parentDoc.resource.category);
+    if(!parentDoc) return null;
+    const parentCategory = config.getCategory(parentDoc.resource.category);
     if(!parentCategory) return null;
     
 
     return (
-        <Modal onRequestClose={ props.onClose } animationType="fade"
+        <Modal onRequestClose={ onClose } animationType="fade"
             transparent visible={ true }>
             <View style={ styles.container }>
                 <Card style={ styles.card }>
@@ -79,9 +81,9 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                             <>
                                 <CategoryIcon
                                     category={ parentCategory }
-                                    config={ props.config } size={ 25 } />
+                                    size={ 25 } />
                                 <Heading style={ styles.heading }>
-                                    Add child to { props.parentDoc?.resource.identifier }
+                                    Add child to { parentDoc?.resource.identifier }
                                 </Heading>
                             </>
                         }
@@ -89,7 +91,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                             title="Cancel"
                             variant="transparent"
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                            onPress={ props.onClose }
+                            onPress={ onClose }
                         /> }
                     />
                     <ScrollView style={ styles.categories }>

@@ -1,10 +1,11 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
-import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { Document, FieldGeometry } from 'idai-field-core';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
+import { ConfigurationContext } from '../../../../contexts/configuration-context';
 import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
@@ -34,7 +35,6 @@ const no = () => {};
 const yes = () => true;
 
 interface GLMapProps {
-    config: ProjectConfiguration;
     setHighlightedDocId: (docId: string) => void;
     viewPort: ViewPort;
     cameraView: CameraView | undefined;
@@ -45,8 +45,15 @@ interface GLMapProps {
 
 
 const GLMap: React.FC<GLMapProps> = ({
-     config, setHighlightedDocId, viewPort, cameraView, transformMatrix, selectedDocumentIds, geoDocuments }) => {
+    setHighlightedDocId,
+    viewPort,
+    cameraView,
+    transformMatrix,
+    selectedDocumentIds,
+    geoDocuments
+}) => {
 
+    const config = useContext(ConfigurationContext);
 
     let timeout: number;
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,0,100,100) ).current;
@@ -178,11 +185,11 @@ const GLMap: React.FC<GLMapProps> = ({
             switch(geometry.type){
                 case 'Polygon':
                 case 'MultiPolygon':
-                    polygonToShape(transformMatrix, scene, config,doc, geometry.coordinates );
+                    polygonToShape(transformMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'LineString':
                 case 'MultiLineString':
-                    lineStringToShape(transformMatrix, scene, config,doc, geometry.coordinates);
+                    lineStringToShape(transformMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'Point':
                     pointToShape(transformMatrix, scene, config, doc, geometry.coordinates);

@@ -13,7 +13,6 @@ interface MapBottomSheetProps {
     document: Document | undefined;
     config: ProjectConfiguration;
     repository: DocumentRepository;
-    languages: string[];
     addDocument: (parentDoc: Document) => void;
     removeDocument: (doc: Document) => void;
     focusHandler: (docId: string) => void;
@@ -23,7 +22,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
     config,
     repository,
-    languages,
     addDocument,
     removeDocument,
     focusHandler
@@ -46,7 +44,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     disabled={ true }
                     size={ 30 }
                     style={ styles.docButton }
-                    languages={ languages }
                 />
                 <Button
                     style={ [styles.button, styles.focusBtn] }
@@ -84,7 +81,6 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     docId={ docId }
                     config={ config }
                     repository={ repository }
-                    languages={ languages }
                 />
             </Column>
         </BottomSheet>

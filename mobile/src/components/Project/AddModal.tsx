@@ -17,7 +17,6 @@ interface AddModalProps {
     config: ProjectConfiguration;
     isInOverview: () => boolean;
     parentDoc?: Document;
-    languages: string[]
 }
 
 const AddModal: React.FC<AddModalProps> = (props) => {
@@ -50,19 +49,18 @@ const AddModal: React.FC<AddModalProps> = (props) => {
     },[isAllowedCategory, props]);
 
     
-    const renderButton = (category: Category, style: ViewStyle, languages: string[], key?: string) => (
+    const renderButton = (category: Category, style: ViewStyle, key?: string) => (
         <CategoryButton
             config={ props.config } size={ ICON_SIZE }
             category={ category }
             style={ style }
             key={ key }
-            languages={ languages }
             onPress={ () => props.onAddCategory(category.name, props.parentDoc) } />);
 
 
-    const renderCategoryChilds = (category: Category, languages: string[]) => (
+    const renderCategoryChilds = (category: Category) => (
         <View style={ categoryChildStyles.container }>
-            {category.children.map(category => renderButton(category,{ margin: 2.5 }, languages, category.name))}
+            {category.children.map(category => renderButton(category,{ margin: 2.5 }, category.name))}
         </View>);
     
 
@@ -81,7 +79,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                             <>
                                 <CategoryIcon
                                     category={ parentCategory }
-                                    config={ props.config } size={ 25 } languages={ props.languages } />
+                                    config={ props.config } size={ 25 } />
                                 <Heading style={ styles.heading }>
                                     Add child to { props.parentDoc?.resource.identifier }
                                 </Heading>
@@ -97,8 +95,8 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                     <ScrollView style={ styles.categories }>
                         {categories.map(category => (
                             <View key={ category.name } >
-                                {renderButton(category,{ margin: 5 }, props.languages)}
-                                {renderCategoryChilds(category, props.languages)}
+                                { renderButton(category,{ margin: 5 }) }
+                                { renderCategoryChilds(category) }
                             </View>
                         ))}
                     </ScrollView>

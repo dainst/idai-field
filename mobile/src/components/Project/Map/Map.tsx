@@ -12,7 +12,6 @@ interface NMapProps {
     repository: DocumentRepository;
     config: ProjectConfiguration;
     selectedDocumentIds: string[];
-    languages: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
     removeDocument: (doc: Document) => void;
@@ -59,7 +58,6 @@ const Map: React.FC<NMapProps> = (props) => {
                 document={ highlightedDoc }
                 config={ props.config }
                 repository={ props.repository }
-                languages={ props.languages }
                 addDocument={ props.addDocument }
                 removeDocument={ props.removeDocument }
                 focusHandler={ focusMapOnDocumentId } />

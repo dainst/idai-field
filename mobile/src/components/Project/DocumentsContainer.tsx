@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { last } from 'tsfun';
 import useOrientation from '../../hooks/use-orientation';
 import useProjectData from '../../hooks/use-project-data';
-import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentAdd from './DocumentAdd';
 import DocumentsDrawer from './DocumentsDrawer';
@@ -31,12 +30,8 @@ const Drawer = createDrawerNavigator<DocumentsContainerDrawerParamList>();
 interface DocumentsContainerProps {
     repository: DocumentRepository;
     syncStatus: SyncStatus;
-    projectSettings: ProjectSettings;
     config: ProjectConfiguration;
     relationsManager: RelationsManager;
-    username: string;
-    languages: string[];
-    setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
 
 
@@ -46,12 +41,8 @@ type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     repository,
     syncStatus,
-    projectSettings,
     config,
     relationsManager,
-    username,
-    languages,
-    setProjectSettings
 }) => {
 
     const [q, setQ] = useState<string>('');
@@ -109,7 +100,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
                     onParentSelected={ onParentSelected }
                     onHierarchyBack={ onHierarchyBack }
-                    languages={ languages }
                 />;
             } }
         >
@@ -121,21 +111,16 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     documents={ documents }
                     issueSearch={ setQ }
                     syncStatus={ syncStatus }
-                    projectSettings={ projectSettings }
                     config={ config }
                     relationsManager={ relationsManager }
-                    languages={ languages }
-                    setProjectSettings={ setProjectSettings }
                     isInOverview={ isInOverview }
                     selectDocument={ handleSelectDocument } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd
                     navigation={ navigation }
-                    username={ username }
                     config={ config }
                     repository={ repository }
-                    languages={ languages }
                     parentDoc={ route.params.parentDoc }
                     categoryName={ route.params.categoryName }
                 /> }

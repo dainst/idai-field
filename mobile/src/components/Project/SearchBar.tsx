@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useOrientation from '../../hooks/use-orientation';
-import { ProjectSettings } from '../../models/preferences';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Row from '../common/Row';
@@ -12,18 +11,14 @@ import ScanBarcodeButton from './ScanBarcodeButton';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {
-    projectSettings: ProjectSettings;
     syncStatus: SyncStatus;
-    setProjectSettings: (settings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
     toggleDrawer: () => void;
     onBarCodeScanned: (data: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
-    projectSettings,
     syncStatus,
-    setProjectSettings,
     issueSearch,
     toggleDrawer,
     onBarCodeScanned,
@@ -44,7 +39,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onEndEditing={ () => issueSearch(q) }
                 hideBorder
             />
-            { renderRightIcons(projectSettings, setProjectSettings, syncStatus, onBarCodeScanned) }
+            { renderRightIcons(syncStatus, onBarCodeScanned) }
         </Row>
     );
 };
@@ -58,19 +53,10 @@ const renderLeftIcons = (onPress: () => void) =>
     />;
     
 
-const renderRightIcons = (
-    projectSettings: ProjectSettings,
-    setProjectSettings: (settings: ProjectSettings) => void,
-    syncStatus: SyncStatus,
-    onBarCodeScanned: (data: string) => void,
-) =>
+const renderRightIcons = (syncStatus: SyncStatus, onBarCodeScanned: (data: string) => void) =>
     <>
         <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
-        <SyncSettingsButton
-            settings={ projectSettings }
-            setSettings={ setProjectSettings }
-            status={ syncStatus }
-        />
+        <SyncSettingsButton status={ syncStatus } />
     </>;
 
 

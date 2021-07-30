@@ -1,17 +1,19 @@
 import { Category, I18N, ProjectConfiguration } from 'idai-field-core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { PreferencesContext } from '../../contexts/preferences-context';
 
 
 interface CategoryIconProps {
     config: ProjectConfiguration;
     category: Category;
     size: number;
-    languages: string[];
 }
 
 
-const CategoryIcon: React.FC<CategoryIconProps> = ({ category, size, languages }: CategoryIconProps) => {
+const CategoryIcon: React.FC<CategoryIconProps> = ({ category, size }: CategoryIconProps) => {
+
+    const languages = useContext(PreferencesContext).preferences.languages;
 
     const styles = getStyles(category, size);
 

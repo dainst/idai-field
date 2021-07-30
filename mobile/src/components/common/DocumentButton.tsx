@@ -6,7 +6,6 @@ import CategoryIconButton from './CategoryIconButton';
 interface DocumentButtonProps extends TouchableOpacityProps {
     size: number;
     config: ProjectConfiguration;
-    languages: string[];
     document: Document;
 }
 

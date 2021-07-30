@@ -1,4 +1,4 @@
-import { PouchdbDatastore, SyncProcess, SyncStatus } from 'idai-field-core';
+import { PouchdbDatastore, SyncService, SyncStatus, Document } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import { ToastType } from '../components/common/Toast/ToastProvider';
@@ -26,9 +26,9 @@ const useSync = (
         return () => {
             setupSyncPromise.then(setupSyncResult => {
                 if (setupSyncResult) {
-                    const [process, subscription] = setupSyncResult;
+                    const [subscription] = setupSyncResult;
                     subscription.unsubscribe();
-                    process.cancel();
+                    // process.cancel();
                 }
             });
         };
@@ -46,20 +46,32 @@ const setupSync = async (
     project: string,
     { url, password, connected } : ProjectSettings,
     setStatus: (status: SyncStatus) => void,
-    showToast: (type: ToastType, message: string, duration?: number | undefined) => void,
-): Promise<[SyncProcess, Subscription] | undefined> => {
+    showToast: (type: ToastType, message: string, duration?: number | undefined) => void
+): Promise<[Subscription] | undefined> => {
 
-    if (connected && url) {
-        const syncProcess = await repository.setupSync(url, project, password);
-        const subscription = syncProcess.observer.subscribe({
-            next: setStatus,
-            error: err => {
-                showToast(ToastType.Error,`Error while syncing ${err}`);
-                console.error('Error while syncing', err);
-                setStatus(err);
-            }
-        });
-        return [syncProcess, subscription];
+    if (connected && url && repository.syncService) {
+        
+        repository.syncService.init(url, project, password);
+        repository.syncService.setupSync((doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type));
+
+        // const syncProcess = await syncService.setupSync(url, project, password);
+// 
+        const statusSubscription = repository.syncService
+            .statusNotifications().subscribe({ next: status => {
+                console.log("status", status);
+                setStatus(status);
+            }});
+        // TODO make error subscription, too
+
+        // const subscription = syncProcess.observer.subscribe({
+            // next: setStatus,
+            // error: err => {
+                // showToast(ToastType.Error,`Error while syncing ${err}`);
+                // console.error('Error while syncing', err);
+                // setStatus(err);
+            // }
+        // });
+        return [statusSubscription];
     }
 };
 

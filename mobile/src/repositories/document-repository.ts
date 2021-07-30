@@ -10,7 +10,7 @@ export class DocumentRepository {
 
     private pouchdbDatastore: PouchdbDatastore;
     private changesStream: ChangesStream;
-    private syncService: SyncService;
+    public syncService: SyncService;
 
     public datastore: Datastore;
 
@@ -78,18 +78,6 @@ export class DocumentRepository {
 
     public remoteChanged = (): Observable<Document> =>
         this.changesStream.remoteChangesNotifications();
-
-
-    public setupSync = (syncTarget: string, project: string, password: string): Promise<SyncProcess> => {
-
-        this.syncService.init(syncTarget, project, password);
-        return this.syncService.setupSync(isNotAnImage);
-    }
-
-
-    public stopSync = (): void =>
-        this.syncService._stopSync();
-
 }
 
 

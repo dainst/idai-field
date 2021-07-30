@@ -68,12 +68,16 @@ export namespace Category {
 
     export function build(name: Name, parentCategory?: Category): Category {
 
+        const color: string = Category.generateColorForCategory(name);
+
         const newCategory = {
             name: name,
             label: {},
             defaultLabel: {},
             description: {},
-            defaultDescription: {}
+            defaultDescription: {},
+            color: color,
+            defaultColor: color
         } as any /* TODO any */;
 
         if (parentCategory) {
@@ -88,7 +92,7 @@ export namespace Category {
     export function getFields(category: Category): Array<Field> {
 
         return flatMap(
-            values(category.groups), 
+            values(category.groups),
             Group.toFields);
     }
 

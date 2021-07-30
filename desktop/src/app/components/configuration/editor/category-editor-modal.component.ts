@@ -45,11 +45,11 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         this.currentColor = this.category.color
             ? CategoryEditorModalComponent.getHexColor(this.category.color)
-            : '#000';
+            : '#000000';
 
         if (this.new) {
             this.clonedConfigurationDocument.resource.categories[this.category.name] = {
-                color: '#000',
+                color: this.category.color,
                 parent: this.category.parentCategory.name,
                 fields: {},
                 groups: ConfigurationUtil.createGroupsConfiguration(
@@ -68,7 +68,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public async save() {
 
         if (this.getClonedCategoryDefinition().color ===
-                CategoryEditorModalComponent.getHexColor(this.category.defaultColor)) {
+                CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
+                && this.category.libraryId) {
             delete this.getClonedCategoryDefinition().color;
         }
 
@@ -97,7 +98,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return this.getClonedCategoryDefinition().color
             && this.getClonedCategoryDefinition().color
-                !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor);
+                !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
+            && this.category.libraryId !== undefined;
     }
 
 

@@ -139,7 +139,10 @@ function buildCategoryFromDefinition(definition: TransientCategoryDefinition): C
     category.groups = [];
     category.isAbstract = def.abstract || false;
     category.color = def.color ?? Category.generateColorForCategory(category.name);
-    category.defaultColor = def.defaultColor ?? Category.generateColorForCategory(category.name);
+    category.defaultColor = def.defaultColor ?? (category.libraryId
+        ? Category.generateColorForCategory(def.name)
+        : category.color
+    );
     category.createdBy = def.createdBy;
     category.creationDate = def.creationDate ? new Date(def.creationDate) : undefined;
     category.children = [];

@@ -57,23 +57,6 @@ export class SyncService {
     public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
-    public async startSyncWithRetry() {
-
-        if (!this.syncTarget || !this.project) return;
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-
-        const syncProcess = await this.setupSync();
-        syncProcess.observer.subscribe(
-            _ => {},
-            _ => {
-                syncProcess.cancel();
-                this.currentSyncTimeout = setTimeout(() => this.startSyncWithRetry(), 5000); // retry
-            }
-        );
-    }
-
-
     public stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
@@ -84,14 +67,30 @@ export class SyncService {
     }
 
 
-    // TODO make private and use startSync
+    public async startSyncWithRetry() {
+
+        if (!this.syncTarget || !this.project) return;
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+
+        const syncProcess = await this.startSync();
+        syncProcess.observer.subscribe(
+            _ => {},
+            _ => {
+                syncProcess.cancel();
+                this.currentSyncTimeout = setTimeout(() => this.startSyncWithRetry(), 5000); // retry
+            }
+        );
+    }
+
+
     /**
      * Setup peer-to-peer syncing between this datastore and target.
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
      * @param project
      */
-    public async setupSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    public async startSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
         if (!this.syncTarget || !this.project) return;
 

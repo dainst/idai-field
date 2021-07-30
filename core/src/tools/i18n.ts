@@ -34,7 +34,12 @@ export namespace I18N {
                                            languages: string[]): { label: string, description?: string } {
 
 
-        if (!labeledValue.label) return { label: labeledValue.name };
+        if (!labeledValue.label) {
+            return {
+                label: labeledValue.name,
+                description: getTranslation(labeledValue['description'], languages)
+            };
+        }
 
         const language = getLanguage(labeledValue.label, languages);
         return language
@@ -43,8 +48,8 @@ export namespace I18N {
                 description: labeledValue?.['description']?.[language]
             }
             : { 
-                label: 
-                labeledValue.name 
+                label: labeledValue.name,
+                description: getTranslation(labeledValue['description'], languages)
             };
     }
 

@@ -1,4 +1,4 @@
-import { PouchdbManager, SyncProcess, SyncStatus } from 'idai-field-core';
+import { PouchdbDatastore, SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import { ToastType } from '../components/common/Toast/ToastProvider';
@@ -10,14 +10,14 @@ const useSync = (
     project: string,
     projectSettings: ProjectSettings,
     repository?: DocumentRepository,
-    pouchdbManager?: PouchdbManager): SyncStatus => {
+    pouchdbDatastore?: PouchdbDatastore): SyncStatus => {
     
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
     const { showToast } = useToast();
 
     useEffect(() => {
 
-        if(!pouchdbManager || !pouchdbManager.open || !repository || !project) {
+        if(!pouchdbDatastore || !pouchdbDatastore.open || !repository || !project) {
             setStatus(SyncStatus.Offline);
             return;
         }
@@ -33,7 +33,7 @@ const useSync = (
             });
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pouchdbManager, pouchdbManager?.open, repository, project, projectSettings]);
+    }, [pouchdbDatastore, pouchdbDatastore?.open, repository, project, projectSettings]);
 
     if (!repository) return SyncStatus.Offline;
 
@@ -50,8 +50,7 @@ const setupSync = async (
 ): Promise<[SyncProcess, Subscription] | undefined> => {
 
     if (connected && url) {
-        const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
-        const syncProcess = await repository.setupSync(fullUrl, project);
+        const syncProcess = await repository.setupSync(url, project, password);
         const subscription = syncProcess.observer.subscribe({
             next: setStatus,
             error: err => {

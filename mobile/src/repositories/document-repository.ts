@@ -80,8 +80,11 @@ export class DocumentRepository {
         this.changesStream.remoteChangesNotifications();
 
 
-    public setupSync = (url: string, project: string): Promise<SyncProcess> =>
-        this.syncService.setupSync(url, project, isNotAnImage);
+    public setupSync = (syncTarget: string, project: string, password: string): Promise<SyncProcess> => {
+
+        this.syncService.init(syncTarget, project, password);
+        return this.syncService.setupSync(isNotAnImage);
+    }
 
 
     public stopSync = (): void =>

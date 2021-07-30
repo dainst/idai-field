@@ -29,6 +29,7 @@ export namespace SyncProcess {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
 
+        // const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
         return !password
             ? syncTarget
             : syncTarget.replace(/(https?):\/\//, '$1://' +
@@ -92,9 +93,7 @@ export class SyncService {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
-        const url = SyncProcess.generateUrl(this.syncTarget, this.project, this.password);
-        
-        const syncProcess = await this.setupSync(url, this.project);
+        const syncProcess = await this.setupSync();
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
@@ -134,9 +133,13 @@ export class SyncService {
      * @param url target datastore
      * @param project
      */
-    public async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    public async setupSync(filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
-        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); // TODO review if SyncProcess.generateUrl should do this, too
+        if (!this.syncTarget || !this.project) return;
+
+        const url = SyncProcess.generateUrl(this.syncTarget, this.project, this.password);
+
+        const fullUrl = url + '/' + (this.project === 'synctest' ? 'synctestremotedb' : this.project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
 
         let sync = this.pouchdbDatastore.getDb().sync(fullUrl, { live: true, retry: false, filter });

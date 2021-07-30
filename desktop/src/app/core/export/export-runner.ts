@@ -79,14 +79,18 @@ export module ExportRunner {
                                                   categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
         if (!context) return determineCategoryCountsForSchema(categoriesList);
-        if (context === PROJECT_CONTEXT) return determineCategoryCountsForSelectedOperation(
-            find, context, categoriesList
-        );
+
+        if (context === PROJECT_CONTEXT) {
+            return (await determineCategoryCountsForSelectedOperation(
+               find, context, categoriesList
+            )).filter(([_category, count]) => count > 0);
+        }
 
         const topLevelCounts = await determineCategoryCountsForToplevel(find, context, categoriesList);
         const recordedCounts = await determineCategoryCountsForMultipleOperations(
             get, find, context, categoriesList
         );
+
         return topLevelCounts.concat(recordedCounts).filter(([_category, count]) => count > 0);
     }
 

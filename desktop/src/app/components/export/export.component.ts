@@ -15,10 +15,10 @@ import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ExportModalComponent } from './export-modal.component';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {ImageRelationsManager} from '../../services/image-relations-manager';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -96,6 +96,7 @@ export class ExportComponent implements OnInit {
         this.initializing = false;
     }
 
+    
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(

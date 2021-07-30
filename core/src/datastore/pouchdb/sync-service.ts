@@ -77,12 +77,11 @@ export class SyncService {
     public stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this._stopSync();
+        console.log('Stop syncing');
+        for (let handle of this.syncHandles) (handle as any).cancel();
+        this.syncHandles = [];
         this.setStatus(SyncStatus.Offline);
     }
-
-
-    
 
 
     // TODO make private and use startSync
@@ -143,18 +142,6 @@ export class SyncService {
 
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
-    }
-
-
-    // TODO make private and use stopSync
-    private _stopSync() {
-
-        console.log('Stop syncing');
-
-        for (let handle of this.syncHandles) {
-            (handle as any).cancel();
-        }
-        this.syncHandles = [];
     }
 
 

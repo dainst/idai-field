@@ -97,6 +97,7 @@ export class ExportComponent implements OnInit {
         this.initializing = false;
     }
 
+    
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(

@@ -82,11 +82,7 @@ export class SyncService {
     }
 
 
-    public setStatus(status: SyncStatus) {
-
-        this.status = status;
-        ObserverUtil.notify(this.statusObservers, this.status);
-    }
+    
 
 
     // TODO make private and use startSync
@@ -140,6 +136,13 @@ export class SyncService {
                     });
             })
         };
+    }
+
+
+    private setStatus(status: SyncStatus) {
+
+        this.status = status;
+        ObserverUtil.notify(this.statusObservers, this.status);
     }
 
 

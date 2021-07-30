@@ -86,7 +86,7 @@ export class SyncService {
 
         if (!this.syncTarget || !this.project) return;
         if (this.syncHandles.length > 0) {
-            console.warn('sync already running, will not \'startSync\' again');
+            console.warn('sync already running, will not \'startSync\' again'); // TODO this does not seem to be enough; from mobile, at startup, there are two calls to startSync, of which the second comes then presumably before we have a sync handle
             return;
         }
 

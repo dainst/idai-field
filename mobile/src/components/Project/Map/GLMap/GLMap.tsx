@@ -17,7 +17,7 @@ import {
 import { calcCenter, calcDistance } from './math-utils';
 
 
-interface Coordinate {
+interface Coordinate2D {
     x: number;
     y: number;
 }
@@ -66,7 +66,7 @@ const GLMap: React.FC<GLMapProps> = ({
     const isMoving = useRef<boolean>(false);
 
     //reference values set at the beginning of the gesture
-    const initialTouch = useRef<Coordinate>({ x:0, y:0 });
+    const initialTouch = useRef<Coordinate2D>({ x:0, y:0 });
     const initialX = useRef<number>(0);
     const initialY = useRef<number>(0);
     const initialZoom = useRef<number>(1);

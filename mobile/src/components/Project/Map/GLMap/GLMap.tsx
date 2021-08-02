@@ -1,7 +1,7 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Document, FieldGeometry } from 'idai-field-core';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
@@ -22,16 +22,22 @@ interface Coordinate2D {
     y: number;
 }
 
+interface CameraPosition extends Coordinate2D {
+    z: number;
+}
+
 const cameraDefaultPos = {
     x: 0,
     y: 0,
     z: 5,
 };
 
+
 const moveThreshold = 5;
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const no = () => {};
 const yes = () => true;
+
 
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
@@ -114,8 +120,11 @@ const GLMap: React.FC<GLMapProps> = ({
         } else {
             const dx = x - initialTouch.current.x;
             const dy = y - initialTouch.current.y;
-            camera.position.set(initialX.current - dx / camera.zoom, initialY.current + dy / camera.zoom, 5);
-            camera.updateProjectionMatrix();
+            updateCamera(camera.zoom,{
+                x: initialX.current - dx / camera.zoom,
+                y: initialY.current + dy / camera.zoom,
+                z: cameraDefaultPos.z
+            });
         }
     };
 
@@ -133,44 +142,48 @@ const GLMap: React.FC<GLMapProps> = ({
         } else {
             const touchZoom = distance / initialDistance.current;
             const newZoom = initialZoom.current * touchZoom;
-            camera.zoom = newZoom;
-            camera.updateProjectionMatrix();
+            updateCamera(newZoom);
         }
     };
-
+    
 
     useEffect(() => {
         
         if(viewPort){
             scene.clear();
             const maxSize = Math.max(viewPort.width, viewPort.height );
-            camera.left = viewPort.x;
-            camera.right = maxSize;
-            camera.top = maxSize;
-            camera.bottom = viewPort.y;
+            const view: CameraView = {
+                left: viewPort.x,
+                right: maxSize,
+                top: maxSize,
+                bottom: viewPort.y
+            };
+            updateCamera(1, cameraDefaultPos, view);
             
-            camera.position.set(cameraDefaultPos.x, cameraDefaultPos.y, cameraDefaultPos.z);
-            camera.updateProjectionMatrix();
         }
         
-    },[ viewPort, scene, camera]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[viewPort]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => updateCamera(1, cameraDefaultPos, cameraView),[cameraView]);
 
-    const updateCamera = useCallback((cameraView: CameraView | undefined, zoom?: number) => {
+    const updateCamera = (zoom: number, pos?: CameraPosition, view?: CameraView) => {
+        
+        camera.zoom = zoom;
+        
+        if(pos){
+            camera.position.set(pos.x, pos.y, pos.z);
+        }
+        if(view ){
+            camera.left = view.left;
+            camera.right = view.right;
+            camera.top = view.top;
+            camera.bottom = view.bottom;
+        }
 
-        if(!camera || !cameraView) return;
-        const { left, right, top, bottom } = cameraView;
-        camera.left = left;
-        camera.right = right;
-        camera.top = top;
-        camera.bottom = bottom;
-        if(zoom) camera.zoom = zoom;
-        camera.position.set(0,0,5);
         camera.updateProjectionMatrix();
-    },[camera]);
-
-
-    useEffect(() => updateCamera(cameraView),[cameraView, updateCamera]);
+    };
 
 
     useEffect(() => {

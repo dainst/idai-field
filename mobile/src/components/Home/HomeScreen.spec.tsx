@@ -1,4 +1,5 @@
 import React from 'react';
+import { PreferencesContext } from '../../contexts/preferences-context';
 import { Preferences } from '../../models/preferences';
 import { fireEvent, render, waitFor } from '../../utils/test-utils';
 import HomeScreen from './HomeScreen';
@@ -7,7 +8,9 @@ describe('HomeScreen', () => {
 
     it('displays warning if username is not set', () => {
         
-        const { getByText } = render(<HomeScreen { ... mockProps() } />);
+        const { getByText } = render(<PreferencesContext.Provider value={ mockPreferences() }>
+            <HomeScreen { ... mockProps() } />
+        </PreferencesContext.Provider>);
         const warning = getByText('Make sure to set your name!');
 
         expect(warning).toBeTruthy();
@@ -16,8 +19,11 @@ describe('HomeScreen', () => {
     it('does not display warning if username is set', () => {
 
         const props = mockProps();
-        props.preferences.username = 'Test User';
-        const { queryByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.username = 'Test User';
+        const { queryByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
         const warning = queryByText('Make sure to set your name!');
 
         expect(warning).toBeNull();
@@ -34,8 +40,11 @@ describe('HomeScreen', () => {
     it('displays picker when projects are present', () => {
         
         const props = mockProps();
-        props.preferences.recentProjects = ['project-1', 'project-2'];
-        const { getByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
 
         expect(getByText('Open existing project:')).toBeTruthy();
     });
@@ -43,8 +52,11 @@ describe('HomeScreen', () => {
     it('allows deleting project', async () => {
 
         const props = mockProps();
-        props.preferences.recentProjects = ['project-1', 'project-2'];
-        const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByTestId, queryByTestId, getByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
         fireEvent.press(getByTestId('delete-project-button'));
 
         await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
@@ -59,37 +71,46 @@ describe('HomeScreen', () => {
     it('diables project button if no username is set', async () => {
 
         const props = mockProps();
-        props.preferences.recentProjects = ['project-1', 'project-2'];
-        const { getByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
         fireEvent.press(getByText('Open'));
 
-        expect(props.setCurrentProject).toHaveBeenCalledTimes(0);
+        expect(prefs.setCurrentProject).toHaveBeenCalledTimes(0);
     });
 
     it('allows opening project', async () => {
 
         const props = mockProps();
-        props.preferences.username = 'testuser';
-        props.preferences.recentProjects = ['project-1', 'project-2'];
-        const { getByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.username = 'testuser';
+        prefs.preferences.recentProjects = ['project-1', 'project-2'];
+        const { getByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
         fireEvent.press(getByText('Open'));
 
-        expect(props.setCurrentProject).toHaveBeenCalledWith('project-1');
+        expect(prefs.setCurrentProject).toHaveBeenCalledWith('project-1');
         expect(props.navigate).toHaveBeenCalledWith('ProjectScreen');
     });
 
     it('allows creating project', async () => {
 
         const props = mockProps();
-        props.preferences.username = 'testuser';
-        const { getByTestId, queryByTestId, getByText } = render(<HomeScreen { ... props } />);
+        const prefs = mockPreferences();
+        prefs.preferences.username = 'testuser';
+        const { getByTestId, queryByTestId, getByText } = render(<PreferencesContext.Provider value={ prefs }>
+            <HomeScreen { ... props } />
+        </PreferencesContext.Provider>);
         fireEvent.press(getByText('Create new project'));
 
         await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
         fireEvent.changeText(getByTestId('project-input'), 'new-project');
         fireEvent.press(getByText('Create'));
 
-        expect(props.setCurrentProject).toHaveBeenCalledWith('new-project');
+        expect(prefs.setCurrentProject).toHaveBeenCalledWith('new-project');
         expect(props.navigate).toHaveBeenCalledWith('ProjectScreen');
     });
 
@@ -97,6 +118,11 @@ describe('HomeScreen', () => {
 
 
 const mockProps = () => ({
+    deleteProject: jest.fn(_ => { return; }),
+    navigate: jest.fn(_ => { return; }),
+});
+
+const mockPreferences = () => ({
     preferences: {
         username: '',
         languages: [],
@@ -105,7 +131,7 @@ const mockProps = () => ({
         projects: {}
     } as Preferences,
     setCurrentProject: jest.fn(_ => { return; }),
-    deleteProject: jest.fn(_ => { return; }),
     setProjectSettings: jest.fn(_ => { return; }),
-    navigate: jest.fn(_ => { return; }),
+    setUsername: jest.fn(_ => { return; }),
+    removeProject: jest.fn(_ => { return; }),
 });

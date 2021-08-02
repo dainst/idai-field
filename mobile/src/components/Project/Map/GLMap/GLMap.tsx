@@ -17,17 +17,16 @@ import {
 import { calcCenter, calcDistance } from './math-utils';
 
 
+interface Coordinate {
+    x: number;
+    y: number;
+}
+
 const cameraDefaultPos = {
     x: 0,
     y: 0,
     z: 5,
 };
-
-
-interface Coordinate {
-    x: number;
-    y: number;
-}
 
 const moveThreshold = 5;
 // eslint-disable-next-line @typescript-eslint/no-empty-function

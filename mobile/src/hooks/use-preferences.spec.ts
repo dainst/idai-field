@@ -17,7 +17,7 @@ describe('usePreferences', () => {
 
         await waitForNextUpdate();
       
-        expect(result.current.preferences.currentProject).toBeUndefined();
+        expect(result.current.preferences.currentProject).toBe('');
         expect(result.current.preferences.recentProjects).toHaveLength(0);
         expect(result.current.preferences.languages).toEqual(['en']);
         expect(result.current.preferences.username).toBe('');

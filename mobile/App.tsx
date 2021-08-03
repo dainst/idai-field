@@ -11,6 +11,7 @@ import HomeScreen from './src/components/Home/HomeScreen';
 import LoadingScreen from './src/components/Loading/LoadingScreen';
 import ProjectScreen from './src/components/Project/ProjectScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
+import LabelsContextProvider from './src/contexts/labels/LabelsContextProvider';
 import { PreferencesContext } from './src/contexts/preferences-context';
 import usePouchdbDatastore from './src/hooks/use-pouchdb-datastore';
 import usePreferences from './src/hooks/use-preferences';
@@ -54,33 +55,35 @@ export default function App(): ReactElement {
         return (
             <SafeAreaProvider>
                 <PreferencesContext.Provider value={ preferences }>
-                    <ToastProvider>
-                        <NavigationContainer>
-                            <Stack.Navigator
-                                initialRouteName={ initialRouteName }
-                                screenOptions={ { headerShown: false } }
-                            >
-                                <Stack.Screen name="HomeScreen">
-                                    { ({ navigation }) => <HomeScreen
-                                        deleteProject={ deleteProject }
-                                        navigate={ (screen: string) => navigation.navigate(screen) }
-                                    /> }
-                                </Stack.Screen>
-                                <Stack.Screen name="ProjectScreen">
-                                    { () => preferences.preferences.currentProject && <ProjectScreen /> }
-                                </Stack.Screen>
-                                <Stack.Screen name="SettingsScreen">
-                                    { (props) => <SettingsScreen { ...props } /> }
-                                </Stack.Screen>
-                                <Stack.Screen name="LoadingScreen">
-                                    { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
-                                        navigation={ navigation }
-                                    /> }
-                                </Stack.Screen>
-                            </Stack.Navigator>
-                        </NavigationContainer>
-                        <Toast />
-                    </ToastProvider>
+                    <LabelsContextProvider>
+                        <ToastProvider>
+                            <NavigationContainer>
+                                <Stack.Navigator
+                                    initialRouteName={ initialRouteName }
+                                    screenOptions={ { headerShown: false } }
+                                >
+                                    <Stack.Screen name="HomeScreen">
+                                        { ({ navigation }) => <HomeScreen
+                                            deleteProject={ deleteProject }
+                                            navigate={ (screen: string) => navigation.navigate(screen) }
+                                        /> }
+                                    </Stack.Screen>
+                                    <Stack.Screen name="ProjectScreen">
+                                        { () => preferences.preferences.currentProject && <ProjectScreen /> }
+                                    </Stack.Screen>
+                                    <Stack.Screen name="SettingsScreen">
+                                        { (props) => <SettingsScreen { ...props } /> }
+                                    </Stack.Screen>
+                                    <Stack.Screen name="LoadingScreen">
+                                        { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
+                                            navigation={ navigation }
+                                        /> }
+                                    </Stack.Screen>
+                                </Stack.Navigator>
+                            </NavigationContainer>
+                            <Toast />
+                        </ToastProvider>
+                    </LabelsContextProvider>
                 </PreferencesContext.Provider>
             </SafeAreaProvider>
         );

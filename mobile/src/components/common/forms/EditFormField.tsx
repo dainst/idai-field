@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { FieldBaseProps } from './common-props';
 import InputField from './InputField';
 import NumberField from './NumberField';
+import TextField from './TextField';
 
 
 const EditFormField: React.FC<FieldBaseProps> = (props) => {
@@ -26,6 +27,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
         case 'unsignedFloat':
         case 'unsignedInt':
             return <NumberField { ...fieldBaseProps } />;
+        case 'text':
+            return <TextField { ...fieldBaseProps } />;
         default:
             return <Text>{field.name}</Text>;
     }

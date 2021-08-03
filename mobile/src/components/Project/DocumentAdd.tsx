@@ -133,7 +133,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                                 key={ fieldDef.name }
                                 setFunction={ updateResource }
                                 field={ fieldDef }
-                                resource={ newResource } />)}
+                                currentValue={ newResource[fieldDef.name] } />)}
                 </Column>
             </Row>
         </SafeAreaView>

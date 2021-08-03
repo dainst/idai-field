@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
-import { FieldsBaseProps } from './common-props';
+import { FieldBaseProps } from './common-props';
 import FieldTitle from './FieldTitle';
 
 
-const InputField: React.FC<FieldsBaseProps> = ({ setFunction, name, resource }) => {
+const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue }) => {
 
     const [value, setValue] = useState<string>('');
 
     useEffect(() => {
-        setValue(resource[name]);
-    },[resource, name]);
+    
+        setValue(currentValue && typeof currentValue === 'string' ? currentValue : '');
+    },[currentValue]);
 
     return (
         <View style={ styles.container }>
-            <FieldTitle>{name}</FieldTitle>
+            <FieldTitle>{field.name}</FieldTitle>
             <TextInput
                 multiline={ false }
                 value={ value }
                 onChangeText={ (text) => setValue(text) }
-                onEndEditing={ () => setFunction(name, value) }
+                onEndEditing={ () => setFunction(field.name, value) }
                 style={ styles.textInputStyle }
                 autoCompleteType="off" />
         </View>

@@ -1,4 +1,6 @@
+import * as Location from 'expo-location';
 import { Document } from 'idai-field-core';
+import proj4 from 'proj4';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-mapdata';
@@ -6,10 +8,8 @@ import { DocumentRepository } from '../../../repositories/document-repository';
 import { ViewPort } from './GLMap/geojson';
 import GLMap from './GLMap/GLMap';
 import MapBottomSheet from './MapBottomSheet';
-import * as Location from 'expo-location';
-import proj4 from "proj4";
 
-proj4.defs('WGS84', "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
+proj4.defs('WGS84', '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees');
 
 
 interface NMapProps {
@@ -44,21 +44,19 @@ const Map: React.FC<NMapProps> = (props) => {
     
     useEffect(() => {
         (async () => {
-          let { status } = await Location.requestPermissionsAsync();
-          if (status !== 'granted') {
-            console.log('Permission to access location was denied');
-            return;
-          }
+            const { status } = await Location.requestPermissionsAsync();
+            if (status !== 'granted') {
+                console.log('Permission to access location was denied');
+                return;
+            }
     
-          let location = await Location.getCurrentPositionAsync({});
-          const lat = location.coords.latitude;
-          const lon = location.coords.longitude;
-          const new_cords = proj4("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", [lat,lon]);
+            const location = await Location.getCurrentPositionAsync({});
+            const { latitude, longitude } = location.coords;
+            const newCoords = proj4(
+                '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs',
+                '+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', [latitude,longitude]);
         })();
       }, []);
-    
-
-
 
     
     const handleLayoutChange = (event: LayoutChangeEvent) => setViewPort(event.nativeEvent.layout);

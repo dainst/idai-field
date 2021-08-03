@@ -21,10 +21,7 @@ interface DocumentDetailsProps {
 }
 
 
-const DocumentDetails: React.FC<DocumentDetailsProps> = ({
-    repository,
-    docId,
-}) => {
+const DocumentDetails: React.FC<DocumentDetailsProps> = ({ repository,docId, }) => {
 
     const config = useContext(ConfigurationContext);
     const languages = useContext(PreferencesContext).preferences.languages;

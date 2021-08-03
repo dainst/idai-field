@@ -1,7 +1,7 @@
-import { Category, I18N } from 'idai-field-core';
+import { Category } from 'idai-field-core';
 import React, { useContext } from 'react';
 import { TouchableOpacityProps } from 'react-native';
-import { PreferencesContext } from '../../contexts/preferences-context';
+import LabelsContext from '../../contexts/labels/labels-context';
 import CategoryIconButton from './CategoryIconButton';
 
 interface CategoryButtonProps extends TouchableOpacityProps {
@@ -11,11 +11,13 @@ interface CategoryButtonProps extends TouchableOpacityProps {
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ category ,...btnProps }) => {
 
-    const languages = useContext(PreferencesContext).preferences.languages;
+    const { labels } = useContext(LabelsContext);
 
+    if(!labels) return null;
+    
     return <CategoryIconButton
         category={ category }
-        label={ I18N.getLabel(category, languages) }
+        label={ labels.get(category) }
         { ...btnProps }
     />;
 };

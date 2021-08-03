@@ -2,13 +2,13 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Category, Document, Field,
-    Group, I18N, NewDocument, NewResource, Resource
+    Group, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
-import { PreferencesContext } from '../../contexts/preferences-context';
+import LabelsContext from '../../contexts/labels/labels-context';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { colors } from '../../utils/colors';
@@ -34,7 +34,7 @@ interface DocumentAddProps {
 const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, parentDoc, categoryName }) => {
     
     const config = useContext(ConfigurationContext);
-    const languages = useContext(PreferencesContext).preferences.languages;
+    const { labels } = useContext(LabelsContext);
 
     const [category, setCategory] = useState<Category>();
     const [activeGroup, setActiveGroup] = useState<Group>();
@@ -88,7 +88,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     };
     
 
-    if(!category || !activeGroup) return null;
+    if(!category || !activeGroup || !labels) return null;
     
     
     return (
@@ -98,7 +98,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                     <>
                         <CategoryIcon category={ category } size={ 25 } />
                         <Heading style={ styles.heading }>
-                            Add {I18N.getLabel(category, languages)} to { parentDoc.resource.identifier }
+                            Add {labels.get(category)} to { parentDoc.resource.identifier }
                         </Heading>
                     </>
                 }

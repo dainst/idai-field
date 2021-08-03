@@ -1,7 +1,7 @@
-import { Category, I18N } from 'idai-field-core';
+import { Category } from 'idai-field-core';
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { PreferencesContext } from '../../contexts/preferences-context';
+import LabelsContext from '../../contexts/labels/labels-context';
 
 
 interface CategoryIconProps {
@@ -12,12 +12,14 @@ interface CategoryIconProps {
 
 const CategoryIcon: React.FC<CategoryIconProps> = ({ category, size }: CategoryIconProps) => {
 
-    const languages = useContext(PreferencesContext).preferences.languages;
+    const { labels } = useContext(LabelsContext);
 
     const styles = getStyles(category, size);
 
+    if(!labels) return null;
+
     return <View style={ styles.container }>
-        <Text style={ styles.text }>{ I18N.getLabel(category, languages).substr(0, 1) }</Text>
+        <Text style={ styles.text }>{ labels.get(category).substr(0, 1) }</Text>
     </View>;
 };
 

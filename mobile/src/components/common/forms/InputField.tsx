@@ -21,7 +21,7 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
                 multiline={ false }
                 value={ value }
                 onChangeText={ (text) => setValue(text) }
-                onEndEditing={ () => setFunction(field.name, value) }
+                onEndEditing={ () => setFunction(field.name, value.trimEnd()) }
                 style={ styles.textInputStyle }
                 autoCompleteType="off" />
         </View>

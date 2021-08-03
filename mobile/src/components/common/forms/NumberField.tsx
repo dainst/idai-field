@@ -22,7 +22,7 @@ const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValu
                 multiline={ false }
                 value={ value }
                 onChangeText={ setValue }
-                onEndEditing={ () => setFunction(field.name, value) }
+                onEndEditing={ () => setFunction(field.name, value.trimEnd()) }
                 style={ styles.textInputStyle }
                 keyboardType={ field.inputType === 'float' ? 'numeric' : 'number-pad' }
                 autoCompleteType="off"

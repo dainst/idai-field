@@ -5,7 +5,7 @@ import {
     Group, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextStyle, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
@@ -17,6 +17,7 @@ import CategoryIcon from '../common/CategoryIcon';
 import Column from '../common/Column';
 import EditFormField from '../common/forms/EditFormField';
 import Heading from '../common/Heading';
+import I18NLabel from '../common/I18NLabel';
 import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 import { ToastType } from '../common/Toast/ToastProvider';
@@ -121,9 +122,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                         <TouchableOpacity
                             key={ group.name } style={ styles.groupBtn }
                             onPress={ () => setActiveGroup(group) }>
-                            <Text style={ styleGroupText(group, activeGroup) }>
-                                { I18N.getLabel(group, languages)}
-                            </Text>
+                            <I18NLabel style={ styleGroupText(group, activeGroup) } label={ group } />
                         </TouchableOpacity>))}
                 </Column>
                 <Column style={ styles.fieldColumn }>

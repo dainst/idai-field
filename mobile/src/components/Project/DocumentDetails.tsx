@@ -1,8 +1,7 @@
 /* eslint-disable react/display-name */
 import {
-    Document, FieldsViewField, FieldsViewGroup, FieldsViewUtil, I18N,
-    Labels,
-    ProjectConfiguration
+    Document, FieldsViewField, FieldsViewGroup,
+    FieldsViewUtil, Labels, ProjectConfiguration
 } from 'idai-field-core';
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -14,6 +13,7 @@ import { DocumentRepository } from '../../repositories/document-repository';
 import translations from '../../utils/translations';
 import Column from '../common/Column';
 import DocumentButton from '../common/DocumentButton';
+import I18NLabel from '../common/I18NLabel';
 
 
 interface DocumentDetailsProps {
@@ -50,7 +50,7 @@ const DocumentDetails: React.FC<DocumentDetailsProps> = ({ repository, docId }) 
 const renderGroup = (config: ProjectConfiguration, languages: string[], labels: Labels) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
-            <Text style={ styles.groupLabel }>{ I18N.getLabel(group, languages) }</Text>
+            <I18NLabel style={ styles.groupLabel } label={ group } />
             { group.fields.map(renderField(languages, config, labels)) }
         </View>;
 

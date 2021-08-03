@@ -7,6 +7,7 @@ import {
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ConfigurationContext } from '../../contexts/configuration-context';
+import LabelsContext from '../../contexts/labels/labels-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import useDocument from '../../hooks/use-document';
 import { DocumentRepository } from '../../repositories/document-repository';
@@ -21,43 +22,44 @@ interface DocumentDetailsProps {
 }
 
 
-const DocumentDetails: React.FC<DocumentDetailsProps> = ({ repository,docId, }) => {
+const DocumentDetails: React.FC<DocumentDetailsProps> = ({ repository, docId }) => {
 
     const config = useContext(ConfigurationContext);
     const languages = useContext(PreferencesContext).preferences.languages;
+    const { labels } = useContext(LabelsContext);
 
     const doc = useDocument(repository, docId);
     const [groups, setGroups] = useState<FieldsViewGroup[]>();
     
     useEffect(() => {
 
-        if (!doc) return;
+        if (!doc || !labels) return;
 
-        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore, new Labels(() => languages))
+        FieldsViewUtil.getGroupsForResource(doc.resource, config, repository.datastore, labels)
             .then(setGroups);
-    }, [doc, config, repository, languages]);
+    }, [doc, config, repository, languages, labels]);
 
-    if (!doc || !groups) return null;
+    if (!doc || !groups || !labels) return null;
 
     return <ScrollView style={ styles.container }>
-        { groups.map(renderGroup( config, languages)) }
+        { groups.map(renderGroup( config, languages, labels)) }
     </ScrollView>;
 };
 
 
-const renderGroup = (config: ProjectConfiguration, languages: string[]) =>
+const renderGroup = (config: ProjectConfiguration, languages: string[], labels: Labels) =>
     (group: FieldsViewGroup) =>
         <View key={ group.name }>
             <Text style={ styles.groupLabel }>{ I18N.getLabel(group, languages) }</Text>
-            { group.fields.map(renderField(languages, config)) }
+            { group.fields.map(renderField(languages, config, labels)) }
         </View>;
 
 
-const renderField = (languages: string[], config: ProjectConfiguration) =>
+const renderField = (languages: string[], config: ProjectConfiguration, labels: Labels) =>
     (field: FieldsViewField) =>
         <Column style={ styles.fieldColumn } key={ field.label }>
             <Text style={ styles.fieldLabel }>{ field.label }</Text>
-            { renderFieldValue(field, field.value, languages, config) }
+            { renderFieldValue(field, field.value, languages, config, labels) }
         </Column>;
 
 
@@ -65,28 +67,29 @@ const renderFieldValue = (
     field: FieldsViewField,
     value: unknown,
     languages: string[],
-    config: ProjectConfiguration
+    config: ProjectConfiguration,
+    labels: Labels
 ): ReactNode =>
     field.type === 'relation'
         ? field.targets?.map(renderRelationTarget)
         : field.type === 'default' && typeof value === 'string'
             ? renderStringValue(value)
             : field.type === 'array' && Array.isArray(value)
-                ? value.map(value => renderFieldValue(field, value, languages, config))
-                : renderObjectValue(value, field, languages);
+                ? value.map(value => renderFieldValue(field, value, languages, config, labels))
+                : renderObjectValue(value, field, languages, labels);
 
 
 const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
 
 
-const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[]) =>
+const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[], labels: Labels) =>
     <Text>
         { FieldsViewUtil.getObjectLabel(
             value,
             field,
             getTranslation(languages),
             (value: number) => value.toLocaleString(languages),
-            new Labels(() => languages)
+            labels
         ) }
     </Text>;
 

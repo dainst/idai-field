@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FieldBaseProps } from './common-props';
+import DropdownField from './DropdownField';
 import InputField from './InputField';
 import NumberField from './NumberField';
 import TextField from './TextField';
@@ -29,6 +30,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <NumberField { ...fieldBaseProps } />;
         case 'text':
             return <TextField { ...fieldBaseProps } />;
+        case 'dropdown':
+            return <DropdownField { ...fieldBaseProps } />;
         default:
             return <Text>{field.name}</Text>;
     }

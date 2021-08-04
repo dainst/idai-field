@@ -50,7 +50,7 @@ describe('NumberField',() => {
             field={ mockField }
             setFunction={ mockSetValueFn }
             currentValue={ currentValue } />);
-        const changedText = 'Find2';
+        const changedText = '60';
 
         fireEvent.changeText(getByTestId('input'),changedText);
         expect(getByTestId('input').props.value).toEqual(changedText);
@@ -58,17 +58,42 @@ describe('NumberField',() => {
     });
 
     
-    it('should call setFunction on onChangeText with correct parameters', () => {
+    it('should call setFunction on onChangeText with correct parameters for unsignedInt', () => {
 
         const { getByTestId } = render(<NumberField
             field={ mockField }
             setFunction={ mockSetValueFn }
             currentValue={ currentValue } />);
-        const changedText = 'Find2';
+        const changedText = '-80';
 
         fireEvent.changeText(getByTestId('input'), changedText);
-        expect(mockSetValueFn).toHaveBeenCalledWith(fieldName,changedText);
+        expect(mockSetValueFn).toHaveBeenCalledWith(fieldName,'');
+
+        const validInput = '80';
+        fireEvent.changeText(getByTestId('input'), validInput);
+        expect(mockSetValueFn.mock.calls.slice(-1)[0]).toEqual([fieldName,validInput]);
     });
+
+    it('should call setFunction on onChangeText with correct parameters for float', () => {
+
+        const floatField: Field = {
+            name: fieldName,
+            inputType: 'float'
+        };
+        const { getByTestId } = render(<NumberField
+            field={ floatField }
+            setFunction={ mockSetValueFn }
+            currentValue={ currentValue } />);
+        const invalidValue = 'two';
+
+        fireEvent.changeText(getByTestId('input'), invalidValue);
+        expect(mockSetValueFn.mock.calls.slice(-1)[0]).toEqual([fieldName,'']);
+
+        const validInput = '80.0';
+        fireEvent.changeText(getByTestId('input'), validInput);
+        expect(mockSetValueFn.mock.calls.slice(-1)[0]).toEqual([fieldName,validInput]);
+    });
+
 
     afterAll(() => {
         cleanup();

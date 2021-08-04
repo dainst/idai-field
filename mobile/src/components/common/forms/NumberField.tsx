@@ -16,8 +16,16 @@ const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValu
 
 
     const changeTextHandler = (text: string) => {
-        setValue(text);
-        setFunction(field.name, text.trimEnd());
+
+        if((field.inputType === 'unsignedInt' && text.indexOf('.') === -1 && parseInt(text) >= 0) ||
+            (field.inputType === 'float' && parseFloat(text)) ||
+            (field.inputType === 'unsignedFloat' && parseFloat(text) && parseFloat(text) >= 0)){
+                setValue(text);
+                setFunction(field.name, text.trimEnd());
+        } else {
+                setValue(text.substring(0, text.length - 1 ));
+                setFunction(field.name, '');
+        }
     };
 
     return (

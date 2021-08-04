@@ -5,7 +5,7 @@ import {
     Group, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, TextStyle, TouchableOpacity } from 'react-native';
+import { Keyboard, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
@@ -82,6 +82,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                     navigation.navigate('DocumentsMap',{ highlightedDocId: doc.resource.id });
                 })
                 .catch(_err => {
+                    Keyboard.dismiss();
                     showToast(ToastType.Error,'Could not create resource!');
                     console.log(_err);
                 });

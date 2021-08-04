@@ -2,7 +2,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import { Document, RelationsManager, SyncStatus } from 'idai-field-core';
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { ToastType } from '../common/Toast/ToastProvider';
@@ -82,7 +82,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     showToast(ToastType.Info, `Removed ${identifier}`);
                     navigation.navigate('DocumentsMap', isRecordedIn ? { highlightedDocId: isRecordedIn } : {});
                 })
-                .catch(err => showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`));
+                .catch(err => {
+                    showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`);
+                    Keyboard.dismiss();
+                });
         }
     };
 

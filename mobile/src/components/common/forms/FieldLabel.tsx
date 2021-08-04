@@ -4,11 +4,11 @@ import { StyleSheet, TextProps, ViewStyle } from 'react-native';
 import { colors } from '../../../utils/colors';
 import I18NLabel from '../I18NLabel';
 
-interface FieldTitleProps extends TextProps {
+interface FieldLabelProps extends TextProps {
     label: I18N.LabeledValue
 }
 
-const FieldTitle: React.FC<FieldTitleProps> = (props) =>
+const FieldLabel: React.FC<FieldLabelProps> = (props) =>
     <I18NLabel style={ { ...styles.title, ...props.style as ViewStyle } } label={ props.label } /> ;
 
 
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FieldTitle;
+export default FieldLabel;

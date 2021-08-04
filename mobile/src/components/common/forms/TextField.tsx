@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
 import { FieldBaseProps } from './common-props';
-import FieldTitle from './FieldTitle';
+import FieldLabel from './FieldLabel';
 
 const numberOfLines = 4;
 
@@ -17,7 +17,7 @@ const TextField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue 
 
     return (
         <View style={ styles.container }>
-            <FieldTitle label={ field } />
+            <FieldLabel label={ field } />
             <TextInput
                 multiline={ true }
                 numberOfLines={ numberOfLines }

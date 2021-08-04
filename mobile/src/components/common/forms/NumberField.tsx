@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
 import { FieldBaseProps } from './common-props';
-import FieldTitle from './FieldTitle';
+import FieldLabel from './FieldLabel';
 
 
 const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue }) => {
@@ -17,7 +17,7 @@ const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValu
 
     return (
         <View style={ styles.container }>
-            <FieldTitle label={ field } />
+            <FieldLabel label={ field } />
             <TextInput
                 multiline={ false }
                 value={ value }

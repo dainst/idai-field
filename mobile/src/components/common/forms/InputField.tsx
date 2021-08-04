@@ -16,7 +16,7 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
 
     return (
         <View style={ styles.container }>
-            <FieldTitle>{field.name}</FieldTitle>
+            <FieldTitle label={ field } />
             <TextInput
                 multiline={ false }
                 value={ value }

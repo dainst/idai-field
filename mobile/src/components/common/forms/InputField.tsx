@@ -14,14 +14,20 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         setValue(currentValue && typeof currentValue === 'string' ? currentValue : '');
     },[currentValue]);
 
+
+    const changeTextHandler = (text: string) => {
+        setValue(text);
+        setFunction(field.name, text.trimEnd());
+    };
+
+    
     return (
         <View style={ styles.container }>
             <FieldLabel label={ field } />
             <TextInput
                 multiline={ false }
                 value={ value }
-                onChangeText={ (text) => setValue(text) }
-                onEndEditing={ () => setFunction(field.name, value.trimEnd()) }
+                onChangeText={ changeTextHandler }
                 style={ styles.textInputStyle }
                 autoCompleteType="off" />
         </View>

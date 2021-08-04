@@ -48,8 +48,8 @@
     "isBelow": {
       "label": "Sous"
     },
-    "isEquivalentTo": {
-      "label": "Equivalente à"
+    "isSameAs": {
+      "label": "Le même que"
     },
     "cuts": {
       "label": "Coupe"

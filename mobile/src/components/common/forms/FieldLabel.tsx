@@ -5,11 +5,11 @@ import { colors } from '../../../utils/colors';
 import I18NLabel from '../I18NLabel';
 
 interface FieldLabelProps extends TextProps {
-    label: I18N.LabeledValue
+    field: I18N.LabeledValue
 }
 
 const FieldLabel: React.FC<FieldLabelProps> = (props) =>
-    <I18NLabel style={ { ...styles.title, ...props.style as ViewStyle } } label={ props.label } /> ;
+    <I18NLabel style={ { ...styles.title, ...props.style as ViewStyle } } label={ props.field } /> ;
 
 
 const styles = StyleSheet.create({

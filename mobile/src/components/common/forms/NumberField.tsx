@@ -30,7 +30,7 @@ const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValu
 
     return (
         <View style={ styles.container }>
-            <FieldLabel label={ field } />
+            <FieldLabel field={ field } />
             <TextInput
                 multiline={ false }
                 value={ value }

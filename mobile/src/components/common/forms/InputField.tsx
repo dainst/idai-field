@@ -23,7 +23,7 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     
     return (
         <View style={ styles.container }>
-            <FieldLabel label={ field } />
+            <FieldLabel field={ field } />
             <TextInput
                 multiline={ false }
                 value={ value }

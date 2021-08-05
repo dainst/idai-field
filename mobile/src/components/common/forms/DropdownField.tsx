@@ -27,7 +27,7 @@ const DropdownField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
 
     return (
         <View style={ styles.container }>
-            <FieldLabel label={ field } />
+            <FieldLabel field={ field } />
             <Picker
                 selectedValue={ selectedValue }
                 onValueChange={ onValueChangeHandler }

@@ -4,7 +4,7 @@ import {
 import {
     buildImportCatalog,
     ImportCatalogErrors
-} from '../../../../../../src/app/components/import/import/import-catalog';
+} from '../../../../../src/app/components/import/import/import-catalog';
 import { createApp, createHelpers, setupSyncTestDb } from '../../subsystem-helper';
 
 

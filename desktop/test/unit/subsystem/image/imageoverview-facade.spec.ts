@@ -1,5 +1,5 @@
 import { fieldDoc } from 'idai-field-core';
-import { ImageOverviewFacade } from '../../../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 import PouchDB =  require('pouchdb-node');
 

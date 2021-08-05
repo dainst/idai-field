@@ -2,27 +2,27 @@ import { sameset } from 'tsfun';
 import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
-import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
-import { Imagestore } from '../../../../src/app/services/imagestore/imagestore';
-import { PouchDbFsImagestore } from '../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
-import { ImageDocumentsManager } from '../../../../src/app/components/image/overview/view/image-documents-manager';
-import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
-import { ImagesState } from '../../../../src/app/components/image/overview/view/images-state';
-import { makeDocumentsLookup } from '../../../../src/app/components/import/import/utils';
-import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
-import { Validator } from '../../../../src/app/model/validator';
-import { ResourcesStateManager } from '../../../../src/app/components/resources/view/resources-state-manager';
-import { ViewFacade } from '../../../../src/app/components/resources/view/view-facade';
-import { SyncTarget } from '../../../../src/app/services/settings/settings';
-import { SettingsProvider } from '../../../../src/app/services/settings/settings-provider';
-import { SettingsService } from '../../../../src/app/services/settings/settings-service';
-import { TabManager } from '../../../../src/app/services/tabs/tab-manager';
-import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
-import { StateSerializer } from '../../../../src/app/services/state-serializer';
-import { makeExpectDocuments } from '../../../../../core/test/test-helpers';
+import { PouchdbServer } from '../../../src/app/services/datastore/pouchdb/pouchdb-server';
+import { Imagestore } from '../../../src/app/services/imagestore/imagestore';
+import { PouchDbFsImagestore } from '../../../src/app/services/imagestore/pouch-db-fs-imagestore';
+import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
+import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
+import { makeDocumentsLookup } from '../../../src/app/components/import/import/utils';
+import { ImageRelationsManager } from '../../../src/app/services/image-relations-manager';
+import { Validator } from '../../../src/app/model/validator';
+import { ResourcesStateManager } from '../../../src/app/components/resources/view/resources-state-manager';
+import { ViewFacade } from '../../../src/app/components/resources/view/view-facade';
+import { SyncTarget } from '../../../src/app/services/settings/settings';
+import { SettingsProvider } from '../../../src/app/services/settings/settings-provider';
+import { SettingsService } from '../../../src/app/services/settings/settings-service';
+import { TabManager } from '../../../src/app/services/tabs/tab-manager';
+import { IndexerConfiguration } from '../../../src/app/indexer-configuration';
+import { StateSerializer } from '../../../src/app/services/state-serializer';
+import { makeExpectDocuments } from '../../../../core/test/test-helpers';
 
 import PouchDB = require('pouchdb-node');
-import {DocumentHolder} from '../../../../src/app/components/docedit/document-holder';
+import {DocumentHolder} from '../../../src/app/components/docedit/document-holder';
 
 const fs = require('fs');
 

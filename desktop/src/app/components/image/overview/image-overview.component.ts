@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ImageDocument, Document, Category, Datastore} from 'idai-field-core';
 import {ImageGridComponent} from '../grid/image-grid.component';
-import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
+import {ImageOverviewFacade} from '../../../components/image/overview/view/imageoverview-facade';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import { MenuContext } from '../../../services/menu-context';

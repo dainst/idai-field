@@ -5,9 +5,9 @@ import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, Config
 import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { Imagestore } from '../../../../src/app/services/imagestore/imagestore';
 import { PouchDbFsImagestore } from '../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
-import { ImageDocumentsManager } from '../../../../src/app/core/images/overview/view/image-documents-manager';
-import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/view/imageoverview-facade';
-import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
+import { ImageDocumentsManager } from '../../../../src/app/components/image/overview/view/image-documents-manager';
+import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImagesState } from '../../../../src/app/components/image/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
 import { Validator } from '../../../../src/app/model/validator';

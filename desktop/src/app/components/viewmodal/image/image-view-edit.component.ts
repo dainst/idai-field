@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {ImageRowItem} from '../../../core/images/row/image-row';
+import {ImageRowItem} from '../../image/row/image-row';
 import {ImageUploadResult} from '../../image/upload/image-uploader';
 
 

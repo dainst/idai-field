@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
-import { ImageOverviewFacade } from '../../../core/images/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ImageOverviewComponent } from './image-overview.component';
 import { ViewFacade } from '../../../components/resources/view/view-facade';

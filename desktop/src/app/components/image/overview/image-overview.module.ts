@@ -6,15 +6,15 @@ import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
-import {ImagesState} from '../../../core/images/overview/view/images-state';
+import {ImagesState} from '../../../components/image/overview/view/images-state';
 import {ImageGridModule} from '../grid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewTaskbarComponent} from './image-overview-taskbar.component';
 import {ImageOverviewSearchBarComponent} from './searchbar/image-overview-search-bar.component';
 import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overview-search-constraints.component';
 import {DeleteModalComponent} from './deletion/delete-modal.component';
-import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
+import {ImageOverviewFacade} from '../../../components/image/overview/view/imageoverview-facade';
+import {ImageDocumentsManager} from '../../../components/image/overview/view/image-documents-manager';
 import {ProjectConfiguration} from 'idai-field-core';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import { Datastore } from 'idai-field-core';

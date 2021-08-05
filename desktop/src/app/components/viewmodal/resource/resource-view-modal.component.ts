@@ -4,8 +4,8 @@ import {on, is} from 'tsfun';
 import {Datastore, Document} from 'idai-field-core';
 import {FieldDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
-import {ImagesState} from '../../../core/images/overview/view/images-state';
-import {ImageRowItem} from '../../../core/images/row/image-row';
+import {ImagesState} from '../../../components/image/overview/view/images-state';
+import {ImageRowItem} from '../../image/row/image-row';
 import {Routing} from '../../../services/routing';
 import {Menus} from '../../../services/menus';
 

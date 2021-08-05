@@ -4,7 +4,7 @@ import { Category, Labels, Constraint, Datastore, Document, FieldDocument, Field
     ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
-import { ImageRowItem } from '../../../../../core/images/row/image-row';
+import { ImageRowItem } from '../../../../image/row/image-row';
 import { TypeImagesUtil } from '../../../../../util/type-images-util';
 
 

@@ -4,7 +4,7 @@ import {Datastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {Imagestore} from '../../../services/imagestore/imagestore';
-import {constructGrid} from '../../../core/images/grid/construct-grid';
+import {constructGrid} from './construct-grid';
 import {BlobMaker} from '../../../services/imagestore/blob-maker';
 
 

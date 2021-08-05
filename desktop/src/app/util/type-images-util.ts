@@ -1,6 +1,6 @@
 import { Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
-import {PLACEHOLDER} from '../core/images/row/image-row';
+import {PLACEHOLDER} from '../components/image/row/image-row';
 
 
 /**

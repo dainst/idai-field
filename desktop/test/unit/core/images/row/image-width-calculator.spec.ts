@@ -1,4 +1,4 @@
-import {ImageWidthCalculator} from '../../../../../src/app/core/images/row/image-width-calculator';
+import {ImageWidthCalculator} from '../../../../../src/app/components/image/row/image-width-calculator';
 
 
 /**

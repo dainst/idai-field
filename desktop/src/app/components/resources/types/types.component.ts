@@ -4,7 +4,7 @@ import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, 
     ProjectConfiguration, Named, Hierarchy } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { Imagestore } from '../../../services/imagestore/imagestore';
-import { PLACEHOLDER } from '../../../core/images/row/image-row';
+import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { TabManager } from '../../../services/tabs/tab-manager';

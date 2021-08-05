@@ -1,5 +1,5 @@
 import {ImageDocument} from 'idai-field-core';
-import {ImageRow} from '../../../../../src/app/core/images/row/image-row';
+import {ImageRow} from '../../../../../src/app/components/image/row/image-row';
 
 
 describe('ImageRow', () => {

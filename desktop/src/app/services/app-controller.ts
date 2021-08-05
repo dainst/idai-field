@@ -3,7 +3,7 @@ import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastor
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './imagestore/image-converter';
 import { Imagestore } from './imagestore/imagestore';
-import { ImagesState } from '../core/images/overview/view/images-state';
+import { ImagesState } from '../components/image/overview/view/images-state';
 import { ResourcesStateManager } from '../components/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';

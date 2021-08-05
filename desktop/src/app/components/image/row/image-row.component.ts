@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Outpu
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { to, aReduce } from 'tsfun';
 import { Datastore, ImageDocument } from 'idai-field-core';
-import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from '../../../core/images/row/image-row';
+import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { BlobMaker } from '../../../services/imagestore/blob-maker';

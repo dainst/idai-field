@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChil
 import { Category, Datastore, Resource, FieldDocument, Name, Named, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../../core/resources/view/view-facade';
+import { ViewFacade } from '../../components/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ResourcesComponent } from './resources.component';

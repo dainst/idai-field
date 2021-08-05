@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { MoveUtility } from '../../../core/resources/move-utility';
+import { MoveUtility } from '../../../components/resources/move-utility';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'

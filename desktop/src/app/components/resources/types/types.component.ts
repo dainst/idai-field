@@ -5,8 +5,8 @@ import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, 
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { Imagestore } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
-import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { TabManager } from '../../../services/tabs/tab-manager';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';

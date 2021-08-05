@@ -4,7 +4,7 @@ import { Document, NewDocument, FieldDocument } from 'idai-field-core';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
 
 
 @Injectable()

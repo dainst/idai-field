@@ -2,7 +2,7 @@ import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
 

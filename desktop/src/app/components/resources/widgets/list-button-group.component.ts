@@ -1,7 +1,7 @@
 import {Component, Input, ChangeDetectionStrategy, EventEmitter, Output} from '@angular/core';
 import {FieldDocument} from 'idai-field-core';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {NavigationService} from '../../../core/resources/navigation/navigation-service';
+import {ViewFacade} from '../../../components/resources/view/view-facade';
+import {NavigationService} from '../navigation/navigation-service';
 import { PopoverMenu, ResourcesComponent } from '../resources.component';
 
 

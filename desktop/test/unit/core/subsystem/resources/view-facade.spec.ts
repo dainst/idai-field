@@ -1,7 +1,7 @@
 import { Datastore, Document, fieldDoc } from 'idai-field-core';
 import { FieldDocument } from '../../../../../../core/index';
-import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
-import { ViewFacade } from '../../../../../src/app/core/resources/view/view-facade';
+import { ResourcesStateManager } from '../../../../../src/app/components/resources/view/resources-state-manager';
+import { ViewFacade } from '../../../../../src/app/components/resources/view/view-facade';
 import { TabManager } from '../../../../../src/app/services/tabs/tab-manager';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 import PouchDB =  require('pouchdb-node');

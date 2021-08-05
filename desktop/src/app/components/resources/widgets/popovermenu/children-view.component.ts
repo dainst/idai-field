@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {Datastore, FieldDocument} from 'idai-field-core';
 import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
-import {ViewFacade} from '../../../../core/resources/view/view-facade';
+import {ViewFacade} from '../../../../components/resources/view/view-facade';
 import {ResourcesComponent} from '../../resources.component';
 
 

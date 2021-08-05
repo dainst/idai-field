@@ -6,7 +6,7 @@ import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from '../../../core/images/overview/view/imageoverview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ImageOverviewComponent } from './image-overview.component';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { MenuContext } from '../../../services/menu-context';

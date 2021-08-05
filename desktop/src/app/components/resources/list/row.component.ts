@@ -4,8 +4,8 @@ import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
 import { MessagesConversion } from '../../docedit/messages-conversion';
-import { ViewFacade } from '../../../core/resources/view/view-facade';
-import { NavigationService } from '../../../core/resources/navigation/navigation-service';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
 
 

@@ -11,8 +11,8 @@ import { ImagesState } from '../../../../src/app/core/images/overview/view/image
 import { makeDocumentsLookup } from '../../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
 import { Validator } from '../../../../src/app/model/validator';
-import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
-import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade';
+import { ResourcesStateManager } from '../../../../src/app/components/resources/view/resources-state-manager';
+import { ViewFacade } from '../../../../src/app/components/resources/view/view-facade';
 import { SyncTarget } from '../../../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../../../src/app/services/settings/settings-provider';
 import { SettingsService } from '../../../../src/app/services/settings/settings-service';

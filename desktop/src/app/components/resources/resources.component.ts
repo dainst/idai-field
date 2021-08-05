@@ -12,12 +12,12 @@ import { MoveModalComponent } from './move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ResourceDeletion } from './deletion/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';
-import { ResourcesViewMode, ViewFacade } from '../../core/resources/view/view-facade';
-import { NavigationService } from '../../core/resources/navigation/navigation-service';
+import { ResourcesViewMode, ViewFacade } from '../../components/resources/view/view-facade';
+import { NavigationService } from './navigation/navigation-service';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { Messages } from '../messages/messages';
-import { NavigationPath } from '../../core/resources/view/state/navigation-path';
+import { NavigationPath } from '../../components/resources/view/state/navigation-path';
 import { ViewModalLauncher } from './service/view-modal-launcher';
 import {MsgWithParams} from '../messages/msg-with-params';
 

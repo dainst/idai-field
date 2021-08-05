@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/co
 import {Datastore, FieldDocument, Named} from 'idai-field-core';
 import {Routing} from '../../../services/routing';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {ViewFacade} from '../../../components/resources/view/view-facade';
 import {Query} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 

@@ -4,7 +4,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
 import {ProjectConfiguration} from 'idai-field-core';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {ViewFacade} from '../../../components/resources/view/view-facade';
 import {Menus} from '../../../services/menus';
 
 

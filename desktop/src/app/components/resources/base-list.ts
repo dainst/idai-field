@@ -4,8 +4,8 @@ import {FieldDocument} from 'idai-field-core';
 import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';
-import {NavigationPath} from '../../core/resources/view/state/navigation-path';
-import {ViewFacade} from '../../core/resources/view/view-facade';
+import {NavigationPath} from '../../components/resources/view/state/navigation-path';
+import {ViewFacade} from '../../components/resources/view/view-facade';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 

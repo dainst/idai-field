@@ -4,7 +4,7 @@ import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loade
 import { ImageConverter } from './imagestore/image-converter';
 import { Imagestore } from './imagestore/imagestore';
 import { ImagesState } from '../core/images/overview/view/images-state';
-import { ResourcesStateManager } from '../core/resources/view/resources-state-manager';
+import { ResourcesStateManager } from '../components/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';

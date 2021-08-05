@@ -1,5 +1,5 @@
 import { Category, Field, I18N, Group } from 'idai-field-core';
-import { CustomLanguageConfigurations} from '../../../../src/app/core/configuration/custom-language-configurations';
+import { CustomLanguageConfigurations} from '../../../../src/app/components/configuration/custom-language-configurations';
 
 
 /**

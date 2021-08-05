@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import { Category, ConfigurationDocument, CustomFieldDefinition, Field, Valuelist,
     Labels } from 'idai-field-core';
 import { InputType } from './configuration.component';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 
 

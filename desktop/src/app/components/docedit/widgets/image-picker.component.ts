@@ -6,7 +6,7 @@ import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {ProjectConfiguration} from 'idai-field-core';
-import { getImageSuggestions } from '../../../core/docedit/widgets/get-image-suggestions';
+import { getImageSuggestions } from './get-image-suggestions';
 
 
 @Component({

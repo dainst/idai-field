@@ -3,13 +3,13 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
     Resource, ProjectConfiguration } from 'idai-field-core';
-import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
-import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
-import { CsvExporter } from '../../core/export/csv/csv-exporter';
-import { CategoryCount } from '../../core/export/export-helper';
-import { ExportRunner } from '../../core/export/export-runner';
-import { GeoJsonExporter } from '../../core/export/geojson-exporter';
-import { ShapefileExporter } from '../../core/export/shapefile-exporter';
+import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
+import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../components/export/catalog/get-export-documents';
+import { CsvExporter } from '../../components/export/csv/csv-exporter';
+import { CategoryCount } from '../../components/export/export-helper';
+import { ExportRunner } from '../../components/export/export-runner';
+import { GeoJsonExporter } from '../../components/export/geojson-exporter';
+import { ShapefileExporter } from './shapefile-exporter';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
@@ -96,7 +96,7 @@ export class ExportComponent implements OnInit {
         this.initializing = false;
     }
 
-    
+
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(

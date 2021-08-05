@@ -5,9 +5,9 @@ import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
     RelationsManager, Labels, Tree, Named } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
-import { ExportRunner } from '../../core/export/export-runner';
+import { ExportRunner } from '../../components/export/export-runner';
 import { Imagestore } from '../../services/imagestore/imagestore';
-import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';
+import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';

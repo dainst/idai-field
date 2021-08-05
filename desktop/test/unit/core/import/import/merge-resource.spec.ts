@@ -1,7 +1,7 @@
 import * as tsfun from 'tsfun';
 import {Resource, Relation} from 'idai-field-core';
-import {GEOMETRY, mergeResource, RELATIONS} from '../../../../../src/app/core/import/import/process/merge-resource';
-import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
+import {GEOMETRY, mergeResource, RELATIONS} from '../../../../../src/app/components/import/import/process/merge-resource';
+import {ImportErrors} from '../../../../../src/app/components/import/import/import-errors';
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 

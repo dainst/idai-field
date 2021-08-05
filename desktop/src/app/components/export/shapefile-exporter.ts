@@ -1,6 +1,6 @@
 import {Document} from 'idai-field-core';
 import {JavaToolExecutor} from '../../services/java/java-tool-executor';
-import {M} from '../../components/messages/m';
+import {M} from '../messages/m';
 import {Settings} from '../../services/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

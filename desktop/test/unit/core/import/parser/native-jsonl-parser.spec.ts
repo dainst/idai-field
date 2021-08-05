@@ -1,5 +1,5 @@
-import {NativeJsonlParser} from '../../../../../src/app/core/import/parser/native-jsonl-parser';
-import {ParserErrors} from '../../../../../src/app/core/import/parser/parser-errors';
+import {NativeJsonlParser} from '../../../../../src/app/components/import/parser/native-jsonl-parser';
+import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
 
 /**
  * @author Sebastian Cuy

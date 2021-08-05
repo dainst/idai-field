@@ -1,7 +1,7 @@
 import {Datastore} from 'idai-field-core';
 import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED,
-    getExportDocuments} from '../../../../../src/app/core/export/catalog/get-export-documents';
-import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
+    getExportDocuments} from '../../../../../src/app/components/export/catalog/get-export-documents';
+import {makeDocumentsLookup} from '../../../../../src/app/components/import/import/utils';
 
 
 describe('getExportDocuments', () => {

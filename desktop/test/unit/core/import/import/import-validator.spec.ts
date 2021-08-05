@@ -1,7 +1,7 @@
 import { Forest, Field, ProjectConfiguration } from 'idai-field-core';
-import { ImportValidator } from '../../../../../src/app/core/import/import/process/import-validator';
+import { ImportValidator } from '../../../../../src/app/components/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
-import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
+import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
 
 
 /**

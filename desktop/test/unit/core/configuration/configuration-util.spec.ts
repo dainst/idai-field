@@ -1,5 +1,5 @@
 import { Category } from 'idai-field-core';
-import { ConfigurationUtil } from '../../../../src/app/core/configuration/configuration-util';
+import { ConfigurationUtil } from '../../../../src/app/components/configuration/configuration-util';
 
 
 /**

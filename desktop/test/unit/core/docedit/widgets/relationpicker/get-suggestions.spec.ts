@@ -1,6 +1,6 @@
 import { doc, Relation, Document } from 'idai-field-core';
 import { getSuggestions,
-    MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
+    MAX_SUGGESTIONS } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
 
 
 /**

@@ -1,5 +1,5 @@
 import { Field, fieldDoc, Relation } from 'idai-field-core';
-import { CSVExport } from '../../../../../src/app/core/export/csv/csv-export';
+import { CSVExport } from '../../../../../src/app/components/export/csv/csv-export';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {

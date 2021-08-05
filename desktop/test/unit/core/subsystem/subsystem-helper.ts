@@ -3,13 +3,12 @@ import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, Config
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
-import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/services/imagestore/imagestore';
 import { PouchDbFsImagestore } from '../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
 import { ImageDocumentsManager } from '../../../../src/app/core/images/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../../src/app/core/images/overview/view/imageoverview-facade';
 import { ImagesState } from '../../../../src/app/core/images/overview/view/images-state';
-import { makeDocumentsLookup } from '../../../../src/app/core/import/import/utils';
+import { makeDocumentsLookup } from '../../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../../src/app/services/image-relations-manager';
 import { Validator } from '../../../../src/app/model/validator';
 import { ResourcesStateManager } from '../../../../src/app/core/resources/view/resources-state-manager';
@@ -23,6 +22,7 @@ import { StateSerializer } from '../../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../../core/test/test-helpers';
 
 import PouchDB = require('pouchdb-node');
+import {DocumentHolder} from '../../../../src/app/components/docedit/document-holder';
 
 const fs = require('fs');
 

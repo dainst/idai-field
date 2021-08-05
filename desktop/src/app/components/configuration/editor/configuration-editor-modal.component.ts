@@ -5,7 +5,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { ErrWithParams } from '../../../core/import/import/import-documents';
+import { ErrWithParams } from '../../../components/import/import/import-documents';
 
 
 /**

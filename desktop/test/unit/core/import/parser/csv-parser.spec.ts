@@ -1,6 +1,6 @@
-import {CsvParser} from '../../../../../src/app/core/import/parser/csv-parser';
+import {CsvParser} from '../../../../../src/app/components/import/parser/csv-parser';
 import {makeFieldDefinitions} from '../../export/csv/csv-export.spec';
-import {ParserErrors} from '../../../../../src/app/core/import/parser/parser-errors';
+import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
 import {Category} from 'idai-field-core';
 
 /**

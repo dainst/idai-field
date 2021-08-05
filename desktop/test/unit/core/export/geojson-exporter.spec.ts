@@ -1,5 +1,5 @@
 import { featureDoc } from 'idai-field-core';
-import { GeoJsonExporter } from '../../../../src/app/core/export/geojson-exporter';
+import { GeoJsonExporter } from '../../../../src/app/components/export/geojson-exporter';
 
 const fs = require('fs');
 const rimraf = require('rimraf');

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { ConfigurationContextMenu } from './configuration-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
+import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
 
 
 export type ConfigurationContextMenuAction = 'edit'|'swap'|'delete';

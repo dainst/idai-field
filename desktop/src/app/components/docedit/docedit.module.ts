@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
-import { DocumentHolder } from '../../core/docedit/document-holder';
+import { DocumentHolder } from '../../components/docedit/document-holder';
 import { Validator } from '../../model/validator';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageGridModule } from '../image/grid/image-grid.module';

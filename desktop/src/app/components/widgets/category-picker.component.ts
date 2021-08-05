@@ -3,7 +3,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { is, Predicate } from 'tsfun';
 import { Category, InPlace, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
 
 
 @Component({

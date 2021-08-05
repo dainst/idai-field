@@ -1,5 +1,5 @@
 import {val} from 'tsfun';
-import {CSVExpansion} from '../../../../../src/app/core/export/csv/csv-expansion';
+import {CSVExpansion} from '../../../../../src/app/components/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
 
 

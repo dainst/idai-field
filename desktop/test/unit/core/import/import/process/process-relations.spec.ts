@@ -1,4 +1,4 @@
-import {processRelations} from '../../../../../../src/app/core/import/import/process/process-relations';
+import {processRelations} from '../../../../../../src/app/components/import/import/process/process-relations';
 import {
     Relation
 } from 'idai-field-core';
@@ -8,7 +8,7 @@ import {createMockValidator, d} from '../helper';
 import {
     ImportErrors,
     ImportErrors as E
-} from '../../../../../../src/app/core/import/import/import-errors';
+} from '../../../../../../src/app/components/import/import/import-errors';
 
 
 describe('processRelations', () => {

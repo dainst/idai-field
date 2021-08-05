@@ -5,7 +5,7 @@ import {FieldDocument, Category, Query, Datastore, Constraint} from 'idai-field-
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
 import {Messages} from '../messages/messages';
-import { getDocumentSuggestions } from '../../core/widgets/get-document-suggestions';
+import { getDocumentSuggestions } from './get-document-suggestions';
 
 
 @Component({

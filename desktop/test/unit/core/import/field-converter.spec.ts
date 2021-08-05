@@ -1,5 +1,5 @@
 import {Document} from 'idai-field-core';
-import {FieldConverter} from '../../../../src/app/core/import/field-converter';
+import {FieldConverter} from '../../../../src/app/components/import/field-converter';
 
 
 /**

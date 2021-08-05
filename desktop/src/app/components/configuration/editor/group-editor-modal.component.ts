@@ -6,8 +6,8 @@ import { Group, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
-import { CustomLanguageConfigurations } from '../../../core/configuration/custom-language-configurations';
-import { ConfigurationUtil } from '../../../core/configuration/configuration-util';
+import { CustomLanguageConfigurations } from '../../../components/configuration/custom-language-configurations';
+import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
 
 
 @Component({

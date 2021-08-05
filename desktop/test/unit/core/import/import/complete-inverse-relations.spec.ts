@@ -1,4 +1,4 @@
-import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
+import {ImportErrors as E} from '../../../../../src/app/components/import/import/import-errors';
 import {Relation, Document} from 'idai-field-core';
 import IS_BELOW = Relation.Position.BELOW;
 import IS_ABOVE = Relation.Position.ABOVE;
@@ -7,8 +7,8 @@ import IS_BEFORE = Relation.Time.BEFORE;
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
-import {completeInverseRelations} from '../../../../../src/app/core/import/import/process/complete-inverse-relations';
-import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
+import {completeInverseRelations} from '../../../../../src/app/components/import/import/process/complete-inverse-relations';
+import {makeDocumentsLookup} from '../../../../../src/app/components/import/import/utils';
 
 
 describe('completeInverseRelations', () => {

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Category, Field, Labels } from 'idai-field-core';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 
 
 @Component({

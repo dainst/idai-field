@@ -18,7 +18,7 @@ import { BlobMaker } from '../services/imagestore/blob-maker';
 import { ImageConverter } from '../services/imagestore/image-converter';
 import { Imagestore } from '../services/imagestore/imagestore';
 import { PouchDbFsImagestore } from '../services/imagestore/pouch-db-fs-imagestore';
-import { ImportValidator } from '../core/import/import/process/import-validator';
+import { ImportValidator } from '../components/import/import/process/import-validator';
 import { InitializationProgress } from './initialization-progress';
 import { ImageRelationsManager } from '../services/image-relations-manager';
 import { Validator } from '../model/validator';

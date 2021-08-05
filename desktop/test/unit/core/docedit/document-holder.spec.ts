@@ -1,6 +1,6 @@
 import { Document, ProjectConfiguration, Forest } from 'idai-field-core';
+import {DocumentHolder} from '../../../../src/app/components/docedit/document-holder';
 import { M } from '../../../../src/app/components/messages/m';
-import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 
 
 /**

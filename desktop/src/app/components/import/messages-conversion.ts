@@ -1,10 +1,10 @@
 import {isArray} from 'tsfun';
 import {ValidationErrors} from '../../model/validation-errors';
 import {M} from '../messages/m';
-import {ImportErrors} from '../../core/import/import/import-errors';
-import {ParserErrors} from '../../core/import/parser/parser-errors';
-import {ReaderErrors} from '../../core/import/reader/reader-errors';
-import {ImportCatalogErrors} from '../../core/import/import/import-catalog';
+import {ImportErrors} from '../../components/import/import/import-errors';
+import {ParserErrors} from '../../components/import/parser/parser-errors';
+import {ReaderErrors} from '../../components/import/reader/reader-errors';
+import {ImportCatalogErrors} from '../../components/import/import/import-catalog';
 import {MsgWithParams} from '../messages/msg-with-params';
 
 

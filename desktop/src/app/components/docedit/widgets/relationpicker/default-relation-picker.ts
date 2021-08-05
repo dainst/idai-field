@@ -1,6 +1,6 @@
 import { isUndefinedOrEmpty } from 'tsfun';
 import { Document, Resource, Datastore, Relation } from 'idai-field-core';
-import { getSuggestions } from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
+import { getSuggestions } from './get-suggestions';
 import { RelationPicker } from './relation-picker';
 
 

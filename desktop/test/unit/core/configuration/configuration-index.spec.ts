@@ -1,4 +1,4 @@
-import {ConfigurationIndex} from '../../../../src/app/core/configuration/configuration-index';
+import {ConfigurationIndex} from '../../../../src/app/components/configuration/configuration-index';
 
 
 describe('ConfigurationIndex', () => {

@@ -15,12 +15,12 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
-import { ConfigurationUtil } from '../../core/configuration/configuration-util';
+import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryModalComponent } from './add/add-category-modal.component';
-import { ErrWithParams } from '../../core/import/import/import-documents';
+import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { ConfigurationIndex } from '../../core/configuration/configuration-index';
+import { ConfigurationIndex } from './configuration-index';
 import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
@@ -312,7 +312,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             () => AngularUtility.blurActiveElement());
     }
 
-    
+
     public swapCategoryForm(category: Category) {
 
         const [result, componentInstance] =

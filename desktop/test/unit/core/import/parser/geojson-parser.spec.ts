@@ -1,6 +1,6 @@
-import {GeojsonParser} from '../../../../../src/app/core/import/parser/geojson-parser';
+import {GeojsonParser} from '../../../../../src/app/components/import/parser/geojson-parser';
 import {Document} from 'idai-field-core';
-import {ParserErrors} from '../../../../../src/app/core/import/parser/parser-errors';
+import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
 
 
 /**

@@ -21941,6 +21941,228 @@
       }
     }
   },
+  "Lamps-manufacturingMethod-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "freigeformt": {
+        "labels": {
+          "de": "freigeformt"
+        }
+      },
+      "matrizengeformt": {
+        "labels": {
+          "de": "matrizengeformt"
+        }
+      },
+      "scheibengedreht": {
+        "labels": {
+          "de": "scheibengedreht"
+        }
+      }
+    }
+  },
+  "Lamps-coatType-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "mit vollständigem Überzug": {
+        "labels": {
+          "de": "mit vollständigem Überzug"
+        }
+      },
+      "mit teilweisem Überzug": {
+        "labels": {
+          "de": "mit teilweisem Überzug"
+        }
+      },
+      "ohne Überzug": {
+        "labels": {
+          "de": "ohne Überzug"
+        }
+      },
+      "red-on-white": {
+        "labels": {
+          "de": "red-on-white"
+        }
+      }
+    }
+  },
+  "Lamps-decorationTechnique-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Bemalung": {
+        "labels": {
+          "de": "Bemalung"
+        }
+      },
+      "Glasur": {
+        "labels": {
+          "de": "Glasur"
+        }
+      },
+      "Relief": {
+        "labels": {
+          "de": "Relief"
+        }
+      },
+      "Ritzung": {
+        "labels": {
+          "de": "Ritzung"
+        }
+      },
+      "Stempel": {
+        "labels": {
+          "de": "Stempel"
+        }
+      },
+      "Überzug": {
+        "labels": {
+          "de": "Überzug"
+        }
+      },
+      "Vergoldung / metallischer Überzug": {
+        "labels": {
+          "de": "Vergoldung / metallischer Überzug"
+        }
+      }
+    }
+  },
+  "Lamps-decorationPlacement-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Spiegel": {
+        "labels": {
+          "de": "Spiegel"
+        }
+      },
+      "Schulter": {
+        "labels": {
+          "de": "Schulter"
+        }
+      },
+      "Schnauze": {
+        "labels": {
+          "de": "Schnauze"
+        }
+      },
+      "Henkel": {
+        "labels": {
+          "de": "Henkel"
+        }
+      },
+      "Boden": {
+        "labels": {
+          "de": "Boden"
+        }
+      },
+      "Wandung": {
+        "labels": {
+          "de": "Wandung"
+        }
+      }
+    }
+  },
+  "Lamps-lampFragment-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Spiegel": {
+        "labels": {
+          "de": "Spiegel"
+        }
+      },
+      "Schulter": {
+        "labels": {
+          "de": "Schulter"
+        }
+      },
+      "Schnauze": {
+        "labels": {
+          "de": "Schnauze"
+        }
+      },
+      "Henkel": {
+        "labels": {
+          "de": "Henkel"
+        }
+      },
+      "Boden": {
+        "labels": {
+          "de": "Boden"
+        }
+      },
+      "Wandung": {
+        "labels": {
+          "de": "Wandung"
+        }
+      }
+    }
+  },
+  "Lamps-typ-Pergamon": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Herzblattlampen": {
+        "labels": {
+          "de": "Herzblattlampen"
+        }
+      },
+      "Ephesoslampen": {
+        "labels": {
+          "de": "Ephesoslampen"
+        }
+      },
+      "Rillendiskuslampen": {
+        "labels": {
+          "de": "Rillendiskuslampen"
+        }
+      },
+      "Kastenlampen": {
+        "labels": {
+          "de": "Kastenlampen"
+        }
+      },
+      "Ständerlampen": {
+        "labels": {
+          "de": "Ständerlampen"
+        }
+      },
+      "Lampenständer": {
+        "labels": {
+          "de": "Lampenständer"
+        }
+      },
+      "Volutenschnauzenlampen": {
+        "labels": {
+          "de": "Volutenschnauzenlampen"
+        }
+      },
+      "Firmalampen": {
+        "labels": {
+          "de": "Firmalampen"
+        }
+      },
+      "Matrize": {
+        "labels": {
+          "de": "Matrize"
+        }
+      },
+      "Patrize": {
+        "labels": {
+          "de": "Patrize"
+        }
+      }
+    }
+  },
   "Glass-objectType-Pergamon": {
     "createdBy": "",
     "creationDate": "",

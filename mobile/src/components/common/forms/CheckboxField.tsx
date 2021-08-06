@@ -49,7 +49,7 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
                 setValue={ selectValue }
             />}
             <TouchableOpacity onPress={ () => setIsModalOpen(true) }>
-                <FieldLabel field={ field } />
+                <FieldLabel field={ field } modalType={ true } />
             </TouchableOpacity>
         </View>);
 };

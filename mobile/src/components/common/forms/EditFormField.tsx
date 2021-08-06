@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import CheckboxField from './CheckboxField';
 import { FieldBaseProps } from './common-props';
 import DropdownField from './DropdownField';
 import InputField from './InputField';
@@ -32,8 +33,10 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <TextField { ...fieldBaseProps } />;
         case 'dropdown':
             return <DropdownField { ...fieldBaseProps } />;
+        case 'checkboxes':
+            return <CheckboxField { ...fieldBaseProps } />;
         default:
-            return <Text>{field.name}</Text>;
+            return <Text>{field.name} - {field.inputType}</Text>;
     }
 };
 

@@ -1,17 +1,17 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React from 'react';
+import { View, ViewProps } from 'react-native';
 
 
-interface RowProps {
-    style?: StyleProp<ViewStyle>;
-    children: ReactNode;
-}
+// interface RowProps extends ViewProps{
+//     style?: StyleProp<ViewStyle>;
+//     children: ReactNode;
+// }
 
 
-const Row = ({ children, style }: RowProps): ReactElement => {
+const Row: React.FC<ViewProps> = (props) => {
 
-    return <View style={ [styles.row, style] }>
-        { children }
+    return <View { ...props } style={ [styles.row, props.style] }>
+        { props.children }
     </View>;
 };
 

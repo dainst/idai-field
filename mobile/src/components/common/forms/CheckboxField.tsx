@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
-import ChoiceModal, { ItemData } from './ChoiceModal';
+import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
 
@@ -10,14 +10,14 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
 
     const { labels } = useContext(LabelsContext);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [valuesObject, setValuesObject] = useState<ItemData>({});
+    const [valuesObject, setValuesObject] = useState<ItemsObject>({});
 
     const getValues = useCallback(
         () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);
     
     useEffect(() => {
 
-        const itemData: ItemData = {};
+        const itemData: ItemsObject = {};
         getValues().forEach(value => {
             if(currentValue && Array.isArray(currentValue) && currentValue.includes(value))
                 itemData[value] = { selected: true, label: value };

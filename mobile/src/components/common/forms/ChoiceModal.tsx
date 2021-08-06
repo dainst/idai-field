@@ -1,8 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Field } from 'idai-field-core';
 import React from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Button from '../Button';
 import Card from '../Card';
 import Heading from '../Heading';
@@ -12,17 +11,32 @@ import TitleBar from '../TitleBar';
 
 interface ChoiceModalProps {
     onClose: () => void;
-    choices: ItemData;
+    choices: ItemsObject;
     field: Field
     setValue: (label: string) => void;
 }
 
-export interface ItemData {
-    [key: string]: {selected: boolean; label: string};
+export interface ItemsObject {
+    [key: string]: ItemData;
+}
+
+interface ItemData {
+    selected: boolean;
+    label: string;
 }
 
 const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setValue }) => {
 
+    const renderItem = ({ item }: { item: ItemData }) => (
+            <Row style={ { alignItems: 'center' } }>
+                <TouchableOpacity onPress={ () => setValue(item.label) }>
+                    <Ionicons
+                        name={ choices[item.label].selected ? 'checkbox-outline' : 'stop-outline' }
+                        size={ 24 } color="black" />
+                </TouchableOpacity>
+                <Text style={ { marginLeft: 2 } }>{item.label}</Text>
+            </Row>
+    );
 
     return (
         <Modal onRequestClose={ onClose } animationType="fade" transparent visible={ true }>
@@ -39,20 +53,11 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
                             onPress={ onClose }
                         /> }
                     />
-                    <ScrollView>
-                        {Object.keys(choices).map(choice => (
-                            <View key={ choice }>
-                                <Row style={ { alignItems: 'center' } }>
-                                    <TouchableOpacity onPress={ () => setValue(choice) }>
-                                        <Ionicons
-                                            name={ choices[choice].selected ? 'checkbox-outline' : 'stop-outline' }
-                                            size={ 24 } color="black" />
-                                    </TouchableOpacity>
-                                    <Text style={ { marginLeft: 2 } }>{choice}</Text>
-                                </Row>
-                            </View>
-                        ))}
-                    </ScrollView>
+                    <FlatList
+                        data={ Object.keys(choices).map(choice => choices[choice]) }
+                        keyExtractor={ item => item.label }
+                        renderItem={ renderItem }
+                    />
                 </Card>
             </View>
         </Modal>

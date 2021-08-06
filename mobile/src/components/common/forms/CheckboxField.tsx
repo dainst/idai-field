@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal, { ItemData } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
@@ -48,9 +48,7 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
                 field={ field }
                 setValue={ selectValue }
             />}
-            <TouchableOpacity onPress={ () => setIsModalOpen(true) }>
-                <FieldLabel field={ field } modalType={ true } />
-            </TouchableOpacity>
+            <FieldLabel field={ field } openModal={ () => setIsModalOpen(true) } />
         </View>);
 };
 

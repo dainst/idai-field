@@ -28,8 +28,8 @@ interface ItemData {
 const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setValue }) => {
 
     const renderItem = ({ item }: { item: ItemData }) => (
-            <Row style={ { alignItems: 'center' } }>
-                <TouchableOpacity onPress={ () => setValue(item.label) }>
+            <Row style={ { alignItems: 'center' } } testID={ item.label }>
+                <TouchableOpacity onPress={ () => setValue(item.label) } testID={ `press_${item.label}` }>
                     <Ionicons
                         name={ choices[item.label].selected ? 'checkbox-outline' : 'stop-outline' }
                         size={ 24 } color="black" />
@@ -47,6 +47,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
                                     <I18NLabel label={ field } />
                                 </Heading> }
                         left={ <Button
+                            testID="closeBtn"
                             title="Close"
                             variant="transparent"
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }

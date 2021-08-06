@@ -1,8 +1,9 @@
 import {
+    basicIndexConfiguration,
     Category, CategoryConverter, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache,
     Forest, Indexer, IndexFacade, NewDocument,
-    PouchdbDatastore, ProjectConfiguration, Query, SyncProcess, SyncService, Tree
+    PouchdbDatastore, ProjectConfiguration, Query, SyncService, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -106,16 +107,12 @@ const buildIndexFacade = (categories: Category[]): IndexFacade => {
 
     const createdConstraintIndex = ConstraintIndex.make({
         /* eslint-disable max-len */
-        'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
-        'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain', recursivelySearchable: true },
-        'liesWithin:exist': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'exist' },
+        ... basicIndexConfiguration,
         'depicts:contain': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'contain' },
         'depicts:exist': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'exist' },
         'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'exist' },
         'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'links' },
         'isMapLayerOf:exist': { path: 'resource.relations.isMapLayerOf', pathArray: ['resource', 'relations', 'isMapLayerOf'], type: 'exist' },
-        'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
-        'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
         'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
         'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
         /* eslint-enable max-len */

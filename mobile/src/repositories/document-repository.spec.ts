@@ -1,6 +1,5 @@
 import {
-    Category, createCategory, createDocuments, doc, Document, Forest,
-    PouchdbDatastore, IdGenerator, SyncStatus
+    Category, createCategory, createDocuments, doc, Document, Forest, IdGenerator, PouchdbDatastore, SyncStatus
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
@@ -173,7 +172,7 @@ describe('DocumentRepository', () => {
 
         const sync = await repository.syncService.startSync();
         const inSync = new Promise<boolean>((resolve, reject) => {
-            sync.observer.subscribe(
+            sync.subscribe(
                 status => {
                     console.log({ status });
                     (status === SyncStatus.InSync) && resolve(true);

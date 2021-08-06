@@ -88,8 +88,12 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                 });
         }
     };
-    
 
+    const onReturn = () => {
+        setResourceToDefault();
+        navigation.navigate('DocumentsMap',{});
+    };
+    
     if(!category || !activeGroup || !labels) return null;
     
     
@@ -106,7 +110,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                 }
                 left={ <Button
                     variant="transparent"
-                    onPress={ () => navigation.navigate('DocumentsMap',{}) }
+                    onPress={ onReturn }
                     icon={ <Ionicons name="chevron-back" size={ 18 } /> }
                 /> }
                 right={ <Button

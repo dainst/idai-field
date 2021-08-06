@@ -53,11 +53,8 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
                             </View>
                         ))}
                     </ScrollView>
-
-
                 </Card>
             </View>
-
         </Modal>
     );
 };

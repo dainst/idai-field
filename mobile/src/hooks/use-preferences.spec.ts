@@ -80,6 +80,7 @@ describe('usePreferences', () => {
 
         // generates a warning
         // see https://github.com/testing-library/react-hooks-testing-library/issues/14
+        jest.spyOn(console, 'error').mockImplementation(jest.fn());
         await waitForNextUpdate2();
         
         expect(AsyncStorage.getItem).toBeCalledWith('preferences');

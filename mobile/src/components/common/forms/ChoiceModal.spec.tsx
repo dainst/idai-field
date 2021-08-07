@@ -19,13 +19,17 @@ const choices: ItemsObject = {
 const mockSetValueFn = jest.fn();
 const closeFuntion = jest.fn();
 
-describe('ChoiceModal.spec',() => {
+const baseProps: {type: 'checkbox' | 'radio', field: Field} = {
+    type: 'checkbox',
+};
+
+describe('ChoiceModal',() => {
     
     it('should display all choices',() => {
 
         const { getByTestId } = render(
                     <ChoiceModal
-                        field={ mockField }
+                        { ...baseProps }
                         onClose={ closeFuntion }
                         choices={ choices }
                         setValue={ jest.fn() } />);
@@ -42,7 +46,7 @@ describe('ChoiceModal.spec',() => {
         const itemChosen = keys[Math.floor(Math.random() * keys.length)];
         const { getByTestId } = render(
             <ChoiceModal
-                field={ mockField }
+                { ...baseProps }
                 onClose={ jest.fn() }
                 choices={ choices }
                 setValue={ mockSetValueFn } />);
@@ -53,9 +57,10 @@ describe('ChoiceModal.spec',() => {
 
 
     it('should call onClose prop if close button is pressed', () => {
+
         const { getByTestId } = render(
             <ChoiceModal
-                field={ mockField }
+                { ...baseProps }
                 onClose={ closeFuntion }
                 choices={ choices }
                 setValue={ jest.fn() } />);

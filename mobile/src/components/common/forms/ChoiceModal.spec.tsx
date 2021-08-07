@@ -8,6 +8,7 @@ const mockField: Field = {
     name: fieldName,
     inputType: 'checkboxes',
 };
+
 const choices: ItemsObject = {
     1: { selected: true, label: '1' },
     2: { selected: true, label: '2' },
@@ -18,9 +19,17 @@ const choices: ItemsObject = {
 };
 const mockSetValueFn = jest.fn();
 const closeFuntion = jest.fn();
+jest.mock('@expo/vector-icons', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { View } = require('react-native');
+    return {
+      Ionicons: View,
+    };
+  });
 
 const baseProps: {type: 'checkbox' | 'radio', field: Field} = {
     type: 'checkbox',
+    field: mockField,
 };
 
 describe('ChoiceModal',() => {
@@ -67,5 +76,38 @@ describe('ChoiceModal',() => {
 
         fireEvent.press(getByTestId('closeBtn'));
         expect(mockSetValueFn).toBeCalledTimes(1);
+    });
+
+    
+    it('should render correct icons for prop type', () => {
+
+        //test type checkbox
+        const { getByTestId, rerender } = render(
+            <ChoiceModal
+                { ...baseProps }
+                onClose={ closeFuntion }
+                choices={ choices }
+                setValue={ jest.fn() } />);
+        
+        Object.keys(choices).forEach(key => {
+            if(choices[key].selected) expect(getByTestId(`icon_${key}`).props.name).toEqual('checkbox-outline');
+            else expect(getByTestId(`icon_${key}`).props.name).toEqual('stop-outline');
+        });
+
+        //check type radio
+        rerender(
+            <ChoiceModal
+                { ...baseProps }
+                onClose={ closeFuntion }
+                choices={ choices }
+                setValue={ jest.fn() }
+                type="radio" />);
+        
+        Object.keys(choices).forEach(key => {
+            if(choices[key].selected)
+                expect(getByTestId(`icon_${key}`).props.name).toEqual('md-radio-button-on-outline');
+            else expect(getByTestId(`icon_${key}`).props.name).toEqual('md-radio-button-off-outline');
+        });
+
     });
 });

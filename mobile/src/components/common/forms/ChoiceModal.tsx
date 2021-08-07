@@ -14,6 +14,7 @@ interface ChoiceModalProps {
     choices: ItemsObject;
     field: Field
     setValue: (label: string) => void;
+    type: 'checkbox'| 'radio'
 }
 
 export interface ItemsObject {
@@ -25,14 +26,26 @@ interface ItemData {
     label: string;
 }
 
-const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setValue }) => {
+const ICON_SIZE = 24;
+const ICON_COLOR = 'black';
+
+const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setValue, type }) => {
 
     const renderItem = ({ item }: { item: ItemData }) => (
             <Row style={ { alignItems: 'center' } } testID={ item.label }>
                 <TouchableOpacity onPress={ () => setValue(item.label) } testID={ `press_${item.label}` }>
-                    <Ionicons
-                        name={ choices[item.label].selected ? 'checkbox-outline' : 'stop-outline' }
-                        size={ 24 } color="black" />
+                    {type === 'checkbox' ?
+                        <Ionicons
+                            name={ choices[item.label].selected ? 'checkbox-outline' : 'stop-outline' }
+                            size={ ICON_SIZE } color={ ICON_COLOR }
+                            testID={ `icon_${item.label}` } /> :
+                        <Ionicons
+                            name={ choices[item.label].selected ?
+                                'md-radio-button-on-outline' :
+                                'md-radio-button-off-outline' }
+                            size={ ICON_SIZE } color={ ICON_COLOR }
+                            testID={ `icon_${item.label}` } />
+                    }
                 </TouchableOpacity>
                 <Text style={ { marginLeft: 2 } }>{item.label}</Text>
             </Row>

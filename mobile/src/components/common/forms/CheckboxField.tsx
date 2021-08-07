@@ -47,6 +47,7 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
                 choices={ valuesObject }
                 field={ field }
                 setValue={ selectValue }
+                type="checkbox"
             />}
             <FieldLabel field={ field } openModal={ () => setIsModalOpen(true) } />
         </View>);

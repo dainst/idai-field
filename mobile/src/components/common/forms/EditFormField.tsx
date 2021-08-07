@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import BooleanField from './BooleanField';
 import CheckboxField from './CheckboxField';
 import { FieldBaseProps } from './common-props';
 import DropdownField from './DropdownField';
@@ -35,6 +36,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <DropdownField { ...fieldBaseProps } />;
         case 'checkboxes':
             return <CheckboxField { ...fieldBaseProps } />;
+        case 'boolean':
+            return <BooleanField { ...fieldBaseProps } />;
         default:
             return <Text>{field.name} - {field.inputType}</Text>;
     }

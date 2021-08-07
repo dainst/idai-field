@@ -17,8 +17,6 @@ jobs:
           node-version: '14'
       - name: Setup NPM cache
         uses: c-hive/gha-npm-cache@v1
-      - name: Update NPM
-        run: npm install -g npm@latest
       - name: Install root node modules
         run: npm i
       - name: Bootstrap monorepo packages

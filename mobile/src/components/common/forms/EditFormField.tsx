@@ -6,6 +6,7 @@ import { FieldBaseProps } from './common-props';
 import DropdownField from './DropdownField';
 import InputField from './InputField';
 import NumberField from './NumberField';
+import RadioField from './RadioField';
 import TextField from './TextField';
 
 
@@ -36,6 +37,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <DropdownField { ...fieldBaseProps } />;
         case 'checkboxes':
             return <CheckboxField { ...fieldBaseProps } />;
+        case 'radio':
+            return <RadioField { ...fieldBaseProps } />;
         case 'boolean':
             return <BooleanField { ...fieldBaseProps } />;
         default:

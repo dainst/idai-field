@@ -9,13 +9,11 @@ import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbDatastore from '../../hooks/use-pouchdb-datastore';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
-import useToast from '../../hooks/use-toast';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import Heading from '../common/Heading';
 import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
-import { ToastType } from '../common/Toast/ToastProvider';
 
 type DocumentAddNav = StackNavigationProp<AppStackParamList, 'LoadingScreen'>;
 
@@ -30,7 +28,6 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
     const [showSpinner, setShowSpinner] = useState<boolean>(false);
     const [showError, setShowError] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('');
-    const { showToast } = useToast();
 
     const pouchdbManager = usePouchdbDatastore(preferences.preferences.currentProject);
 
@@ -71,8 +68,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
             setStatus('Loading....');
             setShowSpinner(true);
         } else if(syncStatus === SyncStatus.InSync) {
-            showToast(ToastType.Success, `Loaded ${preferences.preferences.currentProject}`);
-            navigation.navigate('HomeScreen');
+            navigation.navigate('ProjectScreen');
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [syncStatus, preferences.preferences.currentProject]);

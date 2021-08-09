@@ -32,17 +32,15 @@ const useSync = (
         if (!projectSettings?.url || !project || !syncService) return;
 
         syncService.init(projectSettings.url, project, projectSettings.password);
-    }, [syncService, projectSettings.url, project, projectSettings.password]);
+    }, [syncService, projectSettings?.url, project, projectSettings?.password]);
 
     useEffect(() => {
 
-        if(!syncService || !project) return;
+        if(!syncService || !project || !projectSettings?.connected) return;
 
-        if (projectSettings.connected) {
-            syncService.startSyncWithRetry(isNotAnImage);
-            return () => syncService.stopSync();
-        }
-    }, [syncService, project, projectSettings.connected]);
+        syncService.startSyncWithRetry(isNotAnImage);
+        return () => syncService.stopSync();
+    }, [syncService, project, projectSettings?.connected]);
 
     return status;
 };

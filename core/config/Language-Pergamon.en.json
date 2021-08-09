@@ -119,6 +119,9 @@
        "sample": {
          "label": "Sample"
        },
+       "isMisfired": {
+        "label": "Misfired"
+      },
        "typeNumber": {
          "label": "Type number",
          "description": "Type catalogue number"
@@ -162,8 +165,14 @@
        "colorBreakMunsell": {
          "label": "Wood color(s) core Munsell-Nr."
        },
+       "toneColorOutside": {
+        "label": "Clay color(s) (outside)"
+      },
+      "toneColorOutsideMunsell": {
+        "label": "Clay color(s) (outside) Munsell-Nr."
+      },
        "porosity": {
-         "label": "Porosität"
+         "label": "Porosity"
        },
        "coatCondition": {
          "label": "Condition of coat"
@@ -189,17 +198,14 @@
        "decorationPlacement": {
          "label": "Decoration placement"
        },
-       "colorOutside": {
-         "label": "Tonfarbe(n) außen"
-       },
-       "colorOutsideMunsell": {
-         "label": "Tonfarbe(n) außen Munsell-Nr."
-       },
        "colorInside": {
-         "label": "Tonfarbe(n) innen"
+         "label": "Clay color(s) (inside)"
        },
        "colorInsideMunsell": {
-         "label": "Tonfarbe(n) innen Munsell-Nr."
+         "label": "Clay color(s) (inside) Munsell-Nr."
+       },
+       "coatColorOutsideMunsell": {
+        "label": "Coat outside Munsell-Nr."
        }
       }
     },

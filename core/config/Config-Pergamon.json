@@ -720,7 +720,7 @@
           "inputType": "input"
         },
         "manufacturing": {
-          "inputType": "checkboxes"
+          "inputType": "input"
         },
         "manufacturingMethod": {
           "inputType": "checkboxes"
@@ -729,19 +729,13 @@
           "inputType": "input"
         },
         "temper": {
-          "inputType": "checkboxes"
+          "inputType": "text"
         },
         "porosity": {
           "inputType": "dropdown"
         },
         "clayHardness": {
           "inputType": "dropdown"
-        },
-        "colorOutside": {
-          "inputType": "input"
-        },
-        "colorOutsideMunsell": {
-          "inputType": "input"
         },
         "colorInside": {
           "inputType": "input"
@@ -753,6 +747,12 @@
           "inputType": "input"
         },
         "colorBreakMunsell": {
+          "inputType": "input"
+        },
+        "toneColorOutside": {
+          "inputType": "input"
+        },
+        "toneColorOutsideMunsell": {
           "inputType": "input"
         },
         "breakStructure": {
@@ -817,7 +817,6 @@
         }
       },
       "valuelists": {
-        "manufacturing": "Brick-manufacturing-default",
         "manufacturingMethod": "Lamps-manufacturingMethod-Pergamon",
         "clayHardness": "Pottery-clayHardness-default",
         "breakEdge": "Pottery-breakEdge-Pergamon",
@@ -832,7 +831,6 @@
         "coatCondition": "Wood-paintCondition-default",
         "provenance": "provenance-default-1",
         "porosity": "Pottery-porosity-Pergamon",
-        "temper": "Brick-temper-default",
         "lampFragment": "Lamps-lampFragment-Pergamon",
         "typ": "Lamps-typ-Pergamon"
       }

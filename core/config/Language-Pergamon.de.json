@@ -223,6 +223,12 @@
        "colorBreakMunsell": {
          "label": "Tonfarne(n) Kern Munsell-Nr."
        },
+       "toneColorOutside": {
+        "label": "Tonfarbe(n) außen"
+      },
+      "toneColorOutsideMunsell": {
+        "label": "Tonfarbe(n) außen Munsell-Nr"
+      },
        "porosity": {
          "label": "Porosität"
        },
@@ -249,12 +255,6 @@
        },
        "decorationPlacement": {
          "label": "Verortung des Dekors"
-       },
-       "colorOutside": {
-         "label": "Farbe(n) Bemalung außen"
-       },
-       "colorOutsideMunsell": {
-         "label": "Farbe(n) Bemalung außen Munsel."
        },
        "colorInside": {
          "label": "Tonfarbe(n) innen"

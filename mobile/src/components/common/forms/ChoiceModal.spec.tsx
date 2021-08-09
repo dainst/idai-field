@@ -25,7 +25,7 @@ jest.mock('@expo/vector-icons', () => {
     return {
       Ionicons: View,
     };
-  });
+});
 
 const baseProps: {type: 'checkbox' | 'radio', field: Field} = {
     type: 'checkbox',

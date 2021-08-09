@@ -30,7 +30,6 @@ const ProjectScreen: React.FC = () => {
     const syncStatus = useSync(
         preferences.preferences.currentProject,
         preferences.preferences.projects[preferences.preferences.currentProject],
-        repository,
         pouchdbDatastore,
     );
     

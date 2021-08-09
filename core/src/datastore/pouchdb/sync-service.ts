@@ -59,13 +59,13 @@ export class SyncService {
     }
 
 
-    public async startSyncWithRetry() { // TODO does not need to be async
+    public async startSyncWithRetry(filter?: (doc: any) => boolean) { // TODO does not need to be async
 
         if (!this.syncTarget || !this.project) return;
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
-        this.startSync().subscribe(
+        this.startSync(filter).subscribe(
             _ => {},
             _ => {
                 for (let handle of this.syncHandles) (handle as any).cancel();

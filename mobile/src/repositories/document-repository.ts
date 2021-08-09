@@ -107,7 +107,7 @@ const buildIndexFacade = (categories: Category[]): IndexFacade => {
 
     const createdConstraintIndex = ConstraintIndex.make({
         /* eslint-disable max-len */
-        ... basicIndexConfiguration,
+        ...basicIndexConfiguration,
         'depicts:contain': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'contain' },
         'depicts:exist': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'exist' },
         'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'exist' },
@@ -125,6 +125,3 @@ const buildIndexFacade = (categories: Category[]): IndexFacade => {
         false
     );
 };
-
-
-const isNotAnImage = (doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type);

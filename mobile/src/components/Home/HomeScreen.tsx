@@ -112,7 +112,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 <Button
                     icon={ <Ionicons name="cloud-download-outline" size={ 16 } /> }
                     onPress={ () => setIsLoadModalOpen(true) }
-                    title="Load project"
+                    title="Load project from server"
                     style={ styles.bottomRowButton }
                     variant="mellow"
                 />

@@ -34,7 +34,7 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
     return (
         <Modal onRequestClose={ onCancel } animationType="slide">
             <SafeAreaView>
-                <TitleBar title={ <Heading>Load project</Heading> }
+                <TitleBar title={ <Heading>Load project from server</Heading> }
                     left={ <Button
                         title="Cancel"
                         variant="transparent"
@@ -65,7 +65,6 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                         onChangeText={ setUrl }
                         autoCapitalize="none"
                         autoCorrect={ false }
-                        autoFocus
                     />
                     <Input
                         placeholder="Password"

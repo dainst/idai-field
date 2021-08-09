@@ -64,20 +64,17 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
                     /> }
             />
             <View style={ styles.statusContainer }>
-                { (syncStatus === SyncStatus.Pulling
-                        || syncStatus === SyncStatus.Pushing)
-                    && <ActivityIndicator
+                { (syncStatus === SyncStatus.Error
+                        || syncStatus === SyncStatus.AuthenticationError
+                        || syncStatus === SyncStatus.AuthorizationError)
+                    ? <MaterialIcons name="error" size={ 35 } color={ colors.danger } />
+                    : <ActivityIndicator
                         size="large"
                         color={ colors.primary }
                         style={ styles.loadingSpinner }
                     />
                 }
-                { (syncStatus === SyncStatus.Error
-                        || syncStatus === SyncStatus.AuthenticationError
-                        || syncStatus === SyncStatus.AuthorizationError)
-                    && <MaterialIcons name="error" size={ 35 } color={ colors.danger } />
-                }
-                <Button variant="primary" title={ 'Cancel' } onPress={ returnToHomeScreen } />
+                <Button variant="danger" title={ 'Cancel' } onPress={ returnToHomeScreen } />
             </View>
             
            

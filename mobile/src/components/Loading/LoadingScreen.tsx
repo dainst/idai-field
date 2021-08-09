@@ -1,9 +1,9 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { SyncStatus } from 'idai-field-core';
 import React, { useContext, useEffect } from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, View } from 'react-native';
-import { AppStackParamList } from '../../../App';
+import { AppParamList } from '../../../App';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import usePouchdbDatastore from '../../hooks/use-pouchdb-datastore';
 import useSync from '../../hooks/use-sync';
@@ -12,7 +12,7 @@ import Button from '../common/Button';
 import Heading from '../common/Heading';
 import TitleBar from '../common/TitleBar';
 
-type DocumentAddNav = StackNavigationProp<AppStackParamList, 'LoadingScreen'>;
+type DocumentAddNav = BottomTabNavigationProp<AppParamList, 'LoadingScreen'>;
 
 interface LoadingScreenProps {
     navigation: DocumentAddNav;

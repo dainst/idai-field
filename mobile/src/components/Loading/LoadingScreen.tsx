@@ -29,26 +29,26 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
     const [showError, setShowError] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('');
 
-    const pouchdbManager = usePouchdbDatastore(preferences.preferences.currentProject);
+    const pouchdbDatastore = usePouchdbDatastore(preferences.preferences.currentProject);
 
     const config = useConfiguration(
         preferences.preferences.currentProject,
         preferences.preferences.languages,
         preferences.preferences.username,
-        pouchdbManager,
+        pouchdbDatastore,
     );
 
     const repository = useRepository(
         preferences.preferences.username,
         config?.getCategories() || [],
-        pouchdbManager,
+        pouchdbDatastore,
     );
 
     const syncStatus = useSync(
         preferences.preferences.currentProject,
         preferences.preferences.projects[preferences.preferences.currentProject],
         repository,
-        pouchdbManager,
+        pouchdbDatastore,
     );
     
 

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import useConfiguration from '../../hooks/use-configuration';
-import usePouchdbManager from '../../hooks/use-pouchdb-datastore';
+import usePouchDbDatastore from '../../hooks/use-pouchdb-datastore';
 import useRelationsManager from '../../hooks/use-relations-manager';
 import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
@@ -12,26 +12,26 @@ const ProjectScreen: React.FC = () => {
 
     const preferences = useContext(PreferencesContext);
 
-    const pouchdbManager = usePouchdbManager(preferences.preferences.currentProject);
+    const pouchdbDatastore = usePouchDbDatastore(preferences.preferences.currentProject);
 
     const config = useConfiguration(
         preferences.preferences.currentProject,
         preferences.preferences.languages,
         preferences.preferences.username,
-        pouchdbManager,
+        pouchdbDatastore,
     );
 
     const repository = useRepository(
         preferences.preferences.username,
         config?.getCategories() || [],
-        pouchdbManager,
+        pouchdbDatastore,
     );
 
     const syncStatus = useSync(
         preferences.preferences.currentProject,
         preferences.preferences.projects[preferences.preferences.currentProject],
         repository,
-        pouchdbManager,
+        pouchdbDatastore,
     );
     
     const relationsManager = useRelationsManager(

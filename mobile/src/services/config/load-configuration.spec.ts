@@ -1,4 +1,4 @@
-import { PouchdbDatastore, IdGenerator } from 'idai-field-core';
+import { IdGenerator, PouchdbDatastore } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import loadConfiguration from './load-configuration';
 
@@ -9,24 +9,24 @@ describe('loadConfiguration()', () => {
     const project = 'testdb_config';
 
 
-    let pouchdbManager: PouchdbDatastore;
+    let pouchdbDatastore: PouchdbDatastore;
     
 
     beforeEach(() => {
-        pouchdbManager = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
-        pouchdbManager.createDbForTesting(project);
+        pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
+        pouchdbDatastore.createDbForTesting(project);
     });
 
 
     afterEach(async (done) => {
-        await pouchdbManager.destroyDb(project);
+        await pouchdbDatastore.destroyDb(project);
         done();
     });
 
 
     xit('loads default config via config reader', async () => {
 
-        const config = await loadConfiguration(pouchdbManager, 'asdflkjhasdflj', ['de', 'en'], 'Testuser');
+        const config = await loadConfiguration(pouchdbDatastore, 'asdflkjhasdflj', ['de', 'en'], 'Testuser');
         
         // expect(config.getLabelForCategory('Trench')).toEqual('Schnitt');
         // this does not exist any longer

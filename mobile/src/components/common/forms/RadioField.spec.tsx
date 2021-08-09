@@ -38,6 +38,7 @@ jest.mock('idai-field-core', () => {
                     5: { label: { de: 'fünf', en: 'five' } },
                 }
             };
+            const fieldName = 'RadioField';
 
             return {
                 orderKeysByLabels: () => Object.keys(valueList.values).map(key => {

@@ -26,7 +26,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
 
         
         const itemData = initValuesObject();
-        if(currentValue && typeof currentValue === 'string')
+        if(currentValue && typeof currentValue === 'string' && itemData[currentValue])
             itemData[currentValue].selected = true;
         setValuesObject(itemData);
     },[currentValue, initValuesObject]);

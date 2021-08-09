@@ -53,7 +53,8 @@ const usePreferences = (): UsePreferences => {
         setPreferences(
             compose(
                 update('projects', detach(project)),
-                update('recentProjects', subtract([project]))
+                update('recentProjects', subtract([project])),
+                update('currentProject', (p: string) => p === project ? '' : p)
             )
         );
 

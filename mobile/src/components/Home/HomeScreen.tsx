@@ -60,7 +60,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         navigate('LoadingScreen');
     },[navigate, preferences]);
 
-    
     const usernameNotSet = () => preferences.preferences.username === '';
 
     return <>

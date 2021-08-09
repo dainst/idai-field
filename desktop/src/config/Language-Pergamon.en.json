@@ -104,6 +104,111 @@
         }
       }
     },
+    "Lamps": {
+      "label": "Lamps",
+      "fields": {
+       "decorationDescription": {
+         "label": "Decoration description"
+       },
+       "breakStructure": {
+         "label": "Notes about the break (Structure, porousness etc.)"
+       },
+       "residueAnalysis": {
+         "label": "Residue analysis"
+       },
+       "sample": {
+         "label": "Sample"
+       },
+       "isMisfired": {
+        "label": "Misfired"
+      },
+       "typeNumber": {
+         "label": "Type number",
+         "description": "Type catalogue number"
+       },
+       "clayHardness": {
+         "label": "Clay hardness (Mohs scale)"
+       },
+       "coatColorOutside": {
+         "label": "Coat (outside): Color and intensity"
+       },
+       "decorationTechnique": {
+         "label": "Surface treatment or decoration technique"
+       },
+       "manufacturing": {
+         "label": "Manufacturing"
+       },
+       "manufacturingMethod": {
+         "label": "Manufacturing method"
+       },
+       "temper": {
+         "label": "Temper"
+       },
+       "isImport": {
+         "label": "Import"
+       },
+       "lampFragment": {
+         "label": "Lamp fragment"
+       },
+       "typ": {
+         "label": "Type"
+       },
+       "manufacturingDescription": {
+         "label": "Details manufacturing"
+       },
+       "coatOutside": {
+         "label": "Coat (outside)"
+       },
+       "colorBreak": {
+         "label": "Color Break"
+       },
+       "colorBreakMunsell": {
+         "label": "Wood color(s) core Munsell-Nr."
+       },
+       "toneColorOutside": {
+        "label": "Clay color(s) (outside)"
+      },
+      "toneColorOutsideMunsell": {
+        "label": "Clay color(s) (outside) Munsell-Nr."
+      },
+       "porosity": {
+         "label": "Porosity"
+       },
+       "coatCondition": {
+         "label": "Condition of coat"
+       },
+       "fragmentSize": {
+         "label": "Fragment size"
+       },
+       "breakEdge": {
+         "label": "Breaking edge"
+       },
+       "sintering": {
+         "label": "Sintering"
+       },
+       "surfaceCondition": {
+         "label": "Surface condition"
+       },
+       "coatType": {
+         "label": "Coat type /surface"
+       },
+       "coatQuality": {
+         "label": "Coat quality"
+       },
+       "decorationPlacement": {
+         "label": "Decoration placement"
+       },
+       "colorInside": {
+         "label": "Clay color(s) (inside)"
+       },
+       "colorInsideMunsell": {
+         "label": "Clay color(s) (inside) Munsell-Nr."
+       },
+       "coatColorOutsideMunsell": {
+        "label": "Coat outside Munsell-Nr."
+       }
+      }
+    },
     "Glass": {
       "fields": {
         "colorOutside": {

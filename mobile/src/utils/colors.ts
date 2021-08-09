@@ -28,6 +28,6 @@ export const textColors: Colors = {
     danger: 'white',
     transparent: 'black',
     lightgray: 'black',
-    mellow: 'white',
+    mellow: 'black',
     containerBackground: 'black'
 };

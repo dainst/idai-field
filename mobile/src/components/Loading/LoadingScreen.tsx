@@ -1,18 +1,15 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SyncStatus } from 'idai-field-core';
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { ActivityIndicator, SafeAreaView, StyleSheet, View } from 'react-native';
 import { AppStackParamList } from '../../../App';
 import { PreferencesContext } from '../../contexts/preferences-context';
-import useConfiguration from '../../hooks/use-configuration';
 import usePouchdbDatastore from '../../hooks/use-pouchdb-datastore';
-import useRepository from '../../hooks/use-repository';
 import useSync from '../../hooks/use-sync';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import Heading from '../common/Heading';
-import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 
 type DocumentAddNav = StackNavigationProp<AppStackParamList, 'LoadingScreen'>;
@@ -25,60 +22,25 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
 
     const preferences = useContext(PreferencesContext);
 
-    const [showSpinner, setShowSpinner] = useState<boolean>(false);
-    const [showError, setShowError] = useState<boolean>(false);
-    const [status, setStatus] = useState<string>('');
-
     const pouchdbDatastore = usePouchdbDatastore(preferences.preferences.currentProject);
-
-    const config = useConfiguration(
-        preferences.preferences.currentProject,
-        preferences.preferences.languages,
-        preferences.preferences.username,
-        pouchdbDatastore,
-    );
-
-    const repository = useRepository(
-        preferences.preferences.username,
-        config?.getCategories() || [],
-        pouchdbDatastore,
-    );
 
     const syncStatus = useSync(
         preferences.preferences.currentProject,
         preferences.preferences.projects[preferences.preferences.currentProject],
-        repository,
         pouchdbDatastore,
     );
-    
 
     useEffect(() => {
-     
-        if(syncStatus === SyncStatus.Offline){
-            setShowSpinner(false);
-            setStatus('Offline');
-        } else if(syncStatus === SyncStatus.AuthenticationError ||
-            syncStatus === SyncStatus.AuthorizationError ||
-            syncStatus === SyncStatus.Error) {
-                setStatus(syncStatus);
-                setShowSpinner(false);
-                setShowError(true);
-                preferences.removeProject(preferences.preferences.currentProject);
-        } else if(syncStatus === SyncStatus.Pulling) {
-            setStatus('Loading....');
-            setShowSpinner(true);
-        } else if(syncStatus === SyncStatus.InSync) {
+
+        if (syncStatus === SyncStatus.InSync) {
             navigation.navigate('ProjectScreen');
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [syncStatus, preferences.preferences.currentProject]);
-
+    }, [syncStatus, navigation]);
 
     const returnToHomeScreen = () => {
         disconnect();
         navigation.navigate('HomeScreen');
     };
-
 
     const disconnect = () => {
         const currentSettings = preferences.preferences.projects[preferences.preferences.currentProject];
@@ -88,7 +50,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
         );
     };
 
-    // Add header
+
     return (
         <SafeAreaView style={ styles.container }>
             <TitleBar
@@ -102,18 +64,20 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
                     /> }
             />
             <View style={ styles.statusContainer }>
-                { showSpinner && <ActivityIndicator
-                                    size="large"
-                                    color={ colors.primary }
-                                    style={ styles.loadingSpinner } />}
-                <Row>
-                    {showError && <MaterialIcons name="error" size={ 35 } color={ colors.danger } />}
-                    <Text style={ styles.loadingText }>{status}</Text>
-                </Row>
-                {(showError || showSpinner) && <Button
-                    variant="primary"
-                    title={ showSpinner ? 'Cancel' : 'Return' }
-                    onPress={ returnToHomeScreen } />}
+                { (syncStatus === SyncStatus.Pulling
+                        || syncStatus === SyncStatus.Pushing)
+                    && <ActivityIndicator
+                        size="large"
+                        color={ colors.primary }
+                        style={ styles.loadingSpinner }
+                    />
+                }
+                { (syncStatus === SyncStatus.Error
+                        || syncStatus === SyncStatus.AuthenticationError
+                        || syncStatus === SyncStatus.AuthorizationError)
+                    && <MaterialIcons name="error" size={ 35 } color={ colors.danger } />
+                }
+                <Button variant="primary" title={ 'Cancel' } onPress={ returnToHomeScreen } />
             </View>
             
            

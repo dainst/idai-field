@@ -47,7 +47,8 @@ jest.mock('idai-field-core', () => {
                         return label['en'];
                     } else return '';
                 }),
-                get: () => fieldName
+                get: () => fieldName,
+                getLabelAndDescription: () => ({ description: 'description' })
             };
         }),
     };

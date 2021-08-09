@@ -1,6 +1,5 @@
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
-import { Field, Valuelist } from 'idai-field-core';
-import { Labels } from 'idai-field-core/src/services/labels';
+import { Field, Labels, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal from './ChoiceModal';
@@ -25,7 +24,7 @@ const mockField: Field = {
 const currentValue = 'one';
 
 // Mock core Labels class
-jest.mock('idai-field-core/src/services/labels', () => {
+jest.mock('idai-field-core', () => {
     // Works and lets you check for constructor calls:
     return {
         Labels: jest.fn().mockImplementation(() => {
@@ -84,7 +83,6 @@ describe('RadioField',() => {
     
     it('should have only one field selected',() => {
         
-        
         const expectedChoices = {
             one: { selected: true, label: 'one' },
             two: { selected: false, label: 'two' },
@@ -115,13 +113,6 @@ describe('RadioField',() => {
     it('should call setFunction with correct props if labels button is pressed and should update valuesObject state', () => {
 
         const newValue = 'two';
-        const expectedOldChoices = {
-            one: { selected: false, label: 'one' },
-            two: { selected: false, label: 'two' },
-            three: { selected: false, label: 'three' },
-            four: { selected: false, label: 'four' },
-            five: { selected: false, label: 'five' },
-        };
         const expectedNewChoices = {
             one: { selected: false, label: 'one' },
             two: { selected: true, label: 'two' },

@@ -5,7 +5,7 @@ import {
     Group, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Keyboard, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity } from 'react-native';
+import { FlatList, Keyboard, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
@@ -14,11 +14,9 @@ import { DocumentRepository } from '../../repositories/document-repository';
 import { colors } from '../../utils/colors';
 import Button from '../common/Button';
 import CategoryIcon from '../common/CategoryIcon';
-import Column from '../common/Column';
 import EditFormField from '../common/forms/EditFormField';
 import Heading from '../common/Heading';
 import I18NLabel from '../common/I18NLabel';
-import Row from '../common/Row';
 import TitleBar from '../common/TitleBar';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
@@ -96,6 +94,10 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     
     if(!category || !activeGroup || !labels) return null;
     
+    const renderItem = ({ item }: {item: Group}) => (
+        <TouchableOpacity style={ styles.groupBtn } onPress={ () => setActiveGroup(item) }>
+            <I18NLabel style={ styleGroupText(item, activeGroup) } label={ item } />
+        </TouchableOpacity>);
     
     return (
         <SafeAreaView style={ styles.container }>
@@ -121,25 +123,23 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                     icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
                 /> }
             />
-            <Row style={ styles.formContainer }>
-                <Column style={ styles.groupColumn }>
-                    {category.groups.map(group => (
-                        <TouchableOpacity
-                            key={ group.name } style={ styles.groupBtn }
-                            onPress={ () => setActiveGroup(group) }>
-                            <I18NLabel style={ styleGroupText(group, activeGroup) } label={ group } />
-                        </TouchableOpacity>))}
-                </Column>
-                <Column style={ styles.fieldColumn }>
-                    {activeGroup.fields.map(fieldDef =>
-                        (shouldShow(fieldDef) && newResource) &&
-                            <EditFormField
-                                key={ fieldDef.name }
-                                setFunction={ updateResource }
-                                field={ fieldDef }
-                                currentValue={ newResource[fieldDef.name] } />)}
-                </Column>
-            </Row>
+            <View style={ styles.groupsContainer }>
+                <FlatList
+                    data={ category.groups }
+                    keyExtractor={ group => group.name }
+                    renderItem={ renderItem }
+                    horizontal={ true }
+                    showsHorizontalScrollIndicator={ false } />
+            </View>
+            <View style={ styles.groupForm }>
+                {activeGroup.fields.map(fieldDef =>
+                    (shouldShow(fieldDef) && newResource) &&
+                        <EditFormField
+                            key={ fieldDef.name }
+                            setFunction={ updateResource }
+                            field={ fieldDef }
+                            currentValue={ newResource[fieldDef.name] } />)}
+            </View>
         </SafeAreaView>
     );
 };
@@ -170,29 +170,21 @@ const createRelations = (parentDoc: Document): Resource.Relations => {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        flex: 1
+        flex: 1,
     },
     heading: {
         marginLeft: 10,
     },
-    formContainer: {
-        margin: 20,
-        justifyContent: 'flex-start',
-        flex: 1
+    groupsContainer: {
+        margin: 5,
+        padding: 5
     },
-    groupColumn: {
-        backgroundColor: colors.lightgray,
-        width: '30%',
-        height: '50%',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginRight: 50,
-        paddingHorizontal: 30,
-        paddingVertical: 10
+    groupForm: {
+        width: '95%',
+        padding: 10
     },
     groupBtn: {
-        margin: 1,
-        width: '100%'
+        margin: 4,
     },
     groupText: {
         color: colors.primary,
@@ -202,11 +194,9 @@ const styles = StyleSheet.create({
     },
     groupTextActive: {
         color: colors.secondary,
+        padding: 5,
         backgroundColor: colors.primary,
-        borderRadius: 2,
-    },
-    fieldColumn: {
-        flex: 1
+        borderRadius: 5,
     }
 });
 

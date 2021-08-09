@@ -1,5 +1,5 @@
+import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import AppLoading from 'expo-app-loading';
 import React, { ReactElement, useCallback } from 'react';
 import 'react-native-get-random-values';
@@ -16,7 +16,7 @@ import { PreferencesContext } from './src/contexts/preferences-context';
 import usePouchdbDatastore from './src/hooks/use-pouchdb-datastore';
 import usePreferences from './src/hooks/use-preferences';
 
-export type AppStackParamList = {
+export type AppParamList = {
     HomeScreen: undefined;
     ProjectScreen: undefined;
     SettingsScreen: undefined;
@@ -24,16 +24,16 @@ export type AppStackParamList = {
 };
 
 
-export type AppStackNavProps<T extends keyof AppStackParamList> = {
-    navigation: StackNavigationProp<AppStackParamList, T>;
-    route: RouteProp<AppStackParamList, T>;
+export type AppNavProps<T extends keyof AppParamList> = {
+    navigation: BottomTabNavigationProp<AppParamList, T>;
+    route: RouteProp<AppParamList, T>;
 };
 
 
 enableScreens();
 
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
 export default function App(): ReactElement {
@@ -58,28 +58,28 @@ export default function App(): ReactElement {
                     <LabelsContextProvider>
                         <ToastProvider>
                             <NavigationContainer>
-                                <Stack.Navigator
+                                <Tab.Navigator
                                     initialRouteName={ initialRouteName }
-                                    screenOptions={ { headerShown: false } }
+                                    screenOptions={ { unmountOnBlur: true, tabBarVisible: false } }
                                 >
-                                    <Stack.Screen name="HomeScreen">
+                                    <Tab.Screen name="HomeScreen">
                                         { ({ navigation }) => <HomeScreen
                                             deleteProject={ deleteProject }
                                             navigate={ (screen: string) => navigation.navigate(screen) }
                                         /> }
-                                    </Stack.Screen>
-                                    <Stack.Screen name="ProjectScreen">
+                                    </Tab.Screen>
+                                    <Tab.Screen name="ProjectScreen">
                                         { () => preferences.preferences.currentProject && <ProjectScreen /> }
-                                    </Stack.Screen>
-                                    <Stack.Screen name="SettingsScreen">
+                                    </Tab.Screen>
+                                    <Tab.Screen name="SettingsScreen">
                                         { (props) => <SettingsScreen { ...props } /> }
-                                    </Stack.Screen>
-                                    <Stack.Screen name="LoadingScreen">
+                                    </Tab.Screen>
+                                    <Tab.Screen name="LoadingScreen">
                                         { ({ navigation }) => preferences.preferences.currentProject && <LoadingScreen
                                             navigation={ navigation }
                                         /> }
-                                    </Stack.Screen>
-                                </Stack.Navigator>
+                                    </Tab.Screen>
+                                </Tab.Navigator>
                             </NavigationContainer>
                             <Toast />
                         </ToastProvider>

@@ -1,23 +1,17 @@
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
-    Category, Document, Field,
-    Group, NewDocument, NewResource, Resource
+    Category, Document, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { FlatList, Keyboard, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
+import { Keyboard } from 'react-native';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
-import { colors } from '../../utils/colors';
 import Button from '../common/Button';
-import CategoryIcon from '../common/CategoryIcon';
-import EditFormField from '../common/forms/EditFormField';
-import Heading from '../common/Heading';
-import I18NLabel from '../common/I18NLabel';
-import TitleBar from '../common/TitleBar';
+import DocumentForm from '../common/forms/DocumentForm';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
@@ -36,7 +30,6 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     const { labels } = useContext(LabelsContext);
 
     const [category, setCategory] = useState<Category>();
-    const [activeGroup, setActiveGroup] = useState<Group>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
     const { showToast } = useToast();
@@ -56,12 +49,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
         else setSaveBtnEnabled(false);
     },[newResource]);
 
-    useEffect(() => {
-        
-        const category = config.getCategory(categoryName);
-        setCategory(category);
-        if(category) setActiveGroup(category?.groups[0]);
-    },[config, categoryName]);
+    useEffect(() => setCategory(config.getCategory(categoryName)),[config, categoryName]);
     
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateResource = (key: string, value: any) =>
@@ -92,65 +80,26 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
         navigation.navigate('DocumentsMap',{});
     };
     
-    if(!category || !activeGroup || !labels) return null;
+    if(!category || !labels) return null;
     
-    const renderItem = ({ item }: {item: Group}) => (
-        <TouchableOpacity style={ styles.groupBtn } onPress={ () => setActiveGroup(item) }>
-            <I18NLabel style={ styleGroupText(item, activeGroup) } label={ item } />
-        </TouchableOpacity>);
     
     return (
-        <SafeAreaView style={ styles.container }>
-            <TitleBar
-                title={
-                    <>
-                        <CategoryIcon category={ category } size={ 25 } />
-                        <Heading style={ styles.heading }>
-                            Add {labels.get(category)} to { parentDoc.resource.identifier }
-                        </Heading>
-                    </>
-                }
-                left={ <Button
-                    variant="transparent"
-                    onPress={ onReturn }
-                    icon={ <Ionicons name="chevron-back" size={ 18 } /> }
-                /> }
-                right={ <Button
+        <DocumentForm
+            titleBarRight={
+                <Button
                     variant="success"
                     onPress={ saveButtonHandler }
                     title="Save"
                     isDisabled={ !saveBtnEnabled }
                     icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
                 /> }
-            />
-            <View style={ styles.groupsContainer }>
-                <FlatList
-                    data={ category.groups }
-                    keyExtractor={ group => group.name }
-                    renderItem={ renderItem }
-                    horizontal={ true }
-                    showsHorizontalScrollIndicator={ false } />
-            </View>
-            <View style={ styles.groupForm }>
-                {activeGroup.fields.map(fieldDef =>
-                    (shouldShow(fieldDef) && newResource) &&
-                        <EditFormField
-                            key={ fieldDef.name }
-                            setFunction={ updateResource }
-                            field={ fieldDef }
-                            currentValue={ newResource[fieldDef.name] } />)}
-            </View>
-        </SafeAreaView>
-    );
+            category={ category }
+            headerText={ `Add ${labels.get(category)} to ${ parentDoc.resource.identifier }` }
+            returnBtnHandler={ onReturn }
+            resource={ newResource }
+            updateFunction={ updateResource }
+        />);
 };
-
-
-const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
-    group.name === activeGroup.name ? { ...styles.groupText, ...styles.groupTextActive } : styles.groupText;
-
-
-const shouldShow = (field: Field)=> field !== undefined && field.editable === true;
-
 
 const createRelations = (parentDoc: Document): Resource.Relations => {
 
@@ -165,40 +114,6 @@ const createRelations = (parentDoc: Document): Resource.Relations => {
     }
     return relations;
 };
-
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        flex: 1,
-    },
-    heading: {
-        marginLeft: 10,
-    },
-    groupsContainer: {
-        margin: 5,
-        padding: 5
-    },
-    groupForm: {
-        width: '95%',
-        padding: 10
-    },
-    groupBtn: {
-        margin: 4,
-    },
-    groupText: {
-        color: colors.primary,
-        fontSize: 20,
-        textTransform: 'capitalize',
-        padding: 2,
-    },
-    groupTextActive: {
-        color: colors.secondary,
-        padding: 5,
-        backgroundColor: colors.primary,
-        borderRadius: 5,
-    }
-});
 
 
 export default DocumentAdd;

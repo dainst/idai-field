@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
+import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
@@ -12,6 +13,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     const { labels } = useContext(LabelsContext);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [valuesObject, setValuesObject] = useState<ItemsObject>({});
+    const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
     
     const getValues = useCallback(
@@ -25,12 +27,12 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     },[getValues]);
 
     useEffect(() => {
-
-        
+   
         const itemData = initValuesObject();
-        if(currentValue && typeof currentValue === 'string' && itemData[currentValue])
+        if(currentValue && typeof currentValue === 'string' && itemData[currentValue]){
             itemData[currentValue].selected = true;
-        else itemData[NO_VAL] = { selected: true, label: NO_VAL };
+            setSelectedValue(currentValue);
+        } else itemData[NO_VAL] = { selected: true, label: NO_VAL };
         setValuesObject(itemData);
     },[currentValue, initValuesObject]);
 
@@ -39,7 +41,11 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         const itemData = initValuesObject();
         itemData[label].selected = true;
         setValuesObject(itemData);
-        if(label !== NO_VAL) setFunction(field.name,label);
+        if(label !== NO_VAL){
+            setSelectedValue(label);
+            setFunction(field.name,label);
+        } else setSelectedValue(null);
+        
     };
     
 
@@ -57,6 +63,9 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
             <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">
                 <FieldLabel field={ field } />
             </TouchableOpacity>
+            {selectedValue && <View style={ styles.selectedValue }>
+                    <Text>{selectedValue}</Text>
+                </View>}
         </View>
     );
 };
@@ -67,6 +76,11 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         width: '100%'
+    },
+    selectedValue: {
+        marginTop: 3,
+        borderColor: colors.lightgray,
+        borderWidth: 1,
     }
 });
 

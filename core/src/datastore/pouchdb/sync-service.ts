@@ -15,6 +15,9 @@ export enum SyncStatus {
 }
 
 
+type Sync = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
+
+
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -25,10 +28,9 @@ export class SyncService {
     private syncTarget: string;
     private project: string;
     private password: string = '';
-    private currentSyncTimeout: any;
 
-    private syncHandles = [];
-
+    private sync: Sync = null;
+    private syncTimeout = null;
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
 
@@ -51,28 +53,16 @@ export class SyncService {
 
     public stopSync() {
 
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         console.log('Stop syncing');
-        for (let handle of this.syncHandles) (handle as any).cancel();
-        this.syncHandles = [];
+        
+        if (this.syncTimeout) clearTimeout(this.syncTimeout);
+
+        if (this.sync) {
+            this.sync.cancel();
+            this.sync = null;
+        }
+
         this.setStatus(SyncStatus.Offline);
-    }
-
-
-    public async startSyncWithRetry(filter?: (doc: any) => boolean) { // TODO does not need to be async
-
-        if (!this.syncTarget || !this.project) return;
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-
-        this.startSync(filter).subscribe(
-            _ => {},
-            _ => {
-                for (let handle of this.syncHandles) (handle as any).cancel();
-                this.syncHandles = [];
-                this.currentSyncTimeout = setTimeout(() => this.startSyncWithRetry(), 5000); // retry
-            }
-        );
     }
 
 
@@ -82,65 +72,50 @@ export class SyncService {
      * @param url target datastore
      * @param project
      */
-    public startSync(filter?: (doc: any) => boolean): Observable<SyncStatus> {
+    public startSync(live: boolean = true, filter?: (doc: any) => boolean): void {
 
         if (!this.syncTarget || !this.project) return;
-        if (this.syncHandles.length > 0) {
-            console.warn('sync already running, will not \'startSync\' again'); // TODO this does not seem to be enough; from mobile, at startup, there are two calls to startSync, of which the second comes then presumably before we have a sync handle
+        if (this.sync) {
+            console.warn('sync already running, will not \'startSync\' again');
             return;
         }
 
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
         console.log('Start syncing', url);
-        let sync = this.pouchdbDatastore.getDb().sync(url, { live: true, retry: false, filter });
 
-        this.syncHandles.push(sync as never);
-        return Observable.create((obs: Observer<SyncStatus>) => {
-            sync.on('change', (info: any) => {
-                    this.setStatus(SyncService.getFromInfo(info));
-                })
-                .on('paused', () => {
-                    this.setStatus(SyncStatus.InSync);
-                })
-                .on('active', () => {
-                    this.setStatus(SyncStatus.Pulling);
-                })
-                .on('complete', (info: any) => {
-                    this.setStatus(SyncStatus.Offline);
-                    obs.complete();
-                })
-                .on('error', (err: any) => {
-                    const syncStatus = SyncService.getFromError(err);
-                    if (syncStatus !== SyncStatus.AuthenticationError
-                        && syncStatus !== SyncStatus.AuthorizationError) {
-                            
-                            console.error('SyncService.startSync received error from PouchDB', err);
-                        }
-                    this.setStatus(syncStatus);
-                    obs.error(err);
-                });
+        // Use single-shot replicate in order to speed up initial sync
+        this.sync = this.pouchdbDatastore.getDb().replicate.from(url, { filter });
+        this.handleStatus(this.sync, false);
+
+        // Setup bidirectional sync when initial replicate has completed
+        if (live) this.sync.on('complete', () => this.startLiveSync(url, filter));
+    }
+
+
+    private startLiveSync(url: string, filter?: (doc: any) => boolean) {
+
+        this.sync = this.pouchdbDatastore.getDb().sync(url, { filter });
+        this.handleStatus(this.sync, true);
+
+        this.sync.on('complete', () => {
+            this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000);
+            console.log('complete');
+        });
+        this.sync.on('error', () => {
+            this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000);
+            console.log('error');
         });
     }
 
 
-    /**
-     * Start a one-time unidirectional replication
-     * (as opposed to bidirectional live syncing)
-     * @param url target datastore
-     * @param project
-     */
-    public startReplication(filter?: (doc: any) => boolean): void {
-
-        const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
-        const replicate = this.pouchdbDatastore.getDb().replicate.from(url, { filter })
-
-        replicate
-            .on('change', info => this.setStatus(SyncService.getFromInfo(info)))
-            .on('active', () => this.setStatus(SyncStatus.Pulling))
+    private handleStatus(sync: Sync, live: boolean): void {
+        
+        sync.on('change', info => this.setStatus(SyncService.getFromInfo(info)))
             .on('complete', () => this.setStatus(SyncStatus.InSync))
+            .on('denied', err => console.error('Document denied in sync', err))
             .on('error', err => {
                 this.setStatus(SyncService.getFromError(err));
-                console.error('SyncService.startReplilcation received error from PouchDB', err);
+                console.error('SyncService received error from PouchDB', err);
             });
     }
 

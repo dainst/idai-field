@@ -40,11 +40,8 @@ const useSync = (
 
         if(!syncService || !project || !projectSettings?.connected) return;
 
-        if (live) {
-            syncService.startSyncWithRetry(isNotAnImage);
-        } else {
-            syncService.startReplication(isNotAnImage);
-        }
+        syncService.startSync(live, isNotAnImage);
+        
         return () => syncService.stopSync();
     }, [live, syncService, project, projectSettings?.connected]);
 

@@ -1,15 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+    Category, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration,
+    RelationsManager, SyncService, Tree
+} from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
-import { Category, Document, Datastore, IdGenerator, SyncService, ProjectConfiguration,
-    RelationsManager, Labels, Tree, Named } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
-import { Imagestore } from '../../services/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
+import { Imagestore } from '../../services/imagestore/imagestore';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
+import { SettingsProvider } from '../../services/settings/settings-provider';
 import { TabManager } from '../../services/tabs/tab-manager';
+import { ExtensionUtil } from '../../util/extension-util';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
@@ -17,11 +24,6 @@ import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
-import {ImageRelationsManager} from '../../services/image-relations-manager';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
-import {ExtensionUtil} from '../../util/extension-util';
 
 
 @Component({
@@ -236,7 +238,7 @@ export class ImportComponent implements OnInit {
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams));
         }
-        await this.synchronizationService.startSyncWithRetry();
+        await this.synchronizationService.startSync();
 
         uploadModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);

@@ -19,7 +19,7 @@ interface AddModalProps {
     parentDoc?: Document;
 }
 
-const AddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isInOverview, parentDoc }) => {
+const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isInOverview, parentDoc }) => {
 
     const config = useContext(ConfigurationContext);
 
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddModal;
+export default DocumentAddModal;

@@ -6,7 +6,7 @@ import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import useToast from '../../hooks/use-toast';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { ToastType } from '../common/Toast/ToastProvider';
-import AddModal from './AddModal';
+import DocumentAddModal from './DocumentAddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
@@ -100,7 +100,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
  
     return (
         <View style={ { flex: 1 } }>
-            { isAddModalOpen && <AddModal
+            { isAddModalOpen && <DocumentAddModal
                 onClose={ closeAddModal }
                 parentDoc={ highlightedDoc }
                 onAddCategory={ navigateAddCategory }

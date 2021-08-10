@@ -62,6 +62,9 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
        setIsAddModalOpen(true);
     };
 
+    const handleEditDocument = (docId: string, categoryName: string) =>
+        navigation.navigate('DocumentEdit',{ docId, categoryName });
+
     const closeAddModal = () => setIsAddModalOpen(false);
 
     const openRemoveDocument = (doc: Document) => {
@@ -120,6 +123,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     selectedDocumentIds={ useMemo(() => documents.map(doc => doc.resource.id),[documents]) }
                     highlightedDocId={ route.params?.highlightedDocId }
                     addDocument={ handleAddDocument }
+                    editDocument={ handleEditDocument }
                     removeDocument={ openRemoveDocument }
                     selectDocument={ selectDocument } />
             </View>

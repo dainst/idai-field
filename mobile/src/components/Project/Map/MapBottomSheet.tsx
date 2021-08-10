@@ -13,6 +13,7 @@ interface MapBottomSheetProps {
     document: Document | undefined;
     repository: DocumentRepository;
     addDocument: (parentDoc: Document) => void;
+    editDocument: (docId: string, categoryName: string) => void;
     removeDocument: (doc: Document) => void;
     focusHandler: (docId: string) => void;
 }
@@ -21,6 +22,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
     repository,
     addDocument,
+    editDocument,
     removeDocument,
     focusHandler
 }) => {
@@ -63,7 +65,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     style={ styles.button }
                     variant="primary"
                     title="Edit"
-                    onPress={ () => console.log('Edit btn') }
+                    onPress={ () => editDocument(docId, document.resource.category) }
                     icon={ <Ionicons name="create-outline" size={ iconSize } /> }
                 />
                 <Button

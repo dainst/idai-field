@@ -17,6 +17,7 @@ interface NMapProps {
     selectedDocumentIds: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
+    editDocument: (docID: string, categoryName: string) => void;
     removeDocument: (doc: Document) => void;
     selectDocument: (doc: Document) => void;
 }
@@ -76,6 +77,7 @@ const Map: React.FC<NMapProps> = (props) => {
                 document={ highlightedDoc }
                 repository={ props.repository }
                 addDocument={ props.addDocument }
+                editDocument={ props.editDocument }
                 removeDocument={ props.removeDocument }
                 focusHandler={ focusMapOnDocumentId } />
         </View>

@@ -7,6 +7,7 @@ import useOrientation from '../../hooks/use-orientation';
 import useProjectData from '../../hooks/use-project-data';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentAdd from './DocumentAdd';
+import DocumentEdit from './DocumentEdit';
 import DocumentsDrawer from './DocumentsDrawer';
 import DocumentsMap from './DocumentsMap';
 
@@ -15,6 +16,7 @@ export type DocumentsContainerDrawerParamList = {
     DocumentsMap: { highlightedDocId?: string };
     DocumentDetails: { docId: string };
     DocumentAdd: { parentDoc: Document, categoryName: string };
+    DocumentEdit: { docId: string, categoryName: string };
 };
 
 
@@ -126,6 +128,14 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     parentDoc={ route.params.parentDoc }
                     categoryName={ route.params.categoryName }
                 /> }
+            </Drawer.Screen>
+            <Drawer.Screen name="DocumentEdit">
+                {({ navigation, route }) => <DocumentEdit
+                    navigation={ navigation }
+                    repository={ repository }
+                    docId={ route.params.docId }
+                    categoryName={ route.params.categoryName }
+                />}
             </Drawer.Screen>
         </Drawer.Navigator>
     );

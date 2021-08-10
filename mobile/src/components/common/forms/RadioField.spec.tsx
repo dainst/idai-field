@@ -77,7 +77,7 @@ describe('RadioField',() => {
     });
 
 
-    it('should have only show choices modal if field button is clicked', () => {
+    it('should only show choices modal if field button is clicked', () => {
         const { getByTestId } = render(
             <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
                 <RadioField

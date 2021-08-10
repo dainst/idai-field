@@ -28,6 +28,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
         preferences.preferences.currentProject,
         preferences.preferences.projects[preferences.preferences.currentProject],
         pouchdbDatastore,
+        false
     );
 
     useEffect(() => {

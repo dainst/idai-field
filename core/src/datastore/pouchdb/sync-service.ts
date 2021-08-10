@@ -91,11 +91,8 @@ export class SyncService {
         }
 
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
-
-        const fullUrl = url + '/' + (this.project === 'synctest' ? 'synctestremotedb' : this.project); // TODO review if SyncProcess.generateUrl should do this, too
-        console.log('Start syncing', fullUrl);
-
-        let sync = this.pouchdbDatastore.getDb().sync(fullUrl, { live: true, retry: false, filter });
+        console.log('Start syncing', url);
+        let sync = this.pouchdbDatastore.getDb().sync(url, { live: true, retry: false, filter });
 
         this.syncHandles.push(sync as never);
         return Observable.create((obs: Observer<SyncStatus>) => {
@@ -117,12 +114,34 @@ export class SyncService {
                     if (syncStatus !== SyncStatus.AuthenticationError
                         && syncStatus !== SyncStatus.AuthorizationError) {
                             
-                            console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                            console.error('SyncService.startSync received error from PouchDB', err);
                         }
                     this.setStatus(syncStatus);
                     obs.error(err);
                 });
         });
+    }
+
+
+    /**
+     * Start a one-time unidirectional replication
+     * (as opposed to bidirectional live syncing)
+     * @param url target datastore
+     * @param project
+     */
+    public startReplication(filter?: (doc: any) => boolean): void {
+
+        const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
+        const replicate = this.pouchdbDatastore.getDb().replicate.from(url, { filter })
+
+        replicate
+            .on('change', info => this.setStatus(SyncService.getFromInfo(info)))
+            .on('active', () => this.setStatus(SyncStatus.Pulling))
+            .on('complete', () => this.setStatus(SyncStatus.InSync))
+            .on('error', err => {
+                this.setStatus(SyncService.getFromError(err));
+                console.error('SyncService.startReplilcation received error from PouchDB', err);
+            });
     }
 
 
@@ -137,11 +156,12 @@ export class SyncService {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
 
-        // const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
-        return !password
+        const url = !password
             ? syncTarget
             : syncTarget.replace(/(https?):\/\//, '$1://' +
                 project + ':' + password + '@');
+
+        return url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); 
     }
 
 

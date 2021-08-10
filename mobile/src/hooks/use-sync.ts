@@ -5,7 +5,9 @@ import { ProjectSettings } from '../models/preferences';
 const useSync = (
     project: string,
     projectSettings: ProjectSettings,
-    pouchdbDatastore?: PouchdbDatastore): SyncStatus => {
+    pouchdbDatastore?: PouchdbDatastore,
+    live: boolean = true
+): SyncStatus => {
     
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
     const [syncService, setSyncService] = useState<SyncService>();
@@ -38,9 +40,13 @@ const useSync = (
 
         if(!syncService || !project || !projectSettings?.connected) return;
 
-        syncService.startSyncWithRetry(isNotAnImage);
+        if (live) {
+            syncService.startSyncWithRetry(isNotAnImage);
+        } else {
+            syncService.startReplication(isNotAnImage);
+        }
         return () => syncService.stopSync();
-    }, [syncService, project, projectSettings?.connected]);
+    }, [live, syncService, project, projectSettings?.connected]);
 
     return status;
 };

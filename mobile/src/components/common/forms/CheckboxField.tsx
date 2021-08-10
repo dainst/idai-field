@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
+import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
@@ -11,6 +12,7 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
     const { labels } = useContext(LabelsContext);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [valuesObject, setValuesObject] = useState<ItemsObject>({});
+    //const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
     const getValues = useCallback(
         () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);
@@ -39,6 +41,17 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
 
     
     const closeModal = () => setIsModalOpen(false);
+
+    const renderSelectedValues = () => {
+        if(!valuesObject) return null;
+        else return (
+            <View style={ styles.selectedValues }>
+                {Object.keys(valuesObject)
+                    .filter(key => valuesObject[key].selected )
+                    .map(key => <Text key={ key }>{valuesObject[key].label}</Text>)}
+            </View>
+        );
+    };
     
     return (
         <View style={ styles.container }>
@@ -52,6 +65,7 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
             <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">
                 <FieldLabel field={ field } />
             </TouchableOpacity>
+            {renderSelectedValues()}
         </View>);
 };
 
@@ -62,6 +76,11 @@ const styles = StyleSheet.create({
         padding: 5,
         width: '100%'
     },
+    selectedValues: {
+        marginTop: 3,
+        borderColor: colors.lightgray,
+        borderWidth: 1,
+    }
 });
 
 

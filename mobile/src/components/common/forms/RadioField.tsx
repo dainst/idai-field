@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
@@ -54,7 +54,9 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
                 setValue={ selectValue }
                 type="radio"
             />}
-            <FieldLabel field={ field } openModal={ () => setIsModalOpen(true) } />
+            <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">
+                <FieldLabel field={ field } />
+            </TouchableOpacity>
         </View>
     );
 };

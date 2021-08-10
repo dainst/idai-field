@@ -9,7 +9,6 @@ import Row from '../Row';
 
 interface FieldLabelProps extends TextProps {
     field: I18N.LabeledValue
-    openModal?: () => void;
 }
 
 const ICON_SIZE = 18;
@@ -25,10 +24,6 @@ const FieldLabel: React.FC<FieldLabelProps> = (props) => {
     return (
         <View>
             <Row style={ styles.row }>
-                {props.openModal &&
-                    <TouchableOpacity onPress={ props.openModal } testID="fieldBtn">
-                        <Ionicons name="chevron-down-circle-outline" color="black" size={ 18 } />
-                    </TouchableOpacity>}
                 <I18NLabel style={ props.style } label={ props.field } />
                 {getDescription() && <View style={ styles.infoIcon }>
                         <TouchableOpacity onPress={ infoBtnHandle }>

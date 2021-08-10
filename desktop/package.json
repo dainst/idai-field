@@ -141,6 +141,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/leaflet": "1.0.69",
     "@types/node": "^12.12.38",
+    "@types/node-fetch": "^2.5.12",
     "@types/pouchdb": "6.4.0",
     "@types/showdown": "1.7.5",
     "chromedriver": "^89.0.0",

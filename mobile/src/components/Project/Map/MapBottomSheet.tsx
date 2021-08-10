@@ -27,7 +27,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     focusHandler
 }) => {
 
-    const iconSize = 20;
+    const ICON_SIZE = 20;
     const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
 
     if(!document) return null;
@@ -50,7 +50,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     onPress={ () => focusHandler(docId) }
                     icon={ <MaterialIcons
                         name="center-focus-strong"
-                        size={ iconSize }
+                        size={ ICON_SIZE }
                         color="#565350"
                     /> }
                 />
@@ -59,14 +59,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     variant="success"
                     title="Add Child"
                     onPress={ addChildPressHandler }
-                    icon={ <Ionicons name="add" size={ iconSize } /> }
+                    icon={ <Ionicons name="add" size={ ICON_SIZE } /> }
                 />
                 <Button
                     style={ styles.button }
                     variant="primary"
                     title="Edit"
                     onPress={ () => editDocument(docId, document.resource.category) }
-                    icon={ <Ionicons name="create-outline" size={ iconSize } /> }
+                    icon={ <Ionicons name="create-outline" size={ ICON_SIZE } /> }
                 />
                 <Button
                     style={ styles.button }

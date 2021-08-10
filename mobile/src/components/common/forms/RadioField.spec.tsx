@@ -3,7 +3,7 @@ import { Field, Labels, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal from './ChoiceModal';
-import RadioField from './RadioField';
+import RadioField, { NO_VAL } from './RadioField';
 
 const fieldName = 'RadioField';
 const valueList: Valuelist = {
@@ -102,6 +102,7 @@ describe('RadioField',() => {
             three: { selected: false, label: 'three' },
             four: { selected: false, label: 'four' },
             five: { selected: false, label: 'five' },
+            [NO_VAL]: { selected: false, label: NO_VAL }
         };
         const { getByTestId } = render(
                     <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
@@ -132,6 +133,7 @@ describe('RadioField',() => {
             three: { selected: false, label: 'three' },
             four: { selected: false, label: 'four' },
             five: { selected: false, label: 'five' },
+            [NO_VAL]: { selected: false, label: NO_VAL },
         };
         const setFunciton = jest.fn();
         const { getByTestId } = render(

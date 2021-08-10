@@ -5,6 +5,7 @@ import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
 
+export const NO_VAL = '--';
 
 const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue }) => {
 
@@ -19,6 +20,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     const initValuesObject = useCallback(() => {
         const itemData: ItemsObject = {};
         getValues().forEach(value => itemData[value] = { selected: false, label: value });
+        itemData[NO_VAL] = { selected: false, label: NO_VAL };
         return itemData;
     },[getValues]);
 
@@ -28,6 +30,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         const itemData = initValuesObject();
         if(currentValue && typeof currentValue === 'string' && itemData[currentValue])
             itemData[currentValue].selected = true;
+        else itemData[NO_VAL] = { selected: true, label: NO_VAL };
         setValuesObject(itemData);
     },[currentValue, initValuesObject]);
 
@@ -36,7 +39,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         const itemData = initValuesObject();
         itemData[label].selected = true;
         setValuesObject(itemData);
-        setFunction(field.name,label);
+        if(label !== NO_VAL) setFunction(field.name,label);
     };
     
 

@@ -38,19 +38,11 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
         }
     }, [syncStatus, navigation]);
 
-    const returnToHomeScreen = () => {
-        disconnect();
+    const cancel = () => {
+
+        preferences.removeProject(preferences.preferences.currentProject);
         navigation.navigate('HomeScreen');
     };
-
-    const disconnect = () => {
-        const currentSettings = preferences.preferences.projects[preferences.preferences.currentProject];
-        preferences.setProjectSettings(
-            preferences.preferences.currentProject,
-            { ...currentSettings, connected: false }
-        );
-    };
-
 
     return (
         <SafeAreaView style={ styles.container }>
@@ -60,7 +52,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
                 }
                 left={ <Button
                     variant="transparent"
-                    onPress={ returnToHomeScreen }
+                    onPress={ cancel }
                     icon={ <Ionicons name="chevron-back" size={ 24 } /> }
                     /> }
             />
@@ -75,7 +67,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ navigation }) => {
                         style={ styles.loadingSpinner }
                     />
                 }
-                <Button variant="danger" title={ 'Cancel' } onPress={ returnToHomeScreen } />
+                <Button variant="danger" title={ 'Cancel' } onPress={ cancel } />
             </View>
             
            

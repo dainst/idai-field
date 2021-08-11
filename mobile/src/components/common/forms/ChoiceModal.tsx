@@ -63,7 +63,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
                                 </Heading> }
                         left={ <Button
                             testID="closeBtn"
-                            title="Cancel"
+                            title={ type === 'checkbox' ? 'Cancel' : 'Close' }
                             variant="transparent"
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
                             onPress={ resetValues }

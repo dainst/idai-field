@@ -150,7 +150,8 @@ describe('RadioField',() => {
         fireEvent.press(getByTestId(`press_${newValue}`));
 
         expect(setFunciton).toBeCalledWith(fieldName,newValue);
-        expect(ChoiceModal).toHaveBeenCalledTimes(2);
+        expect(ChoiceModal).toHaveBeenCalledTimes(1);
+        fireEvent.press(getByTestId('fieldBtn'));//open Modal again to check correct value
         expect((ChoiceModal as jest.Mock).mock.calls.slice(-1)[0][0]).toEqual(
             expect.objectContaining({ choices: expectedNewChoices }));
     });

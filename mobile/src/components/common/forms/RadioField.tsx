@@ -41,6 +41,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         itemData[label].selected = true;
         setValuesObject(itemData);
         if(label !== NO_VAL) setFunction(field.name,label);
+        closeModal();
     };
     
 

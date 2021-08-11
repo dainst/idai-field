@@ -11,7 +11,7 @@ interface FieldLabelProps extends TextProps {
     field: I18N.LabeledValue
 }
 
-const ICON_SIZE = 18;
+const ICON_SIZE = 22;
 
 const FieldLabel: React.FC<FieldLabelProps> = (props) => {
 

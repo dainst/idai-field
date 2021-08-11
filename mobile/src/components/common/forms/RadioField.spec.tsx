@@ -144,7 +144,7 @@ describe('RadioField',() => {
                     currentValue=""
                 />
             </LabelsContext.Provider>);
-        fireEvent.press(getByTestId('fieldBtn'));//open module
+        fireEvent.press(getByTestId('fieldBtn'));//open Modal
 
         
         fireEvent.press(getByTestId(`press_${newValue}`));

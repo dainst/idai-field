@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
+import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
@@ -45,6 +46,18 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
 
     const closeModal = () => setIsModalOpen(false);
 
+    const renderSelectedValue = () => {
+
+        const selectedKey = Object.keys(valuesObject).filter(key => valuesObject[key].selected);
+        if(selectedKey && selectedKey.length){
+            return (
+                <View style={ styles.selectedValues }>
+                    <Text>{valuesObject[selectedKey[0]].label}</Text>
+                </View>
+            );
+        } else return null;
+    };
+
     return (
         <View style={ styles.container }>
             {isModalOpen && <ChoiceModal
@@ -57,6 +70,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
             <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">
                 <FieldLabel field={ field } />
             </TouchableOpacity>
+            {renderSelectedValue()}
         </View>
     );
 };
@@ -67,6 +81,11 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         width: '100%'
+    },
+    selectedValues: {
+        marginTop: 3,
+        borderColor: colors.lightgray,
+        borderWidth: 1,
     }
 });
 

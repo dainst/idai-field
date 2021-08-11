@@ -1,5 +1,5 @@
 import {
-    Category, createCategory, createDocuments, doc, Document, Forest, IdGenerator, PouchdbDatastore, SyncStatus
+    Category, createCategory, createDocuments, doc, Document, Forest, IdGenerator, PouchdbDatastore
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
@@ -165,23 +165,5 @@ describe('DocumentRepository', () => {
         await repository.remove(testDoc);
         const deletedDoc = await docDeleted;
         expect(deletedDoc.resource.id).toEqual(testDoc.resource.id);
-    });
-
-
-    xit('syncs with server', async () => {
-
-        const sync = await repository.syncService.startSync();
-        const inSync = new Promise<boolean>((resolve, reject) => {
-            sync.subscribe(
-                status => {
-                    console.log({ status });
-                    (status === SyncStatus.InSync) && resolve(true);
-                },
-                err => reject(err)
-            );
-        });
-        repository.remoteChanged().subscribe(async d => console.log('changed', d));
-
-        expect(await inSync).toBe(true);
     });
 });

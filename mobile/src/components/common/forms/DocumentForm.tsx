@@ -58,16 +58,17 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
                     horizontal={ true }
                     showsHorizontalScrollIndicator={ false } />
             </View>
-            <View style={ styles.groupForm }>
-                {activeGroup.fields.map(fieldDef =>
-                    (shouldShow(fieldDef) && resource) &&
-                        <EditFormField
-                            key={ fieldDef.name }
-                            setFunction={ updateFunction }
-                            field={ fieldDef }
-                            currentValue={ resource[fieldDef.name] } />)}
-            </View>
-
+            <FlatList
+                data={ activeGroup.fields.filter(fieldDef => shouldShow(fieldDef) && resource) }
+                keyExtractor={ field => field.name }
+                renderItem={ ({ item }) => (
+                    <EditFormField
+                        setFunction={ updateFunction }
+                        field={ item }
+                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        currentValue={ resource![item.name] } />) }
+                showsVerticalScrollIndicator={ false }
+            />
         </SafeAreaView>
     );
 };

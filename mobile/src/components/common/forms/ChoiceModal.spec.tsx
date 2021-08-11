@@ -39,7 +39,7 @@ describe('ChoiceModal',() => {
         const { getByTestId } = render(
                     <ChoiceModal
                         { ...baseProps }
-                        onClose={ closeFuntion }
+                        resetValues={ closeFuntion }
                         choices={ choices }
                         setValue={ jest.fn() } />);
         
@@ -56,7 +56,7 @@ describe('ChoiceModal',() => {
         const { getByTestId } = render(
             <ChoiceModal
                 { ...baseProps }
-                onClose={ jest.fn() }
+                resetValues={ jest.fn() }
                 choices={ choices }
                 setValue={ mockSetValueFn } />);
         fireEvent.press(getByTestId(`press_${itemChosen}`));
@@ -70,7 +70,7 @@ describe('ChoiceModal',() => {
         const { getByTestId } = render(
             <ChoiceModal
                 { ...baseProps }
-                onClose={ closeFuntion }
+                resetValues={ closeFuntion }
                 choices={ choices }
                 setValue={ jest.fn() } />);
 
@@ -85,7 +85,7 @@ describe('ChoiceModal',() => {
         const { getByTestId, rerender } = render(
             <ChoiceModal
                 { ...baseProps }
-                onClose={ closeFuntion }
+                resetValues={ closeFuntion }
                 choices={ choices }
                 setValue={ jest.fn() } />);
         
@@ -98,7 +98,7 @@ describe('ChoiceModal',() => {
         rerender(
             <ChoiceModal
                 { ...baseProps }
-                onClose={ closeFuntion }
+                resetValues={ closeFuntion }
                 choices={ choices }
                 setValue={ jest.fn() }
                 type="radio" />);
@@ -108,6 +108,33 @@ describe('ChoiceModal',() => {
                 expect(getByTestId(`icon_${key}`).props.name).toEqual('md-radio-button-on-outline');
             else expect(getByTestId(`icon_${key}`).props.name).toEqual('md-radio-button-off-outline');
         });
+
+    });
+
+
+    it('should display submit button only for type === checkbox', () => {
+
+        const submitBtn = jest.fn();
+        const { getByTestId, rerender, queryByTestId } = render(
+            <ChoiceModal
+                { ...baseProps }
+                resetValues={ jest.fn() }
+                choices={ choices }
+                setValue={ jest.fn() }
+                submitValue={ submitBtn } />);
+
+        fireEvent.press(getByTestId('submitBtnChoiceModal'));
+        expect(mockSetValueFn).toBeCalledTimes(1);
+
+        rerender(<ChoiceModal
+            { ...baseProps }
+            resetValues={ jest.fn() }
+            choices={ choices }
+            setValue={ jest.fn() }
+            submitValue={ submitBtn }
+            type="radio" />);
+        expect(queryByTestId('submitBtnChoiceModal')).toBeNull();
+
 
     });
 });

@@ -10,10 +10,11 @@ import Row from '../Row';
 import TitleBar from '../TitleBar';
 
 interface ChoiceModalProps {
-    onClose: () => void;
+    resetValues: () => void;
     choices: ItemsObject;
     field: Field
     setValue: (label: string) => void;
+    submitValue?: () => void;
     type: 'checkbox'| 'radio'
 }
 
@@ -29,7 +30,8 @@ interface ItemData {
 const ICON_SIZE = 24;
 const ICON_COLOR = 'black';
 
-const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setValue, type }) => {
+const ChoiceModal: React.FC<ChoiceModalProps> = ({
+    resetValues, choices, field, setValue, submitValue, type }) => {
 
     const renderItem = ({ item }: { item: ItemData }) => (
             <Row style={ { alignItems: 'center' } } testID={ item.label }>
@@ -52,7 +54,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
     );
 
     return (
-        <Modal onRequestClose={ onClose } animationType="fade" transparent visible={ true }>
+        <Modal onRequestClose={ resetValues } animationType="fade" transparent visible={ true }>
             <View style={ styles.container }>
                 <Card style={ styles.card }>
                     <TitleBar
@@ -61,10 +63,10 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
                                 </Heading> }
                         left={ <Button
                             testID="closeBtn"
-                            title="Close"
+                            title="Cancel"
                             variant="transparent"
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
-                            onPress={ onClose }
+                            onPress={ resetValues }
                         /> }
                     />
                     <FlatList
@@ -72,6 +74,12 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({ onClose, choices, field, setV
                         keyExtractor={ item => item.label }
                         renderItem={ renderItem }
                     />
+                    {(type === 'checkbox' && submitValue) &&
+                        <Button
+                            variant="success"
+                            onPress={ submitValue }
+                            title="Submit"
+                            testID="submitBtnChoiceModal" />}
                 </Card>
             </View>
         </Modal>

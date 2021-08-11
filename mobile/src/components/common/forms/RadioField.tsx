@@ -61,7 +61,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     return (
         <View style={ styles.container }>
             {isModalOpen && <ChoiceModal
-                onClose={ closeModal }
+                resetValues={ closeModal }
                 choices={ valuesObject }
                 field={ field }
                 setValue={ selectValue }

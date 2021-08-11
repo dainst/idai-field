@@ -15,18 +15,20 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
 
     const getValues = useCallback(
         () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);
-    
-    useEffect(() => {
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const initValuesObject = useCallback((values: any) => {
 
         const itemData: ItemsObject = {};
         getValues().forEach(value => {
-            if(currentValue && Array.isArray(currentValue) && currentValue.includes(value))
+            if(values && Array.isArray(values) && values.includes(value))
                 itemData[value] = { selected: true, label: value };
             else itemData[value] = { selected: false, label: value };
         });
         setValuesObject(itemData);
-    },[currentValue, getValues]);
-
+    },[getValues]);
+    
+    useEffect(() => initValuesObject(currentValue),[currentValue, initValuesObject]);
 
     const selectValue = (label: string) => {
 
@@ -35,11 +37,18 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
         const labelOject = valuesObject[label];
         labelOject.selected = !labelOject.selected;
         setValuesObject(oldValues => oldValues && { ...oldValues, [labelOject.label]: labelOject });
-        setFunction(field.name, Object.keys(valuesObject).filter(key => valuesObject[key].selected));
+        
     };
 
+    const submitValues = () =>{
+        setFunction(field.name, Object.keys(valuesObject).filter(key => valuesObject[key].selected));
+        setIsModalOpen(false);
+    };
     
-    const closeModal = () => setIsModalOpen(false);
+    const resetModal = () => {
+        initValuesObject(currentValue);
+        setIsModalOpen(false);
+    };
 
     const renderSelectedValues = () => {
         if(!valuesObject) return null;
@@ -58,10 +67,11 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
     return (
         <View style={ styles.container }>
             {isModalOpen && <ChoiceModal
-                onClose={ closeModal }
+                resetValues={ resetModal }
                 choices={ valuesObject }
                 field={ field }
                 setValue={ selectValue }
+                submitValue={ submitValues }
                 type="checkbox"
             />}
             <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">

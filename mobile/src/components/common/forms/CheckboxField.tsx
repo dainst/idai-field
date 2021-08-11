@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
@@ -44,13 +44,16 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
 
     const renderSelectedValues = () => {
         if(!valuesObject) return null;
-        else return (
-            <View style={ styles.selectedValues }>
-                {Object.keys(valuesObject)
-                    .filter(key => valuesObject[key].selected )
-                    .map(key => <Text key={ key }>{valuesObject[key].label}</Text>)}
-            </View>
-        );
+        else return <FlatList
+                        data={ Object.keys(valuesObject)
+                            .filter(key => valuesObject[key].selected )
+                            .map(key => valuesObject[key].label) }
+                        keyExtractor={ item => item }
+                        renderItem={ ({ item }) => <Text style={ styles.selectedValue }>{item}</Text> }
+                        horizontal={ true }
+                        ItemSeparatorComponent={ () => <Text>,</Text> }
+                        showsHorizontalScrollIndicator={ false }
+                        ListEmptyComponent={ <Text> </Text> } />;
     };
     
     return (
@@ -65,7 +68,9 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
             <TouchableOpacity onPress={ () => setIsModalOpen(true) } testID="fieldBtn">
                 <FieldLabel field={ field } />
             </TouchableOpacity>
-            {renderSelectedValues()}
+            <View style={ styles.selectedValuesContainer }>
+                {renderSelectedValues()}
+            </View>
         </View>);
 };
 
@@ -76,10 +81,13 @@ const styles = StyleSheet.create({
         padding: 5,
         width: '100%'
     },
-    selectedValues: {
+    selectedValuesContainer: {
         marginTop: 3,
         borderColor: colors.lightgray,
         borderWidth: 1,
+    },
+    selectedValue: {
+        margin: 2,
     }
 });
 

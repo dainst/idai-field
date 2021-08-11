@@ -97,14 +97,8 @@ export class SyncService {
         this.sync = this.pouchdbDatastore.getDb().sync(url, { filter });
         this.handleStatus(this.sync, true);
 
-        this.sync.on('complete', () => {
-            this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000);
-            console.log('complete');
-        });
-        this.sync.on('error', () => {
-            this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000);
-            console.log('error');
-        });
+        this.sync.on('complete', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
+        this.sync.on('error', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
     }
 
 

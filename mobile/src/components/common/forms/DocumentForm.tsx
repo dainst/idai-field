@@ -58,17 +58,19 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
                     horizontal={ true }
                     showsHorizontalScrollIndicator={ false } />
             </View>
-            <FlatList
-                data={ activeGroup.fields.filter(fieldDef => shouldShow(fieldDef) && resource) }
-                keyExtractor={ field => field.name }
-                renderItem={ ({ item }) => (
-                    <EditFormField
-                        setFunction={ updateFunction }
-                        field={ item }
-                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        currentValue={ resource![item.name] } />) }
-                showsVerticalScrollIndicator={ false }
-            />
+            <View style={ styles.groupForm }>
+                <FlatList
+                    data={ activeGroup.fields.filter(fieldDef => shouldShow(fieldDef) && resource) }
+                    keyExtractor={ field => field.name }
+                    renderItem={ ({ item }) => (
+                        <EditFormField
+                            setFunction={ updateFunction }
+                            field={ item }
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            currentValue={ resource![item.name] } />) }
+                    showsVerticalScrollIndicator={ false }
+                />
+            </View>
         </SafeAreaView>
     );
 };
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
         padding: 5
     },
     groupForm: {
-        width: '95%',
         padding: 10
     },
     groupBtn: {

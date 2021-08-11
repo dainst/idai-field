@@ -12,7 +12,6 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
     const { labels } = useContext(LabelsContext);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [valuesObject, setValuesObject] = useState<ItemsObject>({});
-    //const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
     const getValues = useCallback(
         () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);

@@ -55,7 +55,7 @@ export module Dimension {
     const VALID_FIELDS = [VALUE, LABEL, ISRANGE, RANGEMIN, RANGEMAX,
         INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTCOMMENT, ISIMPRECISE];
 
-    const VALID_INPUT_UNITS = ['mm', 'cm', 'm'];
+    export const VALID_INPUT_UNITS = ['mm', 'cm', 'm'];
 
 
     // This is to replicate behaviour of Dimension.isValid before the change

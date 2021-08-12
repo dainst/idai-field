@@ -5,10 +5,14 @@ import Row from './Row';
 
 interface BooleanRadioProps<T> {
     labels: [T, T];
-    selectedValue: T;
-    clickHandler: (value: T) => void
+    selectedValue: T | null;
+    clickHandler: (value: T | null) => void;
+    undefinedPossible?: boolean;
     style?: ViewStyle
 }
+
+const ICON_SIZE = 24;
+const UNDEFINED_STR = '--';
 
 const BooleanRadio: <T extends string>(p: BooleanRadioProps<T>) =>
     React.ReactElement<BooleanRadioProps<T>> = (props) => {
@@ -21,10 +25,21 @@ const BooleanRadio: <T extends string>(p: BooleanRadioProps<T>) =>
                         name={ label === props.selectedValue ?
                             'md-radio-button-on-outline' :
                             'md-radio-button-off-outline' }
-                        size={ 24 } />
+                        size={ ICON_SIZE } />
                 </TouchableOpacity>
                 <Text style={ { textTransform: 'capitalize' } }>{label}</Text>
             </Row>)}
+            {props.undefinedPossible && (
+                <>
+                    <TouchableOpacity onPress={ () => props.clickHandler(null) } >
+                        <Ionicons
+                            name={ props.selectedValue === null ?
+                                'md-radio-button-on-outline' :
+                                'md-radio-button-off-outline' }
+                            size={ ICON_SIZE } />
+                    </TouchableOpacity>
+                    <Text>{UNDEFINED_STR}</Text>
+                </>)}
         </Row>);
  };
 
@@ -37,7 +52,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 5
     }
-
 });
 
 export default BooleanRadio;

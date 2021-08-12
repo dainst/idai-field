@@ -24,7 +24,7 @@ export interface Dimension {
     // Input values as typed in by the user (in mm/cm/m, defined in inputUnit)
     inputValue: number;
     inputRangeEndValue?: number;
-    inputUnit: 'mm'|'cm'|'m';
+    inputUnit: Dimension.InputUnits;
 
     measurementPosition?: string;
     measurementComment?: string;
@@ -48,6 +48,7 @@ export module Dimension {
     export const MEASUREMENTPOSITION = 'measurementPosition';
     export const MEASUREMENTCOMMENT = 'measurementComment';
     export const ISIMPRECISE = 'isImprecise';
+    export type InputUnits = 'mm'|'cm'|'m'
 
     export type Translations = 'asMeasuredBy';
 
@@ -173,7 +174,7 @@ export module Dimension {
     }
 
 
-    function convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
+    function convertValueFromInputUnitToMicrometre(inputUnit: InputUnits,
                                                    inputValue: number): number {
 
         switch (inputUnit) {

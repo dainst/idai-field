@@ -85,7 +85,7 @@ export class SyncService {
 
         // Use single-shot replicate in order to speed up initial sync
         this.sync = this.pouchdbDatastore.getDb().replicate.from(url, { filter });
-        this.handleStatus(this.sync, false);
+        this.handleStatus(this.sync);
 
         // Setup bidirectional sync when initial replicate has completed
         if (live) this.sync.on('complete', () => this.startLiveSync(url, filter));
@@ -95,14 +95,14 @@ export class SyncService {
     private startLiveSync(url: string, filter?: (doc: any) => boolean) {
 
         this.sync = this.pouchdbDatastore.getDb().sync(url, { filter });
-        this.handleStatus(this.sync, true);
+        this.handleStatus(this.sync);
 
         this.sync.on('complete', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
         this.sync.on('error', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
     }
 
 
-    private handleStatus(sync: Sync, live: boolean): void {
+    private handleStatus(sync: Sync): void {
         
         sync.on('change', info => this.setStatus(SyncService.getFromInfo(info)))
             .on('complete', () => this.setStatus(SyncStatus.InSync))

@@ -1,11 +1,13 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { Dimension } from 'idai-field-core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { PreferencesContext } from '../../../contexts/preferences-context';
 import useToast from '../../../hooks/use-toast';
 import { colors } from '../../../utils/colors';
+import translations from '../../../utils/translations';
 import BooleanRadio from '../BooleanRadio';
 import Button from '../Button';
 import Row from '../Row';
@@ -29,7 +31,9 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
     const [measurementPosition, setMeasurementPosition] = useState<MeasuredBy | null>(null);
     const [isImprecise, setIsImprecise] = useState<boolean>(false);
     const [measurementComment, setMeasurementComment] = useState<string>();
+
     const { showToast } = useToast();
+    const languages = useContext(PreferencesContext).preferences.languages;
 
     const addDimensionHandler = () => {
         setShowAddRow(false);
@@ -50,8 +54,18 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
             Object.keys(dimension).forEach(key => dimension[key] === undefined && delete dimension[key]);
             Dimension.addNormalizedValues(dimension);
             resetForm();
+            setFunction(
+                field.name,
+                Array.isArray(currentValue) && currentValue.length ?
+                    [...currentValue as Dimension[], dimension] :
+                    [dimension]);
         } else showToast(ToastType.Error, 'Please enter an input value');
         
+    };
+
+    const removeDimension = (index: number) => {
+        if(currentValue && Array.isArray(currentValue))
+            setFunction(field.name, (currentValue as Dimension[]).filter((_dim, i) => i !== index));
     };
 
     const resetForm = () => {
@@ -70,6 +84,33 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
     return (
         <View style={ styles.container }>
             <FieldLabel field={ field } />
+            <FlatList
+                data={ currentValue as Dimension[] }
+                keyExtractor={ (item: Dimension) => `${item.inputValue}_${item.inputUnit}_${item.isImprecise}` }
+                renderItem={ ({ item, index }: { item: Dimension, index: number }) =>
+                    <Row style={ styles.currentValues }>
+                        <Text>
+                            {Dimension.generateLabel(
+                                item,
+                                (value: number) => value.toLocaleString(languages),
+                                getTranslation(languages))
+                            }
+                        </Text>
+                        <Row style={ { marginLeft: 'auto' } }>
+                            <Button
+                                style={ { marginRight: 5 } }
+                                variant="danger"
+                                onPress={ () => removeDimension(index) }
+                                icon={ <Ionicons name="trash" size={ 15 } /> }
+                            />
+                            <Button
+                                variant="primary"
+                                onPress={ () => console.log(`edit ${index}`) }
+                                icon={ <Ionicons name="create-outline" size={ 15 } /> }
+                            />
+                        </Row>
+                    </Row>
+                } />
             {showAddRow ?
                 <Row style={ styles.addDimension }>
                     <Text style={ { paddingRight: 2 } }>Add</Text>
@@ -148,11 +189,23 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
     );
 };
 
+
+const getTranslation = (_languages: string[]) =>
+    (key: string) => translations[key];
+
+
 const styles = StyleSheet.create({
     container: {
         margin: 5,
         padding: 5,
         width: '100%'
+    },
+    currentValues: {
+        marginTop: 3,
+        padding: 3,
+        borderColor: colors.lightgray,
+        borderWidth: 1,
+        alignItems: 'center',
     },
     addDimension: {
         marginTop: 3,

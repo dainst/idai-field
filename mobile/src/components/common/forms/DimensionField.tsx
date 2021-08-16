@@ -2,8 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { Dimension } from 'idai-field-core';
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { PreferencesContext } from '../../../contexts/preferences-context';
 import useToast from '../../../hooks/use-toast';
 import { colors } from '../../../utils/colors';
@@ -31,6 +30,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
     const [measurementPosition, setMeasurementPosition] = useState<MeasuredBy | null>(null);
     const [isImprecise, setIsImprecise] = useState<boolean>(false);
     const [measurementComment, setMeasurementComment] = useState<string>();
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     const { showToast } = useToast();
     const languages = useContext(PreferencesContext).preferences.languages;
@@ -39,7 +39,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
         setShowAddRow(false);
     };
 
-    const submitHandler = () => {
+    const submitHandler = (index?: number) => {
 
         if(inputValue){
             const dimension: Dimension = {
@@ -57,7 +57,9 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
             setFunction(
                 field.name,
                 Array.isArray(currentValue) && currentValue.length ?
-                    [...currentValue as Dimension[], dimension] :
+                    index !== undefined ?
+                        currentValue.map((val, i) => i === index ? dimension : val) :
+                        [...currentValue as Dimension[], dimension] :
                     [dimension]);
         } else showToast(ToastType.Error, 'Please enter an input value');
         
@@ -66,6 +68,43 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
     const removeDimension = (index: number) => {
         if(currentValue && Array.isArray(currentValue))
             setFunction(field.name, (currentValue as Dimension[]).filter((_dim, i) => i !== index));
+    };
+
+    const opendEditDimension = (index: number) => {
+
+        if(!currentValue || !Array.isArray(currentValue) || currentValue.length < index + 1) return;
+
+        if(editingIndex !== null) {
+
+            setEditingIndex(null);
+            resetForm();
+            setShowAddRow(true);
+            return;
+        }
+        
+        const dimension = (currentValue as Dimension[])[index];
+        if(dimension.inputRangeEndValue){
+            setMeasurementType('range');
+            setInputRangeEndValue(dimension.inputRangeEndValue.toString());
+        } else {
+            setMeasurementType('single value');
+        }
+        setInputUnit(dimension.inputUnit);
+        setIsImprecise(dimension.isImprecise);
+        dimension.inputValue && setInputValue(dimension.inputValue.toString());
+        dimension.measurementPosition && setMeasurementPosition(dimension.measurementPosition as MeasuredBy);
+        dimension.measurementComment && setMeasurementComment(dimension.measurementComment);
+        setEditingIndex(index);
+        setShowAddRow(false);
+    };
+
+    const editDimensionHandler = () => {
+        editingIndex != null && submitHandler(editingIndex);
+    };
+
+    const cancelBtnHandler = () => {
+        setShowAddRow(true);
+        setEditingIndex(null);
     };
 
     const resetForm = () => {
@@ -78,6 +117,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
         setIsImprecise(false);
         setMeasurementComment(undefined);
         setShowAddRow(true);
+        setEditingIndex(null);
     };
 
 
@@ -101,12 +141,14 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                                 style={ { marginRight: 5 } }
                                 variant="danger"
                                 onPress={ () => removeDimension(index) }
-                                icon={ <Ionicons name="trash" size={ 15 } /> }
+                                icon={ <Ionicons name="trash" size={ 15 }
+                                testID={ `dimDelete_${index}` } /> }
                             />
                             <Button
                                 variant="primary"
-                                onPress={ () => console.log(`edit ${index}`) }
-                                icon={ <Ionicons name="create-outline" size={ 15 } /> }
+                                onPress={ () => opendEditDimension(index) }
+                                icon={ <Ionicons name="create-outline" size={ 15 }
+                                testID={ `dimEdit_${index}` } /> }
                             />
                         </Row>
                     </Row>
@@ -114,7 +156,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
             {showAddRow ?
                 <Row style={ styles.addDimension }>
                     <Text style={ { paddingRight: 2 } }>Add</Text>
-                    <TouchableOpacity onPress={ addDimensionHandler }>
+                    <TouchableOpacity onPress={ addDimensionHandler } testID="addDim">
                         <MaterialCommunityIcons name="plus-circle" size={ ICON_SIZE } color={ colors.success } />
                     </TouchableOpacity>
                 </Row> :
@@ -129,7 +171,8 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                             onChangeText={ setInputValue }
                             value={ inputValue }
                             style={ styles.inputText }
-                            keyboardType="numeric" />
+                            keyboardType="numeric"
+                            testID="dimInput" />
                         {measurementType === 'range' && <>
                                 <Text style={ { padding: 15 } }>-</Text>
                                 <TextInput
@@ -146,6 +189,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                             mode="dropdown"
                             onValueChange={ (itemValue) => setInputUnit(itemValue as Dimension.InputUnits) }
                             itemStyle={ styles.pickerItem }
+                            testID="dimUnit"
                         >
                             {Dimension.VALID_INPUT_UNITS.map(unit =>
                                 <Picker.Item value={ unit } label={ unit } key={ unit } />)}
@@ -162,6 +206,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                     </Row>
                     <Row style={ { alignItems: 'center' } }>
                         <Switch
+                            testID="isImprecise"
                             trackColor={ { true: colors.primary, false: colors.lightgray } }
                             thumbColor={ 'white' }
                             value={ isImprecise }
@@ -174,13 +219,23 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                         placeholder="Comment"
                         onChangeText={ setMeasurementComment }
                         value={ measurementComment }
-                        style={ styles.inputText } />
+                        style={ styles.inputText }
+                        testID="measurementComment"
+                    />
                     <Row style={ styles.buttonGroup }>
+                       { editingIndex !== null ?
+                            <Button
+                                onPress={ editDimensionHandler }
+                                style={ [styles.button, { width: '15%' }] }
+                                variant="primary" title="Ok"
+                                testID="okDim" /> :
+                            <Button
+                                testID="submitDim"
+                                onPress={ () => submitHandler() }
+                                style={ styles.button } variant="primary" title="Submit" />
+                        }
                         <Button
-                            onPress={ submitHandler }
-                            style={ styles.button } variant="primary" title="Submit" />
-                        <Button
-                            onPress={ () => setShowAddRow(true) }
+                            onPress={ cancelBtnHandler }
                             style={ styles.button } variant="lightgray" title="Cancel" />
                     </Row>
                 </View>

@@ -58,7 +58,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
                 field.name,
                 Array.isArray(currentValue) && currentValue.length ?
                     index !== undefined ?
-                        currentValue.map((val, i) => i === index ? dimension : val) :
+                        (currentValue as Dimension[]).map((val, i) => i === index ? dimension : val) :
                         [...currentValue as Dimension[], dimension] :
                     [dimension]);
         } else showToast(ToastType.Error, 'Please enter an input value');

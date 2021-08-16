@@ -82,16 +82,15 @@ const renderFieldValue = (
 const renderStringValue = (value: string) => <Text key={ value }>{ value }</Text>;
 
 
-const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[], labels: Labels) =>
-    <Text>
-        { FieldsViewUtil.getObjectLabel(
-            value,
-            field,
-            getTranslation(languages),
-            (value: number) => value.toLocaleString(languages),
-            labels
-        ) }
-    </Text>;
+const renderObjectValue = (value: unknown, field: FieldsViewField, languages: string[], labels: Labels) => {
+    const text = FieldsViewUtil.getObjectLabel(
+        value,
+        field,
+        getTranslation(languages),
+        (value: number) => value.toLocaleString(languages),
+        labels);
+    return <Text key={ text }>{text}</Text>;
+};
 
 
 const renderRelationTarget = (target: Document) =>

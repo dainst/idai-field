@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import BooleanField from './BooleanField';
 import CheckboxField from './CheckboxField';
 import { FieldBaseProps } from './common-props';
+import DateField from './DateField';
 import DimensionField from './DimensionField';
 import InputField from './InputField';
 import NumberField from './NumberField';
@@ -42,6 +43,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <BooleanField { ...fieldBaseProps } />;
         case 'dimension':
             return <DimensionField { ...fieldBaseProps } />;
+        case 'date':
+            return <DateField { ...fieldBaseProps } />;
         default:
             return <Text>{field.name} - {field.inputType}</Text>;
     }

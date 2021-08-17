@@ -13,8 +13,10 @@ const DateField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValue 
 
 
     useEffect(() => {
-        if(currentValue && typeof currentValue === 'string')
-            setDate(new Date(currentValue));
+        if(currentValue && typeof currentValue === 'string'){
+            const [day, month, year] = currentValue.split('.');
+            setDate(new Date(`${year}-${month}-${day}`));
+        }
     },[currentValue]);
 
 

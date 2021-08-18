@@ -4,9 +4,8 @@ import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
+import { NO_VAL } from './constants';
 import FieldLabel from './FieldLabel';
-
-export const NO_VAL = '--';
 
 const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue }) => {
 

@@ -3,7 +3,8 @@ import { Field, Labels, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal from './ChoiceModal';
-import RadioField, { NO_VAL } from './RadioField';
+import { NO_VAL } from './constants';
+import RadioField from './RadioField';
 
 const fieldName = 'RadioField';
 const valueList: Valuelist = {

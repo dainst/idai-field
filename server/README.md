@@ -4,6 +4,9 @@
 
 * Docker
 * docker-compose
+* elixir
+* erlang-dev
+* inotify-tools 
 
 ## Getting started
 
@@ -13,7 +16,7 @@
     $ docker-compose up postgres
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb
-    $ curl -X PUT -u synctest:abcdef http://localhost:5984/synctest
+    $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
 
 ### Run
 

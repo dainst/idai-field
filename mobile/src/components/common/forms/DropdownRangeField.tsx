@@ -58,7 +58,12 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
         const itemData = initValuesObject();
         itemData[label].selected = true;
         setValuesObject(itemData);
-        //if(label !== NO_VAL) setFunction(field.name,label);
+        if(label !== NO_VAL){
+            const range: OptionalRange<string> = { value: label };
+            const endValue = getSelectedValue(endValuesObject);
+            if(endValue !== NO_VAL) range[OptionalRange.ENDVALUE] = endValue;
+            setFunction(field.name,range);
+        }
         closeValueModal();
     };
 
@@ -68,9 +73,13 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
         const itemData = initValuesObject();
         itemData[label].selected = true;
         setEndValuesObject(itemData);
-        //if(label !== NO_VAL) setFunction(field.name,label);
+        if(label !== NO_VAL){
+            const value = getSelectedValue(valuesObject);
+            const range: OptionalRange<string> = { value, endValue: label };
+            setFunction(field.name, range);}
         closeEndValueModal();
     };
+
 
     return (
         <View style={ styles.container }>
@@ -99,7 +108,7 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
                     <>
                         <Text style={ { paddingHorizontal: 5 } }>to</Text>
                         <TouchableOpacity
-                            testID="endValueBtn" style={ styles.selectionField }
+                            testID="endValueTextBtn" style={ styles.selectionField }
                             onPress={ () => setIsEndValuesModalOpen(true) }>
                                 <Text testID="endValueText">{ getSelectedValue(endValuesObject) }</Text>
                         </TouchableOpacity>

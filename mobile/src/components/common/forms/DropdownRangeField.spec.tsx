@@ -177,16 +177,40 @@ describe('DropdownRangeField',() => {
         expect((ChoiceModal as jest.Mock).mock.calls.slice(-1)[0][0]).toEqual(
             expect.objectContaining({ choices: expectedValueChoices }));
 
-        fireEvent.press(getByTestId('endValueBtn'));
+        fireEvent.press(getByTestId('endValueTextBtn'));
         expect((ChoiceModal as jest.Mock).mock.calls.slice(-1)[0][0]).toEqual(
             expect.objectContaining({ choices: expectedEndValueChoices }));
     });
 
-    // it('should display second field if currentValue has ENDVALUE',() => {
+    it('should call setFunction with correct props if new value is selcted in ChoiceModal', () => {
+        
+        const setFunctionMock = jest.fn();
+        const range: OptionalRange<string> = { value };
+        const newValue = 'four';
+        const newEndValue = 'two';
+        const { getByTestId } = render(
+            <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
+                <DropdownRangeField
+                    field={ mockField }
+                    setFunction={ setFunctionMock }
+                    currentValue={ range } />
+            </LabelsContext.Provider>);
+        
+        // select value
+        const expectedRange: OptionalRange<string> = { value: newValue };
+        fireEvent.press(getByTestId('valueTextBtn')); //open Modal
+        fireEvent.press(getByTestId(`press_${newValue}`));
+        
+        expect(ChoiceModal).toHaveBeenCalledTimes(1);
+        expect(setFunctionMock).toBeCalledWith(fieldName,expectedRange);
 
-    // })
 
-    // it('should call setFunction with correct props if new value is selcted in ChoiceModal',() => {
-
-    // })
+        // select endValue
+        const newExpectedRange: OptionalRange<string> = { value: newValue, endValue: newEndValue };
+        fireEvent.press(getByTestId('arrowIconBtn'));
+        fireEvent.press(getByTestId('endValueTextBtn')); //open Modal
+        fireEvent.press(getByTestId(`press_${newEndValue}`));
+        expect(ChoiceModal).toHaveBeenCalledTimes(2);
+        expect(setFunctionMock).toBeCalledWith(fieldName,newExpectedRange);
+    });
 });

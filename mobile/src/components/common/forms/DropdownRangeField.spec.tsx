@@ -3,7 +3,8 @@ import { Field, Labels, OptionalRange, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import ChoiceModal from './ChoiceModal';
-import DropdownRangeField, { NO_VAL } from './DropdownRangeField';
+import { NO_VAL } from './constants';
+import DropdownRangeField from './DropdownRangeField';
 
 const fieldName = 'period';
 const valuelist: Valuelist = {

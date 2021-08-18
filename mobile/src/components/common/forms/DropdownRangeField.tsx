@@ -7,10 +7,8 @@ import { colors } from '../../../utils/colors';
 import Row from '../Row';
 import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
+import { NO_VAL } from './constants';
 import FieldLabel from './FieldLabel';
-
-
-export const NO_VAL = '--';
 
 const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValue }) => {
 

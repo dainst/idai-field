@@ -1,42 +1,114 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { OptionalRange } from 'idai-field-core';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import Row from '../Row';
+import ChoiceModal, { ItemsObject } from './ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
 
+
+export const NO_VAL = '--';
+
 const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValue }) => {
 
+    const { labels } = useContext(LabelsContext);
+
+    const [isValuesModalOpen, setIsValuesModalOpen] = useState<boolean>(false);
+    const [valuesObject, setValuesObject] = useState<ItemsObject>({});
+
+    const [isEndValuesModalOpen, setIsEndValuesModalOpen] = useState<boolean>(false);
+    const [endValuesObject, setEndValuesObject] = useState<ItemsObject>({});
     const [showEndElements, setShowEndElements] = useState<boolean>(false);
-    const [value, setValue] = useState<string>('');
-    const [endValue, setEndValue] = useState<string>('');
+
+
+    const getValues = useCallback(
+        () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);
+
+    const initValuesObject = useCallback(() => {
+        const itemData: ItemsObject = {};
+        getValues().forEach(value => itemData[value] = { selected: false, label: value });
+        itemData[NO_VAL] = { selected: false, label: NO_VAL };
+        return itemData;
+    },[getValues]);
+
 
     useEffect(() => {
-        if(!currentValue) return;
-        const currentValueRange = currentValue as OptionalRange<string>;
+        
+        const currentValueRange = currentValue as OptionalRange<string> | undefined;
+        const valuesData = initValuesObject();
+        if(currentValueRange){
+            valuesData[currentValueRange.value].selected = true;
+        } else valuesData[NO_VAL].selected = true;
+        setValuesObject(valuesData);
 
-        setValue(currentValueRange.value);
-        if( currentValueRange.endValue ){
+        const endValuesData = initValuesObject();
+        if( currentValueRange && currentValueRange.endValue ){
             setShowEndElements(true);
-            setEndValue(currentValueRange.endValue);
-        }
-    },[currentValue]);
+            endValuesData[currentValueRange.endValue].selected = true;
+        } else endValuesData[NO_VAL].selected = true;
+        setEndValuesObject(endValuesData);
+    },[currentValue, initValuesObject]);
+
+    const closeValueModal = () => setIsValuesModalOpen(false);
+
+    const selectValue = (label: string) => {
+        const itemData = initValuesObject();
+        itemData[label].selected = true;
+        setValuesObject(itemData);
+        //if(label !== NO_VAL) setFunction(field.name,label);
+        closeValueModal();
+    };
+
+    const closeEndValueModal = () => setIsEndValuesModalOpen(false);
+
+    const selectEndValue = (label: string) => {
+        const itemData = initValuesObject();
+        itemData[label].selected = true;
+        setEndValuesObject(itemData);
+        //if(label !== NO_VAL) setFunction(field.name,label);
+        closeEndValueModal();
+    };
 
     return (
         <View style={ styles.container }>
+            {isValuesModalOpen && <ChoiceModal
+                resetValues={ closeValueModal }
+                choices={ valuesObject }
+                field={ field }
+                setValue={ selectValue }
+                type="radio"
+            />}
+            {isEndValuesModalOpen && <ChoiceModal
+                resetValues={ closeEndValueModal }
+                choices={ endValuesObject }
+                field={ field }
+                setValue={ selectEndValue }
+                type="radio"
+            />}
             <FieldLabel field={ field } />
             <Row style={ styles.selectionRow }>
-                <View style={ styles.selectionField }>
-                    <Text testID="valueText">{value}</Text>
-                </View>
+                <TouchableOpacity
+                    testID="valueTextBtn" style={ styles.selectionField }
+                    onPress={ () => setIsValuesModalOpen(true) }>
+                        <TextInput
+                            testID="valueText"
+                            value={ getSelectedValue(valuesObject) }
+                            placeholder="select value" editable={ false } />
+                </TouchableOpacity>
                 { showEndElements ?
                     <>
                         <Text style={ { paddingHorizontal: 5 } }>to</Text>
-                        <View style={ styles.selectionField }>
-                            <Text testID="endValueText">{endValue}</Text>
-                        </View>
+                        <TouchableOpacity
+                            testID="endValueBtn" style={ styles.selectionField }
+                            onPress={ () => setIsEndValuesModalOpen(true) }>
+                                <TextInput
+                                    testID="endValueText"
+                                    value={ getSelectedValue(endValuesObject) }
+                                    placeholder="select value" editable={ false } />
+                        </TouchableOpacity>
                     </> :
                     <TouchableOpacity onPress={ () => setShowEndElements(prev => !prev) } testID="arrowIconBtn">
                         <MaterialCommunityIcons name="arrow-expand-horizontal" size={ 20 } testID="arrowIcon" />
@@ -45,6 +117,12 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
             
         </View>
     );
+};
+
+const getSelectedValue = (data: ItemsObject) => {
+    const selectedKey = Object.keys(data).filter(key => data[key].selected);
+    if(selectedKey && selectedKey.length) return data[selectedKey[0]].label;
+    else return '';
 };
 
 const styles = StyleSheet.create({
@@ -58,6 +136,7 @@ const styles = StyleSheet.create({
     },
     selectionField: {
         marginTop: 3,
+        padding: 5,
         borderColor: colors.lightgray,
         borderWidth: 1,
         width: '45%'

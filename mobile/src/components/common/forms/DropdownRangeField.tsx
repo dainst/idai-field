@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { OptionalRange } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import Row from '../Row';
@@ -93,10 +93,7 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
                 <TouchableOpacity
                     testID="valueTextBtn" style={ styles.selectionField }
                     onPress={ () => setIsValuesModalOpen(true) }>
-                        <TextInput
-                            testID="valueText"
-                            value={ getSelectedValue(valuesObject) }
-                            placeholder="select value" editable={ false } />
+                        <Text testID="valueText">{ getSelectedValue(valuesObject) }</Text>
                 </TouchableOpacity>
                 { showEndElements ?
                     <>
@@ -104,10 +101,7 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({ field, setFunction, curr
                         <TouchableOpacity
                             testID="endValueBtn" style={ styles.selectionField }
                             onPress={ () => setIsEndValuesModalOpen(true) }>
-                                <TextInput
-                                    testID="endValueText"
-                                    value={ getSelectedValue(endValuesObject) }
-                                    placeholder="select value" editable={ false } />
+                                <Text testID="endValueText">{ getSelectedValue(endValuesObject) }</Text>
                         </TouchableOpacity>
                     </> :
                     <TouchableOpacity onPress={ () => setShowEndElements(prev => !prev) } testID="arrowIconBtn">

@@ -130,7 +130,7 @@ describe('DropdownRangeField',() => {
         expect(queryByTestId('endValueText')).toBeNull();
         expect(queryByTestId('arrowIcon')).not.toBeNull();
         expect(queryByTestId('valueText')).not.toBeNull();
-        expect(getByTestId('valueText').props.value).toEqual(value);
+        expect(getByTestId('valueText').props.children).toEqual(value);
 
         // test currentValue with only ENDVALUE key
         const range2: OptionalRange<string> = { value , endValue };
@@ -139,10 +139,10 @@ describe('DropdownRangeField',() => {
                 </LabelsContext.Provider>);
 
         expect(queryByTestId('endValueText')).not.toBeNull();
-        expect(getByTestId('endValueText').props.value).toEqual(endValue);
+        expect(getByTestId('endValueText').props.children).toEqual(endValue);
         expect(queryByTestId('arrowIcon')).toBeNull();
         expect(queryByTestId('valueText')).not.toBeNull();
-        expect(getByTestId('valueText').props.value).toEqual(value);
+        expect(getByTestId('valueText').props.children).toEqual(value);
 
     });
 

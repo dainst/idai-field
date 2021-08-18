@@ -7,7 +7,7 @@ import DimensionField from './DimensionField';
 const fieldName = 'dimension';
 const mockField: Field = {
     name: fieldName,
-    inputType: 'input',
+    inputType: 'dimension',
 };
 
 

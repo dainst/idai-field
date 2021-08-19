@@ -7,7 +7,7 @@ import {flow, cond, on, isUndefinedOrEmpty, detach, isObject} from 'tsfun';
  */
 export interface Dating {
 
-    type: 'range'|'exact'|'before'|'after'|'scientific',
+    type: Dating.Types,
 
     begin?: DatingElement,
     end?: DatingElement,
@@ -53,6 +53,7 @@ export module Dating {
     const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
     const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
 
+    export type Types = 'range'|'exact'|'before'|'after'|'scientific'
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';
 
 

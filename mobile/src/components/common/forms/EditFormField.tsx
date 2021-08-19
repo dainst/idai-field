@@ -4,6 +4,7 @@ import BooleanField from './BooleanField';
 import CheckboxField from './CheckboxField';
 import { FieldBaseProps } from './common-props';
 import DateField from './DateField';
+import DatingField from './DatingField';
 import DimensionField from './DimensionField';
 import DropdownRangeField from './DropdownRangeField';
 import InputField from './InputField';
@@ -48,6 +49,8 @@ const renderInputField = (fieldBaseProps: FieldBaseProps) => {
             return <DateField { ...fieldBaseProps } />;
         case 'dropdownRange':
             return <DropdownRangeField { ...fieldBaseProps } />;
+        case 'dating':
+            return <DatingField { ...fieldBaseProps } />;
         default:
             return <Text>{field.name} - {field.inputType}</Text>;
     }

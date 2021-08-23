@@ -1,11 +1,5 @@
 import React from 'react';
-import { View, ViewProps } from 'react-native';
-
-
-// interface RowProps extends ViewProps{
-//     style?: StyleProp<ViewStyle>;
-//     children: ReactNode;
-// }
+import { StyleSheet, View, ViewProps } from 'react-native';
 
 
 const Row: React.FC<ViewProps> = (props) => {
@@ -17,10 +11,10 @@ const Row: React.FC<ViewProps> = (props) => {
 
 export default Row;
 
-type FlexDirection = 'row';
 
-const styles = {
+const styles = StyleSheet.create({
     row: {
-        flexDirection: 'row' as FlexDirection
+        flexDirection: 'row',
+        alignItems: 'center'
     }
-};
+});

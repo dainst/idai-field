@@ -1,10 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors } from '../../../utils/colors';
-import Row from '../Row';
-import { FieldBaseProps } from './common-props';
-import FieldLabel from './FieldLabel';
+import { colors } from '../../../../utils/colors';
+import Row from '../../Row';
+import { FieldBaseProps } from '../common-props';
+import FieldLabel from '../FieldLabel';
 
 const ICON_SIZE = 24;
 

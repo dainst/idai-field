@@ -4,7 +4,7 @@ import BooleanField from './BooleanField';
 import CheckboxField from './CheckboxField';
 import { FieldBaseProps } from './common-props';
 import DateField from './DateField';
-import DatingField from './DatingField';
+import DatingField from './DatingField/DatingField';
 import DimensionField from './DimensionField';
 import DropdownRangeField from './DropdownRangeField';
 import InputField from './InputField';

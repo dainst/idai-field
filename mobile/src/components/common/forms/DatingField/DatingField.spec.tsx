@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import { Field } from 'idai-field-core';
 import React from 'react';
+import { IS_IMPRECISE_ID, IS_UNCERTAIN_ID, SOURCE_TEST_ID } from './constants';
 import DatingField from './DatingField';
 
 const fieldName = 'dating';
@@ -15,8 +16,10 @@ jest.mock('@expo/vector-icons', () => {
     const { View } = require('react-native');
     return {
         MaterialCommunityIcons: View,
+        Ionicons: View,
     };
 });
+
 
 describe('DatingField',() => {
     
@@ -31,5 +34,18 @@ describe('DatingField',() => {
         expect(queryByTestId('datingForm')).not.toBeNull();
         expect(queryByTestId('addRow')).toBeNull();
         
+    });
+
+    it('should display form with: begin, end, isImprecise, isUncertrain, source fields for type PERIOD', () => {
+        const { getByTestId, queryByTestId } = render(<DatingField field={ mockField } setFunction={ jest.fn() } />);
+        
+        fireEvent.press(getByTestId('addDating')); //press add button
+        fireEvent(getByTestId('typePicker'),'onValueChange','range');
+ 
+        expect(queryByTestId('begin_DatingElement')).not.toBeNull();
+        expect(queryByTestId('end_DatingElement')).not.toBeNull();
+        expect(queryByTestId(IS_IMPRECISE_ID)).not.toBeNull();
+        expect(queryByTestId(IS_UNCERTAIN_ID)).not.toBeNull();
+        expect(queryByTestId(SOURCE_TEST_ID)).not.toBeNull();
     });
 });

@@ -1,16 +1,25 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
+import { Dating, DatingElement } from 'idai-field-core';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../../../utils/colors';
 import Row from '../../Row';
 import { FieldBaseProps } from '../common-props';
 import FieldLabel from '../FieldLabel';
+import PeriodForm from './PeriodForm';
 
 const ICON_SIZE = 24;
 
 const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValue }) => {
 
     const [showAddRow, setShowAddRow] = useState<boolean>(true);
+    const [type, setType] = useState<Dating.Types>('range');
+    const [begin, setBegin] = useState<DatingElement>();
+    const [end, setEnd] = useState<DatingElement>();
+    const [isImprecise, setIsImprecise] = useState<boolean>(false);
+    const [isUncertain, setIsUncertain] = useState<boolean>(false);
+    const [source, setSource] = useState<string>('');
 
     return (
         <View style={ styles.container }>
@@ -23,7 +32,22 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                     </TouchableOpacity>
                 </Row> :
                 <View testID="datingForm">
-                    <Text testID="form">Form</Text>
+                    <Picker
+                        style={ styles.typePicker }
+                        selectedValue={ type }
+                        onValueChange={ (itemValue) => setType(itemValue as Dating.Types) }
+                        itemStyle={ styles.typePickerItem }
+                        testID="typePicker">
+                            {Dating.VALID_TYPES.map(type =>
+                                <Picker.Item value={ type } label={ type } key={ type } />)}
+                    </Picker>
+                    {(type === 'range') &&
+                        <PeriodForm
+                            begin={ begin } setBegin={ setBegin }
+                            end={ end } setEnd={ setEnd }
+                            isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
+                            isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
+                            source={ source } setSource={ setSource } />}
                 </View>
             }
         </View>
@@ -43,6 +67,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'flex-end'
+    },
+    typePicker: {
+        width: '100%',
+        height: 100,
+        marginLeft: 5,
+        marginRight: '40%',
+    },
+    typePickerItem: {
+        height: 100,
+        fontSize: 18
     },
 });
 

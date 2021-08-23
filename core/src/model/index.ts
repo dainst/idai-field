@@ -1,7 +1,7 @@
 export { Action } from './action';
 export { Category } from './configuration/category';
 export { Constraint } from './constraint';
-export { Dating, DatingElement } from './dating';
+export { Dating, DatingElement, DatingType } from './dating';
 export { Dimension } from './dimension';
 export { Document, toResourceId } from './document';
 export { FeatureDocument } from './feature-document';

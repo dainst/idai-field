@@ -26,6 +26,12 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
     const [margin, setMargin] = useState<number>();
     const [source, setSource] = useState<string>('');
 
+    const cancelHandler = () => setShowAddRow(true);
+
+    const submitHandler = () => {
+        console.log('submit');
+    };
+
     return (
         <View style={ styles.container }>
             <FieldLabel field={ field } />
@@ -52,29 +58,34 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                             end={ end } setEnd={ setEnd }
                             isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
-                            source={ source } setSource={ setSource } />}
+                            source={ source } setSource={ setSource }
+                            onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'exact') &&
                         <ExactForm
                             begin={ begin } setBegin={ setBegin }
                             isUncertain={ isUncertain } setIsUncertian={ setIsUncertain }
-                            source={ source } setSource={ setSource } />}
+                            source={ source } setSource={ setSource }
+                            onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'before') &&
                         <BeforeForm
                             begin={ begin } setBegin={ setBegin }
                             isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
-                            source={ source } setSource={ setSource } />}
+                            source={ source } setSource={ setSource }
+                            onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'after') &&
                         <AfterForm
                             begin={ begin } setBegin={ setBegin }
                             isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
-                            source={ source } setSource={ setSource } />}
+                            source={ source } setSource={ setSource }
+                            onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'scientific') &&
                         <ScientificForm
                             begin={ begin } setBegin={ setBegin }
                             margin={ margin } setMargin={ setMargin }
-                            source={ source } setSource={ setSource } />}
+                            source={ source } setSource={ setSource }
+                            onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                 </View>
             }
         </View>

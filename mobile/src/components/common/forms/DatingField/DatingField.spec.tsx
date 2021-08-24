@@ -90,5 +90,18 @@ describe('DatingField',() => {
         expect(queryByTestId(SOURCE_TEST_ID)).not.toBeNull();
 
     });
+    
+    it('should display from with begin, margin, source field for type SCIENTIFIC',() => {
+
+        const { getByTestId, queryByTestId } = render(<DatingField field={ mockField } setFunction={ jest.fn() } />);
+
+        fireEvent.press(getByTestId('addDating')); //press add button
+        fireEvent(getByTestId('typePicker'),'onValueChange','scientific');
+
+        expect(queryByTestId('scientificForm')).not.toBeNull();
+        expect(queryByTestId('begin_DatingElement')).not.toBeNull();
+        expect(queryByTestId('marginField')).not.toBeNull();
+        expect(queryByTestId(SOURCE_TEST_ID)).not.toBeNull();
+    });
 
 });

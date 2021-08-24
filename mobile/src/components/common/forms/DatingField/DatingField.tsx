@@ -11,6 +11,7 @@ import AfterForm from './AfterForm';
 import BeforeForm from './BeforeForm';
 import ExactForm from './ExactForm';
 import PeriodForm from './PeriodForm';
+import ScientificForm from './ScientificForm';
 
 const ICON_SIZE = 24;
 
@@ -22,6 +23,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
     const [end, setEnd] = useState<DatingElement>();
     const [isImprecise, setIsImprecise] = useState<boolean>(false);
     const [isUncertain, setIsUncertain] = useState<boolean>(false);
+    const [margin, setMargin] = useState<number>();
     const [source, setSource] = useState<string>('');
 
     return (
@@ -68,7 +70,11 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                             isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
                             source={ source } setSource={ setSource } />}
-
+                    {(type === 'scientific') &&
+                        <ScientificForm
+                            begin={ begin } setBegin={ setBegin }
+                            margin={ margin } setMargin={ setMargin }
+                            source={ source } setSource={ setSource } />}
                 </View>
             }
         </View>

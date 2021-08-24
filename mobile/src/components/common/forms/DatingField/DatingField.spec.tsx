@@ -61,4 +61,19 @@ describe('DatingField',() => {
         expect(queryByTestId(SOURCE_TEST_ID)).not.toBeNull();
     });
 
+    it('should display form with begin, isImprecise, isUncertrain, source fields for type BEFORE',() => {
+
+        const { getByTestId, queryByTestId } = render(<DatingField field={ mockField } setFunction={ jest.fn() } />);
+
+        fireEvent.press(getByTestId('addDating')); //press add button
+        fireEvent(getByTestId('typePicker'),'onValueChange','before');
+
+        expect(queryByTestId('beforeForm')).not.toBeNull();
+        expect(queryByTestId('begin_DatingElement')).not.toBeNull();
+        expect(queryByTestId(IS_IMPRECISE_ID)).not.toBeNull();
+        expect(queryByTestId(IS_UNCERTAIN_ID)).not.toBeNull();
+        expect(queryByTestId(SOURCE_TEST_ID)).not.toBeNull();
+
+    });
+
 });

@@ -7,6 +7,7 @@ import { colors } from '../../../../utils/colors';
 import Row from '../../Row';
 import { FieldBaseProps } from '../common-props';
 import FieldLabel from '../FieldLabel';
+import BeforeForm from './BeforeForm';
 import ExactForm from './ExactForm';
 import PeriodForm from './PeriodForm';
 
@@ -53,6 +54,12 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                         <ExactForm
                             begin={ begin } setBegin={ setBegin }
                             isUncertain={ isUncertain } setIsUncertian={ setIsUncertain }
+                            source={ source } setSource={ setSource } />}
+                    {(type === 'before') &&
+                        <BeforeForm
+                            begin={ begin } setBegin={ setBegin }
+                            isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
+                            isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
                             source={ source } setSource={ setSource } />}
                 </View>
             }

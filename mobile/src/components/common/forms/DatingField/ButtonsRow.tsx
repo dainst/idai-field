@@ -11,8 +11,15 @@ interface ButtonsRowProps {
 const ButtonsRow: React.FC<ButtonsRowProps> = ({ onSubmit, onCancel }) => {
     return (
         <Row style={ styles.container }>
-            <Button variant="primary" title="Ok" onPress={ onSubmit } style={ styles.button } />
-            <Button variant="lightgray" title="Cancel" onPress={ onCancel } style={ styles.button } />
+            <Button
+                variant="primary"
+                title="Ok" onPress={ onSubmit }
+                style={ styles.button } testID="datingSubmitBtn" />
+            <Button
+                variant="lightgray"
+                title="Cancel"
+                onPress={ onCancel }
+                style={ styles.button } testID="datingCancelBtn" />
         </Row>
     );
 };

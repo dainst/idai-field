@@ -15,7 +15,7 @@ interface BooleanCheckboxProps {
 const BooleanCheckbox: React.FC<BooleanCheckboxProps> = ({ title, value, setValue, style, testID }) => {
     return (
         <Row style={ style } testID={ testID }>
-            <TouchableOpacity onPress={ () => setValue(!value) }>
+            <TouchableOpacity onPress={ () => setValue(!value) } testID={ testID ? `${testID}Btn` : undefined }>
                 <Ionicons name={ value ? 'checkbox-outline' : 'stop-outline' } size={ 24 } color="black" />
             </TouchableOpacity>
             <Text>{title}</Text>

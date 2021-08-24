@@ -1,11 +1,11 @@
 import { DatingElement } from 'idai-field-core';
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { colors } from '../../../../utils/colors';
+import { StyleSheet, Text, View } from 'react-native';
 import BooleanCheckbox from '../../BooleanCheckbox';
 import Row from '../../Row';
-import { IS_IMPRECISE_ID, IS_UNCERTAIN_ID, SOURCE_TEST_ID } from './constants';
+import { IS_IMPRECISE_ID, IS_UNCERTAIN_ID } from './constants';
 import DatingElementField from './DatingElementField';
+import SourceField from './SourceField';
 
 interface PeriodFormProps {
     begin: DatingElement | undefined
@@ -44,12 +44,7 @@ const PeriodForm: React.FC<PeriodFormProps> = (props) => {
                     title="Uncertain" style={ styles.checkbox }
                     testID={ IS_UNCERTAIN_ID } />
             </Row>
-            <TextInput
-                placeholder="source"
-                onChangeText={ props.setSource }
-                value={ props.source }
-                testID={ SOURCE_TEST_ID }
-                style={ styles.source } />
+            <SourceField source={ props.source } setSource={ props.setSource } />
         </View>
     );
 };
@@ -61,12 +56,6 @@ const styles = StyleSheet.create({
     },
     checkbox: {
         margin: 5,
-    },
-    source: {
-        borderWidth: 1,
-        borderColor: colors.lightgray,
-        margin: 5,
-        padding: 5
     }
 });
 

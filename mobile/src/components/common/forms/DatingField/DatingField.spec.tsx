@@ -20,6 +20,24 @@ jest.mock('@expo/vector-icons', () => {
     };
 });
 
+const dating1: Dating = {
+    type: 'exact',
+    end: {
+    year: 1946,
+    inputYear: 4,
+    inputType: 'bp'
+    },
+    source: 'Dating1'
+};
+const dating2: Dating = {
+    type: 'before',
+    end: {
+    year: 7,
+    inputYear: 7,
+    inputType: 'ce'
+    },
+    source: 'Dating2'
+};
 
 describe('DatingField',() => {
     
@@ -293,24 +311,7 @@ describe('DatingField',() => {
 
     it('should display all Datings from currentValueProp',() => {
         
-        const dating1: Dating = {
-            type: 'exact',
-            end: {
-            year: 1946,
-            inputYear: 4,
-            inputType: 'bp'
-            },
-            source: 'Test'
-        };
-        const dating2: Dating = {
-            type: 'before',
-            end: {
-            year: 7,
-            inputYear: 7,
-            inputType: 'ce'
-            },
-            source: 'Test'
-        };
+       
         const currentValue: Dating[] = [dating1, dating2];
 
         const { queryByTestId } = render(
@@ -326,24 +327,6 @@ describe('DatingField',() => {
 
     it('should append new Dating to currentValue Array', () => {
 
-        const dating1: Dating = {
-            type: 'exact',
-            end: {
-            year: 1946,
-            inputYear: 4,
-            inputType: 'bp'
-            },
-            source: 'Dating1'
-        };
-        const dating2: Dating = {
-            type: 'before',
-            end: {
-            year: 7,
-            inputYear: 7,
-            inputType: 'ce'
-            },
-            source: 'Dating2'
-        };
         const currentValue: Dating[] = [dating1, dating2];
    
         const source = 'Test';

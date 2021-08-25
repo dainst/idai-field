@@ -61,6 +61,8 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
 
     const removeBtnHandler = (index: number) => {
 
+        if(currentValue && Array.isArray(currentValue))
+            setFunction(field.name, (currentValue as Dating[]).filter((_dating, i) => i !== index));
     };
 
     const clearStates = (clearType: boolean = true) => {

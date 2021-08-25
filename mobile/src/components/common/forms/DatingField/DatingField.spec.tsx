@@ -359,4 +359,16 @@ describe('DatingField',() => {
 
         expect(setFunc).toBeCalledWith(fieldName, [...currentValue, newDating]);
     });
+
+
+    it('should remove correct Dating when pressing remove button', () => {
+
+        const currentValue: Dating[] = [dating1, dating2];
+        const setFunc = jest.fn();
+        const { getByTestId } = render(
+            <DatingField field={ mockField } setFunction={ setFunc } currentValue={ currentValue } />);
+        
+        fireEvent.press(getByTestId('datingRemove_0'));
+        expect(setFunc).toBeCalledWith(fieldName, [dating2]);
+    });
 });

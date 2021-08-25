@@ -207,7 +207,7 @@ describe('DatingField',() => {
         fireEvent.press(getByTestId('addDating')); //press add button
         fireEvent(getByTestId('typePicker'),'onValueChange','before'); //select before
 
-        //fill Exact Form
+        //fill Before Form
         fireEvent.changeText(getByTestId('end_DatingElementText'),end.toString());
         fireEvent(getByTestId('end_DatingElementPicker'),'onValueChange',endUnit);
         fireEvent.changeText(getByTestId(SOURCE_TEST_ID),source);

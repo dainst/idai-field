@@ -13,7 +13,6 @@ import ExactForm from './ExactForm';
 import PeriodForm from './PeriodForm';
 import ScientificForm from './ScientificForm';
 
-const ICON_SIZE = 24;
 
 const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValue }) => {
 
@@ -74,7 +73,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                 <Row style={ styles.addDimension } testID="addRow">
                     <Text style={ { paddingRight: 2 } }>Add</Text>
                     <TouchableOpacity onPress={ () => setShowAddRow(false) } testID="addDating">
-                        <MaterialCommunityIcons name="plus-circle" size={ ICON_SIZE } color={ colors.success } />
+                        <MaterialCommunityIcons name="plus-circle" size={ 20 } color={ colors.success } />
                     </TouchableOpacity>
                 </Row> :
                 <View testID="datingForm">

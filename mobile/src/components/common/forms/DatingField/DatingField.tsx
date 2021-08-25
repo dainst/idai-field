@@ -48,7 +48,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
         Dating.addNormalizedValues(dating);
         setFunction(field.name,
             Array.isArray(currentValue) && currentValue.length ?
-                (currentValue as Dating[]).push(dating) : [dating]);
+                [...currentValue, dating] : [dating]);
         setShowAddRow(false);
         clearStates();
     };

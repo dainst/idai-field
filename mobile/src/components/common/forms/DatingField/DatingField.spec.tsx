@@ -322,4 +322,58 @@ describe('DatingField',() => {
         expect(queryByTestId('datingRemove_0')).not.toBeNull();
         expect(queryByTestId('datingRemove_1')).not.toBeNull();
     });
+
+
+    it('should append new Dating to currentValue Array', () => {
+
+        const dating1: Dating = {
+            type: 'exact',
+            end: {
+            year: 1946,
+            inputYear: 4,
+            inputType: 'bp'
+            },
+            source: 'Dating1'
+        };
+        const dating2: Dating = {
+            type: 'before',
+            end: {
+            year: 7,
+            inputYear: 7,
+            inputType: 'ce'
+            },
+            source: 'Dating2'
+        };
+        const currentValue: Dating[] = [dating1, dating2];
+   
+        const source = 'Test';
+        const end = 7;
+        const endUnit = 'ce';
+        const newDating: Dating = {
+            type: 'before',
+            end: {
+                year: end,
+                inputYear: end,
+                inputType: endUnit
+            },
+            isImprecise: true,
+            source
+        };
+        const setFunc = jest.fn();
+
+        const { getByTestId } = render(
+            <DatingField field={ mockField } setFunction={ setFunc } currentValue={ currentValue } />);
+        fireEvent.press(getByTestId('addDating')); //press add button
+        fireEvent(getByTestId('typePicker'),'onValueChange','before'); //select before
+
+        //fill Before Form
+        fireEvent.changeText(getByTestId('end_DatingElementText'),end.toString());
+        fireEvent(getByTestId('end_DatingElementPicker'),'onValueChange',endUnit);
+        fireEvent.changeText(getByTestId(SOURCE_TEST_ID),source);
+        fireEvent.press(getByTestId(`${IS_IMPRECISE_ID}Btn`));
+
+        fireEvent.press(getByTestId('datingSubmitBtn'));
+
+        expect(setFunc).toBeCalledWith(fieldName, [...currentValue, newDating]);
+    });
 });

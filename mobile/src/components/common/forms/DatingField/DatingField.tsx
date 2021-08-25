@@ -45,7 +45,27 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
         setFunction(field.name,
             Array.isArray(currentValue) && currentValue.length ?
                 (currentValue as Dating[]).push(dating) : [dating]);
+        setShowAddRow(false);
+        clearStates();
     };
+
+    const pickerSelectHandler = (selectedType: Dating.Types) => {
+        
+        setType(selectedType);
+        clearStates(false);
+    };
+
+    const clearStates = (clearType: boolean = true) => {
+
+        if(clearType) setType('range');
+        setBegin(undefined);
+        setEnd(undefined);
+        setIsImprecise(undefined);
+        setIsUncertain(undefined);
+        setMargin(undefined);
+        setSource('');
+    };
+
 
     return (
         <View style={ styles.container }>
@@ -61,7 +81,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                     <Picker
                         style={ styles.typePicker }
                         selectedValue={ type }
-                        onValueChange={ (itemValue) => setType(itemValue as Dating.Types) }
+                        onValueChange={ (itemValue) => pickerSelectHandler(itemValue as Dating.Types) }
                         itemStyle={ styles.typePickerItem }
                         testID="typePicker">
                             {Dating.VALID_TYPES.map(type =>

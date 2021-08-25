@@ -8,11 +8,11 @@ import { FormBaseProps, IS_IMPRECISE_ID, IS_UNCERTAIN_ID } from './constants';
 import DatingElementField from './DatingElementField';
 
 interface BeforeFormProps extends FormBaseProps {
-    begin: DatingElement | undefined
-    setBegin: (dating: DatingElement) => void;
-    isImprecise: boolean;
+    end: DatingElement | undefined
+    setEnd: (dating: DatingElement) => void;
+    isImprecise: boolean | undefined;
     setIsImprecise: (imprecise: boolean) => void;
-    isUncertian: boolean;
+    isUncertian: boolean | undefined;
     setIsUncertian: (uncertain: boolean) => void;
 }
 
@@ -25,9 +25,9 @@ const BeforeForm: React.FC<BeforeFormProps> = (props) => {
             source={ props.source }
             testID="beforeForm">
                 <DatingElementField
-                    dating={ props.begin }
-                    setDating={ props.setBegin }
-                    type="begin"
+                    dating={ props.end }
+                    setDating={ props.setEnd }
+                    type="end"
                 />
                 <Row>
                     <BooleanCheckbox

@@ -9,8 +9,8 @@ import { FormBaseProps } from './constants';
 import DatingElementField from './DatingElementField';
 
 interface ScientificFormProps extends FormBaseProps{
-    begin: DatingElement | undefined
-    setBegin: (dating: DatingElement) => void;
+    end: DatingElement | undefined
+    setEnd: (dating: DatingElement) => void;
     margin: number | undefined;
     setMargin: (margin: number) => void;
 }
@@ -24,7 +24,7 @@ const ScientificForm: React.FC<ScientificFormProps> = (props) => {
             source={ props.source }
             testID="scientificForm">
                 <Row>
-                    <DatingElementField dating={ props.begin } setDating={ props.setBegin } type="begin" />
+                    <DatingElementField dating={ props.end } setDating={ props.setEnd } type="end" />
                     <MaterialCommunityIcons name="plus-minus" size={ 20 } color="black" />
                     <TextInput
                         value={ props.margin ? props.margin.toString() : '' }

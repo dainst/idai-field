@@ -12,9 +12,9 @@ interface PeriodFormProps extends FormBaseProps {
     setBegin: (dating: DatingElement) => void;
     end: DatingElement | undefined;
     setEnd: (dating: DatingElement) => void;
-    isImprecise: boolean;
+    isImprecise: boolean | undefined;
     setIsImprecise: (imprecise: boolean) => void;
-    isUncertian: boolean;
+    isUncertian: boolean | undefined;
     setIsUncertian: (uncertain: boolean) => void;
 }
 

@@ -5,7 +5,7 @@ import Row from './Row';
 
 interface BooleanCheckboxProps {
     title: string;
-    value: boolean;
+    value: boolean | undefined;
     setValue: (value: boolean) => void;
     style?: ViewStyle;
     testID?: string

@@ -7,9 +7,9 @@ import { FormBaseProps, IS_UNCERTAIN_ID } from './constants';
 import DatingElementField from './DatingElementField';
 
 interface ExactFormProps extends FormBaseProps{
-    begin: DatingElement | undefined;
-    setBegin: (dating: DatingElement) => void;
-    isUncertain: boolean;
+    end: DatingElement | undefined;
+    setEnd: (dating: DatingElement) => void;
+    isUncertain: boolean | undefined;
     setIsUncertian: (uncertain: boolean) => void;
 }
 
@@ -22,9 +22,9 @@ const ExactForm: React.FC<ExactFormProps> = (props) => {
             source={ props.source }
             testID="afterForm">
                 <DatingElementField
-                    dating={ props.begin }
-                    setDating={ props.setBegin }
-                    type="begin" />
+                    dating={ props.end }
+                    setDating={ props.setEnd }
+                    type="end" />
                 <BooleanCheckbox
                     value={ props.isUncertain }
                     setValue={ props.setIsUncertian }

@@ -21,15 +21,30 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
     const [type, setType] = useState<Dating.Types>('range');
     const [begin, setBegin] = useState<DatingElement>();
     const [end, setEnd] = useState<DatingElement>();
-    const [isImprecise, setIsImprecise] = useState<boolean>(false);
-    const [isUncertain, setIsUncertain] = useState<boolean>(false);
+    const [isImprecise, setIsImprecise] = useState<boolean>();
+    const [isUncertain, setIsUncertain] = useState<boolean>();
     const [margin, setMargin] = useState<number>();
     const [source, setSource] = useState<string>('');
 
     const cancelHandler = () => setShowAddRow(true);
 
     const submitHandler = () => {
-        console.log('submit');
+        const dating: Dating = {
+            type,
+            begin: begin ?
+                begin :
+                type === 'scientific' ? { year: 0, inputYear: 0, inputType: 'bce' } : undefined,
+            end: end || undefined,
+            isImprecise,
+            isUncertain,
+            source: source || undefined,
+            margin
+        };
+        Object.keys(dating).forEach(key => dating[key] === undefined && delete dating[key]);
+        Dating.addNormalizedValues(dating);
+        setFunction(field.name,
+            Array.isArray(currentValue) && currentValue.length ?
+                (currentValue as Dating[]).push(dating) : [dating]);
     };
 
     return (
@@ -62,13 +77,13 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                             onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'exact') &&
                         <ExactForm
-                            begin={ begin } setBegin={ setBegin }
+                            end={ end } setEnd={ setEnd }
                             isUncertain={ isUncertain } setIsUncertian={ setIsUncertain }
                             source={ source } setSource={ setSource }
                             onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'before') &&
                         <BeforeForm
-                            begin={ begin } setBegin={ setBegin }
+                            end={ end } setEnd={ setEnd }
                             isImprecise={ isImprecise } setIsImprecise={ setIsImprecise }
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
                             source={ source } setSource={ setSource }
@@ -82,7 +97,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                             onCancel={ cancelHandler } onSubmit={ submitHandler } />}
                     {(type === 'scientific') &&
                         <ScientificForm
-                            begin={ begin } setBegin={ setBegin }
+                            end={ end } setEnd={ setEnd }
                             margin={ margin } setMargin={ setMargin }
                             source={ source } setSource={ setSource }
                             onCancel={ cancelHandler } onSubmit={ submitHandler } />}

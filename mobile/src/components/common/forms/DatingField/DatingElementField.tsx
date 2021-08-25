@@ -13,7 +13,6 @@ interface DatingElementFieldProps {
 
 const DatingElementField: React.FC<DatingElementFieldProps> = ({ dating, setDating, type }) => {
 
-    //const [year, setYear] = useState<number>(0);
     const [inputYear, setInputYear] = useState<string>();
     const [inputType, setInputType] = useState<DatingType>('bce');
 
@@ -26,6 +25,20 @@ const DatingElementField: React.FC<DatingElementFieldProps> = ({ dating, setDati
 
     const changeInputYearHandler = (text: string) => {
         setInputYear(text);
+        setDating({
+            inputYear: parseInt(text),
+            inputType
+        } as DatingElement);
+    };
+
+    const changeInputType = (type: DatingType) => {
+        setInputType(type);
+        if(inputYear){
+            setDating({
+                inputYear: parseInt(inputYear),
+                inputType: type,
+            } as DatingElement);
+        }
     };
     
     return (
@@ -40,7 +53,7 @@ const DatingElementField: React.FC<DatingElementFieldProps> = ({ dating, setDati
             <Picker
                 style={ styles.picker }
                 selectedValue={ inputType }
-                onValueChange={ (itemValue) => setInputType(itemValue as DatingType) }
+                onValueChange={ (itemValue) => changeInputType(itemValue as DatingType) }
                 mode="dropdown"
                 itemStyle={ styles.pickerItem }
                 testID={ `${type}_DatingElementPicker` } >

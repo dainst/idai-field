@@ -1,9 +1,12 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { Dating, DatingElement } from 'idai-field-core';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { PreferencesContext } from '../../../../contexts/preferences-context';
 import { colors } from '../../../../utils/colors';
+import translations from '../../../../utils/translations';
+import Button from '../../Button';
 import Row from '../../Row';
 import { FieldBaseProps } from '../common-props';
 import FieldLabel from '../FieldLabel';
@@ -24,6 +27,8 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
     const [isUncertain, setIsUncertain] = useState<boolean>();
     const [margin, setMargin] = useState<number>();
     const [source, setSource] = useState<string>('');
+
+    const languages = useContext(PreferencesContext).preferences.languages;
 
     const cancelHandler = () => setShowAddRow(true);
 
@@ -54,6 +59,10 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
         clearStates(false);
     };
 
+    const removeBtnHandler = (index: number) => {
+
+    };
+
     const clearStates = (clearType: boolean = true) => {
 
         if(clearType) setType('range');
@@ -65,10 +74,30 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
         setSource('');
     };
 
+    const getLabel = (dating: Dating): string =>
+        dating.label ? dating.label : Dating.generateLabel(dating, getTranslation(languages));
+    
+    const renderItem = ({ item, index }: {item: Dating, index: number}) => (
+        <Row style={ styles.currentValues } testID={ `currentValueDating_${index}` }>
+            <Text>{ getLabel(item) }</Text>
+            <Button
+                style={ { marginLeft: 'auto' } }
+                variant="danger"
+                onPress={ () => removeBtnHandler(index) }
+                icon={ <Ionicons name="trash" size={ 12 }
+                testID={ `datingRemove_${index}` } /> }
+            />
+        </Row>
+    );
 
     return (
         <View style={ styles.container }>
             <FieldLabel field={ field } />
+            <FlatList
+                data={ currentValue as Dating[] }
+                keyExtractor={ (item: Dating) => getLabel(item) }
+                renderItem={ renderItem }
+            />
             { showAddRow ?
                 <Row style={ styles.addDimension } testID="addRow">
                     <Text style={ { paddingRight: 2 } }>Add</Text>
@@ -126,6 +155,10 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
     );
 };
 
+
+const getTranslation = (_languages: string[]) =>
+    (key: string) => translations[key];
+
 const styles = StyleSheet.create({
     container: {
         margin: 5,
@@ -139,6 +172,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'flex-end'
+    },
+    currentValues: {
+        marginTop: 3,
+        padding: 3,
+        borderColor: colors.lightgray,
+        borderWidth: 1,
+        alignItems: 'center',
     },
     typePicker: {
         width: '100%',

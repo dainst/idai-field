@@ -289,4 +289,37 @@ describe('DatingField',() => {
 
         expect(setFunc).toBeCalledWith(fieldName, expectedDating);
     });
+
+
+    it('should display all Datings from currentValueProp',() => {
+        
+        const dating1: Dating = {
+            type: 'exact',
+            end: {
+            year: 1946,
+            inputYear: 4,
+            inputType: 'bp'
+            },
+            source: 'Test'
+        };
+        const dating2: Dating = {
+            type: 'before',
+            end: {
+            year: 7,
+            inputYear: 7,
+            inputType: 'ce'
+            },
+            source: 'Test'
+        };
+        const currentValue: Dating[] = [dating1, dating2];
+
+        const { queryByTestId } = render(
+            <DatingField field={ mockField } setFunction={ jest.fn() } currentValue={ currentValue } />);
+        
+
+        expect(queryByTestId('currentValueDating_0')).not.toBeNull();
+        expect(queryByTestId('currentValueDating_1')).not.toBeNull();
+        expect(queryByTestId('datingRemove_0')).not.toBeNull();
+        expect(queryByTestId('datingRemove_1')).not.toBeNull();
+    });
 });

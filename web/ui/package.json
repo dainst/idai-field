@@ -42,11 +42,13 @@
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.1",
     "tsfun": "5.5.38",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "cross-env": "7.0.3"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
-    "start-shapes": "PORT=3002 REACT_APP_MAIN=shapes react-scripts start",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+    "start": "cross-env PORT=3001 react-scripts start",
+    "start-shapes": "cross-env PORT=3002 cross-env REACT_APP_MAIN=shapes react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

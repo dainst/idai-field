@@ -1,7 +1,7 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Document, FieldGeometry } from 'idai-field-core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
@@ -60,9 +60,10 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const config = useContext(ConfigurationContext);
 
-    let timeout: number;
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,0,100,100) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
+    const renderer = useRef<Renderer>();
+    const glContext = useRef<ExpoWebGLRenderingContext>();
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
@@ -108,6 +109,14 @@ const GLMap: React.FC<GLMapProps> = ({
             isZooming.current = false;
         }
     })).current;
+
+
+    const renderScene = useCallback(() => {
+        if(glContext && glContext.current && renderer && renderer.current){
+            renderer.current.render(scene, camera);
+            glContext.current.endFrameEXP();
+        }
+    },[camera, scene]);
 
     const touchHandler = (x: number, y: number): void => {
 
@@ -183,6 +192,7 @@ const GLMap: React.FC<GLMapProps> = ({
         }
 
         camera.updateProjectionMatrix();
+        renderScene();
     };
 
 
@@ -211,7 +221,8 @@ const GLMap: React.FC<GLMapProps> = ({
                     break;
             }
         });
-    },[geoDocuments, config ,scene, transformMatrix]);
+        renderScene();
+    },[geoDocuments, config ,scene, transformMatrix, renderScene]);
 
 
     useEffect(() => {
@@ -244,10 +255,6 @@ const GLMap: React.FC<GLMapProps> = ({
 
         });
     },[scene, selectedDocumentIds, previousSelectedDocIds]);
-
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => clearTimeout(timeout),[]);
    
 
     const onPress = (e: GestureResponderEvent) => {
@@ -272,20 +279,15 @@ const GLMap: React.FC<GLMapProps> = ({
     const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
+        glContext.current = gl;
+        renderer.current = new Renderer({ gl: glContext.current });
 
-        const renderer = new Renderer({ gl });
-        renderer.setSize(width, height);
-        renderer.setClearColor(colors.containerBackground);
+        renderer.current.setSize(width, height);
+        renderer.current.setClearColor(colors.containerBackground);
 
         camera.position.set(cameraDefaultPos.x,cameraDefaultPos.y,cameraDefaultPos.z);
 
-
-        const render = () => {
-            timeout = requestAnimationFrame(render);
-            renderer.render(scene, camera);
-            gl.endFrameEXP();
-        };
-        render();
+        renderScene();
     };
 
     

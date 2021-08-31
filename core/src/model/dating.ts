@@ -52,6 +52,8 @@ export module Dating {
 
     const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
     const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
+    export const VALID_DATING_TYPES = ['bce','ce','bp'];
+    export const VALID_TYPES = ['range','exact','before','after','scientific']
 
     export type Types = 'range'|'exact'|'before'|'after'|'scientific'
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';

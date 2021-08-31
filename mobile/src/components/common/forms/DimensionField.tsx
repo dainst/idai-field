@@ -120,22 +120,18 @@ const DimensionField: React.FC<FieldBaseProps> = ({ setFunction, field, currentV
         setEditingIndex(null);
     };
 
+    const generateLabel = (dimension: Dimension) =>
+        Dimension.generateLabel(dimension,(value: number) => value.toLocaleString(languages),getTranslation(languages));
 
     return (
         <View style={ styles.container }>
             <FieldLabel field={ field } />
             <FlatList
                 data={ currentValue as Dimension[] }
-                keyExtractor={ (item: Dimension) => `${item.inputValue}_${item.inputUnit}_${item.isImprecise}` }
+                keyExtractor={ (item: Dimension) => generateLabel(item) }
                 renderItem={ ({ item, index }: { item: Dimension, index: number }) =>
                     <Row style={ styles.currentValues }>
-                        <Text>
-                            {Dimension.generateLabel(
-                                item,
-                                (value: number) => value.toLocaleString(languages),
-                                getTranslation(languages))
-                            }
-                        </Text>
+                        <Text>{ generateLabel(item) }</Text>
                         <Row style={ { marginLeft: 'auto' } }>
                             <Button
                                 style={ { marginRight: 5 } }

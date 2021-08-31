@@ -95,11 +95,11 @@ const GLMap: React.FC<GLMapProps> = ({
         onPanResponderMove: e => {
             const { nativeEvent: { touches } } = e;
             if(touches.length === 1){
-                const [{ pageX, pageY }] = touches;
-                touchHandler(pageX, pageY);
+                const [{ locationX, locationY }] = touches;
+                touchHandler(locationX, locationY);
             } else if(touches.length === 2) {
                 const [touch1, touch2] = touches;
-                zoomHandler(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY);
+                zoomHandler(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY);
             } else return;
             e.preventDefault();
         },

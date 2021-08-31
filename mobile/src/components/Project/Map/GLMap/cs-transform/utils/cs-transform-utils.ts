@@ -98,8 +98,10 @@ export const extractCoordsPositions = (geometries: Position[]): [number[], numbe
 export const mapValueToNewRange = (newMax: number, newMin: number, value: number, oldMax: number, oldMin: number): number =>
     (newMax - newMin) * (value - oldMin) / (oldMax - oldMin) + newMin;
 
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const arrayDim = (a: any, dim:number = 0):number => {
-    if(Array.isArray(a)) return arrayDim(a[0], dim + 1);
+export const arrayDim = (array: any, dim:number = 0):number => {
+    if(Array.isArray(array)) return arrayDim(array[0], dim + 1);
     else return dim;
 };
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

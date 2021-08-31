@@ -12,7 +12,7 @@ import { ConfigurationContext } from '../../../../contexts/configuration-context
 import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { processTransform2d } from './cs-transform';
+import { processTransform2d, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
@@ -56,7 +56,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const config = useContext(ConfigurationContext);
 
-    const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,1000,1000,0) ).current;
+    const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
     const renderer = useRef<Renderer>();
     const glContext = useRef<ExpoWebGLRenderingContext>();

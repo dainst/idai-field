@@ -1,30 +1,24 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
+import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import { GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from 'react-native';
+import {
+    GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet
+} from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
 import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { ViewPort } from './geojson';
+import { processTransform2d } from './geojson';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson-gl-shape';
 import { calcCenter, calcDistance } from './math-utils';
 
-
-interface Coordinate2D {
-    x: number;
-    y: number;
-}
-
-interface CameraPosition extends Coordinate2D {
-    z: number;
-}
 
 const cameraDefaultPos = {
     x: 0,
@@ -41,9 +35,10 @@ const yes = () => true;
 
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
-    viewPort: ViewPort;
+    screen: LayoutRectangle;
     cameraView: CameraView | undefined;
-    transformMatrix: Matrix4 | undefined;
+    documentToWorldMatrix: Matrix4 ;
+    screenToWorldMatrix: Matrix4;
     selectedDocumentIds: string[];
     geoDocuments: Document[];
 }
@@ -51,16 +46,17 @@ interface GLMapProps {
 
 const GLMap: React.FC<GLMapProps> = ({
     setHighlightedDocId,
-    viewPort,
+    screen,
     cameraView,
-    transformMatrix,
+    documentToWorldMatrix,
+    screenToWorldMatrix,
     selectedDocumentIds,
     geoDocuments
 }) => {
 
     const config = useContext(ConfigurationContext);
 
-    const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,0,100,100) ).current;
+    const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,1000,1000,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
     const renderer = useRef<Renderer>();
     const glContext = useRef<ExpoWebGLRenderingContext>();
@@ -73,11 +69,15 @@ const GLMap: React.FC<GLMapProps> = ({
     const isMoving = useRef<boolean>(false);
 
     //reference values set at the beginning of the gesture
-    const initialTouch = useRef<Coordinate2D>({ x:0, y:0 });
-    const initialX = useRef<number>(0);
-    const initialY = useRef<number>(0);
+    const initialTouch = useRef<{x: number, y: number}>({ x:0, y:0 });
     const initialZoom = useRef<number>(1);
     const initialDistance = useRef<number>(0);
+    const zoom = useRef<number>(1);
+
+    const left = useRef<number>(0);
+    const initialLeft = useRef<number>(0);
+    const top = useRef<number>(0);
+    const initialTop = useRef<number>(0);
    
 
     const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
@@ -120,85 +120,83 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const touchHandler = (x: number, y: number): void => {
 
+        const [x_w, y_w] = screenToWorld([x,y]);
         if(!isMoving.current || isZooming.current){
             isMoving.current = true;
             isZooming.current = false;
-            initialX.current = camera.position.x;
-            initialY.current = camera.position.y;
-            initialTouch.current = { x, y };
+            initialLeft.current = left.current;
+            initialTop.current = top.current;
+            initialTouch.current = { x:x_w, y:y_w };
         } else {
-            const dx = x - initialTouch.current.x;
-            const dy = y - initialTouch.current.y;
-            updateCamera(camera.zoom,{
-                x: initialX.current - dx / camera.zoom,
-                y: initialY.current + dy / camera.zoom,
-                z: cameraDefaultPos.z
-            });
+            const dx = x_w - initialTouch.current.x;
+            const dy = y_w - initialTouch.current.y;
+
+            left.current = initialLeft.current + dx;
+            top.current = initialTop.current + dy;
+            updateSceen();
         }
     };
 
     const zoomHandler = (x1: number, y1: number, x2: number, y2: number ): void => {
-        const distance = calcDistance(x1, y1, x2, y2);
-        const { x, y } = calcCenter(x1, y1, x2, y2);
+        
+        const [x1_w, y1_w] = screenToWorld([x1,y1]);
+        const [x2_w, y2_w] = screenToWorld([x2,y2]);
+        const distance = calcDistance(x1_w, y1_w, x2_w, y2_w);
+        const { x, y } = calcCenter(x1_w , y1_w, x2_w , y2_w);
 
         if(!isZooming.current){
             isZooming.current = true;
             initialTouch.current = { x,y };
-            initialX.current = camera.position.x;
-            initialY.current = camera.position.y;
-            initialZoom.current = camera.zoom;
+            initialTop.current = top.current;
+            initialLeft.current = left.current;
+            initialZoom.current = zoom.current;
             initialDistance.current = distance;
         } else {
             const touchZoom = distance / initialDistance.current;
-            const newZoom = initialZoom.current * touchZoom;
-            updateCamera(newZoom);
+            const dx = x - initialTouch.current.x;
+            const dy = y - initialTouch.current.y;
+            left.current = (initialLeft.current + dx - x) * touchZoom + x;
+            top.current = (initialTop.current + dy - y) * touchZoom + y;
+            zoom.current = initialZoom.current * touchZoom;
+            updateSceen();
         }
     };
-    
 
-    useEffect(() => {
-        
-        if(viewPort){
-            scene.clear();
-            const maxSize = Math.max(viewPort.width, viewPort.height );
-            const view: CameraView = {
-                left: viewPort.x,
-                right: maxSize,
-                top: maxSize,
-                bottom: viewPort.y
-            };
-            updateCamera(1, cameraDefaultPos, view);
-            
-        }
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[viewPort]);
+    const updateSceen = () => {
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => updateCamera(1, cameraDefaultPos, cameraView),[cameraView]);
-
-    const updateCamera = (zoom: number, pos?: CameraPosition, view?: CameraView) => {
-        
-        camera.zoom = zoom;
-        
-        if(pos){
-            camera.position.set(pos.x, pos.y, pos.z);
-        }
-        if(view ){
-            camera.left = view.left;
-            camera.right = view.right;
-            camera.top = view.top;
-            camera.bottom = view.bottom;
-        }
-
-        camera.updateProjectionMatrix();
+        scene.position.set(
+            left.current + zoom.current,
+            top.current + zoom.current,0);
+        scene.scale.set(zoom.current, zoom.current,1);
         renderScene();
     };
+    
 
+    // useEffect(() => {
+        
+    //     if(screen){
+    //         scene.clear();
+    //         const maxSize = Math.max(screen.width, screen.height );
+    //         const view: CameraView = {
+    //             left: screen.x,
+    //             right: maxSize,
+    //             top: maxSize,
+    //             bottom: screen.y
+    //         };
+    //         //updateCamera(1, cameraDefaultPos, view);
+            
+    //     }
+        
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[screen]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //useEffect(() => updateCamera(1, cameraDefaultPos, cameraView),[cameraView]);
+
+    
     useEffect(() => {
     
-        if(!transformMatrix || !geoDocuments.length) return;
+        if(!documentToWorldMatrix || !geoDocuments.length) return;
         scene.clear();
         geoDocuments.forEach((doc) => {
             
@@ -207,22 +205,22 @@ const GLMap: React.FC<GLMapProps> = ({
             switch(geometry.type){
                 case 'Polygon':
                 case 'MultiPolygon':
-                    polygonToShape(transformMatrix, scene, config, doc, geometry.coordinates);
+                    polygonToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'LineString':
                 case 'MultiLineString':
-                    lineStringToShape(transformMatrix, scene, config, doc, geometry.coordinates);
+                    lineStringToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'Point':
-                    pointToShape(transformMatrix, scene, config, doc, geometry.coordinates);
+                    pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'MultiPoint':
-                    multiPointToShape(transformMatrix,scene, config, doc, geometry.coordinates);
+                    multiPointToShape(documentToWorldMatrix,scene, config, doc, geometry.coordinates);
                     break;
             }
         });
         renderScene();
-    },[geoDocuments, config ,scene, transformMatrix, renderScene]);
+    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene]);
 
 
     useEffect(() => {
@@ -260,8 +258,8 @@ const GLMap: React.FC<GLMapProps> = ({
     const onPress = (e: GestureResponderEvent) => {
 
         const vec = new Vector2(
-            (e.nativeEvent.locationX / viewPort.width ) * 2 - 1,
-            -(e.nativeEvent.locationY / viewPort.height) * 2 + 1);
+            (e.nativeEvent.locationX / screen.width ) * 2 - 1,
+            -(e.nativeEvent.locationY / screen.height) * 2 + 1);
         const raycaster = new Raycaster();
         raycaster.setFromCamera(vec, camera);
         const intersections = raycaster.intersectObjects(scene.children,true);
@@ -290,6 +288,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     };
 
+    const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
     
     if (!camera || !scene.children.length) return null;
 

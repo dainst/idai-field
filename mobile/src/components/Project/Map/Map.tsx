@@ -2,10 +2,9 @@ import * as Location from 'expo-location';
 import { Document } from 'idai-field-core';
 import proj4 from 'proj4';
 import React, { useCallback, useEffect, useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import { LayoutChangeEvent, LayoutRectangle, StyleSheet, View } from 'react-native';
 import useMapData from '../../../hooks/use-mapdata';
 import { DocumentRepository } from '../../../repositories/document-repository';
-import { ViewPort } from './GLMap/geojson';
 import GLMap from './GLMap/GLMap';
 import MapBottomSheet from './MapBottomSheet';
 
@@ -25,14 +24,15 @@ interface NMapProps {
 
 const Map: React.FC<NMapProps> = (props) => {
 
-    const [viewPort, setViewPort] = useState<ViewPort>();
+    const [screen, setScreen] = useState<LayoutRectangle>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
     
     const [
         geoDocuments,
-        transformMatrix,
+        documentToWorldMatrix,
+        screenToWorldMatrix,
         cameraView,
-        focusMapOnDocumentId] = useMapData(props.repository,viewPort,props.selectedDocumentIds);
+        focusMapOnDocumentId] = useMapData(props.repository,props.selectedDocumentIds, screen);
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
         props.repository.get(docId).then(setHighlightedDoc), [props.repository]);
@@ -60,17 +60,16 @@ const Map: React.FC<NMapProps> = (props) => {
       }, []);
 
     
-    const handleLayoutChange = (event: LayoutChangeEvent) => setViewPort(event.nativeEvent.layout);
-
+    const handleLayoutChange = (event: LayoutChangeEvent) => setScreen(event.nativeEvent.layout);
 
     return (
         <View style={ styles.container } onLayout={ handleLayoutChange }>
-
-            {(viewPort) && <GLMap
+            {(screen && documentToWorldMatrix && screenToWorldMatrix) && <GLMap
                 setHighlightedDocId={ setHighlightedDocFromId }
-                viewPort={ viewPort }
+                screen={ screen }
                 cameraView={ cameraView }
-                transformMatrix={ transformMatrix }
+                documentToWorldMatrix={ documentToWorldMatrix }
+                screenToWorldMatrix={ screenToWorldMatrix }
                 selectedDocumentIds={ props.selectedDocumentIds }
                 geoDocuments={ geoDocuments } />}
             <MapBottomSheet

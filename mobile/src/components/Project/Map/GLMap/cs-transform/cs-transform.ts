@@ -1,7 +1,8 @@
 import { Position } from 'geojson';
 import { identityMatrix4, Matrix4, matrixVecMul4 } from 'react-native-redash';
+import { CSBox } from './types';
 import { GeometryBoundings } from './utils';
-import { getViewPortTransform, ViewBox, ViewPort } from './utils/viewport-utils';
+import { getDocumentToWorldTransform } from './utils/document-to-world-transformation';
 
 
 export const processTransform2d = (transformationMatrix: Matrix4, position: Position): Position => {
@@ -11,15 +12,13 @@ export const processTransform2d = (transformationMatrix: Matrix4, position: Posi
 
 
 // eslint-disable-next-line max-len
-export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null, viewPort: ViewPort | undefined): Matrix4 => {
+export const setupDocumentToWorldTransformMatrix = (geoBoundings: GeometryBoundings | null): Matrix4 => {
 
-    if(!geoBoundings || !viewPort) return identityMatrix4;
-    //console.log('here! in transform',geoBoundings, viewPort);
-    const { minX, minY, maxX, maxY } = geoBoundings;
-    const viewBox: ViewBox = [minX, minY, maxX - minX, maxY - minY];
+    if(!geoBoundings) return identityMatrix4;
 
-    const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(viewPort, viewBox);
-    const { scaleX, scaleY, translateX, translateY } = getViewPortTransform( aspect_vb, aspect_vp);
+    const worldCS = defineWorldCoordinateSystem();
+    const documentCS = adjustAspectRatio(geoBoundings);
+    const { scaleX, scaleY, translateX, translateY } = getDocumentToWorldTransform( documentCS, worldCS);
     const worldToViewPort: Matrix4 = [
         [scaleX, 0, 0, translateX],
         [0, scaleY, 0, translateY],
@@ -30,14 +29,28 @@ export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null
 };
 
 
-export const adjustViewPortAndBoxToKeepAspectRatio = (viewPort: ViewPort, viewBox: ViewBox):
+export const adjustAspectRatio = (geoBoundings: GeometryBoundings): CSBox => {
     //see https://www.albany.edu/faculty/jmower/geog/gog530Python/src/NormalizingCoordinatesManual.html
-    {aspect_vp: ViewPort, aspect_vb: ViewBox} => {
-
-    const viewPortDim = Math.max(viewPort.width, viewPort.height);
-    const viewBoxDim = Math.max(viewBox[2], viewBox[3]);
+    
+    const { minX, minY, maxX, maxY } = geoBoundings;
+    const maxWidthHeight = Math.max(maxX - minX, maxY - minY);
     return {
-        aspect_vp: { ...viewPort, width: viewPortDim, height: viewPortDim },
-        aspect_vb: [viewBox[0], viewBox[1], viewBoxDim, viewBoxDim]
+        minX,
+        minY,
+        width: maxWidthHeight,
+        height: maxWidthHeight,
     };
 };
+
+
+export const defineWorldCoordinateSystem = (): CSBox => (
+    // defines boundaries of world coordinate system. WorldCS is right-handed coordinate system
+     {
+        minX: 0,
+        width: 1000,
+        minY: 0,
+        height: 1000,
+    }
+);
+
+

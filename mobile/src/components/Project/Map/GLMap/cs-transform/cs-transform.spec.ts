@@ -1,15 +1,14 @@
 
 import { Matrix4 } from 'react-native-redash';
 import { matrixInverse4 } from '../geojson/matrix-utils/matrix-utils';
-import { processTransform2d, setupTransformationMatrix } from './cs-transform';
+import { processTransform2d, setupDocumentToWorldTransformMatrix } from './cs-transform';
 import { GeometryBoundings } from './utils';
-import { ViewPort } from './utils/viewport-utils';
 
 
-describe('geojson-cs-to-svg',() => {
+describe('cs-transforms',() => {
 
     
-    it('transform GeoJSON to SVG',() => {
+    it('transform GeoJSON to World',() => {
 
         const transformationMat: Matrix4 = [
             [2,0,0,4],
@@ -31,24 +30,18 @@ describe('geojson-cs-to-svg',() => {
             maxY: 100,
         };
 
-        const viewPort: ViewPort = {
-            x: 0,
-            y: 0,
-            width: 800,
-            height: 1200,
-        };
 
         const expectedResult: Matrix4 = [
-            [12,0,0,0],
-            [0,12,0,0],
+            [10,0,0,0],
+            [0,10,0,0],
             [0,0,1,0],
             [0,0,0,1]];
         
-        expect(setupTransformationMatrix(geoBoundings, viewPort)).toEqual(expectedResult);
+        expect(setupDocumentToWorldTransformMatrix(geoBoundings)).toEqual(expectedResult);
     });
 
 
-    it('transforms point from test467 project worldCS to screen viewPort coords', () => {
+    it('transforms point from test467 project documentCS to worldCS coords', () => {
 
         const geoBoundings: GeometryBoundings = {
             minX: 27.188940048217773,
@@ -56,11 +49,11 @@ describe('geojson-cs-to-svg',() => {
             maxX: 27.189414739608765,
             maxY: 39.141438484191895,
         };
-        const viewPort: ViewPort = { x: 0,y: 0, width: 752.941162109375,height: 1067.2940673828125 };
+        
         const position = [27.189346313476562,39.141404151916504];
-        const expectedTransformedPos = [913.4450481235981, 795.5120020061731];
+        const expectedTransformedPos = [855.85133, 745.354093];
 
-        const transformationMat = setupTransformationMatrix(geoBoundings, viewPort);
+        const transformationMat = setupDocumentToWorldTransformMatrix(geoBoundings);
         const transformedPosition = processTransform2d(transformationMat, position);
         
         transformedPosition.forEach((coord: number, i: number) => {

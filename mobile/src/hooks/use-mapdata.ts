@@ -1,12 +1,14 @@
 import { Document, FieldGeometry, Query } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
+import { LayoutRectangle } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/GLMap/constants';
+import { screenToWorldTransformationMatrix } from '../components/Project/Map/GLMap/cs-transform/utils';
 import {
     GeometryBoundings, getGeometryBoundings,
     getMinMaxCoords,
     processTransform2d,
-    setupTransformationMatrix, ViewPort
+    setupDocumentToWorldTransformMatrix
 } from '../components/Project/Map/GLMap/geojson';
 import { DocumentRepository } from '../repositories/document-repository';
 
@@ -22,22 +24,25 @@ export interface CameraView {
     bottom: number;
 }
 
-type mapDataReturn = [Document[], Matrix4 | undefined, CameraView | undefined, (docId: string) => void];
+type mapDataReturn = [
+    Document[],
+    Matrix4 | undefined,
+    Matrix4 | undefined,
+    CameraView | undefined, (docId: string) => void];
 
 
-const useMapData = (
-        repository: DocumentRepository,
-        viewPort: ViewPort | undefined,
-        selectedDocumentIds: string[]): mapDataReturn => {
+const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[], screen?: LayoutRectangle):
+    mapDataReturn => {
 
     const [geoDocuments, setGeoDocuments] = useState<Document[]>([]);
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
-    const [transformMatrix, setTransformMatrix] = useState<Matrix4>();
+    const [documentToWorldMatrix, setDocumentToWorldMatrix] = useState<Matrix4>();
+    const [screenToWorldMatrix, setScreenToWorldMatrix] = useState<Matrix4>();
     const [cameraView, setCameraView] = useState<CameraView>();
-
+   
     const focusMapOnDocumentIds = useCallback(async (docIds: string[]) => {
 
-        if(!transformMatrix) return;
+        if(!documentToWorldMatrix) return;
         
         const geoDocs: FieldGeometry[] = [];
         const docs = await repository.getMultiple(docIds);
@@ -46,14 +51,14 @@ const useMapData = (
         });
         if(!geoDocs.length) return;
         const { minX, minY, maxX, maxY } = getMinMaxCoords(geoDocs);
-        const [left, bottom] = processTransform2d(transformMatrix, [minX,minY]);
-        const [right, top] = processTransform2d(transformMatrix, [maxX,maxY]);
+        const [left, bottom] = processTransform2d(documentToWorldMatrix, [minX,minY]);
+        const [right, top] = processTransform2d(documentToWorldMatrix, [maxX,maxY]);
         setCameraView({
             left: left - viewBoxPaddingX,
             right: right + viewBoxPaddingX,
             bottom: bottom - viewBoxPaddingY,
             top: top + viewBoxPaddingY });
-    },[repository,transformMatrix]);
+    },[repository,documentToWorldMatrix]);
 
     const focusMapOnDocumentId = (docId: string) => focusMapOnDocumentIds([docId]);
 
@@ -68,14 +73,20 @@ const useMapData = (
     },[repository]);
 
 
-    useEffect(() => setTransformMatrix( setupTransformationMatrix(geometryBoundings,viewPort)),
-        [geometryBoundings, viewPort]);
+    useEffect(() => setDocumentToWorldMatrix( setupDocumentToWorldTransformMatrix(geometryBoundings)),
+        [geometryBoundings]);
 
 
     useEffect(() => {focusMapOnDocumentIds(selectedDocumentIds);},[selectedDocumentIds, focusMapOnDocumentIds]);
 
+    useEffect(() => {
+        
+        if(!screen) return;
+        setScreenToWorldMatrix(screenToWorldTransformationMatrix(screen));
+    },[screen]);
 
-    return [geoDocuments, transformMatrix, cameraView, focusMapOnDocumentId];
+
+    return [geoDocuments, documentToWorldMatrix, screenToWorldMatrix, cameraView, focusMapOnDocumentId];
 };
 
 

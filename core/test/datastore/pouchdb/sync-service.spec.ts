@@ -43,7 +43,7 @@ import { doc } from '../../test-helpers';
         await localDb.destroy();
     };
 
-    it('one-shot sync emits the correct status', async done => {
+    xit('one-shot sync emits the correct status', async done => {
 
         try {
 

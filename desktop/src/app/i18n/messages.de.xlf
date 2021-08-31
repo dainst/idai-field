@@ -437,7 +437,7 @@
         <target state="final">Alle Kategorien</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.addSubcategory" datatype="html">
@@ -445,7 +445,7 @@
         <target state="final">Unterkategorie hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
@@ -493,7 +493,7 @@
         <target state="final">Pfad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -501,7 +501,7 @@
         <target state="final">Datei auswählen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -509,7 +509,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
@@ -517,7 +517,7 @@
         <target state="final"> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">239</context>
+          <context context-type="linenumber">236</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
@@ -592,12 +592,20 @@
           <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.selectCategory" datatype="html">
+        <source>Kategorie auswählen</source>
+        <target state="final">Kategorie auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">179,181</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
         <source>Daten einer Maßnahme zuordnen</source>
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">188</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -605,7 +613,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -613,7 +621,7 @@
         <target state="final">Feldtrennzeichen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -621,7 +629,7 @@
         <target state="final"> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -629,7 +637,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -637,7 +645,7 @@
         <target state="final"> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
@@ -645,7 +653,7 @@
         <target state="final">Nicht importierte Ressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">204</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
@@ -653,7 +661,7 @@
         <target state="final">Zurück</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -677,7 +685,7 @@
         <target state="final">Kontext</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">245</context>
+          <context context-type="linenumber">246</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
@@ -685,7 +693,7 @@
         <target state="final">Keine Einschränkung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">266</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
@@ -693,7 +701,7 @@
         <target state="final">Katalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">293</context>
+          <context context-type="linenumber">294</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
@@ -701,7 +709,7 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">325</context>
+          <context context-type="linenumber">326</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -717,7 +725,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -725,7 +733,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.catalog" datatype="html">
@@ -733,7 +741,7 @@
         <target state="final">Katalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">172</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
@@ -749,7 +757,7 @@
         <target state="final">Komplett</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
@@ -757,7 +765,7 @@
         <target state="final">Nur Schema</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">222</context>
+          <context context-type="linenumber">223</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
@@ -765,7 +773,7 @@
         <target state="final"> Keine Ressourcen gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">344</context>
+          <context context-type="linenumber">345</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
@@ -773,7 +781,7 @@
         <target state="final"> Keine Kataloge gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">344</context>
+          <context context-type="linenumber">345</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -781,7 +789,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">344</context>
+          <context context-type="linenumber">345</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -789,7 +797,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -797,7 +805,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -885,11 +893,11 @@
         <target state="final">Kategorie auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
@@ -897,7 +905,7 @@
         <target state="final">Feld hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
@@ -909,7 +917,7 @@
         <target state="final">Neues Feld erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addGroup" datatype="html">
@@ -917,11 +925,11 @@
         <target state="final">Gruppe hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createGroup" datatype="html">
@@ -929,7 +937,7 @@
         <target state="final">Neue Gruppe erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.form.custom" datatype="html">
@@ -937,7 +945,7 @@
         <target state="final">Projektspezifisches Formular</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -957,7 +965,7 @@
         <target state="final">Oberkategorie hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">62,65</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.fieldLabel" datatype="html">
@@ -1165,7 +1173,7 @@
         <target state="final"> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
@@ -1173,7 +1181,7 @@
         <target state="final"> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> hinzufügen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
-          <context context-type="linenumber">25,8</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
@@ -1265,7 +1273,7 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.libraryId" datatype="html">
@@ -1273,7 +1281,7 @@
         <target state="final">Formular</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">171</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoryLabel" datatype="html">
@@ -1281,15 +1289,15 @@
         <target state="final"> Kategoriebezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
         <source> Beschreibung </source>
         <target state="final"> Beschreibung </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
@@ -1301,7 +1309,7 @@
         <target state="final"> Farbe </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
@@ -1542,34 +1550,34 @@
         <target state="final">Feld löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
         <target state="final">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</target>
+        <note priority="1" from="description">configuration.deleteField.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">40</context>
         </context-group>
-        <note priority="1" from="description">configuration.deleteField.body</note>
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.header" datatype="html">
         <source>Gruppe löschen?</source>
         <target state="final">Gruppe löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
         <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
         <target state="final"> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </target>
+        <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">46</context>
         </context-group>
-        <note priority="1" from="description">configuration.deleteGroup.body</note>
       </trans-unit>
       <trans-unit id="d4286c7895048075c0bcfc84f6e470697b0049ef" datatype="html">
         <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
@@ -1881,7 +1889,7 @@
         <target state="final"> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.component.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
@@ -2145,7 +2153,7 @@
         <target state="final">Kategorie löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
@@ -2154,7 +2162,7 @@
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.confirmInfo" datatype="html">
@@ -5069,19 +5077,19 @@
         <target state="final">Abbrechen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-group-modal.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
@@ -5089,7 +5097,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -5153,7 +5161,7 @@
         <target state="final">Speichern</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>

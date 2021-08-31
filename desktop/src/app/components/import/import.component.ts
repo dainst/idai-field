@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-    Category, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration,
-    RelationsManager, SyncService, Tree
-} from 'idai-field-core';
+import { Category, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
+    SyncService, Tree } from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
@@ -131,6 +129,7 @@ export class ImportComponent implements OnInit {
             && this.ignoredIdentifiers.length < 2
             && this.importState.format !== undefined
             && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
+            && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
                 ? this.importState.file !== undefined
                 : this.importState.url !== undefined);
@@ -167,11 +166,7 @@ export class ImportComponent implements OnInit {
             }
 
             this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
-            if (this.importState.selectedCategory) {
-                this.importState.typeFromFileName = true;
-            } else {
-                this.selectFirstCategory();
-            }
+            if (this.importState.selectedCategory) this.importState.typeFromFileName = true;
         }
     }
 
@@ -200,8 +195,8 @@ export class ImportComponent implements OnInit {
             Tree.flatten(this.projectConfiguration.getCategories()), this.getCategoriesToExclude()
         );
 
-        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.selectFirstCategory();
+        if (!this.importState.categories.includes(this.importState.selectedCategory)) {
+            this.importState.selectedCategory = undefined;
         }
     }
 
@@ -367,12 +362,6 @@ export class ImportComponent implements OnInit {
         }
 
         return undefined;
-    }
-
-
-    private selectFirstCategory() {
-
-        if (this.importState.categories.length > 0) this.importState.selectedCategory = this.importState.categories[0];
     }
 
 

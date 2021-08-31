@@ -6,7 +6,6 @@
   },
   "scripts": {
     "bootstrap": "npm i && lerna bootstrap -- --force",
-    "build": "lerna run build",
-    "test": "lerna run test"
+    "build": "lerna run build"
   }
 }

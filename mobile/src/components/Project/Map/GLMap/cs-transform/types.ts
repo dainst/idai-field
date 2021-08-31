@@ -11,3 +11,11 @@ export interface GeometryBoundings {
     maxX: number;
     maxY: number;
 }
+
+
+export interface Transformation {
+    translateX: number;
+    translateY: number;
+    scaleX: number;
+    scaleY: number;
+}

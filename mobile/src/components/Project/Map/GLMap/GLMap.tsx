@@ -9,10 +9,9 @@ import {
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
-import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { processTransform2d, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
+import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
@@ -36,7 +35,7 @@ const yes = () => true;
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
     screen: LayoutRectangle;
-    cameraView: CameraView | undefined;
+    viewBox: Transformation | undefined;
     documentToWorldMatrix: Matrix4 ;
     screenToWorldMatrix: Matrix4;
     selectedDocumentIds: string[];
@@ -47,7 +46,7 @@ interface GLMapProps {
 const GLMap: React.FC<GLMapProps> = ({
     setHighlightedDocId,
     screen,
-    cameraView,
+    viewBox,
     documentToWorldMatrix,
     screenToWorldMatrix,
     selectedDocumentIds,
@@ -190,8 +189,16 @@ const GLMap: React.FC<GLMapProps> = ({
     // // eslint-disable-next-line react-hooks/exhaustive-deps
     // },[screen]);
 
+    useEffect(() => {
+
+        if(!viewBox) return;
+        const { scaleX, translateX, translateY } = viewBox;
+        if(!isNaN(translateX)) left.current = translateX;
+        if(!isNaN(translateY)) top.current = translateY;
+        if(!isNaN(scaleX)) zoom.current = scaleX;
+        updateSceen();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    //useEffect(() => updateCamera(1, cameraDefaultPos, cameraView),[cameraView]);
+    },[viewBox]);
 
     
     useEffect(() => {

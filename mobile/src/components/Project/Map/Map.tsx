@@ -31,7 +31,7 @@ const Map: React.FC<NMapProps> = (props) => {
         geoDocuments,
         documentToWorldMatrix,
         screenToWorldMatrix,
-        cameraView,
+        viewBox,
         focusMapOnDocumentId] = useMapData(props.repository,props.selectedDocumentIds, screen);
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
@@ -67,7 +67,7 @@ const Map: React.FC<NMapProps> = (props) => {
             {(screen && documentToWorldMatrix && screenToWorldMatrix) && <GLMap
                 setHighlightedDocId={ setHighlightedDocFromId }
                 screen={ screen }
-                cameraView={ cameraView }
+                viewBox={ viewBox }
                 documentToWorldMatrix={ documentToWorldMatrix }
                 screenToWorldMatrix={ screenToWorldMatrix }
                 selectedDocumentIds={ props.selectedDocumentIds }

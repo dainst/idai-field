@@ -1,11 +1,5 @@
-import { CSBox } from '../types';
+import { CSBox, Transformation } from '../types';
 
-interface Transformation {
-    translateX: number;
-    translateY: number;
-    scaleX: number;
-    scaleY: number;
-}
 
 export const getDocumentToWorldTransform = (documentCS: CSBox, worldCS: CSBox,
     preserveAspectRatio?: string ): Transformation => {

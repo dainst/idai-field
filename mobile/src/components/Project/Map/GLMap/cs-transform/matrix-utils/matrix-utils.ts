@@ -1,4 +1,5 @@
-import { Matrix4 } from 'react-native-redash';
+import { Position } from 'geojson';
+import { Matrix4, matrixVecMul4 } from 'react-native-redash';
 
 
 export const matrixInverse4 = (m: Matrix4 ): Matrix4 | null => {
@@ -54,4 +55,10 @@ export const matrixInverse4 = (m: Matrix4 ): Matrix4 | null => {
     
 ] as const;
 
+};
+
+
+export const processTransform2d = (transformationMatrix: Matrix4, position: Position): Position => {
+    const outVec = matrixVecMul4(transformationMatrix, [position[0], position[1], 0, 1]);
+    return [outVec[0], outVec[1]];
 };

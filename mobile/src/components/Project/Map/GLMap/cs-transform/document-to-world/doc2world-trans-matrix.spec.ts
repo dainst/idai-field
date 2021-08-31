@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { CSBox } from '../types';
-import { getDocumentToWorldTransform } from './document-to-world-transformation';
+import { getDocumentToWorldTransform } from './doc2world-trans-matrix';
 
 
 describe('getViewPortTransform',() => {

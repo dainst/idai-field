@@ -4,3 +4,10 @@ export interface CSBox {
     minY: number;
     height: number;
 }
+
+export interface GeometryBoundings {
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+}

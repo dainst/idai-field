@@ -1,6 +1,6 @@
 import { LayoutRectangle } from 'react-native';
 import { Matrix4, processTransform3d } from 'react-native-redash';
-import { defineWorldCoordinateSystem } from '../cs-transform';
+import { defineWorldCoordinateSystem } from '../constants';
 /**
  * Transforms screen coordinate system to world cs
  * and takes care of the different y axis directions of the coordinate systems
@@ -13,7 +13,7 @@ import { defineWorldCoordinateSystem } from '../cs-transform';
  * @param viewBoxHeight
  * @returns correctly transformed y coordinate
  */
-export const screenToWorldTransformationMatrix = (screen: LayoutRectangle): Matrix4 => {
+export const getScreenToWorldTransformationMatrix = (screen: LayoutRectangle): Matrix4 => {
     
     const worldCS = defineWorldCoordinateSystem();
     const scaleX = worldCS.width / screen.width;

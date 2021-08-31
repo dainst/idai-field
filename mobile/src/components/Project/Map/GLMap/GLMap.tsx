@@ -12,11 +12,11 @@ import { ConfigurationContext } from '../../../../contexts/configuration-context
 import { CameraView } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { processTransform2d } from './geojson';
+import { processTransform2d } from './cs-transform';
 import {
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
-} from './geojson-gl-shape';
+} from './geojson/geojson-gl-shape';
 import { calcCenter, calcDistance } from './math-utils';
 
 

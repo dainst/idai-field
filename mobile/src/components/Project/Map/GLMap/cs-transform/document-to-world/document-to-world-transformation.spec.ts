@@ -1,8 +1,7 @@
-
 import { Matrix4 } from 'react-native-redash';
-import { matrixInverse4 } from '../geojson/matrix-utils/matrix-utils';
-import { processTransform2d, setupDocumentToWorldTransformMatrix } from './cs-transform';
-import { GeometryBoundings } from './utils';
+import { matrixInverse4, processTransform2d } from '../matrix-utils/matrix-utils';
+import { GeometryBoundings } from '../types';
+import { getDocumentToWorldTransformMatrix } from './document-to-world-transformation';
 
 
 describe('cs-transforms',() => {
@@ -37,7 +36,7 @@ describe('cs-transforms',() => {
             [0,0,1,0],
             [0,0,0,1]];
         
-        expect(setupDocumentToWorldTransformMatrix(geoBoundings)).toEqual(expectedResult);
+        expect(getDocumentToWorldTransformMatrix(geoBoundings)).toEqual(expectedResult);
     });
 
 
@@ -53,7 +52,7 @@ describe('cs-transforms',() => {
         const position = [27.189346313476562,39.141404151916504];
         const expectedTransformedPos = [855.85133, 745.354093];
 
-        const transformationMat = setupDocumentToWorldTransformMatrix(geoBoundings);
+        const transformationMat = getDocumentToWorldTransformMatrix(geoBoundings);
         const transformedPosition = processTransform2d(transformationMat, position);
         
         transformedPosition.forEach((coord: number, i: number) => {

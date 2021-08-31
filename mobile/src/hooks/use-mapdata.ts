@@ -3,14 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { LayoutRectangle } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { viewBoxPaddingX, viewBoxPaddingY } from '../components/Project/Map/GLMap/constants';
-import { screenToWorldTransformationMatrix } from '../components/Project/Map/GLMap/cs-transform/utils';
 import {
-    GeometryBoundings, getGeometryBoundings,
-    getMinMaxCoords,
-    processTransform2d,
-    setupDocumentToWorldTransformMatrix
-} from '../components/Project/Map/GLMap/geojson';
+    GeometryBoundings, getDocumentToWorldTransformMatrix, getGeometryBoundings, getMinMaxCoords,
+    getScreenToWorldTransformationMatrix, processTransform2d
+} from '../components/Project/Map/GLMap/cs-transform';
 import { DocumentRepository } from '../repositories/document-repository';
+
 
 const searchQuery: Query = {
     q: '*',
@@ -73,7 +71,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     },[repository]);
 
 
-    useEffect(() => setDocumentToWorldMatrix( setupDocumentToWorldTransformMatrix(geometryBoundings)),
+    useEffect(() => setDocumentToWorldMatrix( getDocumentToWorldTransformMatrix(geometryBoundings)),
         [geometryBoundings]);
 
 
@@ -82,7 +80,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     useEffect(() => {
         
         if(!screen) return;
-        setScreenToWorldMatrix(screenToWorldTransformationMatrix(screen));
+        setScreenToWorldMatrix(getScreenToWorldTransformationMatrix(screen));
     },[screen]);
 
 

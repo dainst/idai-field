@@ -1,18 +1,11 @@
-import { Position } from 'geojson';
-import { identityMatrix4, Matrix4, matrixVecMul4 } from 'react-native-redash';
-import { CSBox } from './types';
-import { GeometryBoundings } from './utils';
-import { getDocumentToWorldTransform } from './utils/document-to-world-transformation';
-
-
-export const processTransform2d = (transformationMatrix: Matrix4, position: Position): Position => {
-    const outVec = matrixVecMul4(transformationMatrix, [position[0], position[1], 0, 1]);
-    return [outVec[0], outVec[1]];
-};
+import { identityMatrix4, Matrix4 } from 'react-native-redash';
+import { defineWorldCoordinateSystem } from '../constants';
+import { CSBox, GeometryBoundings } from '../types';
+import { getDocumentToWorldTransform } from './doc2world-trans-matrix';
 
 
 // eslint-disable-next-line max-len
-export const setupDocumentToWorldTransformMatrix = (geoBoundings: GeometryBoundings | null): Matrix4 => {
+export const getDocumentToWorldTransformMatrix = (geoBoundings: GeometryBoundings | null): Matrix4 => {
 
     if(!geoBoundings) return identityMatrix4;
 
@@ -41,16 +34,5 @@ export const adjustAspectRatio = (geoBoundings: GeometryBoundings): CSBox => {
         height: maxWidthHeight,
     };
 };
-
-
-export const defineWorldCoordinateSystem = (): CSBox => (
-    // defines boundaries of world coordinate system. WorldCS is right-handed coordinate system
-     {
-        minX: 0,
-        width: 1000,
-        minY: 0,
-        height: 1000,
-    }
-);
 
 

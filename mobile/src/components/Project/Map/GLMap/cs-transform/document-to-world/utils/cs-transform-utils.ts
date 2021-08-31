@@ -1,17 +1,10 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-
+import { GeometryBoundings } from '../../types';
 
 type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
 
-
-export interface GeometryBoundings {
-    minX: number;
-    minY: number;
-    maxX: number;
-    maxY: number;
-}
 
 export const getGeometryBoundings = (documents: Document[]): GeometryBoundings | null => {
 

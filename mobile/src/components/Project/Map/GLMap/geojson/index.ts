@@ -1,12 +1,12 @@
 import {
     processTransform2d,
     setupTransformationMatrix
-} from './cs-transform/cs-transform';
+} from '../cs-transform/cs-transform';
 import {
     GeometryBoundings,
     getGeometryBoundings, getMinMaxCoords
-} from './cs-transform/utils/cs-transform-utils';
-import { ViewPort } from './cs-transform/utils/viewport-utils';
+} from '../cs-transform/utils/cs-transform-utils';
+import { ViewPort } from '../cs-transform/utils/viewport-utils';
 
 
 export {

@@ -1,6 +1,6 @@
 
 import { Matrix4 } from 'react-native-redash';
-import { matrixInverse4 } from '../matrix-utils/matrix-utils';
+import { matrixInverse4 } from '../geojson/matrix-utils/matrix-utils';
 import { processTransform2d, setupTransformationMatrix } from './cs-transform';
 import { GeometryBoundings } from './utils';
 import { ViewPort } from './utils/viewport-utils';

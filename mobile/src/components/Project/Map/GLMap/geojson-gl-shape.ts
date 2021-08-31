@@ -7,8 +7,8 @@ import {
     LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, Vector2
 } from 'three';
 import { pointRadius, strokeWidth } from './constants';
+import { arrayDim } from './cs-transform/utils/cs-transform-utils';
 import { processTransform2d } from './geojson';
-import { arrayDim } from './geojson/cs-transform/utils/cs-transform-utils';
 
 
 interface ShapeFunction<T extends Position | Position[] | Position[][] | Position[][][]> {

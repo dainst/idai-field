@@ -264,11 +264,9 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const onPress = (e: GestureResponderEvent) => {
 
-        const vec = new Vector2(
-            (e.nativeEvent.locationX / screen.width ) * 2 - 1,
-            -(e.nativeEvent.locationY / screen.height) * 2 + 1);
+        const ndc_vec = screenToNormalizedDeviceCoordinates(e.nativeEvent.locationX, e.nativeEvent.locationY);
         const raycaster = new Raycaster();
-        raycaster.setFromCamera(vec, camera);
+        raycaster.setFromCamera(ndc_vec, camera);
         const intersections = raycaster.intersectObjects(scene.children,true);
         
         for(const intersection of intersections){
@@ -296,6 +294,12 @@ const GLMap: React.FC<GLMapProps> = ({
     };
 
     const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
+
+    const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
+        new Vector2(
+            (x / screen.width ) * 2 - 1,
+            -(y / screen.height) * 2 + 1);
+    
     
     if (!camera || !scene.children.length) return null;
 

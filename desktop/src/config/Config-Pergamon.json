@@ -682,6 +682,155 @@
       "paintCondition": "Wood-paintCondition-default"
     }
   },
+  "Lamps": {
+    "parent": "Find",
+    "commons": [
+      "provenance"
+    ],
+    "color": "blue",
+    "hidden": [
+      "amountSherdsLip",
+      "amountSherdsPedestal",
+      "amountSherdsRimBase",
+      "amountSherdsRimShoulder",
+      "amountSherdsShoulder",
+      "clayColorOutside",
+      "clayColorInside",
+      "clayColorBreak",
+      "clayColorBreakMunsell",
+      "clayColorInsideMunsell",
+      "clayColorOutsideMunsell",
+      "temperAmount",
+      "temperParticles",
+      "objectType",
+      "coatInside",
+      "coatInsideType",
+      "coatOutside",
+      "coatOutsideType",
+      "temperTypeClay",
+      "formDescription",
+      "usage",
+      "hasCoat",
+      "amountSherdsPercent",
+      "usage"
+    ],
+    "fields": {
+      "typeNumber": {
+        "inputType": "input"
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingDescription": {
+        "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
+      },
+      "porosity": {
+        "inputType": "dropdown"
+      },
+      "clayHardness": {
+        "inputType": "dropdown"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "toneColorOutside": {
+        "inputType": "input"
+      },
+      "toneColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "breakStructure": {
+        "inputType": "radio"
+      },
+      "breakEdge": {
+        "inputType": "dropdown"
+      },
+      "fragmentSize": {
+        "inputType": "radio"
+      },
+      "coatType": {
+        "inputType": "dropdown"
+      },
+      "coatQuality": {
+        "inputType": "checkboxes"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "radio"
+      },
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "decorationPlacement": {
+        "inputType": "checkboxes"
+      },
+      "isImport": {
+        "inputType": "radio"
+      },
+      "sintering": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio"
+      },
+      "sample": {
+        "inputType": "input"
+      },
+      "residueAnalysis": {
+        "inputType": "input"
+      },
+      "isMisfired": {
+        "inputType": "boolean"
+      },
+      "coatCondition": {
+        "inputType": "dropdown"
+      },
+      "lampFragment": {
+        "inputType": "checkboxes"
+      },
+      "typ": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "manufacturingMethod": "Lamps-manufacturingMethod-Pergamon",
+      "clayHardness": "Pottery-clayHardness-default",
+      "breakEdge": "Pottery-breakEdge-Pergamon",
+      "breakStructure": "Pottery-breakStructure-Pergamon",
+      "fragmentSize": "Pottery-fragmentSize-Pergamon",
+      "coatType": "Lamps-coatType-Pergamon",
+      "coatQuality": "Pottery-coatQuality-Pergamon",
+      "decorationTechnique": "Lamps-decorationTechnique-Pergamon",
+      "decorationPlacement": "Lamps-decorationPlacement-Pergamon",
+      "isImport": "Pottery-isImport-Pergamon",
+      "surfaceCondition": "Pottery-surfaceCondition-Pergamon",
+      "coatCondition": "Wood-paintCondition-default",
+      "provenance": "provenance-default-1",
+      "porosity": "Pottery-porosity-Pergamon",
+      "lampFragment": "Lamps-lampFragment-Pergamon",
+      "typ": "Lamps-typ-Pergamon"
+    }
+  },
   "Grave:default": {
     "fields": {},
     "hidden": []

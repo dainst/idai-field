@@ -1,15 +1,22 @@
 import * as PouchDB from 'pouchdb-node';
 import { update } from 'tsfun';
-import { Document } from 'idai-field-core';
+import { Datastore, Document } from 'idai-field-core';
 import { createApp, setupSyncTestDb } from '../../subsystem-helper';
 import { getImageSuggestions } from '../../../../../../src/app/core/docedit/widgets/get-image-suggestions';
 
 
 describe('subsystem/getImageSuggestions', () => {
 
-    let datastore;
+    let datastore: Datastore;
 
-    const doc = { resource: { id: '1', identifier: 'One', category: 'Image', relations: {}}, project: undefined }
+    const doc = { resource: { id: '1', identifier: 'One', category: 'Image', relations: {}, georeference: true }, project: undefined }
+
+    const query = {
+        q: '',
+        categories: ['Image'],
+        offset: 0,
+        limit: 1
+    };
 
     beforeEach(async done => {
 
@@ -29,12 +36,7 @@ describe('subsystem/getImageSuggestions', () => {
             datastore,
             { resource: {} } as Document,
             'depicts',
-            {
-                q: '',
-                categories: ['Image'],
-                offset: 0,
-                limit: 1
-            }
+            query
         );
         expect(image.resource.id).toBe('1');
         expect(totalCount).toBe(1);
@@ -50,12 +52,7 @@ describe('subsystem/getImageSuggestions', () => {
             datastore,
             { resource: { id: '2' } } as Document,
             'depicts',
-            {
-                q: '',
-                categories: ['Image'],
-                offset: 0,
-                limit: 1
-            }
+            query
         );
         expect(images.length).toBe(0);
         expect(totalCount).toBe(0);
@@ -71,15 +68,106 @@ describe('subsystem/getImageSuggestions', () => {
             datastore,
             { resource: {} } as Document,
             'depicts',
-            {
-                q: '',
-                categories: ['Image'],
-                offset: 0,
-                limit: 1
-            }
+            query
         );
         expect(images.length).toBe(0);
         expect(totalCount).toBe(0);
+        done();
+    });
+
+
+    it('georeference', async done => {
+
+        await datastore.create(doc, 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { id: '2', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(1);
+        expect(totalCount).toBe(1);
+        done();
+    });
+
+
+    it('exclude if try to assign to non-project but already assigned to project document', async done => {
+
+        await datastore.create(update(['resource', 'relations', 'isMapLayerOf'], ['project'], doc), 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { id: '2', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(0);
+        expect(totalCount).toBe(0);
+        done();
+    });
+
+
+    it('exclude if try to assign to project but already assigned to non-project document', async done => {
+
+        await datastore.create(update(['resource', 'relations', 'isMapLayerOf'], ['3'], doc), 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { category: 'Project' , id: '2', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(0);
+        expect(totalCount).toBe(0);
+        done();
+    });
+
+
+    it('exclude if try to assign to project but already assigned to project document', async done => {
+
+        await datastore.create(update(['resource', 'relations', 'isMapLayerOf'], ['project'], doc), 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { category: 'Project', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(0);
+        expect(totalCount).toBe(0);
+        done();
+    });
+
+
+    it('exclude if try to assign to non-project but already assigned to the document', async done => {
+
+        await datastore.create(update(['resource', 'relations', 'isMapLayerOf'], ['2'], doc), 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { id: '2', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(0);
+        expect(totalCount).toBe(0);
+        done();
+    });
+
+
+    it('do not exclude if try to assign to non-project but already assigned to the document', async done => {
+
+        await datastore.create(update(['resource', 'relations', 'isMapLayerOf'], ['3'], doc), 'test')
+
+        const [,[images, totalCount]] = await getImageSuggestions(
+            datastore,
+            { resource: { id: '2', relations: {} } } as Document,
+            'layers',
+            query
+        );
+        expect(images.length).toBe(1);
+        expect(totalCount).toBe(1);
         done();
     });
 });

@@ -51,7 +51,7 @@
     "isBelow": {
       "label": "Sotto a"
     },
-    "isEquivalentTo": {
+    "isSameAs": {
       "label": "Uguale a"
     },
     "cuts": {

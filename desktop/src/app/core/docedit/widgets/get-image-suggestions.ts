@@ -1,4 +1,4 @@
-import { Either, update } from 'tsfun';
+import { Either, isUndefinedOrEmpty, update } from 'tsfun';
 import { Query, Document, ImageDocument, Datastore } from 'idai-field-core';
 
 
@@ -24,19 +24,35 @@ export async function getImageSuggestions(datastore: Datastore,
         query.constraints['depicts:contain'] = { value: document.resource.id, subtract: true };
     } else {
         query.constraints['georeference:exist'] = { value: 'KNOWN' };
-        query.constraints['isMapLayerOf:exist'] = { value: 'UNKNOWN' };
+
         if (document.resource.relations['hasMapLayer']) {
-            query.constraints['id:match'] = { value: document.resource.relations['hasMapLayer'], subtract: true };
+            query.constraints['id:match'] = {
+                value: document.resource.relations['hasMapLayer'],
+                subtract: true
+            };
         }
     }
 
     try {
         const result = await datastore.find(query);
+
+        const resultDocuments = mode === 'depicts'
+            ? result.documents
+            : result.documents
+                .filter(resultDoc => !resultDoc.resource
+                    .relations['isMapLayerOf']?.includes(document.resource.id)
+                )
+                .filter(resultDoc =>
+                    document.resource.category === 'Project'
+                        ? isUndefinedOrEmpty(resultDoc.resource.relations['isMapLayerOf'])
+                        : !resultDoc.resource.relations['isMapLayerOf']?.includes('project')
+                );
+
         return [
             undefined,
             [
-               result.documents as Array<ImageDocument>,
-               result.totalCount
+               resultDocuments as Array<ImageDocument>,
+               resultDocuments.length
             ]
         ];
     } catch (errWithParams) {

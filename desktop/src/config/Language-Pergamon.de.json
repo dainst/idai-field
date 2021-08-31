@@ -165,6 +165,108 @@
         }
       }
     },
+    "Lamps": {
+      "label": "Lampen",
+      "fields": {
+       "decorationDescription": {
+         "label": "Beschreibung Dekoration"
+       },
+       "breakStructure": {
+         "label": "Struktur des Bruches"
+       },
+       "residueAnalysis": {
+         "label": "Rückstandsanalyse"
+       },
+       "sample": {
+         "label": "Probe"
+       },
+       "typeNumber": {
+         "label": "Typenkatalog-Nr.",
+         "description": "Type catalogue number"
+       },
+       "clayHardness": {
+         "label": "Tonhärte (nach Rice 2005, 356)"
+       },
+       "coatColorOutside": {
+         "label": "Farbe(n) Überzug außen"
+       },
+       "decorationTechnique": {
+         "label": "Dekor"
+       },
+       "manufacturing": {
+         "label": "Fabrikat"
+       },
+       "manufacturingMethod": {
+         "label": "Herstellungstechnik"
+       },
+       "temper": {
+         "label": "Magerung"
+       },
+       "isImport": {
+         "label": "Import"
+       },
+       "isMisfired": {
+         "label": "Fehlbrand/Schadensbrand: BITTE"
+       },
+       "typ": {
+         "label": "Typ"
+       },
+       "lampFragment": {
+         "label": "Lampen Fragment"
+       },
+       "manufacturingDescription": {
+         "label": "Details Herstellung"
+       },
+       "colorBreak": {
+         "label": "Tonfarbe(n) Kern"
+       },
+       "colorBreakMunsell": {
+         "label": "Tonfarne(n) Kern Munsell-Nr."
+       },
+       "toneColorOutside": {
+        "label": "Tonfarbe(n) außen"
+      },
+      "toneColorOutsideMunsell": {
+        "label": "Tonfarbe(n) außen Munsell-Nr"
+      },
+       "porosity": {
+         "label": "Porosität"
+       },
+       "coatCondition": {
+         "label": "Zustand Überzug"
+       },
+       "fragmentSize": {
+         "label": "Fragmentgröße"
+       },
+       "breakEdge": {
+         "label": "Bruchkanten"
+       },
+       "sintering": {
+         "label": "Versinterung"
+       },
+       "surfaceCondition": {
+         "label": "Brandspuren"
+       },
+       "coatType": {
+         "label": "Oberfläche"
+       },
+       "coatQuality": {
+         "label": "Qualität Überzug"
+       },
+       "decorationPlacement": {
+         "label": "Verortung des Dekors"
+       },
+       "colorInside": {
+         "label": "Tonfarbe(n) innen"
+       },
+       "colorInsideMunsell": {
+         "label": "Tonfarbe(n) innen Munsell-Nr."
+       },
+       "coatColorOutsideMunsell": {
+         "label": "Farbe Überzug außen Munsell-Nr."
+       }
+      }
+      },
     "Glass": {
       "fields": {
         "colorOutside": {

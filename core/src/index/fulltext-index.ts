@@ -21,7 +21,7 @@ export interface FulltextIndex {
  */
 export module FulltextIndex {
 
-    const tokenizationPattern: RegExp = /[ \-_]/;
+    const tokenizationPattern: RegExp = /[ \-_.]/;
 
 
     export function put(index: FulltextIndex,

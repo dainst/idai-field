@@ -19,7 +19,9 @@ Given that one had already set all configurations properly, one could start the 
 
 ### Getting started | elasticsearch
 
-Acts as the primary datastore. `api`, and `ui` through `api` depend on this service running. It can be started via `docker-compose up elasticsearch`.
+Acts as the primary datastore. `api`, and `ui` through `api` depend on this service running. It can be started via 
+
+    docker-compose up elasticsearch
 
 To do a hard reset of the data during development, do
 
@@ -39,7 +41,9 @@ Set up a connection to a couchdb instance
     couchdb_user: "<user>",
     couchdb_password: "<pass>",
 
-and configure at least one project (`projects: ["<project>"]`).
+and configure at least one project 
+
+    projects: ["<project>"]
 
 The goal here is to ingest and index one or more project from a `couchdb` into our `elasticsearch`. We can trigger the ingest process and query for the documents via rest api calls against our api. To get there as quickly as possible, we make sure for the following curl commands will work withouth any authentication. For that, we give the anonymous user admin rights:
 

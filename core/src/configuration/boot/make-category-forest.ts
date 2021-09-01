@@ -63,14 +63,14 @@ const createGroups = (relationDefinitions: Array<Relation>) => (category: Catego
         return group;
     });
 
-    addOtherGroup(category);
+    putUnassignedFieldsToOtherGroup(category);
     putCoreFieldsToHiddenGroup(category);
 
     return category;
 }
 
 
-function addOtherGroup(category: Category) {
+function putUnassignedFieldsToOtherGroup(category: Category) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
     const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])

@@ -1578,7 +1578,7 @@
         "name": "child",
         "fields": ["materialType", "specificType", "vesselForm", "vesselFormSpecific", "typeNumber",
           "manufacturing", "manufacturingMethod", "temper", "temperAmount", "temperParticles",
-          "temperParticles", "clayHardness", "clayColorOutside", "clayColorOutsideMunsell",
+          "temperTypeClay", "clayHardness", "clayColorOutside", "clayColorOutsideMunsell",
           "clayColorInside", "clayColorInsideMunsell", "clayColorBreak", "clayColorBreakMunsell",
           "breakStructure", "coatInside", "coatColorInside", "coatInsideType", "coatOutside",
           "coatColorOutside", "coatOutsideType", "formDescription", "decorationTechnique",

@@ -30,6 +30,7 @@ const Map: React.FC<NMapProps> = (props) => {
 
     const [screen, setScreen] = useState<LayoutRectangle>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
+    const [location, setLocation] = useState<{x: number, y: number}>();
     
     const [
         geoDocuments,
@@ -58,9 +59,10 @@ const Map: React.FC<NMapProps> = (props) => {
             const location = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = location.coords;
             // longitude for x and latitude for y
-            const p = {x: location.coords.longitude, y: location.coords.latitude};
+            const p = { x: location.coords.longitude, y: location.coords.latitude };
             const newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
-            //console.log(newCoords);
+            setLocation(newCoords);
+            console.log(p);
         })();
       }, []);
 
@@ -76,7 +78,8 @@ const Map: React.FC<NMapProps> = (props) => {
                 documentToWorldMatrix={ documentToWorldMatrix }
                 screenToWorldMatrix={ screenToWorldMatrix }
                 selectedDocumentIds={ props.selectedDocumentIds }
-                geoDocuments={ geoDocuments } />}
+                geoDocuments={ geoDocuments }
+                location={ location } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 repository={ props.repository }

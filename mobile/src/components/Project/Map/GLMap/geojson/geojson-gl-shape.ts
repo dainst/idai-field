@@ -185,3 +185,28 @@ const lineStringMaterial = (color: string, isSelected: boolean = false) =>
 
 const pointMaterial = (color: string, isSelected: boolean = false) =>
     new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
+
+
+export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordinates: Position): void => {
+
+    const [x,y] = processTransform2d(matrix,coordinates);
+    const location = 'location';
+
+    const point = scene.getObjectByName(location);
+    if(point){
+        point.translateX(x);
+        point.translateY(y);
+        return;
+    }
+
+    const color = 'blue';
+    const radius = pointRadius;
+    const segments = 30; //<-- Increase or decrease for more resolution
+    
+    const circleGeometry = new CircleGeometry( radius, segments );
+    circleGeometry.translate(x ,y ,0);
+    const locationPoint = new Mesh(circleGeometry, pointMaterial(color, true));
+    locationPoint.name = location;
+    
+    scene.add(locationPoint);
+};

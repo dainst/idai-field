@@ -13,6 +13,7 @@ import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
+    addlocationPointToScene,
     lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
     pointToShape, polygonToShape
 } from './geojson/geojson-gl-shape';
@@ -40,6 +41,7 @@ interface GLMapProps {
     screenToWorldMatrix: Matrix4;
     selectedDocumentIds: string[];
     geoDocuments: Document[];
+    location: {x: number, y:number} | undefined;
 }
 
 
@@ -50,7 +52,8 @@ const GLMap: React.FC<GLMapProps> = ({
     documentToWorldMatrix,
     screenToWorldMatrix,
     selectedDocumentIds,
-    geoDocuments
+    geoDocuments,
+    location
 }) => {
 
     const config = useContext(ConfigurationContext);
@@ -243,6 +246,13 @@ const GLMap: React.FC<GLMapProps> = ({
         });
     },[scene, selectedDocumentIds, previousSelectedDocIds]);
    
+    useEffect(() => {
+        
+        if(!location) return;
+        addlocationPointToScene(documentToWorldMatrix,scene,[location.x, location.y]);
+        updateSceen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[location, scene, documentToWorldMatrix]);
 
     const onPress = (e: GestureResponderEvent) => {
 

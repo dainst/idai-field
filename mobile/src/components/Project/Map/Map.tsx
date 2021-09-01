@@ -8,7 +8,10 @@ import { DocumentRepository } from '../../../repositories/document-repository';
 import GLMap from './GLMap/GLMap';
 import MapBottomSheet from './MapBottomSheet';
 
+// define projection standards 
 proj4.defs('WGS84', '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees');
+proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
+proj4.defs("EPSG:3857","+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
 
 
 interface NMapProps {
@@ -53,9 +56,10 @@ const Map: React.FC<NMapProps> = (props) => {
     
             const location = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = location.coords;
-            const newCoords = proj4(
-                '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs',
-                '+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', [latitude,longitude]);
+            // longitude for x and latitude for y
+            var p = {x: location.coords.longitude, y: location.coords.latitude};
+            var newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
+            //console.log(newCoords);
         })();
       }, []);
 

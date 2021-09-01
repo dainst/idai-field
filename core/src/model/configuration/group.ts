@@ -1,7 +1,7 @@
 import { Named } from '../../tools/named';
 import { I18N } from '../../tools/i18n';
 import { Field } from './field';
-import {Relation} from './relation';
+import { Relation } from './relation';
 
 
 export interface GroupDefinition {
@@ -21,6 +21,7 @@ export module Groups {
     export const PROPERTIES = 'properties';
     export const PARENT = 'parent';
     export const CHILD = 'child';
+    export const OTHER = 'other';
     export const HIDDEN_CORE_FIELDS = '_hiddenCoreFields';
     
 

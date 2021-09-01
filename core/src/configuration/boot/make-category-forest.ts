@@ -63,14 +63,14 @@ const createGroups = (relationDefinitions: Array<Relation>) => (category: Catego
         return group;
     });
 
-    completeStemGroup(category);
+    addOtherGroup(category);
     putCoreFieldsToHiddenGroup(category);
 
     return category;
 }
 
 
-function completeStemGroup(category: Category) {
+function addOtherGroup(category: Category) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
     const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])
@@ -80,13 +80,13 @@ function completeStemGroup(category: Category) {
 
     if (fieldsNotInGroups.length === 0) return;
 
-    let stemGroup: Group = category.groups.find(group => group.name === 'stem');
-    if (!stemGroup) {
-        stemGroup = Group.create('stem');
-        category.groups.unshift(stemGroup);
+    let otherGroup: Group = category.groups.find(group => group.name === Groups.OTHER);
+    if (!otherGroup) {
+        otherGroup = Group.create(Groups.OTHER);
+        category.groups.push(otherGroup);
     }
 
-    stemGroup.fields = stemGroup.fields.concat(fieldsNotInGroups);
+    otherGroup.fields = otherGroup.fields.concat(fieldsNotInGroups);
 }
 
 

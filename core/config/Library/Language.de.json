@@ -4,7 +4,8 @@
     "time": "Zeit",
     "position": "Lage / Kontext",
     "dimension": "Maße",
-    "identification": "Bestimmung"
+    "identification": "Bestimmung",
+    "other": "Andere"
   },
   "commons": {
     "dimensionLength": {

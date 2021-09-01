@@ -1,16 +1,19 @@
 defmodule Api.Worker.Services.ResultHandler do
   require Logger
 
+  alias HTTPoison.Response
+  alias HTTPoison.Error
+
   defguard is_ok(status_code) when status_code >= 200 and status_code < 300
 
   defguard is_error(status_code) when status_code >= 400
 
-  def handle_result({:ok, %HTTPoison.Response{status_code: status_code, body: body}})
+  def handle_result({:ok, %Response{status_code: status_code, body: body}})
     when is_ok(status_code) do
 
     Poison.decode!(body)
   end
-  def handle_result({:ok, %HTTPoison.Response{status_code: status_code, body: body, request: request}})
+  def handle_result({:ok, %Response{status_code: status_code, body: body, request: request}})
     when is_error(status_code) do
 
     result = Poison.decode!(body)
@@ -22,7 +25,7 @@ defmodule Api.Worker.Services.ResultHandler do
            nil
     end
   end
-  def handle_result({:error, %HTTPoison.Error{reason: reason}}) do
+  def handle_result({:error, %Error{reason: reason}}) do
 
     Logger.error "API call failed, reason: #{inspect reason}"
     nil

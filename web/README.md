@@ -45,6 +45,8 @@ and configure at least one project
 
     projects: ["<project>"]
 
+If you do not have a project yet, the simplest way to aquire one would be to start `iDAI.field` desktop and set the `couchdb_url` to `ip_of_host_as_seen_from_within_the_container:3000' and set `projects: ["test"]`. Do a websearch of how to obtain the correct ip for the system you run docker on. 
+
 The goal here is to ingest and index one or more project from a `couchdb` into our `elasticsearch`. We can trigger the ingest process and query for the documents via rest api calls against our api. To get there as quickly as possible, we make sure for the following curl commands will work withouth any authentication. For that, we give the anonymous user admin rights:
 
     users: [%{ name: "anonymous", admin: true }]
@@ -72,8 +74,11 @@ Prepare the configuration:
     $ cp src/configuration.json.template src/configuration.json
     $ vi src/configuration.json # Edit
 
-Start the iDAI.field UI with `npm start` and visit `http://localhost:3001`.
-Start the iDAI.shapes UI with `npm run start-shapes` and visit  `http://localhost:3002`.
+Set `fieldUrl` to `localhost:4000/api`. Start the iDAI.field UI with `npm start` and visit `http://localhost:3001`.
+
+If you used the `test` project of `iDAI.field Desktop`, then enter `testf1` into the search field and click the `search` button and you should have one hit. Click on it to see more.
+
+To try out the alternative `iDAI.shapes UI`, set `shapesUrl` and start the application with `npm run start-shapes` and visit  `http://localhost:3002`.
 
 ### Getting started | cantaloupe
 

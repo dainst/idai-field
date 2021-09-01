@@ -78,10 +78,28 @@ const GLMap: React.FC<GLMapProps> = ({
     const top = useRef<number>(0);
     const initialTop = useRef<number>(0);
    
+    const updateSceen = () => {
 
-    const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
-        e.nativeEvent.touches.length === 2 ||
-        Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
+        scene.position.set(
+            left.current + zoom.current,
+            top.current + zoom.current,0);
+        scene.scale.set(zoom.current, zoom.current,1);
+        renderScene();
+    };
+    
+    const renderScene = useCallback(() => {
+        if(glContext && glContext.current && renderer && renderer.current){
+            renderer.current.render(scene, camera);
+            glContext.current.endFrameEXP();
+        }
+    },[camera, scene]);
+
+    const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
+
+    const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
+        new Vector2(
+            (x / screen.width ) * 2 - 1,
+            -(y / screen.height) * 2 + 1);
 
     const panResponder = useRef(PanResponder.create({
         onPanResponderGrant: no,
@@ -108,14 +126,6 @@ const GLMap: React.FC<GLMapProps> = ({
             isZooming.current = false;
         }
     })).current;
-
-
-    const renderScene = useCallback(() => {
-        if(glContext && glContext.current && renderer && renderer.current){
-            renderer.current.render(scene, camera);
-            glContext.current.endFrameEXP();
-        }
-    },[camera, scene]);
 
     const touchHandler = (x: number, y: number): void => {
 
@@ -160,34 +170,6 @@ const GLMap: React.FC<GLMapProps> = ({
             updateSceen();
         }
     };
-
-    const updateSceen = () => {
-
-        scene.position.set(
-            left.current + zoom.current,
-            top.current + zoom.current,0);
-        scene.scale.set(zoom.current, zoom.current,1);
-        renderScene();
-    };
-    
-
-    // useEffect(() => {
-        
-    //     if(screen){
-    //         scene.clear();
-    //         const maxSize = Math.max(screen.width, screen.height );
-    //         const view: CameraView = {
-    //             left: screen.x,
-    //             right: maxSize,
-    //             top: maxSize,
-    //             bottom: screen.y
-    //         };
-    //         //updateCamera(1, cameraDefaultPos, view);
-            
-    //     }
-        
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[screen]);
 
     useEffect(() => {
 
@@ -279,7 +261,7 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     };
     
-    const _onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
+    const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
         glContext.current = gl;
@@ -293,13 +275,6 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     };
 
-    const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
-
-    const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
-        new Vector2(
-            (x / screen.width ) * 2 - 1,
-            -(y / screen.height) * 2 + 1);
-    
     
     if (!camera || !scene.children.length) return null;
 
@@ -308,10 +283,15 @@ const GLMap: React.FC<GLMapProps> = ({
             onTouchStart={ onPress }
             { ...panResponder.panHandlers }
             style={ styles.container }
-            onContextCreate={ _onContextCreate }
+            onContextCreate={ onContextCreate }
         />
     );
 };
+
+
+const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
+        e.nativeEvent.touches.length === 2 ||
+        Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
 
 
 const styles = StyleSheet.create({

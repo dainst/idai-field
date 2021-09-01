@@ -31,8 +31,8 @@ defmodule Api.Worker.Services.IdaiFieldDb do
     |> update_in([Access.all(), :doc], &(Map.drop(&1, [:_id, :_rev, :_attachments])))
   end
 
-  defp send_request full_url, auth do
-    full_url
+  defp send_request url, auth do
+    url
     |> HTTPoison.get(%{}, auth)
     |> ResultHandler.handle_result
   end

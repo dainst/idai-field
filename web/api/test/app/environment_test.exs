@@ -1,4 +1,4 @@
-defmodule Api.EnvironmentTest do
+defmodule Api.AppTest.EnvironmentTest do
   use ExUnit.Case, async: true
   use Plug.Test
 

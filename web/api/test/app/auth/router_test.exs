@@ -1,31 +1,18 @@
-defmodule Api.Auth.RouterTest do
+defmodule Api.AppTest.Auth.RouterTest do
     use ExUnit.Case, async: true
     use Plug.Test
-  
-    @auth_info_path Api.AppTestHelper.auth_path <> "/info"
-  
+    alias Api.AppTest.Support.AppTestHelper
+
+    @auth_info_path AppTestHelper.auth_path <> "/info"
+
     @user5 {"user-5", "pass-5"}
-  
+
     setup context do
-      conn = conn(:get, context[:path])
-      conn = Api.Router.call((if login_info = context[:login] do
-        {name, pass} = login_info
-        token = Api.AppTestHelper.sign_in(name, pass)
-        put_req_header(conn, "authorization", token)
-      else
-        conn
-      end), Api.AppTestHelper.opts)
-      body = if Enum.member?(conn.resp_headers, {"content-type", "application/json; charset=utf-8"}) do
-        Api.Core.Utils.atomize(Poison.decode!(conn.resp_body))
-      else
-        conn.resp_body
-      end
-      [conn: conn, body: body]
+      AppTestHelper.perform_query context
     end
-  
+
     @tag path: @auth_info_path, login: @user5
     test "show readable_projects - anonymous", context do
       assert context.body.readable_projects == ["a", "b"]
     end
   end
-  

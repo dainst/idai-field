@@ -1,7 +1,9 @@
-defmodule Api.Auth.SignInTest do
+defmodule Api.AppTest.Auth.SignInTest do
     use ExUnit.Case, async: true
     use Plug.Test
-  
+
+    alias Api.Router
+
     @api_path "/api"
     @auth_path @api_path <> "/auth"
     @auth_sign_in_path @auth_path <> "/sign_in"
@@ -9,11 +11,11 @@ defmodule Api.Auth.SignInTest do
     setup context do
       user = context[:user]
       conn = conn(:post, @auth_sign_in_path, user)
-      |> Api.Router.call(Api.Router.init([]))
+      |> Router.call(Router.init([]))
       result = Poison.decode!(conn.resp_body)
       [result: result]
     end
-  
+
     @tag user: %{ name: "anonymous" }
     test "anonymous", context do
       assert context.result["is_admin"] == false
@@ -41,10 +43,9 @@ defmodule Api.Auth.SignInTest do
     end
 
     @tag user: %{ name: "user-1", pass: "pass-2" }
-    test "wrong pass", context do 
+    test "wrong pass", context do
       assert context.result["token"] == nil
       assert context.result["info"] == "not_found"
       assert context.result["is_admin"] == nil
     end
   end
-  

@@ -81,7 +81,7 @@ const GLMap: React.FC<GLMapProps> = ({
     const top = useRef<number>(0);
     const initialTop = useRef<number>(0);
    
-    const updateSceen = () => {
+    const updateScene = () => {
 
         scene.position.set(
             left.current + zoom.current,
@@ -145,7 +145,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
             left.current = initialLeft.current + dx;
             top.current = initialTop.current + dy;
-            updateSceen();
+            updateScene();
         }
     };
 
@@ -170,7 +170,7 @@ const GLMap: React.FC<GLMapProps> = ({
             left.current = (initialLeft.current + dx - x) * touchZoom + x;
             top.current = (initialTop.current + dy - y) * touchZoom + y;
             zoom.current = initialZoom.current * touchZoom;
-            updateSceen();
+            updateScene();
         }
     };
 
@@ -181,7 +181,7 @@ const GLMap: React.FC<GLMapProps> = ({
         if(!isNaN(translateX)) left.current = translateX;
         if(!isNaN(translateY)) top.current = translateY;
         if(!isNaN(scaleX)) zoom.current = scaleX;
-        updateSceen();
+        updateScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[viewBox]);
 
@@ -250,7 +250,7 @@ const GLMap: React.FC<GLMapProps> = ({
         
         if(!location) return;
         addlocationPointToScene(documentToWorldMatrix,scene,[location.x, location.y]);
-        updateSceen();
+        updateScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[location, scene, documentToWorldMatrix]);
 

@@ -9,12 +9,10 @@ import { defineWorldCoordinateSystem } from '../constants';
  * |    to  |
  * ---      |y
  * world     screen
- * @param yCoord
- * @param viewBoxHeight
- * @returns correctly transformed y coordinate
+ * @screen Screen rectangle
+ * @returns transformation matrix from screen to world
  */
 export const getScreenToWorldTransformationMatrix = (screen: LayoutRectangle): Matrix4 => {
-    
     const worldCS = defineWorldCoordinateSystem();
     const scaleX = worldCS.width / screen.width;
     const scaleY = worldCS.height / screen.height;

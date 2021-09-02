@@ -62,9 +62,9 @@ const GLMap: React.FC<GLMapProps> = ({
     const scene = useRef<Scene>(new Scene() ).current;
     const renderer = useRef<Renderer>();
     const glContext = useRef<ExpoWebGLRenderingContext>();
+    const glContextToScreenFactor = useRef<number>(0);
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
-
 
     //boolean to init gestures
     const isZooming = useRef<boolean>(false);
@@ -81,16 +81,12 @@ const GLMap: React.FC<GLMapProps> = ({
     const top = useRef<number>(0);
     const initialTop = useRef<number>(0);
    
-    const updateSceen = () => {
+    const renderScene = useCallback(() => {
 
         scene.position.set(
             left.current + zoom.current,
             top.current + zoom.current,0);
         scene.scale.set(zoom.current, zoom.current,1);
-        renderScene();
-    };
-    
-    const renderScene = useCallback(() => {
         if(glContext && glContext.current && renderer && renderer.current){
             renderer.current.render(scene, camera);
             glContext.current.endFrameEXP();
@@ -145,7 +141,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
             left.current = initialLeft.current + dx;
             top.current = initialTop.current + dy;
-            updateSceen();
+            renderScene();
         }
     };
 
@@ -170,7 +166,7 @@ const GLMap: React.FC<GLMapProps> = ({
             left.current = (initialLeft.current + dx - x) * touchZoom + x;
             top.current = (initialTop.current + dy - y) * touchZoom + y;
             zoom.current = initialZoom.current * touchZoom;
-            updateSceen();
+            renderScene();
         }
     };
 
@@ -181,7 +177,7 @@ const GLMap: React.FC<GLMapProps> = ({
         if(!isNaN(translateX)) left.current = translateX;
         if(!isNaN(translateY)) top.current = translateY;
         if(!isNaN(scaleX)) zoom.current = scaleX;
-        updateSceen();
+        renderScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[viewBox]);
 
@@ -250,9 +246,19 @@ const GLMap: React.FC<GLMapProps> = ({
         
         if(!location) return;
         addlocationPointToScene(documentToWorldMatrix,scene,[location.x, location.y]);
-        updateSceen();
+        renderScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[location, scene, documentToWorldMatrix]);
+
+    useEffect(() => {
+        if(renderer.current && glContextToScreenFactor.current){
+            renderer.current.setSize(
+                screen.width * glContextToScreenFactor.current,
+                screen.height * glContextToScreenFactor.current);
+        
+            renderScene();
+        }
+    },[screen, renderScene]);
 
     const onPress = (e: GestureResponderEvent) => {
 
@@ -276,7 +282,7 @@ const GLMap: React.FC<GLMapProps> = ({
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
         glContext.current = gl;
         renderer.current = new Renderer({ gl: glContext.current });
-
+        glContextToScreenFactor.current = width / screen.width;
         renderer.current.setSize(width, height);
         renderer.current.setClearColor(colors.containerBackground);
 

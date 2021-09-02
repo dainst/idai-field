@@ -9,8 +9,6 @@ defmodule Api.AppTest.RouterTest do
   use Plug.Test
 
   alias Api.AppTest.Support.AppTestHelper
-  alias Api.Router
-  alias Api.Core.Utils
 
   @api_path AppTestHelper.api_path
   @documents_path @api_path <> "/documents"

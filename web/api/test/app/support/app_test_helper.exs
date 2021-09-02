@@ -22,7 +22,7 @@ defmodule Api.AppTest.Support.AppTestHelper do
       put_req_header(conn, "authorization", token)
     else
       conn
-    end), opts)
+    end), @opts)
     body = if Enum.member?(conn.resp_headers, {"content-type", "application/json; charset=utf-8"}) do
       Utils.atomize(Poison.decode!(conn.resp_body))
     else

@@ -19,7 +19,7 @@ defmodule Api.Worker.Services.Gazetteer do
     Poison.decode!(body)
   end
   def handle_result({:error, %Error{reason: reason}}) do
-    Logger.error "API call failed, reason: #{inspect reason}"
+    Logger.error "Reason: #{inspect reason}"
     nil
   end
 end

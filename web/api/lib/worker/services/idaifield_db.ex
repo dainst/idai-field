@@ -79,12 +79,12 @@ defmodule Api.Worker.Services.IdaiFieldDb do
     case result do
       %{ "error" => "not_found", "reason" => "deleted"} -> nil
       %{ "error" => "not_found", "reason" => "missing"} -> nil
-      _ -> Logger.error "Got HTTP Error for request: #{request.url}, response: #{inspect body}"
+      _ -> Logger.error "Request url: #{request.url} - Response: #{inspect body}"
            nil
     end
   end
   def handle_result({:error, %Error{reason: reason}}) do
-    Logger.error "API call failed, reason: #{inspect reason}"
+    Logger.error "Reason: #{inspect reason}"
     nil
   end
 end

@@ -3,6 +3,7 @@ defmodule Api.Worker.Services.IdaiFieldDb do
 
   alias HTTPoison.Response
   alias HTTPoison.Error
+  alias Api.Core.Config
   alias Api.Core.CorePropertiesAtomizing
 
   @batch_size 500
@@ -56,9 +57,9 @@ defmodule Api.Worker.Services.IdaiFieldDb do
   defp get_connection_data do
     {
       [hackney: [basic_auth: {
-            Api.Core.Config.get(:couchdb_user),
-            Api.Core.Config.get(:couchdb_password)}]],
-      Api.Core.Config.get(:couchdb_url)
+            Config.get(:couchdb_user),
+            Config.get(:couchdb_password)}]],
+      Config.get(:couchdb_url)
     }
   end
 

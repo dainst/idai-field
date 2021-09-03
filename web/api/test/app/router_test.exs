@@ -1,28 +1,23 @@
-defmodule Api.RouterTest do
+defmodule Api.AppTest.RouterTest do
+  @moduledoc """
+  For these tests, when the api is queried,
+  Api.Documents.MockIndexAdapter
+  will provide the test data.
+  """
+
   use ExUnit.Case, async: true
   use Plug.Test
 
-  @api_path Api.AppTestHelper.api_path
+  alias Api.AppTest.Support.AppTestHelper
+
+  @api_path AppTestHelper.api_path
   @documents_path @api_path <> "/documents"
   @map_path @documents_path <> "/map"
 
   @user1 {"user-1", "pass-1"}
 
   setup context do
-    conn = conn(:get, context[:path])
-    conn = Api.Router.call((if login_info = context[:login] do
-      {name, pass} = login_info
-      token = Api.AppTestHelper.sign_in(name, pass)
-      put_req_header(conn, "authorization", token)
-    else
-      conn
-    end), Api.AppTestHelper.opts)
-    body = if Enum.member?(conn.resp_headers, {"content-type", "application/json; charset=utf-8"}) do
-      Api.Core.Utils.atomize(Poison.decode!(conn.resp_body))
-    else
-      conn.resp_body
-    end
-    [conn: conn, body: body]
+    AppTestHelper.perform_query context
   end
 
   @tag path: @documents_path <> "/doc-of-proj-a"

@@ -1,8 +1,12 @@
-defmodule Api.ImagesTest do
+defmodule Api.AppTest.ImagesTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  @api_path Api.AppTestHelper.api_path
+  alias Api.AppTest.Support.AppTestHelper
+  alias Api.Core.Utils
+  alias Api.Router
+
+  @api_path AppTestHelper.api_path
   @image_path @api_path <> "/images"
 
   @user1 {"user-1", "pass-1"}
@@ -11,16 +15,16 @@ defmodule Api.ImagesTest do
   setup context do
     token = if login_info = context[:login] do
       {name, pass} = login_info
-      Api.AppTestHelper.sign_in(name, pass)
+      AppTestHelper.sign_in(name, pass)
     else
       "anonymous"
     end
 
     path = String.replace(context[:path], "TOKEN", token)
-    conn = conn(:get, path) |> Api.Router.call(Api.AppTestHelper.opts)
+    conn = conn(:get, path) |> Router.call(AppTestHelper.opts)
 
     body = if Enum.member?(conn.resp_headers, {"content-type", "application/json; charset=utf-8"}) do
-      Api.Core.Utils.atomize(Poison.decode!(conn.resp_body))
+      Utils.atomize(Poison.decode!(conn.resp_body))
     else
       conn.resp_body
     end

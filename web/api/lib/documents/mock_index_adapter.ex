@@ -18,6 +18,15 @@ defmodule Api.Documents.MockIndexAdapter do
       groups: []
     }
   }
+  @project_doc %{
+    resource: %{
+      id: "proj",
+      identifier: "proj",
+      category: "Project",
+      groups: [],
+      license: "some-license"
+    }
+  }
 
   def post_query query do
 
@@ -33,6 +42,8 @@ defmodule Api.Documents.MockIndexAdapter do
 
       "_id:doc-of-proj-a" -> @doc_a
       "_id:doc-of-proj-b" -> @doc_b
+      "_id:a" -> @project_doc
+      "_id:b" -> @project_doc
       _ -> nil
     end
 

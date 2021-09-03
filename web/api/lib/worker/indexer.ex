@@ -12,8 +12,6 @@ defmodule Api.Worker.Indexer do
   while the old index gets removed.
   """
   def reindex(project) do
-    configuration =
-
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
 
     perform_reindex ProjectConfigLoader.get(project), project, new_index

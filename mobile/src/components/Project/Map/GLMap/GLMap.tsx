@@ -56,6 +56,7 @@ const GLMap: React.FC<GLMapProps> = ({
     location
 }) => {
 
+    const previousSelectedDocIds = usePrevious(selectedDocumentIds);
     const config = useContext(ConfigurationContext);
 
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
@@ -63,8 +64,6 @@ const GLMap: React.FC<GLMapProps> = ({
     const renderer = useRef<Renderer>();
     const glContext = useRef<ExpoWebGLRenderingContext>();
     const glContextToScreenFactor = useRef<number>(0);
-
-    const previousSelectedDocIds = usePrevious(selectedDocumentIds);
 
     //boolean to init gestures
     const isZooming = useRef<boolean>(false);

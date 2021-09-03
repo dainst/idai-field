@@ -7,7 +7,7 @@ defmodule Api.Worker.Indexer do
   alias Api.Core.ProjectConfigLoader
 
   @doc """
-  For every project (identified by its alias) a new index gets created.
+  For a project (identified by its alias) a new index gets created.
   When reindexing for the project is finished, the alias will change to point to the new index
   while the old index gets removed.
   """

@@ -21,7 +21,7 @@ defmodule Api.Worker.Services.IdaiFieldDb do
       nil ->
         nil
       unexpected ->
-        Logger.error "(Services.IdaiFieldDb) Unexpected: #{inspect unexpected}"
+        Logger.error "Unexpected: #{inspect unexpected}"
         nil
     end
   end

@@ -191,7 +191,7 @@ describe('resources/types --', () => {
         const relationValue = await FieldsViewPage.getRelationValue(1, 0);
         expect(relationValue).toEqual('T1');
 
-        navigateTo('resources/types');
+        await navigateTo('resources/types');
         await ResourcesTypeGridPage.clickToggleFindsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 

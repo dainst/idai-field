@@ -8,7 +8,7 @@ defmodule Api.Worker.Indexer do
 
   @doc """
   For every project (identified by its alias) a new index gets created.
-  When reindexing for the project is finished, the alias will change to point to the new index 
+  When reindexing for the project is finished, the alias will change to point to the new index
   while the old index gets removed.
   """
   def reindex(project) do
@@ -16,7 +16,9 @@ defmodule Api.Worker.Indexer do
 
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
 
-    IdaiFieldDb.fetch_changes(project)
+    result = IdaiFieldDb.fetch_changes(project)
+
+    result
     |> Enum.filter(&filter_non_owned_document/1)
     |> Enum.map(Mapper.process)
     |> log_finished("mapping", project)

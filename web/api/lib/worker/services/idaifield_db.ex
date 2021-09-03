@@ -1,8 +1,9 @@
 defmodule Api.Worker.Services.IdaiFieldDb do
   require Logger
 
+  alias HTTPoison.Response
+  alias HTTPoison.Error
   alias Api.Core.CorePropertiesAtomizing
-  alias Api.Worker.Services.ResultHandler
 
   @batch_size 500
 
@@ -49,7 +50,7 @@ defmodule Api.Worker.Services.IdaiFieldDb do
   defp send_request url, auth do
     url
     |> HTTPoison.get(%{}, auth)
-    |> ResultHandler.handle_result
+    |> handle_result
   end
 
   defp get_connection_data do
@@ -59,5 +60,30 @@ defmodule Api.Worker.Services.IdaiFieldDb do
             Api.Core.Config.get(:couchdb_password)}]],
       Api.Core.Config.get(:couchdb_url)
     }
+  end
+
+  defguard is_ok(status_code) when status_code >= 200 and status_code < 300
+
+  defguard is_error(status_code) when status_code >= 400
+
+  def handle_result({:ok, %Response{status_code: status_code, body: body}})
+    when is_ok(status_code) do
+    Poison.decode!(body)
+  end
+  def handle_result({:ok, %Response{status_code: status_code, body: body, request: request}})
+    when is_error(status_code) do
+
+    result = Poison.decode!(body)
+
+    case result do
+      %{ "error" => "not_found", "reason" => "deleted"} -> nil
+      %{ "error" => "not_found", "reason" => "missing"} -> nil
+      _ -> Logger.error "Got HTTP Error for request: #{request.url}, response: #{inspect body}"
+           nil
+    end
+  end
+  def handle_result({:error, %Error{reason: reason}}) do
+    Logger.error "API call failed, reason: #{inspect reason}"
+    nil
   end
 end

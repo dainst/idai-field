@@ -12,20 +12,11 @@ defmodule Api.Worker.Indexer do
   while the old index gets removed.
   """
   def reindex(project) do
-    configuration = ProjectConfigLoader.get(project)
+    configuration =
 
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
 
-    result = IdaiFieldDb.fetch_changes(project)
-
-    result
-    |> Enum.filter(&filter_non_owned_document/1)
-    |> Enum.map(Mapper.process)
-    |> log_finished("mapping", project)
-    |> Enricher.process(project, IdaiFieldDb.get_doc(project), configuration)
-    |> log_finished("enriching", project)
-    |> Enum.map(IndexAdapter.process(project, new_index))
-    |> log_finished("indexing", project)
+    perform_reindex ProjectConfigLoader.get(project), project, new_index
 
     IndexAdapter.add_alias_and_remove_old_index project, new_index, old_index
     {:finished, project}
@@ -33,6 +24,17 @@ defmodule Api.Worker.Indexer do
 
   def stop_reindex(project) do
     IndexAdapter.remove_stale_index_alias project
+  end
+
+  defp perform_reindex configuration, project, index do
+    IdaiFieldDb.fetch_changes(project)
+    |> Enum.filter(&filter_non_owned_document/1)
+    |> Enum.map(Mapper.process)
+    |> log_finished("mapping", project)
+    |> Enricher.process(project, IdaiFieldDb.get_doc(project), configuration)
+    |> log_finished("enriching", project)
+    |> Enum.map(IndexAdapter.process(project, index))
+    |> log_finished("indexing", project)
   end
 
   defp log_finished(change, step, project) do

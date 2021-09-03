@@ -1,4 +1,4 @@
-defmodule Api.Worker.Services.Gazetteer do
+defmodule Api.Worker.Adapter.Gazetteer do
   require Logger
 
   alias HTTPoison.Response

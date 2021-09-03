@@ -1,4 +1,4 @@
-defmodule Api.Worker.Services.IdaiFieldDb do
+defmodule Api.Worker.Adapter.IdaiFieldDb do
   require Logger
 
   alias HTTPoison.Response

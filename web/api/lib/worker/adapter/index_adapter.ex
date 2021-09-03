@@ -1,4 +1,4 @@
-defmodule Api.Worker.IndexAdapter do
+defmodule Api.Worker.Adapter.IndexAdapter do
   require Logger
   alias Api.Core.Config
 
@@ -46,7 +46,7 @@ defmodule Api.Worker.IndexAdapter do
     with {:ok, %HTTPoison.Response{body: body}} <- HTTPoison.delete("#{Config.get(:elasticsearch_url)}/#{new_index}"),
          body <- Poison.decode! body
     do
-      case body do 
+      case body do
         %{ "acknowledged" => true } -> IO.puts "done" # TODO return message to caller?
         _ -> nil
       end
@@ -74,7 +74,7 @@ defmodule Api.Worker.IndexAdapter do
   end
 
   defp get_doc_url(id, index), do: "#{Config.get(:elasticsearch_url)}/#{index}/_doc/#{id}"
-  
+
   defp get_template_url() do
     "#{Config.get(:elasticsearch_url)}/"
     <> "_template/"
@@ -127,7 +127,7 @@ defmodule Api.Worker.IndexAdapter do
       _err -> nil
     end
   end
-  
+
   defp add_index(index) do
     with {:ok, _} <- HTTPoison.put("#{Config.get(:elasticsearch_url)}/#{index}")
     do
@@ -147,8 +147,8 @@ defmodule Api.Worker.IndexAdapter do
   end
 
   defp add_alias(index, alias) do
-    with {:ok,  %HTTPoison.Response{body: _body}} <- HTTPoison.post("#{Config.get(:elasticsearch_url)}/_aliases", 
-      Poison.encode!(%{ actions: %{ 
+    with {:ok,  %HTTPoison.Response{body: _body}} <- HTTPoison.post("#{Config.get(:elasticsearch_url)}/_aliases",
+      Poison.encode!(%{ actions: %{
         add: %{ index: index, alias: alias }
         }}), [{"Content-Type", "application/json"}])
     do
@@ -159,7 +159,7 @@ defmodule Api.Worker.IndexAdapter do
   end
 
   defp remove_alias(index, alias) do
-    with {:ok, _} <- HTTPoison.post("#{Config.get(:elasticsearch_url)}/_aliases", Poison.encode!(%{ actions: %{ 
+    with {:ok, _} <- HTTPoison.post("#{Config.get(:elasticsearch_url)}/_aliases", Poison.encode!(%{ actions: %{
       remove: %{ index: index, alias: alias }
       }}),
       [{"Content-Type", "application/json"}])

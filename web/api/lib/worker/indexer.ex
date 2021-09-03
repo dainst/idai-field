@@ -1,8 +1,8 @@
 defmodule Api.Worker.Indexer do
   require Logger
-  alias Api.Worker.IndexAdapter
   alias Api.Worker.Mapper
-  alias Api.Worker.Services.IdaiFieldDb
+  alias Api.Worker.Adapter.IndexAdapter
+  alias Api.Worker.Adapter.IdaiFieldDb
   alias Api.Worker.Enricher.Enricher
   alias Api.Core.ProjectConfigLoader
 

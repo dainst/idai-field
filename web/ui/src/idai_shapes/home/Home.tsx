@@ -17,7 +17,6 @@ import Draw from '../draw/Draw';
 import FileBrowser from '../filebrowser/FileBrowser';
 
 
-const NUM_CATALOGS = 7;
 enum searchComp {
     Text,
     Draw,
@@ -71,7 +70,6 @@ export default function Home(): ReactElement {
 const searchCatalogDocuments = async (token: string): Promise<Result> => {
     
     const query: Query = {
-        size: NUM_CATALOGS,
         filters: [
             { field: 'project', value: SHAPES_PROJECT_ID },
             { field: 'resource.category.name', value: 'TypeCatalog' }

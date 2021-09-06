@@ -1,5 +1,4 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Category, Document, NewDocument, NewResource, Resource
 } from 'idai-field-core';
@@ -15,11 +14,16 @@ import DocumentForm from '../common/forms/DocumentForm';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
-type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
 
+type NavigationFunction<ParamsList, Routes extends keyof ParamsList> = <T extends Routes>(
+    target: Routes,
+    params?: ParamsList[T]) => void;
+    
 interface DocumentAddProps {
     repository: DocumentRepository;
-    navigation: DocumentAddNav;
+    navigation: {
+        navigate: NavigationFunction<DocumentsContainerDrawerParamList, 'DocumentsMap'>
+    };
     parentDoc: Document;
     categoryName: string;
 }

@@ -17,7 +17,7 @@ import Draw from '../draw/Draw';
 import FileBrowser from '../filebrowser/FileBrowser';
 
 
-const NUM_CATALOGS = 6;
+const NUM_CATALOGS = 7;
 enum searchComp {
     Text,
     Draw,

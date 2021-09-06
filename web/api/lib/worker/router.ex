@@ -2,7 +2,7 @@ defmodule Api.Worker.Router do
   require Logger
   use Plug.Router
   import Api.RouterUtils, only: [send_json: 2]
-  alias Api.Worker.IndexAdapter
+  alias Api.Worker.Adapter.IndexAdapter
   alias Api.Worker.Server
   alias Api.Core.Config
 
@@ -28,7 +28,7 @@ defmodule Api.Worker.Router do
     {status, msg} = Server.reindex([project])
     send_json(conn, %{ status: status, message: msg })
   end
-  
+
   post "/tasks/stop" do
     {status, msg} = Server.stop_tasks(Config.get(:projects))
     send_json(conn, %{ status: status, message: msg })
@@ -38,7 +38,7 @@ defmodule Api.Worker.Router do
     {status, msg} = Server.stop_tasks([project])
     send_json(conn, %{ status: status, message: msg })
   end
-  
+
   get "/tasks/show" do
     {status, msg} = Server.show_tasks()
     send_json(conn, %{ status: status, message: msg })

@@ -8,6 +8,7 @@ const Heading: React.FC<TextProps> = (props) => {
         style={ [styles.heading, props.style] }
         numberOfLines={ 1 }
         ellipsizeMode="tail"
+        testID="headerText"
     >
         { props.children }
     </Text>;

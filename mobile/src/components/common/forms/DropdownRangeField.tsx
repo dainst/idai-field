@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import Row from '../Row';
-import ChoiceModal, { ItemsObject } from './ChoiceModal';
+import ChoiceModal, { ItemsObject } from './ChoiceModal/ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import { NO_VAL } from './constants';
 import FieldLabel from './FieldLabel';

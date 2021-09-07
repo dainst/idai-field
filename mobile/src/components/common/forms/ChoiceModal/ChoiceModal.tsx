@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { Field } from 'idai-field-core';
 import React from 'react';
 import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Button from '../Button';
-import Card from '../Card';
-import Heading from '../Heading';
-import I18NLabel from '../I18NLabel';
-import Row from '../Row';
-import TitleBar from '../TitleBar';
+import Button from '../../Button';
+import Card from '../../Card';
+import Heading from '../../Heading';
+import I18NLabel from '../../I18NLabel';
+import Row from '../../Row';
+import TitleBar from '../../TitleBar';
 
 interface ChoiceModalProps {
     resetValues: () => void;

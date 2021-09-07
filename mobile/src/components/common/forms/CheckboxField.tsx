@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
-import ChoiceModal, { ItemsObject } from './ChoiceModal';
+import ChoiceModal, { ItemsObject } from './ChoiceModal/ChoiceModal';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
 

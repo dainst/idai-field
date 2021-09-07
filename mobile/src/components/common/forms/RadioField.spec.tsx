@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import { Field, Labels, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
-import ChoiceModal from './ChoiceModal';
+import ChoiceModal from './ChoiceModal/ChoiceModal';
 import { NO_VAL } from './constants';
 import RadioField from './RadioField';
 

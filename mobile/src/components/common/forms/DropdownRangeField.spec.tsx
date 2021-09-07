@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import { Field, Labels, OptionalRange, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
-import ChoiceModal from './ChoiceModal';
+import ChoiceModal from './ChoiceModal/ChoiceModal';
 import { NO_VAL } from './constants';
 import DropdownRangeField from './DropdownRangeField';
 

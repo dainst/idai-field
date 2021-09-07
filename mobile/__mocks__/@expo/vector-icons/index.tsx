@@ -20,3 +20,10 @@ export const MaterialCommunityIcons: React.FC<IconProps> = (props) => {
         <View { ...props }></View>
     );
 };
+
+
+export const MaterialIcons: React.FC<IconProps> = (props) => {
+    return (
+        <View { ...props }></View>
+    );
+};

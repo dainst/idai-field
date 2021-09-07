@@ -35,7 +35,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
         </TouchableOpacity>);
 
     return (
-        <SafeAreaView style={ styles.container }>
+        <SafeAreaView style={ styles.container } testID="documentForm">
             <TitleBar
                 title={
                     <>

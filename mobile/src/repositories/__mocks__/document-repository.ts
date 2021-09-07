@@ -37,5 +37,7 @@ export class DocumentRepository {
     }
 
     public remoteChanged = (): Observable<Document> => new Observable<Document>();
+
+    public create = jest.fn();
     
 }

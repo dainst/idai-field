@@ -55,20 +55,7 @@ jest.mock('idai-field-core', () => {
     };
 });
 
-// Mock Choice Modal component
-jest.mock('./ChoiceModal', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { Text, TouchableOpacity } = require('react-native');
-    return jest.fn((props) => Object.keys(props.choices).map(key => (
-        <TouchableOpacity
-            onPress={ () => props.setValue(props.choices[key].label) }
-            testID={ `press_${props.choices[key].label}` }
-            key={ props.choices[key].label }>
-                <Text>{props.choices[key].label}</Text>
-        </TouchableOpacity>
-    )));
-    
-});
+jest.mock('./ChoiceModal/ChoiceModal');
 
 describe('RadioField',() => {
 

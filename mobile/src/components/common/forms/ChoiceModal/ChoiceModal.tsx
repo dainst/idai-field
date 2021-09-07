@@ -9,7 +9,7 @@ import I18NLabel from '../../I18NLabel';
 import Row from '../../Row';
 import TitleBar from '../../TitleBar';
 
-interface ChoiceModalProps {
+export interface ChoiceModalProps {
     resetValues: () => void;
     choices: ItemsObject;
     field: Field

@@ -24,37 +24,8 @@ const mockField: Field = {
 };
 const currentValue = 'one';
 
-// Mock core Labels class
-jest.mock('idai-field-core', () => {
-    // Works and lets you check for constructor calls:
-    return {
-        Labels: jest.fn().mockImplementation(() => {
-            const valueList = {
-                id: 'valuelist',
-                values: {
-                    1: { label: { de: 'eins', en: 'one' } },
-                    2: { label: { de: 'zwei', en: 'two' } },
-                    3: { label: { de: 'drei', en: 'three' } },
-                    4: { label: { de: 'vier', en: 'four' } },
-                    5: { label: { de: 'fünf', en: 'five' } },
-                }
-            };
-            const fieldName = 'RadioField';
-
-            return {
-                orderKeysByLabels: () => Object.keys(valueList.values).map(key => {
-                    const label = valueList.values[key].label;
-                    if(label && label['en']){
-                        return label['en'];
-                    } else return '';
-                }),
-                get: () => fieldName,
-                getLabelAndDescription: () => ({ description: 'description' })
-            };
-        }),
-    };
-});
-
+// Mocking modules
+jest.mock('idai-field-core');
 jest.mock('./ChoiceModal/ChoiceModal');
 
 describe('RadioField',() => {

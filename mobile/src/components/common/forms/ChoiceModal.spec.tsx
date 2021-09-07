@@ -19,13 +19,6 @@ const choices: ItemsObject = {
 };
 const mockSetValueFn = jest.fn();
 const closeFuntion = jest.fn();
-jest.mock('@expo/vector-icons', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { View } = require('react-native');
-    return {
-      Ionicons: View,
-    };
-});
 
 const baseProps: {type: 'checkbox' | 'radio', field: Field} = {
     type: 'checkbox',

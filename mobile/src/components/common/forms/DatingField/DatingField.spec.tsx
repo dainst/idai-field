@@ -10,15 +10,6 @@ const mockField: Field = {
     inputType: 'dating',
 };
 
-//Mock vector icons
-jest.mock('@expo/vector-icons', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { View } = require('react-native');
-    return {
-        MaterialCommunityIcons: View,
-        Ionicons: View,
-    };
-});
 
 const dating1: Dating = {
     type: 'exact',

@@ -56,15 +56,6 @@ jest.mock('idai-field-core', () => {
     };
 });
 
-//Mock vector icons
-jest.mock('@expo/vector-icons', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { View } = require('react-native');
-    return {
-        MaterialCommunityIcons: View,
-        Ionicons: View,
-    };
-});
 
 // Mock Choice Modal component
 jest.mock('./ChoiceModal', () => {

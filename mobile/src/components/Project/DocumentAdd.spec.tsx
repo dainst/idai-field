@@ -15,14 +15,8 @@ import { ToastProvider } from '../common/Toast/ToastProvider';
 import DocumentAdd from './DocumentAdd';
 
 
-const navigate = jest.fn();
 const category = 'Pottery';
-
-jest.mock('../../repositories/document-repository');
-jest.mock('idai-field-core');
-
 const project = 'testdb';
-
 const preferences: Preferences = {
     username: 'testUser',
     currentProject: project,
@@ -36,10 +30,15 @@ const preferences: Preferences = {
         }
     }
 };
+
+const navigate = jest.fn();
 const setCurrentProject = jest.fn();
 const setUsername = jest.fn();
 const setProjectSettings = jest.fn();
 const removeProject = jest.fn();
+
+jest.mock('../../repositories/document-repository');
+jest.mock('idai-field-core');
 
 describe('DocumentAdd',() => {
     let repository: DocumentRepository;
@@ -94,6 +93,7 @@ describe('DocumentAdd',() => {
     it('should render component correctly', async () => {
         
         expect(renderAPI.queryByTestId('documentForm')).not.toBe(undefined);
+        expect(renderAPI.queryByTestId('documentForm')).not.toBe(null);
     });
 
     it('should create a new Document with entered values and correctly set relations field',async () => {

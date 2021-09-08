@@ -95,7 +95,8 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                     onPress={ saveButtonHandler }
                     title="Save"
                     isDisabled={ !saveBtnEnabled }
-                    icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
+                    icon={ <MaterialIcons name="save" size={ 18 } color="white"
+                    testID="saveDocBtn" /> }
                 /> }
             category={ category }
             headerText={ `Add ${labels.get(category)} to ${ parentDoc.resource.identifier }` }

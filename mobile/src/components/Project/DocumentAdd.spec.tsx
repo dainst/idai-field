@@ -1,6 +1,6 @@
-import { cleanup, render } from '@testing-library/react-native';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native';
 import {
-    Category, createCategory, Forest, IdGenerator, Labels, PouchdbDatastore, ProjectConfiguration
+    Category, createCategory, Forest, IdGenerator, Labels, NewDocument, PouchdbDatastore, ProjectConfiguration
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import React from 'react';
@@ -13,6 +13,7 @@ import { DocumentRepository } from '../../repositories/document-repository';
 import loadConfiguration from '../../services/config/load-configuration';
 import { ToastProvider } from '../common/Toast/ToastProvider';
 import DocumentAdd from './DocumentAdd';
+
 
 const navigate = jest.fn();
 const category = 'Pottery';
@@ -43,19 +44,23 @@ const removeProject = jest.fn();
 describe('DocumentAdd',() => {
     let repository: DocumentRepository;
     let config: ProjectConfiguration;
-   
+    let pouchdbDatastore: PouchdbDatastore;
     
     beforeEach(async() => {
   
-        const datastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
-        await datastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
+        pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
+        await pouchdbDatastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
         const categories: Forest<Category> = [createCategory('Feature'), createCategory(category)];
-        repository = await DocumentRepository.init('testuser', categories, datastore);
+        repository = await DocumentRepository.init('testuser', categories, pouchdbDatastore);
 
-        config = await loadConfiguration(datastore, project, preferences.languages, preferences.username);
+        config = await loadConfiguration(pouchdbDatastore, project, preferences.languages, preferences.username);
     });
 
-    afterEach(cleanup);
+    afterEach(async (done) => {
+        await pouchdbDatastore.destroyDb(project);
+        cleanup();
+        done();
+    });
 
     it('should render component correctly', async () => {
 
@@ -77,6 +82,46 @@ describe('DocumentAdd',() => {
 
         expect(queryByTestId('documentForm')).not.toBe(undefined);
             
+    });
+
+    it('should create a new Document with entered values and correctly set relations field',async () => {
+
+        const identifier = 'Test';
+        const shortDescription = 'This is a test document';
+        const expectedDoc: NewDocument = {
+            resource: {
+                identifier,
+                shortDescription,
+                category,
+                relations: {
+                    isRecordedIn: [t2.resource.id]
+                }
+            },
+        };
+
+        const { getByTestId } = render(
+            <ToastProvider>
+                <PreferencesContext.Provider
+                    value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
+                    <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
+                        <ConfigurationContext.Provider value={ config }>
+                            <DocumentAdd
+                                repository={ repository }
+                                parentDoc={ t2 }
+                                categoryName={ category }
+                                navigation={ { navigate } } />
+                        </ConfigurationContext.Provider>
+                    </LabelsContext.Provider>
+                </PreferencesContext.Provider>
+            </ToastProvider>);
+
+        
+        fireEvent.press(getByTestId('groupSelect_stem'));
+        fireEvent.changeText(getByTestId('inputField_identifier'),identifier);
+        fireEvent.changeText(getByTestId('inputField_shortDescription'),shortDescription);
+        await waitFor(() => fireEvent.press(getByTestId('saveDocBtn')));
+        
+        expect(repository.create).toHaveBeenCalledWith(expectedDoc);
     });
 });
 

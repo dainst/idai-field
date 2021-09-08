@@ -38,6 +38,6 @@ export class DocumentRepository {
 
     public remoteChanged = (): Observable<Document> => new Observable<Document>();
 
-    public create = jest.fn();
+    create = jest.fn(async (doc: Document): Promise<Document> => doc);
     
 }

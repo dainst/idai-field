@@ -107,5 +107,19 @@ describe('DocumentAdd',() => {
         
         expect(repository.create).toHaveBeenCalledWith(expectedDoc);
     });
+
+    it('should navigate back to DocumentsMap after object hast been created', async () => {
+
+        const { getByTestId } = renderAPI;
+        const highlightedDocId = 'id'; //see mock of DocumentRepository class
+
+        fireEvent.press(getByTestId('groupSelect_stem'));
+        fireEvent.changeText(getByTestId('inputField_identifier'),identifier);
+        fireEvent.changeText(getByTestId('inputField_shortDescription'),shortDescription);
+        await waitFor(() => fireEvent.press(getByTestId('saveDocBtn')));
+
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith('DocumentsMap',{ highlightedDocId });
+    });
 });
 

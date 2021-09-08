@@ -1,4 +1,4 @@
-import { Datastore, Document, Query } from 'idai-field-core';
+import { Datastore, Document, NewDocument, Query } from 'idai-field-core';
 import { Observable } from 'rxjs';
 import { bu1 } from '../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../test_data/test_docs/lineBuilding';
@@ -38,6 +38,16 @@ export class DocumentRepository {
 
     public remoteChanged = (): Observable<Document> => new Observable<Document>();
 
-    create = jest.fn(async (doc: Document): Promise<Document> => doc);
+    create = jest.fn(async (doc: Document | NewDocument): Promise<Document> => {
+        return {
+            resource: { ...doc.resource, id: 'id' },
+            _id: 'id',
+            modified: [],
+            created: {
+                user: 'testUser',
+                date: new Date()
+            }
+        };
+    });
     
 }

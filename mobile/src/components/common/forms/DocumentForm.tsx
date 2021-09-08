@@ -30,7 +30,10 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
     useEffect(() => setActiveGroup(category?.groups[0]),[category]);
 
     const renderItem = ({ item }: {item: Group}) => (
-        <TouchableOpacity style={ styles.groupBtn } onPress={ () => setActiveGroup(item) }>
+        <TouchableOpacity
+            onPress={ () => setActiveGroup(item) }
+            style={ styles.groupBtn }
+            testID={ `groupSelect_${item.name}` }>
             <I18NLabel style={ styleGroupText(item, activeGroup) } label={ item } />
         </TouchableOpacity>);
 

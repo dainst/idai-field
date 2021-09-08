@@ -30,7 +30,7 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
                 onChangeText={ changeTextHandler }
                 style={ styles.textInputStyle }
                 autoCompleteType="off"
-                testID="input" />
+                testID={ `inputField_${field.name}` } />
         </View>
     );
 };

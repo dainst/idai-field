@@ -22,7 +22,7 @@ describe('InputField',() => {
                                 currentValue={ currentValue } />);
         
                                 
-        expect(getByTestId('input').props.value).toEqual(currentValue);
+        expect(getByTestId(`inputField_${mockField.name}` ).props.value).toEqual(currentValue);
     });
 
 
@@ -34,8 +34,8 @@ describe('InputField',() => {
             currentValue={ currentValue } />);
         const changedText = 'Find2';
 
-        fireEvent.changeText(getByTestId('input'),changedText);
-        expect(getByTestId('input').props.value).toEqual(changedText);
+        fireEvent.changeText(getByTestId(`inputField_${mockField.name}`),changedText);
+        expect(getByTestId(`inputField_${mockField.name}`).props.value).toEqual(changedText);
 
     });
 
@@ -48,7 +48,7 @@ describe('InputField',() => {
             currentValue={ currentValue } />);
         const changedText = 'Find2';
 
-        fireEvent.changeText(getByTestId('input'), changedText);
+        fireEvent.changeText(getByTestId(`inputField_${mockField.name}`), changedText);
         expect(mockSetValueFn).toHaveBeenCalledWith(fieldName,changedText);
     });
 

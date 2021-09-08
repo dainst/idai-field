@@ -144,9 +144,11 @@
                                for="importTypeSelect"
                                i18n="@@import.format.importCategorySelect">Kategorie</label>
 
-                        <select id="importTypeSelect" class="form-control"
+                        <select id="importTypeSelect"
+                                class="form-control"
+                                [class.unselected-category]="!importState.selectedCategory"
                                 [(ngModel)]="importState.selectedCategory">
-
+                            <option hidden [ngValue]="undefined" i18n="@@import.selectCategory">Kategorie auswählen</option>
                             <option *ngFor="let t of importState.categories" [ngValue]="t">
                                 {{t.label}}
                             </option>

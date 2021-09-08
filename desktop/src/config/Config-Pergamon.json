@@ -755,9 +755,6 @@
         "inputType": "input"
       },
       "breakStructure": {
-        "inputType": "input"
-      },
-      "breakStructure": {
         "inputType": "radio"
       },
       "breakEdge": {

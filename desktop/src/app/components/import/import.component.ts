@@ -128,6 +128,7 @@ export class ImportComponent implements OnInit {
             && this.ignoredIdentifiers.length < 2
             && this.importState.format !== undefined
             && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
+            && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
                 ? this.importState.file !== undefined
                 : this.importState.url !== undefined);
@@ -164,11 +165,7 @@ export class ImportComponent implements OnInit {
             }
 
             this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
-            if (this.importState.selectedCategory) {
-                this.importState.typeFromFileName = true;
-            } else {
-                this.selectFirstCategory();
-            }
+            if (this.importState.selectedCategory) this.importState.typeFromFileName = true;
         }
     }
 
@@ -197,8 +194,8 @@ export class ImportComponent implements OnInit {
             this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
         );
 
-        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.selectFirstCategory();
+        if (!this.importState.categories.includes(this.importState.selectedCategory)) {
+            this.importState.selectedCategory = undefined;
         }
     }
 
@@ -363,12 +360,6 @@ export class ImportComponent implements OnInit {
         }
 
         return undefined;
-    }
-
-
-    private selectFirstCategory() {
-
-        if (this.importState.categories.length > 0) this.importState.selectedCategory = this.importState.categories[0];
     }
 
 

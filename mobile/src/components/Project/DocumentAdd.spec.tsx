@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { cleanup, fireEvent, render, RenderAPI, waitFor } from '@testing-library/react-native';
 import {
     Category, createCategory, Forest, IdGenerator, Labels, NewDocument, PouchdbDatastore, ProjectConfiguration
 } from 'idai-field-core';
@@ -45,6 +45,19 @@ describe('DocumentAdd',() => {
     let repository: DocumentRepository;
     let config: ProjectConfiguration;
     let pouchdbDatastore: PouchdbDatastore;
+    let renderAPI: RenderAPI;
+    const identifier = 'Test';
+    const shortDescription = 'This is a test document';
+    const expectedDoc: NewDocument = {
+        resource: {
+            identifier,
+            shortDescription,
+            category,
+            relations: {
+                isRecordedIn: [t2.resource.id]
+            },
+        },
+    };
     
     beforeEach(async() => {
   
@@ -54,68 +67,39 @@ describe('DocumentAdd',() => {
         repository = await DocumentRepository.init('testuser', categories, pouchdbDatastore);
 
         config = await loadConfiguration(pouchdbDatastore, project, preferences.languages, preferences.username);
+        renderAPI = render(
+            <ToastProvider>
+                <PreferencesContext.Provider
+                    value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
+                    <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
+                        <ConfigurationContext.Provider value={ config }>
+                            <DocumentAdd
+                                repository={ repository }
+                                parentDoc={ t2 }
+                                categoryName={ category }
+                                navigation={ { navigate } } />
+                        </ConfigurationContext.Provider>
+                    </LabelsContext.Provider>
+                </PreferencesContext.Provider>
+            </ToastProvider>);
     });
 
     afterEach(async (done) => {
         await pouchdbDatastore.destroyDb(project);
         cleanup();
         done();
+        jest.clearAllMocks();
     });
 
     it('should render component correctly', async () => {
-
-        const { queryByTestId } = render(
-            <ToastProvider>
-                <PreferencesContext.Provider
-                    value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
-                    <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
-                        <ConfigurationContext.Provider value={ config }>
-                            <DocumentAdd
-                                repository={ repository }
-                                parentDoc={ t2 }
-                                categoryName={ category }
-                                navigation={ { navigate } } />
-                        </ConfigurationContext.Provider>
-                    </LabelsContext.Provider>
-                </PreferencesContext.Provider>
-            </ToastProvider>);
-
-        expect(queryByTestId('documentForm')).not.toBe(undefined);
-            
+        
+        expect(renderAPI.queryByTestId('documentForm')).not.toBe(undefined);
     });
 
     it('should create a new Document with entered values and correctly set relations field',async () => {
 
-        const identifier = 'Test';
-        const shortDescription = 'This is a test document';
-        const expectedDoc: NewDocument = {
-            resource: {
-                identifier,
-                shortDescription,
-                category,
-                relations: {
-                    isRecordedIn: [t2.resource.id]
-                }
-            },
-        };
+        const { getByTestId } = renderAPI;
 
-        const { getByTestId } = render(
-            <ToastProvider>
-                <PreferencesContext.Provider
-                    value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
-                    <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
-                        <ConfigurationContext.Provider value={ config }>
-                            <DocumentAdd
-                                repository={ repository }
-                                parentDoc={ t2 }
-                                categoryName={ category }
-                                navigation={ { navigate } } />
-                        </ConfigurationContext.Provider>
-                    </LabelsContext.Provider>
-                </PreferencesContext.Provider>
-            </ToastProvider>);
-
-        
         fireEvent.press(getByTestId('groupSelect_stem'));
         fireEvent.changeText(getByTestId('inputField_identifier'),identifier);
         fireEvent.changeText(getByTestId('inputField_shortDescription'),shortDescription);

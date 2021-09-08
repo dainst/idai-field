@@ -57,14 +57,12 @@ describe('HomeScreen', () => {
         const { getByTestId, queryByTestId, getByText } = render(<PreferencesContext.Provider value={ prefs }>
             <HomeScreen { ... props } />
         </PreferencesContext.Provider>);
-        fireEvent.press(getByTestId('delete-project-button'));
 
-        await waitFor(() => expect(queryByTestId('project-input')).toBeTruthy());
+        fireEvent.press(getByTestId('delete-project-button'));
+        expect(queryByTestId('project-input')).toBeTruthy();
+        
         fireEvent.changeText(getByTestId('project-input'), 'project-1');
         fireEvent.press(getByText('Delete'));
-
-        await waitFor(() => getByTestId('home-screen'));
-
         expect(props.deleteProject).toHaveBeenCalledWith('project-1');
     });
 

@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Category, Resource } from 'idai-field-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
@@ -7,17 +6,19 @@ import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
 import useDocument from '../../hooks/use-document';
 import useToast from '../../hooks/use-toast';
+import { NavigationFunction } from '../../navigation/navigation.types';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
 import DocumentForm from '../common/forms/DocumentForm';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
-type DocumentEditNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentEdit'>;
 
 interface DocumentEditProps {
     repository: DocumentRepository;
-    navigation: DocumentEditNav;
+    navigation: {
+        navigate: NavigationFunction<DocumentsContainerDrawerParamList,'DocumentsMap'>
+    };
     docId: string;
     categoryName: string;
 }

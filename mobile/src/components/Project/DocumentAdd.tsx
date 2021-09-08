@@ -8,16 +8,13 @@ import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
 import useToast from '../../hooks/use-toast';
+import { NavigationFunction } from '../../navigation/navigation.types';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
 import DocumentForm from '../common/forms/DocumentForm';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
-
-type NavigationFunction<ParamsList, Routes extends keyof ParamsList> = <T extends Routes>(
-    target: Routes,
-    params?: ParamsList[T]) => void;
     
 interface DocumentAddProps {
     repository: DocumentRepository;

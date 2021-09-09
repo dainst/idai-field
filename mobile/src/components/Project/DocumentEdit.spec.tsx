@@ -1,4 +1,4 @@
-import { cleanup, render, waitFor } from '@testing-library/react-native';
+import { cleanup, fireEvent, render, RenderAPI, waitFor } from '@testing-library/react-native';
 import {
     Category, createCategory, Forest, IdGenerator,
     Labels, PouchdbDatastore, ProjectConfiguration
@@ -45,7 +45,7 @@ describe('DocumentEdit',() => {
     let repository: DocumentRepository;
     let config: ProjectConfiguration;
     let pouchdbDatastore: PouchdbDatastore;
-
+    let renderAPI: RenderAPI;
 
     beforeEach(async () => {
 
@@ -55,18 +55,8 @@ describe('DocumentEdit',() => {
         repository = await DocumentRepository.init('testuser', categories, pouchdbDatastore);
 
         config = await loadConfiguration(pouchdbDatastore, project, preferences.languages, preferences.username);
-    });
 
-    afterEach(async (done) => {
-        await pouchdbDatastore.destroyDb(project);
-        cleanup();
-        done();
-        jest.clearAllMocks();
-    });
-
-    it('should render component correctly', async () => {
-        
-        const { queryByTestId } = render(
+        renderAPI = render(
             <ToastProvider>
                 <PreferencesContext.Provider
                     value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
@@ -81,9 +71,35 @@ describe('DocumentEdit',() => {
                     </LabelsContext.Provider>
                 </PreferencesContext.Provider>
             </ToastProvider>);
+    });
 
-        await waitFor(() => queryByTestId('documentForm'));
-        expect(queryByTestId('documentForm')).not.toBe(undefined);
-        expect(queryByTestId('documentForm')).not.toBe(null);
+    afterEach(async (done) => {
+        await pouchdbDatastore.destroyDb(project);
+        cleanup();
+        done();
+        jest.clearAllMocks();
+    });
+
+    it('should render component correctly', async () => {
+        
+        const { queryByTestId } = renderAPI;
+
+        await waitFor(() => expect(queryByTestId('documentForm')).not.toBe(undefined));
+        await waitFor(() => expect(queryByTestId('documentForm')).not.toBe(null));
+    });
+
+    it('should set input fields with correct values', async () => {
+
+        const { getByTestId } = renderAPI;
+
+        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
+
+
+        await waitFor(() => expect(
+            getByTestId('inputField_identifier').props.value)
+            .toEqual(t2.resource.id.toUpperCase()));
+        await waitFor(() => expect(
+            getByTestId('inputField_shortDescription').props.value)
+            .toEqual(t2.resource.shortDescription));
     });
 });

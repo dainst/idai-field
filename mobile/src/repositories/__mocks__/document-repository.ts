@@ -62,5 +62,9 @@ export class DocumentRepository {
             }
         };
     });
+
+    update = jest.fn(async (doc: Document): Promise<Document> => {
+        return doc;
+    });
     
 }

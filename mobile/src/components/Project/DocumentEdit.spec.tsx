@@ -102,4 +102,30 @@ describe('DocumentEdit',() => {
             getByTestId('inputField_shortDescription').props.value)
             .toEqual(t2.resource.shortDescription);
     });
+
+    it('should update document with changed values', async () => {
+
+        const { getByTestId } = renderAPI;
+        const newDescription = 'Changed description';
+        const expectedDoc = { ...t2 };
+        t2.resource.shortDescription = newDescription;
+
+        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
+        await waitFor(() => fireEvent.changeText(getByTestId('inputField_shortDescription'),newDescription));
+        await waitFor(() => fireEvent.press(getByTestId('editDocBtn')));
+        
+        expect(repository.update).toHaveBeenCalledWith(expectedDoc);
+    });
+
+    it('should navigate back to DocumentsMap after object hast been edited', async () => {
+
+        const { getByTestId } = renderAPI;
+
+        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
+        await waitFor(() => fireEvent.changeText(getByTestId('inputField_shortDescription'),'newDescription'));
+        await waitFor(() => fireEvent.press(getByTestId('editDocBtn')));
+
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith('DocumentsMap',{ highlightedDocId: t2.resource.id });
+    });
 });

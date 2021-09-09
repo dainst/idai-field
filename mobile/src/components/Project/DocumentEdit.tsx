@@ -71,7 +71,8 @@ const DocumentEdit: React.FC<DocumentEditProps> = ({ repository, navigation, doc
                     variant="primary"
                     onPress={ editDocument }
                     title="Edit"
-                    icon={ <Ionicons name="create-outline" size={ 18 } /> }
+                    icon={ <Ionicons name="create-outline" size={ 18 }
+                    testID="editDocBtn" /> }
                 />
             }
             category={ category }

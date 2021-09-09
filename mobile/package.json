@@ -7,7 +7,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest",
+    "test": "jest --runInBand",
     "testWatch": "jest --watch",
     "build": "tsc -p ."
   },

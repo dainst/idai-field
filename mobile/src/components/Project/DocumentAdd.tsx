@@ -29,11 +29,11 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     
     const config = useContext(ConfigurationContext);
     const { labels } = useContext(LabelsContext);
+    const { showToast } = useToast();
 
     const [category, setCategory] = useState<Category>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
-    const { showToast } = useToast();
 
     const setResourceToDefault = useCallback(() =>
         setNewResource({

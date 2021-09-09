@@ -26,12 +26,12 @@ interface DocumentEditProps {
 const DocumentEdit: React.FC<DocumentEditProps> = ({ repository, navigation, docId, categoryName }) => {
 
     const config = useContext(ConfigurationContext);
+    const { labels } = useContext(LabelsContext);
+    const { showToast } = useToast();
+    const document = useDocument(repository,docId);
+
     const [category, setCategory] = useState<Category>();
     const [resource, setResource] = useState<Resource>();
-
-    const { labels } = useContext(LabelsContext);
-    const document = useDocument(repository,docId);
-    const { showToast } = useToast();
 
     useEffect(() => setCategory(config.getCategory(categoryName)),[config, categoryName]);
     

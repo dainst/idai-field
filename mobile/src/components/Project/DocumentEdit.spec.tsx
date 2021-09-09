@@ -95,11 +95,11 @@ describe('DocumentEdit',() => {
         await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
 
 
-        await waitFor(() => expect(
+        expect(
             getByTestId('inputField_identifier').props.value)
-            .toEqual(t2.resource.id.toUpperCase()));
-        await waitFor(() => expect(
+            .toEqual(t2.resource.id.toUpperCase());
+        expect(
             getByTestId('inputField_shortDescription').props.value)
-            .toEqual(t2.resource.shortDescription));
+            .toEqual(t2.resource.shortDescription);
     });
 });

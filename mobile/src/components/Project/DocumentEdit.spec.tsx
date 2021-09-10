@@ -83,7 +83,6 @@ describe('DocumentEdit',() => {
     it('should render component correctly', async () => {
         
         const { queryByTestId } = renderAPI;
-
         await waitFor(() => expect(queryByTestId('documentForm')).toBeTruthy());
     });
 
@@ -92,7 +91,6 @@ describe('DocumentEdit',() => {
         const { getByTestId } = renderAPI;
 
         await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
-
 
         expect(
             getByTestId('inputField_identifier').props.value)
@@ -109,10 +107,12 @@ describe('DocumentEdit',() => {
         const expectedDoc = { ...t2 };
         t2.resource.shortDescription = newDescription;
 
-        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
-        await waitFor(() => fireEvent.changeText(getByTestId('inputField_shortDescription'),newDescription));
-        await waitFor(() => fireEvent.press(getByTestId('editDocBtn')));
-        
+        await waitFor(() => {
+            fireEvent.press(getByTestId('groupSelect_stem'));
+            fireEvent.changeText(getByTestId('inputField_shortDescription'),newDescription);
+            fireEvent.press(getByTestId('editDocBtn'));
+        });
+
         expect(repository.update).toHaveBeenCalledWith(expectedDoc);
     });
 
@@ -120,9 +120,11 @@ describe('DocumentEdit',() => {
 
         const { getByTestId } = renderAPI;
 
-        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
-        await waitFor(() => fireEvent.changeText(getByTestId('inputField_shortDescription'),'newDescription'));
-        await waitFor(() => fireEvent.press(getByTestId('editDocBtn')));
+        await waitFor(() => {
+            fireEvent.press(getByTestId('groupSelect_stem'));
+            fireEvent.changeText(getByTestId('inputField_shortDescription'),'newDescription');
+            fireEvent.press(getByTestId('editDocBtn'));
+        });
 
         expect(navigate).toHaveBeenCalledTimes(1);
         expect(navigate).toHaveBeenCalledWith('DocumentsMap',{ highlightedDocId: t2.resource.id });

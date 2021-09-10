@@ -90,24 +90,25 @@ describe('DocumentAdd',() => {
         jest.clearAllMocks();
     });
 
-    it('should render component correctly', async () => {
+    fit('should render component correctly', async () => {
         
         expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
     });
 
-    it('should create a new Document with entered values and correctly set relations field',async () => {
+    fit('should create a new Document with entered values and correctly set relations field',async () => {
 
         const { getByTestId } = renderAPI;
 
         fireEvent.press(getByTestId('groupSelect_stem'));
         fireEvent.changeText(getByTestId('inputField_identifier'),identifier);
         fireEvent.changeText(getByTestId('inputField_shortDescription'),shortDescription);
-        await waitFor(() => fireEvent.press(getByTestId('saveDocBtn')));
+        fireEvent.press(getByTestId('saveDocBtn'));
         
+        await waitFor(() => expect(repository.create).toHaveBeenCalledTimes(1));
         expect(repository.create).toHaveBeenCalledWith(expectedDoc);
     });
 
-    it('should navigate back to DocumentsMap after object hast been created', async () => {
+    fit('should navigate back to DocumentsMap after object hast been created', async () => {
 
         const { getByTestId } = renderAPI;
         const highlightedDocId = 'id'; //see mock of DocumentRepository class
@@ -115,8 +116,9 @@ describe('DocumentAdd',() => {
         fireEvent.press(getByTestId('groupSelect_stem'));
         fireEvent.changeText(getByTestId('inputField_identifier'),identifier);
         fireEvent.changeText(getByTestId('inputField_shortDescription'),shortDescription);
-        await waitFor(() => fireEvent.press(getByTestId('saveDocBtn')));
-
+        fireEvent.press(getByTestId('saveDocBtn'));
+        
+        await waitFor(() => expect(repository.create).toHaveBeenCalledTimes(1));
         expect(navigate).toHaveBeenCalledTimes(1);
         expect(navigate).toHaveBeenCalledWith('DocumentsMap',{ highlightedDocId });
     });

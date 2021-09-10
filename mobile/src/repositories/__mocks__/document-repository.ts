@@ -47,7 +47,7 @@ export class DocumentRepository {
     public remoteChanged = (): Observable<Document> => new Observable<Document>();
 
     create = jest.fn(async (doc: Document | NewDocument): Promise<Document> => {
-        return {
+        const createdMockDoc = {
             resource: { ...doc.resource, id: 'id' },
             _id: 'id',
             modified: [],
@@ -56,6 +56,9 @@ export class DocumentRepository {
                 date: new Date()
             }
         };
+        return new Promise((resolve, _reject) => {
+            setTimeout(() => resolve(createdMockDoc));
+        });
     });
 
     update = jest.fn(async (doc: Document): Promise<Document> => {

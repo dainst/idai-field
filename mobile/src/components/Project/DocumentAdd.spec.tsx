@@ -92,8 +92,7 @@ describe('DocumentAdd',() => {
 
     it('should render component correctly', async () => {
         
-        expect(renderAPI.queryByTestId('documentForm')).not.toBe(undefined);
-        expect(renderAPI.queryByTestId('documentForm')).not.toBe(null);
+        expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
     });
 
     it('should create a new Document with entered values and correctly set relations field',async () => {

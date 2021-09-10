@@ -84,8 +84,7 @@ describe('DocumentEdit',() => {
         
         const { queryByTestId } = renderAPI;
 
-        await waitFor(() => expect(queryByTestId('documentForm')).not.toBe(undefined));
-        await waitFor(() => expect(queryByTestId('documentForm')).not.toBe(null));
+        await waitFor(() => expect(queryByTestId('documentForm')).toBeTruthy());
     });
 
     it('should set input fields with correct values', async () => {

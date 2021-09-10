@@ -41,8 +41,8 @@ export class DocumentRepository {
     public async get(resourceId: string): Promise<Document> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const doc = docs.filter(doc => doc.resource.id === resourceId);
-                if(doc.length === 1) resolve(doc[0]);
+                const doc = docs.find(doc => doc.resource.id === resourceId);
+                if(doc) resolve(doc);
                 else reject(
                     'Doc not found. For testing with mock repository provide doc from test_data/test_docs directory!');
             },50);

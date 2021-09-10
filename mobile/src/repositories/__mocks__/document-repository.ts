@@ -12,14 +12,7 @@ import { si4 } from './../../../test_data/test_docs/si4';
 import { t2 } from './../../../test_data/test_docs/t2';
 import { tf1 } from './../../../test_data/test_docs/tf1';
 
-const bu1Id = bu1.resource.id;
-const lineBuildingId = lineBuilding.resource.id;
-const multiPolyTrenchId = multiPolyTrench.resource.id;
-const pointBuildingId = pointBuilding.resource.id;
-const r1Id = r1.resource.id;
-const si1Id = si1.resource.id;
 
-const ids = [bu1Id, lineBuildingId, multiPolyTrenchId, pointBuildingId, r1Id, si1Id];
 const docs: Document[] = [bu1, lineBuilding, multiPointSurvey, multiPolyTrench, pointBuilding, r1, si1, si3,si4,t2,tf1];
 
 export class DocumentRepository {
@@ -31,11 +24,13 @@ export class DocumentRepository {
 
     find = jest.fn(async (_query: Query): Promise<Datastore.FindResult> => {
         
-        return {
-            ids,
-            totalCount: ids.length,
-            documents: [bu1, lineBuilding, multiPolyTrench, pointBuilding, r1, si1]
-        };
+        return new Promise((resolve, _reject) => {
+            setTimeout(() => resolve({
+                ids: docs.map(doc => doc.resource.id),
+                totalCount: docs.length,
+                documents: docs
+            }),50);
+        });
     });
 
     public async get(resourceId: string): Promise<Document> {

@@ -15,7 +15,7 @@ describe('useSearch', () => {
 
     beforeEach(async () => {
         
-        repository = await DocumentRepository.init('test', [], 
+        repository = await DocumentRepository.init('test', [],
             new PouchdbDatastore(name => new PouchDB(name), { generateId: () => '1' }));
     });
 
@@ -55,13 +55,14 @@ describe('useSearch', () => {
         });
 
         const query = { categories: [] };
-        const { waitForNextUpdate } = renderHook(() => useSearch(repository, query));
+        const { waitForNextUpdate, rerender } = renderHook(() => useSearch(repository, query));
 
         await waitForNextUpdate();
 
         await act(async () => {
             triggerChange();
             triggerChange();
+            rerender();
         });
 
         expect(repository.find).toHaveBeenCalledTimes(3);

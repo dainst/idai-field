@@ -15,7 +15,7 @@ proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');
 proj4.defs('EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs');
 
 
-interface NMapProps {
+interface MapProps {
     repository: DocumentRepository;
     selectedDocumentIds: string[];
     highlightedDocId?: string;
@@ -26,7 +26,7 @@ interface NMapProps {
 }
 
 
-const Map: React.FC<NMapProps> = (props) => {
+const Map: React.FC<MapProps> = (props) => {
 
     const [screen, setScreen] = useState<LayoutRectangle>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();

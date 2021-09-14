@@ -59,7 +59,7 @@ const Map: React.FC<NMapProps> = (props) => {
             const location = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = location.coords;
             // longitude for x and latitude for y
-            const p = { x: location.coords.longitude, y: location.coords.latitude };
+            const p = { x: longitude, y: latitude };
             const newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
             setLocation(newCoords);
             console.log(p);

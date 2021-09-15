@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Field, Group, NewResource, Resource } from 'idai-field-core';
+import { Category, Field, Group, Groups, NewResource, Resource } from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../../utils/colors';
@@ -55,7 +55,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
             />
             <View style={ styles.groupsContainer }>
                 <FlatList
-                    data={ category.groups }
+                    data={ category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS) }
                     keyExtractor={ group => group.name }
                     renderItem={ renderItem }
                     horizontal={ true }

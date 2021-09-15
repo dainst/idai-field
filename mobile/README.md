@@ -44,7 +44,3 @@ Sources -> RNDebuggerWorker.js -> 127.0.0.1:9001
 After bootstrapping the app use the following command to run the tests:
 
     $ npm test
-
-## UI Library
-
-We are using (NativeBase)[https://docs.nativebase.io] as UI component library.

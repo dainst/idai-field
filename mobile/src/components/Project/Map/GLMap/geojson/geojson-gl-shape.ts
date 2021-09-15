@@ -4,9 +4,9 @@ import { Document, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, Line,
-    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils, Vector2
+    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils
 } from 'three';
-import { pointRadius, strokeWidth } from '../constants';
+import { lineRenderingOrder, pointRadius, pointRenderingOrder, strokeWidth } from '../constants';
 import { processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
 
@@ -53,16 +53,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
     });
 
     // not selected Child
-    const notSelectedMaterial = new LineBasicMaterial( { color, linewidth: strokeWidth } );
-    shapes.forEach(shape => {
-        shape.autoClose = true;
-        const points = shape.getPoints();
-        const geometryPoints = new BufferGeometry().setFromPoints( points );
-        const notSelected = new Line( geometryPoints, notSelectedMaterial);
-        notSelected.name = ObjectChildValues.notSelected;
-        notSelected.renderOrder = 1;
-        parent.add(notSelected);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, true)));
     
     addObjectInfo(parent,document);
     scene.add(parent);
@@ -93,43 +84,47 @@ export const lineStringToShape:
 
     const parent = new Object3D();
     const color = config.getCategory(document.resource.category)?.color || 'black';
-    const geos: BufferGeometry[] = [];
+    const shapes: Shape[] = [];
 
-    if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates));
-    else coordinates.forEach(lineString => geos.push(geoJsonLineToShape(matrix, lineString)));
+    if(isPosition1d(coordinates)) shapes.push(geoJsonLineToShape(matrix,coordinates));
+    else coordinates.forEach(lineString => shapes.push(geoJsonLineToShape(matrix, lineString)));
 
     // selected Child
-    geos.forEach(geo => {
-        const selectedLine = new Line(geo, lineStringMaterial(color, true));
-        selectedLine.name = ObjectChildValues.selected;
-        selectedLine.visible = false;
-        selectedLine.renderOrder = 1;
-        parent.add(selectedLine);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, true, false)));
 
     // not selected Child
-    geos.forEach(geo => {
-        const notSelectedLine = new Line(geo,lineStringMaterial(color, false));
-        notSelectedLine.name = ObjectChildValues.notSelected;
-        notSelectedLine.visible = true;
-        notSelectedLine.renderOrder = 1;
-        parent.add(notSelectedLine);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, false)));
 
     addObjectInfo(parent, document);
     scene.add(parent);
 };
 
 
-const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): BufferGeometry => {
+const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): Shape => {
 
-    const points: Vector2[] = [];
-    coordinates.forEach(point => {
+    const shape = new Shape();
+    coordinates.forEach((point, i) => {
         const [x,y] = processTransform2d(matrix,point);
-        points.push(new Vector2(x,y));
+        if(i === 0) shape.moveTo(x ,y );
+        else shape.lineTo(x ,y );
     });
-    return new BufferGeometry().setFromPoints(points);
+    return shape;
 };
+
+
+const getLineFromShape = (shape: Shape, color: string, isSelected: boolean, autoClose: boolean): Line => {
+    
+    shape.autoClose = autoClose ? true : false;
+    const geo = new BufferGeometry().setFromPoints(shape.getPoints());
+    const material = new LineBasicMaterial({ color: color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
+    
+    const line = new Line(geo,material);
+    line.name = isSelected ? ObjectChildValues.selected : ObjectChildValues.notSelected;
+    line.visible = isSelected ? false : true;
+    line.renderOrder = lineRenderingOrder;
+    return line;
+};
+
 
 // eslint-disable-next-line max-len
 export const multiPointToShape: ShapeFunction<Position[]> = (matrix, scene, config, document, coordinates) =>
@@ -153,19 +148,23 @@ export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, doc
     const selectedCircle = new Mesh(circleGeometry, pointMaterial(color, true));
     selectedCircle.name = ObjectChildValues.selected;
     selectedCircle.visible = false;
-    selectedCircle.renderOrder = 1;
+    selectedCircle.renderOrder = pointRenderingOrder;
     parent.add(selectedCircle);
 
     // not selected Child
     const notSelectedCircle = new Mesh(circleGeometry, pointMaterial(color, false));
     notSelectedCircle.name = ObjectChildValues.notSelected;
     notSelectedCircle.visible = true;
-    notSelectedCircle.renderOrder = 1;
+    notSelectedCircle.renderOrder = pointRenderingOrder;
     parent.add(notSelectedCircle);
 
     addObjectInfo(parent, document);
     scene.add(parent);
 };
+
+
+const pointMaterial = (color: string, isSelected: boolean = false) =>
+    new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
 
 
 const addObjectInfo = (object: Object3D, doc: Document) => {
@@ -181,14 +180,6 @@ const addObjectInfo = (object: Object3D, doc: Document) => {
 const isPosition1d = (coords: Position[] | Position[][]): coords is Position[] => arrayDim(coords) === 2;
 const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
 const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
-
-
-const lineStringMaterial = (color: string, isSelected: boolean = false) =>
-    new LineBasicMaterial({ color: color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
-
-
-const pointMaterial = (color: string, isSelected: boolean = false) =>
-    new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
 
 
 export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordinates: Position): void => {

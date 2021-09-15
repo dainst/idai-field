@@ -14,8 +14,7 @@ import { colors } from '../../../../utils/colors';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addlocationPointToScene,
-    lineStringToShape, multiPointToShape, ObjectChildValues, ObjectData,
-    pointToShape, polygonToShape
+    lineStringToShape, multiPointToShape, ObjectChildValues, pointToShape, polygonToShape
 } from './geojson/geojson-gl-shape';
 import { calcCenter, calcDistance } from './math-utils';
 
@@ -266,13 +265,17 @@ const GLMap: React.FC<GLMapProps> = ({
         raycaster.setFromCamera(ndc_vec, camera);
         const intersections = raycaster.intersectObjects(scene.children,true);
         
-        for(const intersection of intersections){
-            const object = intersection.object;
-            const parent = object.parent;
-            if(parent){
-                const objectData = parent.userData as ObjectData;
-                if(objectData.isSelected) setHighlightedDocId(parent.uuid);
-            }
+        // filter objects to be selected and sort by renderOrder in descending order
+        const filteredSortedInters = intersections
+            .filter(intersection => intersection.object.parent?.userData['isSelected'])
+            .sort((a,b) => {
+                const aOrder = a.object.renderOrder;
+                const bOrder = b.object.renderOrder;
+                return (aOrder < bOrder) ? 1 : (aOrder > bOrder) ? -1 : 0;
+            });
+        if(filteredSortedInters.length){
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            setHighlightedDocId(filteredSortedInters[0].object.parent!.uuid);
         }
     };
     

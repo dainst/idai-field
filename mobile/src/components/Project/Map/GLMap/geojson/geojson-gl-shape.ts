@@ -4,7 +4,7 @@ import { Document, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, Line,
-    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, Vector2
+    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils, Vector2
 } from 'three';
 import { pointRadius, strokeWidth } from '../constants';
 import { processTransform2d } from '../cs-transform';
@@ -47,6 +47,8 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         const selected = new Mesh(geo, material);
         selected.name = ObjectChildValues.selected;
         selected.visible = false;
+        // render polygons with small area first
+        selected.renderOrder = - Math.abs( Math.floor(ShapeUtils.area(shape.getPoints())));
         parent.add(selected);
     });
 
@@ -101,6 +103,7 @@ export const lineStringToShape:
         const selectedLine = new Line(geo, lineStringMaterial(color, true));
         selectedLine.name = ObjectChildValues.selected;
         selectedLine.visible = false;
+        selectedLine.renderOrder = 1;
         parent.add(selectedLine);
     });
 
@@ -150,6 +153,7 @@ export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, doc
     const selectedCircle = new Mesh(circleGeometry, pointMaterial(color, true));
     selectedCircle.name = ObjectChildValues.selected;
     selectedCircle.visible = false;
+    selectedCircle.renderOrder = 1;
     parent.add(selectedCircle);
 
     // not selected Child

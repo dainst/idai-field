@@ -13,6 +13,7 @@ import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
+    addHighlightedDocToScene,
     addlocationPointToScene,
     lineStringToShape, ObjectChildValues, pointToShape, polygonToShape
 } from './geojson/geojson-gl-shape';
@@ -273,7 +274,10 @@ const GLMap: React.FC<GLMapProps> = ({
             });
         if(filteredSortedInters.length){
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            setHighlightedDocId(filteredSortedInters[0].object.parent!.uuid);
+            const docId = filteredSortedInters[0].object.parent!.uuid;
+            setHighlightedDocId(docId);
+            addHighlightedDocToScene(docId, scene);
+            renderScene();
         }
     };
     

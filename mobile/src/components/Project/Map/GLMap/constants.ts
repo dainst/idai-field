@@ -1,6 +1,8 @@
 export const pointRadius = 2;
 export const strokeWidth = 2;
+export const highlightedStrokeWidth = 4;
 export const viewBoxPaddingX = 5;
 export const viewBoxPaddingY = 5;
 export const lineRenderingOrder = 1;
 export const pointRenderingOrder = 1;
+export const highlightedColor = 'white';

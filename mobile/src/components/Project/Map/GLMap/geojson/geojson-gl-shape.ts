@@ -1,12 +1,13 @@
-
 import { Position } from 'geojson';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, Line,
     LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils
 } from 'three';
-import { lineRenderingOrder, pointRadius, pointRenderingOrder, strokeWidth } from '../constants';
+import {
+    highlightedColor, highlightedStrokeWidth, lineRenderingOrder, pointRadius, pointRenderingOrder, strokeWidth
+} from '../constants';
 import { processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
 
@@ -17,6 +18,8 @@ interface ShapeFunction<T extends Position | Position[] | Position[][] | Positio
 
 export interface ObjectData {
     isSelected: boolean;
+    type: FieldGeometryType;
+    coords: Shape[] | Position[]
 }
 
 export enum ObjectChildValues {
@@ -55,7 +58,7 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
     // not selected Child
     shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, true)));
     
-    addObjectInfo(parent,document);
+    addObjectInfo(parent,document, shapes);
     scene.add(parent);
 };
 
@@ -95,7 +98,7 @@ export const lineStringToShape:
     // not selected Child
     shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, false)));
 
-    addObjectInfo(parent, document);
+    addObjectInfo(parent, document, shapes);
     scene.add(parent);
 };
 
@@ -112,11 +115,12 @@ const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): Shape => 
 };
 
 
-const getLineFromShape = (shape: Shape, color: string, isSelected: boolean, autoClose: boolean): Line => {
+const getLineFromShape =
+    (shape: Shape, color: string, isSelected: boolean, autoClose: boolean, linewidth = strokeWidth): Line => {
     
     shape.autoClose = autoClose ? true : false;
     const geo = new BufferGeometry().setFromPoints(shape.getPoints());
-    const material = new LineBasicMaterial({ color: color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
+    const material = new LineBasicMaterial({ color: color, linewidth, opacity: isSelected ? 1 : 0.7 });
     
     const line = new Line(geo,material);
     line.name = isSelected ? ObjectChildValues.selected : ObjectChildValues.notSelected;
@@ -145,7 +149,7 @@ export const pointToShape:
     // not selected Child
     points.forEach(point => parent.add(getCricleFromCoord(point,false, color)));
 
-    addObjectInfo(parent, document);
+    addObjectInfo(parent, document, points);
     scene.add(parent);
 };
 
@@ -166,12 +170,14 @@ const getCricleFromCoord = (pos: Position, isSelected: boolean, color: string): 
 };
 
 
-const addObjectInfo = (object: Object3D, doc: Document) => {
+const addObjectInfo = (object: Object3D, doc: Document, coords: Shape[] | Position[]) => {
 
     object.name = doc.resource.identifier;
     object.uuid = doc.resource.id;
     const userData: ObjectData = {
         isSelected: false,
+        type: doc.resource.geometry.type,
+        coords
     };
     object.userData = userData;
 };
@@ -206,3 +212,32 @@ export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordi
     
     scene.add(locationPoint);
 };
+
+
+export const addHighlightedDocToScene = (docId: string, scene: Scene): void => {
+
+    const data = getUserData(docId, scene);
+    if(!data) return;
+
+    const name = 'highlighted';
+    let parent = scene.getObjectByName(name);
+    if(parent) scene.remove(parent);
+    
+    parent = new Object3D();
+    parent.name = name;
+    
+    if(isShapeArray(data.coords, data.type)){
+        const closeShape = data.type === 'Polygon' || data.type === 'MultiPolygon';
+        data.coords.forEach(coord =>
+            parent?.add(getLineFromShape(coord, highlightedColor,false, closeShape,highlightedStrokeWidth)));
+    } else
+        data.coords.forEach(coord => parent?.add(getCricleFromCoord(coord, false, highlightedColor)));
+    
+    scene.add(parent);
+};
+
+const isShapeArray = (coords: Shape[] | Position[], type: FieldGeometryType): coords is Shape[] =>
+    type === 'Polygon' || type === 'MultiPolygon' || type === 'LineString' || type === 'MultiLineString';
+
+const getUserData = (docId: string, scene: Scene): ObjectData | undefined =>
+    scene.getObjectByProperty('uuid',docId)?.userData as ObjectData;

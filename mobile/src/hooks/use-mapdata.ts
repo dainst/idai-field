@@ -8,6 +8,7 @@ import {
     getScreenToWorldTransformationMatrix, processTransform2d, Transformation
 } from '../components/Project/Map/GLMap/cs-transform';
 import { DocumentRepository } from '../repositories/document-repository';
+import { viewBoxPaddingX, viewBoxPaddingY } from './../components/Project/Map/GLMap/constants';
 
 
 const searchQuery: Query = {
@@ -48,8 +49,8 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
         setViewBox(getDocumentToWorldTransform({
             minX: left,
             minY: bottom,
-            height: Math.max(top - bottom,right - left),
-            width: Math.max(top - bottom,right - left),
+            height: Math.max(top - bottom,right - left) + viewBoxPaddingY,
+            width: Math.max(top - bottom,right - left) + viewBoxPaddingX,
         },defineWorldCoordinateSystem()));
     },[repository,documentToWorldMatrix]);
 

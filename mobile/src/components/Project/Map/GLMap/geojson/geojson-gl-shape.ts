@@ -126,45 +126,44 @@ const getLineFromShape = (shape: Shape, color: string, isSelected: boolean, auto
 };
 
 
-// eslint-disable-next-line max-len
-export const multiPointToShape: ShapeFunction<Position[]> = (matrix, scene, config, document, coordinates) =>
-    coordinates.forEach(point => pointToShape(matrix, scene, config, document, point));
-
-
-export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, document, coordinates): void => {
+export const pointToShape:
+    ShapeFunction<Position | Position[]> = (matrix, scene, config, document, coordinates): void => {
 
     if(!coordinates) return;
   
-    const [x,y] = processTransform2d(matrix,coordinates);
     const parent = new Object3D();
     const color = config.getCategory(document.resource.category)?.color || 'black';
-    const radius = pointRadius;
-    const segments = 30; //<-- Increase or decrease for more resolution
-    
-    const circleGeometry = new CircleGeometry( radius, segments );
-    circleGeometry.translate(x ,y ,0);
+    const points: Position[] = [];
+
+
+    if(isPostion(coordinates)) points.push(processTransform2d(matrix,coordinates));
+    else coordinates.forEach(coords => points.push(processTransform2d(matrix, coords)));
 
     // selected Child
-    const selectedCircle = new Mesh(circleGeometry, pointMaterial(color, true));
-    selectedCircle.name = ObjectChildValues.selected;
-    selectedCircle.visible = false;
-    selectedCircle.renderOrder = pointRenderingOrder;
-    parent.add(selectedCircle);
+    points.forEach(point => parent.add(getCricleFromCoord(point,true, color)));
 
     // not selected Child
-    const notSelectedCircle = new Mesh(circleGeometry, pointMaterial(color, false));
-    notSelectedCircle.name = ObjectChildValues.notSelected;
-    notSelectedCircle.visible = true;
-    notSelectedCircle.renderOrder = pointRenderingOrder;
-    parent.add(notSelectedCircle);
+    points.forEach(point => parent.add(getCricleFromCoord(point,false, color)));
 
     addObjectInfo(parent, document);
     scene.add(parent);
 };
 
 
-const pointMaterial = (color: string, isSelected: boolean = false) =>
-    new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
+const getCricleFromCoord = (pos: Position, isSelected: boolean, color: string): Mesh => {
+
+    const segments = 30; //<-- Increase or decrease for more resolution
+    const circleGeometry = new CircleGeometry( pointRadius, segments );
+    const [x,y] = pos;
+    circleGeometry.translate(x ,y ,0);
+
+    const material = new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
+    const circle = new Mesh(circleGeometry, material);
+    circle.name = isSelected ? ObjectChildValues.selected : ObjectChildValues.notSelected;
+    circle.visible = isSelected ? false : true;
+    circle.renderOrder = pointRenderingOrder;
+    return circle;
+};
 
 
 const addObjectInfo = (object: Object3D, doc: Document) => {
@@ -177,7 +176,9 @@ const addObjectInfo = (object: Object3D, doc: Document) => {
     object.userData = userData;
 };
 
-const isPosition1d = (coords: Position[] | Position[][]): coords is Position[] => arrayDim(coords) === 2;
+
+const isPostion = (coords: Position | Position[]): coords is Position => arrayDim(coords) === 1;
+const isPosition1d = (coords: Position[] | Position[][] | Position): coords is Position[] => arrayDim(coords) === 2;
 const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
 const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
 
@@ -200,7 +201,7 @@ export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordi
     
     const circleGeometry = new CircleGeometry( radius, segments );
     circleGeometry.translate(x ,y ,0);
-    const locationPoint = new Mesh(circleGeometry, pointMaterial(color, true));
+    const locationPoint = new Mesh(circleGeometry, new MeshBasicMaterial({ color }));
     locationPoint.name = location;
     
     scene.add(locationPoint);

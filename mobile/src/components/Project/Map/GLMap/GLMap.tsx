@@ -14,7 +14,7 @@ import { colors } from '../../../../utils/colors';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addlocationPointToScene,
-    lineStringToShape, multiPointToShape, ObjectChildValues, pointToShape, polygonToShape
+    lineStringToShape, ObjectChildValues, pointToShape, polygonToShape
 } from './geojson/geojson-gl-shape';
 import { calcCenter, calcDistance } from './math-utils';
 
@@ -198,10 +198,8 @@ const GLMap: React.FC<GLMapProps> = ({
                     lineStringToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
                     break;
                 case 'Point':
-                    pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
-                    break;
                 case 'MultiPoint':
-                    multiPointToShape(documentToWorldMatrix,scene, config, doc, geometry.coordinates);
+                    pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
                     break;
             }
         });

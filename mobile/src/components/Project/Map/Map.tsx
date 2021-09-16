@@ -82,7 +82,6 @@ const Map: React.FC<MapProps> = (props) => {
                 location={ location } />}
             <MapBottomSheet
                 document={ highlightedDoc }
-                repository={ props.repository }
                 addDocument={ props.addDocument }
                 editDocument={ props.editDocument }
                 removeDocument={ props.removeDocument }

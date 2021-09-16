@@ -44,7 +44,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
-    const onBarCodeScanned = useCallback((data: string) => {
+    const onQrCodeScanned = useCallback((data: string) => {
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
@@ -115,7 +115,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 issueSearch,
                 syncStatus,
                 toggleDrawer,
-                onBarCodeScanned
+                onQrCodeScanned
             } } />
             <View style={ styles.container }>
                 <Map

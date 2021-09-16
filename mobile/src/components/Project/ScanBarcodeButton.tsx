@@ -5,11 +5,11 @@ import { Modal, StyleSheet } from 'react-native';
 import Button from '../common/Button';
 
 interface ScanBarcodeButtonProps {
-    onBarCodeScanned: (docId: string) => void
+    onQrCodeScanned: (docId: string) => void
 }
 
 
-const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned }) => {
+const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onQrCodeScanned }) => {
 
     const [hasPermission, setHasPermission] = useState(false);
     const [scannerActive, setScannerActive] = useState(false);
@@ -24,7 +24,7 @@ const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned 
     const handleBarCodeScanned = ({ data }: { data: string }) => {
         
         setScannerActive(false);
-        onBarCodeScanned(data);
+        onQrCodeScanned(data);
     };
 
     return hasPermission
@@ -36,13 +36,13 @@ const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned 
 
 
 const renderBarcodeScanner = (
-    handleBarCodeScanned: ({ data }: { data: string }) => void,
+    handleQrCodeScanned: ({ data }: { data: string }) => void,
     setScannerActive: (active: boolean) => void
 ) =>
         <Modal onRequestClose={ () => setScannerActive(false) }>
             <BarCodeScanner
                 style={ [StyleSheet.absoluteFillObject, styles.scannerContainer] }
-                onBarCodeScanned={ handleBarCodeScanned }
+                onBarCodeScanned={ handleQrCodeScanned }
             />
             <Button
                 icon={ <Ionicons name="close" size={ 25 } /> }

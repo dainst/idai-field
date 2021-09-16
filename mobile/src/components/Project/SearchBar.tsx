@@ -14,14 +14,14 @@ interface SearchBarProps {
     syncStatus: SyncStatus;
     issueSearch: (q: string) => void;
     toggleDrawer: () => void;
-    onBarCodeScanned: (data: string) => void;
+    onQrCodeScanned: (data: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
     syncStatus,
     issueSearch,
     toggleDrawer,
-    onBarCodeScanned,
+    onQrCodeScanned,
 }) => {
 
     const orientation = useOrientation();
@@ -39,7 +39,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onEndEditing={ () => issueSearch(q) }
                 hideBorder
             />
-            { renderRightIcons(syncStatus, onBarCodeScanned) }
+            { renderRightIcons(syncStatus, onQrCodeScanned) }
         </Row>
     );
 };
@@ -53,9 +53,9 @@ const renderLeftIcons = (onPress: () => void) =>
     />;
     
 
-const renderRightIcons = (syncStatus: SyncStatus, onBarCodeScanned: (data: string) => void) =>
+const renderRightIcons = (syncStatus: SyncStatus, onQrCodeScanned: (data: string) => void) =>
     <>
-        <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
+        <ScanBarcodeButton onQrCodeScanned={ onQrCodeScanned } />
         <SyncSettingsButton status={ syncStatus } />
     </>;
 

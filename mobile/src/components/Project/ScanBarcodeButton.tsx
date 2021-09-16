@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     fab: {
-        bottom: 15,
-        right: 15,
+        bottom: -25,
+        right: -25,
         height: 50,
         width: 50,
         borderRadius: 25,

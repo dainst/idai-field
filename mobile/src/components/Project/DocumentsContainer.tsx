@@ -14,7 +14,6 @@ import DocumentsMap from './DocumentsMap';
 
 export type DocumentsContainerDrawerParamList = {
     DocumentsMap: { highlightedDocId?: string };
-    DocumentDetails: { docId: string };
     DocumentAdd: { parentDoc: Document, categoryName: string };
     DocumentEdit: { docId: string, categoryName: string };
 };
@@ -36,7 +35,7 @@ interface DocumentsContainerProps {
 }
 
 
-type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>;
+type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
 
 
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({

@@ -48,7 +48,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
-                navigation.navigate('DocumentDetails', { docId: doc.resource.id })
+                navigation.navigate('DocumentEdit', { docId: doc.resource.id, categoryName: doc.resource.category })
             )
             .catch(() => Alert.alert(
                 'Not found',

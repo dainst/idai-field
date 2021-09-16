@@ -39,6 +39,7 @@ const removeProject = jest.fn();
 
 jest.mock('../../repositories/document-repository');
 jest.mock('idai-field-core');
+jest.mock('expo-barcode-scanner');
 
 describe('DocumentEdit',() => {
 
@@ -82,15 +83,19 @@ describe('DocumentEdit',() => {
 
     it('should render component correctly', async () => {
         
-        const { queryByTestId } = renderAPI;
-        await waitFor(() => expect(queryByTestId('documentForm')).toBeTruthy());
+        await waitFor(() => renderAPI.getByTestId('barCodeScanner'));
+        
+        expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
     });
 
     it('should set input fields with correct values', async () => {
 
         const { getByTestId } = renderAPI;
 
-        await waitFor(() => fireEvent.press(getByTestId('groupSelect_stem')));
+        await waitFor(() => {
+            getByTestId('barCodeScanner');
+            fireEvent.press(getByTestId('groupSelect_stem'));
+        });
 
         expect(
             getByTestId('inputField_identifier').props.value)
@@ -108,6 +113,7 @@ describe('DocumentEdit',() => {
         t2.resource.shortDescription = newDescription;
 
         await waitFor(() => {
+            getByTestId('barCodeScanner');
             fireEvent.press(getByTestId('groupSelect_stem'));
             fireEvent.changeText(getByTestId('inputField_shortDescription'),newDescription);
             fireEvent.press(getByTestId('editDocBtn'));
@@ -121,6 +127,7 @@ describe('DocumentEdit',() => {
         const { getByTestId } = renderAPI;
 
         await waitFor(() => {
+            getByTestId('barCodeScanner');
             fireEvent.press(getByTestId('groupSelect_stem'));
             fireEvent.changeText(getByTestId('inputField_shortDescription'),'newDescription');
             fireEvent.press(getByTestId('editDocBtn'));

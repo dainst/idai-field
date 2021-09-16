@@ -11,6 +11,9 @@ const mockField: Field = {
 const currentValue = 'Find1';
 const mockSetValueFn = jest.fn();
 
+jest.mock('expo-barcode-scanner');
+
+
 describe('InputField',() => {
 
 

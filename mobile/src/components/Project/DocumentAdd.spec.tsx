@@ -39,6 +39,7 @@ const removeProject = jest.fn();
 
 jest.mock('../../repositories/document-repository');
 jest.mock('idai-field-core');
+jest.mock('expo-barcode-scanner');
 
 describe('DocumentAdd',() => {
     let repository: DocumentRepository;
@@ -90,12 +91,14 @@ describe('DocumentAdd',() => {
         jest.clearAllMocks();
     });
 
-    fit('should render component correctly', async () => {
+    it('should render component correctly', async () => {
+        
+        await waitFor(() => renderAPI.getByTestId('barCodeScanner'));
         
         expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
     });
 
-    fit('should create a new Document with entered values and correctly set relations field',async () => {
+    it('should create a new Document with entered values and correctly set relations field',async () => {
 
         const { getByTestId } = renderAPI;
 
@@ -108,7 +111,7 @@ describe('DocumentAdd',() => {
         expect(repository.create).toHaveBeenCalledWith(expectedDoc);
     });
 
-    fit('should navigate back to DocumentsMap after object hast been created', async () => {
+    it('should navigate back to DocumentsMap after object hast been created', async () => {
 
         const { getByTestId } = renderAPI;
         const highlightedDocId = 'id'; //see mock of DocumentRepository class

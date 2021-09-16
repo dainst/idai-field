@@ -57,6 +57,7 @@ const renderButton = (setScannerActive: (active: boolean) => void) =>
         variant="transparent"
         icon={ <Ionicons name="qr-code" size={ 18 } /> }
         onPress={ () => setScannerActive(true) }
+        testID="barCodeScanner"
     />;
 
 

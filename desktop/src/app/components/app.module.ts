@@ -45,7 +45,6 @@ import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
 import { Labels } from 'idai-field-core';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';
 import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
 import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
@@ -98,7 +97,6 @@ registerLocaleData(localeIt, 'it');
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        ProjectsModalComponent,
         NetworkProjectComponent,
         HelpComponent,
         NetworkProjectComponent
@@ -232,9 +230,6 @@ registerLocaleData(localeIt, 'it');
         Menus,
         MenuNavigator,
         UtilTranslations
-    ],
-    entryComponents: [
-        ProjectsModalComponent
     ],
     bootstrap: [AppComponent]
 })

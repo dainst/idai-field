@@ -9,6 +9,7 @@ import {Menus} from '../services/menus';
 import { DeleteProjectModalComponent } from './project/delete-project-modal.component';
 import {MenuContext} from '../services/menu-context';
 import { CreateProjectModalComponent } from './project/create-project-modal.component';
+import { SynchronizationModalComponent } from './project/synchronization-modal.component';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 
@@ -48,6 +49,8 @@ export class MenuNavigator {
             await this.zone.run(async () => this.editProject());
         } else if (menuItem === 'deleteProject') {
             await this.zone.run(async () => this.deleteProject());
+        } else if (menuItem === 'projectSynchronization') {
+            await this.zone.run(async () => this.openSynchronizationModal());
         } else {
             await this.zone.run(async () => await this.router.navigate([menuItem]));
         }
@@ -106,6 +109,24 @@ export class MenuNavigator {
             await modalRef.result;
         } catch(err) {
             // Delete project modal has been canceled
+        }
+
+        this.menuService.setContext(MenuContext.DEFAULT);
+    }
+
+
+    public async openSynchronizationModal() {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalRef = this.modalService.open(SynchronizationModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // Synchronization project modal has been canceled
         }
 
         this.menuService.setContext(MenuContext.DEFAULT);

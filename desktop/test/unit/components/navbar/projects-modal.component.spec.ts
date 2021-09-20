@@ -1,12 +1,18 @@
+<<<<<<< HEAD
 import {ProjectsModalComponent} from '../../../../src/app/components/navbar/projects-modal.component';
 import {M} from '../../../../src/app/components/messages/m';
 import {StateSerializer} from '../../../../src/app/services/state-serializer';
 
+=======
+import { M } from '../../../../src/app/components/messages/m';
+import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
+>>>>>>> 06ccb7c25... Rename ProjectsModalComponent to SynchronizationModalComponent & open it via menu; open docedit modal for project document after click on project name
 
+// TODO Rewrite
 /**
  * @author Daniel de Oliveira
  */
-describe('ProjectsModalComponent', () => {
+/*describe('ProjectsModalComponent', () => {
 
     let projectsModalComponent: ProjectsModalComponent;
     let settingsProvider;
@@ -59,3 +65,4 @@ describe('ProjectsModalComponent', () => {
         done();
     });
 });
+*/

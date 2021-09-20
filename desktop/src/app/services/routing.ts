@@ -2,10 +2,9 @@ import { Observable, Observer } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatastoreErrors, Named } from 'idai-field-core';
-import { Document } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../../app/components/resources/view/view-facade';
+import { Document, Named, ProjectConfiguration } from 'idai-field-core';
+import { DatastoreErrors } from 'idai-field-core';
+import {ViewFacade} from '../components/resources/view/view-facade';
 
 
 @Injectable()
@@ -49,7 +48,10 @@ export class Routing {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
+        if (documentToSelect.resource.category === 'Project') {
+            // TODO Implement
+            return;
+        } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             await this.jumpToFieldCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);

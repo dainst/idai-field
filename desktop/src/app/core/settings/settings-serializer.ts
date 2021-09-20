@@ -1,4 +1,4 @@
-import {Settings} from './settings';
+import { Settings } from './settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -34,13 +34,13 @@ export class SettingsSerializer {
 
         configToWrite['languages'] = settings.languages;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
-        configToWrite['isSyncActive'] = settings.isSyncActive;
         configToWrite['hostPassword'] = settings.hostPassword;
 
-        if (settings.syncTarget && (settings.syncTarget['password']
-                || settings.syncTarget['address'])) {
-            configToWrite['syncTarget'] = settings.syncTarget;
-        }
+        configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectName) => {
+            const syncTarget = settings.syncTargets[projectName];
+            if (syncTarget.address || syncTarget.password) result[projectName] = syncTarget;
+            return result;
+        }, {});
 
         if (settings.username && settings.username.length > 0) {
             configToWrite['username'] = settings.username;

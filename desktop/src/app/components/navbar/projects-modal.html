@@ -2,7 +2,7 @@
     <h5 class="modal-title" i18n="@@navbar.projects.manageProject">Projekte verwalten</h5>
 </div>
 
-<div class="modal-body projects-modal" #projectsModalBody>
+<div *ngIf="settings && syncTarget" class="modal-body projects-modal" #projectsModalBody>
     <div class="row">
         <div class="col-md-6 project-select">
             <select id="projectSelectBox" class="form-control" [value]="selectedProject"
@@ -35,6 +35,37 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch" style="margin-bottom: 0;">
+                <input type="checkbox" [checked]="syncTarget.isSyncActive"
+                       (change)="toggleSync()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="sync-target-address-input"
+                class="control-label col-form-label"
+                i18n="@@settings.synchronization.address">Adresse</label>
+        <input id="sync-target-address-input" [ngModel]="syncTarget.address"
+                (ngModelChange)="syncTarget.address = $event"
+                class="form-control">
+
+        <label for="sync-target-password-input"
+                class="control-label col-form-label"
+                i18n="@@settings.synchronization.password">Passwort</label>
+        <input id="sync-target-password-input"
+                type="password"
+                [ngModel]="syncTarget.password"
+                (ngModelChange)="syncTarget.password = $event"
+                class="form-control">
     </div>
 
     <ng-template #newProjectMenu>

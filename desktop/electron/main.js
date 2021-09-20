@@ -33,7 +33,7 @@ const writeConfigFile = (path) => {
 
 global.setConfigDefaults = config => {
 
-    if (!config.syncTarget) config.syncTarget = {};
+    setSyncTargets(config);
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     setLanguages(config);
@@ -41,6 +41,21 @@ global.setConfigDefaults = config => {
 
     return config;
 };
+
+
+const setSyncTargets = config => {
+
+    if (!config.syncTargets) {
+        config.syncTargets = config.syncTarget
+            ? config.dbs.reduce((result, db) => {
+                result[db] = { ...syncTarget };
+                return result;
+            }, {})
+            : {};
+            
+        delete config.syncTarget;
+    }
+}
 
 
 const setLanguages = config => {

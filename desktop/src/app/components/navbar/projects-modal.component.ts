@@ -1,10 +1,11 @@
-import { AfterViewChecked, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { reload } from '../../core/common/reload';
 import { StateSerializer } from '../../core/common/state-serializer';
 import { ProjectNameValidator } from '../../core/model/project-name-validator';
+import { Settings, SyncTarget } from '../../core/settings/settings';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';
@@ -28,12 +29,14 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
+export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
     public openConflictResolver: boolean = false;
+    public settings: Settings;
+    public syncTarget: SyncTarget;
 
     private focusInput: boolean = false;
 
@@ -49,6 +52,19 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private stateSerializer: StateSerializer,
                 private datastore: Datastore,
                 private menuService: MenuService) {
+    }
+
+    
+    async ngOnInit() {
+
+        this.settings = this.settingsProvider.getSettings();
+
+        if (!this.settings.syncTargets[this.settings.selectedProject]) {
+            this.settings.syncTargets[this.settings.selectedProject] = {
+                address: '', password: '', isSyncActive: false
+            };
+        }
+        this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
     }
 
 
@@ -68,7 +84,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public getProjects = () => this.settingsProvider.getSettings().dbs;
+    public getProjects = () => this.settings.dbs;
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -120,7 +136,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             remote.getGlobal('switches')
             && remote.getGlobal('switches').destroy_before_create
         );
-        
+
         reload();
     }
 
@@ -184,6 +200,20 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
         if (!insideCreatePopover && this.createPopover.isOpen()) this.createPopover.close();
         if (!insideDeletePopover && this.deletePopover.isOpen()) this.deletePopover.close();
+    }
+
+
+    public async toggleSync() {
+
+        this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
+        try {
+        this.settings = await this.settingsService.updateSettings(this.settings);
+        } catch (err) {
+            console.error(err);
+        }
+        
+        this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
+        await this.settingsService.setupSync();
     }
 
 

@@ -8,7 +8,7 @@ import { ProjectConfiguration } from '../configuration/project-configuration';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
-import { Settings } from './settings';
+import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
@@ -102,11 +102,14 @@ export class SettingsService {
         this.settingsProvider.setSettings(settings_);
         const settings = this.settingsProvider.getSettings();
 
-        if (settings.syncTarget.address) {
-            settings.syncTarget.address = settings.syncTarget.address.trim();
-            if (!SettingsService.validateAddress(settings.syncTarget.address))
-                throw 'malformed_address';
-        }
+        Object.values(settings.syncTargets).forEach(syncTarget => {
+            if (syncTarget.address) {
+                syncTarget.address = syncTarget.address.trim();
+                if (!SettingsService.validateAddress(syncTarget.address)) {
+                    throw 'malformed_address';
+                }
+            }
+        });
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
@@ -155,14 +158,17 @@ export class SettingsService {
 
         const settings = this.settingsProvider.getSettings();
 
-        if (!settings.isSyncActive || !settings.dbs || !(settings.dbs.length > 0)) return;
-        if (!SettingsService.isSynchronizationAllowed(this.settingsProvider.getSettings().selectedProject)) return;
+        const syncTarget: SyncTarget|undefined = settings.syncTargets[settings.selectedProject];
+
+        if (!syncTarget?.isSyncActive || !settings.dbs || !(settings.dbs.length > 0)) return;
+        if (!SettingsService.isSynchronizationAllowed(settings.selectedProject)) return;
 
         this.synchronizationService.init(
-            settings.syncTarget.address,
+            syncTarget?.address,
             settings.selectedProject,
-            settings.syncTarget.password
+            syncTarget?.password
         );
+
         return this.synchronizationService.startSync();
     }
 

@@ -48,15 +48,15 @@ const getTemplate = (mainWindow, context) => {
                 type: 'separator'
             },
             {
-                label: 'Projekteigenschaften',
+                label: messages.get('menu.file.projectProperties'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectProperties'),
                 enabled: context === 'default'
             }, {
-                label: 'Synchronisationseinstellungen',
+                label: messages.get('menu.file.projectSynchronization'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: context === 'default'
             }, {
-                label: 'Projekt löschen',
+                label: messages.get('menu.file.deleteProject'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
                 enabled: context === 'default'
             }, {

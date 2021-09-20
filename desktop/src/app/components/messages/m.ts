@@ -44,6 +44,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
     public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
 
+    // Network Project Package
+    public static INITIAL_SYNC_COMPLETE = 'M.InitialSync.complete';
+
     // ImportPackage - ParserErrors
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
@@ -400,6 +403,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_COMPLETE] = {
+            content: i18n({
+                id: 'messages.initial-sync.success',
+                value: 'Synchronisation war erfolgreich'
+            }),
+            level: 'success',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_SUCCESS_SINGLE] = {

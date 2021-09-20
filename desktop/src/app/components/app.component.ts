@@ -2,11 +2,11 @@ import { Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppController } from '../core/app-controller';
-import { MenuService } from './menu-service';
 import { UtilTranslations } from '../core/util/util-translations';
 import { Messages } from './messages/messages';
 import { Imagestore } from '../core/images/imagestore/imagestore';
 import { SettingsService } from '../core/settings/settings-service';
+import { MenuNavigator } from './menu-navigator';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -26,7 +26,7 @@ export class AppComponent {
     constructor(router: Router,
                 private messages: Messages,
                 private renderer: Renderer2,
-                private menuService: MenuService,
+                private menuNavigator: MenuNavigator,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 appController: AppController,
@@ -48,7 +48,7 @@ export class AppComponent {
 
         settingsService.setupSync();
         appController.setupServer();
-        menuService.initialize();
+        menuNavigator.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
@@ -72,24 +72,24 @@ export class AppComponent {
             switch(event.key) {
                 case 's':
                     if (event.ctrlKey && event.altKey) {
-                        this.menuService.onMenuItemClicked('settings');
+                        this.menuNavigator.onMenuItemClicked('settings');
                     }
                     break;
                 case ',':
-                    if (event.metaKey) this.menuService.onMenuItemClicked('settings');
+                    if (event.metaKey) this.menuNavigator.onMenuItemClicked('settings');
                     break;
                 case 'b':
-                    this.menuService.onMenuItemClicked('images');
+                    this.menuNavigator.onMenuItemClicked('images');
                     break;
                 case 'i':
-                    this.menuService.onMenuItemClicked('import');
+                    this.menuNavigator.onMenuItemClicked('import');
                     break;
                 case 't':
-                    this.menuService.onMenuItemClicked('resources/types');
+                    this.menuNavigator.onMenuItemClicked('resources/types');
                     break;
                 case 'y':
                 case 'z':
-                    this.menuService.onMenuItemClicked('matrix');
+                    this.menuNavigator.onMenuItemClicked('matrix');
                     break;
             }
         });

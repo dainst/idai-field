@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
-import { MenuService } from '../components/menu-service';
+import { MenuNavigator } from '../components/menu-navigator';
 import { ProjectConfiguration } from './configuration/project-configuration';
 import { FieldConverter } from './datastore/field/category-converter';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
@@ -33,7 +33,7 @@ export class AppController {
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: MenuService) {}
+                private menuNavigator: MenuNavigator) {}
 
 
     public setupServer(): Promise<any> {
@@ -51,7 +51,7 @@ export class AppController {
             });
 
             control.post('/navigate', async (request: any, result: any) => {
-                await this.menuService.onMenuItemClicked(request.body.menu);
+                await this.menuNavigator.onMenuItemClicked(request.body.menu);
                 result.send('done');
             });
 

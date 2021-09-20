@@ -29,7 +29,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class ProjectsModalComponent implements OnInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
@@ -65,12 +65,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
-    }
-
-
-    async ngAfterViewInit() {
-
-        if (this.openConflictResolver) await this.editProject('conflicts');
     }
 
 
@@ -147,28 +141,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
         this.selectedProject = this.settings.dbs[0];
 
         reload();
-    }
-
-
-    public async editProject(activeGroup: string = 'stem') {
-
-        this.menuService.setContext(MenuContext.DOCEDIT);
-
-        const projectDocument: Document = await this.datastore.get('project');
-
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        doceditRef.componentInstance.setDocument(projectDocument);
-        doceditRef.componentInstance.activeGroup = activeGroup;
-
-        try {
-            await doceditRef.result;
-        } catch(err) {
-            // Docedit modal has been canceled
-        }
-
-        this.menuService.setContext(MenuContext.PROJECTS);
     }
 
 

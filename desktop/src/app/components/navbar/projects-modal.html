@@ -5,11 +5,6 @@
 <div *ngIf="settings && syncTarget" class="modal-body projects-modal" #projectsModalBody>
     <div class="row">
         <div class="col-md-6">
-            <div id="edit-project-button" class="circular-button"
-                 (click)="editProject()">
-                <span class="mdi mdi-pencil mdi-18px"></span>
-            </div>
-
             <div id="delete-project-button" class="circular-button red-button"
                  [ngbPopover]="deleteProjectMenu" #deletePopover="ngbPopover"
                  triggers="manual" [placement]="'bottom'" [autoClose]="false"

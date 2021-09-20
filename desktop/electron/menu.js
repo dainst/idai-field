@@ -49,7 +49,7 @@ const getTemplate = (mainWindow, context) => {
             },
             {
                 label: messages.get('menu.file.projectProperties'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'projectProperties'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: context === 'default'
             }, {
                 label: messages.get('menu.file.projectSynchronization'),

@@ -102,8 +102,7 @@ registerLocaleData(localeIt, 'it');
         ProjectsComponent,
         ProjectsModalComponent,
         HelpComponent,
-        NetworkProjectComponent,
-        HelpComponent
+        NetworkProjectComponent
     ],
     providers: [
         DecimalPipe,

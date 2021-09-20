@@ -125,25 +125,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewChecked {
     }
 
 
-    public async deleteProject() {
-
-        if (!this.canDeleteProject()) return;
-
-        try {
-            await this.stateSerializer.delete('resources-state');
-            await this.stateSerializer.delete('matrix-state');
-            await this.stateSerializer.delete('tabs-state');
-        } catch (err) {
-            // Ignore state file deletion errors
-        }
-
-        await this.settingsService.deleteProject(this.selectedProject);
-        this.selectedProject = this.settings.dbs[0];
-
-        reload();
-    }
-
-
     public handleClick(event: Event) {
 
         let target: any = event.target;
@@ -176,22 +157,5 @@ export class ProjectsModalComponent implements OnInit, AfterViewChecked {
 
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
-    }
-
-
-    private canDeleteProject() {
-
-        if (!this.projectToDelete || (this.projectToDelete === '')) {
-            return false;
-        }
-        if (this.projectToDelete !== this.selectedProject) {
-            this.messages.add([M.RESOURCES_WARNING_PROJECT_NAME_NOT_SAME]);
-            return false;
-        }
-        if (this.settings.dbs.length < 2) {
-            this.messages.add([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);
-            return false;
-        }
-        return true;
     }
 }

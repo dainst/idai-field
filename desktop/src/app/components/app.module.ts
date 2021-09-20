@@ -60,6 +60,7 @@ import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
 import { MenuNavigator } from './menu-navigator';
+import { ProjectModule } from './project/project.module';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -88,7 +89,8 @@ registerLocaleData(localeIt, 'it');
         BackupModule,
         DatastoreModule,
         MatrixModule,
-        ConfigurationModule
+        ConfigurationModule,
+        ProjectModule
     ],
     declarations: [
         AppComponent,
@@ -99,8 +101,8 @@ registerLocaleData(localeIt, 'it');
         TaskbarUpdateComponent,
         ProjectsComponent,
         ProjectsModalComponent,
-        NetworkProjectComponent,
-        HelpComponent
+        HelpComponent,
+        NetworkProjectComponent
     ],
     providers: [
         DecimalPipe,

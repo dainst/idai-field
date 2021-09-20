@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col default-nav bg-light text-right">
                 <button id="importStartButton"
-                        class="btn btn-primary">
+                        class="btn btn-primary"
+                        (click)="onStartClicked()">
                     <span class="mdi mdi-file-import"></span>
                     <span class="button-label">Synchronisation starten</span>
                 </button>
@@ -17,12 +18,18 @@
                         <label class="control-label col-form-label">URL</label>
                         <input class="form-control"
                             id="urlInput"
-                            type="text">
-
+                            type="text"
+                            [(ngModel)]="url">
                         <label class="control-label col-form-label">Projektname</label>
+                        <input class="form-control"
+                            id="projectInput"
+                            type="text"
+                            [(ngModel)]="projectName">
+                        <label class="control-label col-form-label">Passwort</label>
                             <input class="form-control"
-                                id="projectInput"
-                                type="text">
+                                id="passwordInput"
+                                type="text"
+                                [(ngModel)]="password">
                     </div>
                 </div>
             </div>

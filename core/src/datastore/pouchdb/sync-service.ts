@@ -65,6 +65,30 @@ export class SyncService {
         this.setStatus(SyncStatus.Offline);
     }
 
+    
+    public async startOneTimeSync(target: string, password: string, project: string): Promise<Observable<SyncStatus>> {
+
+        const url = SyncService.generateUrl(target + '/' + project, project, password);
+
+        console.log('url', url);
+
+        const db = await this.pouchdbDatastore.createEmptyDb(project);
+
+        const sync = db.replicate.from(url, { live: false, retry: false });
+
+        // TODO deduplicate with code below in setupSync
+        return Observable.create((obs: Observer<SyncStatus>) => {
+            sync.on('change', (info: any) => obs.next(SyncService.getFromInfo(info)))
+                .on('paused', () => obs.next(SyncStatus.InSync))
+                .on('active', () => obs.next(SyncStatus.Pulling))
+                .on('complete', (info: any) => {
+                    obs.next(SyncStatus.Offline);
+                    obs.complete();
+                })
+                .on('error', (err: any) => obs.error(err));
+        })
+    };
+
 
     /**
      * Setup peer-to-peer syncing between this datastore and target.
@@ -73,7 +97,7 @@ export class SyncService {
      * @param project
      */
     public startSync(live: boolean = true, filter?: (doc: any) => boolean): void {
-
+    
         if (!this.syncTarget || !this.project) return;
         if (this.sync) {
             console.warn('sync already running, will not \'startSync\' again');

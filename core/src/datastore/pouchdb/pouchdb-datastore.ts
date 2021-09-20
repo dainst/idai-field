@@ -42,6 +42,12 @@ export class PouchdbDatastore {
      */
     public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
 
+    
+    public async createEmptyDb(name: string) {
+
+        return this.pouchDbFactory(name);
+    }
+
 
     public createDbForTesting(dbName: string) {
      

@@ -1,0 +1,33 @@
+
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@project.createModal.header">
+        Neues Projekt erstellen
+    </h5>
+</div>
+
+<div class="modal-body">
+    <div id="confirm-delete-info" >
+        <span i18n="@@project.createModal.info">
+            Bitte geben Sie den Namen des neuen Projekts ein.
+        </span>
+    </div>
+    <div class="input-group">
+        <input id="create-project-input"
+               type="text"
+               class="form-control"
+               [(ngModel)]="projectName"
+               (keydown)="$event.key !== 'Enter' || createProject()" />
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="delete-project-confirm" class="btn btn-success" type="button"
+            [ngClass]="{ 'disabled': !projectName }"
+            (click)="createProject()">
+        <span i18n="@@buttons.create">Erstellen</span>
+    </button>
+    <button type="button" id="delete-project-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

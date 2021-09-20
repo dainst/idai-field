@@ -24,7 +24,7 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [
             {
                 label: messages.get('menu.file.newProject'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'newProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: context === 'default'
             },
             {

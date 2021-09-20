@@ -116,65 +116,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewChecked {
     }
 
 
-    public async createProject() {
-
-        const validationErrorMessage: MsgWithParams|undefined =
-            ProjectNameValidatorMsgConversion.convert(
-                ProjectNameValidation.validate(this.newProject, this.getProjects())
-            );
-        if (validationErrorMessage) return this.messages.add(validationErrorMessage);
-
-        await this.settingsService.createProject(
-            this.newProject,
-            remote.getGlobal('switches')
-            && remote.getGlobal('switches').destroy_before_create
-        );
-
-        reload();
-    }
-
-
-    public async deleteProject() {
-
-        if (!this.canDeleteProject()) return;
-
-        try {
-            await this.stateSerializer.delete('resources-state');
-            await this.stateSerializer.delete('matrix-state');
-            await this.stateSerializer.delete('tabs-state');
-        } catch (err) {
-            // Ignore state file deletion errors
-        }
-
-        await this.settingsService.deleteProject(this.selectedProject);
-        this.selectedProject = this.getProjects()[0];
-
-        reload();
-    }
-
-
-    public async editProject(activeGroup?: string) {
-
-        this.menuService.setContext(MenuContext.DOCEDIT);
-
-        const projectDocument: Document = await this.datastore.get('project');
-
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        doceditRef.componentInstance.setDocument(projectDocument);
-        doceditRef.componentInstance.activeGroup = activeGroup;
-
-        try {
-            await doceditRef.result;
-        } catch(err) {
-            // Docedit modal has been canceled
-        }
-
-        this.menuService.setContext(MenuContext.PROJECTS);
-    }
-
-
     public async editProjectImages() {
 
         this.viewModalLauncher.openImageViewModal(await this.datastore.get('project'), 'edit');

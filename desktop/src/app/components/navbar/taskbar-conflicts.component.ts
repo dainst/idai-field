@@ -2,7 +2,7 @@ import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { Document, Datastore, IndexFacade } from 'idai-field-core';
 import {ComponentHelpers} from '../component-helpers';
 import { Routing } from '../../services/routing';
-import { NavbarComponent } from './navbar.component';
+import { MenuNavigator } from '../menu-navigator';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class TaskbarConflictsComponent {
                 private renderer: Renderer2,
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
-                private navbarComponent: NavbarComponent,
+                private menuNavigator: MenuNavigator,
                 private zone: NgZone) {
 
         this.fetchConflicts();
@@ -44,7 +44,7 @@ export class TaskbarConflictsComponent {
         if (this.popover.isOpen()) this.popover.close();
 
         if (document.resource.category === 'Project') {
-            await this.navbarComponent.openProjectsModal(true);
+            await this.menuNavigator.editProject('conflicts');
         } else {
             await this.routingService.jumpToConflictResolver(document);
         }

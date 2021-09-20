@@ -1,14 +1,15 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppController } from '../services/app-controller';
 import { Menus } from '../services/menus';
-import { UtilTranslations } from '../util/util-translations';
 import { Messages } from './messages/messages';
-import { Imagestore } from '../services/imagestore/imagestore';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
 import { Settings } from '../services/settings/settings';
+import { MenuNavigator } from './menu-navigator';
+import {UtilTranslations} from '../util/util-translations';
+import {AppController} from '../services/app-controller';
+import {Imagestore} from '../services/imagestore/imagestore';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -27,12 +28,14 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
-    constructor(private messages: Messages,
+    constructor(router: Router,
+                private messages: Messages,
+                private renderer: Renderer2,
+                private menuNavigator: MenuNavigator,
+                private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                private i18n: I18n,
-                router: Router,
                 menuService: Menus,
                 appController: AppController,
                 imagestore: Imagestore,
@@ -53,7 +56,7 @@ export class AppComponent {
 
         settingsService.setupSync();
         appController.setupServer();
-        menuService.initialize();
+        menuNavigator.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
@@ -68,6 +71,38 @@ export class AppComponent {
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
             this.changeDetectorRef.detectChanges();
+        });
+    }
+
+
+    private enableMenuShortCutsForTests() {
+
+        this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
+            if (!event.ctrlKey || event.metaKey) return;
+
+            switch(event.key) {
+                case 's':
+                    if (event.ctrlKey && event.altKey) {
+                        this.menuNavigator.onMenuItemClicked('settings');
+                    }
+                    break;
+                case ',':
+                    if (event.metaKey) this.menuNavigator.onMenuItemClicked('settings');
+                    break;
+                case 'b':
+                    this.menuNavigator.onMenuItemClicked('images');
+                    break;
+                case 'i':
+                    this.menuNavigator.onMenuItemClicked('import');
+                    break;
+                case 't':
+                    this.menuNavigator.onMenuItemClicked('resources/types');
+                    break;
+                case 'y':
+                case 'z':
+                    this.menuNavigator.onMenuItemClicked('matrix');
+                    break;
+            }
         });
     }
 

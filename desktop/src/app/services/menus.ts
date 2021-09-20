@@ -18,8 +18,8 @@ export class Menus {
 
 
     constructor(private router: Router,
-                private zone: NgZone,
-                private settingsService: SettingsService) {}
+        private zone: NgZone,
+        private settingsService: SettingsService) {}
 
 
     public getContext = () => this.context;

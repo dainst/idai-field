@@ -34,7 +34,7 @@ type NewType=Settings;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class ProjectsModalComponent implements OnInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
@@ -71,12 +71,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
-    }
-
-
-    async ngAfterViewInit() {
-
-        if (this.openConflictResolver) await this.editProject('conflicts');
     }
 
 

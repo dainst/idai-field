@@ -56,6 +56,7 @@ import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
+import { MenuNavigator } from './menu-navigator';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -224,6 +225,7 @@ registerLocaleData(localeIt, 'it');
         },
         TabSpaceCalculator,
         Menus,
+        MenuNavigator,
         UtilTranslations
     ],
     entryComponents: [

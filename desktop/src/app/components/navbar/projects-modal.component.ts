@@ -68,7 +68,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public getProjects = () => this.settingsProvider.getSettings().dbs;
+    private getProjects = () => this.settingsProvider.getSettings().dbs;
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -100,13 +100,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public async selectProject(project: string) {
-
-        await this.settingsService.selectProject(project);
-        reload();
-    }
-
-
     public async createProject() {
 
         const validationErrorMessage: string[]|undefined =
@@ -120,7 +113,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             remote.getGlobal('switches')
             && remote.getGlobal('switches').destroy_before_create
         );
-        
+
         reload();
     }
 

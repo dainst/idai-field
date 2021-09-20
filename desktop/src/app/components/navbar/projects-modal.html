@@ -4,15 +4,6 @@
 
 <div *ngIf="settings && syncTarget" class="modal-body projects-modal" #projectsModalBody>
     <div class="row">
-        <div class="col-md-6 project-select">
-            <select id="projectSelectBox" class="form-control" [value]="selectedProject"
-                    (change)="selectProject($event.srcElement.value)">
-                <option *ngFor="let project of getProjects()" [ngValue]="project">
-                    {{project}}
-                </option>
-            </select>
-        </div>
-
         <div class="col-md-6">
             <div id="edit-project-button" class="circular-button"
                  (click)="editProject()">

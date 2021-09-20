@@ -84,9 +84,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
     }
 
 
-    public getProjects = () => this.settings.dbs;
-
-
     public onKeyDown(event: KeyboardEvent) {
 
         if (this.menuService.getContext() === MenuContext.PROJECTS && event.key === 'Escape') {
@@ -116,18 +113,11 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
     }
 
 
-    public async selectProject(project: string) {
-
-        await this.settingsService.selectProject(project);
-        reload();
-    }
-
-
     public async createProject() {
 
         const validationErrorMessage: string[]|undefined =
             ProjectNameValidatorMsgConversion.convert(
-                ProjectNameValidator.validate(this.newProject, this.getProjects())
+                ProjectNameValidator.validate(this.newProject, this.settings.dbs)
             );
         if (validationErrorMessage) return this.messages.add(validationErrorMessage);
 
@@ -154,7 +144,7 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
         }
 
         await this.settingsService.deleteProject(this.selectedProject);
-        this.selectedProject = this.getProjects()[0];
+        this.selectedProject = this.settings.dbs[0];
 
         reload();
     }
@@ -211,7 +201,7 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
         } catch (err) {
             console.error(err);
         }
-        
+
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
     }
@@ -226,7 +216,7 @@ export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewC
             this.messages.add([M.RESOURCES_WARNING_PROJECT_NAME_NOT_SAME]);
             return false;
         }
-        if (this.getProjects().length < 2) {
+        if (this.settings.dbs.length < 2) {
             this.messages.add([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);
             return false;
         }

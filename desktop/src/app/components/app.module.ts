@@ -100,7 +100,8 @@ registerLocaleData(localeIt, 'it');
         ProjectsComponent,
         ProjectsModalComponent,
         NetworkProjectComponent,
-        HelpComponent
+        HelpComponent,
+        NetworkProjectComponent
     ],
     providers: [
         Modals,

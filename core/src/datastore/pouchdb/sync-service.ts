@@ -86,6 +86,30 @@ export class SyncService {
     public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
+    public async startOneTimeSync(target: string, password: string, project: string): Promise<Observable<SyncStatus>> {
+
+        const url = SyncProcess.generateUrl(target + '/' + project, project, password);
+
+        console.log('url', url);
+
+        const db = await this.pouchdbManager.createEmptyDb(project);
+
+        const sync = db.replicate.from(url, { live: false, retry: false });
+
+        // TODO deduplicate with code below in setupSync
+        return Observable.create((obs: Observer<SyncStatus>) => {
+            sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
+                .on('paused', () => obs.next(SyncStatus.InSync))
+                .on('active', () => obs.next(SyncStatus.Pulling))
+                .on('complete', (info: any) => {
+                    obs.next(SyncStatus.Offline);
+                    obs.complete();
+                })
+                .on('error', (err: any) => obs.error(err));
+        })
+    };
+
+
     public async startSync() {
 
         if (!this.syncTarget || !this.project) return;

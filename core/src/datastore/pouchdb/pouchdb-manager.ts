@@ -31,6 +31,12 @@ export class PouchdbManager {
     }
 
 
+    public async createEmptyDb(name: string) {
+
+        return this.pouchDbFactory(name);
+    }
+
+
     /**
      * Creates a new database. Unless specified specifically
      * with destroyBeforeCreate set to true,

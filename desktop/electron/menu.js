@@ -28,6 +28,13 @@ const getTemplate = (mainWindow, context, config) => {
                 enabled: context === 'default'
             },
             {
+                label: messages.get('menu.file.networkProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
+                enabled: context === 'default'
+            }, {
+                type: 'separator'
+            },
+            {
                 label: messages.get('menu.file.openProject'),
                 enabled: context === 'default',
                 submenu: (global.config.dbs ?? []).map(projectName => {
@@ -38,8 +45,19 @@ const getTemplate = (mainWindow, context, config) => {
                     };
                 })
             }, {
-                label: messages.get('menu.file.syncProject'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'syncProject'),
+                type: 'separator'
+            },
+            {
+                label: 'Projekteigenschaften',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectProperties'),
+                enabled: context === 'default'
+            }, {
+                label: 'Synchronisationseinstellungen',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
+                enabled: context === 'default'
+            }, {
+                label: 'Projekt löschen',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
                 enabled: context === 'default'
             }, {
                 type: 'separator'
@@ -227,7 +245,7 @@ const getTemplate = (mainWindow, context, config) => {
 
     if (process.platform === 'darwin') {
         // Remove 'Settings' option from 'File' menu
-        template[1].submenu.splice(3, 1);
+        template[1].submenu.splice(10, 1);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

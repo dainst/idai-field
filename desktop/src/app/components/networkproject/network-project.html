@@ -1,3 +1,31 @@
-<div>
-    Hallo
+<div class="import row" (dragover)="false" (dragleave)="false" (drop)="false">
+    <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light text-right">
+                <button id="importStartButton"
+                        class="btn btn-primary">
+                    <span class="mdi mdi-file-import"></span>
+                    <span class="button-label">Synchronisation starten</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col default-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    <div class="form-group">
+                        <label class="control-label col-form-label">URL</label>
+                        <input class="form-control"
+                            id="urlInput"
+                            type="text">
+
+                        <label class="control-label col-form-label">Projektname</label>
+                            <input class="form-control"
+                                id="projectInput"
+                                type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

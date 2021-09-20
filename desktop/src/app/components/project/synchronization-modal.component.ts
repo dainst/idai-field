@@ -3,14 +3,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Settings, SyncTarget } from '../../core/settings/settings';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
-import {  MenuService } from '../menu-service';
+import { MenuService } from '../menu-service';
 
 
 @Component({
     selector: 'synchronization-modal',
     templateUrl: './synchronization-modal.html',
     host: {
-        '(document:click)': 'handleClick($event)',
         '(window:keydown)': 'onKeyDown($event)'
     }
 })

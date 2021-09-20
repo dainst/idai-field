@@ -38,6 +38,10 @@ const getTemplate = (mainWindow, context, config) => {
                     };
                 })
             }, {
+                label: messages.get('menu.file.syncProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'syncProject'),
+                enabled: context === 'default'
+            }, {
                 type: 'separator'
             },
             {

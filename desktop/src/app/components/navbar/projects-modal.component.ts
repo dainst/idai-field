@@ -107,7 +107,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     public async selectProject(project: string) {
 
         await this.settingsService.selectProject(project);
-        ProjectsModalComponent.reload();
+        reload();
     }
 
 
@@ -124,7 +124,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             remote.getGlobal('switches')
             && remote.getGlobal('switches').destroy_before_create
         );
-        ProjectsModalComponent.reload();
+        
+        reload();
     }
 
 
@@ -143,7 +144,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
         await this.settingsService.deleteProject(this.selectedProject);
         this.selectedProject = this.getProjects()[0];
 
-        ProjectsModalComponent.reload();
+        reload();
     }
 
 
@@ -210,15 +211,5 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             return false;
         }
         return true;
-    }
-
-
-    // We have to reload manually since protractor's selectors apparently aren't reliably working as they
-    // should after a reload. So we will do this by hand in the E2Es.
-    private static reload() {
-
-        if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-            reload();
-        }
     }
 }

@@ -23,6 +23,24 @@ const getTemplate = (mainWindow, context, config) => {
         label: messages.get('menu.file'),
         submenu: [
             {
+                label: messages.get('menu.file.newProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'newProject'),
+                enabled: context === 'default'
+            },
+            {
+                label: messages.get('menu.file.openProject'),
+                enabled: context === 'default',
+                submenu: (global.config.dbs ?? []).map(projectName => {
+                    return {
+                        label: projectName,
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
+                        enabled: context === 'default'
+                    };
+                })
+            }, {
+                type: 'separator'
+            },
+            {
                 label: messages.get('menu.file.import'),
                 accelerator: 'CmdOrCtrl+I',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'import'),

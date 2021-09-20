@@ -78,9 +78,8 @@ global.getMainLanguages = () => mainLanguages;
 
 global.updateConfig = config => {
 
-    const oldLocale = global.getLocale();
     global.config = config;
-    if (global.getLocale() !== oldLocale) createMenu();
+    createMenu();
 };
 
 

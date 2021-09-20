@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteProjectModalComponent } from './delete-project-modal.component';
 import { CreateProjectModalComponent } from './create-project-modal.component';
+import { SynchronizationModalComponent } from './synchronization-modal.component';
 
 
 @NgModule({
@@ -16,15 +17,18 @@ import { CreateProjectModalComponent } from './create-project-modal.component';
     ],
     declarations: [
         CreateProjectModalComponent,
-        DeleteProjectModalComponent
+        DeleteProjectModalComponent,
+        SynchronizationModalComponent
     ],
     providers: [
         CreateProjectModalComponent,
-        DeleteProjectModalComponent
+        DeleteProjectModalComponent,
+        SynchronizationModalComponent
     ],
     entryComponents: [
         CreateProjectModalComponent,
-        DeleteProjectModalComponent
+        DeleteProjectModalComponent,
+        SynchronizationModalComponent
     ]
 })
 

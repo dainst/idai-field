@@ -5,7 +5,6 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 
 @import 'taskbar';
 @import 'projects';
-@import 'projects-modal';
 
 .navbar {
   -webkit-app-region: drag;

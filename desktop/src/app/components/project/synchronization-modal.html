@@ -1,14 +1,14 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@navbar.projects.manageProject">Projekte verwalten</h5>
+    <h5 class="modal-title" i18n="@@project.synchronization">Projekt synchronisieren</h5>
 </div>
 
-<div *ngIf="settings && syncTarget" class="modal-body projects-modal" #projectsModalBody>
+<div *ngIf="settings && syncTarget" id="synchronization-modal" class="modal-body">
     <div id="synchronization-slider" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
         </div>
         <div class="col-auto">
-            <label class="switch" style="margin-bottom: 0;">
+            <label class="switch">
                 <input type="checkbox" [checked]="syncTarget.isSyncActive"
                        (change)="toggleSync()">
                 <span class="slider round"></span>
@@ -36,7 +36,7 @@
 </div>
 
 <div class="modal-footer">
-    <div id="close-projects-modal-button" type="button" class="btn btn-secondary"
+    <div id="close-synchronization-modal-button" type="button" class="btn btn-secondary"
             (click)="activeModal.close()">
         <span i18n="@@buttons.close">Schließen</span>
     </div>

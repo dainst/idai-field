@@ -48,7 +48,6 @@ import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';
 import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
 import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
@@ -100,7 +99,6 @@ registerLocaleData(localeIt, 'it');
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        ProjectsModalComponent,
         HelpComponent,
         NetworkProjectComponent
     ],
@@ -207,9 +205,6 @@ registerLocaleData(localeIt, 'it');
         MenuService,
         MenuNavigator,
         UtilTranslations
-    ],
-    entryComponents: [
-        ProjectsModalComponent
     ],
     bootstrap: [AppComponent]
 })

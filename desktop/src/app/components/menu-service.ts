@@ -1,5 +1,7 @@
-import {Router} from '@angular/router';
-import {Injectable, NgZone} from '@angular/core';
+import { Router } from '@angular/router';
+import { Injectable, NgZone } from '@angular/core';
+import { SettingsService } from '../core/settings/settings-service';
+import { reload } from '../core/common/reload';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -30,7 +32,8 @@ export class MenuService {
 
 
     constructor(private router: Router,
-                private zone: NgZone) {}
+                private zone: NgZone,
+                private settingsService: SettingsService) {}
 
 
     public getContext = () => this.context;
@@ -45,16 +48,21 @@ export class MenuService {
 
     public initialize() {
 
-        ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string) => {
-            await this.onMenuItemClicked(menuItem);
+        ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string, projectName?: string) => {
+            await this.onMenuItemClicked(menuItem, projectName);
         });
 
         this.setContext('default');
     }
 
 
-    public async onMenuItemClicked(menuItem: string) {
+    public async onMenuItemClicked(menuItem: string, projectName?: string) {
 
-        await this.zone.run(async () => await this.router.navigate([menuItem]));
+        if (menuItem === 'openProject') {
+            await this.settingsService.selectProject(projectName);
+            reload();
+        } else {
+            await this.zone.run(async () => await this.router.navigate([menuItem]));
+        }
     }
 }

@@ -39,6 +39,7 @@ export class SettingsProvider {
     public async setSettingsAndSerialize(settings: Settings) {
 
         this.settings = settings;
+        remote.getGlobal('updateConfig')(this.settings)
         await this.serialize();
     }
 

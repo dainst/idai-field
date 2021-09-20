@@ -100,8 +100,6 @@ export class SettingsComponent implements OnInit {
 
     private async handleSaveSuccess(languagesChanged: boolean) {
 
-        remote.getGlobal('updateConfig')(this.settings);
-
         if (languagesChanged) {
             reload();
         } else {

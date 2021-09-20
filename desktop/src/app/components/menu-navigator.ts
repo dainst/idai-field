@@ -36,6 +36,8 @@ export class MenuNavigator {
 
     public async onMenuItemClicked(menuItem: string, projectName?: string) {
 
+        console.log(menuItem, projectName)
+
         if (menuItem === 'openProject') {
             await this.settingsService.selectProject(projectName);
             reload();

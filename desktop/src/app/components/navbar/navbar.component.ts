@@ -108,6 +108,8 @@ export class NavbarComponent implements DoCheck {
             return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
+        } else if (this.activeRoute.startsWith('/networkProject')) {
+            return this.i18n({ id: 'navbar.tabs.networkProject', value: 'Mit Netzwerk-Projekt verbinden' });
         } else if (this.activeRoute.startsWith('/import')) {
             return this.i18n({ id: 'navbar.tabs.import', value: 'Import' });
         } else if (this.activeRoute.startsWith('/export')) {

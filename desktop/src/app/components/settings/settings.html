@@ -59,38 +59,6 @@
 
                     <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
 
-                    <div class="row" style="margin: 15px 0 0;">
-                        <div class="col-auto mr-auto">
-                            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
-                        </div>
-                        <div class="col-auto">
-                            <label class="switch" style="margin-bottom: 0;">
-                                <input type="checkbox" [checked]="settings.isSyncActive"
-                                       (change)="toggleSync()">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="sync-target-address-input"
-                               class="control-label col-form-label"
-                               i18n="@@settings.synchronization.address">Adresse</label>
-                        <input id="sync-target-address-input" [ngModel]="settings.syncTarget.address"
-                               (ngModelChange)="settings.syncTarget.address = $event"
-                               class="form-control">
-
-                        <label for="sync-target-password-input"
-                               class="control-label col-form-label"
-                               i18n="@@settings.synchronization.password">Passwort</label>
-                        <input id="sync-target-password-input"
-                               type="password"
-                               [ngModel]="settings.syncTarget.password"
-                               (ngModelChange)="settings.syncTarget.password = $event"
-                               class="form-control">
-                    </div>
-
                     <div class="form-group">
 
                         <label class="control-label col-form-label" i18n="@@settings.synchronization.ownAddress">Eigene Adresse</label>

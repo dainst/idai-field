@@ -1,12 +1,9 @@
-import { AfterViewChecked, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { reload } from '../../services/reload';
-import { StateSerializer } from '../../services/state-serializer';
 import { ProjectNameValidation } from '../../model/project-name-validation';
-import { SettingsProvider } from '../../services/settings/settings-provider';
-import { SettingsService } from '../../services/settings/settings-service';
 import { DoceditComponent } from '../docedit/docedit.component';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
@@ -15,9 +12,15 @@ import { Messages } from '../messages/messages';
 import {MsgWithParams} from '../messages/msg-with-params';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
 import { ViewModalLauncher } from '../resources/service/view-modal-launcher';
+import {SettingsService} from '../../services/settings/settings-service';
+import {StateSerializer} from '../../services/state-serializer';
+import {Settings, SyncTarget} from '../../services/settings/settings';
+import {SettingsProvider} from '../../services/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
+
+type NewType=Settings;
 
 @Component({
     selector: 'projects-modal',
@@ -31,12 +34,14 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
+export class ProjectsModalComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
     public openConflictResolver: boolean = false;
+    public settings: NewType;
+    public syncTarget: SyncTarget;
 
     private focusInput: boolean = false;
 
@@ -56,6 +61,19 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
+    async ngOnInit() {
+
+        this.settings = this.settingsProvider.getSettings();
+
+        if (!this.settings.syncTargets[this.settings.selectedProject]) {
+            this.settings.syncTargets[this.settings.selectedProject] = {
+                address: '', password: '', isSyncActive: false
+            };
+        }
+        this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
+    }
+
+
     async ngAfterViewInit() {
 
         if (this.openConflictResolver) await this.editProject('conflicts');
@@ -72,7 +90,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    private getProjects = () => this.settingsProvider.getSettings().dbs;
+    public getProjects = () => this.settings.dbs;
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -187,6 +205,20 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
         if (!insideCreatePopover && this.createPopover.isOpen()) this.createPopover.close();
         if (!insideDeletePopover && this.deletePopover.isOpen()) this.deletePopover.close();
+    }
+
+
+    public async toggleSync() {
+
+        this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
+        try {
+        this.settings = await this.settingsService.updateSettings(this.settings);
+        } catch (err) {
+            console.error(err);
+        }
+
+        this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
+        await this.settingsService.setupSync();
     }
 
 

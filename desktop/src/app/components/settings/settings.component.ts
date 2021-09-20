@@ -53,12 +53,6 @@ export class SettingsComponent implements OnInit {
     }
 
 
-    public toggleSync() {
-
-        this.settings.isSyncActive = !this.settings.isSyncActive;
-    }
-
-
     public toggleAutoUpdate() {
 
         this.settings.isAutoUpdateActive = !this.settings.isAutoUpdateActive;

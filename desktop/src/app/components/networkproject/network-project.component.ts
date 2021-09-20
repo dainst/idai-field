@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
 
 @Component({
     templateUrl: './network-project.html',
@@ -11,6 +9,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class NetworkProjectComponent {
 
     constructor() {
+
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
 
     }
 }

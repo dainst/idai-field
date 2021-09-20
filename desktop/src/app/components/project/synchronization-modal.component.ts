@@ -9,7 +9,6 @@ import {SettingsService} from '../../services/settings/settings-service';
     selector: 'synchronization-modal',
     templateUrl: './synchronization-modal.html',
     host: {
-        '(document:click)': 'handleClick($event)',
         '(window:keydown)': 'onKeyDown($event)'
     }
 })

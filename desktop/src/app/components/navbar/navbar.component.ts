@@ -138,12 +138,6 @@ export class NavbarComponent implements DoCheck {
     }
 
 
-    public async openProjectsModal(openConflictResolver: boolean = false) {
-
-        await this.routingService.openProjectsModal(openConflictResolver);
-    }
-
-
     private computeTabSpaceWidth(): number {
 
         return this.tabSpaceElement.nativeElement.offsetWidth

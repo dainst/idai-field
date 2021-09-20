@@ -1,36 +1,4 @@
-.projects-modal {
-  .project-select {
-    padding-top: 8px;
-  }
-
-  .circular-button {
-    width: 41px;
-    height: 41px;
-    margin-right: 10px;
-    position: inherit;
-    display: inline-block;
-
-    &.category-button {
-      padding: 0;
-      top: 5px;
-    }
-
-    .mdi-pencil,
-    .mdi-delete {
-      position: relative;
-      top: -1px;
-    }
-  }
-
-  #edit-project-button {
-    background-color: #5572a1;
-    color: #fff;
-
-    &:hover {
-      background-color: lighten(#5572a1, 20%);
-    }
-  }
-
+#synchronization-modal {
   #synchronization-slider {
     margin-top: 18px;
 
@@ -40,6 +8,7 @@
       display: inline-block;
       width: 40px;
       height: 24px;
+      margin-bottom: 0;
     }
 
     /* Hide default HTML checkbox */
@@ -94,8 +63,4 @@
       border-radius: 50%;
     }
   }
-}
-
-#new-project-menu {
-  width: 425px;
 }

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { SyncService, SyncStatus } from 'idai-field-core';
+import { MenuNavigator } from '../menu-navigator';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { SyncService, SyncStatus } from 'idai-field-core';
 export class TaskbarSyncStatusComponent {
 
     constructor(private synchronizationService: SyncService,
-                private changeDetectorRef: ChangeDetectorRef) {
+                private changeDetectorRef: ChangeDetectorRef,
+                private menuNavigator: MenuNavigator) {
 
         this.synchronizationService.statusNotifications().subscribe(() => {
             this.changeDetectorRef.detectChanges();
@@ -23,4 +25,6 @@ export class TaskbarSyncStatusComponent {
 
 
     public getStatus = (): SyncStatus => this.synchronizationService.getStatus();
+
+    public openSynchronizationModal = () => this.menuNavigator.openSynchronizationModal();
 }

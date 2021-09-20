@@ -3,19 +3,6 @@
 </div>
 
 <div *ngIf="settings && syncTarget" class="modal-body projects-modal" #projectsModalBody>
-    <div class="row">
-        <div class="col-md-6">
-            <div id="new-project-button" class="circular-button category-button" [ngbPopover]="newProjectMenu"
-                 #createPopover="ngbPopover" triggers="manual" [placement]="'bottom'"
-                 [autoClose]="false" (click)="openMenu(createPopover)">
-                <category-icon [category]="'Project'" size="41"></category-icon>
-                <div class="plus-sign-circle">
-                    <span class="plus-sign mdi mdi-plus mdi-18px"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="synchronization-slider" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
@@ -46,21 +33,6 @@
                 (ngModelChange)="syncTarget.password = $event"
                 class="form-control">
     </div>
-
-    <ng-template #newProjectMenu>
-        <div id="new-project-menu">
-            <div class="popover-custom-title" i18n="@@navbar.projects.newProject.enterName">
-                Bitte geben Sie den Namen des neuen Projekts ein.
-            </div>
-            <div class="input-group">
-                <input id="new-project-input" type="text" class="project-name-input form-control"
-                       [(ngModel)]="newProject" (keydown)="$event.key !== 'Enter' || createProject()"/>
-                <button class="project-option-ok btn btn-primary" (click)="createProject()">
-                    <span i18n="@@buttons.ok">OK</span>
-                </button>
-            </div>
-        </div>
-    </ng-template>
 </div>
 
 <div class="modal-footer">

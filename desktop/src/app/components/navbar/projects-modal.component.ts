@@ -107,24 +107,6 @@ export class ProjectsModalComponent implements OnInit, AfterViewChecked {
     }
 
 
-    public async createProject() {
-
-        const validationErrorMessage: string[]|undefined =
-            ProjectNameValidatorMsgConversion.convert(
-                ProjectNameValidator.validate(this.newProject, this.settings.dbs)
-            );
-        if (validationErrorMessage) return this.messages.add(validationErrorMessage);
-
-        await this.settingsService.createProject(
-            this.newProject,
-            remote.getGlobal('switches')
-            && remote.getGlobal('switches').destroy_before_create
-        );
-
-        reload();
-    }
-
-
     public handleClick(event: Event) {
 
         let target: any = event.target;

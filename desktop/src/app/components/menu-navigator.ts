@@ -7,6 +7,7 @@ import { reload } from '../core/common/reload';
 import { DoceditComponent } from './docedit/docedit.component';
 import { MenuContext, MenuService } from './menu-service';
 import { DeleteProjectModalComponent } from './project/delete-project-modal.component';
+import { CreateProjectModalComponent } from './project/create-project-modal.component';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 
@@ -37,11 +38,11 @@ export class MenuNavigator {
 
     public async onMenuItemClicked(menuItem: string, projectName?: string) {
 
-        console.log(menuItem, projectName)
-
         if (menuItem === 'openProject') {
             await this.settingsService.selectProject(projectName);
             reload();
+        } else if (menuItem === 'createProject') {
+            await this.zone.run(async () => this.createProject());
         } else if (menuItem === 'editProject') {
             await this.zone.run(async () => this.editProject());
         } else if (menuItem === 'deleteProject') {
@@ -49,6 +50,24 @@ export class MenuNavigator {
         } else {
             await this.zone.run(async () => await this.router.navigate([menuItem]));
         }
+    }
+
+
+    public async createProject() {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalRef = this.modalService.open(CreateProjectModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // Create project modal has been canceled
+        }
+
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 

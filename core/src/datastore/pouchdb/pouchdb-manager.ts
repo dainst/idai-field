@@ -33,7 +33,11 @@ export class PouchdbManager {
 
     public async createEmptyDb(name: string) {
 
-        return this.pouchDbFactory(name);
+        const db = this.pouchDbFactory(name);
+        const info = await db.info();
+
+        if (info.doc_count !== 0) throw "DB not empty";
+        return db;
     }
 
 

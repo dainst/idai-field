@@ -16,9 +16,9 @@ export class NetworkProjectComponent {
 
     public url = 'localhost:5984';
 
-    public projectName = 'synctest';
+    public projectName = 'synctest-1';
 
-    public password = 'synctest';
+    public password = 'synctest-1';
 
 
     constructor(private messages: Messages,
@@ -29,22 +29,30 @@ export class NetworkProjectComponent {
 
         // TODO don't do it if project already exists locally
 
-        (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName))
-            .subscribe({
-                next: item => {
-                    console.log('SYNC_INFO', item);
-                },
-                error: err => {
-                    console.log('SYNC_ERR', err);
-                },
-                complete: () => {
-                    this.messages.add(
-                        [M.INITIAL_SYNC_COMPLETE]
-                    );
+        try {
+            (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName))
+                .subscribe({
+                    next: item => {
+                        console.log('SYNC_INFO', item);
+                    },
+                    error: err => {
+                        console.log('SYNC_ERR', err);
+                    },
+                    complete: () => {
+                        this.messages.add(
+                            [M.INITIAL_SYNC_COMPLETE]
+                        );
 
-                    // TODO add sync info to config.json
-                }
-            });
+                        // TODO add sync info to config.json
+                    }
+                });
+        } catch (e) {
+            if (e == 'DB not empty') {
+                this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
+            } else {
+                console.error('error from sync service startOneTimeSync', e);
+            }
+        }
     }
 
 

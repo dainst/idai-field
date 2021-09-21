@@ -14,9 +14,9 @@ import { Messages } from '../messages/messages';
  */
 export class NetworkProjectComponent {
 
-    public url = 'localhost:5984';
-    public projectName = 'synctest-1';
-    public password = 'synctest-1';
+    public url: string = '';
+    public projectName: string = '';
+    public password: string = '';
 
 
     constructor(private messages: Messages,

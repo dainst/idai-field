@@ -1,4 +1,4 @@
-<div class="import row" (dragover)="false" (dragleave)="false" (drop)="false">
+<div id="network-project" class="row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
             <div class="col default-nav bg-light text-right">
@@ -15,20 +15,28 @@
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">
-                        <label class="control-label col-form-label">URL</label>
+                        <label class="control-label col-form-label"
+                               i18n="@@project.network.address">Adresse</label>
                         <input class="form-control"
                             id="urlInput"
                             type="text"
                             [(ngModel)]="url">
-                        <label class="control-label col-form-label">Projektname</label>
+                        <div class="small-info-text" i18n="@@project.network.address.info">
+                            Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die
+                            Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden.
+                        </div>
+
+                        <label id="project-name-label" class="control-label col-form-label"
+                               i18n="@@project.network.projectName">Projektname</label>
                         <input class="form-control"
                             id="projectInput"
                             type="text"
                             [(ngModel)]="projectName">
-                        <label class="control-label col-form-label">Passwort</label>
+                        <label id="password-label" class="control-label col-form-label"
+                               i18n="@@project.network.password">Passwort</label>
                             <input class="form-control"
                                 id="passwordInput"
-                                type="text"
+                                type="password"
                                 [(ngModel)]="password">
                     </div>
                 </div>

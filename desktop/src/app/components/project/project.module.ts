@@ -8,6 +8,7 @@ import { CreateProjectModalComponent } from './create-project-modal.component';
 import { SynchronizationModalComponent } from './synchronization-modal.component';
 import { NetworkProjectComponent } from './network-project.component';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
+import { CancelModalComponent } from './cancel-modal.component';
 
 
 @NgModule({
@@ -22,20 +23,23 @@ import { NetworkProjectProgressModalComponent } from './network-project-progress
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
         NetworkProjectComponent,
-        NetworkProjectProgressModalComponent
+        NetworkProjectProgressModalComponent,
+        CancelModalComponent
     ],
     providers: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
         NetworkProjectComponent,
-        NetworkProjectProgressModalComponent
+        NetworkProjectProgressModalComponent,
+        CancelModalComponent
     ],
     entryComponents: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
-        NetworkProjectProgressModalComponent
+        NetworkProjectProgressModalComponent,
+        CancelModalComponent
     ]
 })
 

@@ -52,13 +52,21 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleSync() {
 
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
-        try {
-        this.settings = await this.settingsService.updateSettings(this.settings);
-        } catch (err) {
-            console.error(err);
-        }
+        
+    }
 
+
+    public async apply() {
+
+        try {
+            this.settings = await this.settingsService.updateSettings(this.settings);
+        } catch (err) {
+            return console.error(err);
+        }
+    
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
+
+        this.activeModal.close();
     }
 }

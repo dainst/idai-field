@@ -36,8 +36,10 @@
 </div>
 
 <div class="modal-footer">
-    <div id="close-synchronization-modal-button" type="button" class="btn btn-secondary"
-            (click)="activeModal.close()">
-        <span i18n="@@buttons.close">Schließen</span>
+    <div type="button" class="btn btn-primary" (click)="apply()">
+        <span i18n="@@settings.applySettings">Einstellungen übernehmen</span>
+    </div>
+    <div type="button" class="btn btn-secondary" (click)="activeModal.close()">
+        <span i18n="@@buttons.close">Abbrechen</span>
     </div>
 </div>

@@ -7,6 +7,7 @@ import { Observable, Observer } from 'rxjs';
 import { ProjectCategories } from '../core/configuration/project-categories';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';
 import { ViewFacade } from '../core/resources/view/view-facade';
+import { MenuNavigator } from './menu-navigator';
 
 
 @Injectable()
@@ -27,7 +28,8 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuNavigator: MenuNavigator) {}
 
 
     // For ResourcesComponent
@@ -51,8 +53,7 @@ export class RoutingService {
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (documentToSelect.resource.category === 'Project') {
-            // TODO Implement
-            return;
+            await this.menuNavigator.editProject();
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {

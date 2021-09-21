@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SyncService } from 'idai-field-core';
+import { SettingsService } from '../../core/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 
@@ -22,28 +23,22 @@ export class NetworkProjectComponent {
 
 
     constructor(private messages: Messages,
-                private syncService: SyncService) {}
+                private syncService: SyncService,
+                private settingsService: SettingsService) {}
 
 
     public async onStartClicked() {
 
-        // TODO don't do it if project already exists locally
-
         try {
             (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName))
                 .subscribe({
-                    next: item => {
-                        console.log('SYNC_INFO', item);
-                    },
-                    error: err => {
-                        console.log('SYNC_ERR', err);
-                    },
+                    next: item => { console.log('SYNC_INFO', item); },
+                    error: err => { console.log('SYNC_ERR', err); },
                     complete: () => {
-                        this.messages.add(
-                            [M.INITIAL_SYNC_COMPLETE]
-                        );
+                        this.messages.add([M.INITIAL_SYNC_COMPLETE]);
 
-                        // TODO add sync info to config.json
+                        this.settingsService.addProject(this.projectName);
+                        // TODO now update the file menu to reflect that the new project is there, or do some reloading, or suggest the user can now switch the project
                     }
                 });
         } catch (e) {

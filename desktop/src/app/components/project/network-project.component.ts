@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {  SyncService } from 'idai-field-core';
-import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
-import { reloadAndSwitchToHomeRoute } from '../../services/reload';
-import { SettingsService } from '../../services/settings/settings-service';
+import { SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
+import { TabManager } from '../../services/tabs/tab-manager';
+import { SettingsService } from '../../services/settings/settings-service';
+import { MenuContext } from '../../services/menu-context';
+import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
 @Component({
-    templateUrl: './network-project.html'
+    templateUrl: './network-project.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -29,7 +33,16 @@ export class NetworkProjectComponent {
                 private syncService: SyncService,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private tabManager: TabManager) {}
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
+            await this.tabManager.openActiveTab();
+        }
+    }
 
 
     public async onStartClicked() {

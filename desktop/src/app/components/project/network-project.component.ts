@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SyncService } from 'idai-field-core';
-import { reloadAndSwitchToHomeRoute} from '../../services/reload';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {  SyncService } from 'idai-field-core';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
+import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -26,10 +28,13 @@ export class NetworkProjectComponent {
     constructor(private messages: Messages,
                 private syncService: SyncService,
                 private settingsService: SettingsService,
-                private modalService: NgbModal) {}
+                private modalService: NgbModal,
+                private menuService: Menus) {}
 
 
     public async onStartClicked() {
+
+        this.menuService.setContext(MenuContext.MODAL);
 
         const progressModalRef: any = this.modalService.open(
             NetworkProjectProgressModalComponent,
@@ -46,7 +51,7 @@ export class NetworkProjectComponent {
                         progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
                     },
                     error: err => {
-                        progressModalRef.close();
+                        this.closeModal(progressModalRef);
                         this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
                         console.log('SYNC_ERR', err);
                     },
@@ -59,7 +64,7 @@ export class NetworkProjectComponent {
                                 password: this.password
                             }
                         ).then(() => {
-                            progressModalRef.close();
+                            this.closeModal(progressModalRef);
                             reloadAndSwitchToHomeRoute();
                         });
                     }
@@ -70,7 +75,7 @@ export class NetworkProjectComponent {
             } else {
                 console.error('error from sync service startOneTimeSync', e);
             }
-            progressModalRef.close();
+            this.closeModal(progressModalRef);
         }
     }
 
@@ -89,5 +94,12 @@ export class NetworkProjectComponent {
         ).info();
 
         return info.update_seq;
+    }
+
+
+    private closeModal(modalRef: NgbModalRef) {
+
+        modalRef.close();
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 }

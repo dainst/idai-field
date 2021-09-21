@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {reload} from '../../core/common/reload';
 import { SyncService } from 'idai-field-core';
+import {reload} from '../../services/reload';
 import {SettingsService} from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';

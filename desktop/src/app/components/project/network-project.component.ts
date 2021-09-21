@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SyncService } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute} from '../../services/reload';
@@ -78,7 +78,7 @@ export class NetworkProjectComponent {
     private async getUpdateSequence(): Promise<number> {
 
         const info = await new PouchDB(
-            this.url + '/' + this.projectName,
+            SyncService.generateUrl(this.url + '/' + this.projectName, this.projectName),
             {
                 skip_setup: true,
                 auth: {

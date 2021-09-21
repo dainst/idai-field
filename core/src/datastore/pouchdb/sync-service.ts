@@ -153,7 +153,7 @@ export class SyncService {
     }
 
 
-    private static generateUrl(syncTarget: string, project: string, password: string) {
+    public static generateUrl(syncTarget: string, project: string, password?: string) {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
 

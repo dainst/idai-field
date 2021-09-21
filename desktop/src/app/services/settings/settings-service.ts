@@ -4,9 +4,9 @@ import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
-import {Imagestore} from '../imagestore/imagestore';
-import {ImagestoreErrors} from '../imagestore/imagestore-errors';
-import {Settings, SyncTarget} from './settings';
+import { Imagestore } from '../imagestore/imagestore';
+import { ImagestoreErrors } from '../imagestore/imagestore-errors';
+import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
@@ -134,9 +134,17 @@ export class SettingsService {
     }
 
 
-    public async addProject(project: Name) {
+    public async addProject(project: Name, syncTarget?: SyncTarget) {
 
-        await this.settingsProvider.addProjectAndSerialize(project);
+        if (!syncTarget) {
+            await this.settingsProvider.addProjectAndSerialize(project);
+            return;
+        } else {
+            const settings = this.settingsProvider.getSettings();
+            settings.syncTargets[project] = syncTarget;
+            settings.dbs = [project].concat(settings.dbs);
+            await this.settingsProvider.setSettingsAndSerialize(settings);
+        }
     }
 
 

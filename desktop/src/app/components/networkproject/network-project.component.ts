@@ -40,8 +40,14 @@ export class NetworkProjectComponent {
                     complete: () => {
                         this.messages.add([M.INITIAL_SYNC_COMPLETE]);
 
-                        this.settingsService.addProject(this.projectName);
-                        // TODO now update the file menu to reflect that the new project is there, or do some reloading, or suggest the user can now switch the project
+                        this.settingsService.addProject(
+                            this.projectName,
+                            {
+                                isSyncActive: false,
+                                address: this.url,
+                                password: this.password
+                            });
+                        // TODO maybe suggest the user can now switch the project
                     }
                 });
         } catch (e) {

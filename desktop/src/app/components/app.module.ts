@@ -51,7 +51,6 @@ import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.compone
 import { TaskbarUpdateComponent } from './navbar/taskbar-update.component';
 import { TaskbarComponent } from './navbar/taskbar.component';
 import { ResourcesModule } from './resources/resources.module';
-import { NetworkProjectComponent } from './networkproject/network-project.component';
 import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
@@ -97,9 +96,7 @@ registerLocaleData(localeIt, 'it');
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        NetworkProjectComponent,
         HelpComponent,
-        NetworkProjectComponent
     ],
     providers: [
         Modals,

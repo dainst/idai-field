@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteProjectModalComponent } from './delete-project-modal.component';
 import { CreateProjectModalComponent } from './create-project-modal.component';
 import { SynchronizationModalComponent } from './synchronization-modal.component';
+import { NetworkProjectComponent } from './network-project.component';
 
 
 @NgModule({
@@ -18,12 +19,14 @@ import { SynchronizationModalComponent } from './synchronization-modal.component
     declarations: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
-        SynchronizationModalComponent
+        SynchronizationModalComponent,
+        NetworkProjectComponent
     ],
     providers: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
-        SynchronizationModalComponent
+        SynchronizationModalComponent,
+        NetworkProjectComponent
     ],
     entryComponents: [
         CreateProjectModalComponent,

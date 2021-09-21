@@ -5,6 +5,7 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 
+
 @Component({
     templateUrl: './network-project.html'
 })
@@ -14,9 +15,7 @@ import { Messages } from '../messages/messages';
 export class NetworkProjectComponent {
 
     public url = 'localhost:5984';
-
     public projectName = 'synctest-1';
-
     public password = 'synctest-1';
 
 

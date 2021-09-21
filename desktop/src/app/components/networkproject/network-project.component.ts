@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {reload} from '../../core/common/reload';
+import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { SyncService } from 'idai-field-core';
 import { SettingsService } from '../../core/settings/settings-service';
 import { M } from '../messages/m';
@@ -41,11 +41,13 @@ export class NetworkProjectComponent {
                         this.settingsService.addProject(
                             this.projectName,
                             {
-                                isSyncActive: false,
+                                isSyncActive: true,
                                 address: this.url,
                                 password: this.password
                             }
-                        ).then(() => { reload(); });
+                        ).then(() => {
+                            reloadAndSwitchToHomeRoute();
+                        });
                     }
                 });
         } catch (e) {

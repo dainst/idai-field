@@ -33,7 +33,10 @@ export class NetworkProjectComponent {
             (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName))
                 .subscribe({
                     next: item => { console.log('SYNC_INFO', item); },
-                    error: err => { console.log('SYNC_ERR', err); },
+                    error: err => {
+                        this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
+                        console.log('SYNC_ERR', err);
+                    },
                     complete: () => {
                         this.messages.add([M.INITIAL_SYNC_COMPLETE]);
 
@@ -42,7 +45,7 @@ export class NetworkProjectComponent {
                     }
                 });
         } catch (e) {
-            if (e == 'DB not empty') {
+            if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
             } else {
                 console.error('error from sync service startOneTimeSync', e);

@@ -48,18 +48,25 @@ const getTemplate = (mainWindow, context, config) => {
                 type: 'separator'
             },
             {
-                label: messages.get('menu.file.projectProperties'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
-                enabled: context === 'default'
-            }, {
-                label: messages.get('menu.file.projectSynchronization'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
-                enabled: context === 'default'
-            }, {
-                label: messages.get('menu.file.deleteProject'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
-                enabled: context === 'default'
-            }, {
+                label: messages.get('menu.file.currentProject'),
+                enabled: context === 'default',
+                submenu: [
+                    {
+                        label: messages.get('menu.file.projectProperties'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
+                        enabled: context === 'default'
+                    }, {
+                        label: messages.get('menu.file.projectSynchronization'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
+                        enabled: context === 'default'
+                    }, {
+                        label: messages.get('menu.file.deleteProject'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
+                        enabled: context === 'default'
+                    }
+                ]
+            },
+            {
                 type: 'separator'
             },
             {
@@ -245,7 +252,7 @@ const getTemplate = (mainWindow, context, config) => {
 
     if (process.platform === 'darwin') {
         // Remove 'Settings' option from 'File' menu
-        template[1].submenu.splice(12, 1);
+        template[1].submenu.splice(10, 1);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

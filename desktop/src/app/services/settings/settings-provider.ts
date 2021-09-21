@@ -40,7 +40,7 @@ export class SettingsProvider {
 
         this.settings = settings;
         await this.serialize();
-        remote.getGlobal('updateConfig')(this.settings);
+        if (remote) remote.getGlobal('updateConfig')(this.settings);
     }
 
 

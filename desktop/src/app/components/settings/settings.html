@@ -23,7 +23,7 @@
                             Sprachen
                         </label>
                         <language-settings [selectedLanguages]="settings.languages"></language-settings>
-                        <div class="settings-info" i18n="@@settings.languages.info">
+                        <div class="small-info-text" i18n="@@settings.languages.info">
                             Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine
                             übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen
                             Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der
@@ -44,7 +44,7 @@
                                class="form-control">
                     </div>
 
-                    <div class="settings-info" i18n="@@settings.userName.info">
+                    <div class="small-info-text" i18n="@@settings.userName.info">
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
@@ -71,7 +71,7 @@
                                (ngModelChange)="settings.hostPassword = $event"
                                class="form-control">
 
-                        <div class="settings-info" i18n="@@settings.synchronization.info">
+                        <div class="small-info-text" i18n="@@settings.synchronization.info">
                             Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients
                             eingetragen werden, damit dieser Computer als Synchronisationsziel
                             eingerichtet werden kann.
@@ -101,7 +101,7 @@
                             </label>
                         </div>
 
-                        <div class="settings-info" i18n="@@settings.images.path.info">
+                        <div class="small-info-text" i18n="@@settings.images.path.info">
                             Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
                             sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
                             Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.

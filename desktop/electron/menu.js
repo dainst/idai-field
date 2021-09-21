@@ -36,8 +36,8 @@ const getTemplate = (mainWindow, context) => {
             },
             {
                 label: messages.get('menu.file.openProject'),
-                enabled: context === 'default',
-                submenu: (global.config.dbs ?? []).map(projectName => {
+                enabled: context === 'default' && getNamesOfUnopenedProjects().length > 0,
+                submenu: getNamesOfUnopenedProjects().map(projectName => {
                     return {
                         label: projectName,
                         click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
@@ -249,6 +249,16 @@ const getTemplate = (mainWindow, context) => {
     }
 
     return template;
+};
+
+
+const getNamesOfUnopenedProjects = () => {
+
+    if (!global.config.dbs || global.config.dbs.length < 2) {
+        return [];
+    } else {
+        return global.config.dbs.slice(1);
+    }
 };
 
 

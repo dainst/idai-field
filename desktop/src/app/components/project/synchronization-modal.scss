@@ -1,4 +1,9 @@
 #synchronization-modal {
+  span,
+  label {
+    user-select: none;
+  }
+
   #synchronization-slider {
     /* The switch - the box around the slider */
     .switch {

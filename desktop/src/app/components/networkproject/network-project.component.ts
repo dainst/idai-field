@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
+import {reload} from '../../core/common/reload';
 import { SyncService } from 'idai-field-core';
 import { SettingsService } from '../../core/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 
 @Component({
-    templateUrl: './network-project.html',
-    host: {
-        '(window:keydown)': 'onKeyDown($event)'
-    }
+    templateUrl: './network-project.html'
 })
 /**
  * @author Daniel de Oliveira
@@ -38,7 +36,7 @@ export class NetworkProjectComponent {
                         console.log('SYNC_ERR', err);
                     },
                     complete: () => {
-                        this.messages.add([M.INITIAL_SYNC_COMPLETE]);
+                        // this.messages.add([M.INITIAL_SYNC_COMPLETE]); TODO remove message
 
                         this.settingsService.addProject(
                             this.projectName,
@@ -46,8 +44,8 @@ export class NetworkProjectComponent {
                                 isSyncActive: false,
                                 address: this.url,
                                 password: this.password
-                            });
-                        // TODO maybe suggest the user can now switch the project
+                            }
+                        ).then(() => { reload(); });
                     }
                 });
         } catch (e) {
@@ -58,7 +56,4 @@ export class NetworkProjectComponent {
             }
         }
     }
-
-
-    public async onKeyDown(event: KeyboardEvent) {} //  TODO review if it is necessary
 }

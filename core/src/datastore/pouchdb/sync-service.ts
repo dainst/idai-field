@@ -97,7 +97,7 @@ export class SyncService {
 
         const db = await this.pouchdbManager.createEmptyDb(project); // may throw, if not empty
 
-        const sync = db.replicate.from(url, { live: false, retry: false });
+        const sync = db.replicate.from(url, { live: false, retry: true }); // TODO review how retry works
 
         // TODO deduplicate with code below in setupSync
         return Observable.create((obs: Observer<SyncStatus>) => {
@@ -108,7 +108,13 @@ export class SyncService {
                     obs.next(SyncStatus.Offline);
                     obs.complete();
                 })
-                .on('error', (err: any) => obs.error(err));
+                .on('error', (err: any) => {
+                
+                    // it's ok to remove db, because we know by know it was a new one
+                    this.pouchdbManager.destroyDb(project);
+
+                    obs.error(err);
+                });
         })
     };
 

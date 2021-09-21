@@ -3,6 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SyncProcess, SyncService } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { SettingsService } from '../../core/settings/settings-service';
+import { TabManager } from '../../core/tabs/tab-manager';
 import { MenuContext, MenuService } from '../menu-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -12,7 +13,10 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
 
 
 @Component({
-    templateUrl: './network-project.html'
+    templateUrl: './network-project.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -28,7 +32,16 @@ export class NetworkProjectComponent {
                 private syncService: SyncService,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private menuService: MenuService) {}
+                private menuService: MenuService,
+                private tabManager: TabManager) {}
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
+            await this.tabManager.openActiveTab();
+        }
+    }
 
 
     public async onStartClicked() {

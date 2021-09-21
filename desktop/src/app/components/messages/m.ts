@@ -47,6 +47,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Network Project Package
     public static INITIAL_SYNC_COMPLETE = 'M.InitialSync.complete';
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbnotempty';
+    public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.generic-error';
 
     // ImportPackage - ParserErrors
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
@@ -419,6 +420,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.initial-sync.target-db-not-empty',
                 value: 'Zieldatenbank existiert bereits'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.initial-sync.generic-error',
+                value: 'Unbekannter Fehler - Sehen Sie die Entwickler-Konsole eine für mehr Informationen'
             }),
             level: 'danger',
             params: [],

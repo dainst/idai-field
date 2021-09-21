@@ -21,7 +21,6 @@ export const reload = () => {
 export const reloadAndSwitchToHomeRoute = () => {
 
     if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-        const route = window.location.href.split('#')[1];
         ipcRenderer.send('reload', '');
     }
 };

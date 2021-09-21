@@ -66,13 +66,16 @@ export class SyncService {
     }
 
     
+    /**
+     * @throws error if db is not empty
+     */
     public async startOneTimeSync(target: string, password: string, project: string): Promise<Observable<SyncStatus>> {
 
-        const url = SyncService.generateUrl(target + '/' + project, project, password);
+        const url = SyncService.generateUrl(target, project, password);
 
         console.log('url', url);
 
-        const db = await this.pouchdbDatastore.createEmptyDb(project);
+        const db = await this.pouchdbDatastore.createEmptyDb(project); // may throw, if not empty
 
         const sync = db.replicate.from(url, { live: false, retry: false });
 

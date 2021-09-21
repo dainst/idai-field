@@ -48,24 +48,29 @@ export class NetworkProjectComponent {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const progressModalRef: any = this.modalService.open(
+        const progressModalRef: NgbModalRef = this.modalService.open(
             NetworkProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false }
         );
         progressModalRef.componentInstance.progressPercent = 0;
+        progressModalRef.result.catch(cancelled => {
+            this.syncService.stopReplication(this.projectName);
+        });
 
         const updateSequence: number = await this.getUpdateSequence();
 
         try {
-            (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName, updateSequence))
+            (await this.syncService.startReplication(this.url, this.password, this.projectName, updateSequence))
                 .subscribe({
                     next: lastSequence => {
                         progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
                     },
                     error: err => {
                         this.closeModal(progressModalRef);
-                        this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-                        console.log('SYNC_ERR', err);
+                        if (err !== 'canceled') {
+                            this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
+                            console.log('SYNC_ERR', err);
+                        }
                     },
                     complete: () => {
                         this.settingsService.addProject(

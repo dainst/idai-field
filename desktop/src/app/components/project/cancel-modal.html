@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@project.cancelModal.header">
+        Ladevorgang abbrechen?
+    </h5>
+</div>
+
+<div class="modal-body">
+    <span id="cancel-modal-info" i18n="@@project.cancelModal.info">
+        Bitte beachten Sie, dass der Ladeprozess im Falle eines Abbruchs von vorn beginnt,
+        wenn Sie sich zu einem späteren Zeitpunkt erneut mit dem Netzwerkprojekt verbinden.
+    </span>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger"
+            (click)="activeModal.close()">
+        <span i18n="@@project.cancelModal.confirm">Abbrechen</span>
+    </button>
+    <button type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@project.cancelModal.continue">Fortsetzen</span>
+    </button>
+</div>

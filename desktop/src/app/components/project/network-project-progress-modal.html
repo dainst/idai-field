@@ -8,5 +8,9 @@
         </div>
         <div *ngIf="progressPercent === 0" class="process-info" i18n="@@project.network.connecting">Verbindung wird hergestellt...</div>
         <div *ngIf="progressPercent > 0" class="process-info" i18n="@@project.network.progressInfo">{{getRoundedProgress()}}% der Projektressourcen geladen... </div>
+        <button id="network-project-cancel-button" type="button" class="btn btn-secondary"
+                (click)="cancel()">
+            <span i18n="@@buttons.cancel">Abbrechen</span>
+        </button>
     </div>
 </div>

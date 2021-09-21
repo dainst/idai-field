@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isString } from 'tsfun';
+import { is, isObject, isString } from 'tsfun';
 import { Name, PouchdbManager, SyncService } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
@@ -173,9 +173,17 @@ export class SettingsService {
     }
 
 
-    public async addProject(project: Name) {
+    public async addProject(project: Name, syncTarget?: SyncTarget) {
 
-        await this.settingsProvider.addProjectAndSerialize(project);
+        if (!syncTarget) {
+            await this.settingsProvider.addProjectAndSerialize(project);
+            return;
+        } else {
+            const settings = this.settingsProvider.getSettings();
+            settings.syncTargets[project] = syncTarget;
+            settings.dbs = [project].concat(settings.dbs);
+            await this.settingsProvider.setSettingsAndSerialize(settings);
+        }
     }
 
 

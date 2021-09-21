@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Document, Named, ProjectConfiguration } from 'idai-field-core';
 import { DatastoreErrors } from 'idai-field-core';
-import {ViewFacade} from '../components/resources/view/view-facade';
+import { ViewFacade } from '../components/resources/view/view-facade';
+import { MenuNavigator } from '../components/menu-navigator';
 
 
 @Injectable()
@@ -25,7 +26,8 @@ export class Routing {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuNavigator: MenuNavigator) {}
 
 
     // For ResourcesComponent
@@ -49,8 +51,7 @@ export class Routing {
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (documentToSelect.resource.category === 'Project') {
-            // TODO Implement
-            return;
+            await this.menuNavigator.editProject();
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {

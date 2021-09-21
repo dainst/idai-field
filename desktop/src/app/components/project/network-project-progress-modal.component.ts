@@ -11,5 +11,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
  */
 export class NetworkProjectProgressModalComponent {
 
+    public progressPercent: number;
+
     constructor(public activeModal: NgbActiveModal) {}
+
+
+    public getRoundedProgress(): number {
+
+        return Math.floor(this.progressPercent);
+    }
 }

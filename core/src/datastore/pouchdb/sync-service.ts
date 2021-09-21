@@ -89,7 +89,7 @@ export class SyncService {
     /**
      * @throws error if db is not empty
      */
-    public async startOneTimeSync(target: string, password: string, project: string): Promise<Observable<SyncStatus>> {
+    public async startOneTimeSync(target: string, password: string, project: string, updateSequence: number): Promise<Observable<any>> {
 
         const url = SyncProcess.generateUrl(target + '/' + project, project, password);
 
@@ -97,11 +97,11 @@ export class SyncService {
 
         const db = await this.pouchdbManager.createEmptyDb(project); // may throw, if not empty
 
-        const sync = db.replicate.from(url, { live: false, retry: true }); // TODO review how retry works
+        const sync = db.replicate.from(url, { live: false, retry: true, batch_size: updateSequence < 200 ? 10 : 100 }); // TODO review how retry works
 
         // TODO deduplicate with code below in setupSync
         return Observable.create((obs: Observer<SyncStatus>) => {
-            sync.on('change', (info: any) => obs.next(SyncStatus.getFromInfo(info)))
+            sync.on('change', (info: any) => { obs.next(info.last_seq); })
                 .on('paused', () => obs.next(SyncStatus.InSync))
                 .on('active', () => obs.next(SyncStatus.Pulling))
                 .on('complete', (info: any) => {
@@ -109,7 +109,6 @@ export class SyncService {
                     obs.complete();
                 })
                 .on('error', (err: any) => {
-                
                     // it's ok to remove db, because we know by know it was a new one
                     this.pouchdbManager.destroyDb(project);
 

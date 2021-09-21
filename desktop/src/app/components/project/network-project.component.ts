@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SyncService } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute} from '../../services/reload';
@@ -6,6 +6,8 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
+
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
 @Component({
@@ -33,19 +35,22 @@ export class NetworkProjectComponent {
             NetworkProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false }
         );
+        progressModalRef.componentInstance.progressPercent = 0;
+
+        const updateSequence: number = await this.getUpdateSequence();
 
         try {
-            (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName))
+            (await this.syncService.startOneTimeSync(this.url, this.password, this.projectName, updateSequence))
                 .subscribe({
-                    next: item => { console.log('SYNC_INFO', item); },
+                    next: lastSequence => {
+                        progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
+                    },
                     error: err => {
                         progressModalRef.close();
                         this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
                         console.log('SYNC_ERR', err);
                     },
                     complete: () => {
-                        // this.messages.add([M.INITIAL_SYNC_COMPLETE]); TODO remove message
-
                         this.settingsService.addProject(
                             this.projectName,
                             {
@@ -67,5 +72,22 @@ export class NetworkProjectComponent {
             }
             progressModalRef.close();
         }
+    }
+
+
+    private async getUpdateSequence(): Promise<number> {
+
+        const info = await new PouchDB(
+            this.url + '/' + this.projectName,
+            {
+                skip_setup: true,
+                auth: {
+                    username: this.projectName,
+                    password: this.password
+                }
+            }
+        ).info();
+
+        return info.update_seq;
     }
 }

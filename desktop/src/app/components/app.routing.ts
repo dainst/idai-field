@@ -8,7 +8,7 @@ import { MatrixViewComponent } from './matrix/matrix-view.component';
 import { HelpComponent } from './help/help.component';
 import { ExportComponent } from './export/export.component';
 import { ProjectConfigurationComponent } from './configuration/project-configuration.component';
-import { NetworkProjectComponent } from './networkproject/network-project.component';
+import { NetworkProjectComponent } from './project/network-project.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },

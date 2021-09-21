@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { SyncService } from 'idai-field-core';
+import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { SettingsService } from '../../core/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
+
 
 @Component({
     templateUrl: './network-project.html'
@@ -14,9 +15,7 @@ import { Messages } from '../messages/messages';
 export class NetworkProjectComponent {
 
     public url = 'localhost:5984';
-
     public projectName = 'synctest-1';
-
     public password = 'synctest-1';
 
 

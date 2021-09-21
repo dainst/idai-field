@@ -91,7 +91,7 @@ export class SyncService {
                 .on('error', (err: any) => {
                 
                     // it's ok to remove db, because we know by know it was a new one
-                    this.pouchdbManager.destroyDb(project);
+                    this.pouchdbDatastore.destroyDb(project);
 
                     obs.error(err);
                 });

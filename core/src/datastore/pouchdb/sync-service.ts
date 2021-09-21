@@ -25,7 +25,7 @@ export enum SyncStatus {
 
 export namespace SyncProcess {
 
-    export function generateUrl(syncTarget: string, project: string, password: string) {
+    export function generateUrl(syncTarget: string, project: string, password?: string) {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
 

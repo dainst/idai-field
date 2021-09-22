@@ -1,4 +1,9 @@
 #network-project-progress-modal {
+  .spinner {
+    position: relative;
+    left: 5px;
+  }
+  
   #replication-progress {
     width: 300px;
     margin-top: 10px;

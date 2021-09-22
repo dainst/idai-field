@@ -54,7 +54,7 @@ describe('ConnectedDocs', () => {
 
         spyOn(console, 'warn');
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'update', 'putCache']);
+        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'update', 'convert']);
         inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
         relationNames = projectConfiguration.getRelations().map(Named.toName);
 
@@ -86,7 +86,7 @@ describe('ConnectedDocs', () => {
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
         await ConnectedDocs.updateForUpdate(
-            mockDatastore.update, get, mockDatastore.putCache, relationNames, inverseRelationsMap, doc, [doc]);
+            mockDatastore.update, get, mockDatastore.convert, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
@@ -100,7 +100,7 @@ describe('ConnectedDocs', () => {
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
         await ConnectedDocs.updateForUpdate(
-                mockDatastore.update, get, mockDatastore.putCache, relationNames, inverseRelationsMap, doc, [doc]);
+                mockDatastore.update, get, mockDatastore.convert, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, undefined);
         done();
@@ -119,7 +119,7 @@ describe('ConnectedDocs', () => {
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
         await ConnectedDocs.updateForUpdate(
-            mockDatastore.update, get, mockDatastore.putCache, relationNames, inverseRelationsMap, doc, [oldVersion as any]);
+            mockDatastore.update, get, mockDatastore.convert, relationNames, inverseRelationsMap, doc, [oldVersion as any]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
 
@@ -135,7 +135,7 @@ describe('ConnectedDocs', () => {
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
         await ConnectedDocs.updateForUpdate(
-            mockDatastore.update, get, mockDatastore.putCache, relationNames, inverseRelationsMap, doc, [doc]);
+            mockDatastore.update, get, mockDatastore.convert, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');

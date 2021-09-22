@@ -22,7 +22,7 @@ export namespace ConnectedDocs {
 
     export async function updateForUpdate(update: Datastore.Update,
                                           get: Datastore.Get,
-                                          putCache: Datastore.PutCache,
+                                          convert: Datastore.Convert,
                                           relationNames: Array<Name>,
                                           inverseRelationsMap: Relation.InverseRelationsMap, 
                                           document: Document, 
@@ -37,7 +37,7 @@ export namespace ConnectedDocs {
             true
         );
 
-        for (const doc of connectedDocs) putCache(doc);
+        for (const doc of connectedDocs) convert(doc);
 
         await updateDocs(update, docsToUpdate);
     }

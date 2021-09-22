@@ -96,7 +96,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await ConnectedDocs.updateForUpdate(
-            this.datastore.update, this.datastore.get, this.datastore.putCache, 
+            this.datastore.update, this.datastore.get, this.datastore.convert, 
             this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }

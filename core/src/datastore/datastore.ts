@@ -196,9 +196,9 @@ export class Datastore {
     }
 
 
-    public putCache: Datastore.PutCache = (document: Document) => {
+    public convert: Datastore.Convert = (document: Document) => {
         
-        this.documentCache.reassign(this.categoryConverter.convert(document));
+        this.categoryConverter.convert(document);
     }  
 
 
@@ -352,7 +352,7 @@ export namespace Datastore {
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
-    export type PutCache = (document: Document) => void;
+    export type Convert = (document: Document) => void;
 
 
     export interface FindIdsResult {

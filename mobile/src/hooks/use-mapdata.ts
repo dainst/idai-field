@@ -16,12 +16,17 @@ const searchQuery: Query = {
     constraints: { 'geometry:exist': 'KNOWN' }
 };
 
+export type UpdatedDocument = {
+    document: Document,
+    status: 'updated' | 'deleted'
+};
 
 type mapDataReturn = [
     Document[],
     Matrix4 | undefined,
     Matrix4 | undefined,
-    Transformation | undefined, (docId: string) => void];
+    Transformation | undefined, (docId: string) => void,
+    UpdatedDocument | undefined];
 
 
 const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[], screen?: LayoutRectangle):
@@ -32,6 +37,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     const [documentToWorldMatrix, setDocumentToWorldMatrix] = useState<Matrix4>();
     const [screenToWorldMatrix, setScreenToWorldMatrix] = useState<Matrix4>();
     const [viewBox, setViewBox] = useState<Transformation>();
+    const [updateDoc, setUpdateDoc] = useState<UpdatedDocument>();
    
     const focusMapOnDocumentIds = useCallback(async (docIds: string[]) => {
 
@@ -64,6 +70,18 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
                 setGeoDocuments(result.documents);
                 setGeometryBoundings(getGeometryBoundings(result.documents));
             }).catch(err => console.log('Document not found. Error:',err));
+
+        const changedSubscription = repository.remoteChanged()
+            .subscribe(document => Document.hasGeometry(document) && setUpdateDoc({ document, status: 'updated' }));
+
+        return () => changedSubscription.unsubscribe();
+    },[repository]);
+
+    useEffect(() => {
+
+        const deletedSubscription = repository.deleted()
+            .subscribe(document => setUpdateDoc({ document, status: 'deleted' }));
+        return () => deletedSubscription.unsubscribe();
     },[repository]);
 
 
@@ -80,7 +98,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     },[screen]);
 
 
-    return [geoDocuments, documentToWorldMatrix, screenToWorldMatrix, viewBox, focusMapOnDocumentId];
+    return [geoDocuments, documentToWorldMatrix, screenToWorldMatrix, viewBox, focusMapOnDocumentId, updateDoc];
 };
 
 

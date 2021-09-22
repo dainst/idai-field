@@ -1,7 +1,7 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Position } from 'geojson';
-import { Document, FieldGeometry } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import {
     GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet
@@ -9,13 +9,14 @@ import {
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
+import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
+    addDocumentToScene,
     addHighlightedDocToScene,
-    addlocationPointToScene,
-    lineStringToShape, ObjectChildValues, pointToShape, polygonToShape
+    addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene
 } from './geojson/geojson-gl-shape';
 import { calcCenter, calcDistance } from './math-utils';
 
@@ -42,6 +43,7 @@ interface GLMapProps {
     selectedDocumentIds: string[];
     geoDocuments: Document[];
     location: {x: number, y:number} | undefined;
+    updateDoc?: UpdatedDocument
 }
 
 
@@ -53,7 +55,8 @@ const GLMap: React.FC<GLMapProps> = ({
     screenToWorldMatrix,
     selectedDocumentIds,
     geoDocuments,
-    location
+    location,
+    updateDoc
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -183,27 +186,10 @@ const GLMap: React.FC<GLMapProps> = ({
     
     useEffect(() => {
     
-        if(!documentToWorldMatrix || !geoDocuments.length) return;
+        if(!geoDocuments.length) return;
+
         scene.clear();
-        geoDocuments.forEach((doc) => {
-            
-            const geometry = doc.resource.geometry as FieldGeometry;
-            
-            switch(geometry.type){
-                case 'Polygon':
-                case 'MultiPolygon':
-                    polygonToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
-                    break;
-                case 'LineString':
-                case 'MultiLineString':
-                    lineStringToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
-                    break;
-                case 'Point':
-                case 'MultiPoint':
-                    pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
-                    break;
-            }
-        });
+        geoDocuments.forEach(doc => addDocumentToScene(doc,documentToWorldMatrix, scene, config));
         renderScene();
     },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene]);
 
@@ -256,6 +242,19 @@ const GLMap: React.FC<GLMapProps> = ({
             renderScene();
         }
     },[screen, renderScene]);
+
+    useEffect(() => {
+        if(!updateDoc) return;
+        
+        const { document, status } = updateDoc;
+        if(status === 'deleted')
+            removeDocumentFromScene(document.resource.id, scene);
+        else
+            updateDocumentInScene(document, documentToWorldMatrix, scene, config);
+        
+        renderScene();
+
+    },[updateDoc, scene, documentToWorldMatrix, config, renderScene]);
 
     const onPress = (e: GestureResponderEvent) => {
 

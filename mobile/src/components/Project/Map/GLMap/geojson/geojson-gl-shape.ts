@@ -1,5 +1,5 @@
 import { Position } from 'geojson';
-import { Document, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldGeometry, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, Line,
@@ -27,6 +27,45 @@ export enum ObjectChildValues {
     notSelected = 'notSelected',
 }
 
+export const updateDocumentInScene = (
+        document: Document,
+        documentToWorldMatrix: Matrix4,
+        scene: Scene,config: ProjectConfiguration): void => {
+
+    removeDocumentFromScene(document.resource.id, scene);
+    addDocumentToScene(document, documentToWorldMatrix, scene, config);
+};
+
+export const removeDocumentFromScene = (docId: string, scene: Scene): void => {
+    
+    const parent = scene.getObjectByProperty('uuid',docId);
+    if(parent) scene.remove(parent);
+};
+
+export const addDocumentToScene = (
+        doc: Document,
+        documentToWorldMatrix: Matrix4,
+        scene: Scene,
+        config: ProjectConfiguration): void => {
+
+    if(!documentToWorldMatrix) return;
+    const geometry = doc.resource.geometry as FieldGeometry;
+        
+    switch(geometry.type){
+        case 'Polygon':
+        case 'MultiPolygon':
+            polygonToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+        case 'LineString':
+        case 'MultiLineString':
+            lineStringToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+        case 'Point':
+        case 'MultiPoint':
+            pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+    }
+};
 
 export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         (matrix, scene, config, document,coordinates) => {

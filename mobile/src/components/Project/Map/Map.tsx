@@ -37,7 +37,8 @@ const Map: React.FC<MapProps> = (props) => {
         documentToWorldMatrix,
         screenToWorldMatrix,
         viewBox,
-        focusMapOnDocumentId] = useMapData(props.repository,props.selectedDocumentIds, screen);
+        focusMapOnDocumentId,
+        updateDoc] = useMapData(props.repository,props.selectedDocumentIds, screen);
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
         props.repository.get(docId).then(setHighlightedDoc), [props.repository]);
@@ -79,7 +80,8 @@ const Map: React.FC<MapProps> = (props) => {
                 screenToWorldMatrix={ screenToWorldMatrix }
                 selectedDocumentIds={ props.selectedDocumentIds }
                 geoDocuments={ geoDocuments }
-                location={ location } />}
+                location={ location }
+                updateDoc={ updateDoc } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

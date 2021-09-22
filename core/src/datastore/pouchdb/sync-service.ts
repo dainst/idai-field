@@ -94,6 +94,8 @@ export class SyncService {
 
         if (this.replicationHandle) return;
 
+        this.stopSync();
+
         const url = SyncProcess.generateUrl(target + '/' + project, project, password);
 
         const db = await this.pouchdbManager.createEmptyDb(project); // may throw, if not empty
@@ -107,27 +109,28 @@ export class SyncService {
                     if (info.status === 'complete') {
                         obs.complete();
                     } else {
+                        this.pouchdbManager.destroyDb(project);
                         obs.error('canceled');
                     }
+                    this.startSync();
                 })
                 .on('error', (err: any) => {
                     // it's ok to remove db, because we know it was a new one
                     this.pouchdbManager.destroyDb(project);
                     this.replicationHandle = undefined;
+                    this.startSync();
                     obs.error(err);
                 });
         })
     };
 
 
-    public async stopReplication(project: string) {
+    public async stopReplication() {
 
         if (!this.replicationHandle) return;
 
         this.replicationHandle.cancel();
         this.replicationHandle = undefined;
-
-        this.pouchdbManager.destroyDb(project);
     }
 
 
@@ -143,10 +146,9 @@ export class SyncService {
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
+                console.log('error during syncing:', err);
                 const syncStatus = SyncStatus.getFromError(err);
-                if (syncStatus !== SyncStatus.AuthenticationError
-                    && syncStatus !== SyncStatus.AuthorizationError) {
-                
+                if (syncStatus !== SyncStatus.AuthenticationError && syncStatus !== SyncStatus.AuthorizationError) {
                         console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
                 }
                 this.setStatus(syncStatus);
@@ -167,6 +169,7 @@ export class SyncService {
 
     public setStatus(status: SyncStatus) {
 
+        console.log('status:', status);
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
     }

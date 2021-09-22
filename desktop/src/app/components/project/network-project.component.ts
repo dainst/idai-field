@@ -9,6 +9,7 @@ import { TabManager } from '../../services/tabs/tab-manager';
 import { SettingsService } from '../../services/settings/settings-service';
 import { MenuContext } from '../../services/menu-context';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
+import { SettingsProvider } from '../../services/settings/settings-provider';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -33,6 +34,7 @@ export class NetworkProjectComponent {
     constructor(private messages: Messages,
                 private syncService: SyncService,
                 private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
                 private menuService: Menus,
                 private tabManager: TabManager) {}
@@ -68,36 +70,39 @@ export class NetworkProjectComponent {
             return this.closeModal(progressModalRef);
         }
 
+        const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
+
         try {
-            (await this.syncService.startReplication(this.url, this.password, this.projectName, updateSequence))
-                .subscribe({
-                    next: lastSequence => {
-                        progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
-                    },
-                    error: err => {
-                        this.closeModal(progressModalRef);
-                        if (err === 'canceled') return;
-                        if (err.error === 'unauthorized') {
-                            this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
-                        } else {
-                            this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-                            console.error('Error while replicating network project:', err);
-                        }
-                    },
-                    complete: () => {
-                        this.settingsService.addProject(
-                            this.projectName,
-                            {
-                                isSyncActive: true,
-                                address: this.url,
-                                password: this.password
-                            }
-                        ).then(() => {
-                            this.closeModal(progressModalRef);
-                            reloadAndSwitchToHomeRoute();
-                        });
+            (await this.syncService.startReplication(
+                this.url, this.password, this.projectName, updateSequence, destroyExisting
+            )).subscribe({
+                next: lastSequence => {
+                    progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
+                },
+                error: err => {
+                    this.closeModal(progressModalRef);
+                    if (err === 'canceled') return;
+                    if (err.error === 'unauthorized') {
+                        this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+                    } else {
+                        this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
+                        console.error('Error while replicating network project:', err);
                     }
-                });
+                },
+                complete: () => {
+                    this.settingsService.addProject(
+                        this.projectName,
+                        {
+                            isSyncActive: true,
+                            address: this.url,
+                            password: this.password
+                        }
+                    ).then(() => {
+                        this.closeModal(progressModalRef);
+                        reloadAndSwitchToHomeRoute();
+                    });
+                }
+            });
         } catch (e) {
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);

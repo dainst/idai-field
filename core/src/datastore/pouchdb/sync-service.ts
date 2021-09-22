@@ -73,7 +73,8 @@ export class SyncService {
     /**
      * @throws error if db is not empty
      */
-    public async startReplication(target: string, password: string, project: string, updateSequence: number): Promise<Observable<any>> {
+    public async startReplication(target: string, password: string, project: string, updateSequence: number,
+                                  destroyExisting: boolean): Promise<Observable<any>> {
 
         if (this.replicationHandle) return;
 
@@ -81,7 +82,7 @@ export class SyncService {
 
         const url = SyncService.generateUrl(target + '/' + project, project, password);
 
-        const db = await this.pouchdbDatastore.createEmptyDb(project); // may throw, if not empty
+        const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
         this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
 

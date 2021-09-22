@@ -43,12 +43,19 @@ export class PouchdbDatastore {
     public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
 
     
-    public async createEmptyDb(name: string) {
+    public async createEmptyDb(name: string, destroyExisting: boolean = false) {
 
         const db = this.pouchDbFactory(name);
         const info = await db.info();
 
-        if (info.doc_count !== 0) throw "DB not empty";
+        if (info.update_seq !== 0) {
+            if (destroyExisting) {
+                await db.destroy();
+                return this.createEmptyDb(name);
+            } else {
+                throw 'DB not empty';
+            }
+        }
         return db;
     }
 

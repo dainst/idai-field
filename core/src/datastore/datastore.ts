@@ -224,9 +224,9 @@ export class Datastore {
     }
 
 
-    public putCache(document: Document) {
+    public convert(document: Document) {
 
-        this.documentCache.reassign(this.categoryConverter.convert(document));
+        this.categoryConverter.convert(document);
     }    
 
 

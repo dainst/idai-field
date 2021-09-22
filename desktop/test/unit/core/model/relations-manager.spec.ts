@@ -63,7 +63,7 @@ describe('RelationsManager', () => {
         spyOn(console, 'warn');
 
         mockDatastore = jasmine.createSpyObj('mockDatastore',
-            ['get', 'getMultiple', 'putCache', 'find', 'create', 'update', 'refresh', 'remove']);
+            ['get', 'getMultiple', 'convert', 'find', 'create', 'update', 'refresh', 'remove']);
 
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });

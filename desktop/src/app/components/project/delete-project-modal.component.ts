@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {reload} from '../../services/reload';
 import {SettingsProvider} from '../../services/settings/settings-provider';
 import {SettingsService} from '../../services/settings/settings-service';
-import {StateSerializer} from '../../services/state-serializer';
+import { StateSerializer } from '../../services/state-serializer';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 

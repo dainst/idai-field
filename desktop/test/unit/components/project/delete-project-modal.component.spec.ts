@@ -1,7 +1,7 @@
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { M } from '../../../../src/app/components/messages/m';
 import { DeleteProjectModalComponent } from '../../../../src/app/components/project/delete-project-modal.component';
-import { StateSerializer } from '../../../../src/app/core/common/state-serializer';
+import { StateSerializer } from '../../../../src/app/services/state-serializer';
 
 
 /**

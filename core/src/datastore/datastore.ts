@@ -224,6 +224,12 @@ export class Datastore {
     }
 
 
+    public convert(document: Document) {
+
+        this.categoryConverter.convert(document);
+    }    
+
+
     public findIds(query: Query, ignoreCategories: boolean = false /* TODO review */): FindIdsResult {
 
         if (!query.categories && !ignoreCategories) {

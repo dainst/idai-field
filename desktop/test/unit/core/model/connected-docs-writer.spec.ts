@@ -48,7 +48,7 @@ describe('ConnectedDocsWriter', () => {
 
         spyOn(console, 'warn');
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
+        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'convert', 'create', 'update', 'refresh', 'remove']);
 
         connectedDocsWriter = new ConnectedDocsWriter(mockDatastore, projectConfiguration);
 

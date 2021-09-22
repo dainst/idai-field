@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Settings, SyncTarget } from '../../core/settings/settings';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
-import { MenuService } from '../menu-service';
 
 
 @Component({
@@ -25,9 +24,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsProvider: SettingsProvider,
-                private settingsService: SettingsService,
-                private menuService: MenuService) {
-    }
+                private settingsService: SettingsService) {}
 
     
     async ngOnInit() {
@@ -54,7 +51,6 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleSync() {
 
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
-        
     }
 
 

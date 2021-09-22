@@ -328,7 +328,7 @@
         <target state="final">No search criteria specified</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
@@ -336,7 +336,7 @@
         <target state="final">No targets found</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
@@ -352,7 +352,7 @@
         <target state="final">Start import</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.source" datatype="html">
@@ -360,7 +360,7 @@
         <target state="final">Source</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -368,7 +368,7 @@
         <target state="final">File</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
@@ -376,7 +376,7 @@
         <target state="final">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -384,7 +384,7 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -392,7 +392,7 @@
         <target state="final">Choose file...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -400,7 +400,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
@@ -411,7 +411,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
@@ -419,7 +419,7 @@
         <target state="final">Import new resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
@@ -429,7 +429,7 @@
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -439,7 +439,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
@@ -455,7 +455,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -470,7 +470,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
@@ -480,7 +480,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
@@ -493,7 +493,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
@@ -506,7 +506,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -514,7 +514,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
@@ -522,7 +522,7 @@
         <target state="final">Select category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">179,181</context>
+          <context context-type="linenumber">172</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -530,7 +530,7 @@
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -538,7 +538,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -546,7 +546,7 @@
         <target state="final">Field separator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">219</context>
+          <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -570,7 +570,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -583,7 +583,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">219</context>
+          <context context-type="linenumber">212</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
@@ -591,7 +591,7 @@
         <target state="final">Non-imported resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
@@ -615,7 +615,7 @@
         <target state="final">Start export</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
@@ -623,7 +623,7 @@
         <target state="final">Context</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
@@ -631,7 +631,7 @@
         <target state="final">No restriction</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">266</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
@@ -639,7 +639,7 @@
         <target state="final">Catalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">294</context>
+          <context context-type="linenumber">248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
@@ -647,7 +647,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">326</context>
+          <context context-type="linenumber">268</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -655,7 +655,7 @@
         <target state="final">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
@@ -663,7 +663,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -671,7 +671,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.catalog" datatype="html">
@@ -679,7 +679,7 @@
         <target state="final">Catalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
@@ -687,7 +687,7 @@
         <target state="final">CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.complete" datatype="html">
@@ -695,7 +695,7 @@
         <target state="final">Complete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">199</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
@@ -703,7 +703,7 @@
         <target state="final">Schema only</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="linenumber">184</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
@@ -713,7 +713,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">345</context>
+          <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
@@ -723,7 +723,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">345</context>
+          <context context-type="linenumber">318</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -746,7 +746,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -774,7 +774,7 @@
         <target state="final">Create backup</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
@@ -788,7 +788,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.modal.info" datatype="html">
@@ -804,7 +804,7 @@
         <target state="final">Restore backup</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
@@ -816,7 +816,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
@@ -827,7 +827,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
@@ -846,7 +846,7 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.project" datatype="html">
@@ -862,11 +862,11 @@
         <target state="final">Select category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
@@ -878,7 +878,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createField" datatype="html">
@@ -898,7 +898,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createGroup" datatype="html">
@@ -914,7 +914,7 @@
         <target state="final">Project-specific form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -922,11 +922,11 @@
         <target state="final">Input type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSupercategory" datatype="html">
@@ -934,7 +934,7 @@
         <target state="final">Add supercategory</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.fieldLabel" datatype="html">
@@ -942,7 +942,7 @@
         <target state="final">Field label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
@@ -950,7 +950,7 @@
         <target state="final"> Create field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.showField" datatype="html">
@@ -958,7 +958,7 @@
         <target state="final">Show field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.groupLabel" datatype="html">
@@ -966,7 +966,7 @@
         <target state="final"> Group label </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificGroup" datatype="html">
@@ -982,7 +982,7 @@
         <target state="final"> Edit group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.html</context>
-          <context context-type="linenumber">22,6</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
@@ -1142,7 +1142,7 @@
         <target state="final"> Edit category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
@@ -1150,7 +1150,7 @@
         <target state="final"> Add category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
@@ -1158,7 +1158,7 @@
         <target state="final"> Basic settings </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">68,79</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html">
@@ -1166,7 +1166,7 @@
         <target state="final">Allow field specific search</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">104,111</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
@@ -1174,7 +1174,7 @@
         <target state="final">Choose language</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/multi-language-input.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saving" datatype="html">
@@ -1206,7 +1206,7 @@
         <target state="final">Conflicts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
@@ -1214,7 +1214,7 @@
         <target state="final">Upload in progress.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
@@ -1222,7 +1222,7 @@
         <target state="final">Download in progress.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
@@ -1230,7 +1230,7 @@
         <target state="final">Synchronization is disabled.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
@@ -1238,7 +1238,7 @@
         <target state="final">Synchronization completed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
@@ -1246,15 +1246,15 @@
         <target state="final">Synchronization failed</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
@@ -1262,7 +1262,7 @@
         <target state="final">Make sure that the specified address is correct and that there is a network connection to the synchronization target. If necessary, also check the firewall settings of your system and the target system.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
@@ -1270,7 +1270,7 @@
         <target state="final">Make sure that the project exists at the synchronization destination and check the password.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
@@ -1278,7 +1278,7 @@
         <target state="final">Permission denied.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
@@ -1290,7 +1290,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
@@ -1298,7 +1298,7 @@
         <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
@@ -1306,7 +1306,7 @@
         <target state="final">The download of version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been interrupted. Please restart the application to try again.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
@@ -1314,7 +1314,147 @@
         <target state="final">An error occurred while downloading version <x id="INTERPOLATION" equiv-text="{{version}}"/>. Please download the newest version from http://field.dainst.org.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.header" datatype="html">
+        <source> Download abbrechen? </source>
+        <target state="final"> Abort download? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.info" datatype="html">
+        <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen. </source>
+        <target state="final"> Please note that if you abort the download, it will start from the beginning if you download the project again at a later time. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.abort" datatype="html">
+        <source>Abbrechen</source>
+        <target state="final">Abort</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="linenumber">36,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.continue" datatype="html">
+        <source>Fortsetzen</source>
+        <target state="final">Continue</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.header" datatype="html">
+        <source> Neues Projekt erstellen </source>
+        <target state="final"> Create new project </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">44,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.info" datatype="html">
+        <source> Bitte geben Sie den Namen des neuen Projekts ein. </source>
+        <target state="final"> Please enter the name of the new project. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.create" datatype="html">
+        <source>Erstellen</source>
+        <target state="final">Create</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.deleteModal.header" datatype="html">
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
+        <target state="final"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
+        <source> Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="final"> Please enter the project name in order to confirm deletion. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">19,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.connecting" datatype="html">
+        <source>Verbindung wird hergestellt...</source>
+        <target state="final">Establishing connection...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.progressInfo" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% of project loaded... </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.connect" datatype="html">
+        <source>Download starten</source>
+        <target state="final">Start download</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="linenumber">43,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.address" datatype="html">
+        <source>Adresse</source>
+        <target state="final">Address</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="linenumber">64,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.address.info" datatype="html">
+        <source> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </source>
+        <target state="final"> The URL of an iDAI.field database server as well as the network address of another iDAI.field desktop installation can be entered as the address. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="linenumber">81,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.projectName" datatype="html">
+        <source>Projektname</source>
+        <target state="final">Project name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="linenumber">103,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.network.password" datatype="html">
+        <source>Passwort</source>
+        <target state="final">Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="linenumber">126,136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.synchronization" datatype="html">
+        <source>Projekt synchronisieren</source>
+        <target state="final">Synchronize project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">36,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
@@ -1322,7 +1462,7 @@
         <target state="final">The automatic update check is deactivated. You are possibly not using the latest version of iDAI.field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
@@ -1342,7 +1482,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
@@ -1352,7 +1492,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
@@ -1362,7 +1502,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
@@ -1403,7 +1543,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
@@ -1415,7 +1555,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
@@ -1426,7 +1566,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
@@ -1482,7 +1622,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
@@ -1492,7 +1632,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
@@ -1510,7 +1650,7 @@
         <target state="final">The display of very large search results can take a long time depending on the device and number of hits. Therefore, the current display was initially limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources. Click here to load the entire result.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
@@ -1518,7 +1658,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
@@ -1526,19 +1666,23 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.changes" datatype="html">
@@ -1546,7 +1690,7 @@
         <target state="final"> Changes have been made to this category that will be lost upon deletion. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6e4e85603e31ca678cdab0d1576a9dddc13ffcb3" datatype="html">
@@ -1606,7 +1750,7 @@
         <target state="final">Cancel</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-category-modal.component.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/add-field-modal.component.ts</context>
@@ -1642,7 +1786,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
@@ -1658,7 +1802,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -1666,11 +1822,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">224</context>
+          <context context-type="linenumber">205</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -1678,7 +1834,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
@@ -1690,23 +1846,23 @@
         <target state="final">Save</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
@@ -1726,7 +1882,7 @@
         <target state="final">Create multiple instances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
@@ -1778,7 +1934,7 @@
         <target state="final">Duplicate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
@@ -1788,7 +1944,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
@@ -1798,7 +1954,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.createMultipleInstances" datatype="html">
@@ -1806,7 +1962,7 @@
         <target state="final">Create multiple instances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1816,7 +1972,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1826,7 +1982,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1836,25 +1992,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.projects.manageProject" datatype="html">
-        <source>Projekte verwalten</source>
-        <target state="final">Manage projects</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.projects.newProject.enterName" datatype="html">
-        <source> Bitte geben Sie den Namen des neuen Projekts ein. </source>
-        <target state="final">
-                Please enter the name of the new project.
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
@@ -1862,7 +2000,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
@@ -1872,7 +2010,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resourceViewModal.noImages" datatype="html">
@@ -1882,7 +2020,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1929,7 +2067,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">
@@ -1953,7 +2091,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
@@ -1961,7 +2099,7 @@
         <target state="final">Remove links</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
@@ -1969,7 +2107,7 @@
         <target state="final">Link</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
@@ -1977,7 +2115,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.imageCategoryFilter" datatype="html">
@@ -1993,7 +2131,7 @@
         <target state="final">Drag images to the marked area to import them, or click to open a file selection dialog.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -2003,7 +2141,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.georeferenceData" datatype="html">
@@ -2075,7 +2213,7 @@
         <target state="final">Depicted resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/depicts-relations-view.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
@@ -2083,7 +2221,7 @@
         <target state="final">Delete resource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.component.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
@@ -2093,7 +2231,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.single" datatype="html">
@@ -2123,7 +2261,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
@@ -2134,7 +2272,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.multiple" datatype="html">
@@ -2144,7 +2282,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
@@ -2155,7 +2293,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.map" datatype="html">
@@ -2163,7 +2301,7 @@
         <target state="final">Map view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
@@ -2171,7 +2309,7 @@
         <target state="final">List view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.delete" datatype="html">
@@ -2179,7 +2317,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolygon" datatype="html">
@@ -2187,7 +2325,7 @@
         <target state="final">Add polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolyline" datatype="html">
@@ -2195,7 +2333,7 @@
         <target state="final">Add polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPoint" datatype="html">
@@ -2203,7 +2341,7 @@
         <target state="final">Add point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.drag" datatype="html">
@@ -2211,7 +2349,7 @@
         <target state="final">Drag</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
@@ -2219,7 +2357,7 @@
         <target state="final">Please select a category.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
@@ -2227,11 +2365,11 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.swapForm" datatype="html">
@@ -2247,7 +2385,7 @@
         <target state="final">Please select a geometry type.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
@@ -2255,7 +2393,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
@@ -2263,7 +2401,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -2271,7 +2409,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -2279,7 +2417,7 @@
         <target state="final">No geometry data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">189</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.types" datatype="html">
@@ -2287,7 +2425,7 @@
         <target state="final">Types</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.subtypes" datatype="html">
@@ -2295,7 +2433,7 @@
         <target state="final">Subtypes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
@@ -2306,7 +2444,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
@@ -2314,7 +2452,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.identifier" datatype="html">
@@ -2338,7 +2476,7 @@
         <target state="final">Show child resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showInContext.tooltip" datatype="html">
@@ -2346,7 +2484,7 @@
         <target state="final">Show in context</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -2358,7 +2496,7 @@
         <target state="final">Show in context of operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -2370,7 +2508,7 @@
         <target state="final">Switch to operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">113</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -2382,7 +2520,7 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -2406,7 +2544,7 @@
         <target state="final">Depending on your device and the number of hits, the rendering of large search results may take a while. Therefore, the current listing was limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources. Click here to load the complete result.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
@@ -2414,7 +2552,7 @@
         <target state="final">Show resource data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showChildResources.tooltip" datatype="html">
@@ -2430,7 +2568,7 @@
         <target state="final">Project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.typeCatalogs" datatype="html">
@@ -2438,7 +2576,7 @@
         <target state="final">Type catalogs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -2450,11 +2588,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
@@ -2466,7 +2604,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
@@ -2474,7 +2612,7 @@
         <target state="final">All categories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.addSubcategory" datatype="html">
@@ -2482,7 +2620,7 @@
         <target state="final">Add subcategory</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.resultsInOtherContexts" datatype="html">
@@ -2490,7 +2628,7 @@
         <target state="final">Search results in other contexts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
@@ -2498,7 +2636,7 @@
         <target state="final">No resources found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.childrenView.oneResource" datatype="html">
@@ -2506,7 +2644,7 @@
         <target state="final">One resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
@@ -2516,7 +2654,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
@@ -2524,7 +2662,7 @@
         <target state="final">Move</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
@@ -2536,7 +2674,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.header" datatype="html">
@@ -2544,7 +2682,7 @@
         <target state="final">Delete category?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
@@ -2561,7 +2699,7 @@
         <target state="final"> Please enter the category name to confirm the deletion. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">20,31</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.images" datatype="html">
@@ -2649,11 +2787,11 @@
         <target state="final">Expand all groups</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/popover-menu.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">
@@ -2661,11 +2799,11 @@
         <target state="final">Search criteria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
@@ -2677,7 +2815,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
@@ -2800,7 +2938,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
@@ -2811,7 +2949,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.single" datatype="html">
@@ -2821,7 +2959,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.multiple" datatype="html">
@@ -2859,7 +2997,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="boolean.no" datatype="html">
@@ -2887,7 +3025,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="components.documents.documentTeaser.newResource" datatype="html">
@@ -2903,7 +3041,7 @@
         <target state="final">Link image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayer" datatype="html">
@@ -2911,7 +3049,7 @@
         <target state="final">Link image as map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
@@ -2919,7 +3057,7 @@
         <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
@@ -2927,7 +3065,7 @@
         <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images as map layers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.editLayers" datatype="html">
@@ -2935,7 +3073,7 @@
         <target state="final">Edit map layers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -2945,7 +3083,7 @@
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -2977,7 +3115,7 @@
         <target state="final">Add map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
@@ -2985,7 +3123,7 @@
         <target state="final">Set as main image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.deselect" datatype="html">
@@ -2993,7 +3131,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.no-images" datatype="html">
@@ -3001,7 +3139,7 @@
         <target state="final">No images linked</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images-tooltip" datatype="html">
@@ -3035,7 +3173,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
@@ -3045,7 +3183,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
@@ -3055,7 +3193,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.currentVersion" datatype="html">
@@ -3063,7 +3201,7 @@
         <target state="final">Current version:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.competingVersion" datatype="html">
@@ -3071,7 +3209,7 @@
         <target state="final"> Competing version:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.notSet" datatype="html">
@@ -3079,27 +3217,27 @@
         <target state="final">Not set</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">107</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">124</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -3117,7 +3255,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -3131,11 +3269,11 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.resolveConflict" datatype="html">
@@ -3151,7 +3289,7 @@
         <target state="final">Change category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/category-switcher-button.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
@@ -3159,7 +3297,7 @@
         <target state="final">No targets found</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/relationpicker/relation-picker.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
@@ -3169,7 +3307,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/outliers.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deb511940e193e9e5b019171fa6f20ffda230f91" datatype="html">
@@ -3181,7 +3319,7 @@
         <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
@@ -3214,7 +3352,7 @@
         <target state="final">Add...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
@@ -3222,7 +3360,7 @@
         <target state="final">Literature quotation according to DAI guidelines:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
@@ -3230,7 +3368,7 @@
         <target state="final">Zenon ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
@@ -3262,7 +3400,7 @@
         <target state="final">BCE</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.ce" datatype="html">
@@ -3358,7 +3496,7 @@
         <target state="final">Add...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
@@ -3366,7 +3504,7 @@
         <target state="final">Single value</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
@@ -3374,7 +3512,7 @@
         <target state="final">Range</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
@@ -3382,7 +3520,7 @@
         <target state="final">As measured by</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -3406,7 +3544,7 @@
         <target state="final">from</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.to" datatype="html">
@@ -3434,38 +3572,16 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
-          <context context-type="linenumber">146</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
-          <context context-type="linenumber">208</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
-        <source> Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen. </source>
-        <target state="final">
-                Please confirm the name of the selected project in order to delete it.
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
           <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.close" datatype="html">
         <source>Schließen</source>
         <target state="final">Close</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/projects-modal.component.ts</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-picker-modal.component.ts</context>
           <context context-type="linenumber">26</context>
@@ -3498,7 +3614,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -3506,7 +3622,7 @@
         <target state="final">Add...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.date.notParsedInfo" datatype="html">
@@ -3530,7 +3646,7 @@
         <target state="final">No criterion</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">
@@ -3538,7 +3654,7 @@
         <target state="final">All Catalogs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
@@ -3546,7 +3662,7 @@
         <target state="final">Specify start and end period</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.none" datatype="html">
@@ -3554,7 +3670,7 @@
         <target state="final">No geometry</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.point" datatype="html">
@@ -3562,7 +3678,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.multiPoint" datatype="html">
@@ -3570,7 +3686,7 @@
         <target state="final">Multipoint</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.polyline" datatype="html">
@@ -3609,8 +3725,12 @@
         <source>Einstellungen übernehmen</source>
         <target state="final">Apply settings</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.general" datatype="html">
@@ -3618,7 +3738,7 @@
         <target state="final">General settings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
@@ -3628,7 +3748,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -3640,7 +3760,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
@@ -3650,7 +3770,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -3664,7 +3784,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -3672,31 +3792,31 @@
         <target state="final">Synchronization</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
         <source>Synchronisation aktivieren</source>
         <target state="final">Activate synchronization</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
         <source>Adresse</source>
         <target state="final">Address</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
         <source>Passwort</source>
         <target state="final">Password</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -3704,7 +3824,7 @@
         <target state="final">Your address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.hostPassword" datatype="html">
@@ -3712,7 +3832,7 @@
         <target state="final">Your password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -3720,7 +3840,7 @@
         <target state="final">This address and password need to be set in other iDAI.field clients in order to be able to synchronize data to this computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
@@ -3728,7 +3848,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -3738,7 +3858,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -3753,7 +3873,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -3761,7 +3881,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -3769,7 +3889,7 @@
         <target state="final">Activate automatic check for updates</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">
@@ -3777,7 +3897,7 @@
         <target state="final">View</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal-edit" datatype="html">
@@ -3785,7 +3905,7 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.addLanguage" datatype="html">
@@ -3797,7 +3917,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
@@ -3805,7 +3925,7 @@
         <target state="final">Remove language</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -3816,7 +3936,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
@@ -3824,7 +3944,7 @@
         <target state="final">Edit mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -3832,7 +3952,7 @@
         <target state="final">Single selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -3840,7 +3960,7 @@
         <target state="final">Group selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -3848,7 +3968,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -3856,7 +3976,7 @@
         <target state="final">Create matrix from selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -3864,7 +3984,7 @@
         <target state="final">Reload matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
@@ -3883,7 +4003,7 @@
         <target state="final">Relations:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
@@ -4093,7 +4213,7 @@
         <target state="final">Project-specific field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.conflicts" datatype="html">
@@ -4363,6 +4483,34 @@
       <trans-unit id="messages.model.validation.error.unsupportedGeometryType" datatype="html">
         <source>Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</source>
         <target state="final">The geometry type [0] is not supported by the application.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.initialSync.targetDbNotEmpty" datatype="html">
+        <source>Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.</source>
+        <target state="final">Download failed: The specified project already exists on this iDAI.field installation.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.initialSync.genericError" datatype="html">
+        <source>Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.</source>
+        <target state="final">Download failed: Make sure that the specified address is correct and that there is a network connection. Also check the firewall settings of your system.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.initialSync.couldNotStartGenericError" datatype="html">
+        <source>Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.</source>
+        <target state="final">Download failed: An unknown error has occurred.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5508,6 +5656,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.tabs.networkProject" datatype="html">
+        <source>Projekt herunterladen</source>
+        <target state="final">Download project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.tabs.import" datatype="html">
         <source>Import</source>
         <target state="final">Import</target>
@@ -5665,7 +5821,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.libraryId" datatype="html">
@@ -5673,7 +5829,7 @@
         <target state="final">Form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoryLabel" datatype="html">
@@ -5681,7 +5837,7 @@
         <target state="final">Category label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
@@ -5689,11 +5845,11 @@
         <target state="final">Description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.color" datatype="html">
@@ -5701,7 +5857,7 @@
         <target state="final"> Color </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
@@ -5709,7 +5865,7 @@
         <target state="final"> Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
     </body>

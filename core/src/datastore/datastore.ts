@@ -198,7 +198,7 @@ export class Datastore {
 
     public putCache: Datastore.PutCache = (document: Document) => {
         
-        this.documentCache.set(this.categoryConverter.convert(document));
+        this.documentCache.reassign(this.categoryConverter.convert(document));
     }  
 
 

@@ -21,6 +21,7 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class NetworkProjectComponent {
 
@@ -43,7 +44,6 @@ export class NetworkProjectComponent {
             await this.tabManager.openActiveTab();
         }
     }
-
 
     public async onStartClicked() {
 
@@ -126,6 +126,7 @@ export class NetworkProjectComponent {
     }
 
 
+    // TODO delete Pouchdb when closing before finishing
     private closeModal(modalRef: NgbModalRef) {
 
         modalRef.close();

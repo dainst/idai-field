@@ -196,6 +196,12 @@ export class Datastore {
     }
 
 
+    public putCache: Datastore.PutCache = (document: Document) => {
+        
+        this.documentCache.set(this.categoryConverter.convert(document));
+    }  
+
+
     /**
      * As lambda, to allow passing as FindIds (see companion namespace below).
      * 
@@ -344,7 +350,9 @@ export namespace Datastore {
 
     export type FindIds = (query: Query) => FindIdsResult;
 
-    export  type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
+    export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
+
+    export type PutCache = (document: Document) => void;
 
 
     export interface FindIdsResult {

@@ -411,7 +411,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
             content: i18n({
                 id: 'messages.initialSync.targetDbNotEmpty',
-                value: 'Verbindungsvorgang fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.'
+                value: 'Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.'
             }),
             level: 'danger',
             params: [],
@@ -420,7 +420,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.INITIAL_SYNC_GENERIC_ERROR] = {
             content: i18n({
                 id: 'messages.initialSync.genericError',
-                value: 'Verbindungsvorgang fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
+                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
             }),
             level: 'danger',
             params: [],
@@ -429,7 +429,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR] = {
             content: i18n({
                 id: 'messages.initialSync.couldNotStartGenericError',
-                value: 'Verbindungsvorgang fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.'
+                value: 'Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.'
             }),
             level: 'danger',
             params: [],
@@ -438,7 +438,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.INITIAL_SYNC_INVALID_CREDENTIALS] = {
             content: i18n({
                 id: 'messages.initialSync.genericError',
-                value: 'Verbindungsvorgang fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
+                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
             }),
             level: 'danger',
             params: [],

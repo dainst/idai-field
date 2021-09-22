@@ -7,10 +7,10 @@
                  [style.width]="progressPercent + '%'"></div>
         </div>
         <div *ngIf="progressPercent === 0" class="process-info" i18n="@@project.network.connecting">Verbindung wird hergestellt...</div>
-        <div *ngIf="progressPercent > 0" class="process-info" i18n="@@project.network.progressInfo">{{getRoundedProgress()}}% der Projektressourcen geladen... </div>
+        <div *ngIf="progressPercent > 0" class="process-info" i18n="@@project.network.progressInfo">{{getRoundedProgress()}}% des Projekts geladen... </div>
         <button id="network-project-cancel-button" type="button" class="btn btn-secondary"
                 (click)="cancel()">
-            <span i18n="@@buttons.cancel">Abbrechen</span>
+            <span i18n="@@project.network.abort">Abbrechen</span>
         </button>
     </div>
 </div>

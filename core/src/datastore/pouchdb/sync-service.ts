@@ -81,13 +81,10 @@ export class SyncService {
 
         const db = await this.pouchdbDatastore.createEmptyDb(project); // may throw, if not empty
 
-        this.replicationHandle = db.replicate.from(url, { live: false, retry: true, batch_size: updateSequence < 200 ? 10 : 100 }); // TODO review how retry works
+        this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
 
-        // TODO deduplicate with code below in setupSync
         return Observable.create((obs: Observer<any>) => {
             this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
-                .on('paused', () => {})
-                .on('active', () => {})
                 .on('complete', (info: any) => {
                     this.replicationHandle = undefined;
                     if (info.status === 'complete') {
@@ -105,7 +102,7 @@ export class SyncService {
         })
     };
 
-    
+
     public async stopReplication(project: string) {
 
         if (!this.replicationHandle) return;

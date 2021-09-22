@@ -45,9 +45,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
 
     // Network Project Package
-    public static INITIAL_SYNC_COMPLETE = 'M.InitialSync.complete';
-    public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbnotempty';
-    public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.generic-error';
+    public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
+    public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.genericError';
+    public static INITIAL_SYNC_INVALID_CREDENTIALS = 'M.InitialSync.invalidCredentials'
 
     // ImportPackage - ParserErrors
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
@@ -407,19 +407,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.INITIAL_SYNC_COMPLETE] = {
-            content: i18n({
-                id: 'messages.initial-sync.success',
-                value: 'Synchronisation war erfolgreich'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
             content: i18n({
-                id: 'messages.initial-sync.target-db-not-empty',
-                value: 'Zieldatenbank existiert bereits'
+                id: 'messages.initialSync.targetDbNotEmpty',
+                value: 'Verbindungsvorgang fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.'
             }),
             level: 'danger',
             params: [],
@@ -427,8 +418,17 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.INITIAL_SYNC_GENERIC_ERROR] = {
             content: i18n({
-                id: 'messages.initial-sync.generic-error',
-                value: 'Unbekannter Fehler - Sehen Sie die Entwickler-Konsole eine für mehr Informationen'
+                id: 'messages.initialSync.genericError',
+                value: 'Verbindungsvorgang fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_INVALID_CREDENTIALS] = {
+            content: i18n({
+                id: 'messages.initialSync.genericError',
+                value: 'Verbindungsvorgang fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
             }),
             level: 'danger',
             params: [],

@@ -53,11 +53,19 @@ export class NetworkProjectComponent {
             { backdrop: 'static', keyboard: false }
         );
         progressModalRef.componentInstance.progressPercent = 0;
-        progressModalRef.result.catch(cancelled => {
+        progressModalRef.result.catch(canceled => {
             this.syncService.stopReplication(this.projectName);
+            this.closeModal(progressModalRef);
         });
 
-        const updateSequence: number = await this.getUpdateSequence();
+        let updateSequence: number;
+        try {
+            updateSequence = await this.getUpdateSequence();
+        } catch (err) {
+            this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
+            console.error('Error while trying to fetch update sequence of network project:', err);
+            return this.closeModal(progressModalRef);
+        }
 
         try {
             (await this.syncService.startReplication(this.url, this.password, this.projectName, updateSequence))
@@ -67,9 +75,12 @@ export class NetworkProjectComponent {
                     },
                     error: err => {
                         this.closeModal(progressModalRef);
-                        if (err !== 'canceled') {
+                        if (err === 'canceled') return;
+                        if (err.error === 'unauthorized') {
+                            this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+                        } else {
                             this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-                            console.log('SYNC_ERR', err);
+                            console.error('Error while replicating network project:', err);
                         }
                     },
                     complete: () => {

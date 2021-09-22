@@ -101,7 +101,7 @@ export class NetworkProjectComponent {
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
             } else {
-                // TODO display an error to the user, too
+                this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
                 console.error('error from sync service startOneTimeSync', e);
             }
             this.closeModal(progressModalRef);

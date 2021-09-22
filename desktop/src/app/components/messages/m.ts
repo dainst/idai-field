@@ -47,6 +47,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Network Project Package
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
     public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.genericError';
+    public static INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR = 'M.InitialSync.couldNotStartGenericError';
     public static INITIAL_SYNC_INVALID_CREDENTIALS = 'M.InitialSync.invalidCredentials'
 
     // ImportPackage - ParserErrors
@@ -420,6 +421,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.initialSync.genericError',
                 value: 'Verbindungsvorgang fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.initialSync.couldNotStartGenericError',
+                value: 'Verbindungsvorgang fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.'
             }),
             level: 'danger',
             params: [],

@@ -127,7 +127,6 @@ export class NetworkProjectComponent {
     }
 
 
-    // TODO delete Pouchdb when closing before finishing
     private closeModal(modalRef: NgbModalRef) {
 
         modalRef.close();

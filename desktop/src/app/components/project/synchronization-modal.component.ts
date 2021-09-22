@@ -24,8 +24,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsProvider: SettingsProvider,
-                private settingsService: SettingsService) {
-    }
+                private settingsService: SettingsService) {}
 
 
     async ngOnInit() {
@@ -52,7 +51,6 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleSync() {
 
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
-        
     }
 
 
@@ -63,7 +61,7 @@ export class SynchronizationModalComponent implements OnInit {
         } catch (err) {
             return console.error(err);
         }
-    
+
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
 

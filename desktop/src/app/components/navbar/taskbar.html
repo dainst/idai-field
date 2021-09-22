@@ -7,7 +7,7 @@
         <taskbar-conflicts></taskbar-conflicts>
     </li>
 
-    <li class="nav-item pr-2">
+    <li *ngIf="showSyncStatus()" class="nav-item pr-2">
         <taskbar-sync-status></taskbar-sync-status>
     </li>
 

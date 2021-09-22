@@ -48,7 +48,7 @@ const setSyncTargets = config => {
     if (!config.syncTargets) {
         config.syncTargets = config.syncTarget
             ? config.dbs.reduce((result, db) => {
-                result[db] = { ...syncTarget };
+                if (db !== 'test') result[db] = { ...syncTarget };
                 return result;
             }, {})
             : {};

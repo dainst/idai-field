@@ -81,7 +81,8 @@ const Map: React.FC<MapProps> = (props) => {
                 selectedDocumentIds={ props.selectedDocumentIds }
                 geoDocuments={ geoDocuments }
                 location={ location }
-                updateDoc={ updateDoc } />}
+                updateDoc={ updateDoc }
+                focusDocument={ focusMapOnDocumentId } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

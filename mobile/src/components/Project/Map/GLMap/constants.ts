@@ -6,3 +6,4 @@ export const viewBoxPaddingY = 5;
 export const lineRenderingOrder = 1;
 export const pointRenderingOrder = 1;
 export const highlightedColor = 'white';
+export const LONG_PRESS_DURATION_MS = 500;

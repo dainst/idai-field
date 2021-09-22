@@ -12,6 +12,7 @@ import { ConfigurationContext } from '../../../../contexts/configuration-context
 import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
+import { LONG_PRESS_DURATION_MS } from './constants';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
@@ -43,7 +44,8 @@ interface GLMapProps {
     selectedDocumentIds: string[];
     geoDocuments: Document[];
     location: {x: number, y:number} | undefined;
-    updateDoc?: UpdatedDocument
+    updateDoc?: UpdatedDocument;
+    focusDocument: (docId: string) => void
 }
 
 
@@ -56,7 +58,8 @@ const GLMap: React.FC<GLMapProps> = ({
     selectedDocumentIds,
     geoDocuments,
     location,
-    updateDoc
+    updateDoc,
+    focusDocument,
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -71,6 +74,10 @@ const GLMap: React.FC<GLMapProps> = ({
     //boolean to init gestures
     const isZooming = useRef<boolean>(false);
     const isMoving = useRef<boolean>(false);
+
+    //long press handler variables
+    const pressStartTime = useRef<number>(0);
+    const pressedDocId = useRef<string>();
 
     //reference values set at the beginning of the gesture
     const initialTouch = useRef<{x: number, y: number}>({ x:0, y:0 });
@@ -112,6 +119,7 @@ const GLMap: React.FC<GLMapProps> = ({
         onMoveShouldSetPanResponderCapture: shouldRespond,
         onStartShouldSetPanResponderCapture: shouldRespond,
         onPanResponderMove: e => {
+            pressStartTime.current = performance.now();
             const { nativeEvent: { touches } } = e;
             if(touches.length === 1){
                 const [{ locationX, locationY }] = touches;
@@ -255,6 +263,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
 
     },[updateDoc, scene, documentToWorldMatrix, config, renderScene]);
+    
 
     const onPress = (e: GestureResponderEvent) => {
 
@@ -262,7 +271,7 @@ const GLMap: React.FC<GLMapProps> = ({
         const raycaster = new Raycaster();
         raycaster.setFromCamera(ndc_vec, camera);
         const intersections = raycaster.intersectObjects(scene.children,true);
-        
+        pressStartTime.current = performance.now();
         // filter objects to be selected and sort by renderOrder in descending order
         const filteredSortedInters = intersections
             .filter(intersection => intersection.object.parent?.userData['isSelected'])
@@ -276,8 +285,15 @@ const GLMap: React.FC<GLMapProps> = ({
             const docId = filteredSortedInters[0].object.parent!.uuid;
             setHighlightedDocId(docId);
             addHighlightedDocToScene(docId, scene);
+            pressedDocId.current = docId;
             renderScene();
         }
+    };
+
+    const onTouchEnd = () => {
+
+        if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && pressedDocId.current)
+            focusDocument(pressedDocId.current);
     };
     
     const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
@@ -300,6 +316,7 @@ const GLMap: React.FC<GLMapProps> = ({
     return (
         <GLView
             onTouchStart={ onPress }
+            onTouchEnd={ onTouchEnd }
             { ...panResponder.panHandlers }
             style={ styles.container }
             onContextCreate={ onContextCreate }

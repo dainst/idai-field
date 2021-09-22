@@ -146,7 +146,6 @@ export class SyncService {
         syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
-                console.log('error during syncing:', err);
                 const syncStatus = SyncStatus.getFromError(err);
                 if (syncStatus !== SyncStatus.AuthenticationError && syncStatus !== SyncStatus.AuthorizationError) {
                         console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
@@ -169,7 +168,6 @@ export class SyncService {
 
     public setStatus(status: SyncStatus) {
 
-        console.log('status:', status);
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
     }

@@ -77,6 +77,8 @@ export class SyncService {
 
         if (this.replicationHandle) return;
 
+        this.stopSync();
+
         const url = SyncService.generateUrl(target + '/' + project, project, password);
 
         const db = await this.pouchdbDatastore.createEmptyDb(project); // may throw, if not empty
@@ -90,27 +92,28 @@ export class SyncService {
                     if (info.status === 'complete') {
                         obs.complete();
                     } else {
+                        this.pouchdbDatastore.destroyDb(project);
                         obs.error('canceled');
                     }
+                    this.startSync();
                 })
                 .on('error', (err: any) => {
                     // it's ok to remove db, because we know by know it was a new one
                     this.pouchdbDatastore.destroyDb(project);
                     this.replicationHandle = undefined;
+                    this.startSync();
                     obs.error(err);
                 });
         })
     };
 
 
-    public async stopReplication(project: string) {
+    public async stopReplication() {
 
         if (!this.replicationHandle) return;
 
         this.replicationHandle.cancel();
         this.replicationHandle = undefined;
-
-        this.pouchdbDatastore.destroyDb(project);
     }
 
 
@@ -164,6 +167,7 @@ export class SyncService {
 
     private setStatus(status: SyncStatus) {
 
+        console.log('status:', status);
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
     }

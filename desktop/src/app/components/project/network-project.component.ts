@@ -55,7 +55,7 @@ export class NetworkProjectComponent {
         );
         progressModalRef.componentInstance.progressPercent = 0;
         progressModalRef.result.catch(canceled => {
-            this.syncService.stopReplication(this.projectName);
+            this.syncService.stopReplication();
             this.closeModal(progressModalRef);
         });
 

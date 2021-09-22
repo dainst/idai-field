@@ -40,6 +40,8 @@ export class ConnectedDocsWriter {
             true
         );
 
+        for (const doc of connectedDocs) this.datastore.putCache(doc);
+
         await this.updateDocs(docsToUpdate, user);
     }
 

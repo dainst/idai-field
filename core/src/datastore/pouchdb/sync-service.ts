@@ -167,7 +167,6 @@ export class SyncService {
 
     private setStatus(status: SyncStatus) {
 
-        console.log('status:', status);
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
     }

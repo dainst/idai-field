@@ -354,7 +354,7 @@ Please make sure to fill in the field **Editor name** before setting up the conf
 
 To work with an existing project that is available in another iDAI.field desktop installation or on a database server, first download the project. To do this, select **Download project...** from the "File" menu and enter the access data:
 
-* *Address*: Enter the address of the project you want to download. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
+* *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
 * *Project name*: The name of the project you want to download.
 * *Password*: The password of the project or iDAI.field installation from which you want to download the project.
 

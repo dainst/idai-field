@@ -18,7 +18,7 @@ you want to access an image directory located on a network device (NAS) used by 
 Please note that in each case images must be imported via the iDAI.field application. Image files that are
 manually placed in the image directory can **not** be used by the application. 
 
-3. In the "File" menu, select the menu item **New project...** and enter the desired name of your project. Allowed characters are letters, numbers and hyphens.
+3. In the "File" menu, select the menu item **New project...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores.
 
 4. As soon as the new project has been loaded, you can enter basic project data via the menu "File" -> "Current project" -> "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
@@ -356,7 +356,7 @@ To work with an existing project that is available in another iDAI.field desktop
 
 * *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
 * *Project name*: The name of the project you want to download.
-* *Password*: The password of the project or iDAI.field installation from which you want to download the project.
+* *Password*: The password of the project or the iDAI.field installation from which you want to download the project.
 
 Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
 

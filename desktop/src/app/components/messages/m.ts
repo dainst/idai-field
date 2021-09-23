@@ -437,7 +437,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.INITIAL_SYNC_INVALID_CREDENTIALS] = {
             content: i18n({
-                id: 'messages.initialSync.genericError',
+                id: 'messages.initialSync.invalidCredentials',
                 value: 'Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
             }),
             level: 'danger',

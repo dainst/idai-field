@@ -65,8 +65,12 @@ export class NetworkProjectComponent {
         try {
             updateSequence = await this.getUpdateSequence();
         } catch (err) {
-            this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-            console.error('Error while trying to fetch update sequence of network project:', err);
+            if (err === 'invalidCredentials') {
+                this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+            } else {
+                this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
+                console.error('Error while trying to fetch update sequence of network project:', err);
+            }
             return this.closeModal(progressModalRef);
         }
 
@@ -127,6 +131,8 @@ export class NetworkProjectComponent {
                 }
             }
         ).info();
+
+        if (info.status === 401) throw 'invalidCredentials';
 
         return info.update_seq;
     }

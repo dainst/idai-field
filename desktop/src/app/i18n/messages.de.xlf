@@ -1549,7 +1549,7 @@
         <target state="final"> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">81,92</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.projectName" datatype="html">
@@ -1557,7 +1557,7 @@
         <target state="final">Projektname</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">103,113</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.password" datatype="html">
@@ -1565,7 +1565,7 @@
         <target state="final">Passwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">126,136</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
@@ -3987,6 +3987,14 @@
       <trans-unit id="messages.initialSync.couldNotStartGenericError" datatype="html">
         <source>Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.</source>
         <target state="final">Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.initialSync.invalidCredentials" datatype="html">
+        <source>Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.</source>
+        <target state="final">Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -22,7 +22,7 @@ gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über
 iDAI.field-Anwendung importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
 eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
-3. Rufen Sie im Menü "Datei" den Menüpunkt **Neues Projekt...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen und Bindestriche.
+3. Rufen Sie im Menü "Datei" den Menüpunkt **Neues Projekt...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche.
 
 4. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Datei" -> "Aktuelles Projekt" -> "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
@@ -378,11 +378,11 @@ Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall d
 
 ### Projekt herunterladen
 
-Um mit einem bestehenden Projekt zu arbeiten, das in einer anderen iDAI.field-Desktopinstallation oder auf einem Datenbankserver vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Datei" den Menüpunkt **Projekt herunterladen...** aus und geben Sie die Zugangsdaten ein:
+Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen iDAI.field-Desktopinstallation oder auf einem Datenbankserver vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Datei" den Menüpunkt **Projekt herunterladen...** aus und geben Sie die Zugangsdaten ein:
 
 * *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
 * *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.
-* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, von dem Sie das Projekt herunterladen möchten.
+* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, von der Sie das Projekt herunterladen möchten.
 
 Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
 

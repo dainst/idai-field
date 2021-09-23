@@ -115,15 +115,24 @@ export class SyncService {
                     }
                     this.startSync();
                 })
+                .on('denied', (err: any) => {
+                    this.handleReplicationError(obs, err, project);
+                })
                 .on('error', (err: any) => {
-                    // it's ok to remove db, because we know it was a new one
-                    this.pouchdbManager.destroyDb(project);
-                    this.replicationHandle = undefined;
-                    this.startSync();
-                    obs.error(err);
+                    this.handleReplicationError(obs, err, project);
                 });
         })
     };
+
+
+    private handleReplicationError(observer: Observer<any>, error: any, project: string) {
+
+        // it's ok to remove db, because we know it was a new one
+        this.pouchdbManager.destroyDb(project);
+        this.replicationHandle = undefined;
+        this.startSync();
+        observer.error(error);
+    }
 
 
     public async stopReplication() {

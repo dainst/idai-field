@@ -1254,7 +1254,7 @@
         <target state="final">Start download</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">47,55</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.address" datatype="html">
@@ -1262,7 +1262,7 @@
         <target state="final">Address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.address.info" datatype="html">
@@ -1270,7 +1270,7 @@
         <target state="final"> The URL of an iDAI.field database server as well as the network address of another iDAI.field desktop installation can be entered as the address. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.projectName" datatype="html">
@@ -1278,7 +1278,7 @@
         <target state="final">Project name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.network.password" datatype="html">
@@ -1286,7 +1286,7 @@
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
@@ -4099,6 +4099,14 @@
       <trans-unit id="messages.initialSync.couldNotStartGenericError" datatype="html">
         <source>Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.</source>
         <target state="final">Download failed: An unknown error has occurred.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.initialSync.invalidCredentials" datatype="html">
+        <source>Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.</source>
+        <target state="final">Download failed: Make sure that the project exists at the specified address and check the password.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -13,7 +13,6 @@ export interface Settings {
 
     languages: string[];
     isAutoUpdateActive: boolean;
-    remoteSites: Array<string>;
     hostPassword: string;
     syncTargets: { [projectName: string]: SyncTarget };
     username: string;

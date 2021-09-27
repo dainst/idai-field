@@ -49,8 +49,8 @@ const setSyncTargets = config => {
             ? config.dbs.reduce((result, db) => {
                 if (db !== 'test') {
                     result[db] = {
-                        address: syncTarget.address,
-                        password: syncTarget.password,
+                        address: config.syncTarget.address,
+                        password: config.syncTarget.password,
                         isSyncActive: config.isSyncActive
                     };
                 }
@@ -95,6 +95,7 @@ const getLocale = () => {
 global.getLocale = () => global.config.languages.find(language => mainLanguages.includes(language));
 
 global.getMainLanguages = () => mainLanguages;
+
 
 global.updateConfig = config => {
 

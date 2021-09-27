@@ -35,6 +35,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() paddingRight: number;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onShiftClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
@@ -44,9 +45,6 @@ export class ImageGridComponent implements OnChanges {
     private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
-    
-
-
 
     constructor(private element: ElementRef,
                 private imagestore: Imagestore,
@@ -54,25 +52,13 @@ export class ImageGridComponent implements OnChanges {
                 private blobMaker: BlobMaker) {}
 
 
-    public async select(event: MouseEvent) {
-        if (event.shiftKey && this.selected[1]) {
-            this.selectBetween(this.selected[this.selected.length-1], this.selected[this.selected.length-2]);
-            }
-    }
-
-    private selectBetween(document1: ImageDocument, document2: ImageDocument) {
-        const index1 = this.documents.indexOf(document1);
-        const index2 = this.documents.indexOf(document2);
-
-        for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
-            const document = this.documents[i];
-            this.selected.push(document)
-
+    public async handleClick(document: ImageDocument, event: MouseEvent) {
+        if (event.shiftKey) {
+            this.onShiftClick.emit(document);
+        } else {
+            this.onClick.emit(document);
         }
-    }   
-
-
-
+    }
 
 
     async ngOnChanges(changes: SimpleChanges) {

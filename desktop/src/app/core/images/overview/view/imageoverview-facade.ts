@@ -30,7 +30,8 @@ export class ImageOverviewFacade {
 
     public select = (document: ImageDocument) => this.imageDocumentsManager.select(document);
 
-    public toggleSelected = (document: ImageDocument) => this.imageDocumentsManager.toggleSelected(document);
+    public toggleSelected = (document: ImageDocument, multiSelect?: boolean) =>
+        this.imageDocumentsManager.toggleSelected(document, multiSelect);
 
     public getDocuments = (): Array<ImageDocument> => this.imageDocumentsManager.getDocuments();
 

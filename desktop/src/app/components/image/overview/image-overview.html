@@ -51,6 +51,7 @@
                     [showTooltips]="true"
                     [paddingRight]="20"
                     (onClick)="toggleSelected($event)"
+                    (onShiftClick)="toggleSelected($event, true)"
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>

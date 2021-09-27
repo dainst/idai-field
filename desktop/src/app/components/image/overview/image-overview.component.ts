@@ -76,7 +76,8 @@ export class ImageOverviewComponent implements OnInit {
 
     public getCurrentPage = () => this.imageOverviewFacade.getCurrentPage();
 
-    public toggleSelected = (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
+    public toggleSelected = (document: Document, multiSelect?: boolean) =>
+        this.imageOverviewFacade.toggleSelected(document as ImageDocument, multiSelect);
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 

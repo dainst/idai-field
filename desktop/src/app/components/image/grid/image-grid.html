@@ -14,9 +14,8 @@
                 <ng-content></ng-content>
             </div>
 
-            <div *ngIf="cell['document'].id != 'droparea'"
-                 
-                 (click)="onClick.emit(cell['document']);select($event)"
+            <div *ngIf="cell['document'].id != 'droparea'"   
+                 (click)="handleClick(cell['document'], $event)"
                  (dblclick)="onDoubleClick.emit(cell['document'])"
                  (mouseenter)="onCellMouseEnter(cell['document'])"
                  [id]="'resource-' + cell['document'].resource.identifier.replace('.', '_')"

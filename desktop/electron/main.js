@@ -46,9 +46,15 @@ global.setConfigDefaults = config => {
 const setSyncTargets = config => {
 
     if (!config.syncTargets) {
-        config.syncTargets = config.syncTarget
+        config.syncTargets = config.syncTarget && config.dbs
             ? config.dbs.reduce((result, db) => {
-                if (db !== 'test') result[db] = { ...syncTarget };
+                if (db !== 'test') {
+                    result[db] = {
+                        address: syncTarget.address,
+                        password: syncTarget.password,
+                        isSyncActive: config.isSyncActive
+                    };
+                }
                 return result;
             }, {})
             : {};

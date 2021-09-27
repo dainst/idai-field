@@ -18,4 +18,4 @@ Build all packages with:
     $ npm run build
 
 Refer to the sub-package READMEs for detailed instructions on how to set up individual
-development environments.
+development environments. 

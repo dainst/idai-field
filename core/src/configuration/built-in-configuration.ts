@@ -753,7 +753,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Find:inherit'],
-            range: ['Trench', 'Survey'],
+            range: ['Trench', 'Building', 'Survey'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -785,7 +785,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

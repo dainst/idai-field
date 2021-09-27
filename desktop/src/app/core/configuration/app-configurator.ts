@@ -469,7 +469,7 @@ export class AppConfigurator {
             name: 'isRecordedIn',
             label: '',
             domain: ['Find:inherit'],
-            range: ['Trench', 'Survey']
+            range: ['Trench', 'Building', 'Survey']
         },
         {
             name: 'isRecordedIn',
@@ -493,7 +493,7 @@ export class AppConfigurator {
             name: 'liesWithin',
             label: '',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room'],
             sameMainCategoryResource: true
         },
         {

@@ -34,7 +34,6 @@ const writeConfigFile = (path) => {
 global.setConfigDefaults = config => {
 
     setSyncTargets(config);
-    if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;

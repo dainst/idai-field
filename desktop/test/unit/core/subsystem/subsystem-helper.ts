@@ -56,7 +56,6 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
     const settings = await settingsService.updateSettings({
         languages: ['de', 'en'],
         isAutoUpdateActive: false,
-        remoteSites: [],
         hostPassword: '',
         syncTargets: {},
         dbs: [projectName],

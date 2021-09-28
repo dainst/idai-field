@@ -24,7 +24,7 @@ eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Rufen Sie im Menü "Datei" den Menüpunkt **Neues Projekt...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche.
 
-4. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Datei" -> "Aktuelles Projekt" -> "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
+4. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Datei" ➝ "Aktuelles Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Werkzeuge" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.
@@ -389,7 +389,7 @@ Der Download kann bei größeren Projekten unter Umständen eine längere Zeit d
 
 ### Synchronisation konfigurieren
 
-Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Datei" -> "Aktuelles Projekt" -> "Synchronisieren..." konfiguriert werden.
+Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Datei" ➝ "Aktuelles Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
 * *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
 * *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.

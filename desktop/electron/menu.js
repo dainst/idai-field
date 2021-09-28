@@ -24,11 +24,13 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [
             {
                 label: messages.get('menu.file.newProject'),
+                accelerator: 'CmdOrCtrl+N',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: context === 'default'
             },
             {
                 label: messages.get('menu.file.networkProject'),
+                accelerator: 'CmdOrCtrl+D',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
                 enabled: context === 'default'
             }, {

@@ -22,7 +22,7 @@ interface MapProps {
     addDocument: (parentDoc: Document) => void;
     editDocument: (docID: string, categoryName: string) => void;
     removeDocument: (doc: Document) => void;
-    selectDocument: (doc: Document) => void;
+    selectParent: (doc: Document) => void;
 }
 
 
@@ -65,9 +65,13 @@ const Map: React.FC<MapProps> = (props) => {
             setLocation(newCoords);
             console.log(p);
         })();
-      }, []);
+    }, []);
 
-    
+    const onParentIdSelected = (docId: string) => {
+        const doc = geoDocuments.find(doc => doc.resource.id === docId);
+        doc && props.selectParent(doc);
+    };
+
     const handleLayoutChange = (event: LayoutChangeEvent) => setScreen(event.nativeEvent.layout);
 
     return (
@@ -82,7 +86,7 @@ const Map: React.FC<MapProps> = (props) => {
                 geoDocuments={ geoDocuments }
                 location={ location }
                 updateDoc={ updateDoc }
-                focusDocument={ focusMapOnDocumentId } />}
+                selectParentId={ onParentIdSelected } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

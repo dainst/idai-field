@@ -91,6 +91,9 @@ const getTemplate = (mainWindow, context) => {
                 enabled: context === 'default'
             },
             {
+                type: 'separator'
+            },
+            {
                 label: messages.get('menu.file.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: function () {
@@ -248,8 +251,8 @@ const getTemplate = (mainWindow, context) => {
     }];
 
     if (process.platform === 'darwin') {
-        // Remove 'Settings' option from 'File' menu
-        template[1].submenu.splice(10, 1);
+        // Remove 'Settings' option & separator from 'File' menu
+        template[1].submenu.splice(10, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

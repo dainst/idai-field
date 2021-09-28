@@ -33,7 +33,7 @@
                       (click)="decreaseNrImagesPerRow()"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrImagesPerRow()}}"
                        max="{{getMaxNrImagesPerRow()}}" value="{{getNrImagesPerRow()}}"
-                       class="slider align-middle"
+                       class="image-size-slider align-middle"
                        (change)="setNrImagesPerRow(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
                       (click)="increaseNrImagesPerRow()"></span>

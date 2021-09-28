@@ -22,7 +22,7 @@ export namespace ProjectNameValidation {
      */
     export function validate(newProjectName: string, existingProjectNames?: string[]): MsgWithParams|undefined {
 
-        if (newProjectName === '') return [Errors.RESOURCES_ERROR_NO_PROJECT_NAME];
+        if (!newProjectName) return [Errors.RESOURCES_ERROR_NO_PROJECT_NAME];
 
         if (existingProjectNames && existingProjectNames.includes(newProjectName)) {
             return [Errors.RESOURCES_ERROR_PROJECT_NAME_EXISTS, newProjectName];

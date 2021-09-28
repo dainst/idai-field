@@ -67,7 +67,7 @@ $lightgraybgr: #eeeeee;
   background-color: lighten($redbgr, 35%);
 }
 
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus {
+.btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {
   box-shadow: none !important;
 }
 

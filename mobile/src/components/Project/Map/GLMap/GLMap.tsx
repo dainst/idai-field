@@ -45,7 +45,7 @@ interface GLMapProps {
     geoDocuments: Document[];
     location: {x: number, y:number} | undefined;
     updateDoc?: UpdatedDocument;
-    focusDocument: (docId: string) => void
+    selectParentId: (docId: string) => void
 }
 
 
@@ -59,7 +59,7 @@ const GLMap: React.FC<GLMapProps> = ({
     geoDocuments,
     location,
     updateDoc,
-    focusDocument,
+    selectParentId,
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -293,7 +293,7 @@ const GLMap: React.FC<GLMapProps> = ({
     const onTouchEnd = () => {
 
         if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && pressedDocId.current)
-            focusDocument(pressedDocId.current);
+            selectParentId(pressedDocId.current);
     };
     
     const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {

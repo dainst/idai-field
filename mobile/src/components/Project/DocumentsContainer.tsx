@@ -76,10 +76,11 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [documents]);
 
-    const onParentSelected = (doc: Document) => {
+    const onParentSelected = (doc: Document, navigation: DrawerNavigation) => {
 
         setHierarchyBack(false);
         pushToHierarchy(doc);
+        navigation.navigate('DocumentsMap', { highlightedDocId: doc.resource.id } );
     };
 
     const onHierarchyBack = () => {
@@ -88,7 +89,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         popFromHierarchy();
     };
 
-    const handleSelectDocument = (doc: Document) => onParentSelected(doc);
+    //const handleSelectDocument = (doc: Document) => onParentSelected(doc);
 
     return (
         <Drawer.Navigator
@@ -103,7 +104,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') }
-                    onParentSelected={ onParentSelected }
+                    onParentSelected={ doc => onParentSelected(doc, navigation) }
                     onHierarchyBack={ onHierarchyBack }
                 />;
             } }
@@ -118,7 +119,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     syncStatus={ syncStatus }
                     relationsManager={ relationsManager }
                     isInOverview={ isInOverview }
-                    selectDocument={ handleSelectDocument } /> }
+                    selectParent={ doc => onParentSelected(doc, navigation) } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentAdd">
                 { ({ navigation, route }) => <DocumentAdd

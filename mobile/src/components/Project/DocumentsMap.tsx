@@ -21,7 +21,7 @@ interface DocumentsMapProps {
     relationsManager: RelationsManager;
     issueSearch: (q: string) => void;
     isInOverview: () => boolean;
-    selectDocument: (doc: Document) => void;
+    selectParent: (doc: Document) => void;
 }
 
 
@@ -34,7 +34,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     relationsManager,
     issueSearch,
     isInOverview,
-    selectDocument
+    selectParent
 }): ReactElement => {
 
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
@@ -125,7 +125,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     addDocument={ handleAddDocument }
                     editDocument={ handleEditDocument }
                     removeDocument={ openRemoveDocument }
-                    selectDocument={ selectDocument } />
+                    selectParent={ selectParent } />
             </View>
         </View>
     );

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { reload } from '../../core/common/reload';
+import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { ProjectNameValidator } from '../../core/model/project-name-validator';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
@@ -51,6 +51,6 @@ export class CreateProjectModalComponent {
             remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
         );
 
-        reload();
+        reloadAndSwitchToHomeRoute();
     }
 }

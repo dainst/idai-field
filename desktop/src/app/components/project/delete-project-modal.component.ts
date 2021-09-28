@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { reload } from '../../core/common/reload';
+import { reloadAndSwitchToHomeRoute } from '../../core/common/reload';
 import { StateSerializer } from '../../core/common/state-serializer';
 import { SettingsProvider } from '../../core/settings/settings-provider';
 import { SettingsService } from '../../core/settings/settings-service';
@@ -70,7 +70,7 @@ export class DeleteProjectModalComponent {
 
         await this.settingsService.deleteProject(this.getProjectName());
 
-        reload();
+        reloadAndSwitchToHomeRoute();
     }
 
 

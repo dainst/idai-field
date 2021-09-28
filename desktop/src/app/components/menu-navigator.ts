@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, Document } from 'idai-field-core';
 import { SettingsService } from '../core/settings/settings-service';
-import { reload } from '../core/common/reload';
+import { reloadAndSwitchToHomeRoute } from '../core/common/reload';
 import { DoceditComponent } from './docedit/docedit.component';
 import { MenuContext, MenuService } from './menu-service';
 import { DeleteProjectModalComponent } from './project/delete-project-modal.component';
@@ -41,7 +41,7 @@ export class MenuNavigator {
 
         if (menuItem === 'openProject') {
             await this.settingsService.selectProject(projectName);
-            reload();
+            reloadAndSwitchToHomeRoute();
         } else if (menuItem === 'createProject') {
             await this.zone.run(async () => this.createProject());
         } else if (menuItem === 'editProject') {

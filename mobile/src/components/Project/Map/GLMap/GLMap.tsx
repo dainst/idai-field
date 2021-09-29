@@ -37,6 +37,7 @@ const yes = () => true;
 
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
+    highlightedDocId: string | undefined;
     screen: LayoutRectangle;
     viewBox: Transformation | undefined;
     documentToWorldMatrix: Matrix4 ;
@@ -51,6 +52,7 @@ interface GLMapProps {
 
 const GLMap: React.FC<GLMapProps> = ({
     setHighlightedDocId,
+    highlightedDocId,
     screen,
     viewBox,
     documentToWorldMatrix,
@@ -77,7 +79,6 @@ const GLMap: React.FC<GLMapProps> = ({
 
     //long press handler variables
     const pressStartTime = useRef<number>(0);
-    const pressedDocId = useRef<string>();
 
     //reference values set at the beginning of the gesture
     const initialTouch = useRef<{x: number, y: number}>({ x:0, y:0 });
@@ -264,6 +265,12 @@ const GLMap: React.FC<GLMapProps> = ({
 
     },[updateDoc, scene, documentToWorldMatrix, config, renderScene]);
     
+    useEffect(() => {
+        if(highlightedDocId) {
+            addHighlightedDocToScene(highlightedDocId, scene);
+            renderScene();
+        }
+    },[highlightedDocId, scene, renderScene]);
 
     const onPress = (e: GestureResponderEvent) => {
 
@@ -284,16 +291,13 @@ const GLMap: React.FC<GLMapProps> = ({
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const docId = filteredSortedInters[0].object.parent!.uuid;
             setHighlightedDocId(docId);
-            addHighlightedDocToScene(docId, scene);
-            pressedDocId.current = docId;
-            renderScene();
         }
     };
 
     const onTouchEnd = () => {
 
-        if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && pressedDocId.current)
-            selectParentId(pressedDocId.current);
+        if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && highlightedDocId)
+            selectParentId(highlightedDocId);
     };
     
     const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {

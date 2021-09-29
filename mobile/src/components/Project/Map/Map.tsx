@@ -78,6 +78,7 @@ const Map: React.FC<MapProps> = (props) => {
         <View style={ styles.container } onLayout={ handleLayoutChange }>
             {(screen && documentToWorldMatrix && screenToWorldMatrix) && <GLMap
                 setHighlightedDocId={ setHighlightedDocFromId }
+                highlightedDocId={ highlightedDoc?.resource.id }
                 screen={ screen }
                 viewBox={ viewBox }
                 documentToWorldMatrix={ documentToWorldMatrix }

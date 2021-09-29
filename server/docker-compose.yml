@@ -18,6 +18,7 @@ services:
       - 'COUCHDB_PASSWORD=abcdef'
 
   server:
+    image: "dainst/idai-field-web-server"
     build: .
     ports:
       - "4000:4000"

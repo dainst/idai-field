@@ -218,7 +218,6 @@ const GLMap: React.FC<GLMapProps> = ({
             });
         }
         
-        if(!selectedDocumentIds) return;
         selectedDocumentIds.forEach(docId => {
          
             const object = scene.getObjectByProperty('uuid',docId);
@@ -231,7 +230,8 @@ const GLMap: React.FC<GLMapProps> = ({
             }
 
         });
-    },[scene, selectedDocumentIds, previousSelectedDocIds]);
+        renderScene();
+    },[scene, selectedDocumentIds, previousSelectedDocIds, renderScene]);
    
     useEffect(() => {
         

@@ -45,9 +45,8 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
         
         const geoDocs: FieldGeometry[] = [];
         const docs = await repository.getMultiple(docIds);
-        docs.forEach(doc => {
-            if(doc.resource.geometry) geoDocs.push(doc.resource.geometry);
-        });
+        docs.forEach(doc => doc.resource.geometry && geoDocs.push(doc.resource.geometry));
+        
         if(!geoDocs.length) return;
         const { minX, minY, maxX, maxY } = getMinMaxCoords(geoDocs);
         const [left, bottom] = processTransform2d(documentToWorldMatrix, [minX,minY]);

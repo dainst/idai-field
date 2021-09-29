@@ -89,8 +89,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         popFromHierarchy();
     };
 
-    //const handleSelectDocument = (doc: Document) => onParentSelected(doc);
-
     return (
         <Drawer.Navigator
             drawerType={ orientation === 'landscape' ? 'permanent' : 'front' }

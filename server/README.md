@@ -9,6 +9,7 @@
 
 ### Preparations
 
+    $ npm i --prefix=./assets
     $ docker-compose up postgres
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb

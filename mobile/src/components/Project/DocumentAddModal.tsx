@@ -15,7 +15,7 @@ const ICON_SIZE = 30;
 interface AddModalProps {
     onAddCategory: (categoryName: string, parentDoc: Document | undefined) => void;
     onClose: () => void;
-    isInOverview: () => boolean;
+    isInOverview: (category: string) => boolean;
     parentDoc?: Document;
 }
 
@@ -28,7 +28,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
     const isAllowedCategory = useCallback( (category: Category) => {
 
         if(category.name === 'Image' || !parentDoc) return false;
-        if(isInOverview()){
+        if(isInOverview(parentDoc.resource.category)){
             if (!config.isAllowedRelationDomainCategory(
                 category.name, parentDoc.resource.category, 'isRecordedIn')) return false;
             return !category.mustLieWithin;

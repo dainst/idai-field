@@ -20,7 +20,7 @@ interface DocumentsMapProps {
     syncStatus: SyncStatus;
     relationsManager: RelationsManager;
     issueSearch: (q: string) => void;
-    isInOverview: () => boolean;
+    isInOverview: (category: string) => boolean;
     selectParent: (doc: Document) => void;
 }
 

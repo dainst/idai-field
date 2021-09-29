@@ -13,7 +13,7 @@ const useSearch = (
     const issueSearch = useCallback(
         () => repository.find(query)
             .then(result => setDocuments(result.documents))
-            .catch(err => console.log('Document not found. Error:',err)),
+            .catch(err => console.log('Documents not found. Error:',err)),
         [repository, query]
     );
 

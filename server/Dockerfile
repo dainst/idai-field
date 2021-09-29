@@ -9,4 +9,4 @@ RUN ["mix", "local.rebar", "--force"]
 RUN ["mix", "deps.get"]
 RUN ["mix", "deps.compile"]
 
-ENTRYPOINT ["mix", "run", "--no-halt"]
+ENTRYPOINT ["mix", "phx.server"]

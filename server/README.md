@@ -9,7 +9,6 @@
 
 ### Preparations
 
-    $ npm install
     $ docker-compose up postgres
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb

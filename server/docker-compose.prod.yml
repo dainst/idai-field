@@ -24,11 +24,13 @@ services:
   server:
     image: "dainst/idai-field-web-server"
     ports:
-      - "4400:4400"
+      - "4400:4000"
     volumes:
       - "server-config:/opt/src/server/config"
+      - "server-images:/opt/src/server/images"
   
 volumes:
   couchdb-data:
   server-config:
+  server-images:
   postgres-data:

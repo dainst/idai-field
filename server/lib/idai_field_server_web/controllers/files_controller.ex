@@ -1,16 +1,14 @@
-defmodule IdaiFieldServerWeb.FileSyncController do
+defmodule IdaiFieldServerWeb.FilesController do
   use IdaiFieldServerWeb, :controller
 
   import Plug.BasicAuth
   import IdaiFieldServer.Accounts
 
+  # { email, password } = Plug.BasicAuth.parse_basic_auth(conn)
+  # p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
+  # IO.inspect p.email
+
   def index(conn, %{"project" => project}) do
-
-    # { email, password } = Plug.BasicAuth.parse_basic_auth(conn)
-#
-    # p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
-    # IO.inspect p.email
-
     files =
       Path.wildcard("./files/#{project}/*")
       |> Enum.map(fn filename -> String.replace(filename, "files/#{project}/", "") end)

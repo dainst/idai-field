@@ -22,12 +22,10 @@ defmodule IdaiFieldServerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    # get "/files/:project", FileSyncController, :index
   end
 
   scope "/files", IdaiFieldServerWeb do
-    # get "/", FileSyncController, :index
-    get "/:project", FileSyncController, :index
+    get "/:project", FilesController, :index
   end
 
   # Other scopes may use custom stacks.

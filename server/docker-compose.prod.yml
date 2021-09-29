@@ -27,7 +27,7 @@ services:
       - "4400:4000"
     volumes:
       - "server-config:/opt/src/server/config"
-      - "server-images:/opt/src/server/images"
+      - "server-images:/opt/src/server/files"
   
 volumes:
   couchdb-data:

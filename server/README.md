@@ -16,10 +16,15 @@
 
 ### Run
 
-    $ mix phx.server                                          # run on your local machine
-    visit localhost:4000
-    $ docker-compose run --entrypoint "mix phx.server" server # run inside Docker container 
-    visit localhost:4000
+#### On host machine
+
+    $ mix phx.server      
+    Visit localhost:4000
+
+#### In container 
+
+    $ docker-compose run --entrypoint "mix phx.server" server
+    Visit localhost:4000
 
 ## Connect iDAI.field Desktop
 

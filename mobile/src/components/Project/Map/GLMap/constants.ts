@@ -1,4 +1,4 @@
-export const pointRadius = 2;
+export const defaultPointRadius = 2;
 export const strokeWidth = 2;
 export const highlightedStrokeWidth = 4;
 export const viewBoxPaddingX = 5;

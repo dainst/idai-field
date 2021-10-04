@@ -1,10 +1,11 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Position } from 'geojson';
 import { Document } from 'idai-field-core';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
-    GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet
+    GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
@@ -12,13 +13,14 @@ import { ConfigurationContext } from '../../../../contexts/configuration-context
 import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { LONG_PRESS_DURATION_MS } from './constants';
+import { defaultPointRadius, LONG_PRESS_DURATION_MS } from './constants';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
     addHighlightedDocToScene,
-    addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene
+    addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene, updatePointRadiusOfScene
 } from './geojson/geojson-gl-shape';
+import MapSettingsModal from './MapSettingsModal';
 import { calcCenter, calcDistance } from './math-utils';
 
 
@@ -66,6 +68,9 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
     const config = useContext(ConfigurationContext);
+
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
+    const [pointRadius, setPointRadius] = useState<number>(defaultPointRadius);
 
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
@@ -200,7 +205,7 @@ const GLMap: React.FC<GLMapProps> = ({
         scene.clear();
         geoDocuments.forEach(doc => addDocumentToScene(doc,documentToWorldMatrix, scene, config));
         renderScene();
-    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene]);
+    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene, pointRadius]);
 
 
     useEffect(() => {
@@ -272,6 +277,11 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     },[highlightedDocId, scene, renderScene]);
 
+    useEffect(() => {
+        updatePointRadiusOfScene(geoDocuments,documentToWorldMatrix,config,scene, pointRadius);
+        renderScene();
+    },[pointRadius, scene, geoDocuments, documentToWorldMatrix, config, renderScene]);
+
     const onPress = (e: GestureResponderEvent) => {
 
         const ndc_vec = screenToNormalizedDeviceCoordinates(e.nativeEvent.locationX, e.nativeEvent.locationY);
@@ -318,13 +328,22 @@ const GLMap: React.FC<GLMapProps> = ({
     if (!camera || !scene.children.length) return null;
 
     return (
-        <GLView
-            onTouchStart={ onPress }
-            onTouchEnd={ onTouchEnd }
-            { ...panResponder.panHandlers }
-            style={ styles.container }
-            onContextCreate={ onContextCreate }
-        />
+        <View style={ styles.mapSettingsContainer }>
+            {isSettingsModalOpen && <MapSettingsModal
+                onClose={ () => setIsSettingsModalOpen(false) }
+                pointRadius={ pointRadius }
+                onChangePointRadius={ (radius:number) => setPointRadius(radius) } />}
+            <TouchableOpacity onPress={ () => setIsSettingsModalOpen(true) } style={ styles.mapSettings } >
+                <MaterialIcons name="layers" size={ 30 } color="black" />
+            </TouchableOpacity>
+            <GLView
+                onTouchStart={ onPress }
+                onTouchEnd={ onTouchEnd }
+                { ...panResponder.panHandlers }
+                style={ styles.container }
+                onContextCreate={ onContextCreate }
+            />
+        </View>
     );
 };
 
@@ -337,6 +356,15 @@ const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestu
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    mapSettingsContainer: {
+        backgroundColor: colors.containerBackground,
+        flex: 1,
+    },
+    mapSettings: {
+        padding: 4,
+        marginLeft: 'auto',
+        margin: 4
     }
 });
 

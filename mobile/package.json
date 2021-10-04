@@ -64,7 +64,8 @@
     "styled-components": "^5.2.3",
     "styled-system": "^5.1.5",
     "three": "^0.129.0",
-    "tsfun": "5.5.38"
+    "tsfun": "5.5.38",
+    "@react-native-community/slider": "3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

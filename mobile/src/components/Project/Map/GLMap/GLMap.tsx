@@ -279,7 +279,17 @@ const GLMap: React.FC<GLMapProps> = ({
 
     useEffect(() => {
         updatePointRadiusOfScene(geoDocuments,documentToWorldMatrix,config,scene, pointRadius);
+        selectedDocumentIds.forEach(docId => {
+            const object = scene.getObjectByProperty('uuid',docId);
+            if(object){
+                object.userData = { ...object.userData, isSelected: true };
+                object.children.forEach(child => {
+                    child.visible = child.name === ObjectChildValues.selected ? true : false;
+                });
+            }
+        });
         renderScene();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pointRadius, scene, geoDocuments, documentToWorldMatrix, config, renderScene]);
 
     const onPress = (e: GestureResponderEvent) => {

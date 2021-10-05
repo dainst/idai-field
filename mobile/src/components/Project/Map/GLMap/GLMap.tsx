@@ -10,10 +10,11 @@ import {
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
+import { PreferencesContext } from '../../../../contexts/preferences-context';
 import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { defaultPointRadius, LONG_PRESS_DURATION_MS } from './constants';
+import { LONG_PRESS_DURATION_MS } from './constants';
 import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
@@ -68,9 +69,10 @@ const GLMap: React.FC<GLMapProps> = ({
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
     const config = useContext(ConfigurationContext);
-
+    const { getMapSettings, setMapSettings, preferences } = useContext(PreferencesContext);
+    
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
-    const [pointRadius, setPointRadius] = useState<number>(defaultPointRadius);
+    const [pointRadius, setPointRadius] = useState<number>(getMapSettings(preferences.currentProject).pointRadius);
 
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
@@ -279,6 +281,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
     useEffect(() => {
         updatePointRadiusOfScene(geoDocuments,documentToWorldMatrix,config,scene, pointRadius);
+        setMapSettings(preferences.currentProject, { pointRadius });
         selectedDocumentIds.forEach(docId => {
             const object = scene.getObjectByProperty('uuid',docId);
             if(object){
@@ -290,7 +293,7 @@ const GLMap: React.FC<GLMapProps> = ({
         });
         renderScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[pointRadius, scene, geoDocuments, documentToWorldMatrix, config, renderScene]);
+    },[pointRadius, scene, geoDocuments, documentToWorldMatrix, renderScene]);
 
     const onPress = (e: GestureResponderEvent) => {
 

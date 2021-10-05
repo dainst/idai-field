@@ -8,6 +8,7 @@ import { colors, textColors } from '../../utils/colors';
 import Button from '../common/Button';
 import Column from '../common/Column';
 import Row from '../common/Row';
+import { defaultMapSettings } from '../Project/Map/map-settings';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
@@ -56,7 +57,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         setSelectedProject(project);
         preferences.setCurrentProject(project);
-        preferences.setProjectSettings(project, { url, password, connected: true });
+        preferences.setProjectSettings(project, { url, password, connected: true, mapSettings: defaultMapSettings() });
         navigate('LoadingScreen');
     },[navigate, preferences]);
 

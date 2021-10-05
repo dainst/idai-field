@@ -11,7 +11,6 @@ import DocumentsContainer from './DocumentsContainer';
 const ProjectScreen: React.FC = () => {
 
     const preferences = useContext(PreferencesContext);
-
     const pouchdbDatastore = usePouchDbDatastore(preferences.preferences.currentProject);
 
     const config = useConfiguration(

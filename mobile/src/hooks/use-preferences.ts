@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { assoc, compose, detach, prepend, set, subtract, update } from 'tsfun';
 import { Preferences, ProjectSettings } from '../models/preferences';
+import { defaultPointRadius } from './../components/Project/Map/GLMap/constants';
+import { MapSettings } from './../components/Project/Map/map-settings';
 
 
 export interface UsePreferences {
@@ -10,6 +12,8 @@ export interface UsePreferences {
     setUsername: (project: string) => void;
     setProjectSettings: (project: string, projectSettings: ProjectSettings) => void;
     removeProject: (project: string) => void;
+    getMapSettings: (project: string) => MapSettings
+    setMapSettings: (project: string, mapSettings: MapSettings) => void;
 }
 
 
@@ -57,9 +61,23 @@ const usePreferences = (): UsePreferences => {
                 update('currentProject', (p: string) => p === project ? '' : p)
             )
         );
+    
+        
+    const getMapSettings = (project: string): MapSettings =>
+        preferences.projects[project].mapSettings;
+                
+
+    const setMapSettings = (project: string, mapSettings: MapSettings) => {
+        const prefCopy = { ...preferences };
+        prefCopy.projects[project].mapSettings = { ...mapSettings };
+        setPreferences(prefCopy);
+    };
 
 
-    return { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject };
+    return {
+        preferences,
+        setCurrentProject, setUsername,
+        setProjectSettings, removeProject, getMapSettings, setMapSettings };
 
 };
 
@@ -89,5 +107,8 @@ export const getDefaultPreferences = (): Preferences => ({
 const getDefaultProjectSettings = (): ProjectSettings => ({
     url: '',
     password: '',
-    connected: false
+    connected: false,
+    mapSettings: {
+        pointRadius: defaultPointRadius,
+    }
 });

@@ -14,6 +14,7 @@ import { DocumentRepository } from '../../repositories/document-repository';
 import loadConfiguration from '../../services/config/load-configuration';
 import { ToastProvider } from '../common/Toast/ToastProvider';
 import DocumentEdit from './DocumentEdit';
+import { defaultMapSettings } from './Map/map-settings';
 
 const project = 'testdb';
 const category = 'Pottery';
@@ -27,6 +28,7 @@ const preferences: Preferences = {
             url: '',
             password: '',
             connected: true,
+            mapSettings: defaultMapSettings()
         }
     }
 };
@@ -36,6 +38,8 @@ const setCurrentProject = jest.fn();
 const setUsername = jest.fn();
 const setProjectSettings = jest.fn();
 const removeProject = jest.fn();
+const getMapSettings = jest.fn();
+const setMapSettings = jest.fn();
 
 jest.mock('../../repositories/document-repository');
 jest.mock('idai-field-core');
@@ -60,7 +64,9 @@ describe('DocumentEdit',() => {
         renderAPI = render(
             <ToastProvider>
                 <PreferencesContext.Provider
-                    value={ { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject } }>
+                    value={ {
+                        preferences, setCurrentProject, setUsername,
+                        setProjectSettings, removeProject, getMapSettings, setMapSettings } }>
                     <LabelsContext.Provider value={ { labels: new Labels(() => ['en']) } }>
                         <ConfigurationContext.Provider value={ config }>
                             <DocumentEdit

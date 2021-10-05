@@ -6,14 +6,20 @@ import {
     LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils
 } from 'three';
 import {
-    highlightedColor, highlightedStrokeWidth, lineRenderingOrder, pointRadius, pointRenderingOrder, strokeWidth
+    highlightedColor, highlightedStrokeWidth, lineRenderingOrder, pointRenderingOrder, strokeWidth
 } from '../constants';
 import { processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
+import { defaultPointRadius } from './../constants';
 
 
 interface ShapeFunction<T extends Position | Position[] | Position[][] | Position[][][]> {
-    (matrix: Matrix4,scene: Scene, config: ProjectConfiguration, document: Document, coordinates: T): void;
+    (matrix: Matrix4,
+        scene: Scene,
+        config: ProjectConfiguration,
+        document: Document,
+        coordinates: T,
+        radius?: number): void;
 }
 
 export interface ObjectData {
@@ -170,10 +176,20 @@ const getLineFromShape =
 
 
 export const pointToShape:
-    ShapeFunction<Position | Position[]> = (matrix, scene, config, document, coordinates): void => {
+    ShapeFunction<Position | Position[]> = (matrix, scene, config, document, coordinates, radius?: number): void => {
 
     if(!coordinates) return;
-  
+
+    const name = 'pointParent';
+    let pointParent = scene.getObjectByName(name);
+    if(!pointParent){
+        pointParent = new Object3D();
+        pointParent.name = name;
+        scene.add(pointParent);
+    }
+    pointParent.userData = { radius: radius || defaultPointRadius };
+
+
     const parent = new Object3D();
     const color = config.getCategory(document.resource.category)?.color || 'black';
     const points: Position[] = [];
@@ -183,20 +199,22 @@ export const pointToShape:
     else coordinates.forEach(coords => points.push(processTransform2d(matrix, coords)));
 
     // selected Child
-    points.forEach(point => parent.add(getCricleFromCoord(point,true, color)));
+    points.forEach(point => parent.add(getCricleFromCoord(scene, point,true, color)));
 
     // not selected Child
-    points.forEach(point => parent.add(getCricleFromCoord(point,false, color)));
+    points.forEach(point => parent.add(getCricleFromCoord(scene, point,false, color)));
 
     addObjectInfo(parent, document, points);
-    scene.add(parent);
+    //scene.add(parent);
+    pointParent.add(parent);
 };
 
 
-const getCricleFromCoord = (pos: Position, isSelected: boolean, color: string): Mesh => {
+const getCricleFromCoord = (scene: Scene, pos: Position, isSelected: boolean, color: string): Mesh => {
 
+    const radius = scene.getObjectByName('pointParent')?.userData.radius as number || defaultPointRadius;
     const segments = 30; //<-- Increase or decrease for more resolution
-    const circleGeometry = new CircleGeometry( pointRadius, segments );
+    const circleGeometry = new CircleGeometry( radius, segments );
     const [x,y] = pos;
     circleGeometry.translate(x ,y ,0);
 
@@ -206,6 +224,27 @@ const getCricleFromCoord = (pos: Position, isSelected: boolean, color: string): 
     circle.visible = isSelected ? false : true;
     circle.renderOrder = pointRenderingOrder;
     return circle;
+};
+
+export const updatePointRadiusOfScene = (
+        geoDocuments: Document[],
+        documentToWorldMatrix: Matrix4,
+        config: ProjectConfiguration,
+        scene: Scene,
+        radius: number): void => {
+
+    const name = 'pointParent';
+    const pointParent = scene.getObjectByName(name);
+    
+    if(!pointParent) return;
+    scene.remove(pointParent);
+
+    geoDocuments.forEach(doc => {
+        const geometry = doc.resource.geometry as FieldGeometry;
+        if(geometry.type === 'Point' || geometry.type === 'MultiPoint')
+            pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates, radius);
+    });
+
 };
 
 
@@ -241,7 +280,7 @@ export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordi
     }
 
     const color = 'blue';
-    const radius = pointRadius;
+    const radius = defaultPointRadius;
     const segments = 30; //<-- Increase or decrease for more resolution
     
     const circleGeometry = new CircleGeometry( radius, segments );
@@ -270,7 +309,7 @@ export const addHighlightedDocToScene = (docId: string, scene: Scene): void => {
         data.coords.forEach(coord =>
             parent?.add(getLineFromShape(coord, highlightedColor,false, closeShape,highlightedStrokeWidth)));
     } else
-        data.coords.forEach(coord => parent?.add(getCricleFromCoord(coord, false, highlightedColor)));
+        data.coords.forEach(coord => parent?.add(getCricleFromCoord(scene, coord, false, highlightedColor)));
     
     scene.add(parent);
 };

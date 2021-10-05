@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from '@testing-library/react-native';
+import { defaultMapSettings } from './../components/Project/Map/map-settings';
 import usePreferences from './use-preferences';
 
 describe('usePreferences', () => {
@@ -49,7 +50,8 @@ describe('usePreferences', () => {
             result.current.setProjectSettings('test2', {
                 url: 'https://test.url',
                 password: 'testword',
-                connected: true
+                connected: true,
+                mapSettings: defaultMapSettings(),
             });
         });
       
@@ -70,7 +72,8 @@ describe('usePreferences', () => {
             result.current.setProjectSettings('test2', {
                 url: 'https://test.url',
                 password: 'testword',
-                connected: true
+                connected: true,
+                mapSettings: defaultMapSettings(),
             });
         });
 

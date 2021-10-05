@@ -126,10 +126,12 @@ const mockPreferences = () => ({
         languages: [],
         currentProject: '',
         recentProjects: [],
-        projects: {}
+        projects: {},
     } as Preferences,
     setCurrentProject: jest.fn(_ => { return; }),
     setProjectSettings: jest.fn(_ => { return; }),
     setUsername: jest.fn(_ => { return; }),
     removeProject: jest.fn(_ => { return; }),
+    getMapSettings: jest.fn(),
+    setMapSettings: jest.fn(),
 });

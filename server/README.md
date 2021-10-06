@@ -52,6 +52,12 @@ POST /files/:project/path/to/file.png
 
 `/path/to/` gets created in case it does not yet exist.
 
+To delete a file, use
+
+```
+DELETE /files/:project/path/to/file.png
+```
+
 ## Connect iDAI.field Desktop
 
 Sync to couchdb (planned to go via server soon) by setting up a project `synctest` 

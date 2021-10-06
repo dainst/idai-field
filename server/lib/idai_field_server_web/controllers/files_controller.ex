@@ -11,23 +11,17 @@ defmodule IdaiFieldServerWeb.FilesController do
   # p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
   # IO.inspect p.email
 
-  def download %{
-      query_params: query_params,
-      params: %{
-        "project" => project,
-        "filepath" => filepath
-      }} = conn, params do
+  def download %{ query_params: query_params} = conn, params do
 
-    filepath_string = Enum.join filepath, "/"
-    complete_filepath = "#{@files_root}/#{project}/#{filepath_string}"
+    filepath = get_filepath conn
 
-    if not File.exists? complete_filepath do
-      json conn, %{ status: :not_found, path: complete_filepath }
+    if not File.exists? filepath do
+      json conn, %{ status: :not_found, path: filepath }
     else
-      if File.dir? complete_filepath do
-        json conn, %{ project: project, files: get_files(complete_filepath) }
+      if File.dir? filepath do
+        json conn, %{ project: get_project(conn), files: get_files(filepath) }
       else
-        send_download conn, {:file, complete_filepath}
+        send_download conn, {:file, filepath}
       end
     end
   end
@@ -47,7 +41,28 @@ defmodule IdaiFieldServerWeb.FilesController do
     IO.binwrite file, body
     File.close file
 
-    json conn, %{status: :ok}
+    json conn, %{ status: :ok }
+  end
+
+  def delete conn, params do
+
+    filepath = get_filepath conn
+
+    if File.exists?(filepath) and not File.dir?(filepath) do
+      File.rm! filepath
+      json conn, %{ status: :deleted }
+    else
+      json conn, %{ status: :notfound }
+    end
+  end
+
+  defp get_filepath %{ params: %{ "project" => project, "filepath" => filepath }} do
+    filepath_string = Enum.join filepath, "/"
+    "#{@files_root}/#{project}/#{filepath_string}"
+  end
+
+  defp get_project %{ params: %{ "project" => project }} do
+    project
   end
 
   defp get_files dir do

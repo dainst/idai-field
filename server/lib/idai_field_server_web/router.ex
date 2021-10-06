@@ -27,6 +27,7 @@ defmodule IdaiFieldServerWeb.Router do
   scope "/files", IdaiFieldServerWeb do
     get "/:project/*filepath", FilesController, :download
     post "/:project/*filepath", FilesController, :upload
+    delete "/:project/*filepath", FilesController, :delete
   end
 
   # Other scopes may use custom stacks.

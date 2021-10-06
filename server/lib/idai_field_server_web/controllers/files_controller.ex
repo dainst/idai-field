@@ -25,24 +25,16 @@ defmodule IdaiFieldServerWeb.FilesController do
     end
   end
 
-  def upload %{ params: %{ "project" => project, "filepath" => filepath }} = conn, params do
+  def upload conn, _params do
     unless is_authorized? conn do
-      json conn, %{ status: :unauthorized}
+      json conn, %{ status: :unauthorized }
     else
-      if length(filepath) > 0 do
-        fp = filepath |> Enum.reverse |> tl() |> Enum.reverse
-        File.mkdir_p! "#{@files_root}/#{project}/#{fp}"
+      if File.exists?(get_filepath(conn)) do
+        json conn, %{ status: :filexists }
+      else
+        put_file conn
+        json conn, %{ status: :ok }
       end
-
-      filepath = Enum.join filepath, "/"
-
-      {:ok, body, conn} = Plug.Conn.read_body conn
-
-      {:ok, file} = File.open "#{@files_root}/#{project}/#{filepath}", [:write]
-      IO.binwrite file, body
-      File.close file
-
-      json conn, %{ status: :ok }
     end
   end
 
@@ -58,6 +50,20 @@ defmodule IdaiFieldServerWeb.FilesController do
         json conn, %{ status: :notfound }
       end
     end
+  end
+
+  defp put_file %{ params: %{ "project" => project, "filepath" => segments }} = conn do
+    if length(segments) > 0 do
+      fp = segments |> Enum.reverse |> tl() |> Enum.reverse
+      File.mkdir_p! "#{@files_root}/#{project}/#{fp}"
+    end
+
+    {:ok, body, conn} = Plug.Conn.read_body conn
+
+    filepath = get_filepath conn
+    {:ok, file} = File.open filepath, [:write]
+    IO.binwrite file, body
+    File.close file
   end
 
   defp get_filepath %{ params: %{ "project" => project, "filepath" => filepath }} do
@@ -93,11 +99,5 @@ defmodule IdaiFieldServerWeb.FilesController do
         |> Enum.concat
       true -> []
     end
-  end
-
-  # TODO remove
-  def list_images dir do
-    #if not File.dir?(dir) raise ""
-    File.ls! dir
   end
 end

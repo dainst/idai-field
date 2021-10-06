@@ -7,11 +7,10 @@ defmodule IdaiFieldServerWeb.FilesController do
   @files_folder_name "files"
   @files_root "./#{@files_folder_name}"
 
-  # { email, password } = Plug.BasicAuth.parse_basic_auth(conn)
-  # p = IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
-  # IO.inspect p.email
-
   def download %{ query_params: query_params} = conn, params do
+
+    { _email, _password } = Plug.BasicAuth.parse_basic_auth(conn)
+    # IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
 
     filepath = get_filepath conn
 
@@ -27,6 +26,9 @@ defmodule IdaiFieldServerWeb.FilesController do
   end
 
   def upload %{ params: %{ "project" => project, "filepath" => filepath }} = conn, params do
+
+    { _email, _password } = Plug.BasicAuth.parse_basic_auth(conn)
+    # IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
 
     if length(filepath) > 0 do
       fp = filepath |> Enum.reverse |> tl() |> Enum.reverse
@@ -45,6 +47,9 @@ defmodule IdaiFieldServerWeb.FilesController do
   end
 
   def delete conn, params do
+
+    { _email, _password } = Plug.BasicAuth.parse_basic_auth(conn)
+    # IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
 
     filepath = get_filepath conn
 

@@ -29,6 +29,8 @@
 
 ## API
 
+Note that subsequently calls to `GET /files/:project/path/to/file.png` are shorthands for `GET https://user:pwd@hostname:port/files/:project/path/to/file.png`. Typically, the user has the same name as the `:project` to be accessed.
+
 Get a file, if `path/to/file.png` exists and is a file.
 
 ```

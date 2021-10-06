@@ -18,17 +18,17 @@ defmodule IdaiFieldServerWeb.FilesController do
         "filepath" => filepath
       }} = conn, params do
 
-    if query_params == %{} do
-      filepath = Enum.join(filepath, "/")
-      conn
-      |> send_download({:file, "#{@files_root}/#{project}/#{filepath}"})
-    else
-      filepath = Enum.join(filepath, "/")
-      files =
-        Path.wildcard("#{@files_root}/#{project}/#{filepath}/*")
-        |> Enum.map(fn filename -> String.replace(filename, "#{@files_folder_name}/#{project}/#{filepath}", "") end)
+    filepath_string = Enum.join filepath, "/"
+    complete_filepath = "#{@files_root}/#{project}/#{filepath_string}"
 
-      json(conn, %{project: project, files: files})
+    if not File.exists? complete_filepath do
+      json conn, %{ status: :not_found, path: complete_filepath }
+    else
+      if File.dir? complete_filepath do
+        json conn, %{ project: project, files: get_files(complete_filepath) }
+      else
+        send_download conn, {:file, complete_filepath}
+      end
     end
   end
 
@@ -39,17 +39,23 @@ defmodule IdaiFieldServerWeb.FilesController do
       File.mkdir_p! "#{@files_root}/#{project}/#{fp}"
     end
 
-    filepath = Enum.join(filepath, "/")
+    filepath = Enum.join filepath, "/"
 
-    {:ok, body, conn} = Plug.Conn.read_body(conn)
+    {:ok, body, conn} = Plug.Conn.read_body conn
 
     {:ok, file} = File.open "#{@files_root}/#{project}/#{filepath}", [:write]
     IO.binwrite file, body
     File.close file
 
-    json(conn, %{status: :ok})
+    json conn, %{status: :ok}
   end
 
+  defp get_files dir do
+    Path.wildcard("#{dir}/*")
+    |> Enum.map(fn filename -> "/" <> filename end)
+  end
+
+  # TODO remove
   def list_images dir do
     #if not File.dir?(dir) raise ""
     File.ls! dir

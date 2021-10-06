@@ -51,8 +51,22 @@ defmodule IdaiFieldServerWeb.FilesController do
   end
 
   defp get_files dir do
-    Path.wildcard("#{dir}/*")
-    |> Enum.map(fn filename -> "/" <> filename end)
+    ls_r(dir)
+    |> Enum.map(fn filename -> String.replace(filename, "./", "/") end)
+    # Path.wildcard("#{dir}/*")
+  end
+
+  # thx Ryan Daigle, https://www.ryandaigle.com/a/recursively-list-files-in-elixir/
+  defp ls_r(path \\ ".") do
+    cond do
+      File.regular?(path) -> [path]
+      File.dir?(path) ->
+        File.ls!(path)
+        |> Enum.map(&Path.join(path, &1))
+        |> Enum.map(&ls_r/1)
+        |> Enum.concat
+      true -> []
+    end
   end
 
   # TODO remove

@@ -25,6 +25,8 @@ defmodule IdaiFieldServerWeb.Router do
   end
 
   scope "/files", IdaiFieldServerWeb do
+    get "/download", FilesController, :download
+
     get "/:project", FilesController, :index
   end
 

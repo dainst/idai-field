@@ -16,6 +16,11 @@ defmodule IdaiFieldServerWeb.FilesController do
     json(conn, %{project: project, files: files})
   end
 
+  def download(conn, _) do
+    conn
+    |> send_download({:file, "./README.md"})
+  end
+
   def list_images(dir) do
     #if not File.dir?(dir) raise ""
     File.ls! dir

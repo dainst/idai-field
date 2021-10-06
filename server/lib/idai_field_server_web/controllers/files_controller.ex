@@ -21,6 +21,16 @@ defmodule IdaiFieldServerWeb.FilesController do
     |> send_download({:file, "./README.md"})
   end
 
+  def upload(conn, params) do
+    {:ok, body, conn} = Plug.Conn.read_body(conn)
+
+    {:ok, file} = File.open "abc.png", [:write]
+    IO.binwrite file, body
+    File.close file
+
+    json(conn, %{status: :ok})
+  end
+
   def list_images(dir) do
     #if not File.dir?(dir) raise ""
     File.ls! dir

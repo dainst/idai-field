@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  android-build:
+    container_name: mobile-android-build
+    build:
+      context: ./
+      network: host
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/mobile

@@ -27,6 +27,31 @@
     $ docker-compose run --entrypoint "mix phx.server" server
     Visit localhost:4000
 
+## API
+
+Get a file, if `path/to/file.png` exists and is a file.
+
+```
+GET /files/:project/path/to/file.png
+```
+
+Get a recursive directory listing of all files under a certain path, if
+the given `path/to/files` is a directory
+
+```
+GET /files/:project/path/to/files
+```
+
+When the path does not exist, an error, wrapped in a JSON object, is returned.
+
+To post a new file, use
+
+```
+POST /files/:project/path/to/file.png
+```
+
+`/path/to/` gets created in case it does not yet exist.
+
 ## Connect iDAI.field Desktop
 
 Sync to couchdb (planned to go via server soon) by setting up a project `synctest` 

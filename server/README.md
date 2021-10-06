@@ -52,7 +52,7 @@ To post a new file, use
 POST /files/:project/path/to/file.png
 ```
 
-`/path/to/` gets created in case it does not yet exist.
+`/path/to/` gets created in case it does not yet exist. The request will be rejected if the file already exists.
 
 To delete a file, use
 

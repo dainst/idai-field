@@ -47,6 +47,7 @@ defmodule IdaiFieldServer.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
+      {:poison, "~> 3.0"},
       {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false}
     ]
   end

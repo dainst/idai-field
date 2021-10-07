@@ -3,12 +3,13 @@ defmodule IdaiFieldServerWeb.FilesController do
 
   import Plug.BasicAuth
   import IdaiFieldServer.Accounts
+  alias IdaiFieldServer.Repo
 
   @files_folder_name "files"
   @files_root "./#{@files_folder_name}"
 
   def download %{ query_params: query_params} = conn, params do
-    unless is_authorized? conn do # TODO consider using a plug
+    unless is_authorized? conn do
       json conn, %{ status: :unauthorized }
     else
       filepath = get_filepath conn
@@ -74,8 +75,23 @@ defmodule IdaiFieldServerWeb.FilesController do
   defp is_authorized? conn do
     project = get_project conn
     { user, password } = Plug.BasicAuth.parse_basic_auth(conn)
-    # IdaiFieldServer.Accounts.get_project_by_email_and_password(email, password)
-    project == user and user == password # TODO implement proper authorization
+    couchdb_path = get_couchdb_path()
+
+    options = [hackney: [basic_auth: {user, password}]]
+    response = HTTPoison.get!(
+      "http://#{couchdb_path}/#{project}" ,
+      %{},
+      options
+    )
+    result = Poison.decode! response.body
+
+    is_nil result["error"]
+  end
+
+  defp get_couchdb_path do
+    repo_env = Application.fetch_env! :idai_field_server, Repo
+    repo_env = Enum.into repo_env, %{}
+    repo_env.couchdb
   end
 
   defp get_project %{ params: %{ "project" => project }} do
@@ -85,10 +101,9 @@ defmodule IdaiFieldServerWeb.FilesController do
   defp get_files dir do
     ls_r(dir)
     |> Enum.map(fn filename -> String.replace(filename, "./", "/") end)
-    # Path.wildcard("#{dir}/*")
   end
 
-  # thx Ryan Daigle, https://www.ryandaigle.com/a/recursively-list-files-in-elixir/
+  # https://www.ryandaigle.com/a/recursively-list-files-in-elixir/
   defp ls_r(path \\ ".") do
     cond do
       File.regular?(path) -> [path]

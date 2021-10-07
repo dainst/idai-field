@@ -12,16 +12,22 @@ defmodule IdaiFieldServerWeb.Router do
     plug :fetch_current_user
   end
 
-  scope "/", IdaiFieldServerWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
+  # Currently this is the most important thing we use of the Phoenix Application.
+  # It is a (proof of concept of a) simple API for storing, retrieving and deleting files.
+  # The authentication and authorization is based on couchdb users and databases.
+  # If the given credentials suffice to access the corresponding couchdb, permissions
+  # will be granted to access the files storage for that project.
+  #
   scope "/files", IdaiFieldServerWeb do
     get "/:project/*filepath", FilesController, :download
     post "/:project/*filepath", FilesController, :upload
     delete "/:project/*filepath", FilesController, :delete
+  end
+
+  # Phoenix landing page of the web app
+  scope "/", IdaiFieldServerWeb do
+    pipe_through :browser
+    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -29,24 +35,9 @@ defmodule IdaiFieldServerWeb.Router do
   #   pipe_through :api
   # end
 
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: IdaiFieldServerWeb.Telemetry
-    end
-  end
-
-  ## Authentication routes
-
+  # Authentication routes
+  # Everything from here as well as a couple of artifacts have been generated
+  # via `mix phx.gen.auth`.
   scope "/", IdaiFieldServerWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
@@ -76,5 +67,21 @@ defmodule IdaiFieldServerWeb.Router do
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm
+  end
+
+  # Enables LiveDashboard only for development
+  #
+  # If you want to use the LiveDashboard in production, you should put
+  # it behind authentication and allow only admins to access it.
+  # If your application does not have an admins-only section yet,
+  # you can use Plug.BasicAuth to set up some basic authentication
+  # as long as you are also using SSL (which you should anyway).
+  if Mix.env() in [:dev, :test] do
+    import Phoenix.LiveDashboard.Router
+
+    scope "/" do
+      pipe_through :browser
+      live_dashboard "/dashboard", metrics: IdaiFieldServerWeb.Telemetry
+    end
   end
 end

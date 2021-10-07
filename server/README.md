@@ -1,11 +1,18 @@
 # IdaiFieldServer
 
-## Prerequisites
+## Getting started
+
+### Prerequisites
 
 * Docker
 * docker-compose
+* Postgres (optional, see below)
+* Couchdb (optional, see below)
 
-## Getting started
+Make sure you have running postgres and couchdb instances before proceeding. If they do not run on the host machine, you can start them as containers via
+
+    $ docker-compose up postgres
+    $ docker-compose up couchdb
 
 ### Preparations
 
@@ -59,11 +66,6 @@ To delete a file, use
 ```
 DELETE /files/:project/path/to/file.png
 ```
-
-## Connect iDAI.field Desktop
-
-Sync to couchdb (planned to go via server soon) by setting up a project `synctest` 
-and setting password to `abcdef`. Then activate sync.
 
 ## Development
 

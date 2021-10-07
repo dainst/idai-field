@@ -12,12 +12,6 @@ defmodule IdaiFieldServerWeb.Router do
     plug :fetch_current_user
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-
-    get "/sync/*rest", IdaiFieldServerWeb.CouchDBController, :sync
-  end
-
   scope "/", IdaiFieldServerWeb do
     pipe_through :browser
 

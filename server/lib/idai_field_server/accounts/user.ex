@@ -1,9 +1,9 @@
-defmodule IdaiFieldServer.Accounts.Project do
+defmodule IdaiFieldServer.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
   @derive {Inspect, except: [:password]}
-  schema "projects" do
+  schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :hashed_password, :string
@@ -13,15 +13,15 @@ defmodule IdaiFieldServer.Accounts.Project do
   end
 
   @doc """
-  A project changeset for registration.
+  A user changeset for registration.
 
   It is important to validate the length of both e-mail and password.
   Otherwise databases may truncate the e-mail without warnings, which
   could lead to unpredictable or insecure behaviour. Long passwords may
   also be very expensive to hash for certain algorithms.
   """
-  def registration_changeset(project, attrs) do
-    project
+  def registration_changeset(user, attrs) do
+    user
     |> cast(attrs, [:email, :password])
     |> validate_email()
     |> validate_password()
@@ -55,12 +55,12 @@ defmodule IdaiFieldServer.Accounts.Project do
   end
 
   @doc """
-  A project changeset for changing the e-mail.
+  A user changeset for changing the e-mail.
 
   It requires the e-mail to change otherwise an error is added.
   """
-  def email_changeset(project, attrs) do
-    project
+  def email_changeset(user, attrs) do
+    user
     |> cast(attrs, [:email])
     |> validate_email()
     |> case do
@@ -70,10 +70,10 @@ defmodule IdaiFieldServer.Accounts.Project do
   end
 
   @doc """
-  A project changeset for changing the password.
+  A user changeset for changing the password.
   """
-  def password_changeset(project, attrs) do
-    project
+  def password_changeset(user, attrs) do
+    user
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password()
@@ -82,18 +82,18 @@ defmodule IdaiFieldServer.Accounts.Project do
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
-  def confirm_changeset(project) do
+  def confirm_changeset(user) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    change(project, confirmed_at: now)
+    change(user, confirmed_at: now)
   end
 
   @doc """
   Verifies the password.
 
-  If there is no project or the project doesn't have a password, we call
+  If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%IdaiFieldServer.Accounts.Project{hashed_password: hashed_password}, password)
+  def valid_password?(%IdaiFieldServer.Accounts.User{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end

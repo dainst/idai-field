@@ -1,4 +1,4 @@
-defmodule IdaiFieldServer.Accounts.ProjectToken do
+defmodule IdaiFieldServer.Accounts.UserToken do
   use Ecto.Schema
   import Ecto.Query
 
@@ -12,11 +12,11 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
   @change_email_validity_in_days 7
   @session_validity_in_days 60
 
-  schema "projects_tokens" do
+  schema "users_tokens" do
     field :token, :binary
     field :context, :string
     field :sent_to, :string
-    belongs_to :project, IdaiFieldServer.Accounts.Project
+    belongs_to :user, IdaiFieldServer.Accounts.User
 
     timestamps(updated_at: false)
   end
@@ -26,22 +26,22 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
   such as session or cookie. As they are signed, those
   tokens do not need to be hashed.
   """
-  def build_session_token(project) do
+  def build_session_token(user) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %IdaiFieldServer.Accounts.ProjectToken{token: token, context: "session", project_id: project.id}}
+    {token, %IdaiFieldServer.Accounts.UserToken{token: token, context: "session", user_id: user.id}}
   end
 
   @doc """
   Checks if the token is valid and returns its underlying lookup query.
 
-  The query returns the project found by the token.
+  The query returns the user found by the token.
   """
   def verify_session_token_query(token) do
     query =
       from token in token_and_context_query(token, "session"),
-        join: project in assoc(token, :project),
+        join: user in assoc(token, :user),
         where: token.inserted_at > ago(@session_validity_in_days, "day"),
-        select: project
+        select: user
 
     {:ok, query}
   end
@@ -49,32 +49,32 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
   @doc """
   Builds a token with a hashed counter part.
 
-  The non-hashed token is sent to the project e-mail while the
+  The non-hashed token is sent to the user e-mail while the
   hashed part is stored in the database, to avoid reconstruction.
-  The token is valid for a week as long as projects don't change
+  The token is valid for a week as long as users don't change
   their email.
   """
-  def build_email_token(project, context) do
-    build_hashed_token(project, context, project.email)
+  def build_email_token(user, context) do
+    build_hashed_token(user, context, user.email)
   end
 
-  defp build_hashed_token(project, context, sent_to) do
+  defp build_hashed_token(user, context, sent_to) do
     token = :crypto.strong_rand_bytes(@rand_size)
     hashed_token = :crypto.hash(@hash_algorithm, token)
 
     {Base.url_encode64(token, padding: false),
-     %IdaiFieldServer.Accounts.ProjectToken{
+     %IdaiFieldServer.Accounts.UserToken{
        token: hashed_token,
        context: context,
        sent_to: sent_to,
-       project_id: project.id
+       user_id: user.id
      }}
   end
 
   @doc """
   Checks if the token is valid and returns its underlying lookup query.
 
-  The query returns the project found by the token.
+  The query returns the user found by the token.
   """
   def verify_email_token_query(token, context) do
     case Base.url_decode64(token, padding: false) do
@@ -84,9 +84,9 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
 
         query =
           from token in token_and_context_query(hashed_token, context),
-            join: project in assoc(token, :project),
-            where: token.inserted_at > ago(^days, "day") and token.sent_to == project.email,
-            select: project
+            join: user in assoc(token, :user),
+            where: token.inserted_at > ago(^days, "day") and token.sent_to == user.email,
+            select: user
 
         {:ok, query}
 
@@ -101,7 +101,7 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
   @doc """
   Checks if the token is valid and returns its underlying lookup query.
 
-  The query returns the project token record.
+  The query returns the user token record.
   """
   def verify_change_email_token_query(token, context) do
     case Base.url_decode64(token, padding: false) do
@@ -123,17 +123,17 @@ defmodule IdaiFieldServer.Accounts.ProjectToken do
   Returns the given token with the given context.
   """
   def token_and_context_query(token, context) do
-    from IdaiFieldServer.Accounts.ProjectToken, where: [token: ^token, context: ^context]
+    from IdaiFieldServer.Accounts.UserToken, where: [token: ^token, context: ^context]
   end
 
   @doc """
-  Gets all tokens for the given project for the given contexts.
+  Gets all tokens for the given user for the given contexts.
   """
-  def project_and_contexts_query(project, :all) do
-    from t in IdaiFieldServer.Accounts.ProjectToken, where: t.project_id == ^project.id
+  def user_and_contexts_query(user, :all) do
+    from t in IdaiFieldServer.Accounts.UserToken, where: t.user_id == ^user.id
   end
 
-  def project_and_contexts_query(project, [_ | _] = contexts) do
-    from t in IdaiFieldServer.Accounts.ProjectToken, where: t.project_id == ^project.id and t.context in ^contexts
+  def user_and_contexts_query(user, [_ | _] = contexts) do
+    from t in IdaiFieldServer.Accounts.UserToken, where: t.user_id == ^user.id and t.context in ^contexts
   end
 end

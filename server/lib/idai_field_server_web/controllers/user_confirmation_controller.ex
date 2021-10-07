@@ -1,4 +1,4 @@
-defmodule IdaiFieldServerWeb.ProjectConfirmationController do
+defmodule IdaiFieldServerWeb.UserConfirmationController do
   use IdaiFieldServerWeb, :controller
 
   alias IdaiFieldServer.Accounts
@@ -7,11 +7,11 @@ defmodule IdaiFieldServerWeb.ProjectConfirmationController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"project" => %{"email" => email}}) do
-    if project = Accounts.get_project_by_email(email) do
-      Accounts.deliver_project_confirmation_instructions(
-        project,
-        &Routes.project_confirmation_url(conn, :confirm, &1)
+  def create(conn, %{"user" => %{"email" => email}}) do
+    if user = Accounts.get_user_by_email(email) do
+      Accounts.deliver_user_confirmation_instructions(
+        user,
+        &Routes.user_confirmation_url(conn, :confirm, &1)
       )
     end
 
@@ -25,10 +25,10 @@ defmodule IdaiFieldServerWeb.ProjectConfirmationController do
     |> redirect(to: "/")
   end
 
-  # Do not log in the project after confirmation to avoid a
-  # leaked token giving the project access to the account.
+  # Do not log in the user after confirmation to avoid a
+  # leaked token giving the user access to the account.
   def confirm(conn, %{"token" => token}) do
-    case Accounts.confirm_project(token) do
+    case Accounts.confirm_user(token) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Account confirmed successfully.")

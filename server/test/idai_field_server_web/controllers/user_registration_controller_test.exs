@@ -1,11 +1,11 @@
-defmodule IdaiFieldServerWeb.ProjectRegistrationControllerTest do
+defmodule IdaiFieldServerWeb.UserRegistrationControllerTest do
   use IdaiFieldServerWeb.ConnCase, async: true
 
   import IdaiFieldServer.AccountsFixtures
 
-  describe "GET /projects/register" do
+  describe "GET /users/register" do
     test "renders registration page", %{conn: conn} do
-      conn = get(conn, Routes.project_registration_path(conn, :new))
+      conn = get(conn, Routes.user_registration_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
       assert response =~ "Log in</a>"
@@ -13,22 +13,22 @@ defmodule IdaiFieldServerWeb.ProjectRegistrationControllerTest do
     end
 
     test "redirects if already logged in", %{conn: conn} do
-      conn = conn |> log_in_project(project_fixture()) |> get(Routes.project_registration_path(conn, :new))
+      conn = conn |> log_in_user(user_fixture()) |> get(Routes.user_registration_path(conn, :new))
       assert redirected_to(conn) == "/"
     end
   end
 
-  describe "POST /projects/register" do
+  describe "POST /users/register" do
     @tag :capture_log
-    test "creates account and logs the project in", %{conn: conn} do
-      email = unique_project_email()
+    test "creates account and logs the user in", %{conn: conn} do
+      email = unique_user_email()
 
       conn =
-        post(conn, Routes.project_registration_path(conn, :create), %{
-          "project" => %{"email" => email, "password" => valid_project_password()}
+        post(conn, Routes.user_registration_path(conn, :create), %{
+          "user" => %{"email" => email, "password" => valid_user_password()}
         })
 
-      assert get_session(conn, :project_token)
+      assert get_session(conn, :user_token)
       assert redirected_to(conn) =~ "/"
 
       # Now do a logged in request and assert on the menu
@@ -41,8 +41,8 @@ defmodule IdaiFieldServerWeb.ProjectRegistrationControllerTest do
 
     test "render errors for invalid data", %{conn: conn} do
       conn =
-        post(conn, Routes.project_registration_path(conn, :create), %{
-          "project" => %{"email" => "with spaces", "password" => "too short"}
+        post(conn, Routes.user_registration_path(conn, :create), %{
+          "user" => %{"email" => "with spaces", "password" => "too short"}
         })
 
       response = html_response(conn, 200)

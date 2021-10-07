@@ -1,4 +1,4 @@
-defmodule IdaiFieldServerWeb.ProjectAuth do
+defmodule IdaiFieldServerWeb.UserAuth do
   import Plug.Conn
   import Phoenix.Controller
 
@@ -7,13 +7,13 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change
-  # the token expiry itself in ProjectToken.
+  # the token expiry itself in UserToken.
   @max_age 60 * 60 * 24 * 60
-  @remember_me_cookie "project_remember_me"
+  @remember_me_cookie "user_remember_me"
   @remember_me_options [sign: true, max_age: @max_age]
 
   @doc """
-  Logs the project in.
+  Logs the user in.
 
   It renews the session ID and clears the whole session
   to avoid fixation attacks. See the renew_session
@@ -24,16 +24,16 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
   disconnected on log out. The line can be safely removed
   if you are not using LiveView.
   """
-  def log_in_project(conn, project, params \\ %{}) do
-    token = Accounts.generate_project_session_token(project)
-    project_return_to = get_session(conn, :project_return_to)
+  def log_in_user(conn, user, params \\ %{}) do
+    token = Accounts.generate_user_session_token(user)
+    user_return_to = get_session(conn, :user_return_to)
 
     conn
     |> renew_session()
-    |> put_session(:project_token, token)
-    |> put_session(:live_socket_id, "projects_sessions:#{Base.url_encode64(token)}")
+    |> put_session(:user_token, token)
+    |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
     |> maybe_write_remember_me_cookie(token, params)
-    |> redirect(to: project_return_to || signed_in_path(conn))
+    |> redirect(to: user_return_to || signed_in_path(conn))
   end
 
   defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
@@ -66,13 +66,13 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
   end
 
   @doc """
-  Logs the project out.
+  Logs the user out.
 
   It clears all session data for safety. See renew_session.
   """
-  def log_out_project(conn) do
-    project_token = get_session(conn, :project_token)
-    project_token && Accounts.delete_session_token(project_token)
+  def log_out_user(conn) do
+    user_token = get_session(conn, :user_token)
+    user_token && Accounts.delete_session_token(user_token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       IdaiFieldServerWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
@@ -85,23 +85,23 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
   end
 
   @doc """
-  Authenticates the project by looking into the session
+  Authenticates the user by looking into the session
   and remember me token.
   """
-  def fetch_current_project(conn, _opts) do
-    {project_token, conn} = ensure_project_token(conn)
-    project = project_token && Accounts.get_project_by_session_token(project_token)
-    assign(conn, :current_project, project)
+  def fetch_current_user(conn, _opts) do
+    {user_token, conn} = ensure_user_token(conn)
+    user = user_token && Accounts.get_user_by_session_token(user_token)
+    assign(conn, :current_user, user)
   end
 
-  defp ensure_project_token(conn) do
-    if project_token = get_session(conn, :project_token) do
-      {project_token, conn}
+  defp ensure_user_token(conn) do
+    if user_token = get_session(conn, :user_token) do
+      {user_token, conn}
     else
       conn = fetch_cookies(conn, signed: [@remember_me_cookie])
 
-      if project_token = conn.cookies[@remember_me_cookie] do
-        {project_token, put_session(conn, :project_token, project_token)}
+      if user_token = conn.cookies[@remember_me_cookie] do
+        {user_token, put_session(conn, :user_token, user_token)}
       else
         {nil, conn}
       end
@@ -109,10 +109,10 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
   end
 
   @doc """
-  Used for routes that require the project to not be authenticated.
+  Used for routes that require the user to not be authenticated.
   """
-  def redirect_if_project_is_authenticated(conn, _opts) do
-    if conn.assigns[:current_project] do
+  def redirect_if_user_is_authenticated(conn, _opts) do
+    if conn.assigns[:current_user] do
       conn
       |> redirect(to: signed_in_path(conn))
       |> halt()
@@ -122,25 +122,25 @@ defmodule IdaiFieldServerWeb.ProjectAuth do
   end
 
   @doc """
-  Used for routes that require the project to be authenticated.
+  Used for routes that require the user to be authenticated.
 
-  If you want to enforce the project e-mail is confirmed before
+  If you want to enforce the user e-mail is confirmed before
   they use the application at all, here would be a good place.
   """
-  def require_authenticated_project(conn, _opts) do
-    if conn.assigns[:current_project] do
+  def require_authenticated_user(conn, _opts) do
+    if conn.assigns[:current_user] do
       conn
     else
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: Routes.project_session_path(conn, :new))
+      |> redirect(to: Routes.user_session_path(conn, :new))
       |> halt()
     end
   end
 
   defp maybe_store_return_to(%{method: "GET", request_path: request_path} = conn) do
-    put_session(conn, :project_return_to, request_path)
+    put_session(conn, :user_return_to, request_path)
   end
 
   defp maybe_store_return_to(conn), do: conn

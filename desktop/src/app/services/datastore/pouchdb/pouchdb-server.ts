@@ -40,7 +40,6 @@ export class PouchdbServer {
 
             // https://stackoverflow.com/a/16599008
             req.on('data', function(data) {
-                console.log(data)
                 fs.writeFileSync(path, data);
             });
             req.on('end', function() {

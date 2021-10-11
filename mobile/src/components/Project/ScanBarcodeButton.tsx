@@ -5,11 +5,11 @@ import { Modal, StyleSheet } from 'react-native';
 import Button from '../common/Button';
 
 interface ScanBarcodeButtonProps {
-    onBarCodeScanned: (docId: string) => void
+    onQrCodeScanned: (docId: string) => void
 }
 
 
-const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned }) => {
+const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onQrCodeScanned }) => {
 
     const [hasPermission, setHasPermission] = useState(false);
     const [scannerActive, setScannerActive] = useState(false);
@@ -24,7 +24,7 @@ const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned 
     const handleBarCodeScanned = ({ data }: { data: string }) => {
         
         setScannerActive(false);
-        onBarCodeScanned(data);
+        onQrCodeScanned(data);
     };
 
     return hasPermission
@@ -36,13 +36,13 @@ const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned 
 
 
 const renderBarcodeScanner = (
-    handleBarCodeScanned: ({ data }: { data: string }) => void,
+    handleQrCodeScanned: ({ data }: { data: string }) => void,
     setScannerActive: (active: boolean) => void
 ) =>
         <Modal onRequestClose={ () => setScannerActive(false) }>
             <BarCodeScanner
                 style={ [StyleSheet.absoluteFillObject, styles.scannerContainer] }
-                onBarCodeScanned={ handleBarCodeScanned }
+                onBarCodeScanned={ handleQrCodeScanned }
             />
             <Button
                 icon={ <Ionicons name="close" size={ 25 } /> }
@@ -57,6 +57,7 @@ const renderButton = (setScannerActive: (active: boolean) => void) =>
         variant="transparent"
         icon={ <Ionicons name="qr-code" size={ 18 } /> }
         onPress={ () => setScannerActive(true) }
+        testID="barCodeScanner"
     />;
 
 
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     fab: {
-        bottom: 15,
-        right: 15,
+        bottom: -25,
+        right: -25,
         height: 50,
         width: 50,
         borderRadius: 25,

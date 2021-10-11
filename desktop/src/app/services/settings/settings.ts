@@ -5,6 +5,7 @@ export interface SyncTarget {
 
     address: string;
     password: string;
+    isSyncActive: boolean;
 }
 
 
@@ -12,10 +13,8 @@ export interface Settings {
 
     languages: string[];
     isAutoUpdateActive: boolean;
-    isSyncActive: boolean;
-    remoteSites: Array<string>;
     hostPassword: string;
-    syncTarget: SyncTarget;
+    syncTargets: { [projectName: string]: SyncTarget };
     username: string;
     dbs: Array<string>;
     selectedProject: string;

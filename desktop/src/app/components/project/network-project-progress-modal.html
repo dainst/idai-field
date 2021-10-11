@@ -1,0 +1,16 @@
+<div id="network-project-progress-modal" class="modal-body process-modal">
+    <div class="process-modal-container">
+        <div class="spinner"></div>
+        <div id="replication-progress" class="progress">
+            <div id="replication-progress-bar"
+                 class="progress-bar"
+                 [style.width]="progressPercent + '%'"></div>
+        </div>
+        <div *ngIf="progressPercent === 0" class="process-info" i18n="@@project.network.connecting">Verbindung wird hergestellt...</div>
+        <div *ngIf="progressPercent > 0" class="process-info" i18n="@@project.network.progressInfo">{{getRoundedProgress()}}% des Projekts geladen... </div>
+        <button id="network-project-cancel-button" type="button" class="btn btn-secondary"
+                (click)="cancel()">
+            <span i18n="@@project.network.abort">Abbrechen</span>
+        </button>
+    </div>
+</div>

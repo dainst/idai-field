@@ -133,12 +133,12 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
 
 const getLatestVersion = (): Promise<string> => {
 
-    const url = 'https://api.github.com/repos/dainst/idai-field/releases';
+    const url = 'https://api.github.com/repos/dainst/idai-field/releases/latest';
 
     return new Promise<string>(resolve => {
         const request = new XMLHttpRequest();
         request.addEventListener('load', () => {
-            resolve(JSON.parse(request.response)[0].tag_name.substr(1));
+            resolve(JSON.parse(request.response).tag_name.substr(1));
         });
 
         request.open('GET', url);

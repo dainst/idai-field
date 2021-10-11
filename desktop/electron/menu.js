@@ -23,6 +23,56 @@ const getTemplate = (mainWindow, context, config) => {
         label: messages.get('menu.file'),
         submenu: [
             {
+                label: messages.get('menu.file.newProject'),
+                accelerator: 'CmdOrCtrl+N',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
+                enabled: context === 'default'
+            },
+            {
+                label: messages.get('menu.file.networkProject'),
+                accelerator: 'CmdOrCtrl+D',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
+                enabled: context === 'default'
+            }, {
+                type: 'separator'
+            },
+            {
+                label: messages.get('menu.file.openProject'),
+                enabled: context === 'default' && getNamesOfUnopenedProjects().length > 0,
+                submenu: getNamesOfUnopenedProjects().map(projectName => {
+                    return {
+                        label: projectName,
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
+                        enabled: context === 'default'
+                    };
+                })
+            }, {
+                type: 'separator'
+            },
+            {
+                label: messages.get('menu.file.currentProject'),
+                enabled: context === 'default',
+                submenu: [
+                    {
+                        label: messages.get('menu.file.projectProperties'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
+                        enabled: context === 'default'
+                    }, {
+                        label: messages.get('menu.file.projectSynchronization'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
+                        enabled: context === 'default'
+                            && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
+                    }, {
+                        label: messages.get('menu.file.deleteProject'),
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
+                        enabled: context === 'default'
+                    }
+                ]
+            },
+            {
+                type: 'separator'
+            },
+            {
                 label: messages.get('menu.file.import'),
                 accelerator: 'CmdOrCtrl+I',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
@@ -39,6 +89,9 @@ const getTemplate = (mainWindow, context, config) => {
                 accelerator: 'CmdOrCtrl+Alt+S',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
                 enabled: isDefaultContext(context)
+            },
+            {
+                type: 'separator'
             },
             {
                 label: messages.get('menu.file.exit'),
@@ -204,8 +257,8 @@ const getTemplate = (mainWindow, context, config) => {
     }];
 
     if (process.platform === 'darwin') {
-        // Remove 'Settings' option from 'File' menu
-        template[1].submenu.splice(3, 1);
+        // Remove 'Settings' option & separator from 'File' menu
+        template[1].submenu.splice(10, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);
@@ -244,6 +297,16 @@ const isDefaultContext = context => ['default', 'configuration'].includes(contex
 
 const isConfigurationContext = context => ['configuration', 'configurationEdit', 'configurationModal']
     .includes(context);
+
+
+const getNamesOfUnopenedProjects = () => {
+
+    if (!global.config.dbs || global.config.dbs.length < 2) {
+        return [];
+    } else {
+        return global.config.dbs.slice(1);
+    }
+};
 
 
 module.exports = getTemplate;

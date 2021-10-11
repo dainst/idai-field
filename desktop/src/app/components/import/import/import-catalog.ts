@@ -263,6 +263,9 @@ function importOneDocument(services: ImportCatalogServices,
 
         if (!existingDocument) {
             await services.datastore.create(updateDocument);
+            if (!isTypeOrCatalog(updateDocument)) {
+                await services.imagestore.readThumbnails([updateDocument.resource.id]);
+            }
             return updateDocument;
         }
 

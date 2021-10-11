@@ -7,6 +7,7 @@ import Column from '../../common/Column';
 import Heading from '../../common/Heading';
 import Input from '../../common/Input';
 import TitleBar from '../../common/TitleBar';
+import { defaultMapSettings } from '../Map/map-settings';
 
 interface ConnectPouchFormProps {
     settings: ProjectSettings,
@@ -22,7 +23,7 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
     const onSubmit = () => {
 
         Keyboard.dismiss();
-        onConnect({ url, password, connected: true });
+        onConnect({ url, password, connected: true, mapSettings: defaultMapSettings() });
     };
 
     return (

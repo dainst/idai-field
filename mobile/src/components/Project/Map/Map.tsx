@@ -15,18 +15,18 @@ proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');
 proj4.defs('EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs');
 
 
-interface NMapProps {
+interface MapProps {
     repository: DocumentRepository;
     selectedDocumentIds: string[];
     highlightedDocId?: string;
     addDocument: (parentDoc: Document) => void;
     editDocument: (docID: string, categoryName: string) => void;
     removeDocument: (doc: Document) => void;
-    selectDocument: (doc: Document) => void;
+    selectParent: (doc: Document) => void;
 }
 
 
-const Map: React.FC<NMapProps> = (props) => {
+const Map: React.FC<MapProps> = (props) => {
 
     const [screen, setScreen] = useState<LayoutRectangle>();
     const [highlightedDoc, setHighlightedDoc] = useState<Document>();
@@ -37,7 +37,8 @@ const Map: React.FC<NMapProps> = (props) => {
         documentToWorldMatrix,
         screenToWorldMatrix,
         viewBox,
-        focusMapOnDocumentId] = useMapData(props.repository,props.selectedDocumentIds, screen);
+        focusMapOnDocumentId,
+        updateDoc] = useMapData(props.repository,props.selectedDocumentIds, screen);
 
     const setHighlightedDocFromId = useCallback((docId: string) =>
         props.repository.get(docId).then(setHighlightedDoc), [props.repository]);
@@ -59,30 +60,36 @@ const Map: React.FC<NMapProps> = (props) => {
             const location = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = location.coords;
             // longitude for x and latitude for y
-            const p = { x: location.coords.longitude, y: location.coords.latitude };
+            const p = { x: longitude, y: latitude };
             const newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
             setLocation(newCoords);
             console.log(p);
         })();
-      }, []);
+    }, []);
 
-    
+    const onParentIdSelected = (docId: string) => {
+        const doc = geoDocuments.find(doc => doc.resource.id === docId);
+        doc && props.selectParent(doc);
+    };
+
     const handleLayoutChange = (event: LayoutChangeEvent) => setScreen(event.nativeEvent.layout);
 
     return (
         <View style={ styles.container } onLayout={ handleLayoutChange }>
             {(screen && documentToWorldMatrix && screenToWorldMatrix) && <GLMap
                 setHighlightedDocId={ setHighlightedDocFromId }
+                highlightedDocId={ highlightedDoc?.resource.id }
                 screen={ screen }
                 viewBox={ viewBox }
                 documentToWorldMatrix={ documentToWorldMatrix }
                 screenToWorldMatrix={ screenToWorldMatrix }
                 selectedDocumentIds={ props.selectedDocumentIds }
                 geoDocuments={ geoDocuments }
-                location={ location } />}
+                location={ location }
+                updateDoc={ updateDoc }
+                selectParentId={ onParentIdSelected } />}
             <MapBottomSheet
                 document={ highlightedDoc }
-                repository={ props.repository }
                 addDocument={ props.addDocument }
                 editDocument={ props.editDocument }
                 removeDocument={ props.removeDocument }

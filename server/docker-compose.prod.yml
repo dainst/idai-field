@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+
+  postgres:
+    image: postgres:latest
+    environment: 
+      POSTGRES_PASSWORD: abcdef
+    ports: 
+      - "5432:5432"
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+
+  couchdb:
+    image: couchdb:3
+    ports:
+      - "5984:5984"
+    environment:
+      - 'COUCHDB_USER=admin'
+      - 'COUCHDB_PASSWORD=abcdef'
+    volumes:
+      - "couchdb-data:/opt/couchdb/data"
+  
+  server:
+    image: "dainst/idai-field-web-server"
+    ports:
+      - "4400:4000"
+    volumes:
+      - "server-config:/opt/src/server/config"
+      - "server-images:/opt/src/server/files"
+  
+volumes:
+  couchdb-data:
+  server-config:
+  server-images:
+  postgres-data:

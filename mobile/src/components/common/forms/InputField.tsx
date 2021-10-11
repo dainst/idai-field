@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
+import ScanBarcodeButton from '../../Project/ScanBarcodeButton';
+import Row from '../Row';
 import { FieldBaseProps } from './common-props';
 import FieldLabel from './FieldLabel';
 
@@ -24,13 +26,19 @@ const InputField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     return (
         <View style={ styles.container }>
             <FieldLabel field={ field } />
-            <TextInput
-                multiline={ false }
-                value={ value }
-                onChangeText={ changeTextHandler }
-                style={ styles.textInputStyle }
-                autoCompleteType="off"
-                testID="input" />
+            <Row style={ styles.textInputContainer }>
+                <TextInput
+                    multiline={ false }
+                    value={ value }
+                    onChangeText={ changeTextHandler }
+                    style={ styles.textInput }
+                    autoCompleteType="off"
+                    testID={ `inputField_${field.name}` } />
+                {field.name === 'identifier' && <View style={ { marginLeft: 'auto' } }>
+                    <ScanBarcodeButton onQrCodeScanned={ changeTextHandler } />
+                </View>}
+            </Row>
+
         </View>
     );
 };
@@ -41,11 +49,15 @@ const styles = StyleSheet.create({
         padding: 5,
         width: '100%'
     },
-    textInputStyle: {
+    textInputContainer: {
         marginTop: 3,
         borderColor: colors.lightgray,
         borderWidth: 1,
-    }
+    },
+    textInput: {
+        flex: 1
+    },
+
 });
 
 export default InputField;

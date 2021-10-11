@@ -2,6 +2,7 @@ import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys, isUnd
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
+import { doc } from '../../test';
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -146,4 +147,6 @@ export module Document {
 
 
     export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l !== undefined && l.resource.id === r.resource.id);
+
+    export const hasGeometry = (document: Document): boolean => document.resource.geometry? true : false;
 }

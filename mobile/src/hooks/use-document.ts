@@ -11,7 +11,10 @@ const useDocument = (repository: DocumentRepository, docId: string | undefined):
         if(!docId) return undefined;
         repository.get(docId)
             .then(setDoc)
-            .catch(_e => setDoc(undefined));
+            .catch(error => {
+                console.error(error);
+                setDoc(undefined);
+            });
 
     }, [repository, docId]);
 

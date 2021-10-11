@@ -11,7 +11,7 @@ interface ProjectData {
     hierarchyPath: Document[];
     pushToHierarchy: (doc: Document) => void;
     popFromHierarchy: () => void;
-    isInOverview: () => boolean;
+    isInOverview: (category: string) => boolean;
 }
 
 
@@ -31,7 +31,9 @@ const useProjectData = (
 
     const pushToHierarchy = (doc: Document) => setHierarchyPath(old => [...old, doc]);
     const popFromHierarchy = () => setHierarchyPath(old => dropRight(1, old));
-    const isInOverview = () => !hierarchyPath.length;
+    const isInOverview = (category: string): boolean =>
+        config.getOperationCategories().map(Named.toName).includes(category);
+
 
     useEffect(() => {
 

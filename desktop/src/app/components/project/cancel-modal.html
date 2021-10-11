@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@project.cancelModal.header">
+        Download abbrechen?
+    </h5>
+</div>
+
+<div class="modal-body">
+    <span id="cancel-modal-info" i18n="@@project.cancelModal.info">
+        Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt,
+        wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen.
+    </span>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger"
+            (click)="activeModal.close()">
+        <span i18n="@@project.network.abort">Abbrechen</span>
+    </button>
+    <button type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@project.cancelModal.continue">Fortsetzen</span>
+    </button>
+</div>

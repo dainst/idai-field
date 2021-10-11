@@ -8,10 +8,10 @@ $roboto-font-path: 'fonts/' !default;
 @import 'bootstrap';
 
 @import 'app/components/initialization';
-@import 'app/components/navbar/navbar';
 @import 'app/components/spinner';
 @import 'app/components/buttons';
 @import 'app/components/slider';
+@import 'app/components/navbar/navbar';
 @import 'app/components/default-page';
 @import 'app/components/resources/resources';
 @import 'app/components/import/import';
@@ -24,6 +24,7 @@ $roboto-font-path: 'fonts/' !default;
 @import 'app/components/matrix/matrix-view';
 @import 'app/components/help/help';
 @import 'app/components/configuration/configuration';
+@import 'app/components/project/project';
 
 .search-help-tooltip {
   .tooltip-inner {
@@ -346,4 +347,10 @@ a {
 
 .alert {
   text-align: center;
+}
+
+.small-info-text {
+  font-size: 14px;
+  margin-top: 13px;
+  user-select: none;
 }

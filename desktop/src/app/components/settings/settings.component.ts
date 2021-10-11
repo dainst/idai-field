@@ -53,12 +53,6 @@ export class SettingsComponent implements OnInit {
     }
 
 
-    public toggleSync() {
-
-        this.settings.isSyncActive = !this.settings.isSyncActive;
-    }
-
-
     public toggleAutoUpdate() {
 
         this.settings.isAutoUpdateActive = !this.settings.isAutoUpdateActive;
@@ -100,8 +94,6 @@ export class SettingsComponent implements OnInit {
 
 
     private async handleSaveSuccess(languagesChanged: boolean) {
-
-        remote.getGlobal('updateConfig')(this.settings);
 
         if (languagesChanged) {
             reload();

@@ -6,7 +6,7 @@ test project is selected, any newly created data sets will be deleted and all ch
 the application. For this reason, synchronization with other iDAI.field instances or databases is not performed for
 the test project.  
 
-In order to work with iDAI.field productively, you should first follow these steps:
+In order to work with iDAI.field productively and create your own project, you should first follow these steps:
 
 1. The submenu **Settings**, which is accessible via the menu "iDAI.field" (MacOS) respectively "File"
 (Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
@@ -18,12 +18,9 @@ you want to access an image directory located on a network device (NAS) used by 
 Please note that in each case images must be imported via the iDAI.field application. Image files that are
 manually placed in the image directory can **not** be used by the application. 
 
-3. Click on the project name "test" in order to open the **Project management**. In this menu, you can create
-a new project by clicking the plus button. Allowed characters for the project name are letters, numbers and
-hyphens.
+3. In the "File" menu, select the menu item **New project...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores.
 
-4. As soon as the new project has been loaded, you can enter basic project data by clicking the edit
-button in the project management menu. First of all, you should create the lists of **staff members** (field
+4. As soon as the new project has been loaded, you can enter basic project data via the menu "File" ➝ "Current project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
@@ -348,22 +345,30 @@ from the current selection:
 
 ## Synchronization
 
-In order to collaborate on a single project, data can be synchronized between multiple iDAI.field installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline - in that case the databases will be synchronized as soon as the network connection is established again.
-
-Data only is synchronized between projects of the same name. To load data from another iDAI.field installation, simply start by creating an empty project with the name of the project you want to load into your application. When a connection is established, the data will be downloaded automatically (this process can take a while for larger projects).
-
-### Configuration
-
-Synchronization is configured via the **Settings** submenu (menu "iDAI.field" (MacOS) or "File" (Windows)).
+In order to collaborate on a single project, data can be synchronized between multiple iDAI.field installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
 
 Please make sure to fill in the field **Editor name** before setting up the configuration.
 
-* *Address*: Enter the address of the synchronization target. This can be the network address of another machine which runs an iDAI.field installation, or the address of a CouchDB database accessible via the internet or a local network (for example *http://field.dainst.org/sync* for the iDAI.field database server of the DAI).
-* *Password*: Enter the password of the target database.
-* *Your address*: Your network address, which others can use to connect their iDAI.field applications to your installation. You can hand over this address and your password to allow others to connect to your machine.
-* *Your password*: By default the database is protected with a randomly generated password. Here you can change that password.
 
-After setting *Address* and *Password*, you can complete the configuration by selecting *Activate synchronization* and then saving these settings by clicking *Apply settings*.
+### Download project
+
+To work with an existing project that is available on another iDAI.field desktop installation or a database server, first download the project. To do this, select **Download project...** from the "File" menu and enter the access data:
+
+* *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
+* *Project name*: The name of the project you want to download.
+* *Password*: The password of the project or the iDAI.field installation from which you want to download the project.
+
+Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
+
+
+### Configuration
+
+Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "File" ➝ "Current project" ➝ "Synchronize...".
+
+* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where iDAI.field is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI). 
+* *Password*: The password of the project or iDAI.field installation you want to establish the synchronization connection with.
+
+Use the switch **Enable synchronization** to start or interrupt the connection. Finally, confirm your settings by clicking the **Apply settings** button.
 
 ### Synchronization state
 
@@ -384,3 +389,10 @@ Conflicted resources are marked by a red border in the resources list. In additi
 Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
 
 To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
+
+### Allow synchronization connections to your own iDAI.field installation
+
+You can allow others to establish a synchronization connection with your project by providing them with the credentials that can be found in the **Settings** menu in the section **Synchronization**:
+
+* *Your address*: Your network address, which others can use to connect to your database from their own iDAI.field installation. You can share this address along with your password to allow others to synchronize their project data with you.
+* *Your password*: By default, the database is protected from unauthorized access with a randomly generated password. At this point you can change the password.

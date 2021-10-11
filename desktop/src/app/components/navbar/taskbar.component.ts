@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { SettingsProvider } from '../../services/settings/settings-provider';
 
 
 @Component({
@@ -10,4 +11,16 @@ import {Component} from '@angular/core';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class TaskbarComponent {}
+export class TaskbarComponent {
+
+    private projectName: string;
+
+
+    constructor(private settingsProvider: SettingsProvider) {
+
+        this.projectName = this.settingsProvider.getSettings().selectedProject;
+    }
+
+
+    public showSyncStatus = () => this.projectName !== 'test';
+}

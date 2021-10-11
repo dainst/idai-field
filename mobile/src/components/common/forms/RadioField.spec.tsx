@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import { Field, Labels, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
-import ChoiceModal from './ChoiceModal';
+import ChoiceModal from './ChoiceModal/ChoiceModal';
 import { NO_VAL } from './constants';
 import RadioField from './RadioField';
 
@@ -24,51 +24,9 @@ const mockField: Field = {
 };
 const currentValue = 'one';
 
-// Mock core Labels class
-jest.mock('idai-field-core', () => {
-    // Works and lets you check for constructor calls:
-    return {
-        Labels: jest.fn().mockImplementation(() => {
-            const valueList = {
-                id: 'valuelist',
-                values: {
-                    1: { label: { de: 'eins', en: 'one' } },
-                    2: { label: { de: 'zwei', en: 'two' } },
-                    3: { label: { de: 'drei', en: 'three' } },
-                    4: { label: { de: 'vier', en: 'four' } },
-                    5: { label: { de: 'fünf', en: 'five' } },
-                }
-            };
-            const fieldName = 'RadioField';
-
-            return {
-                orderKeysByLabels: () => Object.keys(valueList.values).map(key => {
-                    const label = valueList.values[key].label;
-                    if(label && label['en']){
-                        return label['en'];
-                    } else return '';
-                }),
-                get: () => fieldName,
-                getLabelAndDescription: () => ({ description: 'description' })
-            };
-        }),
-    };
-});
-
-// Mock Choice Modal component
-jest.mock('./ChoiceModal', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { Text, TouchableOpacity } = require('react-native');
-    return jest.fn((props) => Object.keys(props.choices).map(key => (
-        <TouchableOpacity
-            onPress={ () => props.setValue(props.choices[key].label) }
-            testID={ `press_${props.choices[key].label}` }
-            key={ props.choices[key].label }>
-                <Text>{props.choices[key].label}</Text>
-        </TouchableOpacity>
-    )));
-    
-});
+// Mocking modules
+jest.mock('idai-field-core');
+jest.mock('./ChoiceModal/ChoiceModal');
 
 describe('RadioField',() => {
 

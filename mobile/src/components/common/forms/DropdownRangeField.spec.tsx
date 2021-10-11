@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import { Field, Labels, OptionalRange, Valuelist } from 'idai-field-core';
 import React from 'react';
 import LabelsContext from '../../../contexts/labels/labels-context';
-import ChoiceModal from './ChoiceModal';
+import ChoiceModal from './ChoiceModal/ChoiceModal';
 import { NO_VAL } from './constants';
 import DropdownRangeField from './DropdownRangeField';
 
@@ -25,61 +25,9 @@ const mockField: Field = {
     valuelist: valuelist
 };
 
-// Mock core Labels class
-jest.mock('idai-field-core', () => {
-    // Works and lets you check for constructor calls:
-    return {
-        Labels: jest.fn().mockImplementation(() => {
-            const valueList = {
-                id: 'valuelist',
-                values: {
-                    eins: { label: { de: 'eins', en: 'one' } },
-                    zwei: { label: { de: 'zwei', en: 'two' } },
-                    drei: { label: { de: 'drei', en: 'three' } },
-                    vier: { label: { de: 'vier', en: 'four' } },
-                    fünf: { label: { de: 'fünf', en: 'five' } },
-                }
-            };
-            const fieldName = 'period';
-
-            return {
-                orderKeysByLabels: () => Object.keys(valueList.values).map(key => {
-                    const label = valueList.values[key].label;
-                    if(label && label['en']){
-                        return label['en'];
-                    } else return '';
-                }),
-                get: () => fieldName,
-                getLabelAndDescription: () => ({ description: 'description' })
-            };
-        }),
-    };
-});
-
-//Mock vector icons
-jest.mock('@expo/vector-icons', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { View } = require('react-native');
-    return {
-        MaterialCommunityIcons: View,
-        Ionicons: View,
-    };
-});
-
-// Mock Choice Modal component
-jest.mock('./ChoiceModal', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { Text, TouchableOpacity } = require('react-native');
-    return jest.fn((props) => Object.keys(props.choices).map(key => (
-        <TouchableOpacity
-            onPress={ () => props.setValue(props.choices[key].label) }
-            testID={ `press_${props.choices[key].label}` }
-            key={ props.choices[key].label }>
-                <Text>{props.choices[key].label}</Text>
-        </TouchableOpacity>
-    )));
-    
-});
+// Mocking modules
+jest.mock('idai-field-core');
+jest.mock('./ChoiceModal/ChoiceModal');
 
 
 describe('DropdownRangeField',() => {

@@ -50,7 +50,7 @@ defmodule Api.Worker.Enricher.Labels do
       Enum.member?(@core_properties, field_name) -> put_in(resource, [field_name], field_value)
 
       get_field_definition(category_definition, field_name) == nil ->
-        Logger.warn "not found: field \"#{field_name}\" of category \"#{category_definition.name}\""
+        Logger.warn "Label not found: field \"#{field_name}\" of category \"#{category_definition.name}\""
         resource
       true ->
         case field_value do

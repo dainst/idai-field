@@ -37,6 +37,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() paddingRight: number;
 
     @Output() onClick = new EventEmitter<any>();
+    @Output() onShiftClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick = new EventEmitter<any>();
 
     public rows = [];
@@ -50,6 +51,15 @@ export class ImageGridComponent implements OnChanges {
                 private imagestore: Imagestore,
                 private datastore: Datastore,
                 private blobMaker: BlobMaker) {}
+
+
+    public async handleClick(document: ImageDocument, event: MouseEvent) {
+        if (event.shiftKey) {
+            this.onShiftClick.emit(document);
+        } else {
+            this.onClick.emit(document);
+        }
+    }
 
 
     async ngOnChanges(changes: SimpleChanges) {
@@ -90,6 +100,9 @@ export class ImageGridComponent implements OnChanges {
             this.calcGridTimeout = undefined;
         }, 100);
     }
+
+
+
 
 
     private async _calcGrid() {
@@ -160,4 +173,5 @@ export class ImageGridComponent implements OnChanges {
             }
         } as any);
     }
+
 }

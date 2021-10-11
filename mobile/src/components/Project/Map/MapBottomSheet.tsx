@@ -1,17 +1,13 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Document } from 'idai-field-core';
 import React, { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
-import { DocumentRepository } from '../../../repositories/document-repository';
+import { StyleSheet, Text, View } from 'react-native';
 import BottomSheet from '../../common/BottomSheet';
 import Button from '../../common/Button';
-import Column from '../../common/Column';
 import DocumentButton from '../../common/DocumentButton';
 import Row from '../../common/Row';
-import DocumentDetails from '../DocumentDetails';
 interface MapBottomSheetProps {
     document: Document | undefined;
-    repository: DocumentRepository;
     addDocument: (parentDoc: Document) => void;
     editDocument: (docId: string, categoryName: string) => void;
     removeDocument: (doc: Document) => void;
@@ -20,7 +16,6 @@ interface MapBottomSheetProps {
 
 const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     document,
-    repository,
     addDocument,
     editDocument,
     removeDocument,
@@ -75,12 +70,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     icon={ <Ionicons name="trash" size={ 16 } /> }
                 />
             </Row>
-            <Column style={ styles.container }>
-                <DocumentDetails
-                    docId={ docId }
-                    repository={ repository }
-                />
-            </Column>
+            <View style={ styles.docOverviewContainer }>
+                {document.resource.shortDescription &&
+                    <View>
+                        <Text style={ styles.fieldLabel }>Short Description:</Text>
+                        <Text style={ { paddingLeft: 10 } }>{document.resource.shortDescription}</Text>
+                    </View>
+                }
+            </View>
         </BottomSheet>
     );
 };
@@ -120,7 +117,16 @@ const styles = StyleSheet.create({
     focusBtn: {
         borderWidth: 1,
         borderColor: 'black',
-    }
+    },
+    docOverviewContainer: {
+        padding: 5,
+        backgroundColor: 'white',
+        flex: 1 },
+    fieldLabel: {
+        fontWeight: 'bold',
+        fontSize: 14,
+        paddingRight: 5
+    },
 });
 
 export default MapBottomSheet;

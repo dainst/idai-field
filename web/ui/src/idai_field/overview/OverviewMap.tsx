@@ -36,13 +36,14 @@ export default function OverviewMap({ documents, filter }
 
     useEffect(() => {
 
-        if (!map || !documents?.length) return;
+        if (!map) return;
 
         const featureCollection = createFeatureCollection(documents, filter);
-        if (!featureCollection) return;
 
         const vectorLayer = getGeoJSONLayer(featureCollection);
         map.addLayer(vectorLayer);
+
+        if (!featureCollection) return;
 
         map.getView().fit((vectorLayer.getSource() as VectorSource<Geometry>).getExtent(),
             { padding: FIT_OPTIONS.padding });
@@ -90,7 +91,9 @@ export default function OverviewMap({ documents, filter }
         return () => map.un('click', onClick);
     }, [map, searchParams]);
 
-    return <div className="overview-map" id="ol-overview-map" style={ mapStyle } />;
+    return <div className="overview-map" id="ol-overview-map" style={ mapStyle }>
+        <div id="mapbox-logo" />
+    </div>;
 }
 
 
@@ -113,13 +116,18 @@ const createMap = (): Map => {
 
 const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
 
-    if (!featureCollection) return;
-
     const vectorSource = new VectorSource({
-        features: new GeoJSON().readFeatures(featureCollection, {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        })
+        features: featureCollection
+            ? new GeoJSON().readFeatures(featureCollection, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
+            }) : [],
+        attributions: [
+        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © '
+            + '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '
+            + '<strong><a href="https://www.mapbox.com/map-feedback/"'
+            + 'target="_blank">Improve this map</a></strong>'
+        ]
     });
 
     const vectorLayer = new VectorLayer({

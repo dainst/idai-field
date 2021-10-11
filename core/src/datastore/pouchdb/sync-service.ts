@@ -28,6 +28,10 @@ export class SyncService {
     private syncTarget: string;
     private project: string;
     private password: string = '';
+    private currentSyncTimeout: any;
+
+    private syncHandles = [];
+    private replicationHandle;
 
     private sync: Sync = null;
     private syncTimeout = null;
@@ -65,6 +69,63 @@ export class SyncService {
         this.setStatus(SyncStatus.Offline);
     }
 
+    
+    /**
+     * @throws error if db is not empty
+     */
+    public async startReplication(target: string, password: string, project: string, updateSequence: number,
+                                  destroyExisting: boolean): Promise<Observable<any>> {
+
+        if (this.replicationHandle) return;
+
+        this.stopSync();
+
+        const url = SyncService.generateUrl(target + '/' + project, project, password);
+
+        const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
+
+        this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
+
+        return Observable.create((obs: Observer<any>) => {
+            this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
+                .on('complete', (info: any) => {
+                    this.replicationHandle = undefined;
+                    if (info.status === 'complete') {
+                        obs.complete();
+                    } else {
+                        this.pouchdbDatastore.destroyDb(project);
+                        obs.error('canceled');
+                    }
+                    this.startSync();
+                })
+                .on('denied', (err: any) => {
+                    this.handleReplicationError(obs, err, project);
+                })
+                .on('error', (err: any) => {
+                    this.handleReplicationError(obs, err, project);
+                });
+        })
+    };
+
+
+    private handleReplicationError(observer: Observer<any>, error: any, project: string) {
+
+        // it's ok to remove db, because we know it was a new one
+        this.pouchdbDatastore.destroyDb(project);
+        this.replicationHandle = undefined;
+        this.startSync();
+        observer.error(error);
+    }
+
+
+    public async stopReplication() {
+
+        if (!this.replicationHandle) return;
+
+        this.replicationHandle.cancel();
+        this.replicationHandle = undefined;
+    }
+
 
     /**
      * Setup peer-to-peer syncing between this datastore and target.
@@ -72,7 +133,7 @@ export class SyncService {
      * @param url target datastore
      * @param project
      */
-    public startSync(live: boolean = true, filter?: (doc: any) => boolean): void {
+     public startSync(live: boolean = true, filter?: (doc: any) => boolean): void {
 
         if (!this.syncTarget || !this.project) return;
         if (this.sync) {
@@ -121,7 +182,7 @@ export class SyncService {
     }
 
 
-    private static generateUrl(syncTarget: string, project: string, password: string) {
+    public static generateUrl(syncTarget: string, project: string, password?: string) {
 
         if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
 

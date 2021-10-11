@@ -46,16 +46,32 @@ export class ImageDocumentsManager {
     }
 
 
-    public toggleSelected(document: ImageDocument) {
+    public toggleSelected(document: ImageDocument, multiSelect: boolean = false) {
 
-        if (this.selected.indexOf(document) == -1) {
-            this.selected.push(document);
+        if (multiSelect && this.selected.length > 0) {
+            this.selectBetween(this.selected[this.selected.length - 1], document);
         } else {
-            this.selected.splice(this.selected.indexOf(document), 1);
+            if (this.selected.indexOf(document) == -1) {
+                this.selected.push(document);
+            } else {
+                this.selected.splice(this.selected.indexOf(document), 1);
+            }
         }
 
         this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
     }
+
+
+    private selectBetween(document1: ImageDocument, document2: ImageDocument) {
+
+        const index1: number = this.documents.indexOf(document1);
+        const index2: number = this.documents.indexOf(document2);
+
+        for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
+            const document = this.documents[i];
+            if (!this.selected.includes(document)) this.selected.push(document);
+        }
+    }   
 
 
     private doSelectedDocumentsContainDepictsRelations(): boolean {

@@ -1,6 +1,7 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+coverage/**/*
 *.jks
 *.p8
 *.p12
@@ -11,6 +12,7 @@ web-build/
 build/
 .vscode/.react/**/*
 .idea
+testdb/**
 
 # macOS
 .DS_Store

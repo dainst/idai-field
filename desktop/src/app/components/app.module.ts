@@ -45,7 +45,6 @@ import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
 import { Labels } from 'idai-field-core';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProjectsModalComponent } from './navbar/projects-modal.component';
 import { ProjectsComponent } from './navbar/projects.component';
 import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
 import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
@@ -56,6 +55,8 @@ import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
+import { MenuNavigator } from './menu-navigator';
+import { ProjectModule } from './project/project.module';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -84,7 +85,8 @@ registerLocaleData(localeIt, 'it');
         BackupModule,
         DatastoreModule,
         MatrixModule,
-        ConfigurationModule
+        ConfigurationModule,
+        ProjectModule
     ],
     declarations: [
         AppComponent,
@@ -94,8 +96,7 @@ registerLocaleData(localeIt, 'it');
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        ProjectsModalComponent,
-        HelpComponent
+        HelpComponent,
     ],
     providers: [
         Modals,
@@ -224,10 +225,8 @@ registerLocaleData(localeIt, 'it');
         },
         TabSpaceCalculator,
         Menus,
+        MenuNavigator,
         UtilTranslations
-    ],
-    entryComponents: [
-        ProjectsModalComponent
     ],
     bootstrap: [AppComponent]
 })

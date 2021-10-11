@@ -33,14 +33,34 @@ const writeConfigFile = (path) => {
 
 global.setConfigDefaults = config => {
 
-    if (!config.syncTarget) config.syncTarget = {};
-    if (!config.remoteSites) config.remoteSites = [];
+    setSyncTargets(config);
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 
     return config;
 };
+
+
+const setSyncTargets = config => {
+
+    if (!config.syncTargets) {
+        config.syncTargets = config.syncTarget && config.dbs
+            ? config.dbs.reduce((result, db) => {
+                if (db !== 'test') {
+                    result[db] = {
+                        address: config.syncTarget.address,
+                        password: config.syncTarget.password,
+                        isSyncActive: config.isSyncActive
+                    };
+                }
+                return result;
+            }, {})
+            : {};
+            
+        delete config.syncTarget;
+    }
+}
 
 
 const setLanguages = config => {
@@ -76,11 +96,11 @@ global.getLocale = () => global.config.languages.find(language => mainLanguages.
 
 global.getMainLanguages = () => mainLanguages;
 
+
 global.updateConfig = config => {
 
-    const oldLocale = global.getLocale();
     global.config = config;
-    if (global.getLocale() !== oldLocale) createMenu();
+    createMenu();
 };
 
 

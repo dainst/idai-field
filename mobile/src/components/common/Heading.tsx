@@ -1,21 +1,16 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TextProps } from 'react-native';
 
 
-interface HeadingProps {
-    style?: StyleProp<ViewStyle>;
-    children: ReactNode;
-}
-
-
-const Heading = ({ children, style }: HeadingProps): ReactElement => {
+const Heading: React.FC<TextProps> = (props) => {
 
     return <Text
-        style={ [styles.heading, style] }
+        style={ [styles.heading, props.style] }
         numberOfLines={ 1 }
         ellipsizeMode="tail"
+        testID="headerText"
     >
-        { children }
+        { props.children }
     </Text>;
 };
 

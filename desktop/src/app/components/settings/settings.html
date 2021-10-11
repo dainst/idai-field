@@ -23,7 +23,7 @@
                             Sprachen
                         </label>
                         <language-settings [selectedLanguages]="settings.languages"></language-settings>
-                        <div class="settings-info" i18n="@@settings.languages.info">
+                        <div class="small-info-text" i18n="@@settings.languages.info">
                             Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine
                             übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen
                             Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der
@@ -44,7 +44,7 @@
                                class="form-control">
                     </div>
 
-                    <div class="settings-info" i18n="@@settings.userName.info">
+                    <div class="small-info-text" i18n="@@settings.userName.info">
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
@@ -59,38 +59,6 @@
 
                     <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
 
-                    <div class="row" style="margin: 15px 0 0;">
-                        <div class="col-auto mr-auto">
-                            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
-                        </div>
-                        <div class="col-auto">
-                            <label class="switch" style="margin-bottom: 0;">
-                                <input type="checkbox" [checked]="settings.isSyncActive"
-                                       (change)="toggleSync()">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="sync-target-address-input"
-                               class="control-label col-form-label"
-                               i18n="@@settings.synchronization.address">Adresse</label>
-                        <input id="sync-target-address-input" [ngModel]="settings.syncTarget.address"
-                               (ngModelChange)="settings.syncTarget.address = $event"
-                               class="form-control">
-
-                        <label for="sync-target-password-input"
-                               class="control-label col-form-label"
-                               i18n="@@settings.synchronization.password">Passwort</label>
-                        <input id="sync-target-password-input"
-                               type="password"
-                               [ngModel]="settings.syncTarget.password"
-                               (ngModelChange)="settings.syncTarget.password = $event"
-                               class="form-control">
-                    </div>
-
                     <div class="form-group">
 
                         <label class="control-label col-form-label" i18n="@@settings.synchronization.ownAddress">Eigene Adresse</label>
@@ -103,7 +71,7 @@
                                (ngModelChange)="settings.hostPassword = $event"
                                class="form-control">
 
-                        <div class="settings-info" i18n="@@settings.synchronization.info">
+                        <div class="small-info-text" i18n="@@settings.synchronization.info">
                             Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients
                             eingetragen werden, damit dieser Computer als Synchronisationsziel
                             eingerichtet werden kann.
@@ -133,7 +101,7 @@
                             </label>
                         </div>
 
-                        <div class="settings-info" i18n="@@settings.images.path.info">
+                        <div class="small-info-text" i18n="@@settings.images.path.info">
                             Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
                             sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
                             Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.

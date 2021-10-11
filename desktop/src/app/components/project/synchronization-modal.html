@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@project.synchronization">Projekt synchronisieren</h5>
+</div>
+
+<div *ngIf="settings && syncTarget" id="synchronization-modal" class="modal-body">
+    <div id="synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="syncTarget.isSyncActive"
+                       (change)="toggleSync()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="sync-target-address-input"
+                class="control-label col-form-label"
+                i18n="@@settings.synchronization.address">Adresse</label>
+        <input id="sync-target-address-input" [ngModel]="syncTarget.address"
+                (ngModelChange)="syncTarget.address = $event"
+                class="form-control">
+
+        <label for="sync-target-password-input"
+                class="control-label col-form-label"
+                i18n="@@settings.synchronization.password">Passwort</label>
+        <input id="sync-target-password-input"
+                type="password"
+                [ngModel]="syncTarget.password"
+                (ngModelChange)="syncTarget.password = $event"
+                class="form-control">
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div type="button" class="btn btn-primary" (click)="apply()">
+        <span i18n="@@settings.applySettings">Einstellungen übernehmen</span>
+    </div>
+    <div type="button" class="btn btn-secondary" (click)="activeModal.close()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

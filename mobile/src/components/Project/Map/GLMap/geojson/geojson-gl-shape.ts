@@ -1,22 +1,31 @@
-
 import { Position } from 'geojson';
-import { Document, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldGeometry, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
     BufferGeometry, CircleGeometry, Line,
-    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, Vector2
+    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils
 } from 'three';
-import { pointRadius, strokeWidth } from '../constants';
+import {
+    highlightedColor, highlightedStrokeWidth, lineRenderingOrder, pointRenderingOrder, strokeWidth
+} from '../constants';
 import { processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
+import { defaultPointRadius } from './../constants';
 
 
 interface ShapeFunction<T extends Position | Position[] | Position[][] | Position[][][]> {
-    (matrix: Matrix4,scene: Scene, config: ProjectConfiguration, document: Document, coordinates: T): void;
+    (matrix: Matrix4,
+        scene: Scene,
+        config: ProjectConfiguration,
+        document: Document,
+        coordinates: T,
+        radius?: number): void;
 }
 
 export interface ObjectData {
     isSelected: boolean;
+    type: FieldGeometryType;
+    coords: Shape[] | Position[]
 }
 
 export enum ObjectChildValues {
@@ -24,6 +33,45 @@ export enum ObjectChildValues {
     notSelected = 'notSelected',
 }
 
+export const updateDocumentInScene = (
+        document: Document,
+        documentToWorldMatrix: Matrix4,
+        scene: Scene,config: ProjectConfiguration): void => {
+
+    removeDocumentFromScene(document.resource.id, scene);
+    addDocumentToScene(document, documentToWorldMatrix, scene, config);
+};
+
+export const removeDocumentFromScene = (docId: string, scene: Scene): void => {
+    
+    const parent = scene.getObjectByProperty('uuid',docId);
+    if(parent) scene.remove(parent);
+};
+
+export const addDocumentToScene = (
+        doc: Document,
+        documentToWorldMatrix: Matrix4,
+        scene: Scene,
+        config: ProjectConfiguration): void => {
+
+    if(!documentToWorldMatrix) return;
+    const geometry = doc.resource.geometry as FieldGeometry;
+        
+    switch(geometry.type){
+        case 'Polygon':
+        case 'MultiPolygon':
+            polygonToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+        case 'LineString':
+        case 'MultiLineString':
+            lineStringToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+        case 'Point':
+        case 'MultiPoint':
+            pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates);
+            break;
+    }
+};
 
 export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         (matrix, scene, config, document,coordinates) => {
@@ -47,22 +95,15 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> =
         const selected = new Mesh(geo, material);
         selected.name = ObjectChildValues.selected;
         selected.visible = false;
+        // render polygons with small area first
+        selected.renderOrder = - Math.abs( Math.floor(ShapeUtils.area(shape.getPoints())));
         parent.add(selected);
     });
 
     // not selected Child
-    const notSelectedMaterial = new LineBasicMaterial( { color, linewidth: strokeWidth } );
-    shapes.forEach(shape => {
-        shape.autoClose = true;
-        const points = shape.getPoints();
-        const geometryPoints = new BufferGeometry().setFromPoints( points );
-        const notSelected = new Line( geometryPoints, notSelectedMaterial);
-        notSelected.name = ObjectChildValues.notSelected;
-        notSelected.renderOrder = 1;
-        parent.add(notSelected);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, true)));
     
-    addObjectInfo(parent,document);
+    addObjectInfo(parent,document, shapes);
     scene.add(parent);
 };
 
@@ -91,100 +132,139 @@ export const lineStringToShape:
 
     const parent = new Object3D();
     const color = config.getCategory(document.resource.category)?.color || 'black';
-    const geos: BufferGeometry[] = [];
+    const shapes: Shape[] = [];
 
-    if(isPosition1d(coordinates)) geos.push(geoJsonLineToShape(matrix,coordinates));
-    else coordinates.forEach(lineString => geos.push(geoJsonLineToShape(matrix, lineString)));
+    if(isPosition1d(coordinates)) shapes.push(geoJsonLineToShape(matrix,coordinates));
+    else coordinates.forEach(lineString => shapes.push(geoJsonLineToShape(matrix, lineString)));
 
     // selected Child
-    geos.forEach(geo => {
-        const selectedLine = new Line(geo, lineStringMaterial(color, true));
-        selectedLine.name = ObjectChildValues.selected;
-        selectedLine.visible = false;
-        parent.add(selectedLine);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, true, false)));
 
     // not selected Child
-    geos.forEach(geo => {
-        const notSelectedLine = new Line(geo,lineStringMaterial(color, false));
-        notSelectedLine.name = ObjectChildValues.notSelected;
-        notSelectedLine.visible = true;
-        notSelectedLine.renderOrder = 1;
-        parent.add(notSelectedLine);
-    });
+    shapes.forEach(shape => parent.add(getLineFromShape(shape, color, false, false)));
 
-    addObjectInfo(parent, document);
+    addObjectInfo(parent, document, shapes);
     scene.add(parent);
 };
 
 
-const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): BufferGeometry => {
+const geoJsonLineToShape = (matrix: Matrix4, coordinates: Position[]): Shape => {
 
-    const points: Vector2[] = [];
-    coordinates.forEach(point => {
+    const shape = new Shape();
+    coordinates.forEach((point, i) => {
         const [x,y] = processTransform2d(matrix,point);
-        points.push(new Vector2(x,y));
+        if(i === 0) shape.moveTo(x ,y );
+        else shape.lineTo(x ,y );
     });
-    return new BufferGeometry().setFromPoints(points);
+    return shape;
 };
 
-// eslint-disable-next-line max-len
-export const multiPointToShape: ShapeFunction<Position[]> = (matrix, scene, config, document, coordinates) =>
-    coordinates.forEach(point => pointToShape(matrix, scene, config, document, point));
+
+const getLineFromShape =
+    (shape: Shape, color: string, isSelected: boolean, autoClose: boolean, linewidth = strokeWidth): Line => {
+    
+    shape.autoClose = autoClose ? true : false;
+    const geo = new BufferGeometry().setFromPoints(shape.getPoints());
+    const material = new LineBasicMaterial({ color: color, linewidth, opacity: isSelected ? 1 : 0.7 });
+    
+    const line = new Line(geo,material);
+    line.name = isSelected ? ObjectChildValues.selected : ObjectChildValues.notSelected;
+    line.visible = isSelected ? false : true;
+    line.renderOrder = lineRenderingOrder;
+    return line;
+};
 
 
-export const pointToShape: ShapeFunction<Position> = (matrix, scene, config, document, coordinates): void => {
+export const pointToShape:
+    ShapeFunction<Position | Position[]> = (matrix, scene, config, document, coordinates, radius?: number): void => {
 
     if(!coordinates) return;
-  
-    const [x,y] = processTransform2d(matrix,coordinates);
+
+    const name = 'pointParent';
+    let pointParent = scene.getObjectByName(name);
+    if(!pointParent){
+        pointParent = new Object3D();
+        pointParent.name = name;
+        scene.add(pointParent);
+    }
+    pointParent.userData = { radius: radius || defaultPointRadius };
+
+
     const parent = new Object3D();
     const color = config.getCategory(document.resource.category)?.color || 'black';
-    const radius = pointRadius;
-    const segments = 30; //<-- Increase or decrease for more resolution
-    
-    const circleGeometry = new CircleGeometry( radius, segments );
-    circleGeometry.translate(x ,y ,0);
+    const points: Position[] = [];
+
+
+    if(isPostion(coordinates)) points.push(processTransform2d(matrix,coordinates));
+    else coordinates.forEach(coords => points.push(processTransform2d(matrix, coords)));
 
     // selected Child
-    const selectedCircle = new Mesh(circleGeometry, pointMaterial(color, true));
-    selectedCircle.name = ObjectChildValues.selected;
-    selectedCircle.visible = false;
-    parent.add(selectedCircle);
+    points.forEach(point => parent.add(getCricleFromCoord(scene, point,true, color)));
 
     // not selected Child
-    const notSelectedCircle = new Mesh(circleGeometry, pointMaterial(color, false));
-    notSelectedCircle.name = ObjectChildValues.notSelected;
-    notSelectedCircle.visible = true;
-    notSelectedCircle.renderOrder = 1;
-    parent.add(notSelectedCircle);
+    points.forEach(point => parent.add(getCricleFromCoord(scene, point,false, color)));
 
-    addObjectInfo(parent, document);
-    scene.add(parent);
+    addObjectInfo(parent, document, points);
+    //scene.add(parent);
+    pointParent.add(parent);
 };
 
 
-const addObjectInfo = (object: Object3D, doc: Document) => {
+const getCricleFromCoord = (scene: Scene, pos: Position, isSelected: boolean, color: string): Mesh => {
+
+    const radius = scene.getObjectByName('pointParent')?.userData.radius as number || defaultPointRadius;
+    const segments = 30; //<-- Increase or decrease for more resolution
+    const circleGeometry = new CircleGeometry( radius, segments );
+    const [x,y] = pos;
+    circleGeometry.translate(x ,y ,0);
+
+    const material = new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
+    const circle = new Mesh(circleGeometry, material);
+    circle.name = isSelected ? ObjectChildValues.selected : ObjectChildValues.notSelected;
+    circle.visible = isSelected ? false : true;
+    circle.renderOrder = pointRenderingOrder;
+    return circle;
+};
+
+export const updatePointRadiusOfScene = (
+        geoDocuments: Document[],
+        documentToWorldMatrix: Matrix4,
+        config: ProjectConfiguration,
+        scene: Scene,
+        radius: number): void => {
+
+    const name = 'pointParent';
+    const pointParent = scene.getObjectByName(name);
+    
+    if(!pointParent) return;
+    scene.remove(pointParent);
+
+    geoDocuments.forEach(doc => {
+        const geometry = doc.resource.geometry as FieldGeometry;
+        if(geometry.type === 'Point' || geometry.type === 'MultiPoint')
+            pointToShape(documentToWorldMatrix, scene, config, doc, geometry.coordinates, radius);
+    });
+
+};
+
+
+const addObjectInfo = (object: Object3D, doc: Document, coords: Shape[] | Position[]) => {
 
     object.name = doc.resource.identifier;
     object.uuid = doc.resource.id;
     const userData: ObjectData = {
         isSelected: false,
+        type: doc.resource.geometry.type,
+        coords
     };
     object.userData = userData;
 };
 
-const isPosition1d = (coords: Position[] | Position[][]): coords is Position[] => arrayDim(coords) === 2;
+
+const isPostion = (coords: Position | Position[]): coords is Position => arrayDim(coords) === 1;
+const isPosition1d = (coords: Position[] | Position[][] | Position): coords is Position[] => arrayDim(coords) === 2;
 const isPosition2d = (coords: Position[][] | Position[][][]): coords is Position[][] => arrayDim(coords) === 3;
 const isPosition3d = (coords: Position[][] | Position[][][]): coords is Position[][][] => arrayDim(coords) === 4;
-
-
-const lineStringMaterial = (color: string, isSelected: boolean = false) =>
-    new LineBasicMaterial({ color: color, linewidth: strokeWidth, opacity: isSelected ? 1 : 0.7 });
-
-
-const pointMaterial = (color: string, isSelected: boolean = false) =>
-    new MeshBasicMaterial({ color, opacity: isSelected ? 1 : 0.7 } );
 
 
 export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordinates: Position): void => {
@@ -200,13 +280,42 @@ export const addlocationPointToScene = (matrix: Matrix4, scene: Object3D, coordi
     }
 
     const color = 'blue';
-    const radius = pointRadius;
+    const radius = defaultPointRadius;
     const segments = 30; //<-- Increase or decrease for more resolution
     
     const circleGeometry = new CircleGeometry( radius, segments );
     circleGeometry.translate(x ,y ,0);
-    const locationPoint = new Mesh(circleGeometry, pointMaterial(color, true));
+    const locationPoint = new Mesh(circleGeometry, new MeshBasicMaterial({ color }));
     locationPoint.name = location;
     
     scene.add(locationPoint);
 };
+
+
+export const addHighlightedDocToScene = (docId: string, scene: Scene): void => {
+
+    const data = getUserData(docId, scene);
+    if(!data) return;
+
+    const name = 'highlighted';
+    let parent = scene.getObjectByName(name);
+    if(parent) scene.remove(parent);
+    
+    parent = new Object3D();
+    parent.name = name;
+    
+    if(isShapeArray(data.coords, data.type)){
+        const closeShape = data.type === 'Polygon' || data.type === 'MultiPolygon';
+        data.coords.forEach(coord =>
+            parent?.add(getLineFromShape(coord, highlightedColor,false, closeShape,highlightedStrokeWidth)));
+    } else
+        data.coords.forEach(coord => parent?.add(getCricleFromCoord(scene, coord, false, highlightedColor)));
+    
+    scene.add(parent);
+};
+
+const isShapeArray = (coords: Shape[] | Position[], type: FieldGeometryType): coords is Shape[] =>
+    type === 'Polygon' || type === 'MultiPolygon' || type === 'LineString' || type === 'MultiLineString';
+
+const getUserData = (docId: string, scene: Scene): ObjectData | undefined =>
+    scene.getObjectByProperty('uuid',docId)?.userData as ObjectData;

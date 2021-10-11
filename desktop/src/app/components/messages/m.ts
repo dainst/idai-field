@@ -44,6 +44,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
     public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
 
+    // Network Project Package
+    public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
+    public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.genericError';
+    public static INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR = 'M.InitialSync.couldNotStartGenericError';
+    public static INITIAL_SYNC_INVALID_CREDENTIALS = 'M.InitialSync.invalidCredentials'
+
     // ImportPackage - ParserErrors
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
@@ -200,7 +206,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources.error.projectNameLength';
     public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources.error.projectNameSymbols';
     public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources.error.projectNameExists';
-    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist';
+    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
     public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
@@ -400,6 +406,42 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
+            content: i18n({
+                id: 'messages.initialSync.targetDbNotEmpty',
+                value: 'Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.initialSync.genericError',
+                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.initialSync.couldNotStartGenericError',
+                value: 'Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.INITIAL_SYNC_INVALID_CREDENTIALS] = {
+            content: i18n({
+                id: 'messages.initialSync.invalidCredentials',
+                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
+            }),
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_SUCCESS_SINGLE] = {

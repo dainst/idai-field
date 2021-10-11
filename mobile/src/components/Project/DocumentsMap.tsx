@@ -20,8 +20,8 @@ interface DocumentsMapProps {
     syncStatus: SyncStatus;
     relationsManager: RelationsManager;
     issueSearch: (q: string) => void;
-    isInOverview: () => boolean;
-    selectDocument: (doc: Document) => void;
+    isInOverview: (category: string) => boolean;
+    selectParent: (doc: Document) => void;
 }
 
 
@@ -34,7 +34,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     relationsManager,
     issueSearch,
     isInOverview,
-    selectDocument
+    selectParent
 }): ReactElement => {
 
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
@@ -44,11 +44,11 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
-    const onBarCodeScanned = useCallback((data: string) => {
+    const onQrCodeScanned = useCallback((data: string) => {
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
-                navigation.navigate('DocumentDetails', { docId: doc.resource.id })
+                navigation.navigate('DocumentEdit', { docId: doc.resource.id, categoryName: doc.resource.category })
             )
             .catch(() => Alert.alert(
                 'Not found',
@@ -115,7 +115,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 issueSearch,
                 syncStatus,
                 toggleDrawer,
-                onBarCodeScanned
+                onQrCodeScanned
             } } />
             <View style={ styles.container }>
                 <Map
@@ -125,7 +125,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                     addDocument={ handleAddDocument }
                     editDocument={ handleEditDocument }
                     removeDocument={ openRemoveDocument }
-                    selectDocument={ selectDocument } />
+                    selectParent={ selectParent } />
             </View>
         </View>
     );

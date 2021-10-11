@@ -1,5 +1,4 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
     Category, Document, NewDocument, NewResource, Resource
 } from 'idai-field-core';
@@ -9,17 +8,19 @@ import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '../../contexts/configuration-context';
 import LabelsContext from '../../contexts/labels/labels-context';
 import useToast from '../../hooks/use-toast';
+import { NavigationFunction } from '../../navigation/navigation.types';
 import { DocumentRepository } from '../../repositories/document-repository';
 import Button from '../common/Button';
 import DocumentForm from '../common/forms/DocumentForm';
 import { ToastType } from '../common/Toast/ToastProvider';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
-type DocumentAddNav = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentAdd'>;
-
+    
 interface DocumentAddProps {
     repository: DocumentRepository;
-    navigation: DocumentAddNav;
+    navigation: {
+        navigate: NavigationFunction<DocumentsContainerDrawerParamList, 'DocumentsMap'>
+    };
     parentDoc: Document;
     categoryName: string;
 }
@@ -28,11 +29,11 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     
     const config = useContext(ConfigurationContext);
     const { labels } = useContext(LabelsContext);
+    const { showToast } = useToast();
 
     const [category, setCategory] = useState<Category>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
-    const { showToast } = useToast();
 
     const setResourceToDefault = useCallback(() =>
         setNewResource({
@@ -91,7 +92,8 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
                     onPress={ saveButtonHandler }
                     title="Save"
                     isDisabled={ !saveBtnEnabled }
-                    icon={ <MaterialIcons name="save" size={ 18 } color="white" /> }
+                    icon={ <MaterialIcons name="save" size={ 18 } color="white"
+                    testID="saveDocBtn" /> }
                 /> }
             category={ category }
             headerText={ `Add ${labels.get(category)} to ${ parentDoc.resource.identifier }` }

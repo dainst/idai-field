@@ -55,14 +55,8 @@ export async function setupSettingsService(pouchdbdatastore, pouchdbserver, proj
     const settings = await settingsService.updateSettings({
         languages: ['de', 'en'],
         isAutoUpdateActive: false,
-        isSyncActive: false,
-        remoteSites: [],
         hostPassword: '',
-        syncTarget: new class implements SyncTarget {
-            address: string = 'http://localhost:3003/';
-            password: string;
-            username: string;
-        },
+        syncTargets: {},
         dbs: [projectName],
         selectedProject: '',
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',

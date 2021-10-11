@@ -1,7 +1,7 @@
 defmodule IdaiFieldServerWeb.Router do
   use IdaiFieldServerWeb, :router
 
-  import IdaiFieldServerWeb.ProjectAuth
+  import IdaiFieldServerWeb.UserAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,26 +9,65 @@ defmodule IdaiFieldServerWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_project
+    plug :fetch_current_user
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-
-    get "/sync/*rest", IdaiFieldServerWeb.CouchDBController, :sync
+  # Currently this is the most important thing we use of the Phoenix Application.
+  # It is a (proof of concept of a) simple API for storing, retrieving and deleting files.
+  # The authentication and authorization is based on couchdb users and databases.
+  # If the given credentials suffice to access the corresponding couchdb, permissions
+  # will be granted to access the files storage for that project.
+  #
+  scope "/files", IdaiFieldServerWeb do
+    get "/:project/*filepath", FilesController, :download
+    post "/:project/*filepath", FilesController, :upload
+    delete "/:project/*filepath", FilesController, :delete
   end
 
+  # Phoenix landing page of the web app
   scope "/", IdaiFieldServerWeb do
     pipe_through :browser
-
     get "/", PageController, :index
-    get "/files/:project", FileSyncController, :index
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", IdaiFieldServerWeb do
   #   pipe_through :api
   # end
+
+  # Authentication routes
+  # Everything from here as well as a couple of artifacts have been generated
+  # via `mix phx.gen.auth`.
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/users/register", UserRegistrationController, :new
+    post "/users/register", UserRegistrationController, :create
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
+    get "/users/reset_password", UserResetPasswordController, :new
+    post "/users/reset_password", UserResetPasswordController, :create
+    get "/users/reset_password/:token", UserResetPasswordController, :edit
+    put "/users/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings/update_password", UserSettingsController, :update_password
+    put "/users/settings/update_email", UserSettingsController, :update_email
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+  end
+
+  scope "/", IdaiFieldServerWeb do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :confirm
+  end
 
   # Enables LiveDashboard only for development
   #
@@ -44,38 +83,5 @@ defmodule IdaiFieldServerWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: IdaiFieldServerWeb.Telemetry
     end
-  end
-
-  ## Authentication routes
-
-  scope "/", IdaiFieldServerWeb do
-    pipe_through [:browser, :redirect_if_project_is_authenticated]
-
-    get "/projects/register", ProjectRegistrationController, :new
-    post "/projects/register", ProjectRegistrationController, :create
-    get "/projects/log_in", ProjectSessionController, :new
-    post "/projects/log_in", ProjectSessionController, :create
-    get "/projects/reset_password", ProjectResetPasswordController, :new
-    post "/projects/reset_password", ProjectResetPasswordController, :create
-    get "/projects/reset_password/:token", ProjectResetPasswordController, :edit
-    put "/projects/reset_password/:token", ProjectResetPasswordController, :update
-  end
-
-  scope "/", IdaiFieldServerWeb do
-    pipe_through [:browser, :require_authenticated_project]
-
-    get "/projects/settings", ProjectSettingsController, :edit
-    put "/projects/settings/update_password", ProjectSettingsController, :update_password
-    put "/projects/settings/update_email", ProjectSettingsController, :update_email
-    get "/projects/settings/confirm_email/:token", ProjectSettingsController, :confirm_email
-  end
-
-  scope "/", IdaiFieldServerWeb do
-    pipe_through [:browser]
-
-    delete "/projects/log_out", ProjectSessionController, :delete
-    get "/projects/confirm", ProjectConfirmationController, :new
-    post "/projects/confirm", ProjectConfirmationController, :create
-    get "/projects/confirm/:token", ProjectConfirmationController, :confirm
   end
 end

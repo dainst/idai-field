@@ -40,6 +40,7 @@ export class SettingsProvider {
 
         this.settings = settings;
         await this.serialize();
+        if (remote) remote.getGlobal('updateConfig')(this.settings);
     }
 
 
@@ -60,6 +61,7 @@ export class SettingsProvider {
     public async deleteProjectAndSerialize(project: Name) {
 
         this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
+        delete this.settings.syncTargets[project];
         await this.serialize();
     }
 

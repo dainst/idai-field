@@ -5,11 +5,6 @@ import {TabManager} from '../../services/tabs/tab-manager';
 import {Tab} from '../../services/tabs/tab';
 import {TabUtil} from '../../services/tabs/tab-util';
 import {ViewFacade} from '../../components/resources/view/view-facade';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {ProjectsModalComponent} from './projects-modal.component';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
 
 
 @Component({
@@ -35,9 +30,6 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private settingsProvider: SettingsProvider,
-                private menuService: Menus,
-                private modalService: NgbModal,
                 private i18n: I18n) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
@@ -114,6 +106,8 @@ export class NavbarComponent implements DoCheck {
             return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
+        } else if (this.activeRoute.startsWith('/networkProject')) {
+            return this.i18n({ id: 'navbar.tabs.networkProject', value: 'Projekt herunterladen' });
         } else if (this.activeRoute.startsWith('/import')) {
             return this.i18n({ id: 'navbar.tabs.import', value: 'Import' });
         } else if (this.activeRoute.startsWith('/export')) {
@@ -139,24 +133,6 @@ export class NavbarComponent implements DoCheck {
         return this.tabManager.getShownTabs().find(tab => {
             return this.activeRoute === '/' + tab.routeName + '/' + tab.operationId;
         });
-    }
-
-
-    public async openProjectsModal(openConflictResolver: boolean = false) {
-
-        this.menuService.setContext(MenuContext.PROJECTS);
-
-        const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
-        ref.componentInstance.selectedProject = this.settingsProvider.getSettings().selectedProject;
-        ref.componentInstance.openConflictResolver = openConflictResolver;
-
-        try {
-            await ref.result;
-        } catch(err) {
-            // Projects modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-        }
     }
 
 

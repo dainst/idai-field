@@ -57,6 +57,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
+import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -152,6 +153,7 @@ registerLocaleData(localeIt, 'it');
             },
             deps: [PouchdbDatastore, ImageConverter, BlobMaker]
         },
+        ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
         ImageConverter,

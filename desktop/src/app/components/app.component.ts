@@ -10,6 +10,7 @@ import { MenuNavigator } from './menu-navigator';
 import {UtilTranslations} from '../util/util-translations';
 import {AppController} from '../services/app-controller';
 import {Imagestore} from '../services/imagestore/imagestore';
+import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -39,7 +40,8 @@ export class AppComponent {
                 menuService: Menus,
                 appController: AppController,
                 imagestore: Imagestore,
-                settingsService: SettingsService) {
+                settingsService: SettingsService,
+                imageChangesStream: ImageChangesStream /* require it so that it starts */) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user

@@ -265,7 +265,10 @@ export module Validations {
 
         const projectFields: Array<Field> =
             Category.getFields(projectConfiguration.getCategory(resource.category));
-        const defaultFields: Array<Field> = [{ name: 'relations' } as Field];
+        const defaultFields: Array<Field> = [
+            { name: 'relations' } as Field,
+            { name: 'id' } as Field
+        ];
 
         const definedFields: Array<any> = projectFields.concat(defaultFields);
 

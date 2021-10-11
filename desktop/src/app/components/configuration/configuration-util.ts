@@ -1,6 +1,6 @@
 import { clone, flatten, isEmpty, to } from 'tsfun';
-import { Category, CustomCategoryDefinition, Field, FieldResource, Resource,
-    GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named } from 'idai-field-core';
+import { Category, Field, FieldResource, Resource,
+    GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named, CustomFormDefinition } from 'idai-field-core';
 import { CustomLanguageConfigurations } from './custom-language-configurations';
 
 
@@ -12,12 +12,12 @@ export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORT
  */
 export module ConfigurationUtil {
 
-    export const isHidden = (customCategoryDefinition?: CustomCategoryDefinition,
-                             parentCustomCategoryDefinition?: CustomCategoryDefinition) =>
+    export const isHidden = (customFormDefinition?: CustomFormDefinition,
+                             parentCustomFormDefinitiion?: CustomFormDefinition) =>
             (field: Field): boolean => {
 
-        return (customCategoryDefinition?.hidden ?? []).includes(field.name) ||
-            (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
+        return (customFormDefinition?.hidden ?? []).includes(field.name) ||
+            (parentCustomFormDefinitiion?.hidden ?? []).includes(field.name);
     }
 
 
@@ -78,7 +78,7 @@ export module ConfigurationUtil {
                                    removeFromCategoriesOrder: boolean = true): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
-        delete clonedConfigurationDocument.resource.categories[category.libraryId ?? category.name];
+        delete clonedConfigurationDocument.resource.forms[category.libraryId ?? category.name];
 
         CustomLanguageConfigurations.deleteCategory(
             clonedConfigurationDocument.resource.languages, category
@@ -99,7 +99,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name];
+            .forms[category.libraryId ?? category.name];
         clonedCategoryConfiguration.groups = clonedCategoryConfiguration.groups.filter(g => g.name !== group.name);
 
         if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
@@ -117,7 +117,7 @@ export module ConfigurationUtil {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
-            .categories[category.libraryId ?? category.name];
+            .forms[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
 
         const groupDefinition = clonedCategoryConfiguration.groups.find(
@@ -142,14 +142,13 @@ export module ConfigurationUtil {
     export function isCustomizedCategory(configurationDocument: ConfigurationDocument,
                                          category: Category): boolean {
 
-        const customDefinition: CustomCategoryDefinition = configurationDocument.resource
-            .categories[category.libraryId ?? category.name];
+        const customDefinition: CustomFormDefinition = configurationDocument.resource
+            .forms[category.libraryId ?? category.name];
 
         return customDefinition.color !== undefined
             || customDefinition.groups !== undefined
             || (customDefinition.valuelists !== undefined && !isEmpty(customDefinition.valuelists))
             || (customDefinition.fields !== undefined && !isEmpty(customDefinition.fields))
-            || (customDefinition.commons !== undefined && !isEmpty(customDefinition.commons))
             || (customDefinition.hidden !== undefined && !isEmpty(customDefinition.hidden))
             || CustomLanguageConfigurations.hasCustomTranslations(
                 configurationDocument.resource.languages, category
@@ -178,17 +177,17 @@ export module ConfigurationUtil {
 
 
     export function getCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                category: Category): CustomCategoryDefinition|undefined {
+                                                category: Category): CustomFormDefinition|undefined {
 
-        return configurationDocument.resource.categories[category.libraryId ?? category.name];
+        return configurationDocument.resource.forms[category.libraryId ?? category.name];
     }
 
 
     export function getParentCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                      category: Category): CustomCategoryDefinition|undefined {
+                                                      category: Category): CustomFormDefinition|undefined {
 
         return category.parentCategory
-            ? configurationDocument.resource.categories[category.libraryId ?? category.parentCategory.name]
+            ? configurationDocument.resource.forms[category.libraryId ?? category.parentCategory.name]
             : undefined;
     }
 }

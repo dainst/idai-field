@@ -1,25 +1,26 @@
 import { clone, Map, map } from 'tsfun';
 import { PouchdbDatastore } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
-import { Field } from '../../model';
 import { Relation } from '../../model/configuration/relation';
-import { Valuelist } from '../../model';
-import { addKeyAsProp } from '../../tools';
-import { CustomCategoryDefinition } from '../model';
-import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
-import { LanguageConfiguration } from '../model/language-configuration';
-import { LanguageConfigurations } from '../model/language-configurations';
-import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { LanguageConfiguration } from '../model/language/language-configuration';
+import { LanguageConfigurations } from '../model/language/language-configurations';
+import { LibraryFormDefinition } from '../model/form/library-form-definition';
+import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { ProjectConfiguration } from '../../services/project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
 import { ConfigReader } from './config-reader';
 import { ConfigurationValidation } from './configuration-validation';
+import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
+import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
+import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
+import { Valuelist } from '../../model/configuration/valuelist';
+import { addKeyAsProp } from '../../tools/transformers';
 
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
 
 type CustomConfiguration = {
-    categories: { [formName: string]: CustomCategoryDefinition },
+    forms: Map<CustomFormDefinition>,
     order: string[]
 };
 
@@ -43,60 +44,77 @@ export class ConfigLoader {
                 private pouchdbDatastore: PouchdbDatastore) {}
 
 
-    public async go(commonFields: { [fieldName: string]: any },
-                    builtinCategories: Map<BuiltinCategoryDefinition>,
+    public async go(commonFields: Map<BuiltInFieldDefinition>,
+                    builtInCategories: Map<BuiltInCategoryDefinition>,
                     relations: Array<Relation>,
-                    extraFields: {[fieldName: string]: Field },
+                    builtInFields: Map<BuiltInFieldDefinition>,
                     username: string,
                     customConfigurationName?: string|undefined,
                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        builtinCategories = addKeyAsProp('libraryId')(builtinCategories) as Map<BuiltinCategoryDefinition>;
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories();
+        const libraryForms: Map<LibraryFormDefinition> = this.readLibraryForms();
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
-            relations, Object.keys(builtinCategories as any)
+            relations, Object.keys(builtInCategories as any)
         );
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
         return this.loadConfiguration(
+            builtInCategories,
             libraryCategories,
+            libraryForms,
             commonFields,
-            builtinCategories,
             relations,
-            extraFields,
+            builtInFields,
             username,
             customConfigurationName,
-            customConfigurationDocument);
+            customConfigurationDocument
+        );
     }
 
 
-    private readLibraryCategories(): any {
+    private readLibraryCategories(): Map<LibraryCategoryDefinition> {
 
         const appConfigurationPath = '/Library/Categories.json';
 
         try {
-            return addKeyAsProp('libraryId')(this.configReader.read(appConfigurationPath));
+            return this.configReader.read(appConfigurationPath);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
     }
 
 
-    private async loadConfiguration(libraryCategories: Map<LibraryCategoryDefinition>,
-                                    commonFields: any,
-                                    builtinCategories: Map<BuiltinCategoryDefinition>,
+    private readLibraryForms(): Map<LibraryFormDefinition> {
+
+        const appConfigurationPath = '/Library/Forms.json';
+
+        try {
+            return addKeyAsProp('libraryId')(
+                this.configReader.read(appConfigurationPath)
+            ) as Map<LibraryFormDefinition>;
+        } catch (msgWithParams) {
+            throw [msgWithParams];
+        }
+    }
+
+
+    private async loadConfiguration(builtInCategories: Map<BuiltInCategoryDefinition>,
+                                    libraryCategories: Map<LibraryCategoryDefinition>,
+                                    libraryForms: Map<LibraryFormDefinition>,
+                                    commonFields: Map<BuiltInFieldDefinition>,
                                     relations: Array<Relation>,
-                                    extraFields: { [fieldName: string]: Field },
+                                    builtInFields: Map<BuiltInFieldDefinition>,
                                     username: string,
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         const valuelistsConfigurationPath = '/Library/Valuelists.json';
 
-        let customCategories;
+        let customForms;
         let languageConfigurations: LanguageConfigurations;
         let categoriesOrder: string[];
         let valuelistsConfiguration: any;
@@ -106,7 +124,7 @@ export class ConfigLoader {
                 customConfigurationName ?? 'Default',
                 username
             ));
-            customCategories = configurationDocument.resource.categories;
+            customForms = configurationDocument.resource.forms;
             const defaultLanguageConfigurations = this.readDefaultLanguageConfigurations();
             languageConfigurations = {
                 complete: this.getCompleteLanguageConfigurations(
@@ -126,12 +144,13 @@ export class ConfigLoader {
         try {
             return new ProjectConfiguration(
                 buildRawProjectConfiguration(
-                    builtinCategories,
+                    builtInCategories,
                     libraryCategories,
-                    customCategories,
+                    libraryForms,
+                    customForms,
                     commonFields,
                     valuelistsConfiguration,
-                    extraFields,
+                    builtInFields,
                     relations,
                     languageConfigurations,
                     categoriesOrder,
@@ -157,7 +176,7 @@ export class ConfigLoader {
             return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
         }
 
-        if (!customConfiguration.resource.categories || !customConfiguration.resource.languages) {
+        if (!customConfiguration.resource.forms || !customConfiguration.resource.languages) {
             return await this.storeCustomConfigurationInDatabase(
                 customConfigurationName, username, customConfiguration._rev
             );
@@ -244,7 +263,7 @@ export class ConfigLoader {
                 identifier: 'Configuration',
                 category: 'Configuration',
                 relations: {},
-                categories: customConfiguration.categories,
+                forms: customConfiguration.forms,
                 order: customConfiguration.order,
                 languages: languageConfigurations
             }

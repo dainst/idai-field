@@ -4,7 +4,7 @@ import { ImportErrors } from '../../../../src/app/components/import/import/impor
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { createApp, createHelpers, setupSettingsService, setupSyncTestDb } from '../subsystem-helper';
-import PouchDB =  require('pouchdb-node');
+import PouchDB = require('pouchdb-node');
 
 /**
  * @author Daniel de Oliveira

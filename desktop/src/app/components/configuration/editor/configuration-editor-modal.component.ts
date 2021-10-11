@@ -1,6 +1,6 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
-import { ConfigurationDocument, I18N, Document, Category, CustomCategoryDefinition } from 'idai-field-core';
+import { ConfigurationDocument, I18N, Document, Category, CustomFormDefinition } from 'idai-field-core';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -41,17 +41,17 @@ export abstract class ConfigurationEditorModalComponent {
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
 
 
-    public getClonedCategoryDefinition(): CustomCategoryDefinition {
+    public getClonedFormDefinition(): CustomFormDefinition {
 
         return this.clonedConfigurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name];
+            .forms[this.category.libraryId ?? this.category.name];
     }
 
 
-    public getCustomCategoryDefinition(): CustomCategoryDefinition {
+    public getCustomFormDefinition(): CustomFormDefinition {
 
         return this.configurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name];
+            .forms[this.category.libraryId ?? this.category.name];
     }
 
 

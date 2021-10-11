@@ -69,7 +69,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 
         return this.configurationDocument.resource
-            .categories[this.category.libraryId ?? this.category.name]
+            .forms[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
     }
 

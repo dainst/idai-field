@@ -52,7 +52,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
                 name: this.group.name,
                 fields: []
             });
-            this.getClonedCategoryDefinition().groups = groups;
+            this.getClonedFormDefinition().groups = groups;
         }
     }
 

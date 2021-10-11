@@ -62,6 +62,7 @@ import languageSelinunt_de from '../../../config/Language-Selinunt.de.json';
 import languageSelinunt_it from '../../../config/Language-Selinunt.it.json';
 import languageSudanHeritage_en from '../../../config/Language-SudanHeritage.en.json';
 import languageUruk_en from '../../../config/Language-Uruk.en.json';
+import libraryForms from '../../../config/Library/Forms.json';
 import libraryCategories from '../../../config/Library/Categories.json';
 import libraryLanguageDe from '../../../config/Library/Language.de.json';
 import libraryLanguageEn from '../../../config/Library/Language.en.json';
@@ -79,6 +80,7 @@ const PATH_MAP: Record<string, any> = {
     '/Core/Language.it.json': coreLanguageIt,
     '/Core/Language.fr.json': coreLanguageFr,
     '/Library/Categories.json': libraryCategories,
+    '/Library/Forms.json': libraryForms,
     '/Library/Language.de.json': libraryLanguageDe,
     '/Library/Language.en.json': libraryLanguageEn,
     '/Library/Language.es.json': libraryLanguageEs,

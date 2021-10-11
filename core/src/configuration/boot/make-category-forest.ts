@@ -1,10 +1,13 @@
-import { flow, on, separate, detach, map, reduce, clone, flatten, set, Map, values, isUndefined, compose } from 'tsfun';
-import { Category, Field, Group, Groups, Relation, Resource } from '../../model';
-import { Forest } from '../../tools';
+import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose } from 'tsfun';
+import { Category } from '../../model/configuration/category';
+import { Field } from '../../model/configuration/field';
+import { Group, Groups } from '../../model/configuration/group';
+import { Relation } from '../../model/configuration/relation';
+import { Resource } from '../../model/resource';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
+import { Forest } from '../../tools/forest';
 import { linkParentAndChildInstances } from '../category-forest';
-import { LibraryCategoryDefinition } from '../model';
-import { TransientCategoryDefinition } from '../model/transient-category-definition';
-import { ConfigurationErrors } from './configuration-errors';
+import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 
 
 const TEMP_FIELDS = 'fields';
@@ -16,27 +19,28 @@ const TEMP_GROUPS = 'tempGroups';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export const makeCategoryForest = (relationDefinitions: Array<Relation>, selectedParentCategories?: string[]) =>
-        (categories: Map<TransientCategoryDefinition>): Forest<Category> => {
+export const makeCategoryForest = (relations: Array<Relation>, categories: Map<TransientCategoryDefinition>,
+                                   selectedParentCategories?: string[]) =>
+        (forms: Map<TransientFormDefinition>): Forest<Category> => {
 
     const [parentDefs, childDefs] = flow(
-        categories,
+        forms,
         values,
-        separate(on(LibraryCategoryDefinition.PARENT, isUndefined))
+        separate(form => !form.parent && !categories[form.categoryName].parent)
     );
 
     const parentCategories = flow(
         parentDefs,
-        map(buildCategoryFromDefinition),
+        map(buildCategoryFromDefinition(categories)),
         Forest.wrap
     );
 
     return flow(
         childDefs,
-        reduce(addChildCategory(selectedParentCategories), parentCategories),
+        reduce(addChildCategory(categories, selectedParentCategories), parentCategories),
         Forest.map(
             compose(
-                createGroups(relationDefinitions), 
+                createGroups(relations), 
                 detach(TEMP_FIELDS), 
                 detach(TEMP_GROUPS)
             )
@@ -103,91 +107,63 @@ function putCoreFieldsToHiddenGroup(category: Category) {
 }
 
 
-const addChildCategory = (selectedParentCategories?: string[]) =>
+const addChildCategory = (categories: Map<TransientCategoryDefinition>, selectedParentCategories?: string[]) =>
                             (categoryTree: Forest<Category>,
-                             childDefinition: TransientCategoryDefinition): Forest<Category> => {
+                             childDefinition: TransientFormDefinition): Forest<Category> => {
+
+    const parent: string = childDefinition.parent ?? categories[childDefinition.categoryName]?.parent;
 
     const found = categoryTree.find(({ item: category }) => {
-        return category.name === childDefinition.parent
+        return category.name === parent
             && (!selectedParentCategories || selectedParentCategories.includes(category.libraryId));
     });
     if (!found) return categoryTree;
     
-    const { item: category, trees: trees } = found;
+    const { item: _, trees: trees } = found;
 
-    const childCategory = buildCategoryFromDefinition(childDefinition);
-    childCategory[TEMP_FIELDS] = makeChildFields(category, childCategory);
-
+    const childCategory = buildCategoryFromDefinition(categories)(childDefinition);
     trees.push({ item: childCategory, trees: [] });
+
     return categoryTree;
 }
 
 
-function buildCategoryFromDefinition(definition: TransientCategoryDefinition): Category {
+function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition>) {
 
-    const def: any = definition;
+    return function(formDefinition: TransientFormDefinition): Category {
 
-    const category: any = {};
-    category.mustLieWithin = def.mustLieWithin;
-    category.name = def.name;
-    category.libraryId = def.libraryId;
-    category.label = def.label;
-    category.source = def.source;
-    category.description = def.description;
-    category.defaultLabel = def.defaultLabel;
-    category.defaultDescription = def.defaultDescription;
-    category.groups = [];
-    category.isAbstract = def.abstract || false;
-    category.color = def.color ?? Category.generateColorForCategory(category.name);
-    category.defaultColor = def.defaultColor ?? (category.libraryId
-        ? Category.generateColorForCategory(def.name)
-        : category.color
-    );
-    category.createdBy = def.createdBy;
-    category.creationDate = def.creationDate ? new Date(def.creationDate) : undefined;
-    category.children = [];
-    category.userDefinedSubcategoriesAllowed = def.userDefinedSubcategoriesAllowed;
-    category.required = def.required;
+        const categoryDefinition: TransientCategoryDefinition|undefined = categories[formDefinition.categoryName];
+        const parentCategoryDefinition: TransientCategoryDefinition
+            = categories[formDefinition.parent ?? categoryDefinition.parent];
+        const category: any = {};
 
-    category[TEMP_FIELDS] = def.fields || {};
-    Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
+        category.name = categoryDefinition ? categoryDefinition.name : formDefinition.categoryName;
+        category.mustLieWithin = categoryDefinition
+            ? categoryDefinition.mustLieWithin : parentCategoryDefinition.mustLieWithin;
+        category.isAbstract = categoryDefinition?.abstract || false;
+        category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
+        category.required = categoryDefinition?.required || false;
 
-    category[TEMP_GROUPS] = def.groups || [];
+        category.libraryId = formDefinition.name;
+        category.label = formDefinition.label;
+        category.source = formDefinition.source;
+        category.description = formDefinition.description;
+        category.defaultLabel = formDefinition.defaultLabel;
+        category.defaultDescription = formDefinition.defaultDescription;
+        category.groups = [];
+            category.color = formDefinition.color ?? Category.generateColorForCategory(category.name);
+        category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
+            ? Category.generateColorForCategory(category.name)
+            : category.color
+        );
+        category.createdBy = formDefinition.createdBy;
+        category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
+        
+        category.children = [];
+        category[TEMP_FIELDS] = formDefinition.fields || {};
+        Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
+        category[TEMP_GROUPS] = formDefinition.groups || [];
 
-    return category as Category;
-}
-
-
-function makeChildFields(category: Category, child: Category): Array<Field> {
-
-    try {
-        const childFields = child[TEMP_FIELDS];
-        return getCombinedFields(category[TEMP_FIELDS], childFields);
-    } catch (errWithParams) {
-        errWithParams.push(category.name);
-        errWithParams.push(child.name)
-        throw [errWithParams];
+        return category as Category;
     }
-}
-
-
-function getCombinedFields(parentFields: Array<Field>,
-                           childFields: Array<Field>): Array<Field> {
-
-    const fields = clone(parentFields);
-
-    Object.keys(childFields).forEach(fieldName => {
-        if (fields[fieldName]) {
-            if (fieldName !== 'campaign') {
-                throw [
-                    ConfigurationErrors.TRIED_TO_OVERWRITE_PARENT_FIELD,
-                    fieldName
-                ];
-            }
-        } else {
-            fields[fieldName] = childFields[fieldName];
-        }
-    });
-
-    return fields;
 }

@@ -1,22 +1,27 @@
 import { Map } from 'tsfun';
-import { Category, Relation, Valuelist } from '../../model';
 import { Tree } from '../../tools/forest';
-import { buildRawProjectConfiguration } from '../boot';
-import { BuiltinCategoryDefinition, BuiltinFieldDefinition } from '../model/builtin-category-definition';
-import { LanguageConfiguration } from '../model/language-configuration';
-import { LibraryCategoryDefinition } from '../model/library-category-definition';
 import { RawProjectConfiguration } from '../../services/project-configuration';
+import { Relation } from '../../model/configuration/relation';
+import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
+import { LibraryFormDefinition } from '../model/form/library-form-definition';
+import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
+import { Valuelist } from '../../model/configuration/valuelist';
+import { Category } from '../../model/configuration/category';
+import { buildRawProjectConfiguration } from '../boot/build-raw-project-configuration';
+import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
+import { LanguageConfiguration } from '../model/language/language-configuration';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function createContextIndependentCategories(builtInCategories: Map<BuiltinCategoryDefinition>,
-                                                   builtInRelations: Array<Relation>,
+export function createContextIndependentCategories(builtInCategories: Map<BuiltInCategoryDefinition>,
                                                    libraryCategories: Map<LibraryCategoryDefinition>,
-                                                   commonFields: Map<BuiltinFieldDefinition>,
-                                                   extraFields: Map<BuiltinFieldDefinition>,
+                                                   builtInRelations: Array<Relation>,
+                                                   libraryForms: Map<LibraryFormDefinition>,
+                                                   commonFields: Map<BuiltInFieldDefinition>,
+                                                   builtInFields: Map<BuiltInFieldDefinition>,
                                                    valuelists: Map<Valuelist>,
                                                    selectedParentCategories: string[],
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
@@ -25,10 +30,11 @@ export function createContextIndependentCategories(builtInCategories: Map<Builti
     const [categories,]: RawProjectConfiguration = buildRawProjectConfiguration(
         builtInCategories,
         libraryCategories,
+        libraryForms,
         undefined,
         commonFields,
         valuelists,
-        extraFields,
+        builtInFields,
         builtInRelations,
         { default: languages, complete: languages },
         undefined,

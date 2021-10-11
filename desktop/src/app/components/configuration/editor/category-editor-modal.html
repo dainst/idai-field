@@ -39,12 +39,12 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
         </div>
-        <input *ngIf="getClonedCategoryDefinition().color" id="category-color"
+        <input *ngIf="getClonedFormDefinition().color" id="category-color"
                type="color"
                class="form-control form-control-color"
-               [value]="getClonedCategoryDefinition().color"
-               (change)="getClonedCategoryDefinition().color = $event.srcElement.value">
-        <input *ngIf="!getClonedCategoryDefinition().color" id="category-color"
+               [value]="getClonedFormDefinition().color"
+               (change)="getClonedFormDefinition().color = $event.srcElement.value">
+        <input *ngIf="!getClonedFormDefinition().color" id="category-color"
                type="color"
                class="form-control form-control-color"
                [value]="category.defaultColor">

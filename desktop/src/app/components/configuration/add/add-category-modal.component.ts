@@ -65,7 +65,7 @@ export class AddCategoryModalComponent {
             ? ConfigurationUtil.deleteCategory(this.categoryToReplace, this.configurationDocument, false)
             : Document.clone(this.configurationDocument);
 
-        clonedConfigurationDocument.resource.categories[this.selectedCategory.libraryId] = {
+        clonedConfigurationDocument.resource.forms[this.selectedCategory.libraryId] = {
             fields: {},
             hidden: []
         };
@@ -93,7 +93,7 @@ export class AddCategoryModalComponent {
             .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
-                !Object.keys(this.configurationDocument.resource.categories).includes(
+                !Object.keys(this.configurationDocument.resource.forms).includes(
                     category.libraryId ?? category.name
                 ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
                 && (!this.categoryToReplace || category.name === this.categoryToReplace.name)

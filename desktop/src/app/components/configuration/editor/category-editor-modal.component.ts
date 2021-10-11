@@ -48,7 +48,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             : '#000000';
 
         if (this.new) {
-            this.clonedConfigurationDocument.resource.categories[this.category.name] = {
+            this.clonedConfigurationDocument.resource.forms[this.category.name] = {
                 color: this.category.color,
                 parent: this.category.parentCategory.name,
                 fields: {},
@@ -58,8 +58,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 )
             }
         } else {
-            if (!this.getClonedCategoryDefinition().color) {
-                this.getClonedCategoryDefinition().color = this.currentColor;
+            if (!this.getClonedFormDefinition().color) {
+                this.getClonedFormDefinition().color = this.currentColor;
             }
         }
     }
@@ -67,10 +67,10 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public async save() {
 
-        if (this.getClonedCategoryDefinition().color ===
+        if (this.getClonedFormDefinition().color ===
                 CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
                 && this.category.libraryId) {
-            delete this.getClonedCategoryDefinition().color;
+            delete this.getClonedFormDefinition().color;
         }
 
         if (this.new) {
@@ -90,14 +90,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
-            || this.getClonedCategoryDefinition().color !== this.currentColor;
+            || this.getClonedFormDefinition().color !== this.currentColor;
     }
 
 
     public isRestoreColorButtonVisible(): boolean {
 
-        return this.getClonedCategoryDefinition().color
-            && this.getClonedCategoryDefinition().color
+        return this.getClonedFormDefinition().color
+            && this.getClonedFormDefinition().color
                 !== CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
             && this.category.libraryId !== undefined;
     }
@@ -105,7 +105,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public restoreDefaultColor() {
 
-        this.getClonedCategoryDefinition().color = CategoryEditorModalComponent.getHexColor(
+        this.getClonedFormDefinition().color = CategoryEditorModalComponent.getHexColor(
             this.category.defaultColor
         );
     }

@@ -1,6 +1,6 @@
 import { Map } from 'tsfun';
+import { BuiltInCategoryDefinition, CustomFormDefinition, LibraryCategoryDefinition, LibraryFormDefinition } from '../../../src/configuration';
 import { ConfigLoader, ConfigurationDefinition, ConfigurationErrors } from '../../../src/configuration/boot';
-import { CustomCategoryDefinition } from '../../../src/configuration/model';
 import { Category, Groups } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 
@@ -11,17 +11,19 @@ import { Named, Tree } from '../../../src/tools';
  */
 describe('ConfigLoader', () => {
 
-    let libraryCategories = {} as ConfigurationDefinition;
     let configLoader: ConfigLoader;
     let configReader;
     let pouchdbManager;
 
-    function applyConfig(customCategoriesConfiguration = {},
+    function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
+                         libraryForms: Map<LibraryFormDefinition> = {},
+                         customForms: Map<CustomFormDefinition> = {},
                          languageConfiguration = {},
                          customLanguageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
+            libraryForms,
             languageConfiguration,
             {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
@@ -30,7 +32,7 @@ describe('ConfigLoader', () => {
         pouchdbManager.getDb.and.returnValue({
             get: (_: string) => Promise.resolve({
                 resource: {
-                    categories: customCategoriesConfiguration,
+                    forms: customForms,
                     languages: { de: customLanguageConfiguration }
                 }
             })
@@ -39,8 +41,6 @@ describe('ConfigLoader', () => {
 
 
     beforeEach(() => {
-
-        libraryCategories = {} as ConfigurationDefinition;
 
         configReader = jasmine.createSpyObj('configReader', ['read', 'exists']);
         pouchdbManager = jasmine.createSpyObj('pouchdbManager', ['getDb']);
@@ -52,33 +52,44 @@ describe('ConfigLoader', () => {
 
     it('mix in common fields', async done => {
 
-        Object.assign(libraryCategories, {
-            'B:0': {
-                categoryName: 'B',
-                parent: 'A',
-                commons: ['processor'],
-                valuelists: {},
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
                 fields: {},
-                creationDate: '',
-                createdBy: '',
-                description: {} },
-        });
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            } 
+        };
 
-        applyConfig(
-            { 'A': { fields: {} }, 'B:0': { fields: {} } },
-            {
-                categories: {
-                    B: { label: 'B_', fields: { processor: { label: 'Bearbeiter/Bearbeiterin', description: 'abc' }} },
-                }, relations: {},
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            B: {
+                parent: 'A',
+                fields: {},
+                description: {},
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['processor'] }]
+                } as any
             },
-            {}
-        );
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {}
+            },
+            B: {
+                fields: {}
+            }
+        };
+
+        applyConfig(libraryCategories, {}, customForms, {}, {});
 
         let pconf;
         try {
             pconf = await configLoader.go(
                 { processor : { inputType: 'input' } },
-                { 'A': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true } },
+                builtInCategories,
                 [],
                 {},
                 undefined,
@@ -96,19 +107,41 @@ describe('ConfigLoader', () => {
 
     it('translate common fields', async done => {
 
-        Object.assign(libraryCategories, {
-            'B:0': {
-                categoryName: 'B',
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            } 
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            B: {
                 parent: 'A',
-                commons: ['processor'],
-                valuelists: {},
-                fields: {}, creationDate: '',
-                createdBy: '',
-                description: {}  },
-        });
+                fields: {},
+                description: {},
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['processor'] }]
+                } as any
+            },
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {}
+            },
+            B: {
+                fields: {}
+            }
+        };
 
         applyConfig(
-            { 'B:0': { fields: {} }, 'A': { fields: {} } },
+            libraryCategories,
+            {},
+            customForms,
             {
                 commons: {
                     processor: { label: 'Bearbeiter/Bearbeiterin', description: 'abc' }
@@ -123,7 +156,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 { processor: { inputType: 'input' } },
-                { 'A': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true } },
+                builtInCategories,
                 [],
                 {},
                 undefined,
@@ -143,24 +176,59 @@ describe('ConfigLoader', () => {
 
     it('mix existing externally configured with internal inherits relation', async done => {
 
-        Object.assign(libraryCategories, {
-            'A1': { categoryName: 'A1', parent: 'A', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
-            'A2': { categoryName: 'A2', parent: 'A', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
-            'B1': { categoryName: 'B1', parent: 'B', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
-            'B2': { categoryName: 'B2', parent: 'B', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] }
-        });
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            },
+            C: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+            },
+            D: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        }
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A1': { parent: 'A', fields: {}, description: {} },
+            'A2': { parent: 'A', fields: {}, description: {} },
+            'B1': { parent: 'B', fields: {}, description: {} },
+            'B2': { parent: 'B', fields: {}, description: {} }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A1': { fields: {} },
+            'A2': { fields: {} },
+            'B1': { fields: {} },
+            'B2': { fields: {} },
+            'A': { fields: {} },
+            'B': { fields: {} },
+            'C': { fields: {} },
+            'D': { fields: {} }
+        };
 
         applyConfig(
-            {
-                'A1': { fields: {} },
-                'A2': { fields: {} },
-                'B1': { fields: {} },
-                'B2': { fields: {} },
-                'A': { fields: {} },
-                'B': { fields: {} },
-                'C': { fields: {} },
-                'D': { fields: {} }
-                },
+            libraryCategories,
+            {},
+            customForms,
             {},
             {}
         );
@@ -170,12 +238,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 {},
-                {
-                    'A': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true},
-                    'B': { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true},
-                    'C': { fields: {}, groups: [] },
-                    'D': { fields: {}, groups: [] }
-                },
+                builtInCategories,
                 [
                     {
                         name: 'connection',
@@ -207,24 +270,51 @@ describe('ConfigLoader', () => {
     });
 
 
+    // TODO Adjust title / check if this test is still necessary
     it('preprocess - convert sameOperation to sameMainCategoryResource', async done => {
 
-        Object.assign(libraryCategories, {
-            'A': { categoryName: 'A', parent: 'T', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: []  },
-            'B': { categoryName: 'B', parent: 'T', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: []  }});
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            T: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            },
+            A: { 
+                parent: 'T',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+             },
+            B: {
+                parent: 'T',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} },
+            B: { fields: {} },
+            T: { fields: {} }
+        };
 
         applyConfig(
-            { 'A': { fields: {} }, 'B': { fields: {} }, 'T': { fields: {} }});
+            {},
+            {},
+            customForms
+        );
 
         let pconf;
         try {
             pconf = await configLoader.go(
                 {},
-                {
-                    A: { fields: {}, groups: [] },
-                    B: { fields: {}, groups: [] },
-                    T: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
-                },
+                builtInCategories,
                 [{
                     name: 'abc',
                     domain: ['A'],
@@ -246,19 +336,29 @@ describe('ConfigLoader', () => {
 
     it('preprocess - apply language confs', async done => {
 
-        Object.assign(libraryCategories, {
-            'A': { categoryName: 'A', parent: 'Parent', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
-            'B': { categoryName: 'B', parent: 'Parent', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
-            'C': { categoryName: 'C', parent: 'Parent', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: []  }
-        });
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            Parent: { 
+                fields: {},
+                minimalForm: { groups: [] },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            },
+            A: { parent: 'Parent', fields: {}, minimalForm: { groups: [] } },
+            B: { parent: 'Parent', fields: {}, minimalForm: { groups: [] } },
+            C: { parent: 'Parent', fields: {}, minimalForm: { groups: [] } }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} },
+            B: { fields: {} },
+            C: { fields: {} },
+            Parent: { fields: {} }
+        };
 
         applyConfig(
-            {
-                'A': { fields: {} },
-                'B': { fields: {} },
-                'C': { fields: {} },
-                'Parent': { fields: {} }
-            },
+            {},
+            {},
+            customForms,
             {
                 categories: {
                     A: { label: 'A_' },
@@ -278,11 +378,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 {},
-                {
-                    Parent: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    A: { fields: {}, groups: [] },
-                    B: { fields: {}, groups: [] }
-                },
+                builtInCategories,
                 [
                     { name: 'r1', domain: ['A'], range: ['B'], editable: false, inputType: 'relation' },
                     { name: 'r2', domain: ['A'], range: ['B'], editable: false, inputType: 'relation' }
@@ -307,48 +403,74 @@ describe('ConfigLoader', () => {
 
     it('preprocess - apply custom fields configuration', async done => {
 
-        Object.assign(libraryCategories, {
-            'A': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            F: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            },
+            G: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        }
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            A: {
                 parent: 'F',
                 fields: { fieldA1: { inputType: 'unsignedInt' } },
-                creationDate: '',
-                createdBy: '',
                 description: {}
-                },
-            'B': {
-                categoryName: 'B',
-                commons: [],
-                valuelists: {},
+            },
+            B: {
                 parent: 'G',
                 fields: { fieldB1: { inputType: 'input' } },
-                creationDate: '',
-                createdBy: '',
                 description: {}
             }
-        });
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A': { fields: { fieldA1: { } }, groups: [] },
-            'B': { fields: { fieldB2: { inputType: 'boolean' } }, groups: [] },
-            'F': { fields: {}, groups: [] },
-            'G': { fields: {}, groups: [] }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    fieldA1: { inputType: 'boolean' } // Ignore this field
+                },
+                groups: [{ name: Groups.STEM, fields: ['fieldA1'] }]
+            },
+            B: {
+                fields: { fieldB2: { inputType: 'boolean' } },
+                groups: [{ name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] }]
+            },
+            F: {
+                fields: {},
+                groups: []
+            },
+            G: {
+                fields: {},
+                groups: []
+            }
         };
 
         applyConfig(
-            customCategories,
+            libraryCategories,
+            {},
+            customForms,
             {},
             {}
         );
 
         let pconf;
         try {
-            pconf = await configLoader.go({},
-                {
-                    'F': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    'G': { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [],
+                {},
                 undefined, 'User'
             );
 
@@ -369,53 +491,59 @@ describe('ConfigLoader', () => {
 
     it('preprocess - apply custom fields configuration - add subcategories', async done => {
 
-        Object.assign(libraryCategories, {
-            'Find:0': {
-                categoryName: 'Find',
-                commons: [],
-                valuelists: {},
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            Find: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        }
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            Find: {
                 fields: { fieldA1: { inputType: 'unsignedInt' } },
-                groups: [
-                    { name: Groups.STEM, fields: ['fieldA1'] }
-                ],
-                creationDate: '',
-                createdBy: '',
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['fieldA1'] }
+                    ]
+                } as any,
                 description: {}
             }
-        });
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'B:0': {
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            B: {
                 parent: 'Find',
                 fields: { fieldB1: { inputType: 'boolean'} },
                 groups: [
                     { name: Groups.STEM, fields: ['fieldA1', 'fieldB1'] }
                 ]
             },
-            'Find:0': { fields: {}, groups: [] }
+            Find: {
+                fields: {}
+            }
         };
 
         applyConfig(
-            customCategories,
+            libraryCategories,
+            {},
+            customForms,
             {},
             {}
         );
 
         let pconf;
         try {
-            pconf = await configLoader.go({},
-                {
-                    'Find': {
-                        fields: {},
-                        groups: [],
-                        userDefinedSubcategoriesAllowed: true,
-                        supercategory: true
-                    }
-                },
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
                 [], {}, undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()))['B:0']
+            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()))['B']
                 .groups[0].fields
                 .find(field => field.name == 'fieldB1').inputType)
                 .toEqual('boolean');
@@ -430,28 +558,25 @@ describe('ConfigLoader', () => {
 
     it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async done => {
 
-        Object.assign(libraryCategories, {});
-
-        const customFieldsConfiguration: Map<CustomCategoryDefinition> = {
-            'B:0': {
+        const customForms: Map<CustomFormDefinition> = {
+            'B': {
                 parent: 'Find',
-                commons: [],
                 valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'} }
+                fields: { fieldC1: { inputType: 'boolean'} },
+                groups: [{ name: Groups.STEM, fields: ['fieldC1'] }]
             }
         };
 
         applyConfig(
-            customFieldsConfiguration,
+            {},
+            {},
+            customForms,
             {},
             {}
         );
 
         try {
-            await configLoader.go({}, {},[], {},
-                undefined, 'User'
-            );
-
+            await configLoader.go({}, {},[], {}, undefined, 'User');
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
@@ -463,22 +588,35 @@ describe('ConfigLoader', () => {
 
     it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async done => {
 
-        Object.assign(libraryCategories, {});
-
-        const customFieldsConfiguration: Map<CustomCategoryDefinition> = {
-            'Extension:0': {
-                parent: 'Place',
-                commons: [],
-                valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'} }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            Place: {
+                fields: { fieldA1: { inputType: 'unsignedInt' } },
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
-        applyConfig(customFieldsConfiguration);
+        const customForms: Map<CustomFormDefinition> = {
+            Extension: {
+                parent: 'Place',
+                valuelists: {},
+                fields: { fieldC1: { inputType: 'boolean'} },
+                groups: [{ name: Groups.STEM, fields: ['fieldC1'] }]
+            }
+        };
+
+        applyConfig(
+            {},
+            {},
+            customForms,
+            {},
+            {}
+        );
 
         try {
             await configLoader.go({},
-                { Place: { fields: { fieldA1: { inputType: 'unsignedInt' } }, groups: [] } },
+                builtInCategories,
                 [], {}, undefined, 'User');
             fail();
         } catch(err) {
@@ -491,65 +629,94 @@ describe('ConfigLoader', () => {
 
     it('apply groups configuration', async done => {
 
-        Object.assign(libraryCategories, {
-            'B': {
-                categoryName: 'B',
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            Parent: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            B: {
                 parent: 'Parent',
-                commons: [],
-                valuelists: {},
                 fields: {
                     fieldB2: { inputType: 'input' },
                     fieldB3: { inputType: 'input' },
                     fieldB1: { inputType: 'input' }
                 },
-                groups: [
-                    { name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] },
-                    { name: Groups.PARENT, fields: ['fieldB3'] }
-                ],
-                creationDate: '', createdBy: '', description: {}
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] },
+                        { name: Groups.PARENT, fields: ['fieldB3'] }
+                    ],
+                } as any,
+                description: {}
             },
-            'C': {
-                categoryName: 'C',
-                commons: [],
-                valuelists: {},
+            C: {
                 parent: 'Parent',
                 fields: {
                     fieldC1: { inputType: 'input' },
                     fieldC2: { inputType: 'input' }
                 },
-                groups: [
-                    { name: Groups.STEM, fields: ['fieldC1'] },
-                    { name: Groups.PARENT, fields: ['fieldC2'] }
-                ],
-                creationDate: '', createdBy: '', description: {}
+                description: {}
             },
-            'A': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
+            A: {
                 parent: 'Parent',
                 fields: {
                     fieldA2: { inputType: 'input' },
                     fieldA1: { inputType: 'input' }
                 },
-                groups: [
-                    // Ignore fields defined in groups but not in fields configuration
-                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2', 'fieldA3'] },
-                    { name: Groups.PARENT, fields: ['fieldA4', 'fieldA5'] }
-                ],
-                creationDate: '', createdBy: '', description: {}
+                description: {}
             }
-        });
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
+            'C:default': {
+                categoryName: 'C',
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldC1'] },
+                    { name: Groups.PARENT, fields: ['fieldC2'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': { fields: {} },
+            B: { fields: {} },
+            'C:default': { fields: {} },
+            Parent: { fields: {} }
+        };
 
         applyConfig(
-            { 'A': { fields: {} }, 'B': { fields: {} }, 'C': { fields: {} }, 'Parent': { fields: {} } },
-            {}, {},
+            libraryCategories,
+            libraryForms,
+            customForms,
+            {},
+            {}
         );
 
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { Parent: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true } },
+                builtInCategories,
                 [], {},
                 undefined, 'User'
             );
@@ -586,31 +753,50 @@ describe('ConfigLoader', () => {
 
     it('add fields only once even if they are mentioned multiple times in groups configuration', async done => {
 
-        Object.assign(libraryCategories, {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            Parent: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             A: {
-                categoryName: 'A',
                 parent: 'Parent',
-                commons: [],
-                valuelists: {},
                 fields: {
                     fieldA2: { inputType: 'input' },
                     fieldA1: { inputType: 'input' }
                 },
-                groups: [
-                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2', 'fieldA1']}
-                ],
-                creationDate: '', createdBy: '', description: {}
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['fieldA1', 'fieldA2', 'fieldA1'] }
+                    ]
+                } as any,
+                description: {}
             }
-        });
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} },
+            Parent: { fields: {} }
+        };
 
-        applyConfig({ A: { fields: {} }, Parent: { fields: {} } },
-            {}, {}
+        applyConfig(
+            libraryCategories,
+            {},
+            customForms,
+            {},
+            {}
         );
 
         let pconf;
         try {
             pconf = await configLoader.go({},
-                { Parent: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true } },
+                builtInCategories,
                 [], {}, undefined, 'User'
             );
 
@@ -628,36 +814,50 @@ describe('ConfigLoader', () => {
 
    it('apply hidden', async done => {
 
-        Object.assign(libraryCategories, {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            A: {
                 fields: {
                     fieldA1: { inputType: 'input' },
                     fieldA2: { inputType: 'input' },
                     fieldA3: { inputType: 'input' }
                 },
-                groups: [{
-                    name: Groups.STEM,
-                    fields: ['fieldA1', 'fieldA2', 'fieldA3']
-                }],
-                creationDate: '', createdBy: '', description: {}
+                minimalForm: {
+                    groups: [{
+                        name: Groups.STEM,
+                        fields: ['fieldA1', 'fieldA2', 'fieldA3']
+                    }]
+                } as any,
+                description: {}
             }
-        });
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {},
+                hidden: ['fieldA1', 'fieldA2']
+            }
+        };
 
-        applyConfig({ 'A:0': { fields: {}, hidden: ['fieldA1', 'fieldA2'] } },
-            {
-                'A': ['fieldA1']
-            },
-            {
-                'A': ['fieldA2']
-            }
+        applyConfig(
+            libraryCategories,
+            {},
+            customForms,
+            {},
+            {}
         );
 
         let pconf;
         try {
-            pconf = await configLoader.go({}, { A: { fields: {}, groups: [] } }, [], {},
+            pconf = await configLoader.go({}, builtInCategories, [], {},
                 undefined, 'User'
             );
             const result = pconf.getCategory('A').groups[0];
@@ -681,35 +881,53 @@ describe('ConfigLoader', () => {
 
     it('set libraryId', async done => {
 
-        Object.assign(libraryCategories, {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
                 fields: {},
-                creationDate: '',
-                createdBy: '',
-                description: {}
+                minimalForm: {
+                    groups: []
+                 },
+                 userDefinedSubcategoriesAllowed: true,
+                 supercategory: true
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
             }
-        });
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'B:default': {
+                categoryName: 'B',
+                groups: [],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} },
+            'B:default': { fields: {} },
+            C: { parent: 'A', fields: {} }
+        };
 
         applyConfig(
-            {
-                'A:0': { fields: {} },
-                B: { fields: {} },
-                C: { parent: 'A', fields: {} }
-            },
-            {}, {}
+            {},
+            libraryForms,
+            customForms,
+            {},
+            {}
         );
 
         let pconf;
         try {
             pconf = await configLoader.go(
                 {},
-                {
-                    A: { fields: {}, groups: [], userDefinedSubcategoriesAllowed: true, supercategory: true },
-                    B: { fields: {}, groups: [] }
-                },
+                builtInCategories,
                 [],
                 {},
                 undefined,
@@ -719,9 +937,9 @@ describe('ConfigLoader', () => {
             fail(err);
         }
 
-        expect(pconf.getCategory('A').libraryId).toBe('A:0');
-        expect(pconf.getCategory('B').libraryId).toBe('B');
-        expect(pconf.getCategory('C').libraryId).toBeUndefined();
+        expect(pconf.getCategory('A').libraryId).toBe('A');
+        expect(pconf.getCategory('B').libraryId).toBe('B:default');
+        expect(pconf.getCategory('C').libraryId).toBe('C');
         
         done();
     });

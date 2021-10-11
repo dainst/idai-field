@@ -1,4 +1,4 @@
-import {is, on, copy, separate, Path, Mapping} from 'tsfun';
+import { is, on, copy, separate, Path, Mapping } from 'tsfun';
 
 
 export function sortStructArray<Struct>(order: string[], path: Path): Mapping<Array<Struct>> {

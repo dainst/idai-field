@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
-import { addRelations } from '../../../src/configuration/boot';
-import { LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { Relation } from '../../../src/model';
+import { addRelations } from '../../../src/configuration/boot/add-relations';
+import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
+import { Relation } from '../../../src/model/configuration/relation';
 
 
 /**
@@ -10,45 +10,36 @@ import { Relation } from '../../../src/model';
  */
 describe('addRelations', () => {
 
-    let configuration;
-    let t1: LibraryCategoryDefinition;
+    let forms: Map<TransientFormDefinition>;
+    let t1: TransientFormDefinition;
 
     beforeEach(() => {
 
         t1 = {
+            name: 'T1:default',
             categoryName: 'T1',
-            commons: [],
-            parent: 'x',
-            description: { 'de': '' },
+            description: {},
             createdBy: '',
             creationDate: '',
-            color: 'white',
-            valuelists: {},
-            groups: [],
-            fields: {
-                'aField': {}
-            }
-        } as LibraryCategoryDefinition;
+            fields: {},
+            groups: []
+        };
 
-        configuration = [
-            { 'T1': t1 } as Map<LibraryCategoryDefinition>,
-            []
-        ];
+        forms = { 'T1': t1 };
     });
 
 
-    it('add an extra relation', () => {
+    it('add a relation', () => {
 
-        const extraRelation: Relation = {
+        const relation: Relation = {
             name: 'R',
             domain: ['domainA'],
             range : ['rangeA'],
             editable: false,
             inputType: 'relation'
         };
-        configuration.relations = [];
 
-        const [, relations] = addRelations([extraRelation])(configuration);
+        const [, relations] = addRelations([relation])([forms, []]);
 
         expect(relations[0].name).toBe('R');
         expect(relations[1]).toBe(undefined); // to prevent reintroducing bug
@@ -73,9 +64,7 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration = [{ T1: t1 }, []];
-
-        const [, relations] = addRelations([r1, r2])(configuration);
+        const [, relations] = addRelations([r1, r2])([forms, []]);
         expect(relations[0].domain).toContain('domainB');
         expect(relations[0].domain).toContain('domainC');
         expect(relations[0].range).toContain('rangeB');
@@ -103,9 +92,7 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration = [{ T1: t1 }, []];
-
-        const [, relations] = addRelations([r1, r2])(configuration);
+        const [, relations] = addRelations([r1, r2])([forms, []]);
 
         expect(relations.length).toEqual(1); // to make sure the relation is collapsed into one
         expect(relations[0].range).toContain('rangeA');
@@ -114,7 +101,7 @@ describe('addRelations', () => {
     });
 
 
-    it('replace range ALL with all categories except the domain categories', () => {
+    it('replace empty range with all categories except the domain categories', () => {
 
         const r: Relation = {
             name: 'R',
@@ -124,16 +111,14 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration.relations = [];
-
-        const [, relations] = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])([forms, []]);
 
         expect(relations[0].range[0]).toBe('T1');
         expect(relations[0].range[1]).toBe(undefined);
     });
 
 
-    it('should replace domain ALL with all categories except the range categories', () => {
+    it('replace domain ALL with all categories except the range categories', () => {
 
         const r: Relation = {
             name: 'R',
@@ -143,16 +128,14 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration.relations = [];
-
-        const [, relations] = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])([forms, []]);
 
         expect(relations[0].domain[0]).toBe('T1');
         expect(relations[0].domain[1]).toBe(undefined);
     });
 
 
-    it('should replace range :inherit with all subcategories', () => {
+    it('replace range :inherit with all subcategories', () => {
 
         const r: Relation = { name: 'R',
             domain: [ 'T3' ],
@@ -161,11 +144,29 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration[1] = [];
-        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
-        configuration[0]['T3'] = { fields: {} };
+        forms['T2'] = {
+            name: 'T2:default',
+            categoryName: 'T2',
+            parent: 'T1',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
 
-        const [, relations] = addRelations([r])(configuration);
+        forms['T3'] = {
+            name: 'T3:default',
+            categoryName: 'T3',
+            parent: 'T1',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
+
+        const [, relations] = addRelations([r])([forms, []]);
 
         expect(relations[0].range.indexOf('T1')).not.toBe(-1);
         expect(relations[0].range.indexOf('T2')).not.toBe(-1);
@@ -174,7 +175,7 @@ describe('addRelations', () => {
     });
 
 
-    it('should replace domain :inherit with all subcategories', () => {
+    it('replace domain :inherit with all subcategories', () => {
 
         const r: Relation = {
             name: 'R',
@@ -184,11 +185,29 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration[1] = [];
-        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
-        configuration[0]['T3'] = { fields: {} };
+        forms['T2'] = {
+            name: 'T2:default',
+            categoryName: 'T2',
+            parent: 'T1',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
 
-        const [, relations] = addRelations([r])(configuration);
+        forms['T3'] = {
+            name: 'T3:default',
+            categoryName: 'T3',
+            parent: 'T1',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
+
+        const [, relations] = addRelations([r])([forms, []]);
 
         expect(relations[0].domain.indexOf('T1')).not.toBe(-1);
         expect(relations[0].domain.indexOf('T2')).not.toBe(-1);
@@ -198,7 +217,7 @@ describe('addRelations', () => {
 
 
     // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
-    it('should exclude the category and subcategories when using :inherit and total range', () => {
+    it('exclude the category and subcategories when using :inherit and total range', () => {
 
         const r: Relation = {
             name: 'R',
@@ -208,10 +227,27 @@ describe('addRelations', () => {
             inputType: 'relation'
         };
 
-        configuration[1] = [];
-        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
-        configuration[0]['T3'] = { fields: {} };
-        const [, relations] = addRelations([r])(configuration);
+        forms['T2'] = {
+            name: 'T2:default',
+            categoryName: 'T2',
+            parent: 'T1',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
+
+        forms['T3'] = {
+            name: 'T3:default',
+            categoryName: 'T3',
+            description: {},
+            createdBy: '',
+            creationDate: '',
+            fields: {},
+            groups: []
+        };
+        const [, relations] = addRelations([r])([forms, []]);
 
         expect(relations[0].range[0]).toBe('T3');
         expect(relations[0].range.indexOf('T1')).toBe(-1);

@@ -1,5 +1,5 @@
 import { Relation, Valuelist } from '../../model';
-import { TransientCategoryDefinition } from '../model/transient-category-definition';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
 
@@ -40,54 +40,47 @@ export module ConfigurationValidation {
         return msgs;
     }
 
+    
+    export function validateFieldDefinitions(forms: Array<TransientFormDefinition>): Array<Array<string>> {
 
-    /**
-     * Searches for missing mandatory categories or duplicate categories.
-     * Returns on the first occurrence of either one.
-     *
-     * @returns {Array<string>} msgWithParams. undefined if no error.
-     */
-    export function validateFieldDefinitions(categories: any): Array<Array<string>> {
+        let messages: any[] = [];
 
-        let msgs: any[] = [];
+        const errors = findInvalidFieldDefinitions(forms);
+        if (errors.length) messages = messages.concat(errors);
 
-        const fieldError = validateFieldDefinitions__(categories);
-        if (fieldError.length) msgs = msgs.concat(fieldError);
-
-        return msgs;
+        return messages;
     }
 
 
-    function validateFieldDefinitions__(categories: Array<TransientCategoryDefinition>): Array<Array<string>> {
+    function findInvalidFieldDefinitions(forms: Array<TransientFormDefinition>): Array<Array<string>> {
 
-        let msgs = [] as any;
+        const messages = [];
 
-        for (let category of categories) {
-            for (let fieldName of Object.keys(category.fields)) {
-                const fieldDefinition = category.fields[fieldName];
-                if (!fieldDefinition.hasOwnProperty('inputType'))
-                fieldDefinition.inputType = 'input';
+        for (let form of forms) {
+            for (let fieldName of Object.keys(form.fields)) {
+                const fieldDefinition = form.fields[fieldName];
+                if (!fieldDefinition.hasOwnProperty('inputType')) fieldDefinition.inputType = 'input';
                 if (VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
                     && !fieldDefinition.valuelistFromProjectField
                     && !isValidValuelist(fieldDefinition.valuelist)) {
-                    msgs.push([
+                    messages.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST,
                         fieldName,
-                        category.name
+                        form.name
                     ]);
                 }
                 if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
                     && !isValidValuelist((fieldDefinition as any).positionValues)) {
-                    msgs.push([
+                    messages.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
                         fieldName,
-                        category.name
+                        form.name
                     ]);
                 }
             }
         }
 
-        return msgs;
+        return messages;
     }
 
 

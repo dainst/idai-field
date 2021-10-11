@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { CustomCategoryDefinition, Field, GroupDefinition, I18N } from 'idai-field-core';
+import { CustomFormDefinition, Field, GroupDefinition, I18N } from 'idai-field-core';
 import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -45,9 +45,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         super(activeModal, modalService, menuService, messages);
     }
 
-    public getCustomFieldDefinition = () => this.getCustomCategoryDefinition().fields[this.field.name];
+    public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
-    public getClonedFieldDefinition = () => this.getClonedCategoryDefinition().fields[this.field.name];
+    public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
 
     public initialize() {
@@ -55,7 +55,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         super.initialize();
 
         if (this.new) {
-            this.getClonedCategoryDefinition().fields[this.field.name] = {
+            this.getClonedFormDefinition().fields[this.field.name] = {
                 inputType: 'input',
                 constraintIndexed: false
             };
@@ -63,9 +63,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.category, this.permanentlyHiddenFields
             );
             groups.find(group => group.name === this.groupName).fields.push(this.field.name);
-            this.getClonedCategoryDefinition().groups = groups;
+            this.getClonedFormDefinition().groups = groups;
         } else if (!this.getClonedFieldDefinition()) {
-            this.getClonedCategoryDefinition().fields[this.field.name] = {};
+            this.getClonedFormDefinition().fields[this.field.name] = {};
         }
 
         this.hideable = this.isHideable();
@@ -76,7 +76,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public async save() {
 
         if (isEmpty(this.getClonedFieldDefinition())) {
-            delete this.getClonedCategoryDefinition().fields[this.field.name];
+            delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
         await super.save(this.isConstraintIndexedChanged());
@@ -101,14 +101,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public toggleHidden() {
 
-        const customCategoryDefinition: CustomCategoryDefinition = this.getClonedCategoryDefinition();
+        const customFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
 
         if (this.hidden) {
-            customCategoryDefinition.hidden
-                = customCategoryDefinition.hidden.filter(name => name !== this.field.name);
+            customFormDefinition.hidden
+                = customFormDefinition.hidden.filter(name => name !== this.field.name);
         } else {
-            if (!customCategoryDefinition.hidden) customCategoryDefinition.hidden = [];
-            customCategoryDefinition.hidden.push(this.field.name);
+            if (!customFormDefinition.hidden) customFormDefinition.hidden = [];
+            customFormDefinition.hidden.push(this.field.name);
         }
 
         this.hidden = this.isHidden();
@@ -169,7 +169,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
-            || !equal(this.getCustomCategoryDefinition().hidden)(this.getClonedCategoryDefinition().hidden)
+            || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
@@ -216,6 +216,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isHidden(): boolean {
 
-        return ConfigurationUtil.isHidden(this.getClonedCategoryDefinition())(this.field);
+        return ConfigurationUtil.isHidden(this.getClonedFormDefinition())(this.field);
     }
 }

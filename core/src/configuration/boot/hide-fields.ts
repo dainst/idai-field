@@ -1,34 +1,24 @@
-import { clone, keysValues, Map } from 'tsfun';
-import { CustomCategoryDefinition } from '../model/custom-category-definition';
-import { TransientCategoryDefinition } from '../model/transient-category-definition';
+import { clone, Map } from 'tsfun';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
 
 
-export function hideFields(customCategories: Map<CustomCategoryDefinition>) {
+export function hideFields(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
 
-    return (selectedCategories: Map<TransientCategoryDefinition>) => {
+    const clonedForms = clone(forms);
 
-        const clonedSelectedCategories = clone(selectedCategories);
+    Object.values(clonedForms).forEach(form => {
+        if (!form.fields) return;
 
-        keysValues(clonedSelectedCategories).forEach(
-            ([selectedCategoryName, selectedCategory]: [string, TransientCategoryDefinition]) => {
+        Object.keys(form.fields).forEach(fieldName => {
+            if (form.hidden && form.hidden.includes(fieldName)) {
+                form.fields[fieldName].visible = false;
+                form.fields[fieldName].editable = false;
+            }
 
-                keysValues(customCategories).forEach(
-                    ([customCategoryName, customCategory]: [string, CustomCategoryDefinition]) => {
+            if (form.fields[fieldName].visible === undefined) form.fields[fieldName].visible = true;
+            if (form.fields[fieldName].editable === undefined) form.fields[fieldName].editable = true;
+        })
+    });
 
-                        if (customCategoryName === selectedCategoryName && selectedCategory.fields) {
-                            Object.keys(selectedCategory.fields).forEach(fieldName => {
-                                if (customCategory.hidden && customCategory.hidden.includes(fieldName)) {
-                                    selectedCategory.fields[fieldName].visible = false;
-                                    selectedCategory.fields[fieldName].editable = false;
-                                }
-
-                                if (selectedCategory.fields[fieldName].visible === undefined) selectedCategory.fields[fieldName].visible = true;
-                                if (selectedCategory.fields[fieldName].editable === undefined) selectedCategory.fields[fieldName].editable = true;
-                            })
-                        }
-                    })
-            });
-
-        return clonedSelectedCategories;
-    }
+    return clonedForms;
 }

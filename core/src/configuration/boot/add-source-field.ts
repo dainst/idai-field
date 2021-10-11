@@ -1,35 +1,48 @@
-import {Map} from 'tsfun';
-import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
-import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {Field} from '../../model';
+import { forEach, map, Map, to } from 'tsfun';
+import { Field } from '../../model/configuration/field';
+import { BaseCategoryDefinition } from '../model/category/base-category-definition';
+import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
+import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
+import { BaseFieldDefinition } from '../model/field/base-field-definition';
+import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
+import { BaseFormDefinition } from '../model/form/base-form-definition';
+import { CustomFormDefinition } from '../model/form/custom-form-definition';
+import { LibraryFormDefinition } from '../model/form/library-form-definition';
 
 
-export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>,
+export function addSourceField(builtInCategories: Map<BuiltInCategoryDefinition>,
                                libraryCategories: Map<LibraryCategoryDefinition>,
-                               customCategories: Map<CustomCategoryDefinition>|undefined,
-                               commonFields: Map<any>|undefined) {
+                               libraryForms: Map<LibraryFormDefinition>,
+                               commonFields: Map<BuiltInFieldDefinition>,
+                               customForms?: Map<CustomFormDefinition>) {
 
-    setFieldSourceOnCategories(builtInCategories, Field.Source.BUILTIN);
-    setFieldSourceOnCategories(libraryCategories, Field.Source.LIBRARY);
-    if (customCategories) setFieldSourceOnCategories(customCategories, Field.Source.CUSTOM);
+    setFieldSourceOnForms(map(to(BaseCategoryDefinition.MINIMAL_FORM), builtInCategories), Field.Source.BUILTIN);
+    setFieldSourceOnForms(map(to(BaseCategoryDefinition.MINIMAL_FORM), libraryCategories), Field.Source.LIBRARY);
+    setFieldSourceOnForms(libraryForms, Field.Source.LIBRARY);
+
+    forEach(builtInCategories, category => setFieldSourceOnFields(category.fields, Field.Source.BUILTIN));
+    forEach(libraryCategories, category => setFieldSourceOnFields(category.fields, Field.Source.LIBRARY));
     if (commonFields) setFieldSourceOnFields(commonFields, Field.Source.COMMON);
-}
 
-
-function setFieldSourceOnCategories(categories: any, value: any) {
-
-    for (const category of Object.values(categories) as any) {
-
-        category.source = value;
-        setFieldSourceOnFields(category.fields, value)
+    if (customForms) {
+        setFieldSourceOnForms(customForms, Field.Source.CUSTOM);
+        forEach(customForms, form => setFieldSourceOnFields(form.fields, Field.Source.CUSTOM));
     }
 }
 
 
-function setFieldSourceOnFields(fields: any, value: any) {
+function setFieldSourceOnForms(forms: Map<BaseFormDefinition|undefined>, value: Field.SOURCE_TYPES) {
 
-    for (const field of Object.values(fields) as any) {
+    for (const form of Object.values(forms)) {
+        if (!form) continue;
+        form.source = value;
+    }
+}
+
+
+function setFieldSourceOnFields(fields: Map<BaseFieldDefinition>, value: Field.SOURCE_TYPES) {
+
+    for (const field of Object.values(fields)) {
         
         field.source = value;
     }

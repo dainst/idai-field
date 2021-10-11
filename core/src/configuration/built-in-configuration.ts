@@ -2,7 +2,8 @@ import { Map } from 'tsfun';
 import { Field } from '../model';
 import { Groups } from '../model';
 import { Relation } from '../model/configuration/relation';
-import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
+import { BuiltInFieldDefinition, BuiltInFormDefinition } from './model';
+import { BuiltInCategoryDefinition } from './model/category/built-in-category-definition';
 
 
 /**
@@ -11,7 +12,7 @@ import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
  */
 export class BuiltInConfiguration {
 
-    public commonFields = {
+    public commonFields: Map<BuiltInFieldDefinition> = {
         period: {
             inputType: Field.InputType.DROPDOWNRANGE,
             constraintIndexed: true
@@ -110,7 +111,7 @@ export class BuiltInConfiguration {
     };
     
 
-    public builtInCategories: Map<BuiltinCategoryDefinition> = {
+    public builtInCategories: Map<BuiltInCategoryDefinition> = {
         Project: {
             required: true,
             fields: {
@@ -132,19 +133,21 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.MULTIINPUT
                 }
             },
-            valuelists: {
-                coordinateReferenceSystem: 'coordinate-reference-system-default-1'
-            },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['shortName', 'category', 'shortDescription']
+            minimalForm: {
+                valuelists: {
+                    coordinateReferenceSystem: 'coordinate-reference-system-default-1'
                 },
-                {
-                    name: Groups.PARENT,
-                    fields: ['staff', 'campaigns', 'coordinateReferenceSystem']
-                }
-            ]
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['shortName', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.PARENT,
+                        fields: ['staff', 'campaigns', 'coordinateReferenceSystem']
+                    }
+                ]
+            }
         },
         Operation: {
             supercategory: true,
@@ -155,58 +158,66 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Building: {
+            parent: 'Operation',
             fields: {},
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            parent: 'Operation'
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Survey: {
+            parent: 'Operation',
             fields: {},
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            parent: 'Operation'
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Trench: {
+            parent: 'Operation',
             fields: {},
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            parent: 'Operation'
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Place: {
             fields: {
@@ -219,30 +230,34 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.PARENT,
-                    fields: ['gazId']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.PARENT,
+                        fields: ['gazId']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Inscription: {
+            mustLieWithin: true,
             fields: {},
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                }
-            ],
-            mustLieWithin: true
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    }
+                ]
+            }
         },
         // Room is an idealized (non material) entity
         Room: {
@@ -254,76 +269,84 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         // An idealized (non material) entity, must be created within a Room
         RoomWall: {
+            mustLieWithin: true,
             fields: {
                 geometry: {
                     inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            mustLieWithin: true
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         // An idealized (non material) entity, must be created within a Room
         RoomFloor: {
+            mustLieWithin: true,
             fields: {
                 geometry: {
                     inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            mustLieWithin: true
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
+            mustLieWithin: true,
             fields: {
                 geometry: {
                     inputType: Field.InputType.GEOMETRY,
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ],
-            mustLieWithin: true
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {
@@ -335,16 +358,18 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Area: {
             supercategory: true,
@@ -355,16 +380,18 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Feature: {
             supercategory: true,
@@ -383,20 +410,22 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry'].concat(Relation.Position.ALL)
-                },
-                {
-                    name: Groups.TIME,
-                    fields: ['period', 'dating'].concat(Relation.Time.ALL)
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry'].concat(Relation.Position.ALL)
+                    },
+                    {
+                        name: Groups.TIME,
+                        fields: ['period', 'dating'].concat(Relation.Time.ALL)
+                    }
+                ]
+            }
         },
         Find: {
             supercategory: true,
@@ -407,20 +436,22 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.IDENTIFICATION,
-                    fields: ['isInstanceOf']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.IDENTIFICATION,
+                        fields: ['isInstanceOf']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         Sample: {
             mustLieWithin: true,
@@ -430,16 +461,18 @@ export class BuiltInConfiguration {
                     visible: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.POSITION,
-                    fields: ['geometry']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
         },
         TypeCatalog: {
             supercategory: true,
@@ -449,34 +482,38 @@ export class BuiltInConfiguration {
                     constraintIndexed: true
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
+            minimalForm: {
+                valuelists: {
+                    criterion: 'TypeCatalog-criterion-default'
                 },
-                {
-                    name: Groups.IDENTIFICATION,
-                    fields: ['criterion']
-                }
-            ],
-            valuelists: {
-                criterion: 'TypeCatalog-criterion-default'
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.IDENTIFICATION,
+                        fields: ['criterion']
+                    }
+                ]
             }
         },
         Type: {
             supercategory: true,
             mustLieWithin: true,
             fields: {},
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.IDENTIFICATION,
-                    fields: ['hasInstance']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.IDENTIFICATION,
+                        fields: ['hasInstance']
+                    }
+                ]
+            }
         },
         Image: {
             supercategory: true,
@@ -510,42 +547,42 @@ export class BuiltInConfiguration {
                     editable: false
                 }
             },
-            groups: [
-                {
-                    name: Groups.STEM,
-                    fields: ['identifier', 'category', 'shortDescription']
-                },
-                {
-                    name: Groups.PARENT,
-                    fields: ['height', 'width']
-                }
-            ]
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.PARENT,
+                        fields: ['height', 'width']
+                    }
+                ]
+            }
         },
     };
 
 
-    public builtInFields = {
+    public builtInFields: Map<BuiltInFieldDefinition> = {
         id: {
             editable: false,
-            visible: false,
-            source: 'builtin'
-        } as Field,
+            visible: false
+        },
         category: {
             visible: true,
-            editable: false,
-            source: 'builtin'
-        } as Field,
+            editable: false
+        },
         shortDescription: {
             visible: true,
             editable: true,
             fulltextIndexed: true
-        } as Field,
+        },
         identifier: {
             visible: false,
             editable: true,
             mandatory: true,
             fulltextIndexed: true
-        } as Field
+        }
     };
 
 
@@ -903,8 +940,7 @@ export class BuiltInConfiguration {
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
                 || customConfigurationName === 'Bourgou') {
 
-            (this.builtInCategories as any)['Other'] = {
-                color: '#CC6600',
+            this.builtInCategories.Other = {
                 parent: 'Feature',
                 fields: {
                     geometry: {
@@ -912,57 +948,64 @@ export class BuiltInConfiguration {
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#CC6600',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
         }
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Bourgou') {
 
-            (this.builtInCategories as any)['Wall_surface'] = {
-                color: '#ffff99',
+            this.builtInCategories.Wall_surface = {
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#ffff99',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
-            (this.builtInCategories as any)['Drilling'] = {
-                color: '#08519c',
+            this.builtInCategories.Drilling = {
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#08519c',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
             this.builtInRelations.push({
                 name: 'isRecordedIn',
@@ -982,80 +1025,88 @@ export class BuiltInConfiguration {
 
         if (customConfigurationName === 'Pergamon') {
 
-            (this.builtInCategories as any)['ProcessUnit'] = {
+            this.builtInCategories.ProcessUnit = {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: true,
-                color: '#08306b',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#08306b',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
-            (this.builtInCategories as any)['Profile'] = {
-                color: '#c6dbef',
+            this.builtInCategories.Profile = {
                 parent: 'ProcessUnit',
                 fields: {},
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#c6dbef',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
-            (this.builtInCategories as any)['BuildingFloor'] = {
-                color: '#6600cc',
+            this.builtInCategories.BuildingFloor = {
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#6600cc',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
-            (this.builtInCategories as any)['SurveyBurial'] = {
-                color: '#45ff95',
+            this.builtInCategories.SurveyBurial = {
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#45ff95',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
 
             this.builtInRelations.push({
@@ -1114,8 +1165,7 @@ export class BuiltInConfiguration {
 
         if (customConfigurationName === 'Milet') {
             
-            (this.builtInCategories as any)['Quantification'] = {
-                color: '#c6dbef',
+            this.builtInCategories.Quantification = {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: false,
@@ -1125,20 +1175,22 @@ export class BuiltInConfiguration {
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    color: '#c6dbef',
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
 
-            (this.builtInCategories as any)['Building'] = {
-                userDefinedSubcategoriesAllowed: true,
+            this.builtInCategories.Building = {
                 parent: 'Operation',
                 fields: {
                     gazId: {
@@ -1146,23 +1198,25 @@ export class BuiltInConfiguration {
                         constraintIndexed: true
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.PARENT,
-                        fields: ['gazId']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.PARENT,
+                            fields: ['gazId']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
 
-            (this.builtInCategories as any)['Find'] = {
+            this.builtInCategories.Find = {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
@@ -1174,27 +1228,29 @@ export class BuiltInConfiguration {
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.IDENTIFICATION,
-                        fields: ['isInstanceOf']
-                    },
-                    {
-                        name: Groups.DIMENSION,
-                        fields: ['diameterPercentage']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.IDENTIFICATION,
+                            fields: ['isInstanceOf']
+                        },
+                        {
+                            name: Groups.DIMENSION,
+                            fields: ['diameterPercentage']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
 
-            (this.builtInCategories as any)['Impression'] = {
+            this.builtInCategories.Impression = {
                 supercategory: false,
                 userDefinedSubcategoriesAllowed: false,
                 fields: {
@@ -1203,16 +1259,18 @@ export class BuiltInConfiguration {
                         visible: false
                     }
                 },
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
+                minimalForm: {
+                    groups: [
+                        {
+                            name: Groups.STEM,
+                            fields: ['identifier', 'shortDescription']
+                        },
+                        {
+                            name: Groups.POSITION,
+                            fields: ['geometry']
+                        }
+                    ]
+                }
             };
 
             this.builtInRelations.push({

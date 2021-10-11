@@ -510,13 +510,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         try {
             const builtInConfiguration = new BuiltInConfiguration('');
             const libraryCategories = await this.configReader.read('/Library/Categories.json');
+            const libraryForms = await this.configReader.read('/Library/Forms.json');
             const valuelists = await this.configReader.read('/Library/Valuelists.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
 
             const categories = createContextIndependentCategories(
                 builtInConfiguration.builtInCategories,
-                builtInConfiguration.builtInRelations,
                 libraryCategories,
+                builtInConfiguration.builtInRelations,
+                libraryForms,
                 builtInConfiguration.commonFields,
                 builtInConfiguration.builtInFields,
                 valuelists,

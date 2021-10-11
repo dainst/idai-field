@@ -1,5 +1,7 @@
 import { compose, filter, isDefined, keysValues, map, Map, to } from 'tsfun';
-import { TransientFieldDefinition, TransientCategoryDefinition } from '../model/transient-category-definition';
+import { BaseCategoryDefinition, CustomFormDefinition } from '../model';
+import { TransientFieldDefinition } from '../model/field/transient-field-definition';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
 
 
 export const getDefinedParents = compose(
@@ -9,9 +11,10 @@ export const getDefinedParents = compose(
 );
 
 
-export function iterateOverFieldsOfCategories(categories: Map<TransientCategoryDefinition>,
-                                              f: (categoryName: string, category: TransientCategoryDefinition,
-                                                  fieldName: string, field: TransientFieldDefinition) => void) {
+export function iterateOverFields(categories: Map<BaseCategoryDefinition|CustomFormDefinition|TransientFormDefinition>,
+                                  f: (categoryName: string,
+                                      category: BaseCategoryDefinition|CustomFormDefinition|TransientFormDefinition,
+                                      fieldName: string, field: TransientFieldDefinition) => void) {
 
     keysValues(categories).forEach(([categoryName, category]) => {
         keysValues((category as any).fields).forEach(([fieldName, field]) => {

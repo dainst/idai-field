@@ -1,7 +1,7 @@
 import { Category } from '../../model';
 import { Groups } from '../../model';
-import { LanguageConfiguration } from '../model/language-configuration';
-import { LanguageConfigurations } from '../model/language-configurations';
+import { LanguageConfiguration } from '../model/language/language-configuration';
+import { LanguageConfigurations } from '../model/language/language-configurations';
 
 
 /**
@@ -10,7 +10,7 @@ import { LanguageConfigurations } from '../model/language-configurations';
  * @returns category
  */
 export function setGroupLabels(languageConfigurations: LanguageConfigurations,
-                               category: Category) {
+                               category: Category): Category {
 
     category.groups.forEach(group => {
         group.label = getGroupLabel(category, group.name, 'complete', languageConfigurations);

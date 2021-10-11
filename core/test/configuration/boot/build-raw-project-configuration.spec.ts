@@ -1,43 +1,73 @@
 import { Map, left, to } from 'tsfun';
-import { buildRawProjectConfiguration, ConfigurationErrors } from '../../../src/configuration/boot';
-import { BuiltinCategoryDefinition, CustomCategoryDefinition,
-    LibraryCategoryDefinition } from '../../../src/configuration/model';
-import { Category, Field, Groups, Valuelist } from '../../../src/model';
-import { Named, Tree } from '../../../src/tools';
-import InputType = Field.InputType;
+import { BuiltInFieldDefinition } from '../../../src/configuration';
+import { buildRawProjectConfiguration } from '../../../src/configuration/boot/build-raw-project-configuration';
+import { ConfigurationErrors } from '../../../src/configuration/boot/configuration-errors';
+import { BuiltInCategoryDefinition } from '../../../src/configuration/model/category/built-in-category-definition';
+import { LibraryCategoryDefinition } from '../../../src/configuration/model/category/library-category-definition';
+import { CustomFormDefinition } from '../../../src/configuration/model/form/custom-form-definition';
+import { LibraryFormDefinition } from '../../../src/configuration/model/form/library-form-definition';
+import { Category } from '../../../src/model/configuration/category';
+import { Field } from '../../../src/model/configuration/field';
+import { Groups } from '../../../src/model/configuration/group';
+import { Relation } from '../../../src/model/configuration/relation';
+import { Valuelist } from '../../../src/model/configuration/valuelist';
+import { Tree } from '../../../src/tools/forest';
+import { Named } from '../../../src/tools/named';
 
 
 describe('buildRawProjectConfiguration', () => {
 
     const categories = left;
 
-    function buildRawArray(a: any, b: any, ...rest: any[]) {
 
-        const raw = buildRawProjectConfiguration(a, b, ...rest);
+    function buildRawArray(builtInCategories: Map<BuiltInCategoryDefinition>,
+                           libraryCategories: Map<LibraryCategoryDefinition>,
+                           libraryForms: Map<LibraryFormDefinition>, ...rest: any[]) {
+
+        const raw = buildRawProjectConfiguration(builtInCategories, libraryCategories, libraryForms, ...rest);
         return Tree.flatten<Category>(categories(raw));
     }
 
-    function buildRaw(a: any, b: any, ...rest: any[]) {
 
-        return Named.arrayToMap(buildRawArray(a, b, ...rest));
+    function buildRaw(builtInCategories: Map<BuiltInCategoryDefinition>,
+                      libraryCategories: Map<LibraryCategoryDefinition>,
+                      libraryForms: Map<LibraryFormDefinition>, ...rest: any[]) {
+
+        return Named.arrayToMap(buildRawArray(builtInCategories, libraryCategories, libraryForms, ...rest));
     }
 
 
-    it('throw away unselected categories',  () => {
+    it('throw away unselected forms',  () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             },
             C: {
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                description: {},
+                valuelists: {},
+                createdBy: '',
+                creationDate: '',
+                groups: []
+            }
+        }
+
+        const customForms: Map<CustomFormDefinition> = {
             A: {
                 fields: {},
                 hidden: []
@@ -51,104 +81,124 @@ describe('buildRawProjectConfiguration', () => {
         const result = buildRaw(
             builtInCategories,
             {},
-            customCategories
+            libraryForms,
+            customForms
         );
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
         expect(result['C']).toBeUndefined();
+        expect(result['A:default']).toBeUndefined();
     });
 
 
-    it('do not throw away any categories if no custom categories are provided',  () => {
+    it('do not throw away any forms if no custom forms are provided',  () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             },
             B: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             },
             C: {
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             B1: {
+                parent: 'B',
                 fields: {},
-                groups: [],
-                commons: [],
-                valuelists: {},
-                categoryName: 'B',
-                description: {},
-                createdBy: '',
-                creationDate: ''
-            },
-            B2: {
-                fields: {},
-                groups: [],
-                commons: [],
-                valuelists: {},
-                categoryName: 'B',
-                description: {},
-                createdBy: '',
-                creationDate: ''
+                description: {}
             }
         };
 
 
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                description: {},
+                valuelists: {},
+                createdBy: '',
+                creationDate: '',
+                groups: []
+            }
+        }
+
+
         const result = buildRawArray(
             builtInCategories,
-            libraryCategories
+            libraryCategories,
+            libraryForms
         );
 
         expect(result.length).toBe(5);
         expect(result.find(category => category.libraryId === 'A')).toBeDefined();
+        expect(result.find(category => category.libraryId === 'A:default')).toBeDefined();
         expect(result.find(category => category.libraryId === 'B')).toBeDefined();
         expect(result.find(category => category.libraryId === 'B1')).toBeDefined();
-        expect(result.find(category => category.libraryId === 'B2')).toBeDefined();
         expect(result.find(category => category.libraryId === 'C')).toBeDefined();
     });
 
 
     it('hide fields', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'input' },
                     field2: { inputType: 'input' }
                 },
-                groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                }
             }
         };
+
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             A: {
-                categoryName: 'A',
-                commons: ['aCommonField', 'bCommonField'],
-                valuelists: {},
                 fields: {
                     field3: { inputType: 'input' },
                     field4: { inputType: 'input' }
                 },
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
                 groups: [{
                     name: Groups.STEM,
                     fields: ['field1', 'field2', 'field3', 'field4', 'aCommonField', 'bCommonField']
                 }],
-                creationDate: '', createdBy: '', description: {}
+                creationDate: '',
+                createdBy: '',
+                description: {}
             }
         };
-        const customCategories = {
-            A: {
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
                 fields: {},
                 hidden: ['field1', 'aCommonField', 'field3']
             }
         };
-        const commonFields = {
+        
+        const commonFields: Map<BuiltInFieldDefinition> = {
             aCommonField: { inputType: 'input' },
             bCommonField: { inputType: 'input' }
         };
@@ -156,7 +206,8 @@ describe('buildRawProjectConfiguration', () => {
         const result = buildRaw(
             builtInCategories,
             libraryCategories,
-            customCategories,
+            libraryForms,
+            customForms,
             commonFields
         );
 
@@ -169,13 +220,20 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('valuelistId - provided via valuelists property in custom category', () => {
+    it('valuelistId - provided via valuelists property in custom form', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'dropdown' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
         };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {};
-        const customCategories: Map<CustomCategoryDefinition> = {
+
+        const customForms: Map<CustomFormDefinition> = {
             'A': {
                 fields: {},
                 valuelists: { aField: 'aField-valuelist-id-1' }
@@ -184,8 +242,9 @@ describe('buildRawProjectConfiguration', () => {
 
         const result = buildRaw(
             builtInCategories,
-            libraryCategories,
-            customCategories,
+            {},
+            {},
+            customForms,
             {},
             {
                 'aField-valuelist-id-1': {
@@ -198,21 +257,34 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('valuelistId - overwrite valuelists property in custom category, extending a library category - for a common field', () => {
+    it('valuelistId - overwrite valuelists property in custom form, extending a library form - for a common field', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [] } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:default': {
-                commons: ['aCommon'],
-                valuelists: { aCommon: 'aCommon-valuelists-id-1' },
-                groups: [],
-                creationDate: '', createdBy: '', description: {}, fields: {}, categoryName: 'A'}
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
-        const commonFields = { aCommon: { group: 'stem', inputType: 'dropdown' }};
-        const customCategories: Map<CustomCategoryDefinition> = {
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:default': {
-                commons: ['aCommon'],
+                categoryName: 'A',
+                valuelists: { aCommon: 'aCommon-valuelists-id-1' },
+                groups: [{ name: Groups.STEM, fields: ['aCommon'] }],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'dropdown' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
                 valuelists: { aCommon: 'aCommon-valuelist-id-2' },
                 fields: {}
             }
@@ -220,14 +292,15 @@ describe('buildRawProjectConfiguration', () => {
 
         const result = buildRaw(
             builtInCategories,
-            libraryCategories,
-            customCategories,
+            {},
+            libraryForms,
+            customForms,
             commonFields,
             {
                 'aCommon-valuelist-id-1': {
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 },
-              'aCommon-valuelist-id-2': {
+                'aCommon-valuelist-id-2': {
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
@@ -239,29 +312,39 @@ describe('buildRawProjectConfiguration', () => {
 
     it('valuelistId - provided via valuelists property in library', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'dropdown' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
         };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:default': {
-                valuelists: { aField: 'aField-valuelist-id-1' },
                 categoryName: 'A',
-                commons: [],
-                fields: {},
-                groups: [],
+                valuelists: { aField: 'aField-valuelist-id-1' },
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
                 description: {},
                 createdBy: '',
                 creationDate: ''
             }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:default': { fields: {} }
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
         };
 
         const result = buildRaw(
             builtInCategories,
-            libraryCategories,
-            customCategories,
+            {},
+            libraryForms,
+            customForms,
             {},
             {
                 'aField-valuelist-id-1': {
@@ -274,20 +357,31 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('valuelistId - nowhere provided - built in category selected', () => {
+    it('valuelistId - nowhere provided - minimal form selected', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'dropdown' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A': { fields: { aField: {} } }
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {}
+            }
         };
 
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
                 {},
-                customCategories,
+                {},
+                customForms,
                 {},
                 {},
                 {}
@@ -301,32 +395,42 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('valuelistId - nowhere provided - library category selected', () => {
+    it('valuelistId - nowhere provided - library form selected', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'dropdown' } }, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'dropdown' }
+                },
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:0': {
                 categoryName: 'A',
-                commons: [],
                 valuelists: {},
-                fields: { aField: {} },
-                groups: [],
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
                 createdBy: '',
                 creationDate: '',
                 description: {}
             },
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:0': { fields: { aField: {} } }
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:0': {
+                fields: {}
+            }
         };
 
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
-                libraryCategories,
-                customCategories,
+                {},
+                libraryForms,
+                customForms,
                 {},
                 {},
                 {}
@@ -340,15 +444,21 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('duplication in selection', () => {
+    it('duplication in selection - two library forms of the same category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:0': {
                 categoryName: 'A',
-                commons: [],
                 valuelists: {},
-                fields: {},
                 groups: [],
                 createdBy: '',
                 creationDate: '',
@@ -356,16 +466,15 @@ describe('buildRawProjectConfiguration', () => {
             },
             'A:1': {
                 categoryName: 'A',
-                commons: [],
                 valuelists: {},
-                fields: {},
                 groups: [],
                 createdBy: '',
                 creationDate: '',
                 description: {}
             }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
+
+        const customForms: Map<CustomFormDefinition> = {
             'A:0': {
                 fields: {}
             },
@@ -377,8 +486,9 @@ describe('buildRawProjectConfiguration', () => {
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
-                libraryCategories,
-                customCategories
+                {},
+                libraryForms,
+                customForms
             );
             fail();
         } catch (expected) {
@@ -387,14 +497,20 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('duplication in selection - built in categories create category name implicitly', () => {
+    it('duplication in selection - minimal form and library form of the same category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:0': {
                 categoryName: 'A',
-                commons: [],
-                fields: {},
                 groups: [],
                 valuelists: {},
                 createdBy: '',
@@ -402,7 +518,8 @@ describe('buildRawProjectConfiguration', () => {
                 description: {}
             }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
+
+        const customForms: Map<CustomFormDefinition> = {
             'A': { fields: {} },
             'A:0': { fields: {} }
         };
@@ -410,8 +527,9 @@ describe('buildRawProjectConfiguration', () => {
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
-                libraryCategories,
-                customCategories
+                {},
+                libraryForms,
+                customForms
             );
             fail();
         } catch (expected) {
@@ -420,60 +538,21 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('category names - divergent input type', () => {
+    it('subcategories - library subcategory not allowed', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: { inputType: 'text' } },
-                groups: [],
-                createdBy: '',
-                creationDate: '',
-                description: {}
-            },
-            'A:1': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: { inputType: 'input' } },
-                groups: [],
-                createdBy: '',
-                creationDate: '',
-                description: {}
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
-        try {
-            buildRawProjectConfiguration(
-                builtInCategories,
-                libraryCategories
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([
-                ConfigurationErrors.INCONSISTENT_CATEGORY_NAME,
-                'A', 'divergentInputType', 'aField'
-            ]);
-        }
-    });
-
-
-    it('subcategories - user defined subcategory not allowed', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'B:0': {
-                categoryName: 'B',
+            B: {
                 parent: 'A',
                 fields: {},
-                groups: [],
-                commons: [],
-                createdBy: '',
-                valuelists: {},
-                creationDate: '',
                 description: {}
             }
         };
@@ -482,8 +561,6 @@ describe('buildRawProjectConfiguration', () => {
             buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
-                { 'B:0': { fields: {}, groups: [] } },
-                {},
                 {},
                 {}
             );
@@ -496,167 +573,69 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('commons - cannot set type of common in library categories', () => {
+    it('subcategories - custom subcategory not allowed', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                fields: { aCommon: { inputType: 'input' } },
-                groups: [],
-                createdBy: '',
-                valuelists: {},
-                creationDate: '',
-                description: {}
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            B: {
+                parent: 'A',
+                fields: {}
             }
         };
 
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
-                libraryCategories,
-                { 'A:0': { fields: {}, groups: [] } },
-                commonFields,
                 {},
-                {}
+                {},
+                customForms
             );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aCommon'
+                ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'A'
             ]);
         }
     });
 
 
-    it('commons - cannot set type of common in custom categories', () => {
+    it('ignore attempts to overwrite fields in library', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A': { fields: { aCommon: { inputType: 'text' } }, groups: [] }
-        };
-
-        try {
-            buildRawProjectConfiguration(
-                builtInCategories,
-                {},
-                customCategories,
-                commonFields,
-                {},
-                {}
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A', 'aCommon']);
-        }
-    });
-
-
-    it('commons - common field not provided', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = {};
-        const customCategories: Map<CustomCategoryDefinition> = {
-            A: { fields: {}, commons: ['missing']}
-        };
-
-        try {
-            buildRawProjectConfiguration(
-                builtInCategories,
-                {},
-                customCategories,
-                commonFields,
-                {},
-                {}
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, 'missing']);
-        }
-    });
-
-
-    it('commons - mix in commons in library category', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: ['aCommon'],
-                fields: {},
-                groups: [],
-                valuelists: {},
-                createdBy: '',
-                creationDate: '',
-                description: {}
-            }
-        };
-
-        const result = buildRaw(
-            builtInCategories,
-            libraryCategories,
-            { 'A:0': { fields: {} } },
-            commonFields,
-            {},
-            {}
-        );
-
-        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
-        expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
-    });
-
-
-    it('commons - mix in commons in custom category', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
-                commons: ['aCommon'],
-                fields: {}
+                fields: {
+                    aField: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
+                }
             }
         };
 
-        const result = buildRaw(
-            builtInCategories,
-            {},
-            customCategories,
-            commonFields,
-            {},
-            {}
-        );
-
-        expect(result['A'].groups['0'].fields[0]['group']).toBe('stem');
-        expect(result['A'].groups['0'].fields[0]['inputType']).toBe('input');
-    });
-
-
-    it('commons - add together commons from library and custom category', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = {
-            aCommon: { group: 'stem', inputType: 'input' },
-            bCommon: { group: 'stem', inputType: 'input' }
-        };
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: ['aCommon'],
-                fields: {},
-                groups: [],
-                valuelists: {},
-                createdBy: '',
-                creationDate: '',
+            A: {
+                fields: {
+                    aField: { inputType: 'boolean' },
+                    aCommon: { inputType: 'boolean' }
+                },
                 description: {}
             }
         };
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:0': {
-                commons: ['bCommon'],
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'text' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
                 fields: {}
             }
         };
@@ -664,31 +643,185 @@ describe('buildRawProjectConfiguration', () => {
         const result = buildRaw(
             builtInCategories,
             libraryCategories,
-            customCategories,
-            commonFields,
             {},
-            {}
+            customForms,
+            commonFields
         );
 
-        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
+        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
+    });
+
+
+    it('ignore attempts to overwrite fields in custom forms', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'text' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'boolean' },
+                    aCommon: { inputType: 'boolean' }
+                }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            commonFields
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
+        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
+    });
+
+
+
+    it('throw error if field not found', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {},
+                groups: [{ name: Groups.STEM, fields: ['missing'] }]
+            }
+        };
+
+        try {
+            buildRawProjectConfiguration(
+                builtInCategories,
+                {},
+                {},
+                customForms
+            );
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([[ConfigurationErrors.FIELD_NOT_FOUND, 'A', 'missing']]);
+        }
+    });
+
+
+    it('commons - select common field in library form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'input' }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aCommon'] }],
+                valuelists: {},
+                createdBy: '',
+                creationDate: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            commonFields
+        );
+
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
-        expect(result['A'].groups[0].fields[1]['group']).toBe('stem');
-        expect(result['A'].groups[0].fields[1]['inputType']).toBe('input');
+    });
+
+
+    it('commons - select common field in custom form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'input' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {},
+                groups: [{ name: Groups.STEM, fields: ['aCommon'] }]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            commonFields
+        );
+
+        expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
     });
 
 
     it('commons - use valuelistFromProjectField if defined in commons', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
-        const commonFields = {
-            aCommon: { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'dropdown', valuelistFromProjectField: 'x' }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
             'A:0': {
                 categoryName: 'A',
-                commons: ['aCommon'],
-                fields: {},
-                groups: [],
+                groups: [{ name: Groups.STEM, fields: ['aCommon'] }],
                 valuelists: {},
                 createdBy: '',
                 creationDate: '',
@@ -696,16 +829,20 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
+        const customForms: Map<CustomFormDefinition> = {
+            'A:0': {
+                fields: {}
+            }
+        };
+
         const result = buildRaw(
             builtInCategories,
-            libraryCategories,
-            { 'A:0': { fields: {} } },
-            commonFields,
             {},
-            {}
+            libraryForms,
+            customForms,
+            commonFields
         );
 
-        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('dropdown');
         expect(result['A'].groups[0].fields[0]['valuelistFromProjectField']).toBe('x');
     });
@@ -715,17 +852,37 @@ describe('buildRawProjectConfiguration', () => {
 
     it('field property validation - invalid input type', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {}, groups: [] } };
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: { inputType: 'invalid' } },
-                groups: [],
-                createdBy: '',
-                creationDate: '',
+            A: {
+                fields: {
+                    aField: { inputType: 'invalid' }
+                },
                 description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
             }
         };
 
@@ -733,10 +890,8 @@ describe('buildRawProjectConfiguration', () => {
             buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
-                {},
-                [],
-                {},
-                {}
+                libraryForms,
+                customForms
             );
             fail();
         } catch (expected) {
@@ -749,22 +904,33 @@ describe('buildRawProjectConfiguration', () => {
 
     it('field property validation - missing input type in field of entirely new custom category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
-        const libraryCategories: Map<LibraryCategoryDefinition> = {};
-        const customCategories: Map<CustomCategoryDefinition> = {
-            C: { parent: 'A', fields: { cField: {} } }
+
+        const customForms: Map<CustomFormDefinition> = {
+            C: {
+                parent: 'A',
+                fields: {
+                    cField: {}
+                },
+                groups: [{ name: Groups.STEM, fields: ['cField'] }]
+            }
         };
 
         try {
             buildRawProjectConfiguration(
                 builtInCategories,
-                libraryCategories,
-                customCategories,
                 {},
                 {},
-                {}
+                customForms
             );
             fail();
         } catch (expected) {
@@ -775,81 +941,60 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('field property validation - missing input name in field of builtInCategory name - extension of supercategory', () => {
+    it('field property validation - missing input type in field of library category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: {} } as any,
-                groups: [],
-                creationDate: '', createdBy: '', description: {}
-            },
-        };
-
-        try {
-            buildRawProjectConfiguration(builtInCategories,
-                libraryCategories,
-                {},  {}, {}, {}
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([
-                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'A:0', 'aField']
-            ]);
-        }
-    });
-
-
-    it('field property validation  - extension of supercategory - inputType inherited from builtIn', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'input' } }, groups: [] }
-        };
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: {} } as any,
-                groups: [],
-                creationDate: '', createdBy: '', description: {}
-            },
-        };
-
-        const result = buildRaw(
-            builtInCategories,
-            libraryCategories,
-            { 'A:0': { hidden: [], fields: {} } },
-            {}, {},
-            {}
-        );
-
-        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
-    });
-
-
-    it('field property validation - missing input type in field of library category - new subcategory', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [], supercategory: true, userDefinedSubcategoriesAllowed: true }
-        };
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'B:0': {
-                categoryName: 'B',
+            B: {
                 parent: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { bField: {} } as any,
-                groups: [],
-                creationDate: '', createdBy: '', description: {}
+                fields: {
+                    bField: {}
+                },
+                description: {}
+            },
+        };
+
+        try {
+            buildRawProjectConfiguration(
+                builtInCategories,
+                libraryCategories,
+                {}, {}, {}, {}
+            );
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([
+                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B', 'bField']
+            ]);
+        }
+    });
+
+
+
+    it('field property validation - illegal property in library category field', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            A: {
+                fields: { aField: { xyz: 'a' } } as any,
+                description: {}
             },
         };
 
@@ -861,79 +1006,24 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B:0', 'bField']
+                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'library', 'xyz'
             ]);
         }
     });
 
 
-    it('field property validation - must not set field name on inherited field', () => {
+    it('field property validation - illegal property in custom form field', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: { aField: { inputType: 'input' } }, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: { inputType: 'input' } } as any,
-                groups: [],
-                creationDate: '', createdBy: '', description: {}
-            },
-        };
-
-        try {
-            buildRawProjectConfiguration(builtInCategories,
-                libraryCategories,
-                {}, {}, {}, {}
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField']);
-        }
-    });
-
-
-    it('field property validation - undefined property in library category field', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [] }
-        };
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: { aField: { group: 'a' } } as any,
-                groups: [],
-                creationDate: '', createdBy: '', description: {}
-            },
-        };
-
-        try {
-            buildRawProjectConfiguration(builtInCategories,
-                libraryCategories,
-                {}, {}, {}, {}
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([
-                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'library', 'group'
-            ]);
-        }
-    });
-
-
-    it('field property validation - undefined property in custom category field', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: { fields: {}, groups: [] }
-        };
-
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const customForms: Map<CustomFormDefinition> = {
             'A': {
                 fields: { aField: { xyz: 'a' } as any }
             }
@@ -943,7 +1033,9 @@ describe('buildRawProjectConfiguration', () => {
             buildRawProjectConfiguration(
                 builtInCategories,
                 {},
-                customCategories, {}, {}, {}
+                {},
+                customForms,
+                {}, {}, {}
             );
             fail();
         } catch (expected) {
@@ -954,28 +1046,26 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('apply valuelistConfiguration', () => {
+    it('apply valuelists configuration', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: 'input' }
+                    field1: { inputType: 'dropdown' }
                 },
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             }
         };
-
-        const libraryCategories: Map<LibraryCategoryDefinition>  = {
-            'A:0': {
+        
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
                 categoryName: 'A',
-                commons: [],
-                valuelists: { 'a1': '123' },
-                fields: {
-                    a1: { inputType: 'dropdown' },
-                    a2: { inputType: 'input' },
-                    a3: { inputType: 'input' }
-                },
-                groups: [],
+                valuelists: { 'field1': '123' },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ],
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -996,15 +1086,23 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
+        };
+
         const result = buildRaw(
             builtInCategories,
-            libraryCategories,
-            { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
+            {},
+            libraryForms,
+            customForms,
+            {},
+            valuelistsConfiguration,
+            {}
         );
 
-        result['A'].groups['0'].fields.sort(Named.byName);
-
-        expect(result['A'].groups['0'].fields[0].valuelist.values).toEqual({
+        expect(result['A'].groups[0].fields[0].valuelist.values).toEqual({
             one: { label: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
@@ -1012,42 +1110,20 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('missing description', () => {
+    it('no minimal form provided', () => {
 
-        const builtInCategories = {};
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'B:0': {
-                fields: {}
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
             }
         } as any;
 
-        try {
-            buildRawProjectConfiguration(builtInCategories,
-                libraryCategories,
-                {}, {}, {}, {}
-            );
-        } catch (expected) {
-            expect(expected).toEqual([
-                ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', 'B:0'
-            ]);
-        }
-    });
-
-
-    it('missing parent in library category', () => {
-
-        const builtInCategories = {} as any;
-
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'B:0': {
-                categoryName: 'B',
-                commons: [],
+            B: {
+                parent: 'A',
                 fields: {},
-                groups: [],
-                createdBy: '',
-                valuelists: {},
-                creationDate: '',
                 description: {}
             }
         };
@@ -1058,55 +1134,241 @@ describe('buildRawProjectConfiguration', () => {
                 libraryCategories,
                 {}, {}, {}, {}
             );
+            fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', 'B:0']);
+            expect(expected).toEqual([[
+                ConfigurationErrors.NO_MINIMAL_FORM_PROVIDED, 'A'
+            ]]);
         }
     });
 
 
-    it('missing parent in custom category', () => {
+    it('missing description in library category', () => {
 
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'B:0': { fields: {} }
+        const builtInCategories = {};
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            A: {
+                fields: {}
+            }
+        } as any;
+
+        try {
+            buildRawProjectConfiguration(
+                builtInCategories,
+                libraryCategories,
+                {}, {}, {}, {}
+            );
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', 'A'
+            ]);
+        }
+    });
+
+
+    it('missing description in library form', () => {
+
+        const builtInCategories = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            A: {
+                fields: {},
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                createdBy: '',
+                creationDate: '',
+                groups: [],
+                valuelists: {}
+            } as any
+        };
+
+        try {
+            buildRawProjectConfiguration(
+                builtInCategories,
+                libraryCategories,
+                libraryForms,
+                {}, {}, {}
+            );
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FORM_PROPERTY, 'description', 'A:default'
+            ]);
+        }
+    });
+
+
+    it('missing parent in library category', () => {
+
+        const builtInCategories = {} as any;
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'B': {
+                fields: {},
+                description: {},
+                minimalForm: {
+                    groups: []
+                } as any
+            }
+        };
+
+        try {
+            buildRawProjectConfiguration(
+                builtInCategories,
+                libraryCategories,
+                {}, {}, {}, {}
+            );
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', 'B']);
+        }
+    });
+
+
+    it('missing parent in custom form', () => {
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': { fields: {} }
         };
 
         try {
             buildRawProjectConfiguration(
                 {},
                 {},
-                customCategories,
+                {},
+                customForms,
                 {},
                 {},
                 {}
             );
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', 'B:0', 'must be set for new categories'
+                ConfigurationErrors.MISSING_FORM_PROPERTY, 'parent', 'A', 'must be set for new categories'
             ]);
         }
     });
 
 
-    it('merge library category with builtIn', () => {
+    it('merge library category with built-in category', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: InputType.TEXT }
+                    field1: { inputType: 'text' }
                 },
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:1': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
+            'A': {
                 fields: {
-                    field1: {},
-                    field2: { inputType: InputType.TEXT }
+                    field1: { inputType: 'dropdown' },  // Ignore this field
+                    field2: { inputType: 'text' }
                 },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] },
+                        { name: Groups.PARENT, fields: ['field2'] }
+                    ]
+                } as any,
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': { hidden: [], fields: {} }
+        }
+
+        const result = buildRaw(
+            builtInCategories,
+            libraryCategories,
+            {},
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].name).toBe(Groups.STEM);
+        expect(result['A'].groups[1].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
+    });
+
+
+    it('merge custom forms with built-in categories', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1']}
+                    ]
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'dropdown' }, // Ignore this field
+                    field2: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2']}
+                ]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
+    });
+
+
+    it('merge custom forms with library forms', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text' },
+                    field2: { inputType: 'text' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
                     { name: Groups.PARENT, fields: ['field2'] }
@@ -1117,71 +1379,56 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = buildRaw(
-            builtInCategories, libraryCategories,
-            { 'A:1': { hidden: [], fields: {} } },
-            {}, {}, {}
-        );
-
-        expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[0].name).toBe(Groups.STEM);
-        expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
-    });
-
-
-    it('merge custom categories with built-in categories', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: {
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
                 fields: {
-                    field1: { inputType: 'text' }
-                },
-                groups: []
-            }
-        };
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            A: {
-                fields: {
-                    field1: {},
-                    field2: { inputType: 'text' }
-                }
-            }
-        };
-
-        const result = buildRaw(
-            builtInCategories, {}, customCategories,
-            {}, {}, {}
-        );
-
-        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
-        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
-    });
-
-
-    it('merge custom categories with library categories', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: {
-                fields: {
-                    field1: { inputType: InputType.TEXT }
-                },
-                groups: []
-            }
-        };
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: [],
-                valuelists: {},
-                fields: {
-                    field2: { inputType: InputType.TEXT }
+                    field2: { inputType: 'dropdown' }, // Ignore this field
+                    field3: { inputType: 'text' }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
                     { name: Groups.PARENT, fields: ['field2', 'field3'] }
+                ],
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].name).toBe(Groups.STEM);
+        expect(result['A'].groups[1].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[1].inputType).toBe('text');
+        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
+    });
+
+
+    it('add all fields from library form even if not selected in custom form group', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text' },
+                    field2: { inputType: 'boolean' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] }
                 ],
                 creationDate: '',
                 createdBy: '',
@@ -1189,75 +1436,87 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:0': {
-                fields: {
-                    field2: {},
-                    field3: { inputType: InputType.TEXT }
-                }
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ],
             }
         };
 
         const result = buildRaw(
-            builtInCategories, libraryCategories, customCategories,
-            {}, {}, {}
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[0].inputType).toBe('boolean');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
-        expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[1].fields[1].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });
 
 
-    it('source field', () => {
+    it('set source field', () => {
 
-        const commonFields = {
+        const commonFields: Map<BuiltInFieldDefinition> = {
             aCommon: { inputType: Field.InputType.INPUT }
         };
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: Field.InputType.TEXT }
                 },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]   
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {
+                    field2: { inputType: Field.InputType.TEXT }
+                },
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] }
                 ]
             }
         };
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
-                categoryName: 'A',
-                commons: ['aCommon'],
-                valuelists: {},
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
                 fields: {
-                    field2: { inputType: Field.InputType.TEXT }
+                    field3: { inputType: Field.InputType.TEXT }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
                     { name: Groups.PARENT, fields: ['aCommon', 'field2', 'field3'] },
-                ],
-                creationDate: '',
-                createdBy: '',
-                description: {}
-            }
-        };
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:0': {
-                fields: {
-                    field2: {},
-                    field3: { inputType: Field.InputType.TEXT }
-                }
+                ]
             }
         };
 
         const result = buildRaw(
-            builtInCategories, libraryCategories, customCategories, commonFields,
-            {}, {}
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            commonFields
         );
 
         expect(result['A'].groups[0].fields[0].source).toBe(Field.Source.BUILTIN);
@@ -1269,35 +1528,49 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('set group labels', () => {
+   it('set group labels', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {
                     field1: { inputType: Field.InputType.TEXT },
-                    field2: { inputType: Field.InputType.TEXT }
+                    field2: { inputType: Field.InputType.TEXT },
+                    field3: { inputType: Field.InputType.TEXT }
                 },
-                groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1', 'field2'] },
+                        { name: Groups.PARENT, fields: ['field3'] }
+                    ]
+                }
             }
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
-            A: {
-                fields: { field3: { inputType: Field.InputType.TEXT } },
-                groups: [
-                    { name: Groups.STEM, fields: ['field1', 'field2'] },
-                    { name: Groups.PARENT, fields: ['field3'] }
-                ]
-            },
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             B: {
-                parent: 'A', fields: { field4: { inputType: Field.InputType.TEXT } },
-                groups: [
-                    { name: Groups.STEM, fields: ['field1', 'field2'] },
-                    { name: Groups.PARENT, fields: ['field3'] },
-                    { name: Groups.CHILD, fields: ['field4'] }
-                ]
+                parent: 'A',
+                fields: {
+                    field4: { inputType: Field.InputType.TEXT },
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1', 'field2'] },
+                        { name: Groups.PARENT, fields: ['field3'] },
+                        { name: Groups.CHILD, fields: ['field4'] }
+                    ]
+                } as any,
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {}
+            },
+            'B': {
+                fields: {}
             }
         };
 
@@ -1318,7 +1591,12 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
+            builtInCategories,
+            libraryCategories,
+            {},
+            customForms,
+            {}, {}, {}, [],
+            languageConfigurations
         );
 
         expect(result['A'].groups[0].label.de).toEqual('Stem');
@@ -1332,13 +1610,28 @@ describe('buildRawProjectConfiguration', () => {
 
     it('apply categories order', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            B: { fields: {}, groups: [] },
-            A: { fields: {}, groups: [] },
-            C: { fields: {}, groups: [] },
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            C: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const customForms: Map<CustomFormDefinition> = {
             B: { fields: {} },
             A: { fields: {} },
             C: { fields: {} }
@@ -1347,7 +1640,12 @@ describe('buildRawProjectConfiguration', () => {
         const orderConfiguration = ['C', 'A'];
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} },
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            {}, {}, {}, [],
+            { default: {}, complete: {} },
             orderConfiguration
         ).map(Named.toName);
 
@@ -1357,14 +1655,37 @@ describe('buildRawProjectConfiguration', () => {
 
     it('apply categories order to children', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            B: { fields: {}, groups: [], parent: 'D' },
-            A: { fields: {}, groups: [], parent: 'D' },
-            C: { fields: {}, groups: [], parent: 'D' },
-            D: { fields: {}, groups: [] }
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            B: {
+                parent: 'D',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            A: {
+                parent: 'D',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            C: {
+                parent: 'D',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            D: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const customForms: Map<CustomFormDefinition> = {
             B: { fields: {} },
             A: { fields: {} },
             C: { fields: {} },
@@ -1374,7 +1695,12 @@ describe('buildRawProjectConfiguration', () => {
         const orderConfiguration = ['C', 'A'];
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} },
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            {}, {}, {}, [],
+            { default: {}, complete: {} },
             orderConfiguration
         )['D'].children.map(to(Named.NAME));
 
@@ -1384,42 +1710,51 @@ describe('buildRawProjectConfiguration', () => {
 
     it('put relations into groups', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             P: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                groups: [
-                    { name: Groups.POSITION, fields: ['isAbove'] }
-                ]
-            },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.POSITION, fields: ['isAbove'] }
+                    ]
+                }
+            }
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const customForms: Map<CustomFormDefinition> = {
             P: {
-                fields: {},
-                hidden: [],
+                fields: {}
             },
             C: {
-                fields: {},
                 parent: 'P',
+                fields: {},
                 groups: [
                     { name: Groups.POSITION, fields: ['isAbove'] }
                 ]
             }
         };
 
+        const relationDefinitions: Array<Relation> = [{
+            name: 'isAbove',
+            inverse: 'isBelow',
+            domain: ['P:inherit'],
+            range: ['P:inherit'],
+            inputType: 'relation',
+            sameMainCategoryResource: true
+        }];
+
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [
-                {
-                    name: 'isAbove',
-                    inverse: 'isBelow',
-                    domain: ['P:inherit'],
-                    range: ['P:inherit'],
-                    sameMainCategoryResource: true
-                },
-            ]
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            {}, {}, {},
+            relationDefinitions
         );
+
+        console.log(result['P'].children[0].groups[0]);
 
         const parentGroup = result['P'].groups[0];
         const childGroup = result['P'].children[0].groups[0];
@@ -1433,28 +1768,32 @@ describe('buildRawProjectConfiguration', () => {
 
     it('link parent and child instances', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             P: {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             },
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
+        const customForms: Map<CustomFormDefinition> = {
             P: {
-                fields: {},
-                hidden: []
+                fields: {}
             },
             C: {
-                fields: {},
-                parent: 'P'
+                parent: 'P',
+                fields: {}
             }
         };
 
         const categoriesTree = buildRawProjectConfiguration(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { default: {}, complete: {} }
+            builtInCategories,
+            {},
+            {},
+            customForms
         )[0];
 
         expect((Tree.access(categoriesTree, 0) as any).children[0].name).toBe('C');
@@ -1469,23 +1808,25 @@ describe('buildRawProjectConfiguration', () => {
 
     it('allow overwriting color', () => {
 
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             },
             B: {
                 fields: {},
-                groups: []
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'A:0': {
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
                 categoryName: 'A',
-                commons: [],
                 valuelists: {},
-                fields: {},
                 groups: [],
                 creationDate: '',
                 createdBy: '',
@@ -1494,8 +1835,8 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'A:0': {
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
                 fields: {},
                 color: 'red'
             },
@@ -1506,8 +1847,10 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const result = buildRaw(
-            builtInCategories, libraryCategories, customCategories,
-            {}, {}, {}
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
         );
 
         expect(result['A'].color).toBe('red');
@@ -1515,51 +1858,4 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['B'].color).toBe('red');
         expect(result['B'].defaultColor).toBe('#000042');   // Auto-generated color
     });
-
-
-    // err cases
-
-    /*xit('critical change of input type', () => {
-
-        const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            A: {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                fields : {}
-            }
-        };
-
-        const libraryCategories: Map<LibraryCategoryDefinition> = {
-            'B:0': {
-                categoryName: 'B',
-                parent: 'A',
-                commons: [],
-                valuelists: {},
-                fields: {
-                    field1: { inputType: 'text' }
-                },
-                creationDate: '',
-                createdBy: '',
-                description: {}
-            }
-        };
-
-        const customCategories: Map<CustomCategoryDefinition> = {
-            'B:0': {
-                fields: {
-                    field1: { inputType: 'radio' }
-                },
-                valuelists: {
-                    field1: 'valuelist_field1'
-                }
-            }
-        };
-
-        const result = buildRawProjectConfiguration(
-            builtInCategories, libraryCategories, customCategories,
-            {}, {}, {}
-        );
-
-        // expectation?
-    });*/
 });

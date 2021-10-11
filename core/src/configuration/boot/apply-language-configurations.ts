@@ -1,9 +1,10 @@
 import { Map } from 'tsfun';
 import { Relation } from '../../model/configuration/relation';
-import { TransientCategoryDefinition } from '../model';
-import { LanguageConfiguration } from '../model/language-configuration';
-import { LanguageConfigurations } from '../model/language-configurations';
-import { applyLanguagesToCategory } from './apply-languages-to-category';
+import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
+import { LanguageConfiguration } from '../model/language/language-configuration';
+import { LanguageConfigurations } from '../model/language/language-configurations';
+import { applyLanguagesToForm } from './apply-languages-to-form';
 
 
 /**
@@ -11,41 +12,39 @@ import { applyLanguagesToCategory } from './apply-languages-to-category';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export function applyLanguageConfigurations(languageConfigurations: LanguageConfigurations) {
+export function applyLanguageConfigurations(languageConfigurations: LanguageConfigurations,
+                                            categories: Map<TransientCategoryDefinition>) {
 
-    return (configuration: [Map<TransientCategoryDefinition>, Array<Relation>]) => {
+    return ([forms, relations]: [Map<TransientFormDefinition>, Array<Relation>]) => {
 
-        const [categories, relations] = configuration;
-
-        if (categories) {
-            applyFields(languageConfigurations, categories);
-            applyLanguagesToCategories(languageConfigurations, categories);
+        if (forms) {
+            applyFields(languageConfigurations, forms);
+            applyLanguagesToForms(languageConfigurations, forms, categories);
         }
         if (relations) applyRelations(languageConfigurations, relations);
 
-        return [categories, relations];
+        return [forms, relations];
     };
 }
 
 
-function applyFields(languageConfigurations: LanguageConfigurations,
-                     categories: Map<TransientCategoryDefinition>) {
+function applyFields(languageConfigurations: LanguageConfigurations, forms: Map<TransientFormDefinition>) {
 
-    for (const category of Object.values(categories)) {
-        for (const fieldName of Object.keys(category.fields)) {
-            category.fields[fieldName].label = LanguageConfiguration.getI18nString(
+    for (const form of Object.values(forms)) {
+        for (const fieldName of Object.keys(form.fields)) {
+            form.fields[fieldName].label = LanguageConfiguration.getI18nString(
                 languageConfigurations.complete,
                 'fields', fieldName, 'label'
             );
-            category.fields[fieldName].description = LanguageConfiguration.getI18nString(
+            form.fields[fieldName].description = LanguageConfiguration.getI18nString(
                 languageConfigurations.complete,
                 'fields', fieldName, 'description'
             );
-            category.fields[fieldName].defaultLabel = LanguageConfiguration.getI18nString(
+            form.fields[fieldName].defaultLabel = LanguageConfiguration.getI18nString(
                 languageConfigurations.default,
                 'fields', fieldName, 'label'
             );
-            category.fields[fieldName].defaultDescription = LanguageConfiguration.getI18nString(
+            form.fields[fieldName].defaultDescription = LanguageConfiguration.getI18nString(
                 languageConfigurations.default,
                 'fields', fieldName, 'description'
             );
@@ -54,8 +53,7 @@ function applyFields(languageConfigurations: LanguageConfigurations,
 }
 
 
-function applyRelations(languageConfigurations: LanguageConfigurations,
-                        relations: Array<Relation>) {
+function applyRelations(languageConfigurations: LanguageConfigurations, relations: Array<Relation>) {
 
     for (const relation of relations) {
         relation.label = LanguageConfiguration.getI18nString(
@@ -70,12 +68,12 @@ function applyRelations(languageConfigurations: LanguageConfigurations,
 }
 
 
-function applyLanguagesToCategories(languageConfigurations: LanguageConfigurations,
-                                    categories: Map<TransientCategoryDefinition>) {
+function applyLanguagesToForms(languageConfigurations: LanguageConfigurations,
+                               forms: Map<TransientFormDefinition>,
+                               categories: Map<TransientCategoryDefinition>) {
 
-    for (const key of Object.keys(categories)) {
-        
-        const category = categories[key];
-        applyLanguagesToCategory(languageConfigurations, category, category.categoryName ?? key);
+    for (const form of Object.values(forms)) {
+        const parentCategoryName: string|undefined = form.parent ?? categories[form.categoryName].parent;
+        applyLanguagesToForm(languageConfigurations, form, parentCategoryName);
     }
 }

@@ -9,7 +9,7 @@ export interface Field extends I18N.LabeledValue {
 
     name: string;
     inputType: Field.InputType;
-    inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
+    inputTypeOptions?: { validation?: { permissive?: true } };
     label?: I18N.String;
     description?: I18N.String;
     defaultLabel?: I18N.String;
@@ -30,7 +30,7 @@ export interface Field extends I18N.LabeledValue {
 
 export module Field {
 
-    export type SOURCE_TYPES = 'builtin'|'library' |'custom' |'common';
+    export type SOURCE_TYPES = 'builtIn'|'library'|'custom'|'common';
 
     export const INPUTTYPE = 'inputType';
     export const SOURCE = 'source';
@@ -46,7 +46,7 @@ export module Field {
 
     export module Source {
 
-        export const BUILTIN = 'builtin';
+        export const BUILTIN = 'builtIn';
         export const LIBRARY = 'library';
         export const CUSTOM = 'custom';
         export const COMMON = 'common';

@@ -66,6 +66,7 @@ export namespace Category {
     }
 
 
+    // TODO Remove this (unused)
     export function build(name: Name, parentCategory?: Category): Category {
 
         const color: string = Category.generateColorForCategory(name);

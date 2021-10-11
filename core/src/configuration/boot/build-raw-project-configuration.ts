@@ -1,27 +1,32 @@
-import { clone, compose, cond, copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
-    Map, map, Mapping, on, or, update as updateStruct, assoc, isUndefinedOrEmpty, not, curry } from 'tsfun';
-import { Relation, Category } from '../../model';
-import { Valuelist } from '../../model';
-import { Forest,Tree, withDissoc, sortStructArray } from '../../tools';
-import { linkParentAndChildInstances } from '../category-forest';
-import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
-import { CustomCategoryDefinition } from '../model/custom-category-definition';
-import { LanguageConfigurations } from '../model/language-configurations';
-import { LibraryCategoryDefinition } from '../model/library-category-definition';
-import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
+import { compose, cond, detach, filter, flow, identity, includedIn, isDefined, isNot, Map, map, Mapping,
+    on, or, update as updateStruct, assoc, isUndefinedOrEmpty, not, curry } from 'tsfun';
+import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
+import { CustomFormDefinition } from '../model/form/custom-form-definition';
+import { LanguageConfigurations } from '../model/language/language-configurations';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
+import { TransientFieldDefinition } from '../model/field/transient-field-definition';
 import { RawProjectConfiguration } from '../../services/project-configuration';
-import { addExtraFields } from './add-extra-fields';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';
 import { applyLanguageConfigurations } from './apply-language-configurations';
 import { Assertions } from './assertions';
-import { ConfigurationErrors } from './configuration-errors';
-import { iterateOverFieldsOfCategories } from './helpers';
+import { iterateOverFields } from './helpers';
 import { hideFields } from './hide-fields';
 import { makeCategoryForest } from './make-category-forest';
-import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
-import { mergeWithCustomCategories } from './merge-with-custom-categories';
+import { mergeWithCustomForms } from './merge-with-custom-forms';
 import { setGroupLabels } from './set-group-labels';
+import { Valuelist } from '../../model/configuration/valuelist';
+import { Relation } from '../../model/configuration/relation';
+import { Category } from '../../model/configuration/category';
+import { mergeBuiltInWithLibraryCategories } from './merge-built-in-with-library-categories';
+import { getAvailableForms } from './get-available-forms';
+import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
+import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
+import { LibraryFormDefinition } from '../model/form/library-form-definition';
+import { Forest, Tree } from '../../tools/forest';
+import { sortStructArray } from '../../tools/sort-struct-array';
+import { withDissoc } from '../../tools/utils';
+import { linkParentAndChildInstances } from '../category-forest';
 
 
 const CATEGORIES = 0;
@@ -31,63 +36,65 @@ const CATEGORIES = 0;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCategoryDefinition>,
+export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCategoryDefinition>,
                                              libraryCategories: Map<LibraryCategoryDefinition>,
-                                             customCategories?: Map<CustomCategoryDefinition>,
+                                             libraryForms: Map<LibraryFormDefinition>,
+                                             customForms?: Map<CustomFormDefinition>,
                                              commonFields: Map<any> = {},
                                              valuelistsConfiguration: Map<Valuelist> = {},
-                                             extraFields: Map<any> = {},
+                                             builtInFields: Map<any> = {},
                                              relations: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
-                                             validateFields: any = identity,
+                                             validateFields: any = identity,    // TODO Check if this has to be a parameter
                                              selectedParentCategories?: string[]): RawProjectConfiguration {
 
-    Assertions.performAssertions(builtInCategories, libraryCategories, commonFields, valuelistsConfiguration, customCategories);
-    addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
+    Assertions.performAssertions(
+        builtInCategories, libraryCategories, libraryForms, commonFields, valuelistsConfiguration, customForms
+    );
+    addSourceField(builtInCategories, libraryCategories, libraryForms, commonFields, customForms);
+
+    const categories: Map<TransientCategoryDefinition> = mergeBuiltInWithLibraryCategories(
+        builtInCategories, libraryCategories
+    );
 
     return flow(
-        mergeBuiltInWithLibraryCategories(builtInCategories, libraryCategories),
-        Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
-        cond(isDefined(customCategories), Assertions.assertNoDuplicationInSelection(customCategories)),
+        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relations),
+        cond(isDefined(customForms), Assertions.assertNoDuplicationInSelection(customForms)),
         setDefaultConstraintIndexed,
-        cond(isDefined(customCategories), mergeWithCustomCategories(
-            Assertions.assertInputTypePresentIfNotCommonField(commonFields), customCategories
-        )),
-        cond(isDefined(customCategories), eraseUnusedCategories(Object.keys(customCategories ?? {}))),
-        replaceCommonFields(commonFields),
+        cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relations)),
+        cond(isDefined(customForms), removeUnusedForms(Object.keys(customForms ?? {}))),
         insertValuelistIds,
         Assertions.assertValuelistIdsProvided,
-        cond(isDefined(customCategories), hideFields(customCategories)),
         replaceValuelistIdsWithValuelists(valuelistsConfiguration),
-        addExtraFields(extraFields),
-        setCategoryNames,
+        cond(isDefined(customForms), hideFields),
         prepareRawProjectConfiguration,
         addRelations(relations),
-        applyLanguageConfigurations(languageConfigurations),
+        applyLanguageConfigurations(languageConfigurations, categories),
         updateStruct(
             CATEGORIES,
-            processCategories(
-                validateFields, languageConfigurations, categoriesOrder, relations, selectedParentCategories
+            processForms(
+                validateFields, languageConfigurations, categoriesOrder, relations, categories,
+                selectedParentCategories
             )
         )
     );
 }
 
 
-const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefinition>) => [configuration, [] /* relations */];
+const prepareRawProjectConfiguration = (forms: Map<TransientFormDefinition>) => [forms, [] /* relations */];
 
 
-function processCategories(validateFields: any,
-                           languageConfigurations: LanguageConfigurations,
-                           categoriesOrder: string[],
-                           relations: Array<Relation>,
-                           selectedParentCategories?: string[])
-                           : Mapping<Map<TransientCategoryDefinition>, Forest<Category>> {
+function processForms(validateFields: any,
+                      languageConfigurations: LanguageConfigurations,
+                      categoriesOrder: string[],
+                      relations: Array<Relation>,
+                      categories: Map<TransientCategoryDefinition>,
+                      selectedParentCategories?: string[]): Mapping<Map<TransientFormDefinition>, Forest<Category>> {
 
     return compose(
         validateFields,
-        makeCategoryForest(relations, selectedParentCategories),
+        makeCategoryForest(relations, categories, selectedParentCategories),
         Forest.map(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances
@@ -95,24 +102,13 @@ function processCategories(validateFields: any,
 }
 
 
-function setDefaultConstraintIndexed(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
+function setDefaultConstraintIndexed(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
 
-    iterateOverFieldsOfCategories(categories, (categoryName, category, fieldName, field) => {
+    iterateOverFields(forms, (categoryName, category, fieldName, field) => {
         field.defaultConstraintIndexed = field.constraintIndexed === true;
     });
 
-    return categories;
-}
-
-
-function setCategoryNames(categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
-
-    Object.keys(categories).forEach(key => {
-        const category: TransientCategoryDefinition = categories[key];
-        category.name = category.categoryName ?? key;
-    });
-
-    return categories;
+    return forms;
 }
 
 
@@ -120,87 +116,65 @@ const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
-function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> {
+function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
 
-    iterateOverFieldsOfCategories(mergedCategories, (categoryName, category, fieldName, field) => {
+    iterateOverFields(forms, (_, form: TransientFormDefinition, fieldName, field) => {
 
-        if (category.valuelists && category.valuelists[fieldName]) {
-            field.valuelistId = category.valuelists[fieldName];
+        if (form.valuelists && form.valuelists[fieldName]) {
+            field.valuelistId = form.valuelists[fieldName];
         }
-        if (category.positionValuelists && category.positionValuelists[fieldName]) {
-            field.positionValuelistId = category.positionValuelists[fieldName];
+        if (form.positionValuelists && form.positionValuelists[fieldName]) {
+            field.positionValuelistId = form.positionValuelists[fieldName];
         }
     });
 
-    return mergedCategories;
+    return forms;
 }
 
 
-function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelist>)
-    : Mapping<Map<TransientCategoryDefinition>> {
+function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>): Mapping<Map<TransientFormDefinition>> {
 
     return map(
         cond(
-            on(TransientCategoryDefinition.FIELDS, not(isUndefinedOrEmpty)),
-            assoc(TransientCategoryDefinition.FIELDS,
+            on(TransientFormDefinition.FIELDS, not(isUndefinedOrEmpty)),
+            assoc(TransientFormDefinition.FIELDS,
                 map(
                     cond(
                         or(
                             on(TransientFieldDefinition.VALUELISTID, isDefined),
                             on(TransientFieldDefinition.POSITION_VALUELIST_ID, isDefined)
                         ),
-                        replaceValuelistIdWithActualValuelist(valuelistDefinitionsMap)))))) as any;
+                        replaceValuelistIdWithActualValuelist(valuelists)
+                    )
+                )
+            )
+        )
+    ) as any;
 }
 
 
-function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Valuelist>) {
+function replaceValuelistIdWithActualValuelist(valuelists: Map<Valuelist>) {
 
-    return (fd: TransientFieldDefinition) =>
-        flow(fd,
-            assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
-            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
-            detach(TransientFieldDefinition.VALUELISTID),
-            detach(TransientFieldDefinition.POSITION_VALUELIST_ID)
-        );
+    return (field: TransientFieldDefinition) => flow(
+        field,
+        assoc(TransientFieldDefinition.VALUELIST, valuelists[field.valuelistId!]),
+        assoc(TransientFieldDefinition.POSITION_VALUES, valuelists[field.positionValuelistId!]),
+        detach(TransientFieldDefinition.VALUELISTID),
+        detach(TransientFieldDefinition.POSITION_VALUELIST_ID)
+    );
 }
 
 
-function eraseUnusedCategories(selectedCategoriesNames: string[])
-    : Mapping<Map<TransientCategoryDefinition>> {
+function removeUnusedForms(selectedFormsNames: string[]): Mapping<Map<TransientFormDefinition>> {
 
-    return (categories: Map<TransientCategoryDefinition>) => {
+    return (forms: Map<TransientFormDefinition>) => {
 
-        const categoriesToErase = flow(
-            categories,
+        const formsToRemove = flow(
+            forms,
             Object.keys,
-            filter(isNot(includedIn(selectedCategoriesNames)))
+            filter(isNot(includedIn(selectedFormsNames)))
         );
-        return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
+
+        return formsToRemove.reduce(withDissoc, forms) as Map<TransientFormDefinition>;
     }
-}
-
-
-function replaceCommonFields(commonFields: Map<any>)
-        : Mapping<Map<TransientCategoryDefinition>> {
-
-    return map(
-        cond(
-            on(TransientCategoryDefinition.COMMONS, isDefined),
-            (mergedCategory: TransientCategoryDefinition) => {
-
-                const clonedMergedCategory: any = clone(mergedCategory);
-                for (let commonFieldName of clonedMergedCategory.commons) {
-                    if (!commonFields[commonFieldName]) {
-                        throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
-                    }
-
-                    if (!clonedMergedCategory.fields[commonFieldName]) {
-                        clonedMergedCategory.fields[commonFieldName] = {};
-                    }
-
-                    clonedMergedCategory.fields[commonFieldName] = copy(commonFields[commonFieldName]) as any;
-                }
-                delete clonedMergedCategory.commons;
-                return clonedMergedCategory;
-            })) as any;
 }

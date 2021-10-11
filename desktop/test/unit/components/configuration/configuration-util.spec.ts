@@ -26,7 +26,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {},
                         hidden: []
@@ -38,7 +38,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {},
                         hidden: [],
@@ -51,7 +51,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {},
                         hidden: ['field1']
@@ -63,7 +63,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {
                             field1: {
@@ -79,7 +79,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {},
                         hidden: [],
@@ -94,20 +94,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
         expect(ConfigurationUtil.isCustomizedCategory({
             resource: {
-                categories: {
-                    TestCategory: {
-                        fields: {},
-                        hidden: [],
-                        commons: ['supervisor']
-                    }
-                },
-                languages: {}
-            }
-        } as any, category)).toBe(true);
-
-        expect(ConfigurationUtil.isCustomizedCategory({
-            resource: {
-                categories: {
+                forms: {
                     TestCategory: {
                         fields: {},
                         hidden: []

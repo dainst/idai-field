@@ -1,86 +1,75 @@
-import { isEmpty, not, on, subtract, Map } from 'tsfun';
+import { isEmpty, not, on, subtract, Map, keysValues, set } from 'tsfun';
 import { Relation } from '../../model/configuration/relation';
 import { Named } from '../../tools/named';
-import { TransientCategoryDefinition } from '../model';
+import { TransientFormDefinition } from '../model/form/transient-form-definition';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function addRelations(extraRelations: Array<Relation>) {
+export function addRelations(relationsToAdd: Array<Relation>) {
 
     return (configuration: [any, any]) => {
 
-        let [categories, relations] = configuration;
+        let [forms, relations] = configuration;
 
         if (!relations) return;
 
-        for (let extraRelation of extraRelations) {
-            expandInherits(categories, extraRelation, Relation.DOMAIN);
+        for (let relationToAdd of relationsToAdd) {
+            expandInherits(forms, relationToAdd, Relation.DOMAIN);
 
-            relations
-                .filter(on(Named.NAME)(extraRelation))
+            relations.filter(on(Named.NAME)(relationToAdd))
                 .forEach((relation: any) => {
-                    relation.domain = subtract(extraRelation.domain)(relation.domain)
+                    relation.domain = subtract(relationToAdd.domain)(relation.domain)
                 });
-            relations = relations
-                .filter(not(on(Relation.DOMAIN, isEmpty)));
+            relations = relations.filter(not(on(Relation.DOMAIN, isEmpty)));
 
-            relations.splice(0,0, extraRelation);
+            relations.splice(0,0, relationToAdd);
 
-            expandInherits(categories, extraRelation, Relation.RANGE);
-            expandOnEmpty(categories, extraRelation, Relation.RANGE);
-            expandOnEmpty(categories, extraRelation, Relation.DOMAIN);
+            expandInherits(forms, relationToAdd, Relation.RANGE);
+            expandOnEmpty(forms, relationToAdd, Relation.RANGE);
+            expandOnEmpty(forms, relationToAdd, Relation.DOMAIN);
         }
 
-        return [categories, relations];
+        return [forms, relations];
     }
 }
 
 
-function expandInherits(categories: Map<TransientCategoryDefinition>,
-                        extraRelation: Relation, itemSet: string) {
+function expandInherits(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
 
-    if (!extraRelation) return;
-    if (!(extraRelation as any)[itemSet]) return;
+    if (!relation) return;
+    if (!(relation as any)[itemSet]) return;
 
-    const itemsNew = [] as any;
-    for (let item of (extraRelation as any)[itemSet]) {
-
+    const newItems: string[] = [];
+    for (let item of (relation as any)[itemSet]) {
         if (item.indexOf(':inherit') !== -1) {
-            for (let key of Object.keys(categories)) {
-                const category: TransientCategoryDefinition = categories[key];
-                if (category.parent === item.split(':')[0]) {
-                    itemsNew.push(category.categoryName ?? key);
+            for (let form of Object.values(forms)) {
+                if (form.parent === item.split(':')[0] && !newItems.includes(form.categoryName)) {
+                    newItems.push(form.categoryName);
                 }
             }
-            itemsNew.push(item.split(':')[0]);
+            newItems.push(item.split(':')[0]);
         } else {
-            itemsNew.push(item);
+            newItems.push(item);
         }
-
-
     }
-    (extraRelation as any)[itemSet] = itemsNew;
+    relation[itemSet] = newItems;
 }
 
 
-function expandOnEmpty(categories: any,
-                       extraRelation_: Relation, itemSet: string) {
+function expandOnEmpty(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
 
-    const extraRelation: any = extraRelation_;
-
-    if (not(isEmpty)(extraRelation[itemSet])) return;
+    if (not(isEmpty)(relation[itemSet])) return;
 
     let opposite = Relation.RANGE;
     if (itemSet === Relation.RANGE) opposite = Relation.DOMAIN;
 
-    extraRelation[itemSet] = [];
-    for (let key of Object.keys(categories)) {
-        const categoryName = categories[key].categoryName ?? key;
-        if (extraRelation[opposite].indexOf(categoryName) === -1) {
-            extraRelation[itemSet].push(categoryName);
+    relation[itemSet] = [];
+    for (let form of Object.values(forms)) {
+        if (relation[opposite].indexOf(form.categoryName) === -1) {
+            relation[itemSet].push(form.categoryName);
         }
     }
 }

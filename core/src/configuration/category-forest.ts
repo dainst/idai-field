@@ -1,5 +1,5 @@
-import {Category} from '../model';
-import {Forest, Tree} from '../tools/forest';
+import { Category } from '../model';
+import { Forest, Tree } from '../tools/forest';
 
 
 /**

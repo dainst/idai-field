@@ -34,6 +34,20 @@ export class PouchdbServer {
             unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
         }));
 
+        app.post('/files/:project/*', (req: any, res: any, next: any) => {
+            const prefix = remote.getGlobal('appDataPath') + '/imagestore/';
+            const path = prefix + req.params['project'] + '/' + req.params[0];
+
+            // https://stackoverflow.com/a/16599008
+            req.on('data', function(data) {
+                console.log(data)
+                fs.writeFileSync(path, data);
+            });
+            req.on('end', function() {
+                res.status(200).send( { status: 'ok' });
+            });
+        });
+
         app.get('/files/:project/*', (req: any, res: any) => {
             const prefix = remote.getGlobal('appDataPath') + '/imagestore/';
             const path = prefix + req.params['project'] + '/' + req.params[0];

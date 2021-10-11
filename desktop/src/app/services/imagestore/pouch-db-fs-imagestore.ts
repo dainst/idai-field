@@ -33,10 +33,6 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
     public getPath = (): string|undefined => this.projectPath;
 
-    /**  necessary to detect broken thumbs after restoring backup */
-    public isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.size == 0 || data.size == 2;
-
-
     public init(settings: Settings): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -103,7 +99,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
 
-            if (asThumb && this.isThumbBroken(data)) return Promise.reject('thumb broken');
+            // if (asThumb && this.isThumbBroken(data)) return Promise.reject('thumb broken'); // Can't happen any longer. What can happen, though, is that the original is missing
 
             blobUrls[key] = this.blobMaker.makeBlob(data);
 
@@ -112,11 +108,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
         }).catch((err: any) => {
 
             if (!asThumb) return Promise.resolve(''); // handle missing files by showing black placeholder
-
-            return this.createThumbnail(key).then(() => this.read(key, sanitizeAfter))
-                .catch(() => {
-                    return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
-                });
+            // return Promise.reject([ImagestoreErrors.NOT_FOUND]); // if both thumb and original missing
         });
     }
 
@@ -135,18 +127,8 @@ export class PouchDbFsImagestore /* implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (imageDocument._attachments?.thumb && !this.isThumbBroken(imageDocument._attachments.thumb.data)) {
-
-                result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
-
-            } else {
-                try {
-                    await this.createThumbnail(imageDocument.resource.id);
-                    result[imageDocument.resource.id] = await this.readThumb(imageDocument.resource.id);
-                } catch(err) {
-                    console.error('Failed to recreate thumbnail for image: ' + imageDocument.resource.id, err);
-                }
-            }
+            result[imageDocument.resource.id] =
+                await this.readThumb(imageDocument.resource.id)
         }
 
         return result;
@@ -280,18 +262,15 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     }
 
 
-    private readThumb(key: string): Promise<Blob> {
+    private readThumb(key: string): Promise<any> {
 
-        return this.db.getAttachment(key, 'thumb') as Promise<Blob>;
-    }
-
-
-    private async createThumbnail(key: string): Promise<any> {
-
-        console.debug('Recreating thumbnail for image:', key);
-
-        const originalImageData = await this.readOriginal(key);
-        return await this.putAttachment(originalImageData, key, true);
+        let path = this.projectPath + 'thumbs/' + key;
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
     }
 
 

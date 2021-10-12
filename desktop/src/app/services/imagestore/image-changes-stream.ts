@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Maybe, isOk, ok } from 'tsfun';
 import { ChangesStream, Named, ProjectConfiguration, Document } from 'idai-field-core';
 import { Settings } from '../settings/settings';
 import { SettingsProvider } from '../settings/settings-provider';
@@ -17,8 +18,9 @@ export class ImageChangesStream {
                 settingsProvider: SettingsProvider,
                 projectConfiguration: ProjectConfiguration) {
 
-        const [syncUrl, imagestoreProjectPath] =
-            ImageChangesStream.extract(settingsProvider.getSettings());
+        const account = ImageChangesStream.extract(settingsProvider.getSettings());
+        if (!isOk(account)) return;
+        const [syncUrl, imagestoreProjectPath] = ok(account);
 
         changesStream.remoteChangesNotifications().subscribe(next => {
             if (!projectConfiguration.getImageCategories().map(Named.toName)
@@ -51,10 +53,13 @@ export class ImageChangesStream {
     }
 
 
-    private static extract(settings: Settings) {
+    private static extract(settings: Settings): Maybe<[string, string]> {
 
         const project = settings.selectedProject;
+        if (project === 'test') return [];
+
         const syncSource = settings.syncTargets[project];
+        if (!syncSource) return [];
 
         const address = 'localhost'; // TODO should be derived from syncSource.address
         const protocol = 'http'; // TODO be able to deal with both http and https
@@ -64,6 +69,6 @@ export class ImageChangesStream {
         const imagestorePath = settings.imagestorePath;
         const imagestoreProjectPath = imagestorePath + project + '/';
 
-        return [syncUrl, imagestoreProjectPath];
+        return [[syncUrl, imagestoreProjectPath]];
     }
 }

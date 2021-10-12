@@ -29,7 +29,7 @@ export class AddCategoryModalComponent {
 
     public searchTerm: string = '';
     public selectedCategory: CategoryForm|undefined;
-    public categories: Array<CategoryForm> = [];
+    public categoryForms: Array<CategoryForm> = [];
 
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
@@ -89,7 +89,7 @@ export class AddCategoryModalComponent {
 
     public applyCategoryNameSearch() {
 
-        this.categories = ConfigurationIndex
+        this.categoryForms = ConfigurationIndex
             .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
@@ -99,7 +99,7 @@ export class AddCategoryModalComponent {
                 && (!this.categoryToReplace || category.name === this.categoryToReplace.name)
             );
 
-        this.selectedCategory = this.categories?.[0];
+        this.selectedCategory = this.categoryForms?.[0];
     }
 
 

@@ -18,8 +18,7 @@
                 <span class="mdi mdi-plus"></span>
             </button>
         </div>
-        <category-listing [category]="parentCategory"
-                          [categories]="categories"
+        <category-listing [categoryForms]="categoryForms"
                           [selectedCategory]="selectedCategory"
                           [searchTerm]="searchTerm"
                           (onCategorySelected)="selectCategory($event)">

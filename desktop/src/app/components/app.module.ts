@@ -60,6 +60,9 @@ import { ProjectModule } from './project/project.module';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 import { Filestore } from '../services/imagestore/filestore';
 import { RemoteFilestore } from '../services/imagestore/remote-filestore';
+import { FsAdapter } from '../services/imagestore/fs-adapter';
+import { HttpAdapter } from '../services/imagestore/http-adapter';
+
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -186,6 +189,8 @@ registerLocaleData(localeIt, 'it');
                          settingsProvider: SettingsProvider) => new RelationsManager(datastore, projectConfiguration),
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
+        FsAdapter,
+        HttpAdapter,
         Filestore,
         RemoteFilestore,
         ImageRelationsManager,

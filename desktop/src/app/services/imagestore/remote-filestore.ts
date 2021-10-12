@@ -7,12 +7,10 @@ import { HttpAdapter } from './http-adapter';
 /**
  * @author Daniel de Oliveira
  */
-// Impl note: We use the '=>'-forms of functions on purpose such that
-// they are bound to the Filestore context and can be used as params
 export class RemoteFilestore {
 
-    // pass HttpAdapter as param
-    constructor(private settingsProvider: SettingsProvider) {}
+    constructor(private settingsProvider: SettingsProvider,
+                private httpAdapter: HttpAdapter) {}
 
 
     public isOn = () => isOk(this.getAddress()) && this.mySyncIsOn();
@@ -24,12 +22,12 @@ export class RemoteFilestore {
      * @param path should start with /
      * @throws NOT_ONLINE. Make sure checking isOn() before calling this method
      */
-    public get = (path: string) => {
+    public get(path: string) {
 
         const address = this.getAddress();
         if (!isOk(address) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
         const url = ok(address) + path;
-        return HttpAdapter.getWithBinaryData(url);
+        return this.httpAdapter.getWithBinaryData(url);
     }
 
 
@@ -39,12 +37,12 @@ export class RemoteFilestore {
      * @param path should start with /
      * @throws NOT_ONLINE. Make sure checking isOn() before calling this method
      */
-    public post = (path: string, contents: any) => {
+    public post(path: string, contents: any) {
 
         const address = this.getAddress();
         if (!isOk(address) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
         const url = ok(address) + path;
-        return HttpAdapter.postBinaryData(url, contents);
+        return this.httpAdapter.postBinaryData(url, contents);
     }
 
 
@@ -59,7 +57,7 @@ export class RemoteFilestore {
     /*
      * @returns url, ending slash not included
      */
-    private getAddress = (): Maybe<string> => {
+    private getAddress(): Maybe<string> {
 
         const settings = this.settingsProvider.getSettings();
         const project = settings.selectedProject;

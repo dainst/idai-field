@@ -1,22 +1,23 @@
 const http = typeof window !== 'undefined' ? window.require('http') : require('http');
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+
 /**
  * @author Daniel de Oliveira
  */
-export namespace HttpAdapter {
+export class HttpAdapter {
 
-    export function getWithBinaryData(url: string) {
+    public getWithBinaryData(url: string) {
 
         return new Promise<any>(resolve => {
 
-            http.get(url, getBinaryDataFromResponse(resolve));
+            http.get(url, HttpAdapter.getBinaryDataFromResponse(resolve));
         })
     }
 
 
     // https://stackoverflow.com/a/59032305
-    export async function postBinaryData(url: string, contents: any) {
+    public async postBinaryData(url: string, contents: any) {
 
         await axios({
             method: 'post',
@@ -27,7 +28,7 @@ export namespace HttpAdapter {
     }
 
 
-    function getBinaryDataFromResponse(notify: (data: any) => void) {
+    private static getBinaryDataFromResponse(notify: (data: any) => void) {
 
         // https://stackoverflow.com/a/49600958
         return (res: any) => {

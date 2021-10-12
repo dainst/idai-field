@@ -10,8 +10,8 @@ import { FsAdapter } from './fs-adapter';
 // they are bound to the Filestore context and can be used as params
 export class Filestore {
 
-    // TODO pass FsAdapter as param
-    constructor(private settingsProvider: SettingsProvider) {}
+    constructor(private settingsProvider: SettingsProvider,
+                private fsAdapter: FsAdapter) {}
 
 
     /**
@@ -20,12 +20,12 @@ export class Filestore {
      *
      * @param path should start with /
      */
-    public writeFile = (path: string, contents: any) => {
+    public writeFile(path: string, contents: any) {
 
         const fullPath = this.getFullPath(path);
-        if (FsAdapter.fileExists(fullPath)) return;
+        if (this.fsAdapter.fileExists(fullPath)) return;
 
-        return FsAdapter.writeFile(this.getFullPath(path), contents);
+        return this.fsAdapter.writeFile(this.getFullPath(path), contents);
     }
 
 
@@ -33,13 +33,13 @@ export class Filestore {
      * Reads a file from the current project
      * @param path should start with /
      */
-    public readFile = (path: string) => {
+    public readFile(path: string) {
 
-        return FsAdapter.readFile(this.getFullPath(path));
+        return this.fsAdapter.readFile(this.getFullPath(path));
     }
 
 
-    private getFullPath = (path: string): string => {
+    private getFullPath(path: string): string {
 
         const settings = this.settingsProvider.getSettings()
         return settings.imagestorePath + settings.selectedProject + path;

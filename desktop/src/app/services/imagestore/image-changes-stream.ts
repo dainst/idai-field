@@ -6,12 +6,6 @@ import { RemoteFilestore } from './remote-filestore';
 
 type Paths = [string, string];
 
-type Services = {
-    readFile: (path: string) => any,
-    writeFile: (path: string, contents: any) => void,
-    get: (url: string) => Promise<any>,
-    post: (url: string, data: any) => Promise<void>
-}
 
 // TODO in image overview, update images when new images come in
 
@@ -33,14 +27,6 @@ export class ImageChangesStream {
                 projectConfiguration: ProjectConfiguration,
                 categoryConverter: CategoryConverter) {
 
-        // TODO pass this in as parameter; maybe make a RemoteFilestore to encapsulate HttpAdapter access, analogous to Filestore
-        const services: Services = {
-            readFile: filestore.readFile,
-            writeFile: filestore.writeFile,
-            get: remoteFilestore.get,
-            post: remoteFilestore.post,
-        };
-
         // TODO maybe we can do it only on creation, not on every change
         datastore.changesNotifications().subscribe(document => {
             const doc = categoryConverter.convert(document);
@@ -50,26 +36,29 @@ export class ImageChangesStream {
 
             const paths = ImageChangesStream.getPaths(document)
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
-                ImageChangesStream.postImages(paths, services);
+                ImageChangesStream.postImages(paths, filestore, remoteFilestore);
             } else {
-                ImageChangesStream.fetchImages(paths, services);
+                ImageChangesStream.fetchImages(paths, filestore, remoteFilestore);
             }
         });
     }
 
 
-    private static async postImages([hiresPath, loresPath]: Paths, {readFile, post}: Services) {
+    private static async postImages([hiresPath, loresPath]: Paths,
+                                    filestore: Filestore,
+                                    remoteFilestore: RemoteFilestore) {
 
-        await post(hiresPath, readFile(hiresPath));
-        await post(loresPath, readFile(loresPath));
+        await remoteFilestore.post(hiresPath, filestore.readFile(hiresPath));
+        await remoteFilestore.post(loresPath, filestore.readFile(loresPath));
     }
 
 
     private static async fetchImages([hiresPath, loresPath]: Paths,
-                                     {writeFile, get}: Services) {
+                                     filestore: Filestore,
+                                     remoteFilestore: RemoteFilestore) {
 
-        writeFile(hiresPath, await get(hiresPath));
-        writeFile(loresPath, await get(loresPath));
+        filestore.writeFile(hiresPath, await remoteFilestore.get(hiresPath));
+        filestore.writeFile(loresPath, await remoteFilestore.get(loresPath));
     }
 
 

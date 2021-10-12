@@ -34,20 +34,26 @@ export class ImageChangesStream {
     private static go(syncUrl: string, imagestoreProjectPath: string, next: Document) {
 
         const hiresPath = imagestoreProjectPath + next.resource.id;
+        if (!fs.existsSync(hiresPath)) http.get(syncUrl + next.resource.id, ImageChangesStream.write(hiresPath));
         const loresPath = imagestoreProjectPath + 'thumbs/' + next.resource.id;
+        if (!fs.existsSync(loresPath)) http.get(syncUrl + '/thumbs/' + next.resource.id, ImageChangesStream.write(loresPath));
+    }
 
-        if (!fs.existsSync(hiresPath)) {
-            console.log('hires image does not yet exist', hiresPath);
-            // TODO fetch from remote
-            http.get(syncUrl, (res: any) => {
-                // TODO impl
+
+    /*
+     * https://stackoverflow.com/a/49600958
+     */
+    private static write(path: string) {
+
+        return (res: any) => {
+
+            res.setEncoding('binary');
+            const chunks = [];
+            res.on('data', function(chunk) {
+                chunks.push(Buffer.from(chunk, 'binary'));
             });
-        }
-        if (!fs.existsSync(loresPath)) {
-            console.log('lores image does not yet exist', loresPath);
-            // TODO fetch from remote
-            http.get(syncUrl, (res: any) => {
-                // TODO impl
+            res.on('end', function() {
+                fs.writeFileSync(path, Buffer.concat(chunks));
             });
         }
     }

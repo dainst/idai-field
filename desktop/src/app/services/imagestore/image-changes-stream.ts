@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Maybe, isOk, ok, just, nothing } from 'tsfun';
 import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter } from 'idai-field-core';
-import { Settings } from '../settings/settings';
 import { SettingsProvider } from '../settings/settings-provider';
-import { HttpAdapter } from './http-adapter';
 import { Filestore } from './filestore';
+import { RemoteFilestore } from './remote-filestore';
 
-type BasePaths = [string, string];
-type Paths = [string, string, string, string];
+type Paths = [string, string];
 
 type Services = {
     readFile: (path: string) => any,
     fileExists: (path: string) => boolean,
     writeFile: (path: string, contents: any) => void,
-    getWithBinaryData: (url: string) => Promise<any>,
-    postBinaryData: (url: string, data: any) => Promise<void>
+    get: (url: string) => Promise<any>,
+    post: (url: string, data: any) => Promise<void>
 }
 
 // TODO in image overview, update images when new images come in
@@ -32,6 +29,7 @@ export class ImageChangesStream {
     // TODO reinit on runtime changes of sync settings
     constructor(datastore: PouchdbDatastore,
                 filestore: Filestore,
+                remoteFilestore: RemoteFilestore,
                 settingsProvider: SettingsProvider,
                 projectConfiguration: ProjectConfiguration,
                 categoryConverter: CategoryConverter) {
@@ -41,22 +39,18 @@ export class ImageChangesStream {
             readFile: filestore.readFile,
             fileExists: filestore.fileExists,
             writeFile: filestore.writeFile,
-            getWithBinaryData: HttpAdapter.getWithBinaryData,
-            postBinaryData: HttpAdapter.postBinaryData,
+            get: remoteFilestore.get,
+            post: remoteFilestore.post,
         };
-
-        const maybeBasePaths = ImageChangesStream.extractBasePaths(settingsProvider.getSettings());
-        if (!isOk(maybeBasePaths)) return;
-        const basePaths = ok(maybeBasePaths);
 
         // TODO maybe we can do it only on creation, not on every change
         datastore.changesNotifications().subscribe(document => {
             const doc = categoryConverter.convert(document);
 
             if (!ImageChangesStream.isImageDocument(projectConfiguration, doc)) return;
-            if (!ImageChangesStream.mySyncIsOn(settingsProvider.getSettings())) return;
+            if (!remoteFilestore.isOn()) return;
 
-            const paths = ImageChangesStream.getPaths(basePaths, document)
+            const paths = ImageChangesStream.getPaths(document)
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
                 ImageChangesStream.postImages(paths, services);
             } else {
@@ -66,55 +60,26 @@ export class ImageChangesStream {
     }
 
 
-    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths, {readFile, postBinaryData}: Services) {
+    private static async postImages([hiresPath, loresPath]: Paths, {readFile, post}: Services) {
 
-        await postBinaryData(readFile(hiresPath), hiresUrl);
-        await postBinaryData(readFile(loresPath), loresUrl);
+        await post(hiresPath, readFile(hiresPath));
+        await post(loresPath, readFile(loresPath));
     }
 
 
-    private static async fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths,
-                                     {writeFile, fileExists, getWithBinaryData}: Services) {
+    private static async fetchImages([hiresPath, loresPath]: Paths,
+                                     {writeFile, fileExists, get}: Services) {
 
-        if (!fileExists(hiresPath)) writeFile(hiresPath, await getWithBinaryData(hiresUrl));
-        if (!fileExists(loresPath)) writeFile(loresPath, await getWithBinaryData(loresUrl));
+        if (!fileExists(hiresPath)) writeFile(hiresPath, await get(hiresPath)); // TODO instead testing if exists, pass optional bool param to writeFile, which defaults to false, and allows to overwrite files if set to true
+        if (!fileExists(loresPath)) writeFile(loresPath, await get(loresPath));
     }
 
 
-    private static extractBasePaths(settings: Settings): Maybe<BasePaths> {
-
-        const project = settings.selectedProject;
-        if (project === 'test') return nothing();
-
-        const syncSource = settings.syncTargets[project];
-        if (!syncSource) return nothing();
-
-        const address = syncSource.address;
-        const protocol = 'http'; // TODO be able to deal with both http and https
-        const syncUrl = protocol + '://' + project + ':' + syncSource.password
-            + '@' + address + '/files/' + project + '/';
-
-        const projectPath = project + '/';
-
-        return just([syncUrl, projectPath]);
-    }
-
-
-    private static mySyncIsOn(settings: Settings) {
-
-        const project = settings.selectedProject;
-        const syncSource = settings.syncTargets[project];
-        return syncSource.isSyncActive;
-    }
-
-
-    private static getPaths([syncUrl, projectPath]: BasePaths, document: Document): Paths {
+    private static getPaths(document: Document): Paths {
 
         return [
-            projectPath + document.resource.id,
-            syncUrl + document.resource.id,
-            projectPath + 'thumbs/' + document.resource.id,
-            syncUrl + 'thumbs/' + document.resource.id
+            '/' + document.resource.id,
+            '/thumbs/' + document.resource.id,
         ]
     }
 

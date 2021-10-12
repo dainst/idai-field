@@ -59,6 +59,7 @@ import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 import { Filestore } from '../services/imagestore/filestore';
+import { RemoteFilestore } from '../services/imagestore/remote-filestore';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -186,6 +187,7 @@ registerLocaleData(localeIt, 'it');
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         Filestore,
+        RemoteFilestore,
         ImageRelationsManager,
         {
             provide: Validator,

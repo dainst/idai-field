@@ -13,7 +13,7 @@ export namespace FsAdapter {
 
     export function writeFile(path: string, contents: any) {
 
-        return fs.writeFileSync(path, contents);
+        fs.writeFileSync(path, contents);
     }
 
 

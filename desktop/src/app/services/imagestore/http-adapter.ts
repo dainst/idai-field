@@ -16,7 +16,7 @@ export namespace HttpAdapter {
 
 
     // https://stackoverflow.com/a/59032305
-    export async function postBinaryData(contents: any, url: string) {
+    export async function postBinaryData(url: string, contents: any) {
 
         await axios({
             method: 'post',

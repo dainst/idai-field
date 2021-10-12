@@ -13,20 +13,39 @@ export class Filestore {
     constructor(private settingsProvider: SettingsProvider) {}
 
 
+    /**
+     * Tests if a file exists in the current project
+     * @param path should start with /
+     */
     public fileExists = (path: string) => {
 
-        return FsAdapter.fileExists(this.settingsProvider.getSettings().imagestorePath + path);
+        return FsAdapter.fileExists(this.getFullPath(path));
     }
 
 
+    /**
+     * Writes a files for the current project
+     * @param path should start with /
+     */
     public writeFile = (path: string, contents: any) => {
 
-        return FsAdapter.writeFile(this.settingsProvider.getSettings().imagestorePath + path, contents);
+        return FsAdapter.writeFile(this.getFullPath(path), contents);
     }
 
 
+    /**
+     * Reads a file from the current project
+     * @param path should start with /
+     */
     public readFile = (path: string) => {
 
-        return FsAdapter.readFile(this.settingsProvider.getSettings().imagestorePath + path);
+        return FsAdapter.readFile(this.getFullPath(path));
+    }
+
+
+    private getFullPath = (path: string): string => {
+
+        return this.settingsProvider.getSettings().imagestorePath
+            + this.settingsProvider.getSettings().selectedProject + path;
     }
 }

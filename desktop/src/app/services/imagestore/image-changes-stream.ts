@@ -53,19 +53,19 @@ export class ImageChangesStream {
 
     private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
 
-        await ImageChangesStream.post(hiresPath, hiresUrl);
-        await ImageChangesStream.post(loresPath, loresUrl);
+        await ImageChangesStream.postImagestoreFileToRemote(hiresPath, hiresUrl);
+        await ImageChangesStream.postImagestoreFileToRemote(loresPath, loresUrl);
     }
 
 
     private static fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
 
-        if (!fs.existsSync(hiresPath)) http.get(hiresUrl, ImageChangesStream.write(hiresPath));
-        if (!fs.existsSync(loresPath)) http.get(loresUrl, ImageChangesStream.write(loresPath));
+        if (!fs.existsSync(hiresPath)) http.get(hiresUrl, ImageChangesStream.writeToImagestore(hiresPath));
+        if (!fs.existsSync(loresPath)) http.get(loresUrl, ImageChangesStream.writeToImagestore(loresPath));
     }
 
 
-    private static write(path: string) {
+    private static writeToImagestore(path: string) {
 
         // https://stackoverflow.com/a/49600958
         return (res: any) => {
@@ -83,9 +83,9 @@ export class ImageChangesStream {
 
 
     // https://stackoverflow.com/a/59032305
-    private static async post(filepath: string, url: string) {
+    private static async postImagestoreFileToRemote(path: string, url: string) {
 
-        const buf2 = fs.readFileSync(filepath);
+        const buf2 = fs.readFileSync(path);
         await axios({
             method: 'post',
             url: url,

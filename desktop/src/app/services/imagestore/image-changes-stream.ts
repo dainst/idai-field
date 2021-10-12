@@ -11,6 +11,9 @@ const axios = typeof window !== 'undefined' ? window.require('axios') : require(
 type Paths = [string, string, string, string];
 
 
+// TODO in image overview, update images when new images come in
+
+
 @Injectable()
 /**
  * Posts or fetches new images on any change to image documents.

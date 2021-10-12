@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Maybe, isOk, ok } from 'tsfun';
+import { Maybe, isOk, ok, just, nothing } from 'tsfun';
 import { ChangesStream, Named, ProjectConfiguration, Document } from 'idai-field-core';
 import { Settings } from '../settings/settings';
 import { SettingsProvider } from '../settings/settings-provider';
@@ -40,11 +40,9 @@ export class ImageChangesStream {
     }
 
 
-    /*
-     * https://stackoverflow.com/a/49600958
-     */
     private static write(path: string) {
 
+        // https://stackoverflow.com/a/49600958
         return (res: any) => {
 
             res.setEncoding('binary');
@@ -62,10 +60,10 @@ export class ImageChangesStream {
     private static extract(settings: Settings): Maybe<[string, string]> {
 
         const project = settings.selectedProject;
-        if (project === 'test') return [];
+        if (project === 'test') return nothing();
 
         const syncSource = settings.syncTargets[project];
-        if (!syncSource) return [];
+        if (!syncSource) return nothing();
 
         const address = 'localhost'; // TODO should be derived from syncSource.address
         const protocol = 'http'; // TODO be able to deal with both http and https
@@ -75,6 +73,6 @@ export class ImageChangesStream {
         const imagestorePath = settings.imagestorePath;
         const imagestoreProjectPath = imagestorePath + project + '/';
 
-        return [[syncUrl, imagestoreProjectPath]];
+        return just([syncUrl, imagestoreProjectPath]);
     }
 }

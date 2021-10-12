@@ -6,8 +6,6 @@ import { FsAdapter } from './fs-adapter';
 /**
  * @author Daniel de Oliveira
  */
-// Impl note: We use the '=>'-forms of functions on purpose such that
-// they are bound to the Filestore context and can be used as params
 export class Filestore {
 
     constructor(private settingsProvider: SettingsProvider,

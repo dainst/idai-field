@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
+import { Filestore } from '../../imagestore/filestore';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
@@ -20,11 +20,15 @@ export class PouchdbServer {
     public setPassword = (password: string) => this.password = password;
 
 
+    constructor(private filestore: Filestore) {}
+
+
     /**
      * Provides Fauxton and the CouchDB REST API
      */
     public async setupServer() {
 
+        const self = this;
         const app = express();
 
         app.use(expressBasicAuth({
@@ -35,12 +39,9 @@ export class PouchdbServer {
         }));
 
         app.post('/files/:project/*', (req: any, res: any, next: any) => {
-            const prefix = remote.getGlobal('appDataPath') + '/imagestore/';
-            const path = prefix + req.params['project'] + '/' + req.params[0];
-
             // https://stackoverflow.com/a/16599008
             req.on('data', function(data) {
-                fs.writeFileSync(path, data);
+                self.filestore.writeFile('/' + req.params['project'] + '/' + req.params[0], data)
             });
             req.on('end', function() {
                 res.status(200).send( { status: 'ok' });
@@ -48,24 +49,17 @@ export class PouchdbServer {
         });
 
         app.get('/files/:project/*', (req: any, res: any) => {
-            const prefix = remote.getGlobal('appDataPath') + '/imagestore/';
-            const path = prefix + req.params['project'] + '/' + req.params[0];
+            const path = '/' + req.params['project'] + '/' + req.params[0];
 
-            if (!fs.existsSync(path)) {
+            if (!self.filestore.fileExists(path)) {
                 res.status(200).send({ status: 'notfound' });
             } else {
-                if (fs.lstatSync(path).isDirectory()) {
-                    const result = PouchdbServer
-                        .l(path)
-                        .map(p => p.replace(prefix, ''))
-                        .map(p => p.replace('//', '/'))
-                        .map(p => '/files/' + p);
-
-                    res.status(200).send( { files: result});
+                if (self.filestore.isDirectory(path)) {
+                    res.status(200).send({ files: self.filestore.listFiles(path) });
                 } else {
                     res
-                    .header('Content-Type', 'image/png')
-                    .status(200).sendFile(path);
+                        .header('Content-Type', 'image/png')
+                        .status(200).sendFile(self.filestore.getFullPath(path));
                 }
             }
         });
@@ -89,24 +83,5 @@ export class PouchdbServer {
         await app.listen(3000, function() {
             console.debug('PouchDB Server is listening on port 3000');
         });
-    }
-
-
-    // see https://stackoverflow.com/a/16684530
-    private static l(dir) {
-        var results = [];
-        var list = fs.readdirSync(dir);
-        list.forEach(function(file) {
-            file = dir + '/' + file;
-            var stat = fs.statSync(file);
-            if (stat && stat.isDirectory()) {
-                /* Recurse into a subdirectory */
-                results = results.concat(PouchdbServer.l(file));
-            } else {
-                /* Is a file */
-                results.push(file);
-            }
-        });
-        return results;
     }
 }

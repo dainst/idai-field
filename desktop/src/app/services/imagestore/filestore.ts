@@ -13,7 +13,7 @@ export class Filestore {
 
 
     /**
-     * Writes a files for the current project.
+     * Writes a file to the Filestore
      * If it already exists, does nothing.
      *
      * @param path should start with /
@@ -28,8 +28,8 @@ export class Filestore {
 
 
     /**
-     * Reads a file from the current project
-     * @param path should start with /
+     * Reads a file from the Filestore
+     * @param path must start with /
      */
     public readFile(path: string) {
 
@@ -37,9 +37,53 @@ export class Filestore {
     }
 
 
-    private getFullPath(path: string): string {
+    /**
+     * @param path must start with /
+     */
+    public fileExists(path: string): boolean {
 
-        const settings = this.settingsProvider.getSettings()
-        return settings.imagestorePath + settings.selectedProject + path;
+        return this.fsAdapter.fileExists(this.getFullPath(path));
+    }
+
+
+    /**
+     * @param path must start with /
+     */
+    public isDirectory(path: string): boolean {
+
+        return this.fsAdapter.isDirectory(this.getFullPath(path));
+    }
+
+
+    /**
+     * @param path must start with /
+     */
+    public getFullPath(path: string): string {
+
+        Filestore.performAssert(path);
+
+        const imagestorePath = this.settingsProvider.getSettings().imagestorePath;
+        const prefix = imagestorePath.endsWith('/')
+            ? imagestorePath.substring(0, imagestorePath.length - 1)
+            : imagestorePath;
+        return prefix + path;
+    }
+
+
+    /**
+     * @param path must start with /
+     */
+    public listFiles(path: string): Array<string> {
+
+        return this.fsAdapter.listFiles(this.getFullPath(path))
+            .map(p => p.replace(this.getFullPath('/'), ''))
+            .map(p => p.replace('//', '/'))
+            .map(p => '/files/' + p);
+    }
+
+
+    private static performAssert(path: string) {
+
+        if (!path.startsWith('/')) throw 'illegal argument - path should start with /';
     }
 }

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter } from 'idai-field-core';
+import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter, Resource } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { Filestore } from './filestore';
 import { RemoteFilestore } from './remote-filestore';
-
-type Paths = [string, string];
 
 
 // TODO in image overview, update images when new images come in
@@ -34,40 +32,34 @@ export class ImageChangesStream {
             if (!ImageChangesStream.isImageDocument(projectConfiguration, doc)) return;
             if (!remoteFilestore.isOn()) return;
 
-            const paths = ImageChangesStream.getPaths(document)
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
-                ImageChangesStream.postImages(paths, filestore, remoteFilestore);
+                ImageChangesStream.postImages(
+                    document.resource.id, filestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
             } else {
-                ImageChangesStream.fetchImages(paths, filestore, remoteFilestore);
+                ImageChangesStream.fetchImages(
+                    document.resource.id, filestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
             }
         });
     }
 
 
-    private static async postImages([hiresPath, loresPath]: Paths,
+    private static async postImages(id: Resource.Id,
                                     filestore: Filestore,
-                                    remoteFilestore: RemoteFilestore) {
+                                    remoteFilestore: RemoteFilestore,
+                                    project: string) {
 
-        await remoteFilestore.post(hiresPath, filestore.readFile(hiresPath));
-        await remoteFilestore.post(loresPath, filestore.readFile(loresPath));
+        await remoteFilestore.post('/' + id, filestore.readFile('/' + project + '/' + id));
+        await remoteFilestore.post('/thumbs/' + id , filestore.readFile('/' + project + '/thumbs/' + id));
     }
 
 
-    private static async fetchImages([hiresPath, loresPath]: Paths,
+    private static async fetchImages(id: Resource.Id,
                                      filestore: Filestore,
-                                     remoteFilestore: RemoteFilestore) {
+                                     remoteFilestore: RemoteFilestore,
+                                     project: string) {
 
-        filestore.writeFile(hiresPath, await remoteFilestore.get(hiresPath));
-        filestore.writeFile(loresPath, await remoteFilestore.get(loresPath));
-    }
-
-
-    private static getPaths(document: Document): Paths {
-
-        return [
-            '/' + document.resource.id,
-            '/thumbs/' + document.resource.id,
-        ]
+        filestore.writeFile('/' + project + '/' + id, await remoteFilestore.get('/' + id));
+        filestore.writeFile('/' + project + '/thumbs/' + id, await remoteFilestore.get('/thumbs/' + id));
     }
 
 

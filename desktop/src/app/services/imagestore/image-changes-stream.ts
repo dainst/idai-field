@@ -8,7 +8,6 @@ type Paths = [string, string];
 
 type Services = {
     readFile: (path: string) => any,
-    fileExists: (path: string) => boolean,
     writeFile: (path: string, contents: any) => void,
     get: (url: string) => Promise<any>,
     post: (url: string, data: any) => Promise<void>
@@ -37,7 +36,6 @@ export class ImageChangesStream {
         // TODO pass this in as parameter; maybe make a RemoteFilestore to encapsulate HttpAdapter access, analogous to Filestore
         const services: Services = {
             readFile: filestore.readFile,
-            fileExists: filestore.fileExists,
             writeFile: filestore.writeFile,
             get: remoteFilestore.get,
             post: remoteFilestore.post,
@@ -68,10 +66,10 @@ export class ImageChangesStream {
 
 
     private static async fetchImages([hiresPath, loresPath]: Paths,
-                                     {writeFile, fileExists, get}: Services) {
+                                     {writeFile, get}: Services) {
 
-        if (!fileExists(hiresPath)) writeFile(hiresPath, await get(hiresPath)); // TODO instead testing if exists, pass optional bool param to writeFile, which defaults to false, and allows to overwrite files if set to true
-        if (!fileExists(loresPath)) writeFile(loresPath, await get(loresPath));
+        writeFile(hiresPath, await get(hiresPath));
+        writeFile(loresPath, await get(loresPath));
     }
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Maybe, isOk, Ok, ok, just, nothing } from 'tsfun';
+import { Maybe, isOk, ok, just, nothing } from 'tsfun';
 import { SettingsProvider } from '../settings/settings-provider';
 import { HttpAdapter } from './http-adapter';
 
@@ -11,6 +11,7 @@ import { HttpAdapter } from './http-adapter';
 // they are bound to the Filestore context and can be used as params
 export class RemoteFilestore {
 
+    // pass HttpAdapter as param
     constructor(private settingsProvider: SettingsProvider) {}
 
 

@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Maybe, isOk, ok, just, nothing } from 'tsfun';
-import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter, Action } from 'idai-field-core';
+import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter } from 'idai-field-core';
 import { Settings } from '../settings/settings';
 import { SettingsProvider } from '../settings/settings-provider';
-
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const http = typeof window !== 'undefined' ? window.require('http') : require('http');
-const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
+import { HttpAdapter } from './http-adapter';
+import { Filestore } from './filestore';
 
 type BasePaths = [string, string];
 type Paths = [string, string, string, string];
 
+type Services = {
+    readFile: (path: string) => any,
+    fileExists: (path: string) => boolean,
+    writeFile: (path: string, contents: any) => void,
+    getWithBinaryData: (url: string) => Promise<any>,
+    postBinaryData: (url: string, data: any) => Promise<void>
+}
 
 // TODO in image overview, update images when new images come in
 
@@ -26,9 +31,19 @@ export class ImageChangesStream {
 
     // TODO reinit on runtime changes of sync settings
     constructor(datastore: PouchdbDatastore,
+                filestore: Filestore,
                 settingsProvider: SettingsProvider,
                 projectConfiguration: ProjectConfiguration,
                 categoryConverter: CategoryConverter) {
+
+        // TODO pass this in as parameter; maybe make a RemoteFilestore to encapsulate HttpAdapter access, analogous to Filestore
+        const services: Services = {
+            readFile: filestore.readFile,
+            fileExists: filestore.fileExists,
+            writeFile: filestore.writeFile,
+            getWithBinaryData: HttpAdapter.getWithBinaryData,
+            postBinaryData: HttpAdapter.postBinaryData,
+        };
 
         const maybeBasePaths = ImageChangesStream.extractBasePaths(settingsProvider.getSettings());
         if (!isOk(maybeBasePaths)) return;
@@ -43,55 +58,26 @@ export class ImageChangesStream {
 
             const paths = ImageChangesStream.getPaths(basePaths, document)
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
-                ImageChangesStream.postImages(paths);
+                ImageChangesStream.postImages(paths, services);
             } else {
-                ImageChangesStream.fetchImages(paths);
+                ImageChangesStream.fetchImages(paths, services);
             }
         });
     }
 
 
-    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
+    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths, {readFile, postBinaryData}: Services) {
 
-        await ImageChangesStream.postImagestoreFileToRemote(hiresPath, hiresUrl);
-        await ImageChangesStream.postImagestoreFileToRemote(loresPath, loresUrl);
+        await postBinaryData(readFile(hiresPath), hiresUrl);
+        await postBinaryData(readFile(loresPath), loresUrl);
     }
 
 
-    private static fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
+    private static async fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths,
+                                     {writeFile, fileExists, getWithBinaryData}: Services) {
 
-        if (!fs.existsSync(hiresPath)) http.get(hiresUrl, ImageChangesStream.writeToImagestore(hiresPath));
-        if (!fs.existsSync(loresPath)) http.get(loresUrl, ImageChangesStream.writeToImagestore(loresPath));
-    }
-
-
-    private static writeToImagestore(path: string) {
-
-        // https://stackoverflow.com/a/49600958
-        return (res: any) => {
-
-            res.setEncoding('binary');
-            const chunks = [];
-            res.on('data', function(chunk) {
-                chunks.push(Buffer.from(chunk, 'binary'));
-            });
-            res.on('end', function() {
-                fs.writeFileSync(path, Buffer.concat(chunks));
-            });
-        }
-    }
-
-
-    // https://stackoverflow.com/a/59032305
-    private static async postImagestoreFileToRemote(path: string, url: string) {
-
-        const buf2 = fs.readFileSync(path);
-        await axios({
-            method: 'post',
-            url: url,
-            data: Buffer.from(buf2),
-            headers: { 'Content-Type': 'application/x-binary' }
-        });
+        if (!fileExists(hiresPath)) writeFile(hiresPath, await getWithBinaryData(hiresUrl));
+        if (!fileExists(loresPath)) writeFile(loresPath, await getWithBinaryData(loresUrl));
     }
 
 
@@ -108,10 +94,9 @@ export class ImageChangesStream {
         const syncUrl = protocol + '://' + project + ':' + syncSource.password
             + '@' + address + '/files/' + project + '/';
 
-        const imagestorePath = settings.imagestorePath;
-        const imagestoreProjectPath = imagestorePath + project + '/';
+        const projectPath = project + '/';
 
-        return just([syncUrl, imagestoreProjectPath]);
+        return just([syncUrl, projectPath]);
     }
 
 
@@ -123,12 +108,12 @@ export class ImageChangesStream {
     }
 
 
-    private static getPaths([syncUrl, imagestoreProjectPath]: BasePaths, document: Document): Paths {
+    private static getPaths([syncUrl, projectPath]: BasePaths, document: Document): Paths {
 
         return [
-            imagestoreProjectPath + document.resource.id,
+            projectPath + document.resource.id,
             syncUrl + document.resource.id,
-            imagestoreProjectPath + 'thumbs/' + document.resource.id,
+            projectPath + 'thumbs/' + document.resource.id,
             syncUrl + 'thumbs/' + document.resource.id
         ]
     }

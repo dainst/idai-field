@@ -81,6 +81,7 @@ export class ImageChangesStream {
     }
 
 
+    // https://stackoverflow.com/a/59032305
     private static async post(filepath: string, url: string) {
 
         const buf2 = fs.readFileSync(filepath);

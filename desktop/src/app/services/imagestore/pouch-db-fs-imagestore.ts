@@ -230,13 +230,6 @@ export class PouchDbFsImagestore /* implements Imagestore */{
             return Promise.reject('Failed to create thumbnail for image document ' + key);
         }
 
-        let blob: any;
-        if (typeof Blob !== 'undefined') {
-            blob = new Blob([buffer]);  // electron runtime environment
-        } else {
-            blob = Buffer.from(buffer); // jasmine node tests
-        }
-
         let promise;
         if (documentExists) {
             promise = this.db.get(key).then((doc: any) => doc._rev);
@@ -244,8 +237,10 @@ export class PouchDbFsImagestore /* implements Imagestore */{
             promise = Promise.resolve();
         }
 
-        return promise.then((rev: any) => {
-            return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg');
+        return promise.then((_rev: any) => {
+
+            const path = this.projectPath + '/thumbs/' + key;
+            fs.writeFileSync(path, buffer);
         });
     }
 

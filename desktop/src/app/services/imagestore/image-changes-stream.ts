@@ -8,6 +8,8 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const http = typeof window !== 'undefined' ? window.require('http') : require('http');
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+type Paths = [string, string, string, string];
+
 
 @Injectable()
 /**
@@ -45,28 +47,17 @@ export class ImageChangesStream {
     }
 
 
-    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: [string, string, string, string]) {
+    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
 
         await ImageChangesStream.post(hiresPath, hiresUrl);
         await ImageChangesStream.post(loresPath, loresUrl);
     }
 
 
-    private static fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: [string, string, string, string]) {
+    private static fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: Paths) {
 
         if (!fs.existsSync(hiresPath)) http.get(hiresUrl, ImageChangesStream.write(hiresPath));
         if (!fs.existsSync(loresPath)) http.get(loresUrl, ImageChangesStream.write(loresPath));
-    }
-
-
-    private static getPaths(syncUrl: string, imagestoreProjectPath: string, document: Document): [string, string, string, string] {
-
-        return [
-            imagestoreProjectPath + document.resource.id,
-            syncUrl + document.resource.id,
-            imagestoreProjectPath + 'thumbs/' + document.resource.id,
-            syncUrl + 'thumbs/' + document.resource.id
-        ]
     }
 
 
@@ -124,6 +115,17 @@ export class ImageChangesStream {
         const project = settings.selectedProject;
         const syncSource = settings.syncTargets[project];
         return syncSource.isSyncActive;
+    }
+
+
+    private static getPaths(syncUrl: string, imagestoreProjectPath: string, document: Document): Paths {
+
+        return [
+            imagestoreProjectPath + document.resource.id,
+            syncUrl + document.resource.id,
+            imagestoreProjectPath + 'thumbs/' + document.resource.id,
+            syncUrl + 'thumbs/' + document.resource.id
+        ]
     }
 
 

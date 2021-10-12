@@ -8,6 +8,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const http = typeof window !== 'undefined' ? window.require('http') : require('http');
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+type BasePaths = [string, string];
 type Paths = [string, string, string, string];
 
 
@@ -29,9 +30,9 @@ export class ImageChangesStream {
                 projectConfiguration: ProjectConfiguration,
                 categoryConverter: CategoryConverter) {
 
-        const account = ImageChangesStream.extract(settingsProvider.getSettings());
-        if (!isOk(account)) return;
-        const [syncUrl, imagestoreProjectPath] = ok(account);
+        const maybeBasePaths = ImageChangesStream.extractBasePaths(settingsProvider.getSettings());
+        if (!isOk(maybeBasePaths)) return;
+        const basePaths = ok(maybeBasePaths);
 
         // TODO maybe we can do it only on creation, not on every change
         datastore.changesNotifications().subscribe(document => {
@@ -40,7 +41,7 @@ export class ImageChangesStream {
             if (!ImageChangesStream.isImageDocument(projectConfiguration, doc)) return;
             if (!ImageChangesStream.mySyncIsOn(settingsProvider.getSettings())) return;
 
-            const paths = ImageChangesStream.getPaths(syncUrl, imagestoreProjectPath, document)
+            const paths = ImageChangesStream.getPaths(basePaths, document)
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
                 ImageChangesStream.postImages(paths);
             } else {
@@ -94,7 +95,7 @@ export class ImageChangesStream {
     }
 
 
-    private static extract(settings: Settings): Maybe<[string, string]> {
+    private static extractBasePaths(settings: Settings): Maybe<BasePaths> {
 
         const project = settings.selectedProject;
         if (project === 'test') return nothing();
@@ -122,7 +123,7 @@ export class ImageChangesStream {
     }
 
 
-    private static getPaths(syncUrl: string, imagestoreProjectPath: string, document: Document): Paths {
+    private static getPaths([syncUrl, imagestoreProjectPath]: BasePaths, document: Document): Paths {
 
         return [
             imagestoreProjectPath + document.resource.id,

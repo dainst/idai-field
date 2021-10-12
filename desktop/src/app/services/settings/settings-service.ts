@@ -48,6 +48,7 @@ export class SettingsService {
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
                 destroyBeforeCreate
             );
+            this.pouchdbDatastore.setupChangesEmitter();
         } catch (msgWithParams) {
             console.error(msgWithParams);
             throw msgWithParams;

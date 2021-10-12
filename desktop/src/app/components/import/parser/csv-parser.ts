@@ -1,7 +1,7 @@
 import {flow, map, update as updateD, assoc} from 'tsfun';
 import {Document, Resource} from 'idai-field-core';
 import {Parser} from './parser';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import {convertCsvRows} from './convert-csv-rows';
 import {convertFieldTypes} from './convert-field-types';
 
@@ -24,7 +24,7 @@ export module CsvParser {
      * @param operationId converted into isChildOf entry if not empty
      * @param separator
      */
-    export const build = (category: Category, operationId: string, separator: string): Parser => {
+    export const build = (category: CategoryForm, operationId: string, separator: string): Parser => {
 
         /**
          * ParserErrors
@@ -43,7 +43,7 @@ export module CsvParser {
     };
 
 
-    function doParse(category: Category, content: string, separator: string): Array<Document> {
+    function doParse(category: CategoryForm, content: string, separator: string): Array<Document> {
 
         return flow(content,
             convertCsvRows(separator),

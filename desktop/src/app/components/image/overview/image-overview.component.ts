@@ -1,19 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument, Document, Category, Datastore} from 'idai-field-core';
-import {ImageGridComponent} from '../grid/image-grid.component';
-import {ImageOverviewFacade} from '../../../components/image/overview/view/imageoverview-facade';
-import {ImageUploadResult} from '../upload/image-uploader';
-import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ImageDocument, Document, CategoryForm, Datastore, ProjectConfiguration } from 'idai-field-core';
+import { ImageGridComponent } from '../grid/image-grid.component';
+import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageUploadResult } from '../upload/image-uploader';
+import { ImageViewModalComponent } from '../../viewmodal/image/image-view-modal.component';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
-import {M} from '../../messages/m';
-import {ProjectConfiguration} from 'idai-field-core';
-import {TabManager} from '../../../services/tabs/tab-manager';
-import {ViewFacade} from '../../../components/resources/view/view-facade';
-import {Messages} from '../../messages/messages';
+import { M } from '../../messages/m';
+import { TabManager } from '../../../services/tabs/tab-manager';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -32,7 +31,7 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
-    public filterOptions: Array<Category> = [];
+    public filterOptions: Array<CategoryForm> = [];
 
 
     constructor(route: ActivatedRoute,

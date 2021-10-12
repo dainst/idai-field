@@ -1,8 +1,7 @@
-import {Observable, Observer} from 'rxjs';
-import {Document, ProjectConfiguration} from 'idai-field-core';
-import {FieldDocument, Category, ObserverUtil} from 'idai-field-core';
-import {ViewFacade} from '../view/view-facade';
-import {Routing} from '../../../services/routing';
+import { Observable, Observer } from 'rxjs';
+import { Document, ProjectConfiguration, FieldDocument, CategoryForm, ObserverUtil } from 'idai-field-core';
+import { ViewFacade } from '../view/view-facade';
+import { Routing } from '../../../services/routing';
 
 
 /**
@@ -98,7 +97,7 @@ export class NavigationService {
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
-        const operationCategory: Category|undefined
+        const operationCategory: CategoryForm|undefined
             = this.projectConfiguration.getCategory('Operation');
 
         return operationCategory !== undefined && operationCategory.children !== undefined

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
+import {FieldDocument, FieldGeometry, CategoryForm } from 'idai-field-core';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
@@ -482,7 +482,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             fillOpacity: 1,
             radius: 5,
             stroke: this.getSelection().includes(document),
-            color: Category.isBrightColor(color) ? '#000' : '#fff',
+            color: CategoryForm.isBrightColor(color) ? '#000' : '#fff',
             weight: 2
         };
     }

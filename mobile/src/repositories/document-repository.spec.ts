@@ -17,7 +17,7 @@ describe('DocumentRepository', () => {
         
         const datastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
         await datastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
-        const categories: Forest<Category> = [createCategory('Feature'), createCategory('Find')];
+        const categories: Forest<CategoryForm> = [createCategory('Feature'), createCategory('Find')];
         repository = await DocumentRepository.init('testuser', categories, datastore);
     });
 

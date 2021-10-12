@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
-import { Category } from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
 import { ProjectConfiguration } from 'idai-field-core';
 import {ComponentHelpers} from '../../component-helpers';
@@ -24,7 +24,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     @ViewChild('popover', { static: false }) private popover: any;
 
-    public selectableCategoriesArray: Array<Category>;
+    public selectableCategoriesArray: Array<CategoryForm>;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -47,7 +47,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
     }
 
 
-    public chooseCategory(category: Category) {
+    public chooseCategory(category: CategoryForm) {
 
         this.category = category.name;
         this.onCategoryChanged.emit(category.name);
@@ -68,7 +68,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     private initializeCategories() {
 
-        const categoryObject: Category = this.projectConfiguration.getCategory(this.category);
+        const categoryObject: CategoryForm = this.projectConfiguration.getCategory(this.category);
         if (categoryObject.parentCategory && !categoryObject.parentCategory.isAbstract) {
             this.selectableCategoriesArray = [categoryObject.parentCategory];
         } else {

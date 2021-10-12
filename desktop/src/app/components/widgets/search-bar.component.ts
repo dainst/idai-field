@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
-import {sameset} from 'tsfun';
-import {Category} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
-import {ComponentHelpers} from '../component-helpers';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { sameset} from 'tsfun';
+import { CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { ComponentHelpers } from '../component-helpers';
 
 
 @Component({
@@ -20,7 +19,7 @@ import {ComponentHelpers} from '../component-helpers';
  */
 export class SearchBarComponent implements OnChanges {
 
-    @Input() filterOptions: Array<Category> = [];
+    @Input() filterOptions: Array<CategoryForm> = [];
     @Input() showFiltersMenu: boolean = true;
 
     @Input() q: string = '';
@@ -66,10 +65,10 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public chooseCategoryFilter(category: Category) {
+    public chooseCategoryFilter(category: CategoryForm) {
 
         let newCategories: string[]|undefined = category
-            ? Category.getNamesOfCategoryAndSubcategories(category)
+            ? CategoryForm.getNamesOfCategoryAndSubcategories(category)
             : undefined;
 
         if (newCategories && newCategories.length > 1 && this.categories

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, Category, ConfigurationDocument } from 'idai-field-core';
+import { Document, CategoryForm, ConfigurationDocument } from 'idai-field-core';
 import { ConfigurationIndex } from '../configuration-index';
 import { MenuContext } from '../../../services/menu-context';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -23,13 +23,13 @@ export class AddCategoryModalComponent {
 
     public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
-    public parentCategory: Category;
-    public categoryToReplace?: Category;
+    public parentCategory: CategoryForm;
+    public categoryToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
 
     public searchTerm: string = '';
-    public selectedCategory: Category|undefined;
-    public categories: Array<Category> = [];
+    public selectedCategory: CategoryForm|undefined;
+    public categories: Array<CategoryForm> = [];
 
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
@@ -51,7 +51,7 @@ export class AddCategoryModalComponent {
     }
 
 
-    public selectCategory(category: Category) {
+    public selectCategory(category: CategoryForm) {
 
         this.selectedCategory = category;
     }
@@ -113,7 +113,7 @@ export class AddCategoryModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = Category.build(this.searchTerm, this.parentCategory);
+        componentInstance.category = CategoryForm.build(this.searchTerm, this.parentCategory);
         componentInstance.new = true;
         componentInstance.initialize();
 

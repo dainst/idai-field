@@ -1,4 +1,4 @@
-import { Category, Field, Group } from 'idai-field-core';
+import { CategoryForm, Field, Group } from 'idai-field-core';
 import { ContextMenu } from '../../widgets/context-menu';
 
 
@@ -7,12 +7,12 @@ import { ContextMenu } from '../../widgets/context-menu';
  */
  export class ConfigurationContextMenu extends ContextMenu {
 
-    public category: Category;
+    public category: CategoryForm;
     public group?: Group;
     public field?: Field;
 
 
-    public open(event: MouseEvent, category: Category, group?: Group, field?: Field) {
+    public open(event: MouseEvent, category: CategoryForm, group?: Group, field?: Field) {
 
         super.open(event, category, group, field);
 

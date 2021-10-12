@@ -1,5 +1,5 @@
 import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose } from 'tsfun';
-import { Category } from '../../model/configuration/category';
+import { CategoryForm } from '../../model/configuration/category-form';
 import { Field } from '../../model/configuration/field';
 import { Group, Groups } from '../../model/configuration/group';
 import { Relation } from '../../model/configuration/relation';
@@ -21,7 +21,7 @@ const TEMP_GROUPS = 'tempGroups';
  */
 export const makeCategoryForest = (relations: Array<Relation>, categories: Map<TransientCategoryDefinition>,
                                    selectedParentCategories?: string[]) =>
-        (forms: Map<TransientFormDefinition>): Forest<Category> => {
+        (forms: Map<TransientFormDefinition>): Forest<CategoryForm> => {
 
     const [parentDefs, childDefs] = flow(
         forms,
@@ -50,7 +50,7 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
 }
 
 
-const createGroups = (relationDefinitions: Array<Relation>) => (category: Category): Category => {
+const createGroups = (relationDefinitions: Array<Relation>) => (category: CategoryForm): CategoryForm => {
 
     const categoryRelations: Array<Relation> = Relation.getRelations(
         relationDefinitions, category.name
@@ -74,7 +74,7 @@ const createGroups = (relationDefinitions: Array<Relation>) => (category: Catego
 }
 
 
-function putUnassignedFieldsToOtherGroup(category: Category) {
+function putUnassignedFieldsToOtherGroup(category: CategoryForm) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
     const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])
@@ -94,7 +94,7 @@ function putUnassignedFieldsToOtherGroup(category: Category) {
 }
 
 
-function putCoreFieldsToHiddenGroup(category: Category) {
+function putCoreFieldsToHiddenGroup(category: CategoryForm) {
 
     if (!category[TEMP_FIELDS][Resource.ID]) return;
 
@@ -108,8 +108,8 @@ function putCoreFieldsToHiddenGroup(category: Category) {
 
 
 const addChildCategory = (categories: Map<TransientCategoryDefinition>, selectedParentCategories?: string[]) =>
-                            (categoryTree: Forest<Category>,
-                             childDefinition: TransientFormDefinition): Forest<Category> => {
+                            (categoryTree: Forest<CategoryForm>,
+                             childDefinition: TransientFormDefinition): Forest<CategoryForm> => {
 
     const parent: string = childDefinition.parent ?? categories[childDefinition.categoryName]?.parent;
 
@@ -130,7 +130,7 @@ const addChildCategory = (categories: Map<TransientCategoryDefinition>, selected
 
 function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition>) {
 
-    return function(formDefinition: TransientFormDefinition): Category {
+    return function(formDefinition: TransientFormDefinition): CategoryForm {
 
         const categoryDefinition: TransientCategoryDefinition|undefined = categories[formDefinition.categoryName];
         const parentCategoryDefinition: TransientCategoryDefinition
@@ -151,9 +151,9 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         category.defaultLabel = formDefinition.defaultLabel;
         category.defaultDescription = formDefinition.defaultDescription;
         category.groups = [];
-            category.color = formDefinition.color ?? Category.generateColorForCategory(category.name);
+            category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
         category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
-            ? Category.generateColorForCategory(category.name)
+            ? CategoryForm.generateColorForCategory(category.name)
             : category.color
         );
         category.createdBy = formDefinition.createdBy;
@@ -164,6 +164,6 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
         category[TEMP_GROUPS] = formDefinition.groups || [];
 
-        return category as Category;
+        return category as CategoryForm;
     }
 }

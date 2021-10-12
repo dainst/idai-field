@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Category, Groups, Labels } from 'idai-field-core';
+import { CategoryForm, Groups, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { Category, Groups, Labels } from 'idai-field-core';
  */
 export class CategoryPreviewComponent implements OnChanges {
 
-    @Input() category: Category|undefined;
+    @Input() category: CategoryForm|undefined;
 
     public label: string;
     public description: string;

@@ -1,4 +1,4 @@
-import { Category, Document, FieldDocument, Datastore, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
+import { CategoryForm, Document, FieldDocument, Datastore, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
@@ -32,7 +32,7 @@ export module ExportRunner {
                                         find: Find,
                                         getIdentifierForId: GetIdentifierForId,
                                         context: ExportContext,
-                                        selectedCategory: Category,
+                                        selectedCategory: CategoryForm,
                                         relations: string[],
                                         performExport: PerformExport) {
 
@@ -67,7 +67,7 @@ export module ExportRunner {
     }
 
 
-    export function getCategoriesWithoutExcludedCategories(categories: Array<Category>, exclusion: string[]) {
+    export function getCategoriesWithoutExcludedCategories(categories: Array<CategoryForm>, exclusion: string[]) {
 
         return categories.filter(on(Named.NAME, isNot(includedIn(exclusion))))
     }
@@ -76,7 +76,7 @@ export module ExportRunner {
     export async function determineCategoryCounts(get: Get,
                                                   find: Find,
                                                   context: ExportContext,
-                                                  categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
+                                                  categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         if (!context) return determineCategoryCountsForSchema(categoriesList);
 
@@ -98,7 +98,7 @@ export module ExportRunner {
     async function determineCategoryCountsForMultipleOperations(get: Get,
                                                                 find: Find,
                                                                 selectedOperationId: string,
-                                                                categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
+                                                                categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         const counts = {};
         for (const id of (await getOperationIds(get, find, selectedOperationId))) {
@@ -130,7 +130,7 @@ export module ExportRunner {
 
     async function determineCategoryCountsForSelectedOperation(find: Find,
                                                                selectedOperationId: string|undefined,
-                                                               categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
+                                                               categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         const categories = getCategoriesWithoutExcludedCategories(
             categoriesList,
@@ -163,7 +163,7 @@ export module ExportRunner {
     }
 
 
-    function determineCategoryCountsForSchema(categoriesList: Array<Category>) {
+    function determineCategoryCountsForSchema(categoriesList: Array<CategoryForm>) {
 
         const categories = getCategoriesWithoutExcludedCategories(categoriesList, BASE_EXCLUSION);
         return categories.map(pairWith(val(-1))) as Array<CategoryCount>;
@@ -179,7 +179,7 @@ export module ExportRunner {
      */
     async function fetchDocuments(find: Find,
                                   selectedOperationId: string,
-                                  selectedCategory: Category): Promise<Array<FieldDocument>> {
+                                  selectedCategory: CategoryForm): Promise<Array<FieldDocument>> {
 
         try {
             const query = getQuery(selectedCategory.name, selectedOperationId);

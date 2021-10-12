@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Resource } from 'idai-field-core';
+import { CategoryForm, Resource } from 'idai-field-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { ConfigurationContext } from '../../contexts/configuration-context';
@@ -30,7 +30,7 @@ const DocumentEdit: React.FC<DocumentEditProps> = ({ repository, navigation, doc
     const { showToast } = useToast();
     const document = useDocument(repository,docId);
 
-    const [category, setCategory] = useState<Category>();
+    const [category, setCategory] = useState<CategoryForm>();
     const [resource, setResource] = useState<Resource>();
 
     useEffect(() => setCategory(config.getCategory(categoryName)),[config, categoryName]);

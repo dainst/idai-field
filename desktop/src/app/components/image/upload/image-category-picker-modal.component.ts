@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, ProjectConfiguration, Category, Labels } from 'idai-field-core';
+import { Document, ProjectConfiguration, CategoryForm, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ImageCategoryPickerModalComponent {
 
     public fileCount: number;
     public depictsRelationTarget: Document;
-    public imageCategory: Category;
+    public imageCategory: CategoryForm;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -28,7 +28,7 @@ export class ImageCategoryPickerModalComponent {
     }
 
 
-    public getImageCategoryLabel = (category: Category) => this.labels.get(category);
+    public getImageCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
 
     public onKeyDown(event: KeyboardEvent) {

@@ -4,7 +4,7 @@ import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {ConfigLoader} from '../../app/core/configuration/boot/config-loader';
 import {ProjectConfiguration} from '../../app/core/configuration/project-configuration';
 import {mapTreeList, TreeList, zipTreeList} from '../../app/core/util/tree-list';
-import {Category} from '../../app/core/configuration/model/category';
+import { CategoryForm } from '../../app/core/configuration/model/category';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Group} from '../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../app/core/configuration/model/field-definition';
@@ -36,7 +36,7 @@ function writeProjectConfiguration(fullProjectConfiguration: any, project: strin
 
 function getTreeList(projectConfiguration: ProjectConfiguration) {
 
-    return mapTreeList((category: Category) => {
+    return mapTreeList((category: CategoryForm) => {
 
         delete category.children;
         delete category.parentCategory;
@@ -51,7 +51,7 @@ function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
 }
 
 
-const mergeCategories = (locales: string[]) => (categories: Array<Category>) => {
+const mergeCategories = (locales: string[]) => (categories: Array<CategoryForm>) => {
 
     const result: any = clone(categories[0]);
 
@@ -67,7 +67,7 @@ const mergeCategories = (locales: string[]) => (categories: Array<Category>) => 
     }
 
     result.groups = mergeLayer(mergeGroup, locales, categories.map(to('groups')));
-    return result as Category;
+    return result as CategoryForm;
 };
 
 
@@ -129,7 +129,7 @@ async function start() {
 
     for (const [projectName, project] of Object.entries(PROJECT_MAPPING)) {
         console.log('');
-        const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
+        const localizedTreeLists: { [locale: string]: TreeList<CategoryForm>} = {};
         for (const language of LANGUAGES) {
             console.log('Loading configuration for language: ' + language);
             const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));

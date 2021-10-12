@@ -1,11 +1,11 @@
-import { Category } from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import CategoryIcon from './CategoryIcon';
 
 export interface CategoryIconButtonProps extends TouchableOpacityProps {
     size: number;
-    category: Category;
+    category: CategoryForm;
     label: string;
 }
 

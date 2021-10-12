@@ -1,6 +1,6 @@
 import {flatten, intersection, set} from 'tsfun';
 import {Document, ProjectConfiguration, RelationsManager,
-    FieldDocument, IndexFacade, Constraint, Category} from 'idai-field-core';
+    FieldDocument, IndexFacade, Constraint, CategoryForm } from 'idai-field-core';
 
 
 /**
@@ -10,7 +10,7 @@ export module MoveUtility {
 
     export async function moveDocument(document: FieldDocument, newParent: FieldDocument,
                                        relationsManager: RelationsManager,
-                                       isRecordedInTargetCategories: Array<Category>) {
+                                       isRecordedInTargetCategories: Array<CategoryForm>) {
 
         const oldVersion = Document.clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
@@ -32,7 +32,7 @@ export module MoveUtility {
 
     export function getAllowedTargetCategories(documents: Array<FieldDocument>,
                                                projectConfiguration: ProjectConfiguration,
-                                               isInOverview: boolean): Array<Category> {
+                                               isInOverview: boolean): Array<CategoryForm> {
 
         const result = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
             .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
@@ -52,7 +52,7 @@ export module MoveUtility {
 
 
     export function getIsRecordedInTargetCategories(documents: Array<FieldDocument>,
-                                                    projectConfiguration: ProjectConfiguration): Array<Category> {
+                                                    projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         return intersection(
             documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(
@@ -63,7 +63,7 @@ export module MoveUtility {
 
 
     function updateRelations(document: FieldDocument, newParent: FieldDocument,
-                             isRecordedInTargetCategories: Array<Category>) {
+                             isRecordedInTargetCategories: Array<CategoryForm>) {
 
         if (newParent.resource.category === 'Project') {
             document.resource.relations['isRecordedIn'] = [];
@@ -103,7 +103,7 @@ export module MoveUtility {
 
 
     function getLiesWithinTargetCategories(documents: Array<FieldDocument>,
-                                           projectConfiguration: ProjectConfiguration): Array<Category> {
+                                           projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         return intersection(
             documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(

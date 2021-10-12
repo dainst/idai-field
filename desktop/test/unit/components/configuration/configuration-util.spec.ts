@@ -1,4 +1,4 @@
-import { Category } from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import { ConfigurationUtil } from '../../../../src/app/components/configuration/configuration-util';
 
 
@@ -7,7 +7,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
  */
  describe('ConfigurationUtil', () => {
 
-    const category: Category = {
+    const category: CategoryForm = {
         name: 'TestCategory',
         label: {},
         defaultLabel: {},

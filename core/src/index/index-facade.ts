@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
-import { assoc, filter, flow, forEach, is, isDefined, isUndefinedOrEmpty, lookup, Map, on, separate, update, values } from 'tsfun';
-import { Field } from '../model';
-import { Category } from '../model';
+import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
+import { CategoryForm } from '../model/configuration/category-form';
+import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
 import { Resource } from '../model/resource';
@@ -29,12 +29,12 @@ export class IndexFacade {
 
     private indexItems: { [resourceId: string]: IndexItem } = {};
 
-    private categoriesMap: Map<Category>;
+    private categoriesMap: Map<CategoryForm>;
 
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        categories: Array<Category>,
+        categories: Array<CategoryForm>,
         private showWarnings: boolean
     ) {
         this.categoriesMap = Named.arrayToMap(categories);

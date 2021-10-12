@@ -1,5 +1,5 @@
 import { linkParentAndChildInstances } from '../../src/configuration/category-forest';
-import { Category } from '../../src/model';
+import { CategoryForm } from '../../src/model';
 import { Forest, Tree } from '../../src/tools';
 
 
@@ -25,7 +25,7 @@ describe('CategoryForest', () => {
             ]
         ]);
 
-        const result = Tree.flatten<Category>(t as any);
+        const result = Tree.flatten<CategoryForm>(t as any);
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -87,7 +87,7 @@ describe('CategoryForest', () => {
             ]
         ]);
 
-        const result = Tree.flatten<Category>(t as any);
+        const result = Tree.flatten<CategoryForm>(t as any);
 
         expect(result.length).toBe(6);
 
@@ -156,7 +156,7 @@ describe('CategoryForest', () => {
     it('categoryForestToArray - recursive', () => {
 
         const t = threeLevels();
-        const result = Tree.flatten<Category>(linkParentAndChildInstances(t));
+        const result = Tree.flatten<CategoryForm>(linkParentAndChildInstances(t));
 
         expect(result[0].name).toBe('P1');
         expect(result[1].name).toBe('C1');

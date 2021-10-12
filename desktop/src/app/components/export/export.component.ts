@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
+import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
     Resource, ProjectConfiguration } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../components/export/catalog/get-export-documents';
@@ -42,7 +42,7 @@ export class ExportComponent implements OnInit {
     public catalogs: Array<FieldDocument> = [];
 
     public categoryCounts: Array<CategoryCount> = [];
-    public selectedCategory: Category|undefined = undefined;
+    public selectedCategory: CategoryForm|undefined = undefined;
     public selectedOperationOrPlaceId: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema' | 'complete' = 'complete';
@@ -66,7 +66,7 @@ export class ExportComponent implements OnInit {
 
     public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
 
-    public getCategoryLabel = (category: Category) => this.labels.get(category);
+    public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 

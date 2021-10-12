@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 
 
@@ -13,7 +13,7 @@ import {ProjectConfiguration} from 'idai-field-core';
 })
 export class LinkModalComponent {
 
-    public filterOptions: Array<Category> = [];
+    public filterOptions: Array<CategoryForm> = [];
 
 
     constructor(public activeModal: NgbActiveModal,

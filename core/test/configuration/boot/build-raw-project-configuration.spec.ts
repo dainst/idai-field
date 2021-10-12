@@ -6,7 +6,7 @@ import { BuiltInCategoryDefinition } from '../../../src/configuration/model/cate
 import { LibraryCategoryDefinition } from '../../../src/configuration/model/category/library-category-definition';
 import { CustomFormDefinition } from '../../../src/configuration/model/form/custom-form-definition';
 import { LibraryFormDefinition } from '../../../src/configuration/model/form/library-form-definition';
-import { Category } from '../../../src/model/configuration/category';
+import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Field } from '../../../src/model/configuration/field';
 import { Groups } from '../../../src/model/configuration/group';
 import { Relation } from '../../../src/model/configuration/relation';
@@ -25,7 +25,7 @@ describe('buildRawProjectConfiguration', () => {
                            libraryForms: Map<LibraryFormDefinition>, ...rest: any[]) {
 
         const raw = buildRawProjectConfiguration(builtInCategories, libraryCategories, libraryForms, ...rest);
-        return Tree.flatten<Category>(categories(raw));
+        return Tree.flatten<CategoryForm>(categories(raw));
     }
 
 

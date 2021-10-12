@@ -1,4 +1,4 @@
-import { Category } from '../model';
+import { CategoryForm } from '../model';
 import { Valuelist } from '../model';
 import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
@@ -34,9 +34,9 @@ export class Labels {
     }
 
 
-    public getFieldLabel(category: Category, fieldName: string): string {
+    public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
-        const label = Category.getFieldLabelValue(category, fieldName);
+        const label = CategoryForm.getFieldLabelValue(category, fieldName);
         if (!label) return undefined;
         return I18N.getLabel(label, this.getLanguages());
     }

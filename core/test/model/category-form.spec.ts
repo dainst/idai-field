@@ -1,4 +1,4 @@
-import { Category } from '../../src/model';
+import { CategoryForm } from '../../src/model';
 
 /**
  * @author Daniel de Oliveira
@@ -20,7 +20,7 @@ describe('Category', () => {
             }]
         };
 
-        const fields = Category.getFields(category as any);
+        const fields = CategoryForm.getFields(category as any);
 
         expect(fields[0].name).toEqual('fieldA');
     });

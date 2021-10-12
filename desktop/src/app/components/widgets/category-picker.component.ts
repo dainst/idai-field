@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { is, Predicate } from 'tsfun';
-import { Category, InPlace, Labels } from 'idai-field-core';
+import { CategoryForm, InPlace, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 
 
@@ -14,7 +14,7 @@ import { ConfigurationContextMenu } from '../configuration/context-menu/configur
  */
 export class CategoryPickerComponent {
 
-    @Input() topLevelCategoriesArray: Array<Category>;
+    @Input() topLevelCategoriesArray: Array<CategoryForm>;
     @Input() selectedCategories: string[];
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
@@ -24,26 +24,26 @@ export class CategoryPickerComponent {
     @Input() dragging: boolean = false;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
-    @Output() onCreateSubcategory: EventEmitter<Category> = new EventEmitter<Category>();
+    @Output() onCategoryPicked: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
+    @Output() onCreateSubcategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
     @Output() onOrderChanged: EventEmitter<void> = new EventEmitter<void>();
-    @Output() onEditCategory: EventEmitter<Category> = new EventEmitter<Category>();
+    @Output() onEditCategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
 
     constructor(private labels: Labels) {}
 
 
-    public getCategoryLabel = (category: Category): string => this.labels.get(category);
+    public getCategoryLabel = (category: CategoryForm): string => this.labels.get(category);
 
-    public hasCustomFields = (category: Category): boolean => Category.hasCustomFields(category);
+    public hasCustomFields = (category: CategoryForm): boolean => CategoryForm.hasCustomFields(category);
 
-    public isCreateButtonVisible = (category: Category): boolean =>
+    public isCreateButtonVisible = (category: CategoryForm): boolean =>
         this.showCreateButtons && category.userDefinedSubcategoriesAllowed;
 
-    public openContextMenu = (event: MouseEvent, category: Category) => this.contextMenu?.open(event, category)
+    public openContextMenu = (event: MouseEvent, category: CategoryForm) => this.contextMenu?.open(event, category)
 
 
-    public pickCategory(category: Category) {
+    public pickCategory(category: CategoryForm) {
 
         if (category && category.isAbstract && !this.allowPickingAbstractCategories) return;
 
@@ -51,7 +51,7 @@ export class CategoryPickerComponent {
     }
 
 
-    public onDrop(event: CdkDragDrop<any>, parentCategory?: Category) {
+    public onDrop(event: CdkDragDrop<any>, parentCategory?: CategoryForm) {
 
         if (parentCategory) {
             InPlace.moveInArray(
@@ -73,17 +73,17 @@ export class CategoryPickerComponent {
     }
 
 
-    public getCategoryId(category: Category): string {
+    public getCategoryId(category: CategoryForm): string {
 
         return (
             category.parentCategory
-                ? (category.parentCategory as Category).name.toLowerCase() + '-'
+                ? (category.parentCategory as CategoryForm).name.toLowerCase() + '-'
                 : ''
         ) + category.name.toLowerCase();
     }
 
 
-    public isParentSelected(category: Category): boolean {
+    public isParentSelected(category: CategoryForm): boolean {
 
         if (!category.parentCategory
             || !this.selectedCategories) return false;
@@ -93,5 +93,5 @@ export class CategoryPickerComponent {
     }
 
 
-    public isCustomCategory: Predicate<Category> = category => category.source === 'custom';
+    public isCustomCategory: Predicate<CategoryForm> = category => category.source === 'custom';
 }

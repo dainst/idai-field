@@ -1,9 +1,8 @@
-import {is, isArray, Predicate, isString, and} from 'tsfun';
-import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
-    Resource, OptionalRange, Category, Tree} from 'idai-field-core';
-import {FieldGeometry, ProjectConfiguration, Named, Field, Relation} from 'idai-field-core';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
-import {ValidationErrors} from './validation-errors';
+import { is, isArray, Predicate, isString, and } from 'tsfun';
+import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
+    CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation } from 'idai-field-core';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../util/number-util';
+import { ValidationErrors } from './validation-errors';
 
 
 export module Validations {
@@ -228,10 +227,10 @@ export module Validations {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
-            = Category.getFields(projectConfiguration.getCategory(resource.category));
+            = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (Category.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
+            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
                 if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
                     missingFields.push(fieldDefinition.name);
                 }
@@ -264,7 +263,7 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<Field> =
-            Category.getFields(projectConfiguration.getCategory(resource.category));
+            CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const defaultFields: Array<Field> = [
             { name: 'relations' } as Field,
             { name: 'id' } as Field
@@ -326,7 +325,7 @@ export module Validations {
                                           numericInputTypes: string[]): string[] {
 
         const projectFields: Array<Field> =
-            Category.getFields(projectConfiguration.getCategory(resource.category));
+            CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
@@ -450,7 +449,7 @@ export module Validations {
                                    inputType: string,
                                    isValid: (object: any, options?: any) => boolean): string[] {
 
-        return Category.getFields(projectConfiguration.getCategory(resource.category))
+        return CategoryForm.getFields(projectConfiguration.getCategory(resource.category))
             .filter(field => field.inputType === inputType)
             .filter(field => resource[field.name] !== undefined)
             .filter(field => !isValid(resource[field.name], field.inputTypeOptions?.validation))

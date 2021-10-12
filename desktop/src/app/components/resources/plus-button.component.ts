@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, Datastore, Resource, FieldDocument, Name, Named, Tree } from 'idai-field-core';
+import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../components/resources/view/view-facade';
@@ -41,7 +41,7 @@ export class PlusButtonComponent implements OnChanges {
     @ViewChild('popover', { static: false }) private popover: any;
 
     public selectedCategory: string|undefined;
-    public toplevelCategoriesArray: Array<Category>;
+    public toplevelCategoriesArray: Array<CategoryForm>;
 
 
     constructor(
@@ -111,7 +111,7 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    public chooseCategory(category: Category) {
+    public chooseCategory(category: CategoryForm) {
 
         this.selectedCategory = category.name;
 
@@ -156,7 +156,7 @@ export class PlusButtonComponent implements OnChanges {
         this.toplevelCategoriesArray = [];
 
         if (this.preselectedCategory) {
-            const category: Category = projectConfiguration.getCategory(this.preselectedCategory);
+            const category: CategoryForm = projectConfiguration.getCategory(this.preselectedCategory);
             if (category) {
                 this.toplevelCategoriesArray.push(category);
             } else {
@@ -186,7 +186,7 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private isAllowedCategory(category: Category, projectConfiguration: ProjectConfiguration): boolean {
+    private isAllowedCategory(category: CategoryForm, projectConfiguration: ProjectConfiguration): boolean {
 
         if (category.name === 'Image') return false;
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
-import { Category, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
+import { CategoryForm, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
     ValuelistUtil, Labels } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
@@ -316,7 +316,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private async updateFields() {
 
         const categoryFields = this.category
-            ? clone(Category.getFields(this.projectConfiguration.getCategory(this.category)))
+            ? clone(CategoryForm.getFields(this.projectConfiguration.getCategory(this.category)))
             : [];
 
         const fields: Array<Field> = this.defaultFields
@@ -415,7 +415,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const category = this.projectConfiguration.getCategory(this.category);
         if (!category) return undefined;
 
-        return Category.getFields(category)
+        return CategoryForm.getFields(category)
             .find(field => field.name === fieldName) as Field;
     }
 
@@ -431,7 +431,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             ? fieldName.substring(0, fieldName.indexOf('.'))
             : fieldName;
 
-        const field = clone(Category.getFields(this.projectConfiguration.getCategory(this.category))
+        const field = clone(CategoryForm.getFields(this.projectConfiguration.getCategory(this.category))
             .find(on(Field.NAME, is(baseFieldName))));
 
         if (!field) throw 'Illegal state: Field "' + fieldName + '" does not exist!';

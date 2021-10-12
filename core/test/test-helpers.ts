@@ -1,6 +1,6 @@
 import {sameset} from 'tsfun/src/comparator';
 import {Datastore} from '../src/datastore/datastore';
-import { Category, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
+import { CategoryForm, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
 import { Document, toResourceId } from '../src/model/document';
 import { Resource } from '../src/model/resource';
 import { Tree } from '../src/tools/forest';
@@ -115,7 +115,7 @@ export function createDocuments(documents: NiceDocs) {
 }
 
 
-export const createCategory = (name: string): Tree<Category> => ({
+export const createCategory = (name: string): Tree<CategoryForm> => ({
     item: {
         name,
         label: {},

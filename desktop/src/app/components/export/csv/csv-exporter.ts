@@ -1,7 +1,7 @@
-import {Category, FieldResource} from 'idai-field-core';
-import {CSVExport} from './csv-export';
-import {M} from '../../../components/messages/m';
-import {PerformExport} from '../export-helper';
+import { CategoryForm, FieldResource } from 'idai-field-core';
+import { CSVExport } from './csv-export';
+import { M } from '../../../components/messages/m';
+import { PerformExport } from '../export-helper';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
@@ -18,13 +18,13 @@ export module CsvExporter {
      */
     export function performExport(outputFilePath: string): PerformExport {
 
-        return (category: Category, relations: string[]) => {
+        return (category: CategoryForm, relations: string[]) => {
 
             return async (resources: Array<FieldResource>) => {
 
                 await writeFile(
                     outputFilePath,
-                    CSVExport.createExportable(resources, Category.getFields(category), relations));
+                    CSVExport.createExportable(resources, CategoryForm.getFields(category), relations));
             }
         }
     }

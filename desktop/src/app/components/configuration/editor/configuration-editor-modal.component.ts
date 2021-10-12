@@ -1,6 +1,6 @@
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
-import { ConfigurationDocument, I18N, Document, Category, CustomFormDefinition } from 'idai-field-core';
+import { ConfigurationDocument, I18N, Document, CategoryForm, CustomFormDefinition } from 'idai-field-core';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -14,7 +14,7 @@ import { ErrWithParams } from '../../../components/import/import/import-document
 export abstract class ConfigurationEditorModalComponent {
 
     public configurationDocument: ConfigurationDocument;
-    public category: Category;
+    public category: CategoryForm;
     public new: boolean = false;
 
     public label: I18N.String;

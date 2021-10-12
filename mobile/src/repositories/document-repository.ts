@@ -28,7 +28,7 @@ export class DocumentRepository {
 
     public static async init(
         username: string,
-        categories: Forest<Category>,
+        categories: Forest<CategoryForm>,
         pouchdbDatastore: PouchdbDatastore
     ) : Promise<DocumentRepository> {
 
@@ -83,7 +83,7 @@ export class DocumentRepository {
 
 
 const buildDatastore = async (
-        categories: Forest<Category>,
+        categories: Forest<CategoryForm>,
         pouchdbDatastore: PouchdbDatastore,
         db: PouchDB.Database,
         username: string,
@@ -103,7 +103,7 @@ const buildDatastore = async (
 };
 
 
-const buildIndexFacade = (categories: Category[]): IndexFacade => {
+const buildIndexFacade = (categories: CategoryForm[]): IndexFacade => {
 
     const createdConstraintIndex = ConstraintIndex.make({
         /* eslint-disable max-len */

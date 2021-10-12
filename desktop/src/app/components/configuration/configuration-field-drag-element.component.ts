@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Category, Field, Labels } from 'idai-field-core';
+import { CategoryForm, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 
 
@@ -13,7 +13,7 @@ import { ConfigurationUtil } from '../../components/configuration/configuration-
  */
 export class ConfigurationFieldDragElement implements OnChanges {
 
-    @Input() category: Category;
+    @Input() category: CategoryForm;
     @Input() field: Field;
     @Input() hidden: boolean;
 

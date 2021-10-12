@@ -31,7 +31,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({ repository, navigation, paren
     const { labels } = useContext(LabelsContext);
     const { showToast } = useToast();
 
-    const [category, setCategory] = useState<Category>();
+    const [category, setCategory] = useState<CategoryForm>();
     const [newResource, setNewResource] = useState<NewResource>();
     const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
 

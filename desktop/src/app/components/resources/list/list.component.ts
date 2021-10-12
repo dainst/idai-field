@@ -1,11 +1,11 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FieldDocument, Named, Category, Tree} from 'idai-field-core';
-import {ResourcesComponent} from '../resources.component';
-import {Loading} from '../../widgets/loading';
-import {BaseList} from '../base-list';
-import {ProjectConfiguration} from 'idai-field-core';
-import {ViewFacade} from '../../../components/resources/view/view-facade';
-import {Menus} from '../../../services/menus';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FieldDocument, Named, CategoryForm, Tree } from 'idai-field-core';
+import { ResourcesComponent } from '../resources.component';
+import { Loading } from '../../widgets/loading';
+import { BaseList } from '../base-list';
+import { ProjectConfiguration } from 'idai-field-core';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { Menus } from '../../../services/menus';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ListComponent extends BaseList implements OnChanges {
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
 
-    public categoriesMap: { [category: string]: Category };
+    public categoriesMap: { [category: string]: CategoryForm };
 
 
     constructor(resourcesComponent: ResourcesComponent,

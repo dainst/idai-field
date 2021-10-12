@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 
 @Component({
     selector: 'type-icon',
@@ -12,6 +12,6 @@ import {Category} from 'idai-field-core';
  */
 export class TypeIconComponent {
 
-    @Input() category: Category;
+    @Input() category: CategoryForm;
     @Input() imageUrls: Array<SafeResourceUrl>;
 }

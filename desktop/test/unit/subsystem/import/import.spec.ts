@@ -1,4 +1,4 @@
-import { Category, PouchdbDatastore } from 'idai-field-core';
+import { CategoryForm, PouchdbDatastore } from 'idai-field-core';
 import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../src/app/components/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';
@@ -118,7 +118,7 @@ describe('Import/Subsystem', () => {
             }
         });
 
-        const t: Category = {
+        const t: CategoryForm = {
             name: 'Find', description: { 'de': '' },
             fields: [
                 { name: 'dating', inputType: 'dating' },
@@ -179,7 +179,7 @@ describe('Import/Subsystem', () => {
                 }
             });
 
-        const t: Category = {
+        const t: CategoryForm = {
             name: 'Find',
             fields: [
                 { name: 'dating', inputType: 'dating' },

@@ -2,8 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { Document, FieldDocument, FieldGeometry, Category,
-    ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
@@ -37,7 +36,7 @@ export type PopoverMenu = 'none'|'info'|'children';
 export class ResourcesComponent implements OnDestroy {
 
     public activePopoverMenu: PopoverMenu = 'none';
-    public filterOptions: Array<Category> = [];
+    public filterOptions: Array<CategoryForm> = [];
     public additionalSelectedDocuments: Array<FieldDocument> = [];
 
     private clickEventObservers: Array<any> = [];

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, Category, Name } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
-import { ProjectConfiguration, Labels } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, CategoryForm,
+    Name, ProjectConfiguration, Labels } from 'idai-field-core';
 import { DoceditErrors } from './docedit-errors';
 import { DocumentHolder } from './document-holder';
 import { MenuContext } from '../../services/menu-context';
@@ -176,7 +176,7 @@ export class DoceditComponent {
 
     private updateFields() {
 
-        this.fieldDefinitions = Category.getFields(
+        this.fieldDefinitions = CategoryForm.getFields(
             this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)
         );
         this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)).groups;

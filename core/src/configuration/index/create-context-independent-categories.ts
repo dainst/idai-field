@@ -6,7 +6,7 @@ import { BuiltInCategoryDefinition } from '../model/category/built-in-category-d
 import { LibraryFormDefinition } from '../model/form/library-form-definition';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { Valuelist } from '../../model/configuration/valuelist';
-import { Category } from '../../model/configuration/category';
+import { CategoryForm } from '../../model/configuration/category-form';
 import { buildRawProjectConfiguration } from '../boot/build-raw-project-configuration';
 import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
 import { LanguageConfiguration } from '../model/language/language-configuration';
@@ -25,7 +25,7 @@ export function createContextIndependentCategories(builtInCategories: Map<BuiltI
                                                    valuelists: Map<Valuelist>,
                                                    selectedParentCategories: string[],
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
-                                                   : Array<Category> {
+                                                   : Array<CategoryForm> {
 
     const [categories,]: RawProjectConfiguration = buildRawProjectConfiguration(
         builtInCategories,

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Category, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -12,23 +12,23 @@ import { Category, Labels } from 'idai-field-core';
  */
 export class CategoryListingComponent {
 
-    @Input() category: Category;
-    @Input() categories: Array<Category> = [];
-    @Input() selectedCategory: Category;
+    @Input() category: CategoryForm;
+    @Input() categories: Array<CategoryForm> = [];
+    @Input() selectedCategory: CategoryForm;
     @Input() searchTerm: string = '';
 
-    @Output() onCategorySelected = new EventEmitter<Category>();
+    @Output() onCategorySelected = new EventEmitter<CategoryForm>();
 
 
     constructor(private labels: Labels) {}
 
 
-    public selectCategory = (category: Category) => this.onCategorySelected.emit(category);
+    public selectCategory = (category: CategoryForm) => this.onCategorySelected.emit(category);
 
     public getLabel = (value: any) => this.labels.get(value);
 
 
-    public getSearchResultLabel(category: Category): string|undefined {
+    public getSearchResultLabel(category: CategoryForm): string|undefined {
 
         if (this.searchTerm === ''
                 || this.getLabel(category).toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())

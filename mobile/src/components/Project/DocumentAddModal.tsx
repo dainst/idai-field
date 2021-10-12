@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Document, Tree } from 'idai-field-core';
+import { CategoryForm, Document, Tree } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Modal, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import { ConfigurationContext } from '../../contexts/configuration-context';
@@ -25,7 +25,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
 
     const [categories, setCategories] = useState<Category[]>([]);
 
-    const isAllowedCategory = useCallback( (category: Category) => {
+    const isAllowedCategory = useCallback( (category: CategoryForm) => {
 
         if(category.name === 'Image' || !parentDoc) return false;
         if(isInOverview(parentDoc.resource.category)){
@@ -42,7 +42,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
 
     
     useEffect(() => {
-        const categories: Category[] = [];
+        const categories: CategoryForm[] = [];
         Tree.flatten(config.getCategories()).forEach(category => {
             if(isAllowedCategory(category) && (!category.parentCategory || !isAllowedCategory(category.parentCategory)))
                 categories.push(category);
@@ -51,7 +51,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
     },[isAllowedCategory, config]);
 
     
-    const renderButton = (category: Category, style: ViewStyle, key?: string) => (
+    const renderButton = (category: CategoryForm, style: ViewStyle, key?: string) => (
         <CategoryButton
             size={ ICON_SIZE }
             category={ category }
@@ -60,7 +60,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
             onPress={ () => onAddCategory(category.name, parentDoc) } />);
 
 
-    const renderCategoryChilds = (category: Category) => (
+    const renderCategoryChilds = (category: CategoryForm) => (
         <View style={ categoryChildStyles.container }>
             {category.children.map(category => renderButton(category,{ margin: 2.5 }, category.name))}
         </View>);

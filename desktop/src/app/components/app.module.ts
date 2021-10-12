@@ -181,10 +181,8 @@ registerLocaleData(localeIt, 'it');
         {
             provide: RelationsManager,
             useFactory: (datastore: Datastore,
-                        projectConfiguration: ProjectConfiguration,
-                        settingsProvider: SettingsProvider) =>
-                            new RelationsManager(datastore, projectConfiguration,
-                                ),
+                         projectConfiguration: ProjectConfiguration,
+                         settingsProvider: SettingsProvider) => new RelationsManager(datastore, projectConfiguration),
             deps: [Datastore, ProjectConfiguration, SettingsProvider]
         },
         ImageRelationsManager,

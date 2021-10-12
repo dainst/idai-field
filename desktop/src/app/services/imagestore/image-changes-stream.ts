@@ -1,42 +1,72 @@
 import { Injectable } from '@angular/core';
 import { Maybe, isOk, ok, just, nothing } from 'tsfun';
-import { ChangesStream, Named, ProjectConfiguration, Document } from 'idai-field-core';
+import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter, Action } from 'idai-field-core';
 import { Settings } from '../settings/settings';
 import { SettingsProvider } from '../settings/settings-provider';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const http = typeof window !== 'undefined' ? window.require('http') : require('http');
+const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
 
 @Injectable()
 /**
+ * Posts or fetches new images on any change to image documents.
+ * Acts only if sync is turned on.
+ *
  * @author Daniel de Oliveira
  */
 export class ImageChangesStream {
 
-    constructor(changesStream: ChangesStream,
+    // TODO reinit on runtime changes of sync settings
+    constructor(datastore: PouchdbDatastore,
                 settingsProvider: SettingsProvider,
-                projectConfiguration: ProjectConfiguration) {
+                projectConfiguration: ProjectConfiguration,
+                categoryConverter: CategoryConverter) {
 
         const account = ImageChangesStream.extract(settingsProvider.getSettings());
         if (!isOk(account)) return;
         const [syncUrl, imagestoreProjectPath] = ok(account);
 
-        changesStream.remoteChangesNotifications().subscribe(next => {
-            if (!projectConfiguration.getImageCategories().map(Named.toName)
-                .includes(next.resource.category)) return;
+        // TODO maybe we can do it only on creation, not on every change
+        datastore.changesNotifications().subscribe(document => {
+            const doc = categoryConverter.convert(document);
 
-            ImageChangesStream.go(syncUrl, imagestoreProjectPath, next);
+            if (!ImageChangesStream.isImageDocument(projectConfiguration, doc)) return;
+            if (!ImageChangesStream.mySyncIsOn(settingsProvider.getSettings())) return;
+
+            const paths = ImageChangesStream.getPaths(syncUrl, imagestoreProjectPath, document)
+            if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
+                ImageChangesStream.postImages(paths);
+            } else {
+                ImageChangesStream.fetchImages(paths);
+            }
         });
     }
 
 
-    private static go(syncUrl: string, imagestoreProjectPath: string, next: Document) {
+    private static async postImages([hiresPath, hiresUrl, loresPath, loresUrl]: [string, string, string, string]) {
 
-        const hiresPath = imagestoreProjectPath + next.resource.id;
-        if (!fs.existsSync(hiresPath)) http.get(syncUrl + next.resource.id, ImageChangesStream.write(hiresPath));
-        const loresPath = imagestoreProjectPath + 'thumbs/' + next.resource.id;
-        if (!fs.existsSync(loresPath)) http.get(syncUrl + '/thumbs/' + next.resource.id, ImageChangesStream.write(loresPath));
+        await ImageChangesStream.post(hiresPath, hiresUrl);
+        await ImageChangesStream.post(loresPath, loresUrl);
+    }
+
+
+    private static fetchImages([hiresPath, hiresUrl, loresPath, loresUrl]: [string, string, string, string]) {
+
+        if (!fs.existsSync(hiresPath)) http.get(hiresUrl, ImageChangesStream.write(hiresPath));
+        if (!fs.existsSync(loresPath)) http.get(loresUrl, ImageChangesStream.write(loresPath));
+    }
+
+
+    private static getPaths(syncUrl: string, imagestoreProjectPath: string, document: Document): [string, string, string, string] {
+
+        return [
+            imagestoreProjectPath + document.resource.id,
+            syncUrl + document.resource.id,
+            imagestoreProjectPath + 'thumbs/' + document.resource.id,
+            syncUrl + 'thumbs/' + document.resource.id
+        ]
     }
 
 
@@ -57,6 +87,18 @@ export class ImageChangesStream {
     }
 
 
+    private static async post(filepath: string, url: string) {
+
+        const buf2 = fs.readFileSync(filepath);
+        await axios({
+            method: 'post',
+            url: url,
+            data: Buffer.from(buf2),
+            headers: { 'Content-Type': 'application/x-binary' }
+        });
+    }
+
+
     private static extract(settings: Settings): Maybe<[string, string]> {
 
         const project = settings.selectedProject;
@@ -65,7 +107,7 @@ export class ImageChangesStream {
         const syncSource = settings.syncTargets[project];
         if (!syncSource) return nothing();
 
-        const address = 'localhost'; // TODO should be derived from syncSource.address
+        const address = syncSource.address;
         const protocol = 'http'; // TODO be able to deal with both http and https
         const syncUrl = protocol + '://' + project + ':' + syncSource.password
             + '@' + address + '/files/' + project + '/';
@@ -74,5 +116,22 @@ export class ImageChangesStream {
         const imagestoreProjectPath = imagestorePath + project + '/';
 
         return just([syncUrl, imagestoreProjectPath]);
+    }
+
+
+    private static mySyncIsOn(settings: Settings) {
+
+        const project = settings.selectedProject;
+        const syncSource = settings.syncTargets[project];
+        return syncSource.isSyncActive;
+    }
+
+
+    private static isImageDocument(projectConfiguration: ProjectConfiguration, document: Document) {
+
+        return projectConfiguration
+            .getImageCategories()
+            .map(Named.toName)
+            .includes(document.resource.category);
     }
 }

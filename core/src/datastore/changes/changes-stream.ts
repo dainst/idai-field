@@ -37,9 +37,7 @@ export class ChangesStream {
                 ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
             }
 
-            if (await ChangesStream.isRemoteChange(
-                    document,
-                    this.getUsername())
+            if (ChangesStream.isRemoteChange( document, this.getUsername())
                 || !this.documentCache.get(document.resource.id)
                 || document._conflicts !== undefined) {
 
@@ -70,7 +68,7 @@ export class ChangesStream {
     }
 
 
-    private static async isRemoteChange(document: Document, username: string): Promise<boolean> {
+    public static isRemoteChange(document: Document, username: string): boolean {
 
         const latestAction: Action = Document.getLastModified(document);
         return latestAction && latestAction.user !== username;

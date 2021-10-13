@@ -6,7 +6,7 @@ import { Filestore } from '../filestore/filestore';
 import { ImageConverter } from './image-converter';
 import { ImagestoreErrors } from './imagestore-errors';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs'); // TODO remove
 
 
 /**
@@ -26,7 +26,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
 
     constructor(
-        private filestore: Filestore,
+        private filestore: Filestore, // TODO use this to substitute for fs usage
         private converter: ImageConverter,
         private blobMaker: BlobMaker,
         private db: PouchDB.Database) {

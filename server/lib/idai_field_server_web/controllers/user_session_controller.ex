@@ -1,6 +1,7 @@
 defmodule IdaiFieldServerWeb.UserSessionController do
   use IdaiFieldServerWeb, :controller
 
+  alias IdaiFieldServer.CouchdbDatastore
   alias IdaiFieldServer.Accounts
   alias IdaiFieldServerWeb.UserAuth
 
@@ -8,10 +9,18 @@ defmodule IdaiFieldServerWeb.UserSessionController do
     render(conn, "new.html", error_message: nil)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    %{"email" => email, "password" => password} = user_params
+  # TODO see todo in Accounts.generate_user_session_token
+  # there we took out the insertion of the token into the postgres database,
+  # because we want to get rid of it.
+  # this has as consequence, that when the user tries to continue its session,
+  # UserAuth.fetch_current_user cannot get a user via Accounts.get_user_by_session_token.
+  # So we would need to store our tokens in a couchdb '_tokens' database, for example.
 
-    if user = Accounts.get_user_by_email_and_password(email, password) do
+  def create(conn, %{"user" => user_params}) do
+    %{"username" => username, "password" => password} = user_params
+
+    if user = CouchdbDatastore.authorize(username, password) do
+    # if user = Accounts.get_user_by_email_and_password(username, password) do
       UserAuth.log_in_user(conn, user, user_params)
     else
       render(conn, "new.html", error_message: "Invalid e-mail or password")

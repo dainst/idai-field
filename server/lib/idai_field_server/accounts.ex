@@ -218,7 +218,7 @@ defmodule IdaiFieldServer.Accounts do
   """
   def generate_user_session_token(user) do
     {token, user_token} = UserToken.build_session_token(user)
-    Repo.insert!(user_token)
+    # Repo.insert!(user_token) # TODO store elsewhere
     token
   end
 

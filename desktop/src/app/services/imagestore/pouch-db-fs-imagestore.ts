@@ -170,26 +170,26 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     public async remove(key: string, options?: { fs?: true } /* TODO review */): Promise<any> {
 
         if (options?.fs === true) {
-            if (fs.existsSync(this.projectPath + key)) {
-                fs.unlinkSync(this.projectPath + key);
-            }
+            this.filestore.removeFile(this.path + '/' + key)
             return;
         }
 
-        return new Promise((resolve, reject) => {
-            fs.unlink(this.projectPath + key, () => {
-                // errors are ignored on purpose, original file may be missing due to syncing
-                this.db.get(key)
-                    .then((result: any) => result._rev)
-                    .then((rev: any) => this.db.removeAttachment(key, 'thumb', rev))
-                    .then(() => resolve(undefined))
-                    .catch((err: any) => {
-                        console.error(err);
-                        console.error(key);
-                        return reject([ImagestoreErrors.GENERIC_ERROR])
-                    });
-            });
-        });
+        this.filestore.removeFile(this.path + '/' + key); // original file may be missing due to syncing, but then removeFile will do nothing
+        this.filestore.removeFile(this.path + '/thumbs/' + key);
+
+        // return new Promise((resolve, reject) => {
+            // this.db.get(key)
+                // .then((result: any) => result._rev)
+                // .then((rev: any) => {
+                    //
+                // })
+                // .then(() => resolve(undefined))
+                // .catch((err: any) => {
+                    // console.error(err);
+                    // console.error(key);
+                    // return reject([ImagestoreErrors.GENERIC_ERROR])
+                    // });
+        // });
     }
 
 

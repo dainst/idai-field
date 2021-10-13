@@ -24,6 +24,12 @@ export class FsAdapter {
     }
 
 
+    public removeFile(path: string) {
+
+        fs.unlinkSync(path);
+    }
+
+
     public mkdir(path: string) {
 
         fs.mkdirSync(path);

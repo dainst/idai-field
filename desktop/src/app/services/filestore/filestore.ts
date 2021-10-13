@@ -16,7 +16,7 @@ export class Filestore {
 
 
     /**
-     * Writes a file to the Filestore
+     * Writes a file to the Filestore.
      * If it already exists, does nothing.
      *
      * @param path should start with /
@@ -46,6 +46,18 @@ export class Filestore {
     public fileExists(path: string): boolean {
 
         return this.fsAdapter.fileExists(this.getFullPath(path));
+    }
+
+
+    /**
+     * Removes a file from the Filestore.
+     * If it already exists, does nothing.
+     *
+     * @param path must start with /
+     */
+    public removeFile(path: string) {
+
+        if (this.fileExists(path)) this.fsAdapter.removeFile(this.getFullPath(path));
     }
 
 

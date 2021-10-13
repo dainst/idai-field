@@ -26,6 +26,9 @@ Make sure you have running postgres and couchdb instances before proceeding. If 
     $ docker-compose up couchdb
     $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
 
+For the user interface credentials to work, create a `user-tokens` db.
+Please also note that we assume the (admin) passwords of the `postgres` and the `couchdb` to be the same.
+
 ### Run
 
 #### On host machine

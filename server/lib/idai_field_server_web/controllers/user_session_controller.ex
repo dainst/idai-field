@@ -9,12 +9,7 @@ defmodule IdaiFieldServerWeb.UserSessionController do
     render(conn, "new.html", error_message: nil)
   end
 
-  # TODO see todo in Accounts.generate_user_session_token
-  # there we took out the insertion of the token into the postgres database,
-  # because we want to get rid of it.
-  # this has as consequence, that when the user tries to continue its session,
-  # UserAuth.fetch_current_user cannot get a user via Accounts.get_user_by_session_token.
-  # So we would need to store our tokens in a couchdb '_tokens' database, for example.
+  ## TODO revoke token on log out
 
   def create(conn, %{"user" => user_params}) do
     %{"username" => username, "password" => password} = user_params

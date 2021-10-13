@@ -1,5 +1,9 @@
 # IdaiFieldServer
 
+Provides an API for syncing files as well as a user interface.
+For both the api credentials and the log in data in the UI the `_users` table of
+a couchdb gets used to store user data.
+
 ## Getting started
 
 ### Prerequisites

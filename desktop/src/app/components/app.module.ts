@@ -58,10 +58,10 @@ import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
-import { Filestore } from '../services/imagestore/filestore';
-import { RemoteFilestore } from '../services/imagestore/remote-filestore';
-import { FsAdapter } from '../services/imagestore/fs-adapter';
-import { HttpAdapter } from '../services/imagestore/http-adapter';
+import { Filestore } from '../services/filestore/filestore';
+import { RemoteFilestore } from '../services/filestore/remote-filestore';
+import { FsAdapter } from '../services/filestore/fs-adapter';
+import { HttpAdapter } from '../services/filestore/http-adapter';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

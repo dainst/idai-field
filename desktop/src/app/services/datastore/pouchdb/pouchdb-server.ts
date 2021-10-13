@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { Filestore } from '../../imagestore/filestore';
+import { Filestore } from '../../filestore/filestore';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

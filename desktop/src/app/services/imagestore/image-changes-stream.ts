@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter, Resource } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { Filestore } from './filestore';
-import { RemoteFilestore } from './remote-filestore';
+import { Filestore } from '../filestore/filestore';
+import { RemoteFilestore } from '../filestore/remote-filestore';
 
 
 // TODO in image overview, update images when new images come in

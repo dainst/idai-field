@@ -1,12 +1,10 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { to } from 'tsfun';
-import {Settings} from '../settings/settings';
+import { Settings } from '../settings/settings';
 import { BlobMaker, BlobUrlSet } from './blob-maker';
 import { Filestore } from '../filestore/filestore';
 import { ImageConverter } from './image-converter';
 import { ImagestoreErrors } from './imagestore-errors';
-
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs'); // TODO remove
 
 
 /**
@@ -26,7 +24,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
 
     constructor(
-        private filestore: Filestore, // TODO use this to substitute for fs usage
+        private filestore: Filestore,
         private converter: ImageConverter,
         private blobMaker: BlobMaker,
         private db: PouchDB.Database) {

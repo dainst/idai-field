@@ -2,6 +2,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { to } from 'tsfun';
 import {Settings} from '../settings/settings';
 import { BlobMaker, BlobUrlSet } from './blob-maker';
+import { Filestore } from './filestore';
 import { ImageConverter } from './image-converter';
 import { ImagestoreErrors } from './imagestore-errors';
 
@@ -17,13 +18,15 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class PouchDbFsImagestore /* implements Imagestore */{
 
-    private projectPath: string|undefined = undefined;
+    private projectPath: string|undefined = undefined; // TODO deprecated
+    private path: string|undefined = undefined; // expected to have no ending slash
 
     private thumbBlobUrls: { [key: string]: BlobUrlSet } = {};
     private originalBlobUrls: { [key: string]: BlobUrlSet } = {};
 
 
     constructor(
+        private filestore: Filestore,
         private converter: ImageConverter,
         private blobMaker: BlobMaker,
         private db: PouchDB.Database) {
@@ -35,26 +38,18 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
     public init(settings: Settings): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-
-            if (!fs.existsSync(settings.imagestorePath)) {
-                try {
-                    fs.mkdirSync(settings.imagestorePath);
-                } catch(error) {
-                    this.projectPath = undefined;
-                    return reject([ImagestoreErrors.INVALID_PATH]);
-                }
-            }
+        return new Promise<any>(resolve => {
 
             this.projectPath = settings.imagestorePath + settings.selectedProject + '/';
+            this.path = '/' + settings.selectedProject;
 
-            if (!fs.existsSync(this.projectPath)) {
-                try {
-                    fs.mkdirSync(this.projectPath);
-                } catch(error) {
-                    this.projectPath = undefined;
-                    return reject([ImagestoreErrors.INVALID_PATH]);
-                }
+            if (!this.filestore.fileExists(this.path)) {
+                this.filestore.mkdir(this.path);
+                // reject([ImagestoreErrors.INVALID_PATH]); TODO remove; not longer necessary
+            }
+            if (!this.filestore.fileExists(this.path + '/thumbs')) {
+                this.filestore.mkdir(this.path + '/thumbs');
+                // reject([ImagestoreErrors.INVALID_PATH]); TODO remove; not longer necessary
             }
 
             resolve(undefined);
@@ -198,27 +193,27 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     }
 
 
-    private write(key: any, data: any, update: any, documentExists: any): Promise<any> {
+    private async write(key: any, data: any, update: any, documentExists: any): Promise<any> {
 
-        let flag = update ? 'w' : 'wx';
+        // let flag = update ? 'w' : 'wx';
 
-        return new Promise((resolve, reject) => {
-            fs.writeFile(this.projectPath + key, Buffer.from(data), { flag: flag }, err => {
-                if (err) {
-                    console.error(err);
-                    console.error(key);
-                    reject([ImagestoreErrors.GENERIC_ERROR]);
-                }
-                else {
-                    this.putAttachment(data, key, documentExists)
-                        .then(() => resolve(undefined)
-                    ).catch((warning: any) => {
-                        console.warn(warning);
-                        resolve(undefined);
-                    });
-                }
-            });
-        });
+        this.filestore.writeFile(this.path + '/' + key, Buffer.from(data));
+
+            // fs.writeFile(this.projectPath + key, Buffer.from(data), { flag: flag }, err => {
+                // if (err) {
+                    // console.error(err);
+                    // console.error(key);
+                    // reject([ImagestoreErrors.GENERIC_ERROR]);
+                // }
+                // else {
+        await this.putAttachment(data, key, documentExists)
+                // .then(() => resolve(undefined)
+            // ).catch((warning: any) => {
+                // console.warn(warning);
+                // resolve(undefined);
+            // });
+            // }
+            // });
     }
 
 
@@ -239,33 +234,23 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
         return promise.then((_rev: any) => {
 
-            const path = this.projectPath + '/thumbs/' + key;
-            fs.writeFileSync(path, buffer);
+            const path = this.path + '/thumbs/' + key;
+            this.filestore.writeFile(path, buffer);
         });
     }
 
 
-    private readOriginal(key: string): Promise<any> {
+    private async readOriginal(key: string): Promise<any> {
 
-        let path = this.projectPath + key;
-        return new Promise((resolve, reject) => {
-            fs.readFile(path, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
+        const path = this.path + '/' + key;
+        return this.filestore.readFile(path);
     }
 
 
-    private readThumb(key: string): Promise<any> {
+    private async readThumb(key: string): Promise<any> {
 
-        let path = this.projectPath + 'thumbs/' + key;
-        return new Promise((resolve, reject) => {
-            fs.readFile(path, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
+        const path = this.path + '/thumbs/' + key;
+        return this.filestore.readFile(path);
     }
 
 

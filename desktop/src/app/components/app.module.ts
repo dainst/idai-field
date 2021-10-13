@@ -152,10 +152,10 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: Imagestore,
-            useFactory: function(pouchdbManager: PouchdbDatastore, converter: ImageConverter, blobMaker: BlobMaker) {
-                return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDb());
+            useFactory: function(filestore: Filestore, pouchdbManager: PouchdbDatastore, converter: ImageConverter, blobMaker: BlobMaker) {
+                return new PouchDbFsImagestore(filestore, converter, blobMaker, pouchdbManager.getDb());
             },
-            deps: [PouchdbDatastore, ImageConverter, BlobMaker]
+            deps: [Filestore, PouchdbDatastore, ImageConverter, BlobMaker]
         },
         ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },

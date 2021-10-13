@@ -24,6 +24,12 @@ export class FsAdapter {
     }
 
 
+    public mkdir(path: string) {
+
+        fs.mkdirSync(path);
+    }
+
+
     public isDirectory(path: string) {
 
         return fs.lstatSync(path).isDirectory();

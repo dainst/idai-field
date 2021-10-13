@@ -9,7 +9,10 @@ import { FsAdapter } from './fs-adapter';
 export class Filestore {
 
     constructor(private settingsProvider: SettingsProvider,
-                private fsAdapter: FsAdapter) {}
+                private fsAdapter: FsAdapter) {
+
+        // TODO create imagestore directory if it does not exist
+    }
 
 
     /**
@@ -43,6 +46,12 @@ export class Filestore {
     public fileExists(path: string): boolean {
 
         return this.fsAdapter.fileExists(this.getFullPath(path));
+    }
+
+
+    public mkdir(path: string) {
+
+        this.fsAdapter.mkdir(this.getFullPath(path));
     }
 
 

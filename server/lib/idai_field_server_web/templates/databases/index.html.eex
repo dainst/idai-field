@@ -1,0 +1,9 @@
+<h1>Databases</h1>
+
+<ul>
+<%= for database <- @databases do %>
+  <li>
+    <%= database %>
+  </li>
+<% end %>
+</ul>

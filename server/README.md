@@ -4,6 +4,9 @@ Provides an API for syncing files as well as a user interface.
 For both the api credentials and the log in data in the UI the `_users` table of
 a couchdb gets used to store user data.
 
+As a normal user, one can log in to the user interface and change one owns password.
+As an admin user, one gets the additional option to list the existing databases.
+
 ## Getting started
 
 ### Prerequisites

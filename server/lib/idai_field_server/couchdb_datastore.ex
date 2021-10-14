@@ -31,6 +31,11 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     end
   end
 
+  def list_databases do
+    dbs = admin_get "_all_dbs"
+    dbs -- ["_replicator", "_users", "user-tokens"]
+  end
+
   def delete_session_token token do
     encoded_token = :http_uri.encode token
     answer = admin_get "user-tokens/#{encoded_token}"

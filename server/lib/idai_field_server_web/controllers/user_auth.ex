@@ -31,7 +31,7 @@ defmodule IdaiFieldServerWeb.UserAuth do
     {token, user_token} = UserToken.build_session_token(user)
 
     encoded_token = Base.encode64(token)
-    CouchdbDatastore.store_token user_token.user_id, encoded_token
+    CouchdbDatastore.store_token encoded_token, user
 
     user_return_to = get_session(conn, :user_return_to)
 

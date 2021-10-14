@@ -28,7 +28,8 @@ defmodule IdaiFieldServer.Accounts.UserToken do
   """
   def build_session_token(user) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %IdaiFieldServer.Accounts.UserToken{token: token, context: "session", user_id: user.id}}
+    {token, %{token: token, context: "session", user_id: user.name}}
+    # {token, %IdaiFieldServer.Accounts.UserToken{token: token, context: "session", user_id: user.id}} TODO review
   end
 
   @doc """

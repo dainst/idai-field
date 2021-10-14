@@ -18,23 +18,24 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     )
     answer = Poison.decode! response.body
 
-    if is_nil(answer["error"]), do: %{ name: name, id: "org.couchdb.user:#{name}" }
+    if is_nil(answer["error"]), do: %{ name: name }
   end
 
   def change_password new_pwd, old_pwd do
     false
   end
 
-  def store_token user_id, token do
+  def store_token id, data do
 
     couchdb_path = get_couchdb_path()
     password = get_password()
 
+    body = Poison.encode!(Map.merge(%{ "_id": id }, data))
     options = [hackney: [basic_auth: {"admin", password}]]
     headers = [{"Content-type", "application/json"}]
     {:ok, response} = HTTPoison.post(
       "http://#{couchdb_path}/user-tokens" ,
-      Poison.encode!(%{ user_id: user_id, _id: token }),
+      body,
       headers,
       options
     )
@@ -55,11 +56,12 @@ defmodule IdaiFieldServer.CouchdbDatastore do
       options
     )
     answer = Poison.decode!(response.body)
-    if not is_nil(answer["user_id"]) do
+    if not is_nil(answer["name"]) do
       # TODO review
       %{
-        email: "a@b.c",
-        name: String.replace(answer["user_id"], "org.couchdb.user:", ""),
+        # email: "a@b.c",
+        # name: String.replace(answer["user_id"], "org.couchdb.user:", ""),
+        name: answer["name"],
         id: answer["_id"]
       }
     end

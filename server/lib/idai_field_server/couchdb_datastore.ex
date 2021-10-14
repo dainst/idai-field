@@ -21,6 +21,10 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     if is_nil(answer["error"]), do: %{ name: name, id: "org.couchdb.user:#{name}" }
   end
 
+  def change_password new_pwd, old_pwd do
+    false
+  end
+
   def store_token user_id, token do
 
     couchdb_path = get_couchdb_path()

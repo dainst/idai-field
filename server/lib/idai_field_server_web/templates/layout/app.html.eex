@@ -19,9 +19,7 @@
           </ul>
           <%= render "_user_menu.html", assigns %>
         </nav>
-        <a class="phx-logo">
-          iDAI.field Server
-        </a>
+        <%= if @current_user do %>iDAI.field Server<% else %>&nbsp;<% end %>
       </section>
     </header>
     <main role="main" class="container">

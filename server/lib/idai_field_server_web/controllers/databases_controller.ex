@@ -23,8 +23,10 @@ defmodule IdaiFieldServerWeb.DatabasesController do
       conn = conn |> put_flash(:error, "passwords do not match")
       render conn, "new.html"
     else
+      CouchdbDatastore.create_database name
+      CouchdbDatastore.create_user name, password
 
-      # TODO create new database and main db user for that database
+      # TODO set permissions for user on database
 
       conn
       |> put_flash(:info, "Database created successfully.")

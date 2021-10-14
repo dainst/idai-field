@@ -31,6 +31,20 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     end
   end
 
+  def create_user name, password do
+    admin_put "_users/org.couchdb.user:#{name}", %{
+      _id: "org.couchdb.user:#{name}",
+      name: name,
+      type: "user",
+      roles: [],
+      password: password
+    }
+  end
+
+  def create_database name do
+    admin_put name, %{}
+  end
+
   def list_databases do
     dbs = admin_get "_all_dbs"
     dbs -- ["_replicator", "_users", "user-tokens"]

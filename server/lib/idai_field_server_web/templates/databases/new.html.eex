@@ -1,1 +1,20 @@
 <h1>Create new database</h1>
+
+<%= form_for :database, Routes.databases_path(@conn, :create), fn f -> %>
+
+  <%= label f, :database_name, "Database name" %>
+  <%= text_input f, :database_name, required: true %>
+  <%= error_tag f, :database_name %>
+
+  <%= label f, :main_db_user_password %>
+  <%= password_input f, :main_db_user_password, required: true %>
+  <%= error_tag f, :main_db_user_password %>
+
+  <%= label f, :main_db_user_password_confirmation %>
+  <%= password_input f, :main_db_user_password_confirmation, required: true %>
+  <%= error_tag f, :main_db_user_password_confirmation %>
+
+  <div>
+    <%= submit "Create database" %>
+  </div>
+<% end %>

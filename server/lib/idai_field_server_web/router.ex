@@ -56,7 +56,9 @@ defmodule IdaiFieldServerWeb.Router do
 
     get "/databases", DatabasesController, :index
     get "/databases/new", DatabasesController, :new
+    post "/databases/create", DatabasesController, :create
     get "/databases/:name", DatabasesController, :edit
+
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings/update_password", UserSettingsController, :update_password

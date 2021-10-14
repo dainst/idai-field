@@ -31,6 +31,13 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     end
   end
 
+  def set_permissions name do
+    admin_put "#{name}/_security", %{
+      admins: %{ names:  [name], roles: ["_admin"] },
+      members: %{ names: [], roles: ["_admin"] }
+    }
+  end
+
   def create_user name, password do
     admin_put "_users/org.couchdb.user:#{name}", %{
       _id: "org.couchdb.user:#{name}",

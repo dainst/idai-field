@@ -25,8 +25,7 @@ defmodule IdaiFieldServerWeb.DatabasesController do
     else
       CouchdbDatastore.create_database name
       CouchdbDatastore.create_user name, password
-
-      # TODO set permissions for user on database
+      CouchdbDatastore.set_permissions name
 
       conn
       |> put_flash(:info, "Database created successfully.")

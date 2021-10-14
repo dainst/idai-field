@@ -3,7 +3,7 @@
 <ul>
 <%= for database <- @databases do %>
   <li>
-    <%= database %>
+    <%= link database, to: Routes.databases_path(@conn, :edit, database) %>
   </li>
 <% end %>
 </ul>

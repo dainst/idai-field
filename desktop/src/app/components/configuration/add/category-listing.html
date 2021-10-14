@@ -1,8 +1,8 @@
 <ul id="category-listing" class="bg-light">
     <li *ngFor="let item of items"
         [class.category-header]="!item.form"
-        [class.selected]="item.form && selectedCategory === item.form"
-        (click)="item.form && selectCategory(item.form)">
+        [class.selected]="item.form && selectedForm === item.form"
+        (click)="item.form && selectForm(item.form)">
         <div *ngIf="item.label" class="category-label">{{getLabel(item)}}</div>
         <div *ngIf="item.form">
             <category-icon [category]="item.form" size="30"></category-icon>

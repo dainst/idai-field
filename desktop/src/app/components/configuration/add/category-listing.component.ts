@@ -20,10 +20,10 @@ type CategoryListingItem = {
 export class CategoryListingComponent implements OnChanges {
 
     @Input() categoryForms: Array<CategoryForm> = [];
-    @Input() selectedCategory: CategoryForm;
+    @Input() selectedForm: CategoryForm;
     @Input() searchTerm: string = '';
 
-    @Output() onCategorySelected = new EventEmitter<CategoryForm>();
+    @Output() onFormSelected = new EventEmitter<CategoryForm>();
 
     public items: Array<CategoryListingItem>;
 
@@ -37,7 +37,7 @@ export class CategoryListingComponent implements OnChanges {
     }
 
 
-    public selectCategory = (category: CategoryForm) => this.onCategorySelected.emit(category);
+    public selectForm = (form: CategoryForm) => this.onFormSelected.emit(form);
 
     public getLabel = (value: any) => this.labels.get(value);
 

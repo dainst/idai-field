@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.selectCategory">Kategorie auswählen</h5>
+    <h5 class="modal-title" i18n="@@configuration.selectForm">Formular auswählen</h5>
 </div>
 
 <div class="modal-body row add-category-modal-body">
@@ -19,22 +19,22 @@
             </button>
         </div>
         <category-listing [categoryForms]="categoryForms"
-                          [selectedCategory]="selectedCategory"
+                          [selectedForm]="selectedForm"
                           [searchTerm]="searchTerm"
-                          (onCategorySelected)="selectCategory($event)">
+                          (onFormSelected)="selectForm($event)">
         </category-listing>
     </div>
     <div class="col-md-6">
-        <category-preview [category]="selectedCategory"></category-preview>
+        <category-preview [category]="selectedForm"></category-preview>
     </div>
 </div>
 
 <div class="modal-footer">
     <div id="add-category-button"
          class="btn btn-success"
-         [class.disabled]="!selectedCategory"
+         [class.disabled]="!selectedForm"
          (click)="addSelectedCategory()">
-        <span i18n="@@configuration.selectCategory">Kategorie auswählen</span>
+        <span i18n="@@configuration.selectForm">Formular auswählen</span>
     </div>
     <div id="cancel-add-category-modal-button"
          class="btn btn-secondary"

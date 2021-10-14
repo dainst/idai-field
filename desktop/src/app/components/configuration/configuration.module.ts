@@ -13,7 +13,7 @@ import { FieldEditorModalComponent } from './editor/field-editor-modal.component
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
 import { CategoryPreviewComponent } from './add/category-preview.component';
 import { CategoryListingComponent } from './add/category-listing.component';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
+import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
@@ -41,7 +41,7 @@ import { SaveModalComponent } from './save-modal.component';
         AddGroupModalComponent,
         CategoryPreviewComponent,
         CategoryListingComponent,
-        AddCategoryModalComponent,
+        AddCategoryFormModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

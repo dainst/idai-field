@@ -17,7 +17,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
+import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from './configuration-index';
@@ -206,8 +206,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public async addSupercategory() {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
@@ -227,8 +227,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public async addSubcategory(parentCategory: CategoryForm) {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
@@ -316,8 +316,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public swapCategoryForm(category: CategoryForm) {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );

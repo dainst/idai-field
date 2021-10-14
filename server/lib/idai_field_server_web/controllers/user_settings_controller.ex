@@ -59,16 +59,19 @@ defmodule IdaiFieldServerWeb.UserSettingsController do
       conn = conn |> put_flash(:error, "password and password confirmation do not match")
       render(conn, "edit.html")
     else
+      if user = CouchdbDatastore.authorize(user.name, current_password) do
 
-      # TODO authorize user at couchdb, if that is succesful, then change password at chouchdb
+        CouchdbDatastore.change_password user.name, new_password
 
-      conn
-      |> put_flash(:info, "Password updated successfully.")
-      |> put_session(:user_return_to, Routes.user_settings_path(conn, :edit))
-      |> UserAuth.log_in_user(user)
+        conn
+        |> put_flash(:info, "Password updated successfully.")
+        |> put_session(:user_return_to, Routes.user_settings_path(conn, :edit))
+        |> UserAuth.log_in_user(user)
+      else
+        conn = conn |> put_flash(:error, "current password not correct")
+        render(conn, "edit.html")
+      end
     end
-
-
 
     # {:error, changeset} ->
       # render(conn, "edit.html", password_changeset: changeset)

@@ -48,6 +48,15 @@ defmodule IdaiFieldServer.CouchdbDatastore do
     }
   end
 
+  def delete_user name do
+    answer = admin_get "_users/org.couchdb.user:#{name}"
+    admin_delete "_users/org.couchdb.user:#{name}?rev=#{answer["_rev"]}"
+  end
+
+  def delete_database name do
+    admin_delete name
+  end
+
   def create_database name do
     admin_put name, %{}
   end

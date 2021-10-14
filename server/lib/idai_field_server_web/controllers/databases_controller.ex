@@ -12,6 +12,25 @@ defmodule IdaiFieldServerWeb.DatabasesController do
     render(conn, "new.html", error_message: nil)
   end
 
+  def delete conn, %{ "database" => %{
+      "admin_password" => password,
+      "name" => name
+    }} do
+
+    if CouchdbDatastore.authorize("admin", password) do
+
+      CouchdbDatastore.delete_database name
+      answer = CouchdbDatastore.delete_user name
+
+      conn
+      |> put_flash(:info, "Database deleted successfully.")
+      |> redirect(to: Routes.databases_path(conn, :index))
+    else
+      conn = conn |> put_flash(:error, "Wrong password given.")
+      render(conn, "edit.html", name: name)
+    end
+  end
+
   def create conn, %{ "database" =>
       %{
         "database_name" => name,

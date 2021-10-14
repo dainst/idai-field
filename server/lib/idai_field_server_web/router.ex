@@ -57,6 +57,7 @@ defmodule IdaiFieldServerWeb.Router do
     get "/databases", DatabasesController, :index
     get "/databases/new", DatabasesController, :new
     post "/databases/create", DatabasesController, :create
+    post "/databases/delete", DatabasesController, :delete
     get "/databases/:name", DatabasesController, :edit
 
 

@@ -2,15 +2,6 @@ version: "3.7"
 
 services:
 
-  postgres:
-    image: postgres:latest
-    environment: 
-      POSTGRES_PASSWORD: abcdef
-    ports: 
-      - "5432:5432"
-    volumes:
-      - "postgres-data:/var/lib/postgresql/data"
-
   couchdb:
     image: couchdb:3
     ports:
@@ -42,7 +33,6 @@ volumes:
   couchdb-data:
   server-config:
   server-images:
-  postgres-data:
 
 networks:
   web:

@@ -4,7 +4,6 @@ import { Valuelists } from '../../../model/configuration/valuelist';
 
 export interface BaseFormDefinition {
 
-    color?: string;
     groups?: Array<BaseGroupDefinition>;
     valuelists?: Valuelists;
     source?: Field.SOURCE_TYPES;

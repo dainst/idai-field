@@ -1810,6 +1810,7 @@ describe('buildRawProjectConfiguration', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
+                color: 'blue',
                 fields: {},
                 minimalForm: {
                     groups: []
@@ -1830,8 +1831,7 @@ describe('buildRawProjectConfiguration', () => {
                 groups: [],
                 creationDate: '',
                 createdBy: '',
-                description: {},
-                color: 'blue'
+                description: {}
             }
         };
 

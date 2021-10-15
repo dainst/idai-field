@@ -91,7 +91,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": { "de": "Schnitt; IT-Referat, 2019" },
-      "color": "blue",
       "valuelists": {
         "orientation": "orientation-default-1",
         "excavationType": "trench-excavationType-default"
@@ -125,7 +124,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": { "de": "Glass; IT-Referat, 2019" },
-      "color": "#99CC33",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -182,7 +180,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#ff99ff",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -229,7 +226,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#CC0000",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -405,7 +401,6 @@
       "description": {},
       "creationDate": "",
       "createdBy": "",
-      "color": "#660000",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -462,7 +457,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#707070",
       "valuelists": {
         "color": "colors-default-1",
         "featureBorders": "Feature-featureBorders-default",
@@ -545,7 +539,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#5572A1",
       "valuelists": {
         "findspotClassification": "Place-findspotClassification-default",
         "siteClassification": "Place-siteClassification-default"
@@ -576,7 +569,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#663300",
       "valuelists": {
         "color": "colors-default-1",
         "featureBorders": "Feature-featureBorders-default",
@@ -621,7 +613,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "black",
       "valuelists": {
         "color": "colors-default-1",
         "featureBorders": "Feature-featureBorders-default",
@@ -655,7 +646,6 @@
     },
     "Floor:default": {
       "categoryName": "Floor",
-      "color": "#6600cc",
       "creationDate": "",
       "createdBy": "",
       "description": {},
@@ -896,7 +886,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#339900",
       "valuelists": {
         "color": "colors-default-1",
         "featureBorders": "Feature-featureBorders-default",
@@ -948,7 +937,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#CCFFFF",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1035,7 +1023,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#FF6600",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1158,7 +1145,6 @@
       "description": {},
       "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "color": "#5c5c8a",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1213,7 +1199,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#cc9900",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1268,7 +1253,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Find",
-      "color": "black",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1310,7 +1294,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#737373",
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -1374,7 +1357,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "color": "#995f25",
       "categoryName": "Metal",
       "valuelists": {
         "condition": "Building-condition-default",
@@ -1430,7 +1412,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "BuildingPart",
-      "color": "#707070",
       "valuelists": {},
       "groups": [
         {
@@ -1473,7 +1454,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "SurveyUnit",
-      "color": "#6baed6",
       "valuelists": {},
       "groups": [
         {
@@ -1528,7 +1508,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Sample",
-      "color": "#9ecae1",
       "valuelists": {
         "sampleType": "Sample-sampleType-default"
       },

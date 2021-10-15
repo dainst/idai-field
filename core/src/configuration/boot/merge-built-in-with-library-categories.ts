@@ -33,6 +33,7 @@ function mergeCategories(builtInCategory: BuiltInCategoryDefinition,
     const result: TransientCategoryDefinition = clone(builtInCategory) as TransientCategoryDefinition;
     
     result.description = libraryCategory.description;
+    result.color = libraryCategory.color;
     if (libraryCategory.minimalForm) result.minimalForm = libraryCategory.minimalForm as TransientFormDefinition;
     if (libraryCategory.fields) {
         result.fields = mergeFields(builtInCategory.fields, libraryCategory.fields);

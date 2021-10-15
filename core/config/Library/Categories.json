@@ -1,6 +1,7 @@
 {
   "Trench": {
     "parent": "Operation",
+    "color": "blue",
     "description": {},
     "fields": {
       "trenchComment": {
@@ -10,6 +11,7 @@
   },
   "Glass": {
     "parent": "Find",
+    "color": "#99CC33",
     "description": {},
     "fields": {
       "decorationDescription": {
@@ -51,6 +53,7 @@
   },
   "Mollusk": {
     "parent": "Find",
+    "color": "#ff99ff",
     "description": {},
     "fields": {
       "classification": {
@@ -61,6 +64,7 @@
   },
   "Brick": {
     "parent": "Find",
+    "color": "#CC0000",
     "description": {},
     "fields": {
       "featureText": {
@@ -264,6 +268,7 @@
   },
   "Wood": {
     "parent": "Find",
+    "color": "#660000",
     "description": {},
     "fields": {
       "color": {
@@ -322,6 +327,7 @@
   },
   "Architecture": {
     "parent": "Feature",
+    "color": "#707070",
     "description": {},
     "fields": {
       "bibliography": {
@@ -412,6 +418,7 @@
     }
   },
   "Place": {
+    "color": "#5572A1",
     "description": {},
     "fields": {
       "placeName": {
@@ -445,6 +452,7 @@
   },
   "Layer": {
     "parent": "Feature",
+    "color": "#663300",
     "description": {},
     "fields": {
       "isNatural": {
@@ -470,6 +478,7 @@
     }
   },
   "Feature": {
+    "color": "black",
     "description": {},
     "fields": {
       "comparison": {
@@ -495,6 +504,7 @@
   },
   "Floor": {
     "parent": "Feature",
+    "color": "#6600cc",
     "description": {},
     "fields": {
       "conditionComment": {
@@ -775,6 +785,7 @@
   },
   "Grave": {
     "parent": "Feature",
+    "color": "#339900",
     "description": {},
     "fields": {
       "bibliography": {
@@ -881,6 +892,7 @@
   },
   "Terracotta": {
     "parent": "Find",
+    "color": "#FF6600",
     "description": {},
     "fields": {
       "clayColorBreak": {
@@ -979,6 +991,7 @@
   },
   "Stone": {
     "parent": "Find",
+    "color": "#5c5c8a",
     "description": {},
     "fields": {
       "purpose": {
@@ -1022,6 +1035,7 @@
   },
   "Coin": {
     "parent": "Find",
+    "color": "#cc9900",
     "description": {},
     "fields": {
       "frontSideDescription": {
@@ -1061,6 +1075,7 @@
     }
   },
   "Find": {
+    "color": "black",
     "description": {},
     "fields": {
       "amount": {
@@ -1109,6 +1124,7 @@
     }
   },
   "PlasterFragment": {
+    "color": "#737373",
     "description": {},
     "parent": "Find",
     "fields": {
@@ -1136,6 +1152,7 @@
   },
   "Metal": {
     "parent": "Find",
+    "color": "#995f25",
     "description": {},
     "fields": {
       "decorationTechnique": {
@@ -1168,8 +1185,14 @@
       }
     }
   },
+  "BuildingPart": {
+    "color": "#707070",
+    "description": {},
+    "fields": {}
+  },
   "SurveyUnit": {
     "parent": "Area",
+    "color": "#6baed6",
     "description": {},
     "fields": {}
   },
@@ -1184,6 +1207,7 @@
     }
   },
   "Sample": {
+    "color": "#9ecae1",
     "description": {},
     "fields": {
       "labNumber": {

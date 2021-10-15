@@ -7,6 +7,7 @@ export interface BaseCategoryDefinition {
 
     fields: Map<BaseFieldDefinition>;
     minimalForm?: BaseFormDefinition;
+    color?: string;
     parent?: string;
 }
 

@@ -1,98 +1,74 @@
 defmodule IdaiFieldServer.CouchdbDatastore do
 
-  alias IdaiFieldServer.Repo
+  import IdaiFieldServer.CouchdbConnection
 
   # Returns a user if name and password can be successfully used
   # to instantiate a session with the couchdb's _session endpoint,
   # and `nil`, if not successful.
   def authorize name, password do
-    couchdb_path = get_couchdb_path()
-
-    headers = [{"Content-type", "application/json"}]
-
-    {:ok, response} = HTTPoison.post(
-      "http://#{couchdb_path}/_session" ,
-      Poison.encode!(%{ name: name, password: password }),
-      headers,
-      []
-    )
-    answer = Poison.decode! response.body
-
-    if is_nil(answer["error"]), do: %{ name: name, id: "org.couchdb.user:#{name}" }
+    answer = anon_post "_session", %{ name: name, password: password }
+    if is_nil(answer["error"]), do: %{ name: name }
   end
 
-  def store_token user_id, token do
+  def change_password name, password do
+    answer = admin_get "_users/org.couchdb.user:#{name}"
+    admin_put "_users/org.couchdb.user:#{name}?rev=#{answer["_rev"]}",
+      %{ "name" => name, "password" => password, "roles" => [], "type" => "user"}
+  end
 
-    couchdb_path = get_couchdb_path()
-    password = get_password()
-
-    options = [hackney: [basic_auth: {"admin", password}]]
-    headers = [{"Content-type", "application/json"}]
-    {:ok, response} = HTTPoison.post(
-      "http://#{couchdb_path}/user-tokens" ,
-      Poison.encode!(%{ user_id: user_id, _id: token }),
-      headers,
-      options
-    )
-    # TODO handle errors
+  def store_token id, data do
+    admin_post "user-tokens", Map.merge(%{ "_id": id }, data)
   end
 
   def retrieve_user_by token do
-
-    couchdb_path = get_couchdb_path()
-    password = get_password()
-
     encoded_token = :http_uri.encode token
-
-    options = [hackney: [basic_auth: {"admin", password}]]
-    {:ok, response} = HTTPoison.get(
-      "http://#{couchdb_path}/user-tokens/#{encoded_token}",
-      %{},
-      options
-    )
-    answer = Poison.decode!(response.body)
-    if not is_nil(answer["user_id"]) do
-      # TODO review
+    answer = admin_get "/user-tokens/#{encoded_token}"
+    if not is_nil(answer["name"]) do
       %{
-        email: "a@b.c",
-        name: String.replace(answer["user_id"], "org.couchdb.user:", ""),
+        name: answer["name"],
         id: answer["_id"]
       }
     end
   end
 
-  # TODO handle errors
+  def set_permissions name do
+    admin_put "#{name}/_security", %{
+      admins: %{ names:  [name], roles: ["_admin"] },
+      members: %{ names: [], roles: ["_admin"] }
+    }
+  end
+
+  def create_user name, password do
+    admin_put "_users/org.couchdb.user:#{name}", %{
+      _id: "org.couchdb.user:#{name}",
+      name: name,
+      type: "user",
+      roles: [],
+      password: password
+    }
+  end
+
+  def delete_user name do
+    answer = admin_get "_users/org.couchdb.user:#{name}"
+    admin_delete "_users/org.couchdb.user:#{name}?rev=#{answer["_rev"]}"
+  end
+
+  def delete_database name do
+    admin_delete name
+  end
+
+  def create_database name do
+    admin_put name, %{}
+  end
+
+  def list_databases do
+    dbs = admin_get "_all_dbs"
+    dbs -- ["_replicator", "_users", "user-tokens"]
+  end
+
   def delete_session_token token do
-
-    couchdb_path = get_couchdb_path()
-    password = get_password()
     encoded_token = :http_uri.encode token
-    options = [hackney: [basic_auth: {"admin", password}]]
-
-    {:ok, response} = HTTPoison.get(
-      "http://#{couchdb_path}/user-tokens/#{encoded_token}",
-      %{},
-      options
-    )
-    rev = Poison.decode!(response.body)["_rev"]
-
-    {:ok, response} = HTTPoison.delete(
-      "http://#{couchdb_path}/user-tokens/#{encoded_token}?rev=#{rev}",
-      %{},
-      options
-    )
-  end
-
-  defp get_password do
-    repo_env = Application.fetch_env! :idai_field_server, Repo
-    repo_env = Enum.into repo_env, %{}
-    repo_env.password
-  end
-
-  # TODO dedup, see files_controller
-  defp get_couchdb_path do
-    repo_env = Application.fetch_env! :idai_field_server, Repo
-    repo_env = Enum.into repo_env, %{}
-    repo_env.couchdb
+    answer = admin_get "user-tokens/#{encoded_token}"
+    admin_delete "user-tokens/#{encoded_token}?rev=#{answer["_rev"]}"
   end
 end

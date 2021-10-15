@@ -54,6 +54,13 @@ defmodule IdaiFieldServerWeb.Router do
   scope "/", IdaiFieldServerWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    get "/databases", DatabasesController, :index
+    get "/databases/new", DatabasesController, :new
+    post "/databases/create", DatabasesController, :create
+    post "/databases/delete", DatabasesController, :delete
+    get "/databases/:name", DatabasesController, :edit
+
+
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings/update_password", UserSettingsController, :update_password
     put "/users/settings/update_email", UserSettingsController, :update_email

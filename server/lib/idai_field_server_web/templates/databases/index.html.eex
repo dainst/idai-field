@@ -1,0 +1,13 @@
+<h1>Databases</h1>
+
+<%= link "New", to: Routes.databases_path(@conn, :new) %>
+<br>
+<br>
+
+<ul>
+<%= for database <- @databases do %>
+  <li>
+    <%= link database, to: Routes.databases_path(@conn, :edit, database) %>
+  </li>
+<% end %>
+</ul>

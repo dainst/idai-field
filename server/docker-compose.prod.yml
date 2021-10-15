@@ -2,15 +2,6 @@ version: "3.7"
 
 services:
 
-  postgres:
-    image: postgres:latest
-    environment: 
-      POSTGRES_PASSWORD: abcdef
-    ports: 
-      - "5432:5432"
-    volumes:
-      - "postgres-data:/var/lib/postgresql/data"
-
   couchdb:
     image: couchdb:3
     ports:
@@ -28,9 +19,21 @@ services:
     volumes:
       - "server-config:/opt/src/server/config"
       - "server-images:/opt/src/server/files"
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=web"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:field-server.idai.world"
+        - "traefik.port=4000"
   
 volumes:
   couchdb-data:
   server-config:
   server-images:
-  postgres-data:
+
+networks:
+  web:
+    external: true

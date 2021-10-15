@@ -7,8 +7,6 @@ defmodule IdaiFieldServer.Application do
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      IdaiFieldServer.Repo,
       # Start the Telemetry supervisor
       IdaiFieldServerWeb.Telemetry,
       # Start the PubSub system

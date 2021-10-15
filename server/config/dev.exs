@@ -2,10 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :idai_field_server, IdaiFieldServer.Repo,
-  username: "postgres",
   password: "abcdef",
-  database: "idai_field_server_dev",
-  hostname: (if System.get_env("IN_CONTAINER") == "true" do "postgres" else "localhost" end),
   couchdb: "localhost:5984", # w\o beginning http:// or ending slash
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

@@ -18,7 +18,11 @@ defmodule IdaiFieldServerWeb.Router do
   end
 
   scope "/sync" do
-    forward "/", ReverseProxyPlug, upstream: "//localhost:5984/"
+    repo_env = Application.fetch_env! :idai_field_server, IdaiFieldServer.Repo
+    repo_env = Enum.into repo_env, %{}
+    couchdb_path = repo_env.couchdb
+
+    forward "/", ReverseProxyPlug, upstream: "//#{couchdb_path}/"
   end
 
   # Currently this is the most important thing we use of the Phoenix Application.

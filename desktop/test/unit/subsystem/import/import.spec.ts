@@ -67,7 +67,8 @@ describe('Import/Subsystem', () => {
     it('update geometry of trench with geojson', async done => {
 
         await datastore.create(
-            { resource: { identifier: 't1', category: 'Trench', relations: {} } });
+            { resource: { identifier: 't1', category: 'Trench', relations: {} } }
+        );
 
         const options: ImporterOptions = {
             file: undefined,

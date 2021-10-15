@@ -4,12 +4,21 @@ defmodule IdaiFieldServerWeb.Router do
   import IdaiFieldServerWeb.UserAuth
 
   pipeline :browser do
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json],
+      pass: ["*/*"],
+      json_decoder: Phoenix.json_library()
+
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+  end
+
+  scope "/sync" do
+    forward "/", ReverseProxyPlug, upstream: "//localhost:5984/"
   end
 
   # Currently this is the most important thing we use of the Phoenix Application.
@@ -19,6 +28,7 @@ defmodule IdaiFieldServerWeb.Router do
   # will be granted to access the files storage for that project.
   #
   scope "/files", IdaiFieldServerWeb do
+    # pipe_through :api
     get "/:project/*filepath", FilesController, :download
     post "/:project/*filepath", FilesController, :upload
     delete "/:project/*filepath", FilesController, :delete
@@ -29,11 +39,6 @@ defmodule IdaiFieldServerWeb.Router do
     pipe_through :browser
     get "/", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", IdaiFieldServerWeb do
-  #   pipe_through :api
-  # end
 
   # Authentication routes
   # Everything from here as well as a couple of artifacts have been generated
@@ -59,7 +64,6 @@ defmodule IdaiFieldServerWeb.Router do
     post "/databases/create", DatabasesController, :create
     post "/databases/delete", DatabasesController, :delete
     get "/databases/:name", DatabasesController, :edit
-
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings/update_password", UserSettingsController, :update_password

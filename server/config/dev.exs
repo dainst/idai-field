@@ -7,6 +7,8 @@ config :idai_field_server, IdaiFieldServer.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+# config :reverse_proxy_plug, :http_client, ReverseProxyPlug.HTTPClient.Adapters.HTTPoison
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

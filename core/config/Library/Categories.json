@@ -19,35 +19,43 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-decorationTechnique-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturingMethod": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-manufacturingMethod-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-objectType-default"
       },
       "transparency": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-transparency-default"
       },
       "vesselForm": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-vesselForm-default"
       },
       "vesselFormSpecific": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-vesselFormSpecific-default"
       }
     }
   },
@@ -58,7 +66,8 @@
     "fields": {
       "classification": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Mollusk-classification-default"
       }
     }
   },
@@ -72,47 +81,58 @@
       },
       "brickForm": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-brickForm-default"
       },
       "brickUsage": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-brickUsage-default"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-decorationTechnique-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturing": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-manufacturing-default"
       },
       "manufacturingMethod": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-manufacturingMethod-default"
       },
       "specificType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-specificType-default"
       },
       "temper": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-temper-default"
       }
     }
   },
@@ -120,7 +140,7 @@
     "description": {},
     "fields": {
       "bibliographicReferences": {
-        "inputType" : "literature"
+        "inputType": "literature"
       },
       "contactMail": {
         "inputType": "input"
@@ -190,31 +210,38 @@
       },
       "amountIndividuals": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-amountIndividuals-default"
       },
       "burialCharacteristic": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-burialCharacteristic-default"
       },
       "burialDocumentation": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-burialDocumentation-default"
       },
       "graveFeature": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-graveFeature-default"
       },
       "positionArms": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-positionArms-default"
       },
       "positionLegs": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-positionLegs-default"
       },
       "positioningIndividuals": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Burial-positioningIndividuals-default"
       }
     }
   },
@@ -234,35 +261,43 @@
       },
       "buildingCategory": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-buildingCategory-default"
       },
       "buildingCategorySpecific": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-buildingCategorySpecific-default"
       },
       "buildingTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-buildingTechnique-default"
       },
       "buildingType": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-buildingType-default"
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "context": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-context-default"
       },
       "material": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-material-default"
       }
     }
   },
@@ -273,19 +308,23 @@
     "fields": {
       "color": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-color-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-objectType-default"
       },
       "typeOfWood": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-typeOfWood-default"
       },
       "manufacturingMethod": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-manufacturingMethod-default"
       },
       "colorOutside": {
         "inputType": "input"
@@ -307,11 +346,13 @@
       },
       "surfaceCondition": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-surfaceCondition-default"
       },
       "decorationTechnique": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-decorationTechnique-default"
       },
       "paintColor": {
         "inputType": "input"
@@ -321,7 +362,8 @@
       },
       "paintCondition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Wood-paintCondition-default"
       }
     }
   },
@@ -365,47 +407,58 @@
       },
       "blockProcessing": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-blockProcessing-default"
       },
       "blockTreatment": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-blockTreatment-default"
       },
       "brickwork": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-brickwork-default"
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "construction": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-construction-default"
       },
       "mortarBinder": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-mortarBinder-default"
       },
       "mortarColor": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-2"
       },
       "mortarConsistency": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-mortarConsistency-default"
       },
       "wallClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-wallClassification-default"
       },
       "wallType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-wallType-default"
       }
     }
   },
@@ -442,11 +495,13 @@
       },
       "findspotClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Place-findspotClassification-default"
       },
       "siteClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Place-siteClassification-default"
       }
     }
   },
@@ -461,19 +516,23 @@
       },
       "consistency": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-consistency-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "layerClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-layerClassification-default"
       },
       "soilType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-soilType-default"
       }
     }
   },
@@ -490,15 +549,18 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureForm-default"
       }
     }
   },
@@ -512,31 +574,38 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "consistency": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-consistency-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "floorClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Floor-floorClassification-default"
       },
       "layerClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-layerClassification-default"
       },
       "mortarBinder": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Architecture-mortarBinder-default"
       }
     }
   },
@@ -558,15 +627,18 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "objectType": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Inscription-objectType-default"
       }
     }
   },
@@ -658,59 +730,73 @@
       },
       "clayColorBreak": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayHardness": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-clayHardness-default"
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "coatInside": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-coatInside-default"
       },
       "coatInsideType": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-coatInsideType-default"
       },
       "coatOutside": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-coatInside-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturing": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-manufacturing-default"
       },
       "materialType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-materialType-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-objectType-default"
       },
       "specificType": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-specificType-default"
       },
       "temperTypeClay": {
         "inputType": "input",
@@ -718,57 +804,69 @@
       },
       "vesselFormSpecific": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-vesselFormSpecific-default"
       },
       "vesselpart": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-vesselpart-Uruk"
       },
       "Firing": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-Firing-Uruk"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-decorationTechnique-default"
       },
       "manufacturingMethod": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-manufacturingMethod-default"
       },
       "temper": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-temper-default"
       },
       "temperAmount": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-temperAmount-default"
       },
       "temperParticles": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-temperParticles-default"
       },
       "coatOutsideType": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-coatInsideType-default"
       },
       "FormComparisonCompendia": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
       },
       "FormComparisonCompendiadetail": {
         "inputType": "input"
       },
       "DecorationComparisonCompendia": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
       },
       "DecorationComparisonCompendiadetail": {
         "inputType": "input"
       },
       "ApplicationComparisonCompendia": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
       },
       "ApplicationComparisonCompendiadetail": {
         "inputType": "input"
@@ -779,7 +877,8 @@
       },
       "vesselForm": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-vesselForm-default"
       }
     }
   },
@@ -812,31 +911,38 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "graveType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Grave-graveType-default"
       },
       "specificType": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Grave-specificType-default"
       },
       "soilType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Layer-soilType-default"
       },
       "tombBuilding": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Grave-tombBuilding-default"
       }
     }
   },
@@ -846,31 +952,38 @@
     "fields": {
       "biologicalAge": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-biologicalAge-default"
       },
       "boneClassification": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-boneClassification-default"
       },
       "boneType": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-boneType-default"
       },
       "burningGrade": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-burningGrade-default"
       },
       "sex": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-sex-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-objectType-default"
       },
       "species": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Bone-species-default"
       }
     }
   },
@@ -882,11 +995,13 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       }
     }
   },
@@ -897,63 +1012,78 @@
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "clayStructure": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Terracotta-clayStructure-default"
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-decorationTechnique-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturingMethod": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-manufacturingMethod-default"
       },
       "surfaceCondition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Terracotta-surfaceCondition-default"
       },
       "temper": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Brick-temper-default"
       },
       "temperAmount": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-temperAmount-default"
       },
       "temperParticles": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-temperParticles-default"
       },
       "vesselForm": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Terracotta-vesselForm-default"
       },
       "vesselFormSpecific": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Terracotta-vesselFormSpecific-default"
       }
     }
   },
@@ -963,19 +1093,23 @@
     "fields": {
       "drawingMaterial": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-drawingMaterial-default"
       },
       "drawingTool": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-drawingTool-default"
       },
       "drawingType": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-drawingType-default"
       },
       "scale": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-scale-default"
       }
     }
   },
@@ -985,7 +1119,8 @@
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Survey-researchMethod-default"
       }
     }
   },
@@ -1005,31 +1140,38 @@
       },
       "architectureElement": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Stone-architectureElement-default"
       },
       "color": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "material": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Stone-material-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Stone-objectType-default"
       },
       "origin": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Stone-origin-default"
       },
       "temperAmount": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-temperAmount-default"
       }
     }
   },
@@ -1050,27 +1192,33 @@
       },
       "denomination": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-denomination-default"
       },
       "manufacturingMethod": {
         "inputType": "input",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-manufacturingMethod-default"
       },
       "metalMaterial": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-metalMaterial-default"
       },
       "mint": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-mint-default"
       },
       "mintingRuler": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-mintingRuler-default"
       },
       "stampPositioning": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-stampPositioning-default"
       }
     }
   },
@@ -1111,15 +1259,18 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Building-conditionAmount-default"
       },
       "storagePlace": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Find-storagePlace-default"
       }
     }
   },
@@ -1137,11 +1288,13 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "colors-default-1"
       },
       "plasterComponents": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "PlasterFragment-plasterComponents-default"
       }
     }
   },
@@ -1157,31 +1310,38 @@
     "fields": {
       "decorationTechnique": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Metal-decorationTechnique-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturingMethod": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Metal-manufacturingMethod-default"
       },
       "metalMaterial": {
         "inputType": "checkboxes",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Coin-metalMaterial-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Metal-objectType-default"
       },
       "vesselForm": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "glass-vesselForm-default"
       },
       "vesselFormSpecific": {
         "inputType": "dropdown",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Metal-vesselFormSpecific-default"
       }
     }
   },
@@ -1219,7 +1379,8 @@
       },
       "sampleType": {
         "inputType": "radio",
-        "constraintIndexed": true
+        "constraintIndexed": true,
+        "valuelistId": "Sample-sampleType-default"
       }
     }
   }

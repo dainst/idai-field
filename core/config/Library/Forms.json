@@ -4,7 +4,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -62,7 +61,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -91,10 +89,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": { "de": "Schnitt; IT-Referat, 2019" },
-      "valuelists": {
-        "orientation": "orientation-default-1",
-        "excavationType": "trench-excavationType-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -124,21 +118,6 @@
       "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": { "de": "Glass; IT-Referat, 2019" },
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "color": "colors-default-1",
-        "decorationTechnique": "glass-decorationTechnique-default",
-        "formDescription": "glass-formDescription-default",
-        "manufacturingMethod": "glass-manufacturingMethod-default",
-        "objectType": "glass-objectType-default",
-        "transparency": "glass-transparency-default",
-        "vesselForm": "glass-vesselForm-default",
-        "vesselFormSpecific": "glass-vesselFormSpecific-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -180,13 +159,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "classification": "Mollusk-classification-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -226,24 +198,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "brickForm": "Brick-brickForm-default",
-        "brickUsage": "Brick-brickUsage-default",
-        "clayColorOutside": "colors-default-1",
-        "coatColorInside": "colors-default-1",
-        "coatColorOutside": "colors-default-1",
-        "decorationTechnique": "Brick-decorationTechnique-default",
-        "formDescription": "glass-formDescription-default",
-        "manufacturing": "Brick-manufacturing-default",
-        "manufacturingMethod": "Brick-manufacturingMethod-default",
-        "specificType": "Brick-specificType-default",
-        "temper": "Brick-temper-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -285,9 +239,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "coordinateReferenceSystem": "coordinate-reference-system-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -306,19 +257,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1",
-        "amountIndividuals": "Burial-amountIndividuals-default",
-        "burialCharacteristic": "Burial-burialCharacteristic-default",
-        "burialDocumentation": "Burial-burialDocumentation-default",
-        "graveFeature": "Burial-graveFeature-default",
-        "positionArms": "Burial-positionArms-default",
-        "positionLegs": "Burial-positionLegs-default",
-        "positioningIndividuals": "Burial-positioningIndividuals-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -355,17 +293,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "buildingCategory": "Building-buildingCategory-default",
-        "buildingCategorySpecific": "Building-buildingCategorySpecific-default",
-        "buildingTechnique": "Building-buildingTechnique-default",
-        "buildingType": "Building-buildingType-default",
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "context": "Building-context-default",
-        "material": "Building-material-default",
-        "period": "periods-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -401,20 +328,6 @@
       "description": {},
       "creationDate": "",
       "createdBy": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "color": "Wood-color-default",
-        "objectType": "Wood-objectType-default",
-        "typeOfWood": "Wood-typeOfWood-default",
-        "manufacturingMethod":  "Wood-manufacturingMethod-default",
-        "surfaceCondition": "Wood-surfaceCondition-default",
-        "decorationTechnique": "Wood-decorationTechnique-default",
-        "paintCondition": "Wood-paintCondition-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -457,24 +370,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1",
-        "orientation": "orientation-default-1",
-        "blockProcessing": "Architecture-blockProcessing-default",
-        "blockTreatment": "Architecture-blockTreatment-default",
-        "brickwork": "Architecture-brickwork-default",
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "construction": "Architecture-construction-default",
-        "mortarBinder": "Architecture-mortarBinder-default",
-        "mortarColor": "colors-default-2",
-        "mortarConsistency": "Architecture-mortarConsistency-default",
-        "wallClassification": "Architecture-wallClassification-default",
-        "wallType": "Architecture-wallType-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -513,7 +408,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -539,10 +433,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "findspotClassification": "Place-findspotClassification-default",
-        "siteClassification": "Place-siteClassification-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -569,16 +459,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1",
-        "consistency": "Layer-consistency-default",
-        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-        "layerClassification": "Layer-layerClassification-default",
-        "soilType": "Layer-soilType-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -613,12 +493,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -649,19 +523,6 @@
       "creationDate": "",
       "createdBy": "",
       "description": {},
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1",
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "consistency": "Layer-consistency-default",
-        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-        "floorClassification": "Floor-floorClassification-default",
-        "layerClassification": "Layer-layerClassification-default",
-        "mortarBinder": "Architecture-mortarBinder-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -697,12 +558,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "objectType": "Inscription-objectType-default",
-        "period": "periods-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -728,7 +583,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -745,35 +599,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "clayColorBreak": "colors-default-1",
-        "clayColorInside": "colors-default-1",
-        "clayColorOutside": "colors-default-1",
-        "clayHardness": "Pottery-clayHardness-default",
-        "coatColorInside": "colors-default-1",
-        "coatColorOutside": "colors-default-1",
-        "coatInside": "Pottery-coatInside-default",
-        "coatInsideType": "Pottery-coatInsideType-default",
-        "coatOutside": "Pottery-coatInside-default",
-        "coatOutsideType": "Pottery-coatInsideType-default",
-        "decorationTechnique": "Pottery-decorationTechnique-default",
-        "formDescription": "glass-formDescription-default",
-        "manufacturing": "Brick-manufacturing-default",
-        "manufacturingMethod": "Pottery-manufacturingMethod-default",
-        "materialType": "Pottery-materialType-default",
-        "objectType": "Pottery-objectType-default",
-        "specificType": "Pottery-specificType-default",
-        "temper": "Brick-temper-default",
-        "temperAmount": "Pottery-temperAmount-default",
-        "temperParticles": "Pottery-temperParticles-default",
-        "vesselForm": "Pottery-vesselForm-default",
-        "vesselFormSpecific": "Pottery-vesselFormSpecific-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -823,26 +648,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "vesselpart": "Pottery-vesselpart-Uruk",
-        "Firing": "Pottery-Firing-Uruk",
-        "condition": "Pottery-condition-Uruk",
-        "clayColorInside": "Pottery-clayColorInside-Uruk",
-        "clayColorOutside": "Pottery-clayColorInside-Uruk",
-        "decorationTechnique": "Pottery-decorationTechnique-Uruk",
-        "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
-        "temper": "Pottery-temper-Uruk",
-        "temperAmount": "Pottery-temperAmount-Uruk",
-        "temperParticles": "Pottery-temperParticles-Uruk",
-        "coatOutsideType": "Pottery-coatOutsideType-Uruk",
-        "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-        "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-        "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
-        "vesselForm": "Pottery-vesselForm-Uruk"
-      },
       "groups": [
         {
           "name": "stem",
@@ -886,19 +691,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "color": "colors-default-1",
-        "featureBorders": "Feature-featureBorders-default",
-        "featureForm": "Feature-featureForm-default",
-        "period": "periods-default-1",
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-        "graveType": "Grave-graveType-default",
-        "specificType": "Grave-specificType-default",
-        "soilType": "Layer-soilType-default",
-        "tombBuilding": "Grave-tombBuilding-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -937,19 +729,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "biologicalAge": "Bone-biologicalAge-default",
-        "boneClassification": "Bone-boneClassification-default",
-        "boneType": "Bone-boneType-default",
-        "burningGrade": "Bone-burningGrade-default",
-        "sex": "Bone-sex-default",
-        "objectType": "Bone-objectType-default",
-        "species": "Bone-species-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -990,11 +769,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1023,28 +797,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "clayColorBreak": "colors-default-1",
-        "clayColorInside": "colors-default-1",
-        "clayColorOutside": "colors-default-1",
-        "clayStructure": "Terracotta-clayStructure-default",
-        "coatColorInside": "colors-default-1",
-        "coatColorOutside": "colors-default-1",
-        "decorationTechnique": "Pottery-decorationTechnique-default",
-        "formDescription": "glass-formDescription-default",
-        "manufacturingMethod": "Pottery-manufacturingMethod-default",
-        "surfaceCondition": "Terracotta-surfaceCondition-default",
-        "temper": "Brick-temper-default",
-        "temperAmount": "Pottery-temperAmount-default",
-        "temperParticles": "Pottery-temperParticles-default",
-        "vesselForm": "Terracotta-vesselForm-default",
-        "vesselFormSpecific": "Terracotta-vesselFormSpecific-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1087,12 +839,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "drawingMaterial": "Drawing-drawingMaterial-default",
-        "drawingTool": "Drawing-drawingTool-default",
-        "drawingType": "Drawing-drawingType-default",
-        "scale": "Drawing-scale-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1113,9 +859,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "researchMethod": "Survey-researchMethod-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1145,20 +888,6 @@
       "description": {},
       "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "architectureElement": "Stone-architectureElement-default",
-        "color": "colors-default-1",
-        "formDescription": "glass-formDescription-default",
-        "material": "Stone-material-default",
-        "objectType": "Stone-objectType-default",
-        "origin": "Stone-origin-default",
-        "temperAmount": "Pottery-temperAmount-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1199,19 +928,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "denomination": "Coin-denomination-default",
-        "manufacturingMethod": "Coin-manufacturingMethod-default",
-        "metalMaterial": "Coin-metalMaterial-default",
-        "mint": "Coin-mint-default",
-        "mintingRuler": "Coin-mintingRuler-default",
-        "stampPositioning": "Coin-stampPositioning-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1253,12 +969,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Find",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1294,14 +1004,6 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "plasterComponents": "PlasterFragment-plasterComponents-default",
-        "color": "colors-default-1"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1341,7 +1043,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Photo",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -1358,20 +1059,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Metal",
-      "valuelists": {
-        "condition": "Building-condition-default",
-        "conditionAmount": "Building-conditionAmount-default",
-        "period": "periods-default-1",
-        "storagePlace": "Find-storagePlace-default",
-        "provenance": "provenance-default-1",
-        "decorationTechnique": "Metal-decorationTechnique-default",
-        "formDescription": "glass-formDescription-default",
-        "manufacturingMethod": "Metal-manufacturingMethod-default",
-        "metalMaterial": "Coin-metalMaterial-default",
-        "objectType": "Metal-objectType-default",
-        "vesselForm": "glass-vesselForm-default",
-        "vesselFormSpecific": "Metal-vesselFormSpecific-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1412,7 +1099,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "BuildingPart",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -1429,7 +1115,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Area",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -1454,7 +1139,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "SurveyUnit",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -1479,7 +1163,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Excavation",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -1508,9 +1191,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Sample",
-      "valuelists": {
-        "sampleType": "Sample-sampleType-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1531,9 +1211,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "TypeCatalog",
-      "valuelists": {
-        "criterion": "TypeCatalog-criterion-default"
-      },
       "groups": [
         {
           "name": "stem",
@@ -1554,7 +1231,6 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Type",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",

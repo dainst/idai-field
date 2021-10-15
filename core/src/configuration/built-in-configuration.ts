@@ -15,10 +15,11 @@ export class BuiltInConfiguration {
     public commonFields: Map<BuiltInFieldDefinition> = {
         period: {
             inputType: Field.InputType.DROPDOWNRANGE,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'periods-default-1'
         },
         dating: {
-            inputType: Field.InputType.DATING,
+            inputType: Field.InputType.DATING
         },
         diary: {
             inputType: Field.InputType.INPUT,
@@ -99,11 +100,13 @@ export class BuiltInConfiguration {
         },
         provenance: {
             inputType: Field.InputType.DROPDOWN,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'provenance-default-1'
         },
         orientation: {
             inputType: Field.InputType.DROPDOWN,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'orientation-default-1'
         },
         literature: {
             inputType: Field.InputType.LITERATURE
@@ -124,7 +127,8 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.INPUT
                 },
                 coordinateReferenceSystem: {
-                    inputType: Field.InputType.DROPDOWN
+                    inputType: Field.InputType.DROPDOWN,
+                    valuelistId: 'coordinate-reference-system-default-1'
                 },
                 staff: {
                     inputType: Field.InputType.MULTIINPUT
@@ -400,7 +404,8 @@ export class BuiltInConfiguration {
                 // TODO Use common field?
                 period: {
                     inputType: Field.InputType.DROPDOWNRANGE,
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    valuelistId: 'periods-default-1'
                 },
                 dating: {
                     inputType: Field.InputType.DATING,
@@ -479,7 +484,8 @@ export class BuiltInConfiguration {
             fields: {
                 criterion: {
                     inputType: Field.InputType.DROPDOWN,
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    valuelistId: 'TypeCatalog-criterion-default'
                 }
             },
             minimalForm: {

@@ -1,11 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { CategoryForm, I18N, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 
 
 type CategoryListingItem = {
-    name: string;
-    form?: CategoryForm;
-    label?: I18N.String;
+    form: CategoryForm;
+    isCategoryHeader: boolean;
 };
 
 
@@ -61,11 +60,10 @@ export class CategoryListingComponent implements OnChanges {
     private createItems(): Array<CategoryListingItem> {
 
         return this.categoryForms.reduce((result, form) => {
-            if (result.length === 0 || result[result.length - 1].name !== form.name) {
-                console.log()
-                result.push({ name: form.name, label: form.label });
+            if (result.length === 0 || result[result.length - 1].form.name !== form.name) {
+                result.push({ form, isCategoryHeader: true });
             }
-            result.push({ name: form.name, form: form });
+            result.push({ form, isCategoryHeader: false });
             return result;
         }, []);
     }

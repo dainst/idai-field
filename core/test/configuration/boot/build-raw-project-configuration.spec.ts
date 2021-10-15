@@ -357,6 +357,108 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('valuelistId - provided via valuelistId in category', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: {
+                        inputType: 'dropdown',
+                        valuelistId: 'aField-valuelist-id-1'
+                    }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            {},
+            {
+                'aField-valuelist-id-1': {
+                    values: { a: {}}, description: {}, creationDate: '', createdBy: ''
+                }
+            }
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
+    });
+
+
+    it('valuelistId - overwrite valuelistId', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: {
+                        inputType: 'dropdown',
+                        valuelistId: 'aField-valuelist-id-1'
+                    }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
+                valuelists: { aField: 'aField-valuelist-id-2' },
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            {},
+            {
+                'aField-valuelist-id-1': {
+                    values: { a: {}}, description: {}, creationDate: '', createdBy: ''
+                },
+                'aField-valuelist-id-2': {
+                    values: { b: {}}, description: {}, creationDate: '', createdBy: ''
+                }
+            }
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+    });
+
+
     it('valuelistId - nowhere provided - minimal form selected', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

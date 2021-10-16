@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Category, Document, Datastore, Name, Relation } from 'idai-field-core';
+import { CategoryForm, Document, Datastore, Name, Relation } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../../services/imagestore/imagestore';
@@ -34,7 +34,7 @@ export interface ImporterOptions {
     mergeMode: boolean,
     permitDeletions: boolean;
     selectedOperationId: string;
-    selectedCategory?: Category|undefined;
+    selectedCategory?: CategoryForm|undefined;
     separator: string;
     sourceType: string;
     file?: any|undefined;
@@ -196,7 +196,7 @@ export module Importer {
 
     function createParser(format: ImporterFormat,
                           operationId: string,
-                          selectedCategory?: Category,
+                          selectedCategory?: CategoryForm,
                           separator?: string): any {
 
         switch (format) {

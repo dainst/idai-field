@@ -1,9 +1,9 @@
 import { Map } from 'tsfun';
-import { Field } from '../model';
-import { Groups } from '../model';
+import { Field } from '../model/configuration/field';
+import { Groups } from '../model/configuration/group';
 import { Relation } from '../model/configuration/relation';
-import { BuiltInFieldDefinition, BuiltInFormDefinition } from './model';
 import { BuiltInCategoryDefinition } from './model/category/built-in-category-definition';
+import { BuiltInFieldDefinition } from './model/field/built-in-field-definition';
 
 
 /**
@@ -15,10 +15,11 @@ export class BuiltInConfiguration {
     public commonFields: Map<BuiltInFieldDefinition> = {
         period: {
             inputType: Field.InputType.DROPDOWNRANGE,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'periods-default-1'
         },
         dating: {
-            inputType: Field.InputType.DATING,
+            inputType: Field.InputType.DATING
         },
         diary: {
             inputType: Field.InputType.INPUT,
@@ -99,11 +100,13 @@ export class BuiltInConfiguration {
         },
         provenance: {
             inputType: Field.InputType.DROPDOWN,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'provenance-default-1'
         },
         orientation: {
             inputType: Field.InputType.DROPDOWN,
-            constraintIndexed: true
+            constraintIndexed: true,
+            valuelistId: 'orientation-default-1'
         },
         literature: {
             inputType: Field.InputType.LITERATURE
@@ -124,7 +127,8 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.INPUT
                 },
                 coordinateReferenceSystem: {
-                    inputType: Field.InputType.DROPDOWN
+                    inputType: Field.InputType.DROPDOWN,
+                    valuelistId: 'coordinate-reference-system-default-1'
                 },
                 staff: {
                     inputType: Field.InputType.MULTIINPUT
@@ -400,7 +404,8 @@ export class BuiltInConfiguration {
                 // TODO Use common field?
                 period: {
                     inputType: Field.InputType.DROPDOWNRANGE,
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    valuelistId: 'periods-default-1'
                 },
                 dating: {
                     inputType: Field.InputType.DATING,
@@ -479,7 +484,8 @@ export class BuiltInConfiguration {
             fields: {
                 criterion: {
                     inputType: Field.InputType.DROPDOWN,
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    valuelistId: 'TypeCatalog-criterion-default'
                 }
             },
             minimalForm: {
@@ -942,6 +948,7 @@ export class BuiltInConfiguration {
 
             this.builtInCategories.Other = {
                 parent: 'Feature',
+                color: '#CC6600',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -949,7 +956,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#CC6600',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -967,6 +973,7 @@ export class BuiltInConfiguration {
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Bourgou') {
 
             this.builtInCategories.Wall_surface = {
+                color: '#ffff99',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -974,7 +981,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#ffff99',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -988,13 +994,13 @@ export class BuiltInConfiguration {
                 }
             };
             this.builtInCategories.Drilling = {
+                color: '#08519c',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY
                     }
                 },
                 minimalForm: {
-                    color: '#08519c',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -1029,6 +1035,7 @@ export class BuiltInConfiguration {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: true,
+                color: '#08306b',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -1036,7 +1043,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#08306b',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -1051,9 +1057,9 @@ export class BuiltInConfiguration {
             };
             this.builtInCategories.Profile = {
                 parent: 'ProcessUnit',
+                color: '#c6dbef',
                 fields: {},
                 minimalForm: {
-                    color: '#c6dbef',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -1067,6 +1073,7 @@ export class BuiltInConfiguration {
                 }
             };
             this.builtInCategories.BuildingFloor = {
+                color: '#6600cc',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -1074,7 +1081,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#6600cc',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -1088,6 +1094,7 @@ export class BuiltInConfiguration {
                 }
             };
             this.builtInCategories.SurveyBurial = {
+                color: '#45ff95',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -1095,7 +1102,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#45ff95',
                     groups: [
                         {
                             name: Groups.STEM,
@@ -1169,6 +1175,7 @@ export class BuiltInConfiguration {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 abstract: false,
+                color: '#c6dbef',
                 fields: {
                     geometry: {
                         inputType: Field.InputType.GEOMETRY,
@@ -1176,7 +1183,6 @@ export class BuiltInConfiguration {
                     }
                 },
                 minimalForm: {
-                    color: '#c6dbef',
                     groups: [
                         {
                             name: Groups.STEM,

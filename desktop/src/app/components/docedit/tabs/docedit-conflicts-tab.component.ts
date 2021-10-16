@@ -1,9 +1,8 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document, Datastore, Resource, Labels, Category } from 'idai-field-core';
+import { Document, Datastore, Resource, Labels, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
-import { ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
@@ -225,7 +224,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
             }
 
-            const fd = Category
+            const fd = CategoryForm
                 .getFields(projectConfiguration.getCategory(document))
                 .find(fd => fd.name === fieldName);
 

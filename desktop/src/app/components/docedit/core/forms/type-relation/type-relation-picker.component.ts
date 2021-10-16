@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
+import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
     ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
@@ -138,7 +138,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private async initialize(typeCatalogCategory: Category) {
+    private async initialize(typeCatalogCategory: CategoryForm) {
 
         const usedCriteria = await this.getUsedCatalogCriteria();
 
@@ -239,7 +239,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private static getConfiguredCriteria(typeCatalogCategory: Category, labels: Labels): Array<Criterion> {
+    private static getConfiguredCriteria(typeCatalogCategory: CategoryForm, labels: Labels): Array<Criterion> {
 
         const valuelistDefinition =
             typeCatalogCategory

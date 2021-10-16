@@ -1,10 +1,10 @@
 import { flatten, keysValues, right, set } from 'tsfun';
-import { Category, Name } from 'idai-field-core';
+import { CategoryForm, Name } from 'idai-field-core';
 
 
 export interface ConfigurationIndex {
 
-    [term: string]: Array<Category>;
+    [term: string]: Array<CategoryForm>;
 }
 
 
@@ -14,7 +14,7 @@ export interface ConfigurationIndex {
  */
 export namespace ConfigurationIndex {
 
-    export function create(contextIndependentCategories: Array<Category>): ConfigurationIndex {
+    export function create(contextIndependentCategories: Array<CategoryForm>): ConfigurationIndex {
 
         return contextIndependentCategories.reduce((index, category) => {
 
@@ -34,7 +34,7 @@ export namespace ConfigurationIndex {
     export function find(index: ConfigurationIndex,
                          searchTerm: string,
                          parentCategory?: Name,
-                         onlySupercategories?: boolean): Array<Category> {
+                         onlySupercategories?: boolean): Array<CategoryForm> {
 
         return set(flatten(keysValues(index)
             .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))

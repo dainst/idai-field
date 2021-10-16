@@ -1,5 +1,5 @@
 import { clone, flatten, isEmpty, to } from 'tsfun';
-import { Category, Field, FieldResource, Resource,
+import { CategoryForm, Field, FieldResource, Resource,
     GroupDefinition, Group, Groups, Document, ConfigurationDocument, Named, CustomFormDefinition } from 'idai-field-core';
 import { CustomLanguageConfigurations } from './custom-language-configurations';
 
@@ -21,7 +21,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function isParentField(category: Category, field: Field): boolean {
+    export function isParentField(category: CategoryForm, field: Field): boolean {
 
         if (!category.parentCategory) return false;
 
@@ -31,7 +31,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function createGroupsConfiguration(category: Category,
+    export function createGroupsConfiguration(category: CategoryForm,
                                               permanentlyHiddenFields: string[]): Array<GroupDefinition> {
 
         return category.groups
@@ -48,7 +48,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function getCategoriesOrder(topLevelCategoriesArray: Array<Category>): string[] {
+    export function getCategoriesOrder(topLevelCategoriesArray: Array<CategoryForm>): string[] {
 
         return topLevelCategoriesArray.reduce((order, category) => {
             order.push(category.name);
@@ -73,7 +73,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function deleteCategory(category: Category,
+    export function deleteCategory(category: CategoryForm,
                                    customConfigurationDocument: ConfigurationDocument,
                                    removeFromCategoriesOrder: boolean = true): ConfigurationDocument {
 
@@ -93,8 +93,8 @@ export module ConfigurationUtil {
     }
 
 
-    export function deleteGroup(category: Category, group: Group,
-                                otherCategories: Array<Category>,
+    export function deleteGroup(category: CategoryForm, group: Group,
+                                otherCategories: Array<CategoryForm>,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
@@ -112,7 +112,7 @@ export module ConfigurationUtil {
     }
 
 
-    export function deleteField(category: Category, field: Field,
+    export function deleteField(category: CategoryForm, field: Field,
                                 customConfigurationDocument: ConfigurationDocument): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
@@ -140,7 +140,7 @@ export module ConfigurationUtil {
 
 
     export function isCustomizedCategory(configurationDocument: ConfigurationDocument,
-                                         category: Category): boolean {
+                                         category: CategoryForm): boolean {
 
         const customDefinition: CustomFormDefinition = configurationDocument.resource
             .forms[category.libraryId ?? category.name];
@@ -157,7 +157,7 @@ export module ConfigurationUtil {
 
 
     export function getPermanentlyHiddenFields(configurationDocument: ConfigurationDocument,
-                                               category: Category): string[] {
+                                               category: CategoryForm): string[] {
 
         const groups: Array<Group> = category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
@@ -177,14 +177,14 @@ export module ConfigurationUtil {
 
 
     export function getCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                category: Category): CustomFormDefinition|undefined {
+                                                category: CategoryForm): CustomFormDefinition|undefined {
 
         return configurationDocument.resource.forms[category.libraryId ?? category.name];
     }
 
 
     export function getParentCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                      category: Category): CustomFormDefinition|undefined {
+                                                      category: CategoryForm): CustomFormDefinition|undefined {
 
         return category.parentCategory
             ? configurationDocument.resource.forms[category.libraryId ?? category.parentCategory.name]

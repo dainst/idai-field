@@ -1,6 +1,6 @@
 import {Dating, Dimension, Resource} from 'idai-field-core';
 import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 import {convertFieldTypes} from '../../../../../src/app/components/import/parser/convert-field-types';
 
@@ -22,7 +22,7 @@ describe('convertFieldTypes', () => {
                 name: 'Bool2',
                 inputType: 'boolean'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const result = convertFieldTypes(category)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
 
@@ -39,7 +39,7 @@ describe('convertFieldTypes', () => {
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 dating: [{
@@ -76,7 +76,7 @@ describe('convertFieldTypes', () => {
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 dating: [null],
@@ -95,7 +95,7 @@ describe('convertFieldTypes', () => {
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         try {
             convertFieldTypes(category)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
@@ -114,7 +114,7 @@ describe('convertFieldTypes', () => {
                 name: 'dimension',
                 inputType: 'dimension'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 dimension: [{
@@ -152,7 +152,7 @@ describe('convertFieldTypes', () => {
                 name: 'dimension',
                 inputType: 'dimension'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
             dimension: [null],
@@ -171,7 +171,7 @@ describe('convertFieldTypes', () => {
                 name: 'r',
                 inputType: 'radio'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 r: 'rr',
@@ -190,7 +190,7 @@ describe('convertFieldTypes', () => {
                 name: 'd',
                 inputType: 'date'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 d: '10.07.2019',
@@ -213,7 +213,7 @@ describe('convertFieldTypes', () => {
                 name: 'dd2',
                 inputType: 'dropdownRange'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 dd1: 'a',
@@ -236,7 +236,7 @@ describe('convertFieldTypes', () => {
                 name: 'CB',
                 inputType: 'checkboxes'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 CB: 'a;b;c',
@@ -256,7 +256,7 @@ describe('convertFieldTypes', () => {
                 name: 'ui',
                 inputType: 'unsignedInt'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 ui: '100',
@@ -282,7 +282,7 @@ describe('convertFieldTypes', () => {
                 name: 'uf3',
                 inputType: 'float'
             }]}]
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 uf1: '100.1',
@@ -308,7 +308,7 @@ describe('convertFieldTypes', () => {
                 name: 'uf2',
                 inputType: 'unsignedFloat'
             }]}]
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 uf1: '100.1',
@@ -329,7 +329,7 @@ describe('convertFieldTypes', () => {
                 name: 'uf',
                 inputType: 'unsignedFloat'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
                 relations: {
@@ -353,7 +353,7 @@ describe('convertFieldTypes', () => {
                 name: 'ui',
                 inputType: 'unsignedInt'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         expectNotANumberError(category, 'ui', 'abc');
     });
@@ -367,13 +367,13 @@ describe('convertFieldTypes', () => {
                 name: 'uf',
                 inputType: 'unsignedFloat'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         expectNotANumberError(category, 'uf', 'a100.0');
     });
 
 
-    async function expectNotANumberError(category: Category, fieldName: string, value: string) {
+    async function expectNotANumberError(category: CategoryForm, fieldName: string, value: string) {
 
         try {
             const resource: Resource = {} as unknown as Resource;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Document, Datastore, NewImageDocument, ImageDocument } from 'idai-field-core';
+import { CategoryForm, Document, Datastore, NewImageDocument, ImageDocument } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { Imagestore } from '../../../services/imagestore/imagestore';
 import { readWldFile } from '../wld/wld-import';
@@ -61,7 +61,7 @@ export class ImageUploader {
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
-            const category: Category|undefined = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
+            const category: CategoryForm|undefined = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
             if (!category) return uploadResult;
 
             this.menuService.setContext(MenuContext.MODAL);
@@ -100,7 +100,8 @@ export class ImageUploader {
     }
 
 
-    private async chooseCategory(fileCount: number, depictsRelationTarget?: Document): Promise<Category|undefined> {
+    private async chooseCategory(fileCount: number,
+                                 depictsRelationTarget?: Document): Promise<CategoryForm|undefined> {
 
         const imageCategory = this.projectConfiguration.getCategory('Image');
         if ((imageCategory.children.length > 0)
@@ -127,7 +128,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadImageFiles(files: Array<File>, category: Category, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(files: Array<File>, category: CategoryForm, uploadResult: ImageUploadResult,
                                    depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return uploadResult;
@@ -215,7 +216,7 @@ export class ImageUploader {
     }
 
 
-    private uploadFile(file: File, category: Category, depictsRelationTarget?: Document): Promise<any> {
+    private uploadFile(file: File, category: CategoryForm, depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -251,7 +252,7 @@ export class ImageUploader {
     }
 
 
-    private createImageDocument(file: File, category: Category,
+    private createImageDocument(file: File, category: CategoryForm,
                                 depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise((resolve, reject) => {

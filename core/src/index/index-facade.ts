@@ -1,13 +1,13 @@
 import { Observable, Observer } from 'rxjs';
-import { assoc, filter, flow, forEach, is, isDefined, isUndefinedOrEmpty, lookup, Map, on, separate, update, values } from 'tsfun';
-import { Field } from '../model';
-import { Category } from '../model';
+import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
+import { CategoryForm } from '../model/configuration/category-form';
+import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
 import { Resource } from '../model/resource';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
-import {adjustIsChildOf} from './adjust-is-child-of';
+import { adjustIsChildOf } from './adjust-is-child-of';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
@@ -16,6 +16,7 @@ import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
 
 const TYPE = 'Type';
+const CONFIGURATION = 'Configuration';
 const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
 
@@ -29,12 +30,12 @@ export class IndexFacade {
 
     private indexItems: { [resourceId: string]: IndexItem } = {};
 
-    private categoriesMap: Map<Category>;
+    private categoriesMap: Map<CategoryForm>;
 
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        categories: Array<Category>,
+        categories: Array<CategoryForm>,
         private showWarnings: boolean
     ) {
         this.categoriesMap = Named.arrayToMap(categories);
@@ -139,7 +140,7 @@ export class IndexFacade {
         const doc = adjustIsChildOf(document);
 
         const item = this.getIndexItem(doc);
-        if (!item) return;
+        if (!item || doc.resource.category === CONFIGURATION) return;
 
         if (doc.resource.category === TYPE) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);

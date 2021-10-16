@@ -1,5 +1,5 @@
 export { Action } from './action';
-export { Category } from './configuration/category';
+export { CategoryForm } from './configuration/category-form';
 export { Constraint } from './constraint';
 export { Dating, DatingElement, DatingType } from './dating';
 export { Dimension } from './dimension';

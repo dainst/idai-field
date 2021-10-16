@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
+import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
     SyncService, Tree } from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { AngularUtility } from '../../angular/angular-utility';
@@ -72,7 +72,7 @@ export class ImportComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document);
 
-    public getCategoryLabel = (category: Category) => this.labels.get(category);
+    public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
@@ -353,10 +353,10 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private getCategoryFromFileName(fileName: string): Category|undefined {
+    private getCategoryFromFileName(fileName: string): CategoryForm|undefined {
 
         for (let segment of fileName.split('.')) {
-            const category: Category|undefined = Tree.flatten(this.projectConfiguration.getCategories())
+            const category: CategoryForm|undefined = Tree.flatten(this.projectConfiguration.getCategories())
                 .find(category => category.name.toLowerCase() === segment.toLowerCase());
             if (category) return category;
         }

@@ -13,9 +13,10 @@ import { Valuelists } from '../../../model/configuration/valuelist';
  */
 export interface CustomFormDefinition extends BaseFormDefinition {
 
+    fields: Map<CustomFieldDefinition>;
     hidden?: string[];
     parent?: string;
-    fields: Map<CustomFieldDefinition>;
+    color?: string;
     positionValuelists?: Valuelists;
 }
 

@@ -1,9 +1,9 @@
 import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
     subtract, clone } from 'tsfun';
+import { CategoryForm } from '../model/configuration/category-form';
+import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
-import { Category } from '../model';
-import { Field } from '../model';
 
 
 export interface IndexDefinition {
@@ -53,7 +53,7 @@ export interface ConstraintIndex {
 export module ConstraintIndex {
 
     export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                         categories: Array<Category>) {
+                         categories: Array<CategoryForm>) {
 
         const constraintIndex: ConstraintIndex = {
             indexDefinitions: {},
@@ -282,7 +282,7 @@ export module ConstraintIndex {
 
 
     function getIndexDefinitions(defaultIndexDefinitions: Map<IndexDefinition>,
-                                 categories: Array<Category>): Map<IndexDefinition> {
+                                 categories: Array<CategoryForm>): Map<IndexDefinition> {
 
         const fieldsToIndex = getFieldsToIndex(categories);
 
@@ -293,10 +293,10 @@ export module ConstraintIndex {
     }
 
 
-    function getFieldsToIndex(categories: Array<Category>): Array<Field> {
+    function getFieldsToIndex(categories: Array<CategoryForm>): Array<Field> {
 
         return flow(categories,
-            map(Category.getFields),
+            map(CategoryForm.getFields),
             flatten(),
             getUniqueFields,
             filter<Field>(to(Field.CONSTRAINTINDEXED))

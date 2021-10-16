@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { Category, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
 import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
@@ -25,7 +25,7 @@ import { Modals } from '../../services/modals';
  */
 export class ConfigurationCategoryComponent implements OnChanges {
 
-    @Input() category: Category;
+    @Input() category: CategoryForm;
     @Input() configurationDocument: ConfigurationDocument;
     @Input() showHiddenFields: boolean = true;
     @Input() availableInputTypes: Array<InputType>;

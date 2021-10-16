@@ -5,7 +5,7 @@ import { Field } from './field';
 import { Group } from './group';
 
 
-export interface Category {
+export interface CategoryForm {
 
     name: string;
 
@@ -21,8 +21,8 @@ export interface Category {
     userDefinedSubcategoriesAllowed?: boolean
     required?: boolean;
 
-    children: Array<Category>;
-    parentCategory: Category|undefined; //  = undefined;
+    children: Array<CategoryForm>;
+    parentCategory: CategoryForm|undefined; //  = undefined;
 
     // Contents and Appearance
     
@@ -36,8 +36,8 @@ export interface Category {
     createdBy?: string,
     creationDate?: Date;
 
-    color?: Category.Color; // TODO make sure it is always set and make non-optional
-    defaultColor?: Category.Color;
+    color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
+    defaultColor?: CategoryForm.Color;
 }
 
 
@@ -46,7 +46,7 @@ export interface Category {
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export namespace Category {
+export namespace CategoryForm {
 
     export type Color = string;
 
@@ -67,9 +67,9 @@ export namespace Category {
 
 
     // TODO Remove this (unused)
-    export function build(name: Name, parentCategory?: Category): Category {
+    export function build(name: Name, parentCategory?: CategoryForm): CategoryForm {
 
-        const color: string = Category.generateColorForCategory(name);
+        const color: string = CategoryForm.generateColorForCategory(name);
 
         const newCategory = {
             name: name,
@@ -90,7 +90,7 @@ export namespace Category {
     }
 
 
-    export function getFields(category: Category): Array<Field> {
+    export function getFields(category: CategoryForm): Array<Field> {
 
         return flatMap(
             values(category.groups),
@@ -98,41 +98,41 @@ export namespace Category {
     }
 
 
-    export function getFieldLabelValue(category: Category, field: Name): I18N.LabeledValue|undefined {
+    export function getFieldLabelValue(category: CategoryForm, field: Name): I18N.LabeledValue|undefined {
 
         return getFields(category)?.find(Named.onName(is(field)));
     } 
 
 
-    export function getNamesOfCategoryAndSubcategories(category: Category): string[] {
+    export function getNamesOfCategoryAndSubcategories(category: CategoryForm): string[] {
 
         return [category.name].concat(category.children.map(to(Named.NAME)));
     }
 
 
-    export function getTextColorForCategory(category: Category): string {
+    export function getTextColorForCategory(category: CategoryForm): string {
 
-        return Category.isBrightColor(getColor(category)) ? '#000000' : '#ffffff';
+        return CategoryForm.isBrightColor(getColor(category)) ? '#000000' : '#ffffff';
     }
 
 
-    function getColor(category: Category): string {
+    function getColor(category: CategoryForm): string {
 
         return category.color ?? '#cccccc';
     }
 
 
-    export function hasCustomFields(category: Category): boolean {
+    export function hasCustomFields(category: CategoryForm): boolean {
         
         return compose(
-            Category.getFields,
+            CategoryForm.getFields,
             map(to(Field.SOURCE)),
             any(is(Field.Source.CUSTOM))
         )(category);
     }
 
 
-    export function isMandatoryField(category: Category, fieldName: string): boolean {
+    export function isMandatoryField(category: CategoryForm, fieldName: string): boolean {
 
         return hasProperty(category, fieldName, Field.MANDATORY);
     }
@@ -175,10 +175,10 @@ export namespace Category {
     }
 
 
-    function hasProperty(category: Category, fieldName: string, propertyName: string) {
+    function hasProperty(category: CategoryForm, fieldName: string, propertyName: string) {
 
         return flow(
-            Category.getFields(category),
+            CategoryForm.getFields(category),
             filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             not(isEmpty));

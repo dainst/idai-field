@@ -1,4 +1,4 @@
-import { Category, Field, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
+import { CategoryForm, Field, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
 
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -11,7 +11,7 @@ export module CustomLanguageConfigurations {
 
     export function update(customLanguageConfigurations: CustomLanguageConfigurations,
                            editedLabel: I18N.String, editedDescription?: I18N.String,
-                           category?: Category, field?: Field,
+                           category?: CategoryForm, field?: Field,
                            group?: Group) {
 
         updateSection(
@@ -27,7 +27,7 @@ export module CustomLanguageConfigurations {
 
 
     export function deleteCategory(customLanguageConfigurations: CustomLanguageConfigurations,
-                                   category: Category) {
+                                   category: CategoryForm) {
 
         Object.keys(customLanguageConfigurations).forEach(languageKey => {
             InPlace.removeFrom(customLanguageConfigurations, [languageKey, 'categories', category.name]);
@@ -36,7 +36,7 @@ export module CustomLanguageConfigurations {
 
 
     export function hasCustomTranslations(customLanguageConfigurations: CustomLanguageConfigurations,
-                                          category: Category): boolean {
+                                          category: CategoryForm): boolean {
         
         return Object.values(customLanguageConfigurations).find(languageConfiguration => {
             return languageConfiguration.categories?.[category.name];
@@ -45,7 +45,7 @@ export module CustomLanguageConfigurations {
 
 
     function updateSection(customLanguageConfigurations: CustomLanguageConfigurations,
-                           section: 'label'|'description', editedI18nString: I18N.String, category: Category,
+                           section: 'label'|'description', editedI18nString: I18N.String, category: CategoryForm,
                            field?: Field, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {
@@ -67,7 +67,7 @@ export module CustomLanguageConfigurations {
 
     function handleNewTextInSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                     section: 'label'|'description', newText: string, languageCode: string,
-                                    category: Category, field?: Field, group?: Group) {
+                                    category: CategoryForm, field?: Field, group?: Group) {
 
         const definition = group ?? field ?? category;
 

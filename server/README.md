@@ -1,5 +1,12 @@
 # IdaiFieldServer
 
+Provides an API for syncing files as well as a user interface.
+For both the api credentials and the log in data in the UI the `_users` table of
+a couchdb gets used to store user data.
+
+As a normal user, one can log in to the user interface and change one owns password.
+As an admin user, one gets the additional option to list the existing databases.
+
 ## Getting started
 
 ### Prerequisites
@@ -21,6 +28,9 @@ Make sure you have running postgres and couchdb instances before proceeding. If 
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb
     $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
+
+For the user interface credentials to work, create a `user-tokens` db.
+Please also note that we assume the (admin) passwords of the `postgres` and the `couchdb` to be the same.
 
 ### Run
 

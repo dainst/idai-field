@@ -17,7 +17,7 @@ import { mergeWithCustomForms } from './merge-with-custom-forms';
 import { setGroupLabels } from './set-group-labels';
 import { Valuelist } from '../../model/configuration/valuelist';
 import { Relation } from '../../model/configuration/relation';
-import { Category } from '../../model/configuration/category';
+import { CategoryForm } from '../../model/configuration/category-form';
 import { mergeBuiltInWithLibraryCategories } from './merge-built-in-with-library-categories';
 import { getAvailableForms } from './get-available-forms';
 import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
@@ -90,7 +90,7 @@ function processForms(validateFields: any,
                       categoriesOrder: string[],
                       relations: Array<Relation>,
                       categories: Map<TransientCategoryDefinition>,
-                      selectedParentCategories?: string[]): Mapping<Map<TransientFormDefinition>, Forest<Category>> {
+                      selectedParentCategories?: string[]): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
 
     return compose(
         validateFields,
@@ -112,8 +112,8 @@ function setDefaultConstraintIndexed(forms: Map<TransientFormDefinition>): Map<T
 }
 
 
-const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<Category>): Forest<Category> =>
-    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
+const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<CategoryForm>): Forest<CategoryForm> =>
+    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<CategoryForm>;
 
 
 function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {

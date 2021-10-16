@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { BuiltInCategoryDefinition, CustomFormDefinition, LibraryCategoryDefinition, LibraryFormDefinition } from '../../../src/configuration';
-import { ConfigLoader, ConfigurationDefinition, ConfigurationErrors } from '../../../src/configuration/boot';
-import { Category, Groups } from '../../../src/model';
+import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/boot';
+import { CategoryForm, Groups } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';
 
 
@@ -543,7 +543,7 @@ describe('ConfigLoader', () => {
                 [], {}, undefined, 'User'
             );
 
-            expect(Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()))['B']
+            expect(Named.arrayToMap<CategoryForm>(Tree.flatten(pconf.getCategories()))['B']
                 .groups[0].fields
                 .find(field => field.name == 'fieldB1').inputType)
                 .toEqual('boolean');
@@ -721,7 +721,7 @@ describe('ConfigLoader', () => {
                 undefined, 'User'
             );
 
-            const result = Named.arrayToMap<Category>(Tree.flatten(pconf.getCategories()));
+            const result = Named.arrayToMap<CategoryForm>(Tree.flatten(pconf.getCategories()));
 
             expect(result['A'].name).toEqual('A');
             expect(result['A'].groups[0].name).toBe(Groups.STEM);

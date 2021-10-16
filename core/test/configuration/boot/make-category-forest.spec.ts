@@ -2,7 +2,7 @@ import { Map } from 'tsfun';
 import { makeCategoryForest } from '../../../src/configuration/boot/make-category-forest';
 import { TransientCategoryDefinition } from '../../../src/configuration/model/category/transient-category-definition';
 import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
-import { Category } from '../../../src/model/configuration/category';
+import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Field } from '../../../src/model/configuration/field';
 import { Groups } from '../../../src/model/configuration/group';
 import { Relation } from '../../../src/model/configuration/relation';
@@ -69,16 +69,16 @@ describe('makeCategoryForest', () => {
             }
         };
 
-        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest([], categories)(forms)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<CategoryForm>(makeCategoryForest([], categories)(forms)));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
-        expect(Category.getFields(categoriesMap[P]).length).toBe(1);
+        expect(CategoryForm.getFields(categoriesMap[P]).length).toBe(1);
 
         const categoryA = categoriesMap[P].children[0];
         
         expect(categoryA.name).toEqual(A);
-        expect(Category.getFields(categoryA).length).toBe(2);
+        expect(CategoryForm.getFields(categoryA).length).toBe(2);
         expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
     });
 
@@ -135,7 +135,7 @@ describe('makeCategoryForest', () => {
             }
         };
 
-        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryForest([], categories)(forms)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<CategoryForm>(makeCategoryForest([], categories)(forms)));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -201,7 +201,7 @@ describe('makeCategoryForest', () => {
         }];
 
         const categoriesMap = Named.arrayToMap(
-            Tree.flatten<Category>(makeCategoryForest(relations, categories)(forms))
+            Tree.flatten<CategoryForm>(makeCategoryForest(relations, categories)(forms))
         );
 
         expect(categoriesMap[T].groups[0].name).toEqual(Groups.STEM);

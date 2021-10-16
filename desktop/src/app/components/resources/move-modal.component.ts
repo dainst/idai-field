@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, Category, IndexFacade, Constraint, RelationsManager} from 'idai-field-core';
+import {FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager} from 'idai-field-core';
 import {MoveUtility} from '../../components/resources/move-utility';
 import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../components/resources/view/view-facade';
@@ -21,7 +21,7 @@ import {Loading} from '../widgets/loading';
 export class MoveModalComponent {
 
     public documents: Array<FieldDocument>;
-    public filterOptions: Array<Category> = [];
+    public filterOptions: Array<CategoryForm> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
     public showProjectOption: boolean = false;
 

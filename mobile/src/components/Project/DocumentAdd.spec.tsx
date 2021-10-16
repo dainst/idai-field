@@ -67,7 +67,7 @@ describe('DocumentAdd',() => {
   
         pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), new IdGenerator());
         await pouchdbDatastore.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
-        const categories: Forest<Category> = [createCategory('Feature'), createCategory(category)];
+        const categories: Forest<CategoryForm> = [createCategory('Feature'), createCategory(category)];
         repository = await DocumentRepository.init('testuser', categories, pouchdbDatastore);
 
         config = await loadConfiguration(pouchdbDatastore, project, preferences.languages, preferences.username);

@@ -1,11 +1,11 @@
-import { Category } from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LabelsContext from '../../contexts/labels/labels-context';
 
 
 interface CategoryIconProps {
-    category: Category;
+    category: CategoryForm;
     size: number;
 }
 
@@ -26,7 +26,7 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({ category, size }: CategoryI
 export default CategoryIcon;
 
 
-const getStyles = (category: Category, size: number) => StyleSheet.create({
+const getStyles = (category: CategoryForm, size: number) => StyleSheet.create({
     container: {
         height: size,
         width: size,
@@ -36,7 +36,7 @@ const getStyles = (category: Category, size: number) => StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        color: Category.getTextColorForCategory(category),
+        color: CategoryForm.getTextColorForCategory(category),
         fontSize: size / 1.5,
     },
 });

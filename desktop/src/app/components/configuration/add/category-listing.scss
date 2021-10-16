@@ -13,7 +13,7 @@ category-listing {
 
     li {
       height: 45px;
-      padding: 5px;
+      padding: 12px 5px 5px 45px;
       margin-top: 1px;
       margin-bottom: 1px;
       background-color: #fff;
@@ -21,8 +21,12 @@ category-listing {
       user-select: none;
       transition: background-color .25s ease;
 
+      &.category-header {
+        padding: 5px;
+      }
+
       &.selected,
-      &:hover {
+      &:hover:not(.category-header) {
         background-color: darken($list-item-hover-color, 5%);
         transition: background-color .5s ease;
       }
@@ -52,7 +56,7 @@ category-listing {
 
       .badge {
         position: relative;
-        top: 8px;
+        top: 1px;
         right: 7px;
         float: right;
         background-color: #37588e;

@@ -32,7 +32,7 @@ defmodule IdaiFieldServerWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :idai_field_server
+    # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :idai_field_server
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -43,12 +43,11 @@ defmodule IdaiFieldServerWeb.Endpoint do
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
-
+    parsers: [:urlencoded],
+    pass: ["*/*"]
   plug Plug.MethodOverride
   plug Plug.Head
+
   plug Plug.Session, @session_options
   plug IdaiFieldServerWeb.Router
 end

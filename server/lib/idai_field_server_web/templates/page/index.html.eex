@@ -1,38 +1,25 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+  <h1>iDAI.field</h1>
 </section>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<h1 class="jumbotron-heading">iDAI.field Desktop herunterladen</h1>
+<p class="lead text-muted">Hier können Sie die aktuelle Version von iDAI.field Desktop herunterladen.</p>
+<p>Es werden Pakete für macOS und Windows zur Verfügung gestellt.</p>
+<p>Aktuelle Version: <strong><%= @latest_tag %></strong></p>
+<p>
+    <a href="https://github.com/dainst/idai-field/releases/download/v<%= @latest_tag %>/iDAI.field-<%= @latest_tag %>-Windows.exe" class="btn btn-primary my-2">
+        <span class="fa fa-windows"></span>
+        Download für Windows
+        <span class="fa fa-download"></span>
+    </a>
+    <a href="https://github.com/dainst/idai-field/releases/download/v<%= @latest_tag %>/iDAI.field-<%= @latest_tag %>-MacOS.dmg" class="btn btn-primary my-2">
+        <span class="fa fa-apple"></span>
+        Download für macOS
+        <span class="fa fa-download"></span>
+    </a>
+</p>
+<p>
+    <a href="https://github.com/dainst/idai-field/releases">
+        Alle Versionen ...
+    </a>
+</p>

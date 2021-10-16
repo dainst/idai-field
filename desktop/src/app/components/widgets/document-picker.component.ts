@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
-import {FieldDocument, Category, Query, Datastore, Constraint} from 'idai-field-core';
-import {Loading} from './loading';
-import {AngularUtility} from '../../angular/angular-utility';
-import {Messages} from '../messages/messages';
+import { FieldDocument, CategoryForm, Query, Datastore, Constraint } from 'idai-field-core';
+import { Loading } from './loading';
+import { AngularUtility } from '../../angular/angular-utility';
+import { Messages } from '../messages/messages';
 import { getDocumentSuggestions } from './get-document-suggestions';
 
 
@@ -19,7 +19,7 @@ import { getDocumentSuggestions } from './get-document-suggestions';
  */
 export class DocumentPickerComponent implements OnChanges {
 
-    @Input() filterOptions: Array<Category>;
+    @Input() filterOptions: Array<CategoryForm>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
 

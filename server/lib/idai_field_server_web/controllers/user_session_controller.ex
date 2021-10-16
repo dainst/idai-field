@@ -1,6 +1,7 @@
 defmodule IdaiFieldServerWeb.UserSessionController do
   use IdaiFieldServerWeb, :controller
 
+  alias IdaiFieldServer.CouchdbDatastore
   alias IdaiFieldServer.Accounts
   alias IdaiFieldServerWeb.UserAuth
 
@@ -8,10 +9,13 @@ defmodule IdaiFieldServerWeb.UserSessionController do
     render(conn, "new.html", error_message: nil)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    %{"email" => email, "password" => password} = user_params
+  ## TODO revoke token on log out
 
-    if user = Accounts.get_user_by_email_and_password(email, password) do
+  def create(conn, %{"user" => user_params}) do
+    %{"username" => username, "password" => password} = user_params
+
+    if user = CouchdbDatastore.authorize(username, password) do
+    # if user = Accounts.get_user_by_email_and_password(username, password) do
       UserAuth.log_in_user(conn, user, user_params)
     else
       render(conn, "new.html", error_message: "Invalid e-mail or password")

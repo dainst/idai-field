@@ -1,6 +1,5 @@
-import { Category, Field, Relation, InPlace } from 'idai-field-core';
-import { Dating, Dimension, Resource } from 'idai-field-core';
 import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
+import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -25,13 +24,13 @@ const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includ
  *
  * @author Daniel de Oliveira
  */
-export function convertFieldTypes(category: Category) {
+export function convertFieldTypes(category: CategoryForm) {
 
     return (resource: Resource) => {
 
         for (const fieldName of fields(resource)) {
 
-            const field = Category.getFields(category).find(on(Field.NAME, is(fieldName)));
+            const field = CategoryForm.getFields(category).find(on(Field.NAME, is(fieldName)));
             if (!field) continue;
 
             const inputType = field.inputType as unknown as FieldType;

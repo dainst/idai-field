@@ -1,7 +1,7 @@
 import {CsvParser} from '../../../../../src/app/components/import/parser/csv-parser';
 import {makeFieldDefinitions} from '../../export/csv/csv-export.spec';
 import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 
 /**
  * @author Daniel de Oliveira
@@ -13,7 +13,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions(['custom1, custom2']);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as Category,
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
             'opId1',
             ','
         );
@@ -32,7 +32,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions(['custom1, custom2']);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as Category,
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
             '',
             ','
         );
@@ -48,7 +48,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions([]);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as Category,
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
             '',
             ','
         );
@@ -64,7 +64,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions([]);
 
         const parse = CsvParser.build(
-            { name: 'Feature', groups: [{ fields: category }] } as Category,
+            { name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
             'opId1',
             ','
         );
@@ -83,7 +83,7 @@ describe('CsvParser', () => {
                 name: 'uf',
                 inputType: 'unsignedFloat'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const parse = CsvParser.build(
             category,
@@ -109,7 +109,7 @@ describe('CsvParser', () => {
                 name: 'dim',
                 inputType: 'dimension'
             }]}],
-        } as Category;
+        } as CategoryForm;
 
         const parse = CsvParser.build(
             category,

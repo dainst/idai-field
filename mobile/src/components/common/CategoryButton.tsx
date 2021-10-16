@@ -1,4 +1,4 @@
-import { Category } from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 import React, { useContext } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import LabelsContext from '../../contexts/labels/labels-context';
@@ -6,7 +6,7 @@ import CategoryIconButton from './CategoryIconButton';
 
 interface CategoryButtonProps extends TouchableOpacityProps {
     size: number;
-    category: Category;
+    category: CategoryForm;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ category ,...btnProps }) => {

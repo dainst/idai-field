@@ -1,0 +1,14 @@
+<h1>Edit database "<%= @name %>"</h1>
+
+<%= form_for :database, Routes.databases_path(@conn, :delete), fn f -> %>
+
+  <%= label f, :admin_password %>
+  <%= password_input f, :admin_password, required: true %>
+  <%= error_tag f, :admin_password %>
+
+  <%= hidden_input f, :name, id: :name, value: @name %>
+
+  <div>
+    <%= submit "Delete database" %>
+  </div>
+<% end %>

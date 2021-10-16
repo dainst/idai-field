@@ -2,13 +2,6 @@ version: "3.7"
 
 services:
 
-  postgres:
-    image: postgres:latest
-    environment: 
-      POSTGRES_PASSWORD: abcdef
-    ports: 
-      - "5432:5432"
-
   couchdb:
     image: couchdb:3
     ports:

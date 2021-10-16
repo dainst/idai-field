@@ -1,4 +1,4 @@
-import { Category, Field, I18N, Group } from 'idai-field-core';
+import { CategoryForm, Field, I18N, Group } from 'idai-field-core';
 import { CustomLanguageConfigurations} from '../../../../src/app/components/configuration/custom-language-configurations';
 
 
@@ -32,7 +32,7 @@ import { CustomLanguageConfigurations} from '../../../../src/app/components/conf
         en: 'Test group'
     };
 
-    const category: Category = {
+    const category: CategoryForm = {
         name: 'testCategory',
         label: categoryLabel,
         defaultLabel: categoryLabel,

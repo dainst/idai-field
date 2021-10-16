@@ -1,6 +1,6 @@
-import { Category, Document, Datastore, Field, NewDocument, Resource} from 'idai-field-core';
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
-import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
+import { CategoryForm, Document, Datastore, Field, NewDocument, Resource, ProjectConfiguration,
+    RelationsManager} from 'idai-field-core';
 import { Validations } from '../../model/validations';
 import { Validator } from '../../model/validator';
 import { trimFields } from '../../util/trim-fields';
@@ -136,11 +136,11 @@ export class DocumentHolder {
 
     private convertStringsToNumbers() {
 
-        const category: Category = this.projectConfiguration.getCategory(this.clonedDocument);
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.clonedDocument);
 
         for (let fieldName in this.clonedDocument.resource) {
             const field: Field|undefined
-                = Category.getFields(category).find(field => field.name === fieldName);
+                = CategoryForm.getFields(category).find(field => field.name === fieldName);
             if (!field) continue;
 
             if (field.inputType === 'unsignedInt') {

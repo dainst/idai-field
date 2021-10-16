@@ -1,10 +1,10 @@
 import { includedIn, on, Pair, isString, flow, filter, remove, is } from 'tsfun';
-import { Category, Relation, Document } from '../model';
+import { CategoryForm, Relation, Document } from '../model';
 import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
 
 
-export type RawProjectConfiguration = Pair<Forest<Category>, Array<Relation>>;
+export type RawProjectConfiguration = Pair<Forest<CategoryForm>, Array<Relation>>;
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -21,7 +21,7 @@ const TYPE = 'Type';
  */
 export class ProjectConfiguration {
 
-    private categories: Forest<Category>;
+    private categories: Forest<CategoryForm>;
     
     private relations: Array<Relation>;
 
@@ -44,8 +44,8 @@ export class ProjectConfiguration {
     /**
      * @return Category, including children field
      */
-    public getCategory(category: Name): Category|undefined;
-    public getCategory(document: Document): Category|undefined
+    public getCategory(category: Name): CategoryForm|undefined;
+    public getCategory(document: Document): CategoryForm|undefined
     public getCategory(arg) {
 
         const name = isString(arg) 
@@ -56,7 +56,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
+    public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<CategoryForm> {
 
         return selectedTopLevelCategories.length === 0
             ? this.categories
@@ -65,7 +65,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getHierarchyParentCategories(categoryName: string): Array<Category> {
+    public getHierarchyParentCategories(categoryName: string): Array<CategoryForm> {
 
         return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
             .concat(this.getAllowedRelationRangeCategories('liesWithin', categoryName));
@@ -86,7 +86,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getRegularCategories(): Array<Category> {
+    public getRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
@@ -95,7 +95,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getConcreteFieldCategories(): Array<Category> {
+    public getConcreteFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
@@ -104,7 +104,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getFieldCategories(): Array<Category> {
+    public getFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             removeTrees('Image', 'Project'),
@@ -113,7 +113,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getOverviewCategories(): Array<Category> {
+    public getOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
@@ -122,7 +122,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getConreteOverviewCategories(): Array<Category> {
+    public getConreteOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
@@ -132,7 +132,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getOverviewToplevelCategories(): Array<Category> {
+    public getOverviewToplevelCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             filterTrees('Operation', 'Place'),
@@ -142,7 +142,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getTypeCategories(): Array<Category> {
+    public getTypeCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             filterTrees(TYPE, TYPE_CATALOG),
@@ -151,7 +151,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getImageCategories(): Array<Category> {
+    public getImageCategories(): Array<CategoryForm> {
 
         return flow(this.categories,
             filterTrees('Image'),
@@ -160,13 +160,13 @@ export class ProjectConfiguration {
     }
 
 
-    public getFeatureCategories(): Array<Category> {
+    public getFeatureCategories(): Array<CategoryForm> {
 
         return this.getSuperCategories('Feature');
     }
 
 
-    public getOperationCategories(): Array<Category> {
+    public getOperationCategories(): Array<CategoryForm> {
 
         return this.getSuperCategories('Operation');
     }
@@ -201,7 +201,7 @@ export class ProjectConfiguration {
 
 
     public getAllowedRelationDomainCategories(relationName: string,
-                                              rangeCategoryName: string): Array<Category> {
+                                              rangeCategoryName: string): Array<CategoryForm> {
 
         return Tree.flatten(this.categories)
             .filter(category => {
@@ -215,7 +215,7 @@ export class ProjectConfiguration {
 
 
     public getAllowedRelationRangeCategories(relationName: string,
-                                             domainCategoryName: string): Array<Category> {
+                                             domainCategoryName: string): Array<CategoryForm> {
 
         return Tree.flatten(this.categories)
             .filter(category => {

@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
-import { Category, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
+import { CategoryForm, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
 type Color = string;
 type Character = string;
@@ -19,7 +19,7 @@ type Character = string;
 export class CategoryIconComponent implements OnChanges {
 
     @Input() size: number;
-    @Input() category: string|Category;
+    @Input() category: string|CategoryForm;
 
     public character: Character;
     public color: Color;
@@ -35,7 +35,7 @@ export class CategoryIconComponent implements OnChanges {
 
         this.determineCharacterForCategory();
         this.determineColorForCategory();
-        this.textColor = Category.isBrightColor(this.color)
+        this.textColor = CategoryForm.isBrightColor(this.color)
             ? 'black'
             : 'white';
         this.pxSize = this.size + 'px';

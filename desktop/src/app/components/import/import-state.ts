@@ -1,5 +1,5 @@
 import {ImporterOptions, ImporterFormat} from '../../components/import/importer';
-import {Category} from 'idai-field-core';
+import { CategoryForm } from 'idai-field-core';
 
 
 /**
@@ -18,8 +18,8 @@ export class ImportState implements ImporterOptions {
 
     // For CSV import
 
-    public categories: Array<Category> = [];
-    public selectedCategory: Category|undefined = undefined;
+    public categories: Array<CategoryForm> = [];
+    public selectedCategory: CategoryForm|undefined = undefined;
     public typeFromFileName: boolean = false;
 
     public separator: string|undefined = ',';

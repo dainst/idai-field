@@ -53,6 +53,7 @@ function getMinimalForm(categories: Map<TransientCategoryDefinition>) {
         minimalForm.name = categoryName;
         minimalForm.categoryName = categoryName;
         minimalForm.parent = category.parent;
+        minimalForm.color = category.color;
     
         return minimalForm;
     }
@@ -65,6 +66,7 @@ function makeTransientForm(libraryForm: LibraryFormDefinition, formName: string,
     const clonedForm: TransientFormDefinition = clone(libraryForm) as TransientFormDefinition;
     clonedForm.name = formName;
     clonedForm.parent = category.parent;
+    clonedForm.color = category.color;
 
     return clonedForm;
 }

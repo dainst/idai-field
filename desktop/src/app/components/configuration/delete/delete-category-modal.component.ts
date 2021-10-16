@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { Category, Labels } from 'idai-field-core';
  */
 export class DeleteCategoryModalComponent {
 
-    public category: Category;
+    public category: CategoryForm;
     public labels: Labels;
     public customized: boolean;
 

@@ -1,12 +1,17 @@
 <ul id="category-listing" class="bg-light">
-    <li *ngFor="let category of categories"
-        [class.selected]="selectedCategory === category"
-        (click)="selectCategory(category)">
-        <category-icon [category]="category" size="30"></category-icon>
-        <span class="category-label">{{getLabel(category)}}</span>
-        <span *ngIf="getSearchResultLabel(category)"
-              class="search-result-label"> ({{getSearchResultLabel(category)}})</span>
-        <code>{{category.libraryId}}</code>
-        <div *ngIf="category.createdBy" class="badge badge-primary">{{category.createdBy}}</div>
+    <li *ngFor="let item of items"
+        [class.category-header]="item.isCategoryHeader"
+        [class.selected]="!item.isCategoryHeader&& selectedForm === item.form"
+        (click)="!item.isCategoryHeader&& selectForm(item.form)">
+        <div *ngIf="item.isCategoryHeader">
+            <category-icon [category]="item.form" size="30"></category-icon>
+            <span class="category-label">{{getLabel(item.form)}}</span>
+        </div>
+        <div *ngIf="!item.isCategoryHeader">
+            <span *ngIf="getSearchResultLabel(item.form)"
+                class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
+            <code>{{item.form.libraryId}}</code>
+            <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
+        </div>
     </li>
 </ul>

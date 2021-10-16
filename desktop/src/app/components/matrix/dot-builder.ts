@@ -1,7 +1,6 @@
-import {Document, Category} from 'idai-field-core';
-import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not} from 'tsfun';
-import {Edges} from './edges-builder';
-import {ProjectConfiguration} from 'idai-field-core';
+import { isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not } from 'tsfun';
+import { Document, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { Edges} from './edges-builder';
 
 
 /**
@@ -250,7 +249,7 @@ export module DotBuilder {
                 + '" color="'
                 + projectConfiguration.getCategory(document).color
                 + '" fontcolor="'
-                + Category.getTextColorForCategory(projectConfiguration.getCategory(document))
+                + CategoryForm.getTextColorForCategory(projectConfiguration.getCategory(document))
                 + '"] ';
         }
     }

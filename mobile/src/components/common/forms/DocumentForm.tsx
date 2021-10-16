@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Category, Field, Group, Groups, NewResource, Resource } from 'idai-field-core';
+import { CategoryForm, Field, Group, Groups, NewResource, Resource } from 'idai-field-core';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../../utils/colors';
@@ -11,7 +11,7 @@ import TitleBar from '../TitleBar';
 import EditFormField from './EditFormField';
 
 interface DocumentFormProps {
-    category: Category;
+    category: CategoryForm;
     headerText: string;
     returnBtnHandler: () => void;
     titleBarRight: ReactNode;

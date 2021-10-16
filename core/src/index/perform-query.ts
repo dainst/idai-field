@@ -1,4 +1,4 @@
-import {Resource} from '../model/resource';
+import { Resource } from '../model/resource';
 import { Constraint } from '../model/constraint';
 import { Query } from '../model/query';
 import { ConstraintIndex } from './constraint-index';
@@ -13,8 +13,7 @@ import { ResultSets } from './result-sets';
  */
 export function performQuery(query: Query,
                              constraintIndex: ConstraintIndex,
-                             fulltextIndex: FulltextIndex)
-    : Array<Resource.Id> {
+                             fulltextIndex: FulltextIndex): Array<Resource.Id> {
 
     let resultSets = performConstraints(
         constraintIndex,
@@ -32,8 +31,7 @@ export function performQuery(query: Query,
 
 function performFulltext(fulltextIndex: FulltextIndex,
                          query: Query,
-                         resultSets: ResultSets<Resource.Id>)
-    : ResultSets<Resource.Id> {
+                         resultSets: ResultSets<Resource.Id>): ResultSets<Resource.Id> {
 
     const q = !query.q || query.q.trim() === '' ? '*' : query.q;
 
@@ -44,8 +42,7 @@ function performFulltext(fulltextIndex: FulltextIndex,
 
 
 function performConstraints(constraintIndex: ConstraintIndex,
-                            constraints: { [name: string]: Constraint|string|string[] })
-    : ResultSets<Resource.Id> {
+                            constraints: { [name: string]: Constraint|string|string[] }): ResultSets<Resource.Id> {
 
     return Object.keys(constraints)
         .reduce((resultSets, name: string) => {

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FieldDocument, Category, Datastore, RelationsManager, ProjectConfiguration, Labels } from 'idai-field-core';
+import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
+    Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -21,7 +22,7 @@ import { Messages } from '../../messages/messages';
 export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
-    @Input() categoriesMap: { [category: string]: Category };
+    @Input() categoriesMap: { [category: string]: CategoryForm };
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 

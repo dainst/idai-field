@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop, to } from 'tsfun';
-import { Category, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
+import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
     createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -17,7 +17,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import { AddCategoryModalComponent } from './add/add-category-modal.component';
+import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from './configuration-index';
@@ -50,8 +50,8 @@ export type InputType = {
  */
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
-    public topLevelCategoriesArray: Array<Category>;
-    public selectedCategory: Category;
+    public topLevelCategoriesArray: Array<CategoryForm>;
+    public selectedCategory: CategoryForm;
     public configurationDocument: ConfigurationDocument;
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
@@ -197,7 +197,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public selectCategory(category: Category) {
+    public selectCategory(category: CategoryForm) {
 
         this.selectedCategory = category;
     }
@@ -206,8 +206,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public async addSupercategory() {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
@@ -224,11 +224,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async addSubcategory(parentCategory: Category) {
+    public async addSubcategory(parentCategory: CategoryForm) {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
@@ -246,7 +246,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async editCategory(category: Category) {
+    public async editCategory(category: CategoryForm) {
 
         const [result, componentInstance] =
             this.modals.make<CategoryEditorModalComponent>(
@@ -266,7 +266,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async editGroup(category: Category, group: Group) {
+    public async editGroup(category: CategoryForm, group: Group) {
 
         if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
@@ -289,7 +289,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async editField(category: Category, field: Field) {
+    public async editField(category: CategoryForm, field: Field) {
 
         const [result, componentInstance] =
             this.modals.make<FieldEditorModalComponent>(
@@ -313,11 +313,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public swapCategoryForm(category: Category) {
+    public swapCategoryForm(category: CategoryForm) {
 
         const [result, componentInstance] =
-            this.modals.make<AddCategoryModalComponent>(
-                AddCategoryModalComponent,
+            this.modals.make<AddCategoryFormModalComponent>(
+                AddCategoryFormModalComponent,
                 MenuContext.CONFIGURATION_MODAL,
                 'lg'
             );
@@ -335,7 +335,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async openDeleteCategoryModal(category: Category) {
+    public async openDeleteCategoryModal(category: CategoryForm) {
 
         const [result, componentInstance] =
             this.modals.make<DeleteCategoryModalComponent>(
@@ -355,7 +355,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async openDeleteGroupModal(category: Category, group: Group) {
+    public async openDeleteGroupModal(category: CategoryForm, group: Group) {
 
         const [result, componentInstance] =
             this.modals.make<DeleteGroupModalComponent>(
@@ -371,7 +371,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async openDeleteFieldModal(category: Category, field: Field) {
+    public async openDeleteFieldModal(category: CategoryForm, field: Field) {
 
         const [result, componentInstance] =
             this.modals.make<DeleteFieldModalComponent>(
@@ -387,7 +387,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async deleteCategory(category: Category) {
+    private async deleteCategory(category: CategoryForm) {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
@@ -402,7 +402,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async deleteGroup(category: Category, group: Group) {
+    private async deleteGroup(category: CategoryForm, group: Group) {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
@@ -420,7 +420,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async deleteField(category: Category, field: Field) {
+    private async deleteField(category: CategoryForm, field: Field) {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
@@ -491,9 +491,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async reindex(category: Category) {
+    private async reindex(category: CategoryForm) {
 
-        Category.getFields(category).forEach(field => {
+        CategoryForm.getFields(category).forEach(field => {
             this.indexFacade.addConstraintIndexDefinitionsForField(field)
         });
 

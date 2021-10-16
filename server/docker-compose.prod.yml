@@ -8,7 +8,6 @@ services:
       - "5984:5984"
     environment:
       - 'COUCHDB_USER=admin'
-      - 'COUCHDB_PASSWORD=abcdef'
     volumes:
       - "couchdb-data:/opt/couchdb/data"
   

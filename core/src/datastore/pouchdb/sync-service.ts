@@ -191,7 +191,7 @@ export class SyncService {
             : syncTarget.replace(/(https?):\/\//, '$1://' +
                 project + ':' + password + '@');
 
-        return url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); 
+        return url + '/sync/' + (project === 'synctest' ? 'synctestremotedb' : project); 
     }
 
 

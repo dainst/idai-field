@@ -68,7 +68,7 @@ export class PouchdbServer {
         app.put('/:db', (_: any, res: any) =>
             res.status(401).send( { status: 401 }));
 
-        app.use('/', expressPouchDB(PouchDB, {
+        app.use('/sync/', expressPouchDB(PouchDB, {
             logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
             mode: 'fullCouchDB',
             overrideMode: {

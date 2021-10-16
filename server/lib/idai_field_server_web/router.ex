@@ -22,6 +22,11 @@ defmodule IdaiFieldServerWeb.Router do
     repo_env = Enum.into repo_env, %{}
     couchdb_path = repo_env.couchdb
 
+    # With the current endpoint.ex, log in into Fauxton does not work.
+    # We won't fix it at the moment, because it seems a better idea to leave access to Fauxton be done
+    # via its own url, especially since we provide database management functionalities here, too.
+    get "/_utils", ForbiddenController, :forbid
+
     forward "/", ReverseProxyPlug, upstream: "//#{couchdb_path}/"
   end
 

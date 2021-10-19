@@ -7,6 +7,7 @@ import React, { CSSProperties, ReactElement, useContext, useEffect, useState } f
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { Document, FieldValue, getDocumentDescription, getDocumentImages, getFieldValue } from '../../api/document';
 import { get, search } from '../../api/documents';
 import { buildProjectQueryTemplate, parseFrontendGetParams } from '../../api/query';
@@ -123,7 +124,7 @@ const renderContent = (projectId: string, projectDoc: Document, images: ResultDo
                         location={ location } maxWidth={ 600 } maxHeight={ 400 } />
                 </div>
             }
-            { description && renderDescription(description) }
+            { description && renderDescription(description as string) }
         </div>
         <div className="d-flex">
             <div className="p-2" style={ mapContainerStyle }>
@@ -145,11 +146,8 @@ const renderContent = (projectId: string, projectDoc: Document, images: ResultDo
 };
 
 
-const renderDescription = (description: FieldValue) =>
-    description.toString()
-        .split(/\r\n|\n\r|\r|\n/g)
-        .filter(paragraph => paragraph.length > 0)
-        .map((paragraph, i) => <p key={ i }>{ paragraph }</p>);
+const renderDescription = (description: string) =>
+    <ReactMarkdown linkTarget={ '_blank' }>{ description }</ReactMarkdown>;
 
 
 const renderProjectDetails = (projectDoc: Document, t: TFunction) =>

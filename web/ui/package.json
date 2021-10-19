@@ -21,6 +21,7 @@
     "@types/react-transition-group": "^4.4.0",
     "bootstrap": "^4.6.0",
     "chokidar": "3.0.0",
+    "cross-env": "7.0.3",
     "i18next": "^19.8.7",
     "idai-field-core": "^1.1.1",
     "idai-shapes-ceramics_resnet50": "^1.0.1",
@@ -36,20 +37,18 @@
     "react-dom": "^16.14.0",
     "react-i18next": "^11.8.5",
     "react-leaflet": "^2.8.0",
-    "react-markdown": "^4.3.1",
+    "react-markdown": "^7.0.1",
     "react-modal": "^3.12.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.1",
     "tsfun": "5.5.38",
-    "typescript": "3.8.3",
-    "cross-env": "7.0.3"
+    "typescript": "3.8.3"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+    "build": "react-scripts build",
     "start": "cross-env PORT=3001 react-scripts start",
     "start-shapes": "cross-env PORT=3002 cross-env REACT_APP_MAIN=shapes react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "npx copyfiles -f node_modules/idai-shapes-ceramics_resnet50/model/* public/models/model && npx copyfiles -f node_modules/idai-shapes-ceramics-segmentation-unet/model/* public/models/seg_model"

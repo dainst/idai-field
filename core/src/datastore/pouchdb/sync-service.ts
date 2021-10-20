@@ -101,7 +101,15 @@ export class SyncService {
 
         const db = await this.pouchdbManager.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
-        this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
+        this.replicationHandle = db.replicate.from(
+            url,
+            {
+                retry: true,
+                batch_size: updateSequence < 200 ? 10 : 50,
+                batches_limit: 1,
+                timeout: 600000
+            }
+        );
 
         return Observable.create((obs: Observer<any>) => {
             this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
@@ -194,7 +202,17 @@ export class SyncService {
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); // TODO review if SyncProcess.generateUrl should do this, too
         console.log('Start syncing');
 
-        let sync = this.pouchdbManager.getDb().sync(fullUrl, { live: true, retry: false, filter });
+        let sync = this.pouchdbManager.getDb().sync(
+            fullUrl,
+            {
+                live: true,
+                retry: false,
+                batch_size: 50,
+                batches_limit: 1,
+                timeout: 600000,
+                filter
+            }
+        );
 
         this.syncHandles.push(sync as never);
         return {

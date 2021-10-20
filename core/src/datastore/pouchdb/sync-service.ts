@@ -84,7 +84,15 @@ export class SyncService {
 
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
-        this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
+        this.replicationHandle = db.replicate.from(
+            url,
+            {
+                retry: true,
+                batch_size: updateSequence < 200 ? 10 : 50,
+                batches_limit: 1,
+                timeout: 600000
+            }
+        );
 
         return Observable.create((obs: Observer<any>) => {
             this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
@@ -155,7 +163,17 @@ export class SyncService {
 
     private startLiveSync(url: string, filter?: (doc: any) => boolean) {
 
-        this.sync = this.pouchdbDatastore.getDb().sync(url, { filter });
+        this.sync = this.pouchdbDatastore.getDb().sync(
+            url,
+            {
+                live: true,
+                retry: false,
+                batch_size: 50,
+                batches_limit: 1,
+                timeout: 600000,
+                filter
+            }
+        );
         this.handleStatus(this.sync);
 
         this.sync.on('complete', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));

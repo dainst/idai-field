@@ -9,6 +9,15 @@ services:
     environment:
       - 'COUCHDB_USER=synctest'
       - 'COUCHDB_PASSWORD=abcdef'
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=web"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:db.field.idai.world"
+        - "traefik.port=5984"
 
   server:
     image: "dainst/idai-field-web-server"

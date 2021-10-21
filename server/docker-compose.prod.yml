@@ -17,7 +17,7 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:db.field.idai.world"
+        - "traefik.frontend.rule=Host:db.server.field.idai.world"
         - "traefik.port=5984"
   
   server:

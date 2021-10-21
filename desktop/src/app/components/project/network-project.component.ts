@@ -80,7 +80,8 @@ export class NetworkProjectComponent {
                 this.url, this.password, this.projectName, updateSequence, destroyExisting
             )).subscribe({
                 next: lastSequence => {
-                    progressModalRef.componentInstance.progressPercent = (lastSequence / updateSequence * 100);
+                    const lastSequenceNumber: number = NetworkProjectComponent.parseSequenceNumber(lastSequence);
+                    progressModalRef.componentInstance.progressPercent = (lastSequenceNumber / updateSequence * 100);
                 },
                 error: err => {
                     this.closeModal(progressModalRef);
@@ -133,7 +134,7 @@ export class NetworkProjectComponent {
 
         if (info.status === 401) throw 'invalidCredentials';
 
-        return info.update_seq;
+        return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
     }
 
 
@@ -141,5 +142,11 @@ export class NetworkProjectComponent {
 
         modalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);
+    }
+
+
+    private static parseSequenceNumber(updateSequence: number|string): number {
+
+        return Number.parseInt((updateSequence + '').split('-')[0]);
     }
 }

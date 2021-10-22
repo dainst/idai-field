@@ -76,8 +76,6 @@ export class ExportComponent implements OnInit {
 
     public find = (query: Query) => this.datastore.find(query);
 
-    private get = (id: Resource.Id) => this.datastore.get(id);
-
     public showOperations = () => this.format === 'csv' ? this.csvExportMode === 'complete' : this.format !== 'catalog';
 
     public showCatalogs = () => this.format === 'catalog';
@@ -100,7 +98,6 @@ export class ExportComponent implements OnInit {
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
-            this.get,
             this.find,
             this.getExportContext(),
             Tree.flatten(this.projectConfiguration.getCategories())
@@ -213,7 +210,6 @@ export class ExportComponent implements OnInit {
 
         try {
             await ExportRunner.performExport(
-                this.get,
                 this.find,
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 this.getExportContext(),

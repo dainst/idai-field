@@ -28,8 +28,9 @@ Then clone this repository locally and run the following commands (in the reposi
 
 ```
 $ npm run bootstrap
+$ cd core
 $ npm run build
-$ cd desktop
+$ cd ../desktop
 $ npm start
 ```
 

@@ -196,7 +196,7 @@ export class MatrixViewComponent implements OnInit {
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
         const result = await this.datastore.find( {
-            constraints: { 'isRecordedIn:contain': trench.resource.id },
+            constraints: { 'isChildOf:contain': { value: trench.resource.id, searchRecursively: true } },
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;

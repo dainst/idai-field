@@ -38,13 +38,13 @@ describe('ConstraintIndex', () => {
             doc('2'),
             doc('3')
         ];
-        docs[0].resource.relations['isRecordedIn'] = ['1'];
-        docs[1].resource.relations['isRecordedIn'] = ['1'];
+        docs[0].resource.relations['isChildOf'] = ['1'];
+        docs[1].resource.relations['isChildOf'] = ['1'];
 
         ci = ConstraintIndex.make({
-            'isRecordedIn:contain': {
-                path: 'resource.relations.isRecordedIn',
-                pathArray: ['resource', 'relations', 'isRecordedIn'],
+            'isChildOf:contain': {
+                path: 'resource.relations.isChildOf',
+                pathArray: ['resource', 'relations', 'isChildOf'],
                 type: 'contain'
             }
         }, categories);
@@ -53,7 +53,7 @@ describe('ConstraintIndex', () => {
         ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.get(ci,
-            'isRecordedIn:contain', '1')).toEqual(['2', '3']);
+            'isChildOf:contain', '1')).toEqual(['2', '3']);
     });
 
 
@@ -62,12 +62,12 @@ describe('ConstraintIndex', () => {
         const docs = [
             doc('1')
         ];
-        docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
+        docs[0].resource.relations['isChildOf'] = ['2', '3'];
 
         ci = ConstraintIndex.make({
-            'isRecordedIn:contain': {
-                path: 'resource.relations.isRecordedIn',
-                pathArray: ['resource', 'relations', 'isRecordedIn'],
+            'isChildOf:contain': {
+                path: 'resource.relations.isChildOf',
+                pathArray: ['resource', 'relations', 'isChildOf'],
                 type: 'contain'
             }
         }, categories);
@@ -81,8 +81,8 @@ describe('ConstraintIndex', () => {
 
         docWithMultipleConstraintTargets();
 
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual(['1']);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '3')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '3')).toEqual(['1']);
     });
 
 
@@ -91,7 +91,7 @@ describe('ConstraintIndex', () => {
         const docs = [
             doc('1')
         ];
-        docs[0].resource.relations['isRecordedIn'] = ['2'];
+        docs[0].resource.relations['isChildOf'] = ['2'];
         docs[0].resource.relations['liesWithin'] = ['3'];
 
         ci = ConstraintIndex.make({
@@ -100,9 +100,9 @@ describe('ConstraintIndex', () => {
                 pathArray: ['resource', 'relations', 'liesWithin'],
                 type: 'contain'
             },
-            'isRecordedIn:contain': {
-                path: 'resource.relations.isRecordedIn',
-                pathArray: ['resource', 'relations', 'isRecordedIn'],
+            'isChildOf:contain': {
+                path: 'resource.relations.isChildOf',
+                pathArray: ['resource', 'relations', 'isChildOf'],
                 type: 'contain'
             },
             'identifier:match': {
@@ -122,7 +122,7 @@ describe('ConstraintIndex', () => {
         docWithMultipleConstraints();
 
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '3')).toEqual(['1']);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual(['1']);
     });
 
 
@@ -199,7 +199,7 @@ describe('ConstraintIndex', () => {
         ConstraintIndex.remove(ci, doc);
 
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual([]);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual([]);
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '3')).toEqual([]);
     });
 
@@ -210,8 +210,8 @@ describe('ConstraintIndex', () => {
 
         ConstraintIndex.remove(ci, doc);
 
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual([]);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '3')).toEqual([]);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual([]);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '3')).toEqual([]);
     });
 
 
@@ -219,18 +219,18 @@ describe('ConstraintIndex', () => {
 
         const doc = docWithMultipleConstraints()[0];
 
-        doc.resource.relations['isRecordedIn'] = ['4'];
+        doc.resource.relations['isChildOf'] = ['4'];
         doc.resource.relations['liesWithin'] = ['5'];
         doc.resource.identifier = 'identifier2';
         ConstraintIndex.put(ci, doc);
 
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual([]);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual([]);
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '3')).toEqual([]);
 
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier2'))
             .toEqual(['1']);
-        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '4'))
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '4'))
             .toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '5'))
             .toEqual(['1']);

@@ -112,14 +112,14 @@ describe('performQuery', () => {
         const doc2 = doc('bla2', 'blub2', 'category2','id2');
         const doc3 = doc('bla3', 'blub3', 'category2','id3');
         const doc4 = doc('bla4', 'blub4', 'category2','id4');
-        doc2.resource.relations['isRecordedIn'] = ['id1'];
-        doc3.resource.relations['isRecordedIn'] = ['id1'];
-        doc4.resource.relations['isRecordedIn'] = ['id2'];
+        doc2.resource.relations['isChildOf'] = ['id1'];
+        doc3.resource.relations['isChildOf'] = ['id2'];
+        doc4.resource.relations['isChildOf'] = ['id3'];
 
         const q: Query = {
             q: 'blub',
             constraints: {
-                'isRecordedIn:contain' : 'id1'
+                'isChildOf:contain' : { value: 'id1', searchRecursively: true }
             }
         };
 
@@ -131,7 +131,8 @@ describe('performQuery', () => {
         const result = performQuery(q);
         expect(result).toContain('id2');
         expect(result).toContain('id3');
-        expect(result.length).toBe(2);
+        expect(result).toContain('id4');
+        expect(result.length).toBe(3);
     });
 
 
@@ -159,15 +160,15 @@ describe('performQuery', () => {
 
         const doc1 = doc('bla1', 'blub1', 'category1','id1');
         const doc2 = doc('bla2', 'blub2', 'category2','id2');
-        doc2.resource.relations['isRecordedIn'] = ['id1'];
+        doc2.resource.relations['isChildOf'] = ['id1'];
         const doc3 = doc('bla3', 'blub3', 'category2','id3');
-        doc3.resource.relations['isRecordedIn'] = ['id1'];
+        doc3.resource.relations['isChildOf'] = ['id2'];
         doc3.resource.relations['liesWithin'] = ['id2'];
 
         const q: Query = {
             q: 'blub',
             constraints: {
-                'isRecordedIn:contain' : 'id1',
+                'isChildOf:contain' : { value: 'id1', searchRecursively: true },
                 'liesWithin:contain' : 'id2'
             }
         };
@@ -187,14 +188,14 @@ describe('performQuery', () => {
         const doc1 = doc('Document 1', 'doc1', 'category1','id1');
         const doc2 = doc('Document 2', 'doc2', 'category1','id2');
         const doc3 = doc('Document 3', 'doc3', 'category2','id3');
-        doc3.resource.relations['isRecordedIn'] = ['id1'];
+        doc3.resource.relations['isChildOf'] = ['id1'];
         const doc4 = doc('Document 4', 'doc4', 'category2','id4');
-        doc4.resource.relations['isRecordedIn'] = ['id2'];
+        doc4.resource.relations['isChildOf'] = ['id2'];
 
         const q: Query = {
             q: 'doc',
             constraints: {
-                'isRecordedIn:contain': { value: 'id2', subtract: true }
+                'isChildOf:contain': { value: 'id2', subtract: true }
             }
         };
 

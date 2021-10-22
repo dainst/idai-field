@@ -80,7 +80,7 @@ export class SyncService {
 
         this.stopSync();
 
-        const url = SyncService.generateUrl(target + '/' + project, project, password);
+        const url = SyncService.generateUrl(target, project, password);
 
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
@@ -170,7 +170,7 @@ export class SyncService {
             .on('denied', err => console.error('Document denied in sync', err))
             .on('error', err => {
                 this.setStatus(SyncService.getFromError(err));
-                console.error('SyncService received error from PouchDB', err);
+                console.error('SyncService received error from PouchDB', err, JSON.stringify(err));
             });
     }
 

@@ -1,3 +1,4 @@
+import { Constraints } from 'idai-field-core';
 import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
@@ -9,7 +10,7 @@ import { ResourcesState } from './state/resources-state';
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';
 const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
-const RECORDED_IN_CONTAIN = 'isRecordedIn:contain';
+const CHILDOF_CONTAIN = 'isChildOf:contain';
 const UNKNOWN = 'UNKNOWN';
 
 
@@ -378,10 +379,10 @@ export class DocumentsManager {
     }
 
 
-    private static buildConstraints(customConstraints: { [name: string]: string },
+    private static buildConstraints(customConstraints: Constraints,
                                     operationId: string|undefined,
                                     liesWithinId: string|undefined,
-                                    addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
+                                    addLiesWithinConstraints: boolean): Constraints {
 
         const constraints = tsfun.clone(customConstraints);
 
@@ -393,7 +394,7 @@ export class DocumentsManager {
             }
         }
 
-        if (operationId) constraints[RECORDED_IN_CONTAIN] = operationId;
+        if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
 
         return constraints;
     }

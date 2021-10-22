@@ -1,4 +1,4 @@
-import { CategoryForm, Document, FieldDocument, Datastore, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
+import { CategoryForm, Document, FieldDocument, Datastore, Name, Named, Query, Resource } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
 
@@ -237,7 +237,7 @@ export module ExportRunner {
             limit: limit
         };
         if (selectedOperationId !== PROJECT_CONTEXT) {
-            (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
+            (query.constraints as any)['isChildOf:contain'] = selectedOperationId;
         }
         return query;
     }

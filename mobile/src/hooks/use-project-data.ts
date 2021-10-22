@@ -45,14 +45,9 @@ const useProjectData = (
         } else {
             const currentParent = last(hierarchyPath);
             if (currentParent) {
-                if (operationCategories.includes(currentParent.resource.category)) {
-                    setQuery({ constraints: {
-                        'isRecordedIn:contain': currentParent.resource.id,
-                        'liesWithin:exist': 'UNKNOWN'
-                    } });
-                } else {
-                    setQuery({ constraints: { 'liesWithin:contain': currentParent.resource.id } });
-                }
+                setQuery({ constraints: {
+                    'isChildOf:contain': currentParent.resource.id,
+                } });
             } else {
                 setQuery({ categories: operationCategories });
             }

@@ -1,5 +1,7 @@
 import {Constraint} from './constraint';
 
+export type Constraints = { [name: string]: Constraint|string|string[] };
+
 /**
  * represents a query to the datastore
  * @property q the query string that is used to search documents in the datastore
@@ -24,7 +26,7 @@ export interface Query {
 
     q?: string;
     categories?: string[];
-    constraints?: { [name: string]: Constraint|string|string[]};
+    constraints?: Constraints;
     limit?: number;
     offset?: number;
     sort?: {

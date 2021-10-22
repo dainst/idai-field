@@ -21941,6 +21941,332 @@
       }
     }
   },
+  "Place-findSpot-Pergamon": {
+    "creationDate": "",
+    "createdBy": "tschoenbuchner",
+    "description": {},
+    "values": {
+      "Bestattungsplatz (Bestattung)": {
+        "labels": {
+          "de": "Bestattungsplatz (Bestattung)",
+          "en": "Burial place (burial)"
+        }
+      },
+      "Bestattungsplatz (Grab)": {
+        "labels": {
+          "de": "Bestattungsplatz (Grab)",
+          "en": "Burial place (grave)"
+        }
+      },
+      "Bestattungsplatz (Nekropole/Friedhof)": {
+        "labels": {
+          "de": "Bestattungsplatz (Nekropole/Friedhof)",
+          "en": "Burial place (grave)"
+        }
+      },
+      "Brunnen": {
+        "labels": {
+          "de": "Brunnen",
+          "en": "well"
+        }
+      },
+      "Brücke": {
+        "labels": {
+          "de": "Brücke",
+          "en": "bridge"
+        }
+      },
+      "Festung": {
+        "labels": {
+          "de": "Festung",
+          "en": "fortress"
+        }
+      },
+      "Gebäude": {
+        "labels": {
+          "de": "Gebäude",
+          "en": "buildings"
+        }
+      },
+      "Gebäude (Stallung)": {
+        "labels": {
+          "de": "Gebäude (Stallung)",
+          "en": "building (stable)"
+        }
+      },
+      "Gebäude (Wohnhaus)": {
+        "labels": {
+          "de": "Gebäude (Wohnhaus)",
+          "en": "Burial place (grave)"
+        }
+      },
+      "Gehöft": {
+        "labels": {
+          "de": "Gehöft",
+          "en": "building (dwelling)"
+        }
+      },
+      "Hafen": {
+        "labels": {
+          "de": "Hafen",
+          "en": "port"
+        }
+      },
+      "Heiligtum": {
+        "labels": {
+          "de": "Heiligtum",
+          "en": "sanctuary"
+        }
+      },
+      "Höhle": {
+        "labels": {
+          "de": "Höhle",
+          "en": "cave"
+        }
+      },
+      "Kirche": {
+        "labels": {
+          "de": "Kirche",
+          "en": "church)"
+        }
+      },
+      "Monument/Denkmal": {
+        "labels": {
+          "de": "Monument/Denkmal",
+          "en": "monument"
+        }
+      },
+      "Moschee": {
+        "labels": {
+          "de": "Moschee",
+          "en": "mosque"
+        }
+      },
+      "Pferch": {
+        "labels": {
+          "de": "Pferch",
+          "en": "pen"
+        }
+      },
+      "Produktionsstätte": {
+        "labels": {
+          "de": "Produktionsstätte",
+          "en": "production site"
+        }
+      },
+      "Siedlung": {
+        "labels": {
+          "de": "Siedlung",
+          "en": "settlement"
+        }
+      },
+      "Siedlung (befestigt)": {
+        "labels": {
+          "de": "Siedlung (befestigt)",
+          "en": "settlement (fortified)"
+        }
+      },
+      "Siedlung (dörflich)": {
+        "labels": {
+          "de": "Siedlung (dörflich)",
+          "en": "settlement (village)"
+        }
+      },
+      "Siedlung (städtisch)": {
+        "labels": {
+          "de": "Siedlung (städtisch)",
+          "en": "settlement (urban)"
+        }
+      },
+      "Steinbruch": {
+        "labels": {
+          "de": "Steinbruch",
+          "en": "quarry"
+        }
+      },
+      "Straße/Weg": {
+        "labels": {
+          "de": "Straße/Weg",
+          "en": "road/path"
+        }
+      },
+      "Tempel": {
+        "labels": {
+          "de": "Tempel",
+          "en": "temple"
+        }
+      },
+      "Terrassierung": {
+        "labels": {
+          "de": "Terrassierung",
+          "en": "terracing"
+        }
+      },
+      "Theater": {
+        "labels": {
+          "de": "Theater",
+          "en": "theatre"
+        }
+      },
+      "Therme": {
+        "labels": {
+          "de": "Therme",
+          "en": "spa"
+        }
+      },
+      "Turmgehöft": {
+        "labels": {
+          "de": "Turmgehöft",
+          "en": "tower homestead"
+        }
+      },
+      "unbekannt": {
+        "labels": {
+          "de": "unbekannt",
+          "en": "unknown"
+        }
+      },
+      "Burial place (grave)": {
+        "labels": {
+          "de": "Bestattungsplatz (Grab)",
+          "en": "Burial place (grave)"
+        }
+      },
+      "Villa": {
+        "labels": {
+          "de": "Villa",
+          "en": "villa"
+        }
+      },
+      "Warte": {
+        "labels": {
+          "de": "Warte",
+          "en": "wait"
+        }
+      },
+      "Wasserleitung": {
+        "labels": {
+          "de": "Wasserleitung",
+          "en": "water pipe"
+        }
+      },
+      "Zisterne": {
+        "labels": {
+          "de": "Zisterne",
+          "en": "cistern"
+        }
+      }
+    }
+  },
+  "Place-surfaceContextsAndFinds-Pergamon": {
+    "creationDate": "",
+    "createdBy": "tschoenbuchner",
+    "description": {},
+    "values": {
+      "Baustruktur": {
+        "labels": {
+          "de": "Baustruktur",
+          "en": "Building structure"
+        }
+      },
+      "Boden": {
+        "labels": {
+          "de": "Boden",
+          "en": "Soil"
+        }
+      },
+      "Einzelfund": {
+        "labels": {
+          "de": "Einzelfund",
+          "en": "Single find"
+        }
+      },
+      "Einzelfund (Keramik)": {
+        "labels": {
+          "de": "Einzelfund (Keramik)",
+          "en": "Single find (pottery)"
+        }
+      },
+      "Einzelfund (Ziegel)": {
+        "labels": {
+          "de": "Einzelfund (Ziegel)",
+          "en": "Single find (Brick)"
+        }
+      },
+      "Einzelfund (Stein)": {
+        "labels": {
+          "de": "Einzelfund (Stein)",
+          "en": "Single find (stone)"
+        }
+      },
+      "Felsabarbeitung": {
+        "labels": {
+          "de": "Felsabarbeitung",
+          "en": "Rock excavation"
+        }
+      },
+      "Fundstreuung": {
+        "labels": {
+          "de": "Fundstreuung",
+          "en": "Find scatter"
+        }
+      },
+      "Fundstreuung (Keramik)": {
+        "labels": {
+          "de": "Fundstreuung (Keramik)",
+          "en": "Find scatter (pottery)"
+        }
+      },
+      "Fundstreuung (Stein)": {
+        "labels": {
+          "de": "Fundstreuung (Stein)",
+          "en": "Find scattering (stone)"
+        }
+      },
+      "Fundstreuung (Ziegel)": {
+        "labels": {
+          "de": "Fundstreuung (Ziegel)",
+          "en": "Find scatter (brick)"
+        }
+      },
+      "Inschrift": {
+        "labels": {
+          "de": "Inschrift",
+          "en": "Inscription"
+        }
+      },
+      "Mauer": {
+        "labels": {
+          "de": "Mauer",
+          "en": "Wall"
+        }
+      },
+      "Pflaster": {
+        "labels": {
+          "de": "Pflaster",
+          "en": "Pavement"
+        }
+      },
+      "Rohrleitung": {
+        "labels": {
+          "de": "Rohrleitung",
+          "en": "Pipeline"
+        }
+      },
+      "Spolie": {
+        "labels": {
+          "de": "Spolie",
+          "en": "Spolia"
+        }
+      },
+      "Steinsetzung": {
+        "labels": {
+          "de": "Steinsetzung",
+          "en": "Stonework"
+        }
+      }
+    }
+  },
   "Lamps-manufacturingMethod-Pergamon": {
     "createdBy": "",
     "creationDate": "",

@@ -12,6 +12,9 @@ export const childrenOf = (id: Resource.Id): Query => ({
 });
 
 
+export const CHILDOF_CONTAIN = 'isChildOf:contain';
+
+
 export const basicIndexConfiguration = {
     'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
     'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },

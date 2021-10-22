@@ -1,4 +1,4 @@
-import { Constraint, Query, Datastore, Relation } from 'idai-field-core';
+import { Constraint, Query, Datastore, Relation, Constraints, CHILDOF_CONTAIN } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
 
 export const MAX_SUGGESTIONS: number = 5;
@@ -42,7 +42,8 @@ function makeConstraints(resource: Resource,
 
     if (relationDefinition.sameMainCategoryResource
             && Resource.hasRelations(resource, 'isRecordedIn')) {
-        (constraints as any)['isRecordedIn:contain'] = resource.relations['isRecordedIn'][0];
+        (constraints as Constraints)[CHILDOF_CONTAIN] =
+            { value: resource.relations['isRecordedIn'][0], searchRecursively: true };
     }
 
     return constraints;

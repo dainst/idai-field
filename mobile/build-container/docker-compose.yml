@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   android-build:
-    container_name: mobile-android-build
+    container_name: dainst/mobile-android-build
     build:
       context: ./
       network: host

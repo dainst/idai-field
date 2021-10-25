@@ -1,5 +1,5 @@
 import {
-    Category, createCategory, createDocuments, doc, Document, Forest, IdGenerator, PouchdbDatastore
+    CategoryForm, createCategory, createDocuments, doc, Document, Forest, IdGenerator, PouchdbDatastore
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';

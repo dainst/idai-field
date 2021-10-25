@@ -1,6 +1,5 @@
 import {
-    basicIndexConfiguration,
-    Category, CategoryConverter, ChangesStream,
+    basicIndexConfiguration, CategoryConverter, CategoryForm, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache,
     Forest, Indexer, IndexFacade, NewDocument,
     PouchdbDatastore, ProjectConfiguration, Query, SyncService, Tree

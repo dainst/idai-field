@@ -23,7 +23,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({ onAddCategory, onClose, isI
 
     const config = useContext(ConfigurationContext);
 
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<CategoryForm[]>([]);
 
     const isAllowedCategory = useCallback( (category: CategoryForm) => {
 

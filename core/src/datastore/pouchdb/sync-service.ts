@@ -32,7 +32,7 @@ export namespace SyncProcess {
         return !password
             ? syncTarget
             : syncTarget.replace(/(https?):\/\//, '$1://' +
-                project + ':' + password + '@');
+                project + ':' + encodeURIComponent(password) + '@');
     }
 }
 

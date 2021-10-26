@@ -207,7 +207,7 @@ export class SyncService {
         const url = !password
             ? syncTarget
             : syncTarget.replace(/(https?):\/\//, '$1://' +
-                project + ':' + password + '@');
+                project + ':' + encodeURIComponent(password) + '@');
 
         return url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); 
     }

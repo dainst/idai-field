@@ -82,7 +82,9 @@ export class NetworkProjectComponent {
             )).subscribe({
                 next: lastSequence => {
                     const lastSequenceNumber: number = NetworkProjectComponent.parseSequenceNumber(lastSequence);
-                    progressModalRef.componentInstance.progressPercent = (lastSequenceNumber / updateSequence * 100);
+                    progressModalRef.componentInstance.progressPercent = Math.min(
+                        (lastSequenceNumber / updateSequence * 100), 100
+                    );
                 },
                 error: err => {
                     this.closeModal(progressModalRef);

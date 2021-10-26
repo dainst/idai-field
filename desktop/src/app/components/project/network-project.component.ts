@@ -125,7 +125,7 @@ export class NetworkProjectComponent {
     private async getUpdateSequence(): Promise<number> {
 
         const info = await new PouchDB(
-            SyncService.generateUrl(this.url + '/' + this.projectName, this.projectName),
+            SyncService.generateUrl(this.url, this.projectName),
             {
                 skip_setup: true,
                 auth: {

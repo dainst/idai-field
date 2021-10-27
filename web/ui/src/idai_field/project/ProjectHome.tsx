@@ -147,7 +147,10 @@ const renderContent = (projectId: string, projectDoc: Document, images: ResultDo
 
 
 const renderDescription = (description: string) =>
-    <ReactMarkdown linkTarget={ '_blank' }>{ description }</ReactMarkdown>;
+    description.toString()
+        .split(/\r\n|\n\r|\r|\n/g)
+        .filter(paragraph => paragraph.length > 0)
+        .map((paragraph, i) => <ReactMarkdown key={ i } linkTarget={ '_blank' }>{ paragraph }</ReactMarkdown>);
 
 
 const renderProjectDetails = (projectDoc: Document, t: TFunction) =>

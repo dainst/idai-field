@@ -34,5 +34,5 @@ jobs:
         run: npm run export
         working-directory: mobile
       - name: Build Android app
-        run: docker-compose run android-build
+        run: docker-compose build android-build && docker-compose run android-build
         working-directory: mobile

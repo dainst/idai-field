@@ -30,6 +30,9 @@ jobs:
       - name: Unit test mobile
         run:  npm test
         working-directory: mobile
+      - name: Install Expo global
+        run: npm install expo-cli --global
+        working-directory: mobile
       - name: Export App
         run: npm run export
         working-directory: mobile

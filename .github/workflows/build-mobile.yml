@@ -31,7 +31,7 @@ jobs:
         run:  npm test
         working-directory: mobile
       - name: Export App
-        run: expo export --dev --public-url http://127.0.0.1:8000
+        run: npm run export
         working-directory: mobile
       - name: Build Android app
         run: docker-compose run android-build

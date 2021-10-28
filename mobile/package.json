@@ -10,7 +10,8 @@
     "test": "jest --runInBand",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "export": "expo export --dev --public-url http://127.0.0.1:8000"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",

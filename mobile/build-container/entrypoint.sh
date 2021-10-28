@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-python3 -m http.server -d dist &
-disown
+npx http-server -p 8000 dist &
+#disown
 sleep 3
 curl http://127.0.0.1:8000/android-index.json
 

@@ -138,7 +138,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
         assoc(Group.FIELDS,
             compose(
                 map(pairWith(fieldContent)),
-                filter(on(R, isDefined)),
+                filter(on(R, value => isDefined(value) && value !== '')),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
                 map(makeField(projectConfiguration, relationTargets, labels)),
                 flatten() as any /* TODO review typing*/

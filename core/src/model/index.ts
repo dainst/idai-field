@@ -20,7 +20,7 @@ export { NewImageDocument } from './image-document';
 export { NewImageResource } from './image-resource';
 export { NewResource } from './resource';
 export { OptionalRange } from './optional-range';
-export { Query } from './query';
+export { Query, Constraints } from './query';
 export { Relation } from './configuration/relation';
 export { Resource } from './resource';
 export { Valuelist } from './configuration/valuelist';

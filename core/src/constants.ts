@@ -10,11 +10,6 @@ export const RESOURCE_DOT_ID: [string,string] = ['resource','id'];
 export const ON_RESOURCE_ID = on([Document.RESOURCE, Resource.ID]);
 
 
-// Indexing
-
-export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
-
-
 // Types
 
 export type RevisionId = string;

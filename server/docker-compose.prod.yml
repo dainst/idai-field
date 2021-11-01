@@ -10,6 +10,15 @@ services:
       - 'COUCHDB_USER=admin'
     volumes:
       - "couchdb-data:/opt/couchdb/data"
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=web"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:db.server.field.idai.world"
+        - "traefik.port=5984"
   
   server:
     image: "dainst/idai-field-web-server"

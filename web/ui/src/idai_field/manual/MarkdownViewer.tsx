@@ -1,5 +1,6 @@
 import React, { CSSProperties, ReactElement, RefObject } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import { NAVBAR_HEIGHT } from '../../constants';
 import { CHAPTER_NAVIGATION_WIDTH, PADDING } from './constants';
 import { Chapter } from './Manual';
@@ -21,7 +22,7 @@ export default function MarkdownViewer(
         <div ref={ manualElementRef }
                 style={ markdownContainerStyle }
                 onScroll={ () => updateActiveChapter(chapters, setActiveChapter) }>
-            <ReactMarkdown source={ markdown } escapeHtml={ false } />
+            <ReactMarkdown rehypePlugins={ [rehypeRaw] }>{ markdown }</ReactMarkdown>
         </div>
     );
 }

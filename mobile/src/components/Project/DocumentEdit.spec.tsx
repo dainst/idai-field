@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, RenderAPI, waitFor } from '@testing-library/react-native';
 import {
-    Category, createCategory, Forest, IdGenerator,
+    CategoryForm, createCategory, Forest, IdGenerator,
     Labels, PouchdbDatastore, ProjectConfiguration
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';

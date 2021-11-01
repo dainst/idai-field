@@ -115,7 +115,7 @@ describe('getSuggestions', () => {
                 'id:match': {
                     value: ['id'],
                     subtract: true
-                }, 'isRecordedIn:contain': 'operationId',
+                }, 'isChildOf:contain': { value: 'operationId', searchRecursively: true },
             },
             limit: MAX_SUGGESTIONS,
             sort: { mode: 'exactMatchFirst' }

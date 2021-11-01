@@ -263,7 +263,6 @@ export class ImageUploader {
                 const doc: NewImageDocument = {
                     resource: {
                         identifier: file.name,
-                        shortDescription: '',
                         category: category.name,
                         originalFilename: file.name,
                         width: img.width,

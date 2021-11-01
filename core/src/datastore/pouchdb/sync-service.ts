@@ -80,11 +80,19 @@ export class SyncService {
 
         this.stopSync();
 
-        const url = SyncService.generateUrl(target + '/' + project, project, password);
+        const url = SyncService.generateUrl(target, project, password);
 
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
-        this.replicationHandle = db.replicate.from(url, { retry: true, batch_size: updateSequence < 200 ? 10 : 100 });
+        this.replicationHandle = db.replicate.from(
+            url,
+            {
+                retry: true,
+                batch_size: updateSequence < 200 ? 10 : 50,
+                batches_limit: 1,
+                timeout: 600000
+            }
+        );
 
         return Observable.create((obs: Observer<any>) => {
             this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
@@ -155,7 +163,17 @@ export class SyncService {
 
     private startLiveSync(url: string, filter?: (doc: any) => boolean) {
 
-        this.sync = this.pouchdbDatastore.getDb().sync(url, { filter });
+        this.sync = this.pouchdbDatastore.getDb().sync(
+            url,
+            {
+                live: true,
+                retry: false,
+                batch_size: 50,
+                batches_limit: 1,
+                timeout: 600000,
+                filter
+            }
+        );
         this.handleStatus(this.sync);
 
         this.sync.on('complete', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
@@ -170,7 +188,7 @@ export class SyncService {
             .on('denied', err => console.error('Document denied in sync', err))
             .on('error', err => {
                 this.setStatus(SyncService.getFromError(err));
-                console.error('SyncService received error from PouchDB', err);
+                console.error('SyncService received error from PouchDB', err, JSON.stringify(err));
             });
     }
 
@@ -189,7 +207,7 @@ export class SyncService {
         const url = !password
             ? syncTarget
             : syncTarget.replace(/(https?):\/\//, '$1://' +
-                project + ':' + password + '@');
+                project + ':' + encodeURIComponent(password) + '@');
 
         return url + '/sync/' + (project === 'synctest' ? 'synctestremotedb' : project); 
     }

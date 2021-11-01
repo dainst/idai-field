@@ -1,8 +1,8 @@
-import { CategoryForm, Document, FieldDocument, Datastore, ISRECORDEDIN_CONTAIN, Name, Named, Query, Resource } from 'idai-field-core';
+import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
-import { CategoryCount, Find, Get, GetIdentifierForId, PerformExport } from './export-helper';
+import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
-const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
+const IS_CHILD_OF_CONTAIN = 'isChildOf:contain';
 
 /**
  * Fetches documents, rewrites identifiers in relations, triggering the export of the transformed docs.
@@ -28,8 +28,7 @@ export module ExportRunner {
     export type ExportContext = undefined | 'project' | Resource.Id;
 
 
-    export async function performExport(get: Get,
-                                        find: Find,
+    export async function performExport(find: Find,
                                         getIdentifierForId: GetIdentifierForId,
                                         context: ExportContext,
                                         selectedCategory: CategoryForm,
@@ -37,26 +36,8 @@ export module ExportRunner {
                                         performExport: PerformExport) {
 
         const documents = [];
-
-        if (context === undefined) {
-
-            // nop
-
-        } else if (context === PROJECT_CONTEXT) {
-
+        if (context !== undefined) {
             documents.push(...(await fetchDocuments(find, PROJECT_CONTEXT, selectedCategory)));
-
-        } else if (ADD_EXCLUSION.includes(selectedCategory.name)) {
-
-            documents.push(...(
-                await findLiesWithin(find, selectedCategory.name, context)).documents
-            );
-
-        } else {
-
-            for (const operationId of (await getOperationIds(get, find, context))) {
-                documents.push(...(await fetchDocuments(find, operationId, selectedCategory)));
-            }
         }
 
         return await aFlow(
@@ -73,58 +54,15 @@ export module ExportRunner {
     }
 
 
-    export async function determineCategoryCounts(get: Get,
-                                                  find: Find,
+    export async function determineCategoryCounts(find: Find,
                                                   context: ExportContext,
                                                   categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         if (!context) return determineCategoryCountsForSchema(categoriesList);
 
-        if (context === PROJECT_CONTEXT) {
-            return (await determineCategoryCountsForSelectedOperation(
-               find, context, categoriesList
-            )).filter(([_category, count]) => count > 0);
-        }
-
-        const topLevelCounts = await determineCategoryCountsForToplevel(find, context, categoriesList);
-        const recordedCounts = await determineCategoryCountsForMultipleOperations(
-            get, find, context, categoriesList
-        );
-
-        return topLevelCounts.concat(recordedCounts).filter(([_category, count]) => count > 0);
-    }
-
-
-    async function determineCategoryCountsForMultipleOperations(get: Get,
-                                                                find: Find,
-                                                                selectedOperationId: string,
-                                                                categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
-
-        const counts = {};
-        for (const id of (await getOperationIds(get, find, selectedOperationId))) {
-            const localCounts = await determineCategoryCountsForSelectedOperation(
-                find, id, categoriesList
-            );
-            for (const [cat, cnt] of localCounts) {
-                if (!counts[cat.name]) {
-                    counts[cat.name] = [cat, cnt];
-                } else {
-                    counts[cat.name] = [cat, cnt + counts[cat.name][1]]
-                }
-            }
-        }
-
-        return Object.values(counts);
-    }
-
-
-    async function determineCategoryCountsForToplevel(find: Find,
-                                                      id: string, categoriesList): Promise<Array<CategoryCount>> {
-        const counts = [];
-        for (const category of ADD_EXCLUSION.map(name => categoriesList.find(cat => cat.name === name))) {
-            counts.push([category, (await findLiesWithin(find, category.name, id)).totalCount]);
-        }
-        return counts;
+        return (await determineCategoryCountsForSelectedOperation(
+            find, context, categoriesList
+        )).filter(([_category, count]) => count > 0);
     }
 
 
@@ -146,20 +84,6 @@ export module ExportRunner {
             ]);
         }
         return counts;
-    }
-
-
-    async function getOperationIds(get: Get,
-                                   find: Find,
-                                   selectedOperationId: string) {
-
-        const selectedOperation = await get(selectedOperationId);
-        return selectedOperation.resource.category !== 'Place'
-            ? [selectedOperationId]
-            : (await find({ constraints: { 'liesWithin:contain': selectedOperationId }}))
-                .documents
-                .filter(doc => doc.resource.category !== 'Place')
-                .map(doc => doc.resource.id);
     }
 
 
@@ -216,28 +140,17 @@ export module ExportRunner {
     }
 
 
-    export async function findLiesWithin(find: Find,
-                                         category: Name,
-                                         context: Resource.Id): Promise<Datastore.FindResult> {
+    function getQuery(category: Name, selectedOperationId: string, limit?: number) {
 
         const query: Query = {
             categories: [category],
             constraints: {}
         };
-        (query.constraints as any)[LIES_WITHIN_CONTAIN] = context;
-        return find(query);
-    }
+        if (limit) query.limit = limit;
 
-
-    function getQuery(categoryName: string, selectedOperationId: string, limit?: number) {
-
-        const query: Query = {
-            categories: [categoryName],
-            constraints: {},
-            limit: limit
-        };
         if (selectedOperationId !== PROJECT_CONTEXT) {
-            (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
+            (query.constraints as Constraints)[IS_CHILD_OF_CONTAIN] =
+                { value: selectedOperationId, searchRecursively: true };
         }
         return query;
     }

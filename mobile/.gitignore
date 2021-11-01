@@ -13,9 +13,12 @@ build/
 .vscode/.react/**/*
 .idea
 testdb/**
+*.apk
 
 # macOS
 .DS_Store
 
 #todo list
 todo.txt
+
+!keystore.jks

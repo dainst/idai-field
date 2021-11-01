@@ -3,10 +3,10 @@ services:
   android-build:
     container_name: mobile-android-build
     build:
-      context: ./
+      context: ./build-container
       network: host
       dockerfile: Dockerfile
-    ports:
-      - 8000:8000
+    # ports:
+    #   - 8000:8000
     volumes:
       - ./:/mobile

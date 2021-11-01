@@ -159,7 +159,7 @@ describe('IndexFacade', () => {
         const q: Query = {
             q: 'blub',
             constraints: {
-                'isRecordedIn:contain': 'id1'
+                'isChildOf:contain': 'id1'
             }
         };
 

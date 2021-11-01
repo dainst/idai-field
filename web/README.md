@@ -8,7 +8,7 @@
 
 ## Getting started
 
-The `Web` application stack is made up of four components, all of which are are Docker containers.
+The `Web` application stack is made up of four components, all of which are Docker containers.
 
 - elasticsearch
 - cantaloupe

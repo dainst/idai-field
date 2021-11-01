@@ -28,8 +28,9 @@ Then clone this repository locally and run the following commands (in the reposi
 
 ```
 $ npm run bootstrap
+$ cd core
 $ npm run build
-$ cd desktop
+$ cd ../desktop
 $ npm start
 ```
 
@@ -86,3 +87,4 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
+

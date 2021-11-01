@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import {
-    Category, Document, NewDocument, NewResource, Resource
+    CategoryForm, Document, NewDocument, NewResource, Resource
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';

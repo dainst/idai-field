@@ -8,10 +8,7 @@ import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
 
-const LIES_WITHIN_EXIST = 'liesWithin:exist';
-const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
 const CHILDOF_CONTAIN = 'isChildOf:contain';
-const UNKNOWN = 'UNKNOWN';
 
 
 export const DEFAULT_DOCUMENTS_LIMIT: number = 20000;
@@ -264,7 +261,7 @@ export class DocumentsManager {
 
         for (let document of documents) {
            this.childrenCountMap[document.resource.id] = this.getIndexMatchTermCount(
-               LIES_WITHIN_CONTAIN, document.resource.id
+               CHILDOF_CONTAIN, document.resource.id
            );
         }
     }
@@ -387,15 +384,12 @@ export class DocumentsManager {
         const constraints = tsfun.clone(customConstraints);
 
         if (addLiesWithinConstraints) {
-            if (liesWithinId) {
-                constraints[LIES_WITHIN_CONTAIN] = liesWithinId;
-            } else {
-                constraints[LIES_WITHIN_EXIST] = UNKNOWN;
-            }
+
+            if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
+            else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
+        } else {
+            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
         }
-
-        if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
-
         return constraints;
     }
 

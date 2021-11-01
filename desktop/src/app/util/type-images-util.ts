@@ -32,7 +32,7 @@ export module TypeImagesUtil {
                                            datastore: Datastore): string[] {
 
         const query: Query = {
-            constraints: { 'liesWithin:contain': resourceId }
+            constraints: { 'isChildOf:contain': resourceId }
         };
 
         const resourceIds: string[] = datastore.findIds(query).ids;

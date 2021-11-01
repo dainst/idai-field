@@ -258,7 +258,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const subtypesArray = (await this.datastore.find({
             constraints: {
-                'liesWithin:contain': {
+                'isChildOf:contain': {
                     value: this.mainDocument.resource.id,
                     searchRecursively: true
                 }

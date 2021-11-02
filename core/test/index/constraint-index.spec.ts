@@ -12,7 +12,7 @@ const doc = (id: string, category: string = 'category') =>
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('ConstraintIndex', () => {
+describe('ConstraintIndex', () => {
 
     let ci;
     let categories;

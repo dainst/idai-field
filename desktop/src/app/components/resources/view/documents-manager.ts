@@ -1,4 +1,4 @@
-import { Constraints } from 'idai-field-core';
+import { CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
 import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
@@ -364,7 +364,7 @@ export class DocumentsManager {
                 customConstraints,
                 operationId,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                !extendedSearchMode
+                extendedSearchMode
             ),
             categories: (categoryFilters.length > 0)
                 ? categoryFilters
@@ -379,14 +379,14 @@ export class DocumentsManager {
     private static buildConstraints(customConstraints: Constraints,
                                     operationId: string|undefined,
                                     liesWithinId: string|undefined,
-                                    addLiesWithinConstraints: boolean): Constraints {
+                                    isInExtendedSearchMode: boolean): Constraints {
 
         const constraints = tsfun.clone(customConstraints);
 
-        if (addLiesWithinConstraints) {
-
+        if (!isInExtendedSearchMode) {
             if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
             else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
+            else constraints[CHILDOF_EXIST] = UNKNOWN;
         } else {
             if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
         }

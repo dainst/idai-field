@@ -77,7 +77,7 @@ describe('DocumentRepository', () => {
     });
     
 
-    it('finds document by parent', async () => {
+    fit('finds document by parent', async () => {
 
         const docs = Object.values(createDocuments([
             ['id1', 'Feature', ['id2']],
@@ -86,7 +86,7 @@ describe('DocumentRepository', () => {
         ]));
         await Promise.all(docs.map(async d => await repository.create(d)));
         
-        const { documents: foundDocs } = await repository.find({ constraints: { 'liesWithin:contain': 'id1' } });
+        const { documents: foundDocs } = await repository.find({ constraints: { 'isChildOf:contain': 'id1' } });
         expect(foundDocs).toHaveLength(1);
         expect(foundDocs[0].resource.id).toEqual('id2');
     });

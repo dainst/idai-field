@@ -1,5 +1,5 @@
-import { doc, IndexFacade, Query, createMockProjectConfiguration } from 'idai-field-core';
-import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
+import { basicIndexConfiguration, ConstraintIndex, createMockProjectConfiguration, doc, Query, Tree } from '../..';
+import { IndexFacade } from '../../src/index';
 
 
 /**
@@ -14,8 +14,21 @@ describe('IndexFacade', () => {
 
     beforeEach(() => {
 
-        const { createdIndexFacade } =
-            IndexerConfiguration.configureIndexers(createMockProjectConfiguration(), false);
+        const projectConfiguration = createMockProjectConfiguration()
+
+        const createdConstraintIndex = ConstraintIndex.make({
+            ... basicIndexConfiguration,
+            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'links' }
+        }, Tree.flatten(projectConfiguration.getCategories()));
+
+        const createdFulltextIndex = {};
+        const createdIndexFacade = new IndexFacade(
+            createdConstraintIndex,
+            createdFulltextIndex,
+            Tree.flatten(projectConfiguration.getCategories()),
+            true
+        );
+
         indexFacade = createdIndexFacade;
     });
 

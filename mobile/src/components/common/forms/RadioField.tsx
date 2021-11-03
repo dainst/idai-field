@@ -4,7 +4,7 @@ import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal/ChoiceModal';
 import { FieldBaseProps } from './common-props';
-import { NO_VAL } from './constants';
+import { FORM_FONT_SIZE, NO_VAL } from './constants';
 import FieldLabel from './FieldLabel';
 
 const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue }) => {
@@ -52,7 +52,7 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
         if(selectedKey && selectedKey.length){
             return (
                 <View style={ styles.selectedValues }>
-                    <Text>{valuesObject[selectedKey[0]].label}</Text>
+                    <Text style={ styles.selectedValuesText }>{valuesObject[selectedKey[0]].label}</Text>
                 </View>
             );
         } else return null;
@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
         marginTop: 3,
         borderColor: colors.lightgray,
         borderWidth: 1,
+        padding: 5
+    },
+    selectedValuesText: {
+        fontSize: FORM_FONT_SIZE
     }
 });
 

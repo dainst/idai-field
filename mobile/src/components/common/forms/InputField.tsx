@@ -4,6 +4,7 @@ import { colors } from '../../../utils/colors';
 import ScanBarcodeButton from '../../Project/ScanBarcodeButton';
 import Row from '../Row';
 import { FieldBaseProps } from './common-props';
+import { FORM_FONT_SIZE } from './constants';
 import FieldLabel from './FieldLabel';
 
 
@@ -55,7 +56,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     textInput: {
-        flex: 1
+        flex: 1,
+        fontSize: FORM_FONT_SIZE,
+        padding: 5
     },
 
 });

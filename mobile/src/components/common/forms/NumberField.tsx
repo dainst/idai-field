@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../../../utils/colors';
 import { FieldBaseProps } from './common-props';
+import { FORM_FONT_SIZE } from './constants';
 import FieldLabel from './FieldLabel';
 
 
@@ -54,6 +55,8 @@ const styles = StyleSheet.create({
         marginTop: 3,
         borderColor: colors.lightgray,
         borderWidth: 1,
+        padding: 5,
+        fontSize: FORM_FONT_SIZE
     }
 });
 

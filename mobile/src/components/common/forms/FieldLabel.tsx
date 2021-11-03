@@ -6,6 +6,7 @@ import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import I18NLabel from '../I18NLabel';
 import Row from '../Row';
+import { FORM_FONT_SIZE } from './constants';
 
 interface FieldLabelProps extends TextProps {
     field: I18N.LabeledValue
@@ -24,7 +25,7 @@ const FieldLabel: React.FC<FieldLabelProps> = (props) => {
     return (
         <View>
             <Row style={ styles.row }>
-                <I18NLabel style={ props.style } label={ props.field } />
+                <I18NLabel style={ [{ fontSize: FORM_FONT_SIZE }, props.style ] } label={ props.field } />
                 {getDescription() && <View style={ styles.infoIcon }>
                         <TouchableOpacity onPress={ infoBtnHandle }>
                             <Ionicons name="information-circle-outline" size={ ICON_SIZE } color="black" />
@@ -42,10 +43,8 @@ const FieldLabel: React.FC<FieldLabelProps> = (props) => {
 
 const styles = StyleSheet.create({
     row: {
-        backgroundColor: colors.lightgray,
+
         textTransform: 'capitalize',
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
         paddingHorizontal: 5,
         paddingVertical: 2,
         alignItems: 'center'

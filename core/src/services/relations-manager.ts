@@ -88,7 +88,7 @@ export class RelationsManager {
     }
 
 
-    private async updateWithConnections(document: Document, 
+    private async updateWithConnections(document: Document,
                                         oldVersion: Document,
                                         revisionsToSquash: Array<Document>) {
 
@@ -96,7 +96,7 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await ConnectedDocs.updateForUpdate(
-            this.datastore.update, this.datastore.get, this.datastore.convert, 
+            this.datastore.update, this.datastore.get, this.datastore.convert,
             this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
         return updated as Document;
     }
@@ -144,7 +144,7 @@ export class RelationsManager {
 
         const query: Query = {
             constraints: {
-                'liesWithin:contain': {
+                'isChildOf:contain': {
                     value: resourceId,
                     searchRecursively: true
                 }
@@ -157,7 +157,7 @@ export class RelationsManager {
     private getInverseRelationsMap(): Relation.InverseRelationsMap {
 
         return Relation.makeInverseRelationsMap(this.projectConfiguration.getRelations());
-        
+
     }
 
 

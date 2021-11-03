@@ -220,7 +220,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc1);
         indexFacade.put(doc2);
 
-        const result = indexFacade.getDescendantIds('liesWithin:contain', 'id0');
+        const result = indexFacade.getDescendantIds('isChildOf:contain', 'id0');
         expect(result).toEqual(['id1']);
     });
 });

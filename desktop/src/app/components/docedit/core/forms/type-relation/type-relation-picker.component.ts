@@ -229,7 +229,7 @@ export class TypeRelationPickerComponent {
             };
         }
         if (!isEmpty(selectedCatalogs)) {
-            (query.constraints as any)['liesWithin:contain'] = {
+            (query.constraints as any)['isChildOf:contain'] = {
                 value: selectedCatalogs.map(to(Resource.ID)),
                 searchRecursively: true
             } as Constraint;

@@ -1,6 +1,5 @@
-import { doc, IndexFacade, Query } from 'idai-field-core';
+import { doc, IndexFacade, Query, createMockProjectConfiguration } from 'idai-field-core';
 import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
-import { createMockProjectConfiguration } from './helpers';
 
 
 /**

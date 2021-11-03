@@ -1,10 +1,45 @@
-import {sameset} from 'tsfun/src/comparator';
-import {Datastore} from '../src/datastore/datastore';
+import { sameset, update } from 'tsfun';
+import { Datastore } from '../src/datastore/datastore';
 import { CategoryForm, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
 import { Document, toResourceId } from '../src/model/document';
 import { Resource } from '../src/model/resource';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
+
+
+export function createMockProjectConfiguration(): any {
+
+    const projectConfiguration = jasmine.createSpyObj(
+        'projectConfiguration',
+        ['getCategories']
+    );
+
+    const defaultFieldConfiguration = {
+        name: '',
+        groups: [{
+            fields: [
+                {
+                    name: 'identifier',
+                    fulltextIndexed: true
+                },
+                {
+                    name: 'shortDescription',
+                    fulltextIndexed: true
+                }
+            ]
+        }]
+    };
+
+    projectConfiguration.getCategories.and.returnValue([
+        { item: update('name', 'category1', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'category2', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'category3', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'Find', defaultFieldConfiguration), trees: [] },
+        { item: update('name', 'Type', defaultFieldConfiguration), trees: [] }
+    ]);
+
+    return projectConfiguration;
+}
 
 
 export const fieldDoc = (sd, identifier?, category?, id?) =>

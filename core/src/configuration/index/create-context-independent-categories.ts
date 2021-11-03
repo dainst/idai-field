@@ -23,7 +23,7 @@ export function createContextIndependentCategories(builtInCategories: Map<BuiltI
                                                    commonFields: Map<BuiltInFieldDefinition>,
                                                    builtInFields: Map<BuiltInFieldDefinition>,
                                                    valuelists: Map<Valuelist>,
-                                                   selectedParentCategories: string[],
+                                                   selectedParentForms: string[],
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
                                                    : Array<CategoryForm> {
 
@@ -39,7 +39,7 @@ export function createContextIndependentCategories(builtInCategories: Map<BuiltI
         { default: languages, complete: languages },
         undefined,
         undefined,
-        selectedParentCategories
+        selectedParentForms
     );
 
    return Tree.flatten(categories);

@@ -26,24 +26,24 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.file.newProject'),
                 accelerator: 'CmdOrCtrl+N',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
-                enabled: context === 'default'
+                enabled: isDefaultContext(context)
             },
             {
                 label: messages.get('menu.file.networkProject'),
                 accelerator: 'CmdOrCtrl+D',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
-                enabled: context === 'default'
+                enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
             },
             {
                 label: messages.get('menu.file.openProject'),
-                enabled: context === 'default' && getNamesOfUnopenedProjects().length > 0,
+                enabled: isDefaultContext(context) && getNamesOfUnopenedProjects().length > 0,
                 submenu: getNamesOfUnopenedProjects().map(projectName => {
                     return {
                         label: projectName,
                         click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
-                        enabled: context === 'default'
+                        enabled: isDefaultContext(context)
                     };
                 })
             }, {
@@ -51,21 +51,21 @@ const getTemplate = (mainWindow, context, config) => {
             },
             {
                 label: messages.get('menu.file.currentProject'),
-                enabled: context === 'default',
+                enabled: isDefaultContext(context),
                 submenu: [
                     {
                         label: messages.get('menu.file.projectProperties'),
                         click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
-                        enabled: context === 'default'
+                        enabled: isDefaultContext(context)
                     }, {
                         label: messages.get('menu.file.projectSynchronization'),
                         click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
-                        enabled: context === 'default'
+                        enabled: isDefaultContext(context)
                             && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
                     }, {
                         label: messages.get('menu.file.deleteProject'),
                         click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
-                        enabled: context === 'default'
+                        enabled: isDefaultContext(context)
                     }
                 ]
             },

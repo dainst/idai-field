@@ -25,6 +25,29 @@ category-listing {
         padding: 5px;
       }
 
+      &.new-category-option {
+        padding: 3px 5px 5px 5px;
+        background-color: #d7ffd9;
+
+        &.selected,
+        &:hover {
+          background-color: darken(#d7ffd9, 10%);
+          transition: background-color .5s ease;
+        }
+
+        .mdi-plus-circle {
+          position: relative;
+          top: 1px;
+          left: 9px;
+          margin-right: 21px;
+          color: #28a745;
+        }
+        
+        .category-label {
+          font-style: italic;
+        }
+      }
+
       &.selected,
       &:hover:not(.category-header) {
         background-color: darken($list-item-hover-color, 5%);

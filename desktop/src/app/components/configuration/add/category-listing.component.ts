@@ -19,6 +19,7 @@ type CategoryListingItem = {
 export class CategoryListingComponent implements OnChanges {
 
     @Input() categoryForms: Array<CategoryForm> = [];
+    @Input() emptyForm: CategoryForm;
     @Input() selectedForm: CategoryForm;
     @Input() searchTerm: string = '';
 
@@ -41,6 +42,9 @@ export class CategoryListingComponent implements OnChanges {
     public getLabel = (value: any) => this.labels.get(value);
 
     public getForms = (categoryName: string) => this.categoryForms.filter(form => form.name === categoryName);
+
+    public isNewCategoryOptionShown = (): boolean => this.emptyForm
+        && !this.items.map(item => item.form.libraryId).includes(this.searchTerm);
 
 
     public getSearchResultLabel(category: CategoryForm): string|undefined {

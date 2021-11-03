@@ -18,17 +18,19 @@ import { ConfigurationUtil } from '../configuration-util';
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class AddCategoryFormModalComponent {
 
     public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
-    public parentCategory: CategoryForm;
+    public parentCategory: CategoryForm|undefined;
     public categoryToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;
+    public emptyForm: CategoryForm|undefined;
     public categoryForms: Array<CategoryForm> = [];
 
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
@@ -57,27 +59,15 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    public addSelectedCategory() {
+    public confirmSelection() {
 
         if (!this.selectedForm) return;
 
-        const clonedConfigurationDocument = this.categoryToReplace
-            ? ConfigurationUtil.deleteCategory(this.categoryToReplace, this.configurationDocument, false)
-            : Document.clone(this.configurationDocument);
-
-        clonedConfigurationDocument.resource.forms[this.selectedForm.libraryId] = {
-            fields: {},
-            hidden: []
-        };
-
-        clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
-            clonedConfigurationDocument.resource.order, this.selectedForm.name, this.parentCategory?.name
-        );
-
-        try {
-            this.saveAndReload(clonedConfigurationDocument, this.selectedForm.name);
-            this.activeModal.close();
-        } catch { /* stay in modal */ }
+        if (this.selectedForm === this.emptyForm) {
+            this.createNewSubcategory();
+        } else {
+            this.addSelectedCategory();
+        }
     }
 
 
@@ -100,10 +90,34 @@ export class AddCategoryFormModalComponent {
             );
 
         this.selectedForm = this.categoryForms?.[0];
+        this.emptyForm = this.getEmptyForm();
     }
 
 
-    public async createNewSubcategory() {
+    private addSelectedCategory() {
+
+       
+        const clonedConfigurationDocument = this.categoryToReplace
+            ? ConfigurationUtil.deleteCategory(this.categoryToReplace, this.configurationDocument, false)
+            : Document.clone(this.configurationDocument);
+
+        clonedConfigurationDocument.resource.forms[this.selectedForm.libraryId] = {
+            fields: {},
+            hidden: []
+        };
+
+        clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
+            clonedConfigurationDocument.resource.order, this.selectedForm.name, this.parentCategory?.name
+        );
+
+        try {
+            this.saveAndReload(clonedConfigurationDocument, this.selectedForm.name);
+            this.activeModal.close();
+        } catch { /* stay in modal */ }
+    }
+
+
+    private async createNewSubcategory() {
 
         const [result, componentInstance] = this.modals.make<CategoryEditorModalComponent>(
             CategoryEditorModalComponent,
@@ -121,5 +135,16 @@ export class AddCategoryFormModalComponent {
             () => this.activeModal.close(),
             () => AngularUtility.blurActiveElement()
         );
+    }
+
+
+    private getEmptyForm(): CategoryForm|undefined {
+
+        if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
+
+        return {
+            libraryId: this.searchTerm,
+            groups: this.parentCategory.groups
+        } as CategoryForm;
     }
 }

@@ -6,10 +6,10 @@
         <div *ngIf="item.isCategoryHeader">
             <category-icon [category]="item.form" size="30"></category-icon>
             <span class="category-label">{{getLabel(item.form)}}</span>
+            <span *ngIf="getSearchResultLabel(item.form)"
+                  class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
         </div>
         <div *ngIf="!item.isCategoryHeader">
-            <span *ngIf="getSearchResultLabel(item.form)"
-                class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
             <code>{{item.form.libraryId}}</code>
             <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
         </div>

@@ -21,6 +21,7 @@ describe('performQuery', () => {
 
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
+            'someField:exist': { path: 'resource.someField', pathArray: ['resource', 'someField'], type: 'exist' }
         }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
@@ -162,20 +163,20 @@ describe('performQuery', () => {
     });
 
 
-    xit('should filter with multiple constraints', () => {
+    it('should filter with multiple constraints', () => {
 
         const doc1 = doc('bla1', 'blub1', 'category1','id1');
         const doc2 = doc('bla2', 'blub2', 'category2','id2');
         doc2.resource.relations['isChildOf'] = ['id1'];
         const doc3 = doc('bla3', 'blub3', 'category2','id3');
         doc3.resource.relations['isChildOf'] = ['id2'];
-        doc3.resource.relations['liesWithin'] = ['id2'];
+        doc3.resource.someField = 'isPresent';
 
         const q: Query = {
             q: 'blub',
             constraints: {
                 'isChildOf:contain' : { value: 'id1', searchRecursively: true },
-                'liesWithin:contain' : 'id2'
+                'someField:exist' : 'KNOWN'
             }
         };
 

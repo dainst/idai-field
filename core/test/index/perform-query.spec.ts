@@ -1,8 +1,8 @@
-import { ConstraintIndex, doc, FulltextIndex, Named, performQuery as performQuery_, Query, Tree } from 'idai-field-core';
-import { Document } from 'idai-field-core';
-import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
-import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
-import { createMockProjectConfiguration } from './helpers';
+import { basicIndexConfiguration, Document, FulltextIndex, Named, Query, Tree } from '../..';
+import { ConstraintIndex } from '../..';
+import { getFieldsToIndex } from '../../src/index/get-fields-to-index';
+import { createMockProjectConfiguration, doc } from '../test-helpers';
+import { performQuery as performQuery_ } from '../../src/index/perform-query';
 
 /**
  * @author Daniel de Oliveira
@@ -17,8 +17,14 @@ describe('performQuery', () => {
     beforeEach(() => {
 
         const projectConfiguration = createMockProjectConfiguration();
-        const {createdConstraintIndex, createdFulltextIndex} =
-            IndexerConfiguration.configureIndexers(projectConfiguration);
+
+
+        const createdConstraintIndex = ConstraintIndex.make({
+            ... basicIndexConfiguration,
+        }, Tree.flatten(projectConfiguration.getCategories()));
+
+        const createdFulltextIndex = {};
+
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
         categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()) as any);

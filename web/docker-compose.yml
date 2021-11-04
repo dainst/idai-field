@@ -51,6 +51,7 @@ services:
       - "./api/test:/opt/src/api/test"
       - "./api/_build:/opt/src/api/_build"
       - "./data/cantaloupe:/imageroot"
+      - "./imagemagick:/etc/ImageMagick-6"
 
   ui:
     image: "dainst/idai-field-web-ui"

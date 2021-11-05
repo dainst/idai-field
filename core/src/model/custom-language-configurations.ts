@@ -1,5 +1,9 @@
-import { CategoryForm, Field, Group, I18N, InPlace, LanguageConfiguration } from 'idai-field-core';
-
+import { LanguageConfiguration } from '../configuration/model/language/language-configuration';
+import { I18N } from '../tools/i18n';
+import { InPlace } from '../tools/in-place';
+import { CategoryForm } from './configuration/category-form';
+import { Field } from './configuration/field';
+import { Group } from './configuration/group';
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
 

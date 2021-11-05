@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { CustomFormDefinition, Field, GroupDefinition, I18N } from 'idai-field-core';
-import { ConfigurationUtil, OVERRIDE_VISIBLE_FIELDS } from '../../../components/configuration/configuration-util';
+import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS, CustomLanguageConfigurations } from 'idai-field-core';
+import { ConfigurationUtil} from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { InputType } from '../configuration.component';
-import { CustomLanguageConfigurations } from '../../../components/configuration/custom-language-configurations';
 
 
 @Component({
@@ -216,6 +215,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isHidden(): boolean {
 
-        return ConfigurationUtil.isHidden(this.getClonedFormDefinition())(this.field);
+        return ConfigurationDocument.isHidden(this.getClonedFormDefinition())(this.field);
     }
 }

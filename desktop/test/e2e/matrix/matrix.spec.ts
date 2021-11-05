@@ -56,7 +56,7 @@ describe('matrix --', () => {
 
 
     it('select and deselect resources', async done => {
-    
+
         await MatrixPage.clickSingleSelectionModeButton();
         await MatrixPage.clickNode('si1');
         await MatrixPage.clickNode('si2');
@@ -125,7 +125,7 @@ describe('matrix --', () => {
 
         const edges = await MatrixPage.getEdges();
         expect(edges.length).toBe(1);
-        
+
         await waitForExist(await MatrixPage.getAboveEdge('si1', 'si5'));
 
         await MatrixPage.clickReloadGraphButton();
@@ -164,7 +164,7 @@ describe('matrix --', () => {
         await MatrixPage.clickPeriodCheckbox();
         clusters = await MatrixPage.getClusters();
         expect(clusters.length).toBe(2);
-        
+
         done();
     });
 

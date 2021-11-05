@@ -1,8 +1,8 @@
-import { ConstraintIndex, doc, FulltextIndex, Named, performQuery as performQuery_, Query, Tree } from 'idai-field-core';
-import { Document } from 'idai-field-core';
-import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
-import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
-import { createMockProjectConfiguration } from './helpers';
+import { basicIndexConfiguration, Document, FulltextIndex, Named, Query, Tree } from '../..';
+import { ConstraintIndex } from '../..';
+import { getFieldsToIndex } from '../../src/index/get-fields-to-index';
+import { createMockProjectConfiguration, doc } from '../test-helpers';
+import { performQuery as performQuery_ } from '../../src/index/perform-query';
 
 /**
  * @author Daniel de Oliveira
@@ -17,8 +17,15 @@ describe('performQuery', () => {
     beforeEach(() => {
 
         const projectConfiguration = createMockProjectConfiguration();
-        const {createdConstraintIndex, createdFulltextIndex} =
-            IndexerConfiguration.configureIndexers(projectConfiguration);
+
+
+        const createdConstraintIndex = ConstraintIndex.make({
+            ... basicIndexConfiguration,
+            'someField:exist': { path: 'resource.someField', pathArray: ['resource', 'someField'], type: 'exist' }
+        }, Tree.flatten(projectConfiguration.getCategories()));
+
+        const createdFulltextIndex = {};
+
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
         categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()) as any);
@@ -163,13 +170,13 @@ describe('performQuery', () => {
         doc2.resource.relations['isChildOf'] = ['id1'];
         const doc3 = doc('bla3', 'blub3', 'category2','id3');
         doc3.resource.relations['isChildOf'] = ['id2'];
-        doc3.resource.relations['liesWithin'] = ['id2'];
+        doc3.resource.someField = 'isPresent';
 
         const q: Query = {
             q: 'blub',
             constraints: {
                 'isChildOf:contain' : { value: 'id1', searchRecursively: true },
-                'liesWithin:contain' : 'id2'
+                'someField:exist' : 'KNOWN'
             }
         };
 
@@ -212,16 +219,16 @@ describe('performQuery', () => {
 
     it('should get with descendants', () => {
 
-        const doc1 = doc('Document 1', 'doc1', 'category1','id1');
-        const doc2 = doc('Document 2', 'doc2', 'category1','id2');
-        const doc3 = doc('Document 3', 'doc3', 'category2','id3');
-        doc2.resource.relations['liesWithin'] = ['id1'];
-        doc3.resource.relations['liesWithin'] = ['id2'];
+        const doc1 = doc('Document 1', 'doc1', 'category1', 'id1');
+        const doc2 = doc('Document 2', 'doc2', 'category1', 'id2');
+        const doc3 = doc('Document 3', 'doc3', 'category2', 'id3');
+        doc2.resource.relations['isChildOf'] = ['id1'];
+        doc3.resource.relations['isChildOf'] = ['id2'];
 
         const q: Query = {
             q: 'doc',
             constraints: {
-                'liesWithin:contain': { value: 'id1', searchRecursively: true }
+                'isChildOf:contain': { value: 'id1', searchRecursively: true }
             }
         };
 

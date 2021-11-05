@@ -47,7 +47,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
-                                             selectedParentCategories?: string[]): RawProjectConfiguration {
+                                             selectedParentForms?: string[]): RawProjectConfiguration {
 
     Assertions.performAssertions(
         builtInCategories, libraryCategories, libraryForms, commonFields, valuelistsConfiguration, customForms
@@ -75,7 +75,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
             CATEGORIES,
             processForms(
                 validateFields, languageConfigurations, categoriesOrder, relations, categories,
-                selectedParentCategories
+                selectedParentForms
             )
         )
     );
@@ -90,11 +90,11 @@ function processForms(validateFields: any,
                       categoriesOrder: string[],
                       relations: Array<Relation>,
                       categories: Map<TransientCategoryDefinition>,
-                      selectedParentCategories?: string[]): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
+                      selectedParentForms?: string[]): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
 
     return compose(
         validateFields,
-        makeCategoryForest(relations, categories, selectedParentCategories),
+        makeCategoryForest(relations, categories, selectedParentForms),
         Forest.map(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances

@@ -104,6 +104,7 @@
     "electron-log": "4.3.4",
     "electron-updater": "4.3.8",
     "es6-shim": "0.35.4",
+    "exif": "^0.6.0",
     "express": "4.17.1",
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",

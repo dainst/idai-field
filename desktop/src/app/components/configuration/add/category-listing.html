@@ -1,17 +1,25 @@
 <ul id="category-listing" class="bg-light">
     <li *ngFor="let item of items"
         [class.category-header]="item.isCategoryHeader"
-        [class.selected]="!item.isCategoryHeader&& selectedForm === item.form"
-        (click)="!item.isCategoryHeader&& selectForm(item.form)">
+        [class.selected]="!item.isCategoryHeader && selectedForm === item.form"
+        (click)="!item.isCategoryHeader && selectForm(item.form)">
         <div *ngIf="item.isCategoryHeader">
             <category-icon [category]="item.form" size="30"></category-icon>
             <span class="category-label">{{getLabel(item.form)}}</span>
+            <span *ngIf="getSearchResultLabel(item.form)"
+                  class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
         </div>
         <div *ngIf="!item.isCategoryHeader">
-            <span *ngIf="getSearchResultLabel(item.form)"
-                class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
             <code>{{item.form.libraryId}}</code>
             <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
         </div>
+    </li>
+    <li *ngIf="isNewCategoryOptionShown()"
+        class="category-header new-category-option"
+        [class.selected]="selectedForm === emptyForm"
+        (click)="selectForm(emptyForm)">
+        <span class="mdi mdi-plus-circle mdi-24px"></span>
+        <span class="category-label" i18n="@@configuration.newCategory">Neue Kategorie</span>
+        <code>{{searchTerm}}</code>
     </li>
 </ul>

@@ -61,7 +61,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     || !this.category.groups.map(to(Named.NAME)).includes(this.selectedGroup)) {
                 this.selectedGroup = this.category.groups[0].name;
             }
-            this.permanentlyHiddenFields = ConfigurationUtil.getPermanentlyHiddenFields(
+            this.permanentlyHiddenFields = ConfigurationDocument.getPermanentlyHiddenFields(
                 this.configurationDocument, this.category
             );
             this.openedFieldName = undefined;
@@ -80,13 +80,13 @@ export class ConfigurationCategoryComponent implements OnChanges {
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
     public isHidden = (field: Field) =>
-        ConfigurationUtil.isHidden(this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition())(field);
+        ConfigurationDocument.isHidden(this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition())(field);
 
-    public getCustomCategoryDefinition = () => ConfigurationUtil.getCustomCategoryDefinition(
+    public getCustomCategoryDefinition = () => ConfigurationDocument.getCustomCategoryDefinition(
         this.configurationDocument, this.category
     );
 
-    public getParentCustomCategoryDefinition = () => ConfigurationUtil.getParentCustomCategoryDefinition(
+    public getParentCustomCategoryDefinition = () => ConfigurationDocument.getParentCustomCategoryDefinition(
         this.configurationDocument, this.category
     );
 
@@ -107,8 +107,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
                     on(Field.NAME, not(includedIn(this.permanentlyHiddenFields))),
                     or(
                         () => this.showHiddenFields,
-                        not(ConfigurationUtil.isHidden(
-                            this.getCustomCategoryDefinition(), this.getParentCustomCategoryDefinition()
+                        not(ConfigurationDocument.isHidden(
+                            this.getCustomCategoryDefinition(),
+                            this.getParentCustomCategoryDefinition()
                         ))
                     )
                 )

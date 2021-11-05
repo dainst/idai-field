@@ -1,4 +1,4 @@
-import { Constraints } from 'idai-field-core';
+import { CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
 import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
@@ -8,10 +8,7 @@ import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
 
-const LIES_WITHIN_EXIST = 'liesWithin:exist';
-const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
 const CHILDOF_CONTAIN = 'isChildOf:contain';
-const UNKNOWN = 'UNKNOWN';
 
 
 export const DEFAULT_DOCUMENTS_LIMIT: number = 20000;
@@ -264,7 +261,7 @@ export class DocumentsManager {
 
         for (let document of documents) {
            this.childrenCountMap[document.resource.id] = this.getIndexMatchTermCount(
-               LIES_WITHIN_CONTAIN, document.resource.id
+               CHILDOF_CONTAIN, document.resource.id
            );
         }
     }
@@ -367,7 +364,7 @@ export class DocumentsManager {
                 customConstraints,
                 operationId,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                !extendedSearchMode
+                extendedSearchMode
             ),
             categories: (categoryFilters.length > 0)
                 ? categoryFilters
@@ -382,20 +379,17 @@ export class DocumentsManager {
     private static buildConstraints(customConstraints: Constraints,
                                     operationId: string|undefined,
                                     liesWithinId: string|undefined,
-                                    addLiesWithinConstraints: boolean): Constraints {
+                                    isInExtendedSearchMode: boolean): Constraints {
 
         const constraints = tsfun.clone(customConstraints);
 
-        if (addLiesWithinConstraints) {
-            if (liesWithinId) {
-                constraints[LIES_WITHIN_CONTAIN] = liesWithinId;
-            } else {
-                constraints[LIES_WITHIN_EXIST] = UNKNOWN;
-            }
+        if (!isInExtendedSearchMode) {
+            if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
+            else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
+            else constraints[CHILDOF_EXIST] = UNKNOWN;
+        } else {
+            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
         }
-
-        if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
-
         return constraints;
     }
 

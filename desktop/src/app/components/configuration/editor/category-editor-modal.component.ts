@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { I18N } from 'idai-field-core';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { CustomLanguageConfigurations } from '../../../components/configuration/custom-language-configurations';
 import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
 
 
@@ -54,7 +53,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 fields: {},
                 groups: ConfigurationUtil.createGroupsConfiguration(
                     this.category,
-                    ConfigurationUtil.getPermanentlyHiddenFields(this.configurationDocument, this.category)
+                    ConfigurationDocument.getPermanentlyHiddenFields(this.configurationDocument, this.category)
                 )
             }
         } else {

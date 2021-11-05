@@ -20,7 +20,7 @@ const TEMP_GROUPS = 'tempGroups';
  * @author Sebastian Cuy
  */
 export const makeCategoryForest = (relations: Array<Relation>, categories: Map<TransientCategoryDefinition>,
-                                   selectedParentCategories?: string[]) =>
+                                   selectedParentForms?: string[]) =>
         (forms: Map<TransientFormDefinition>): Forest<CategoryForm> => {
 
     const [parentDefs, childDefs] = flow(
@@ -37,7 +37,7 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
 
     return flow(
         childDefs,
-        reduce(addChildCategory(categories, selectedParentCategories), parentCategories),
+        reduce(addChildCategory(categories, selectedParentForms), parentCategories),
         Forest.map(
             compose(
                 createGroups(relations), 
@@ -107,7 +107,7 @@ function putCoreFieldsToHiddenGroup(category: CategoryForm) {
 }
 
 
-const addChildCategory = (categories: Map<TransientCategoryDefinition>, selectedParentCategories?: string[]) =>
+const addChildCategory = (categories: Map<TransientCategoryDefinition>, selectedParentForms?: string[]) =>
                             (categoryTree: Forest<CategoryForm>,
                              childDefinition: TransientFormDefinition): Forest<CategoryForm> => {
 
@@ -115,7 +115,7 @@ const addChildCategory = (categories: Map<TransientCategoryDefinition>, selected
 
     const found = categoryTree.find(({ item: category }) => {
         return category.name === parent
-            && (!selectedParentCategories || selectedParentCategories.includes(category.libraryId));
+            && (!selectedParentForms || selectedParentForms.includes(category.libraryId));
     });
     if (!found) return categoryTree;
     

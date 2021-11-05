@@ -60,9 +60,7 @@ describe('ViewFacade/Subsystem', () => {
         spyOn(console, 'debug'); // suppress console.debug
 
         trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
-        trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
         trenchDocument2 = fieldDoc('trench2','trench2','Trench','t2');
-        trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
         findDocument1 = fieldDoc('Find 1', 'find1', 'Find', 'find1');
         findDocument1.resource.processor = 'person';

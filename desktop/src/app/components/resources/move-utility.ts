@@ -87,7 +87,7 @@ export module MoveUtility {
         if (parentId) ids.push(parentId);
 
         return ids.concat(indexFacade.getDescendantIds(
-            'liesWithin:contain', document.resource.id
+            'isChildOf:contain', document.resource.id
         ));
     }
 

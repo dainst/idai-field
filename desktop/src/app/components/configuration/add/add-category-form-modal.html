@@ -10,16 +10,10 @@
                    class="form-control"
                    [(ngModel)]="searchTerm"
                    (ngModelChange)="applyCategoryNameSearch()">
-            <button *ngIf="parentCategory && !categoryToReplace"
-                    type="button"
-                    class="btn btn-success"
-                    [class.disabled]="searchTerm.length === 0"
-                    (click)="createNewSubcategory()">
-                <span class="mdi mdi-plus"></span>
-            </button>
         </div>
         <category-listing [categoryForms]="categoryForms"
                           [selectedForm]="selectedForm"
+                          [emptyForm]="emptyForm"
                           [searchTerm]="searchTerm"
                           (onFormSelected)="selectForm($event)">
         </category-listing>
@@ -33,7 +27,7 @@
     <div id="add-category-button"
          class="btn btn-success"
          [class.disabled]="!selectedForm"
-         (click)="addSelectedCategory()">
+         (click)="confirmSelection()">
         <span i18n="@@configuration.selectForm">Formular auswählen</span>
     </div>
     <div id="cancel-add-category-modal-button"

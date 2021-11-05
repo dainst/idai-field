@@ -4,6 +4,7 @@ import LabelsContext from '../../../contexts/labels/labels-context';
 import { colors } from '../../../utils/colors';
 import ChoiceModal, { ItemsObject } from './ChoiceModal/ChoiceModal';
 import { FieldBaseProps } from './common-props';
+import { FORM_FONT_SIZE } from './constants';
 import FieldLabel from './FieldLabel';
 
 
@@ -59,9 +60,9 @@ const CheckboxField: React.FC<FieldBaseProps> = ({ setFunction, field, currentVa
                         keyExtractor={ item => item }
                         renderItem={ ({ item }) => <Text style={ styles.selectedValue }>{item}</Text> }
                         horizontal={ true }
-                        ItemSeparatorComponent={ () => <Text>,</Text> }
+                        ItemSeparatorComponent={ () => <Text style={ styles.selectedValue }>,</Text> }
                         showsHorizontalScrollIndicator={ false }
-                        ListEmptyComponent={ <Text> </Text> } />;
+                        ListEmptyComponent={ <Text style={ styles.selectedValue }> </Text> } />;
     };
     
     return (
@@ -96,7 +97,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     selectedValue: {
-        margin: 2,
+        margin: 5,
+        fontSize: FORM_FONT_SIZE
     }
 });
 

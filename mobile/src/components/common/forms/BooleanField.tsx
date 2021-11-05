@@ -39,9 +39,6 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         width: '98%',
         marginTop: 'auto',
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
-        backgroundColor: colors.lightgray,
 
     },
     switch:{

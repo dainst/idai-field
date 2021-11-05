@@ -8,6 +8,7 @@ import Heading from '../../Heading';
 import I18NLabel from '../../I18NLabel';
 import Row from '../../Row';
 import TitleBar from '../../TitleBar';
+import { FORM_FONT_SIZE } from '../constants';
 
 export interface ChoiceModalProps {
     resetValues: () => void;
@@ -49,7 +50,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
                             testID={ `icon_${item.label}` } />
                     }
                 </TouchableOpacity>
-                <Text style={ { marginLeft: 2 } }>{item.label}</Text>
+                <Text style={ { marginLeft: 2, fontSize: FORM_FONT_SIZE } }>{item.label}</Text>
             </Row>
     );
 
@@ -65,7 +66,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
                             testID="closeBtn"
                             title={ type === 'checkbox' ? 'Cancel' : 'Close' }
                             variant="transparent"
-                            icon={ <Ionicons name="close-outline" size={ 16 } /> }
+                            icon={ <Ionicons name="close-outline" size={ 18 } /> }
                             onPress={ resetValues }
                         /> }
                     />
@@ -73,6 +74,7 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
                         data={ Object.keys(choices).map(choice => choices[choice]) }
                         keyExtractor={ item => item.label }
                         renderItem={ renderItem }
+                        style={ { margin: 5 } }
                     />
                     {(type === 'checkbox' && submitValue) &&
                         <Button

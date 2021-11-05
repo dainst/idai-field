@@ -47,6 +47,7 @@ services:
       - "4000:4000"
     volumes:
       - "/opt/idai-field/api/config:/opt/src/api/config"
+      - "imagemagick-configs:/etc/ImageMagick-6"
       - type: volume
         source: idai-field-web_images
         target: /imageroot
@@ -78,6 +79,7 @@ volumes:
   elasticsearch-data:
   idai-field-web_images:
     external: true
+  imagemagick-configs:
 
 networks:
   web:

@@ -21,15 +21,15 @@ defmodule Api.MixProject do
 
   defp deps do
     [
-      {:tesla, "~> 1.3.0"},
+      {:tesla, "~> 1.4"},
       {:ibrowse, "~> 4.2"},
       {:poison, "~> 3.0"},
-      {:plug, "~> 1.6"},
-      {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.7.0"},
-      {:cowboy, "~> 2.4"},
-      {:remix, "~> 0.0.1", only: :dev},
-      {:guardian, "~> 2.0"}
+      {:plug, "~> 1.12"},
+      {:plug_cowboy, "~> 2.5"},
+      {:httpoison, "~> 1.8"},
+      {:cowboy, "~> 2.9"},
+      {:remix, "~> 0.0.2", only: :dev},
+      {:guardian, "~> 2.2"}
     ]
   end
 end

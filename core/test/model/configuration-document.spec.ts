@@ -1,11 +1,11 @@
-import { CategoryForm } from 'idai-field-core';
-import { ConfigurationUtil } from '../../../../src/app/components/configuration/configuration-util';
+import { ConfigurationDocument } from '../../src/model/configuration-document';
+import { CategoryForm } from '../../src/model/configuration/category-form';
 
 
 /**
  * @author Thomas Kleinke
  */
- describe('ConfigurationUtil', () => {
+ describe('ConfigurationDocument', () => {
 
     const category: CategoryForm = {
         name: 'TestCategory',
@@ -24,7 +24,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
 
     it('Check if category is customized', () => {
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {
@@ -36,7 +36,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
             }
         } as any, category)).toBe(false);
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {
@@ -49,7 +49,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
             }
         } as any, category)).toBe(true);
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {
@@ -61,7 +61,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
             }
         } as any, category)).toBe(true);
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {
@@ -77,7 +77,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
             }
         } as any, category)).toBe(true);
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {
@@ -92,7 +92,7 @@ import { ConfigurationUtil } from '../../../../src/app/components/configuration/
             }
         } as any, category)).toBe(true);
 
-        expect(ConfigurationUtil.isCustomizedCategory({
+        expect(ConfigurationDocument.isCustomizedCategory({
             resource: {
                 forms: {
                     TestCategory: {

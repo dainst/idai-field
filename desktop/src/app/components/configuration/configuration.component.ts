@@ -345,7 +345,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.category = category;
         componentInstance.labels = this.labels;
-        componentInstance.customized = ConfigurationUtil.isCustomizedCategory(
+        componentInstance.customized = ConfigurationDocument.isCustomizedCategory(
             this.configurationDocument, category
         );
 
@@ -390,8 +390,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async deleteCategory(category: CategoryForm) {
 
         try {
-            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteCategory(
-                category, this.configurationDocument
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteCategory(
+                this.configurationDocument, category
             );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
@@ -405,11 +405,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async deleteGroup(category: CategoryForm, group: Group) {
 
         try {
-            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteGroup(
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteGroup(
+                this.configurationDocument,
                 category,
                 group,
                 Tree.flatten(this.projectConfiguration.getCategories()).filter(c => c.name !== category.name),
-                this.configurationDocument
             );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {
@@ -423,8 +423,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async deleteField(category: CategoryForm, field: Field) {
 
         try {
-            const changedConfigurationDocument: ConfigurationDocument = ConfigurationUtil.deleteField(
-                category, field, this.configurationDocument
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteField(
+                this.configurationDocument, category, field
             );
             await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
         } catch (errWithParams) {

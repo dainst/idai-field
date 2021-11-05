@@ -96,9 +96,9 @@ export class AddCategoryFormModalComponent {
 
     private addSelectedCategory() {
 
-       
+
         const clonedConfigurationDocument = this.categoryToReplace
-            ? ConfigurationUtil.deleteCategory(this.categoryToReplace, this.configurationDocument, false)
+            ? ConfigurationDocument.deleteCategory(this.configurationDocument, this.categoryToReplace, false)
             : Document.clone(this.configurationDocument);
 
         clonedConfigurationDocument.resource.forms[this.selectedForm.libraryId] = {

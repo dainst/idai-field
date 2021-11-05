@@ -180,13 +180,13 @@ describe('map --', function() {
 
         await createDoc('doc', 'point', setMultiPoint);
         expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipunkt');
-        
+
         done();
     });
 
 
     it('create a new item with polyline geometry', async done => {
-        
+
         await createDoc('doc', 'polyline', setPolyline);
         expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
 
@@ -204,7 +204,7 @@ describe('map --', function() {
 
 
     it('create a new item with polygon geometry', async done => {
-        
+
         await createDoc('doc', 'polygon', setPolygon);
         expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polygon');
 
@@ -530,7 +530,7 @@ describe('map --', function() {
         await MapPage.clickAddLayersButton();
         await pause(500);
         expect((await ImagePickerModalPage.getCells()).length).toBe(0);
-        
+
         await ImagePickerModalPage.clickCloseButton();
         await MapPage.clickCancelEditingLayersButton();
         await MapPage.clickLayerButton();

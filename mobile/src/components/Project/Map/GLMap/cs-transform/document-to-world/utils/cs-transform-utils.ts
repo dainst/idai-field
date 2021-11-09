@@ -6,18 +6,18 @@ type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
 
 
-export const getGeometryBoundings = (documents: Document[]): GeometryBoundings | null => {
+export const getGeometryBoundings = (geoDocuments: Document[]): GeometryBoundings | null => {
 
-    if(!documents.length) return null;
-    return getMinMaxCoords(documents.map(doc => doc.resource.geometry));
+    if(!geoDocuments.length) return null;
+    return getMinMaxGeometryCoords(geoDocuments.map(doc => doc.resource.geometry));
 };
 
 
-export const getMinMaxCoords = (geos: FieldGeometry[]): GeometryBoundings => {
+export const getMinMaxGeometryCoords = (geometries: FieldGeometry[]): GeometryBoundings => {
     
     const xCoords: number[] = [];
     const yCoords: number[] = [];
-    geos.forEach(geo => {
+    geometries.forEach(geo => {
         switch(geo.type){
             case('Polygon'):
             case('MultiLineString'):{

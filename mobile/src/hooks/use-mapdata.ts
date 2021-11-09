@@ -4,7 +4,7 @@ import { LayoutRectangle } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import {
     defineWorldCoordinateSystem, GeometryBoundings, getDocumentToWorldTransform,
-    getDocumentToWorldTransformMatrix, getGeometryBoundings, getMinMaxCoords,
+    getDocumentToWorldTransformMatrix, getGeometryBoundings, getMinMaxGeometryCoords,
     getScreenToWorldTransformationMatrix, processTransform2d, Transformation
 } from '../components/Project/Map/GLMap/cs-transform';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -48,7 +48,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
         docs.forEach(doc => doc.resource.geometry && geoDocs.push(doc.resource.geometry));
         
         if(!geoDocs.length) return;
-        const { minX, minY, maxX, maxY } = getMinMaxCoords(geoDocs);
+        const { minX, minY, maxX, maxY } = getMinMaxGeometryCoords(geoDocs);
         const [left, bottom] = processTransform2d(documentToWorldMatrix, [minX,minY]);
         const [right, top] = processTransform2d(documentToWorldMatrix, [maxX,maxY]);
         setViewBox(getDocumentToWorldTransform({

@@ -11,7 +11,7 @@ import {
     extractCoordsPositions,
     extractCoordsPositions2d,
     extractCoordsPositions3d,
-    getGeometryBoundings, getLayerCoordinates, getMinMaxCoords,
+    getGeometryBoundings, getLayerCoordinates, getMinMaxGeometryCoords,
     mapValueToNewRange
 } from './cs-transform-utils';
 
@@ -67,7 +67,7 @@ describe('geometry-utils functions', () => {
 
     it('gets min and max x and y coordinates of FieldGeometry[]', () => {
 
-        const boundigs = getMinMaxCoords([
+        const boundigs = getMinMaxGeometryCoords([
             bu1.resource.geometry, lineBuilding.resource.geometry, multiPointSurvey.resource.geometry,
             multiPolyTrench.resource.geometry, pointBuilding.resource.geometry
         ]);

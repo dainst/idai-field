@@ -630,6 +630,52 @@
         }
       }
     },
+    "Place": {
+      "fields": {
+        "findSpot": {
+          "label": "find spot (general classification)"
+        },
+        "surfaceContextsAndFinds": {
+          "label": "surface contexts and finds"
+        },
+        "researchHistory": {
+          "label": "research history / previous measures"
+        },
+        "descriptions": {
+          "label": "description"
+        },
+        "stateOfPreservation": {
+          "label": "state of preservation / risk assessment"
+        },
+        "iDAI.gazetteer-ID": {
+          "label": "iDAI.gazetteer-ID"
+        },
+        "iDAI.objects-ID": {
+          "label": "iDAI.objects-ID"
+        },
+        "iDAI.archives-ID": {
+          "label": "iDAI.archives-ID"
+        },
+        "bibliography": {
+          "label": "bibliography"
+        },
+        "recordedOnMaps": {
+          "label": "recorded on maps"
+        },
+        "modernIntervention-Custom": {
+          "label": "modern intervention"
+        },
+        "excavationHistory-Custom": {
+          "label": "excavation history"
+        },
+        "buildingResearchHistory-Custom": {
+          "label": "building research history"
+        },
+        "findSituation-Custom": {
+          "label": "find situation"
+        }
+      }
+    },
     "Sample": {
       "label": "Sample",
       "fields": {

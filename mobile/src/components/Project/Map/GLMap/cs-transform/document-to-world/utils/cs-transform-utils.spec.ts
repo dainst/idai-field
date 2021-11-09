@@ -1,4 +1,5 @@
 
+import { ImageGeoreference } from 'idai-field-core';
 import { bu1 } from '../../../../../../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../../../../../../test_data/test_docs/lineBuilding';
 import { multiPointSurvey } from '../../../../../../../../test_data/test_docs/multiPointSurvey';
@@ -10,8 +11,7 @@ import {
     extractCoordsPositions,
     extractCoordsPositions2d,
     extractCoordsPositions3d,
-    getGeometryBoundings,
-    getMinMaxCoords,
+    getGeometryBoundings, getLayerCoordinates, getMinMaxCoords,
     mapValueToNewRange
 } from './cs-transform-utils';
 
@@ -114,6 +114,21 @@ describe('geometry-utils functions', () => {
         expect(arrayDim(positionArray)).toBe(2);
         expect(arrayDim(positionArray2d)).toBe(3);
         expect(arrayDim(5)).toBe(0);
+    });
+
+    it('finds forth coordinate of ImageGeoreference by by calling function getLayerCoordinates(georeference)',() => {
+        
+        const georefernce: ImageGeoreference = {
+            topLeftCoordinates: [10,7],
+            topRightCoordinates: [7,15],
+            bottomLeftCoordinates: [5,5]
+        };
+        const coords = getLayerCoordinates(georefernce);
+
+        expect(coords.bottomRightCoordinates).toEqual([13,2]);
+        expect(coords.topLeftCoordinates).toEqual([7,10]);
+        expect(coords.topRightCoordinates).toEqual([15,7]);
+        expect(coords.bottomLeftCoordinates).toEqual([5,5]);
     });
     
 });

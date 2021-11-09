@@ -1,5 +1,5 @@
 import { Position } from 'geojson';
-import { Document, FieldGeometry } from 'idai-field-core';
+import { Document, FieldGeometry, ImageGeoreference } from 'idai-field-core';
 import { GeometryBoundings } from '../../types';
 
 type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
@@ -98,3 +98,45 @@ export const arrayDim = (array: any, dim:number = 0):number => {
     else return dim;
 };
 /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+
+
+interface LayerCoordinates extends ImageGeoreference {
+    bottomRightCoordinates: [number, number];
+}
+/**
+ * Compute missing bottomRightCoordinates of ImageGeoreference type.
+ * Missing coordinate can be found by bisection of diagonals AD and CB
+ *   A ------- B
+ *    |       |
+ *    |       |
+ *   C -------- D
+ *
+ * Furthermore, exchange corrdinates so that Coordinates Tuple has [xCoord, yCoord].
+ *  ImageGeoreference coming from PouchDB has following order in Coords [yCorrd, xCoord]
+ * @param georeference Georeference coming from PouchDB
+ */
+export const getLayerCoordinates = (georeference: ImageGeoreference): LayerCoordinates => {
+
+    const topLeftCoordinates = exchangeXYCoordinates(georeference.topLeftCoordinates);
+    const topRightCoordinates = exchangeXYCoordinates(georeference.topRightCoordinates);
+    const bottomLeftCoordinates = exchangeXYCoordinates(georeference.bottomLeftCoordinates);
+    const bottomRightCoordinates: [number, number] = [0,0];
+
+    //Compute midpoint:
+    const midPointX = (topRightCoordinates[0] + bottomLeftCoordinates[0] ) / 2;
+    const midPointY = (topRightCoordinates[1] + bottomLeftCoordinates[1] ) / 2;
+
+    //Get bottomRightCoordinates
+    bottomRightCoordinates[0] = midPointX * 2 - topLeftCoordinates[0];
+    bottomRightCoordinates[1] = midPointY * 2 - topLeftCoordinates[1];
+
+    return {
+        topLeftCoordinates,
+        topRightCoordinates,
+        bottomLeftCoordinates,
+        bottomRightCoordinates
+    };
+   
+};
+
+const exchangeXYCoordinates = (coord: [number, number]): [number, number] => [coord[1], coord[0]];

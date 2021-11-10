@@ -49,9 +49,6 @@
       "stateOfPreservation": {
         "inputType": "text"
       },
-      "iDAI-gazetteer-ID": {
-        "inputType": "input"
-      },
       "iDAI-objects-ID": {
         "inputType": "input"
       },
@@ -63,32 +60,18 @@
       },
       "recordedOnMaps": {
         "inputType": "text"
-      },
-      "modernIntervention-Custom": {
-        "inputType": "input"
-      },
-      "excavationHistory-Custom": {
-        "inputType": "text"
-      },
-      "buildingResearchHistory-Custom": {
-        "inputType": "text"
-      },
-      "findSituation-Custom": {
-        "inputType": "text"
       }
     },
     "valuelists": {
       "findSpot": "Place-findSpot-Pergamon",
       "surfaceContextsAndFinds": "Place-surfaceContextsAndFinds-Pergamon"
     },
-    "hidden": ["placeName","siteClassification","findspotClassification",
-      "modernIntervention",
-      "excavationHistory",
+    "hidden": [
+      "placeName",
+      "siteClassification",
+      "findspotClassification",
       "buildingHistory",
-      "description",
-      "findSituation",
-      "gazId",
-      "buildingResearchHistory"
+      "description"
     ]
   },
   "Area:default": {

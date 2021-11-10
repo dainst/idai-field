@@ -647,7 +647,7 @@
         "stateOfPreservation": {
           "label": "state of preservation / risk assessment"
         },
-        "iDAI-gazetteer-ID": {
+        "gazId": {
           "label": "iDAI.gazetteer-ID"
         },
         "iDAI-objects-ID": {
@@ -662,17 +662,8 @@
         "recordedOnMaps": {
           "label": "recorded on maps"
         },
-        "modernIntervention-Custom": {
-          "label": "modern intervention"
-        },
-        "excavationHistory-Custom": {
-          "label": "excavation history"
-        },
-        "buildingResearchHistory-Custom": {
+        "buildingResearchHistory": {
           "label": "building research history"
-        },
-        "findSituation-Custom": {
-          "label": "find situation"
         }
       }
     },

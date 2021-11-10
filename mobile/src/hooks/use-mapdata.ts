@@ -11,9 +11,14 @@ import { DocumentRepository } from '../repositories/document-repository';
 import { viewBoxPaddingX, viewBoxPaddingY } from './../components/Project/Map/GLMap/constants';
 
 
-const searchQuery: Query = {
+const geoDocSearchQuery: Query = {
     q: '*',
     constraints: { 'geometry:exist': 'KNOWN' }
+};
+
+const layerDocSearchQuery: Query = {
+    q: '*',
+    constraints: { 'isMapLayerOf:exist': 'KNOWN' }
 };
 
 export type UpdatedDocument = {
@@ -22,6 +27,7 @@ export type UpdatedDocument = {
 };
 
 type mapDataReturn = [
+    Document[],
     Document[],
     Matrix4 | undefined,
     Matrix4 | undefined,
@@ -33,6 +39,7 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     mapDataReturn => {
 
     const [geoDocuments, setGeoDocuments] = useState<Document[]>([]);
+    const [layerDocuments, setLayerDocuments] = useState<Document[]>([]);
     const [geometryBoundings, setGeometryBoundings] = useState<GeometryBoundings | null>(null);
     const [documentToWorldMatrix, setDocumentToWorldMatrix] = useState<Matrix4>();
     const [screenToWorldMatrix, setScreenToWorldMatrix] = useState<Matrix4>();
@@ -48,7 +55,11 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
         docs.forEach(doc => doc.resource.geometry && geoDocs.push(doc.resource.geometry));
         
         if(!geoDocs.length) return;
-        const { minX, minY, maxX, maxY } = getMinMaxGeometryCoords(geoDocs);
+
+        const geometryBoundings = getMinMaxGeometryCoords(geoDocs);
+        if(!geometryBoundings) return;
+        
+        const { minX, minY, maxX, maxY } = geometryBoundings;
         const [left, bottom] = processTransform2d(documentToWorldMatrix, [minX,minY]);
         const [right, top] = processTransform2d(documentToWorldMatrix, [maxX,maxY]);
         setViewBox(getDocumentToWorldTransform({
@@ -64,17 +75,23 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
 
     useEffect(() => {
 
-        repository.find(searchQuery)
-            .then(result => {
-                setGeoDocuments(result.documents);
-                setGeometryBoundings(getGeometryBoundings(result.documents));
-            }).catch(err => console.log('Document not found. Error:',err));
+        repository.find(geoDocSearchQuery)
+            .then(result => setGeoDocuments(result.documents))
+            .catch(err => console.log('Document not found. Error:',err));
+
+        repository.find(layerDocSearchQuery)
+            .then(result => setLayerDocuments(result.documents))
+            .catch(err => console.log('Document not found. Error:',err));
 
         const changedSubscription = repository.remoteChanged()
             .subscribe(document => Document.hasGeometry(document) && setUpdateDoc({ document, status: 'updated' }));
 
         return () => changedSubscription.unsubscribe();
     },[repository]);
+
+    useEffect(() =>
+        setGeometryBoundings(getGeometryBoundings(geoDocuments ,layerDocuments)),
+    [geoDocuments, layerDocuments]);
 
     useEffect(() => {
 
@@ -97,7 +114,10 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
     },[screen]);
 
 
-    return [geoDocuments, documentToWorldMatrix, screenToWorldMatrix, viewBox, focusMapOnDocumentId, updateDoc];
+    return [
+        geoDocuments, layerDocuments,
+        documentToWorldMatrix, screenToWorldMatrix,
+        viewBox, focusMapOnDocumentId, updateDoc];
 };
 
 

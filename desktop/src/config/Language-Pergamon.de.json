@@ -771,13 +771,13 @@
         "stateOfPreservation": {
           "label": "Erhaltungszustand / Gefährdungslage"
         },
-        "iDAI.gazetteer-ID": {
+        "iDAI-gazetteer-ID": {
           "label": "iDAI.gazetteer-ID"
         },
-        "iDAI.objects-ID": {
+        "iDAI-objects-ID": {
           "label": "iDAI.objects-ID"
         },
-        "iDAI.archives-ID": {
+        "iDAI-archives-ID": {
           "label": "iDAI.archives-ID"
         },
         "bibliography": {

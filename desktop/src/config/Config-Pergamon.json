@@ -49,13 +49,13 @@
       "stateOfPreservation": {
         "inputType": "text"
       },
-      "iDAI.gazetteer-ID": {
+      "iDAI-gazetteer-ID": {
         "inputType": "input"
       },
-      "iDAI.objects-ID": {
+      "iDAI-objects-ID": {
         "inputType": "input"
       },
-      "iDAI.archives-ID": {
+      "iDAI-archives-ID": {
         "inputType": "input"
       },
       "bibliography": {

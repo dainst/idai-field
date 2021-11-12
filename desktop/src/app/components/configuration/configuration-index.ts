@@ -1,47 +1,29 @@
-import { flatten, keysValues, right, set } from 'tsfun';
 import { CategoryForm, Name } from 'idai-field-core';
+import { CategoryFormIndex } from './category-form-index';
 
 
 export interface ConfigurationIndex {
 
-    [term: string]: Array<CategoryForm>;
+    categoryFormIndex: CategoryFormIndex;
 }
 
 
 /**
- * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export namespace ConfigurationIndex {
 
     export function create(contextIndependentCategories: Array<CategoryForm>): ConfigurationIndex {
 
-        return contextIndependentCategories.reduce((index, category) => {
-
-            const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
-            if (category.libraryId) terms.push(category.libraryId);
-
-            for (const term of terms) {
-                if (!index[term]) index[term] = [];
-                if (!index[term].includes(category)) index[term].push(category);
-            }
-
-            return index;
-        }, {});
+        return {
+            categoryFormIndex: CategoryFormIndex.create(contextIndependentCategories)
+        };
     }
 
 
-    export function find(index: ConfigurationIndex,
-                         searchTerm: string,
-                         parentCategory?: Name,
-                         onlySupercategories?: boolean): Array<CategoryForm> {
+    export function findCategoryForms(index: ConfigurationIndex, searchTerm: string, parentCategory?: Name,
+                                      onlySupercategories?: boolean): Array<CategoryForm> {
 
-        return set(flatten(keysValues(index)
-            .filter(([categoryName, _]) => categoryName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
-            .map(right)
-        )).filter(category => {
-            return (!onlySupercategories || !category.parentCategory)
-                && (!parentCategory || category.parentCategory?.name === parentCategory);
-        });
+        return CategoryFormIndex.find(index.categoryFormIndex, searchTerm, parentCategory, onlySupercategories);
     }
 }

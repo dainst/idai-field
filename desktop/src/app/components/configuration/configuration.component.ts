@@ -56,7 +56,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
-    private configurationIndex: ConfigurationIndex = {};
+    private configurationIndex: ConfigurationIndex;
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },

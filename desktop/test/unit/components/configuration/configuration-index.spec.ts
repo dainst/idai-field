@@ -1,23 +1,23 @@
-import {ConfigurationIndex} from '../../../../src/app/components/configuration/configuration-index';
+import { ConfigurationIndex } from '../../../../src/app/components/configuration/configuration-index';
 
 
 describe('ConfigurationIndex', () => {
 
-    it('base case', () => {
+    it('find category forms', () => {
 
         const categories = [
             {
-                name: 'a:default',
+                name: 'A:default',
                 label: { de: 'A' },
                 defaultLabel: { de: 'A' },
                 parentCategory: {
-                    name: 'a:parent'
+                    name: 'A:parent'
                 }
             }
         ]
         const index = ConfigurationIndex.create(categories as any);
 
-        const result = ConfigurationIndex.find(index, '', 'a:parent');
-        expect(result[0].name).toEqual('a:default');
+        const result = ConfigurationIndex.findCategoryForms(index, '', 'A:parent');
+        expect(result[0].name).toEqual('A:default');
     })
 });

@@ -80,7 +80,7 @@ export class AddCategoryFormModalComponent {
     public applyCategoryNameSearch() {
 
         this.categoryForms = ConfigurationIndex
-            .find(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
+            .findCategoryForms(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.forms).includes(

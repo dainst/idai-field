@@ -73,7 +73,6 @@ const GLMap: React.FC<GLMapProps> = ({
     const glContext = useRef<ExpoWebGLRenderingContext>();
     const glContextToScreenFactor = useRef<number>(0);
 
-    //long press handler variables
     const pressStartTime = useRef<number>(0);
 
     // scene transformation refs
@@ -153,6 +152,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     },[scene, selectedDocumentIds, previousSelectedDocIds, renderScene]);
    
+
     useEffect(() => {
         
         if(!location) return;
@@ -160,6 +160,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[location, scene, documentToWorldMatrix]);
+
 
     useEffect(() => {
         if(renderer.current && glContextToScreenFactor.current){
@@ -170,6 +171,7 @@ const GLMap: React.FC<GLMapProps> = ({
             renderScene();
         }
     },[screen, renderScene]);
+
 
     useEffect(() => {
         if(!updateDoc) return;
@@ -184,6 +186,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
     },[updateDoc, scene, documentToWorldMatrix, config, renderScene]);
     
+
     useEffect(() => {
         if(highlightedDocId) {
             addHighlightedDocToScene(highlightedDocId, scene);
@@ -191,6 +194,7 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     },[highlightedDocId, scene, renderScene]);
 
+    
     useEffect(() => {
         updatePointRadiusOfScene(geoDocuments,documentToWorldMatrix,config,scene, pointRadius);
         setMapSettings(preferences.currentProject, { pointRadius });

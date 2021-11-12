@@ -3,17 +3,14 @@ import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import { Document } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import {
-    GestureResponderEvent, LayoutRectangle, StyleSheet, TouchableOpacity, View
-} from 'react-native';
+import { LayoutRectangle, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
-import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
+import { OrthographicCamera, Scene } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
 import { PreferencesContext } from '../../../../contexts/preferences-context';
 import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { LONG_PRESS_DURATION_MS } from './constants';
 import { Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
@@ -23,6 +20,7 @@ import {
 } from './geojson/geojson-gl-shape';
 import MapSettingsModal from './MapSettingsModal';
 import useMapGestureHandler from './use-map-gesture-handler';
+import useMapPressHandler from './use-map-press-handler';
 
 
 const cameraDefaultPos = {
@@ -96,12 +94,11 @@ const GLMap: React.FC<GLMapProps> = ({
     },[camera, scene]);
 
     const panResponder = useMapGestureHandler(top,left,zoom,pressStartTime,screenToWorldMatrix,renderScene);
+    const { onPress, onTouchEnd } = useMapPressHandler(
+                                        setHighlightedDocId,highlightedDocId,selectParentId,
+                                        screen, camera, scene, pressStartTime);
     
-    const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
-        new Vector2(
-            (x / screen.width ) * 2 - 1,
-            -(y / screen.height) * 2 + 1);
-
+    
     useEffect(() => {
 
         if(!viewBox) return;
@@ -210,34 +207,7 @@ const GLMap: React.FC<GLMapProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pointRadius, scene, geoDocuments, documentToWorldMatrix, renderScene]);
 
-    const onPress = (e: GestureResponderEvent) => {
 
-        const ndc_vec = screenToNormalizedDeviceCoordinates(e.nativeEvent.locationX, e.nativeEvent.locationY);
-        const raycaster = new Raycaster();
-        raycaster.setFromCamera(ndc_vec, camera);
-        const intersections = raycaster.intersectObjects(scene.children,true);
-        pressStartTime.current = performance.now();
-        // filter objects to be selected and sort by renderOrder in descending order
-        const filteredSortedInters = intersections
-            .filter(intersection => intersection.object.parent?.userData['isSelected'])
-            .sort((a,b) => {
-                const aOrder = a.object.renderOrder;
-                const bOrder = b.object.renderOrder;
-                return (aOrder < bOrder) ? 1 : (aOrder > bOrder) ? -1 : 0;
-            });
-        if(filteredSortedInters.length){
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const docId = filteredSortedInters[0].object.parent!.uuid;
-            setHighlightedDocId(docId);
-        }
-    };
-
-    const onTouchEnd = () => {
-
-        if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && highlightedDocId)
-            selectParentId(highlightedDocId);
-    };
-    
     const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;

@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ImageGeoreference } from 'idai-field-core';
 import { bu1 } from '../../../../../../../../test_data/test_docs/bu1';
 import { lineBuilding } from '../../../../../../../../test_data/test_docs/lineBuilding';
@@ -72,11 +72,11 @@ describe('geometry-utils functions', () => {
             multiPolyTrench.resource.geometry, pointBuilding.resource.geometry
         ]);
 
-
-        expect(boundigs.minX).toBe(expectedXmin);
-        expect(boundigs.maxX).toBe(expectedXmax);
-        expect(boundigs.minY).toBe(expectedYmin);
-        expect(boundigs.maxY).toBe(expectedYmax);
+        expect(boundigs).not.toBeNull();
+        expect(boundigs!.minX).toBe(expectedXmin);
+        expect(boundigs!.maxX).toBe(expectedXmax);
+        expect(boundigs!.minY).toBe(expectedYmin);
+        expect(boundigs!.maxY).toBe(expectedYmax);
     });
 
 
@@ -90,7 +90,7 @@ describe('geometry-utils functions', () => {
             maxY: expectedYmax,
         };
         const calculatedViewBox = getGeometryBoundings(
-            [bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench]);
+            [bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench],[]);
         
         expect(calculatedViewBox).toEqual(expectedBoundings);
     });

@@ -4,17 +4,59 @@ import { GeometryBoundings } from '../../types';
 
 type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
+type GeometryBoundingsNull = GeometryBoundings | null;
 
 
-export const getGeometryBoundings = (geoDocuments: Document[]): GeometryBoundings | null => {
+export const getGeometryBoundings = (geometryDocs: Document[], layerDocs: Document[]): GeometryBoundingsNull =>
+    getMinMaxCoords(
+        geometryDocs.map(doc => doc.resource.geometry),
+        layerDocs.map(doc => doc.resource.georeference));
 
-    if(!geoDocuments.length) return null;
-    return getMinMaxGeometryCoords(geoDocuments.map(doc => doc.resource.geometry));
+
+const getMinMaxCoords = (geometries: FieldGeometry[], georeferences: ImageGeoreference[]): GeometryBoundingsNull => {
+    
+    const georeferencesMinMax = getMinMaxGeoreferenceCoords(georeferences);
+    const geometriesMinMax = getMinMaxGeometryCoords(geometries);
+
+    if(!georeferencesMinMax && !geometriesMinMax) return null;
+    if(!georeferencesMinMax) return geometriesMinMax;
+    if(!geometriesMinMax) return georeferencesMinMax;
+
+    return {
+        minX: Math.min(georeferencesMinMax.minX, geometriesMinMax.minX),
+        maxX: Math.max(georeferencesMinMax.maxX, geometriesMinMax.maxX),
+        minY: Math.min(georeferencesMinMax.minY, geometriesMinMax.minY),
+        maxY: Math.max(georeferencesMinMax.maxY, geometriesMinMax.maxY),
+    };
+};
+
+const getMinMaxGeoreferenceCoords = (georeferences: ImageGeoreference[]): GeometryBoundings | null => {
+
+    if(!georeferences.length) return null;
+
+    const xCoords: number[] = [];
+    const yCoords: number[] = [];
+    georeferences.forEach(geoRef => {
+        const {
+            topRightCoordinates, topLeftCoordinates,
+            bottomRightCoordinates, bottomLeftCoordinates } = getLayerCoordinates(geoRef);
+        xCoords.push(
+            topRightCoordinates[0], topLeftCoordinates[0], bottomLeftCoordinates[0], bottomRightCoordinates[0]);
+        yCoords.push(
+            topRightCoordinates[1], topLeftCoordinates[1], bottomLeftCoordinates[1], bottomRightCoordinates[1]);
+    });
+
+    return {
+        minX: Math.min(...xCoords), minY: Math.min(...yCoords),
+        maxX: Math.max(...xCoords), maxY: Math.max(...yCoords),
+    };
 };
 
 
-export const getMinMaxGeometryCoords = (geometries: FieldGeometry[]): GeometryBoundings => {
+export const getMinMaxGeometryCoords = (geometries: FieldGeometry[]): GeometryBoundings | null => {
     
+    if(!geometries.length) return null;
+
     const xCoords: number[] = [];
     const yCoords: number[] = [];
     geometries.forEach(geo => {

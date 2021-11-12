@@ -34,6 +34,7 @@ const Map: React.FC<MapProps> = (props) => {
     
     const [
         geoDocuments,
+        layerDocuments,
         documentToWorldMatrix,
         screenToWorldMatrix,
         viewBox,
@@ -87,7 +88,8 @@ const Map: React.FC<MapProps> = (props) => {
                 geoDocuments={ geoDocuments }
                 location={ location }
                 updateDoc={ updateDoc }
-                selectParentId={ onParentIdSelected } />}
+                selectParentId={ onParentIdSelected }
+                layerDocuments={ layerDocuments } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

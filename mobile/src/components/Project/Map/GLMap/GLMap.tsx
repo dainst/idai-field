@@ -19,6 +19,7 @@ import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } f
 import {
     addDocumentToScene,
     addHighlightedDocToScene,
+    addLayerToScene,
     addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene, updatePointRadiusOfScene
 } from './geojson/geojson-gl-shape';
 import MapSettingsModal from './MapSettingsModal';
@@ -49,7 +50,8 @@ interface GLMapProps {
     geoDocuments: Document[];
     location: {x: number, y:number} | undefined;
     updateDoc?: UpdatedDocument;
-    selectParentId: (docId: string) => void
+    selectParentId: (docId: string) => void,
+    layerDocuments: Document[],
 }
 
 
@@ -65,6 +67,7 @@ const GLMap: React.FC<GLMapProps> = ({
     location,
     updateDoc,
     selectParentId,
+    layerDocuments,
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -206,8 +209,9 @@ const GLMap: React.FC<GLMapProps> = ({
 
         scene.clear();
         geoDocuments.forEach(doc => addDocumentToScene(doc,documentToWorldMatrix, scene, config));
+        layerDocuments.forEach(doc => addLayerToScene(doc, documentToWorldMatrix, scene));
         renderScene();
-    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene, pointRadius]);
+    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene, pointRadius, layerDocuments]);
 
 
     useEffect(() => {

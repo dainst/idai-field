@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { TextureLoader } from 'expo-three';
 import { Position } from 'geojson';
-import { Document, FieldGeometry, FieldGeometryType, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldGeometry, FieldGeometryType, ImageGeoreference, ProjectConfiguration } from 'idai-field-core';
 import { Matrix4 } from 'react-native-redash';
 import {
-    BufferGeometry, CircleGeometry, Line,
-    LineBasicMaterial, Mesh, MeshBasicMaterial, Object3D, Scene, Shape, ShapeGeometry, ShapeUtils
+    BufferGeometry, CircleGeometry, Line, LineBasicMaterial, Mesh, MeshBasicMaterial,
+    Object3D, Scene, Shape, ShapeBufferGeometry, ShapeGeometry, ShapeUtils, Vector2
 } from 'three';
 import {
     highlightedColor, highlightedStrokeWidth, lineRenderingOrder, pointRenderingOrder, strokeWidth
 } from '../constants';
-import { processTransform2d } from '../cs-transform';
+import { getLayerCoordinates, processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
 import { defaultPointRadius } from './../constants';
-
 
 interface ShapeFunction<T extends Position | Position[] | Position[][] | Position[][][]> {
     (matrix: Matrix4,
@@ -319,3 +320,40 @@ const isShapeArray = (coords: Shape[] | Position[], type: FieldGeometryType): co
 
 const getUserData = (docId: string, scene: Scene): ObjectData | undefined =>
     scene.getObjectByProperty('uuid',docId)?.userData as ObjectData;
+
+
+export const addLayerToScene = (doc: Document, documentToWorldMatrix: Matrix4, scene: Scene): void => {
+    
+    const georeference = doc.resource.georeference as ImageGeoreference;
+    if(!georeference) throw new Error('No georeference!');
+    const {
+        topLeftCoordinates, topRightCoordinates,
+        bottomLeftCoordinates, bottomRightCoordinates } = getLayerCoordinates(georeference);
+
+    const topLeftTrans = processTransform2d(documentToWorldMatrix, topLeftCoordinates);
+    const topRightTrans = processTransform2d(documentToWorldMatrix, topRightCoordinates);
+    const bottomLeftTrans = processTransform2d(documentToWorldMatrix, bottomLeftCoordinates);
+    const bottomRightTrans = processTransform2d(documentToWorldMatrix, bottomRightCoordinates);
+
+    const shape = new Shape();
+    shape.moveTo(...bottomLeftTrans as [number, number]);
+    shape.lineTo(...bottomRightTrans as [number, number]);
+    shape.lineTo(...topRightTrans as [number, number]);
+    shape.lineTo(...topLeftTrans as [number, number]);
+    shape.closePath();
+
+    const width = new Vector2(...bottomRightTrans).distanceTo(new Vector2(...bottomLeftTrans));
+    const height = new Vector2(...topLeftTrans).distanceTo(new Vector2(...bottomLeftTrans));
+    //TODO: Change TextureLoader to also load images from image server
+    const texture = new TextureLoader().load(doc.resource.id === 'o25' ?
+                                            require('../../../../../../assets/o25.png') :
+                                            require('../../../../../../assets/o26.png'));
+    texture.repeat.set(Math.pow(width,-1), Math.pow(height,-1));
+    texture.offset.set(-bottomLeftTrans[0] / width, -bottomLeftTrans[1] / height );
+
+    const material = new MeshBasicMaterial({ map: texture });
+    const layerSquare = new Mesh(new ShapeBufferGeometry(shape), material);
+    layerSquare.renderOrder = - Infinity; //top put all layers behind other polygons
+
+    scene.add(layerSquare);
+};

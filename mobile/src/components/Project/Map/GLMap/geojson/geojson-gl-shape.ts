@@ -352,8 +352,10 @@ export const addLayerToScene = (doc: Document, documentToWorldMatrix: Matrix4, s
     texture.offset.set(-bottomLeftTrans[0] / width, -bottomLeftTrans[1] / height );
 
     const material = new MeshBasicMaterial({ map: texture });
-    const layerSquare = new Mesh(new ShapeBufferGeometry(shape), material);
-    layerSquare.renderOrder = - Infinity; //top put all layers behind other polygons
+    const layerObject = new Mesh(new ShapeBufferGeometry(shape), material);
+    layerObject.renderOrder = - Infinity; //top put all layers behind other polygons
+    layerObject.name = doc.resource.identifier;
+    layerObject.uuid = doc.resource.id;
 
-    scene.add(layerSquare);
+    scene.add(layerObject);
 };

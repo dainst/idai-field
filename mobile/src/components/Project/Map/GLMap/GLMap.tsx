@@ -1,11 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
-import { Position } from 'geojson';
 import { Document } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
-    GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet, TouchableOpacity, View
+    GestureResponderEvent, LayoutRectangle, StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
@@ -15,7 +14,7 @@ import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
 import { LONG_PRESS_DURATION_MS } from './constants';
-import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
+import { Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
     addHighlightedDocToScene,
@@ -23,7 +22,7 @@ import {
     addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene, updatePointRadiusOfScene
 } from './geojson/geojson-gl-shape';
 import MapSettingsModal from './MapSettingsModal';
-import { calcCenter, calcDistance } from './math-utils';
+import useMapGestureHandler from './use-map-gesture-handler';
 
 
 const cameraDefaultPos = {
@@ -31,13 +30,6 @@ const cameraDefaultPos = {
     y: 0,
     z: 5,
 };
-
-
-const moveThreshold = 5;
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const no = () => {};
-const yes = () => true;
-
 
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
@@ -83,23 +75,13 @@ const GLMap: React.FC<GLMapProps> = ({
     const glContext = useRef<ExpoWebGLRenderingContext>();
     const glContextToScreenFactor = useRef<number>(0);
 
-    //boolean to init gestures
-    const isZooming = useRef<boolean>(false);
-    const isMoving = useRef<boolean>(false);
-
     //long press handler variables
     const pressStartTime = useRef<number>(0);
 
-    //reference values set at the beginning of the gesture
-    const initialTouch = useRef<{x: number, y: number}>({ x:0, y:0 });
-    const initialZoom = useRef<number>(1);
-    const initialDistance = useRef<number>(0);
+    // scene transformation refs
     const zoom = useRef<number>(1);
-
     const left = useRef<number>(0);
-    const initialLeft = useRef<number>(0);
     const top = useRef<number>(0);
-    const initialTop = useRef<number>(0);
    
     const renderScene = useCallback(() => {
 
@@ -113,83 +95,12 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     },[camera, scene]);
 
-    const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
-
+    const panResponder = useMapGestureHandler(top,left,zoom,pressStartTime,screenToWorldMatrix,renderScene);
+    
     const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
         new Vector2(
             (x / screen.width ) * 2 - 1,
             -(y / screen.height) * 2 + 1);
-
-    const panResponder = useRef(PanResponder.create({
-        onPanResponderGrant: no,
-        onPanResponderTerminate: no,
-        onShouldBlockNativeResponder: yes,
-        onPanResponderTerminationRequest: yes,
-        onMoveShouldSetPanResponder: shouldRespond,
-        onStartShouldSetPanResponder: shouldRespond,
-        onMoveShouldSetPanResponderCapture: shouldRespond,
-        onStartShouldSetPanResponderCapture: shouldRespond,
-        onPanResponderMove: e => {
-            pressStartTime.current = performance.now();
-            const { nativeEvent: { touches } } = e;
-            if(touches.length === 1){
-                const [{ locationX, locationY }] = touches;
-                touchHandler(locationX, locationY);
-            } else if(touches.length === 2) {
-                const [touch1, touch2] = touches;
-                zoomHandler(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY);
-            } else return;
-            e.preventDefault();
-        },
-        onPanResponderRelease: () => {
-            isMoving.current = false;
-            isZooming.current = false;
-        }
-    })).current;
-
-    const touchHandler = (x: number, y: number): void => {
-
-        const [x_w, y_w] = screenToWorld([x,y]);
-        if(!isMoving.current || isZooming.current){
-            isMoving.current = true;
-            isZooming.current = false;
-            initialLeft.current = left.current;
-            initialTop.current = top.current;
-            initialTouch.current = { x:x_w, y:y_w };
-        } else {
-            const dx = x_w - initialTouch.current.x;
-            const dy = y_w - initialTouch.current.y;
-
-            left.current = initialLeft.current + dx;
-            top.current = initialTop.current + dy;
-            renderScene();
-        }
-    };
-
-    const zoomHandler = (x1: number, y1: number, x2: number, y2: number ): void => {
-        
-        const [x1_w, y1_w] = screenToWorld([x1,y1]);
-        const [x2_w, y2_w] = screenToWorld([x2,y2]);
-        const distance = calcDistance(x1_w, y1_w, x2_w, y2_w);
-        const { x, y } = calcCenter(x1_w , y1_w, x2_w , y2_w);
-
-        if(!isZooming.current){
-            isZooming.current = true;
-            initialTouch.current = { x,y };
-            initialTop.current = top.current;
-            initialLeft.current = left.current;
-            initialZoom.current = zoom.current;
-            initialDistance.current = distance;
-        } else {
-            const touchZoom = distance / initialDistance.current;
-            const dx = x - initialTouch.current.x;
-            const dy = y - initialTouch.current.y;
-            left.current = (initialLeft.current + dx - x) * touchZoom + x;
-            top.current = (initialTop.current + dy - y) * touchZoom + y;
-            zoom.current = initialZoom.current * touchZoom;
-            renderScene();
-        }
-    };
 
     useEffect(() => {
 
@@ -363,11 +274,6 @@ const GLMap: React.FC<GLMapProps> = ({
         </View>
     );
 };
-
-
-const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
-        e.nativeEvent.touches.length === 2 ||
-        Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
 
 
 const styles = StyleSheet.create({

@@ -1,129 +1,149 @@
 {
-  "Project:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Operation:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Survey:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "SurveyUnit:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Place:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Area:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Trench:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Building:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "BuildingPart:default": {
-    "hidden": [],
-    "valuelists": {
-      "denomination": "BuildingPart-denomination-Selinunt",
-      "BuildingPart-dating": "BuildingPart-dating-Selinunt",
-      "material": "BuildingPart-material-Selinunt",
-      "conservationStatus": "BuildingPart-conservationStatus-Selinunt",
-      "assignment": "BuildingPart-assignment-Selinunt",
-      "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
-      "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt",
-      "references": "BuildingPart-references-Selinunt",
-      "BuildingPart-map": "BuildingPart-map-Selinunt"
+  "forms": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
     },
-    "fields": {
-      "descriptionFindingPlace": {
-        "inputType": "text"
+    "Operation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Survey:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "SurveyUnit:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Place:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Area:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Building:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "BuildingPart:default": {
+      "hidden": [],
+      "valuelists": {
+        "denomination": "BuildingPart-denomination-Selinunt",
+        "BuildingPart-dating": "BuildingPart-dating-Selinunt",
+        "material": "BuildingPart-material-Selinunt",
+        "conservationStatus": "BuildingPart-conservationStatus-Selinunt",
+        "assignment": "BuildingPart-assignment-Selinunt",
+        "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
+        "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt",
+        "references": "BuildingPart-references-Selinunt",
+        "BuildingPart-map": "BuildingPart-map-Selinunt"
       },
-      "storageLocation": {
-        "inputType": "text"
-      },
-      "BuildingPart-dates": {
-        "inputType": "text"
-      },
-      "denomination": {
-        "inputType": "dropdown"
-      },
-      "BuildingPart-description": {
-        "inputType": "text"
-      },
-      "specialDimensions": {
-        "inputType": "text"
-      },
-      "material": {
-        "inputType": "checkboxes"
-      },
-      "conservationStatus": {
-        "inputType": "checkboxes"
-      },
-      "BuildingPart-dating": {
-        "inputType": "dropdown"
-      },
-      "assignment": {
-        "inputType": "dropdown"
-      },
-      "evaluationAssignment": {
-        "inputType": "checkboxes"
-      },
-      "positionAtBuilding": {
-        "inputType": "checkboxes"
-      },
-      "references": {
-        "inputType": "checkboxes"
-      },
-      "BuildingPart-map": {
-        "inputType": "checkboxes"
-      },
-      "pencilDrawing": {
-        "inputType": "input"
-      },
-      "inkDrawing": {
-        "inputType": "input"
-      },
-      "note": {
-        "inputType": "input"
+      "fields": {
+        "descriptionFindingPlace": {
+          "inputType": "text"
+        },
+        "storageLocation": {
+          "inputType": "text"
+        },
+        "BuildingPart-dates": {
+          "inputType": "text"
+        },
+        "denomination": {
+          "inputType": "dropdown"
+        },
+        "BuildingPart-description": {
+          "inputType": "text"
+        },
+        "specialDimensions": {
+          "inputType": "text"
+        },
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "conservationStatus": {
+          "inputType": "checkboxes"
+        },
+        "BuildingPart-dating": {
+          "inputType": "dropdown"
+        },
+        "assignment": {
+          "inputType": "dropdown"
+        },
+        "evaluationAssignment": {
+          "inputType": "checkboxes"
+        },
+        "positionAtBuilding": {
+          "inputType": "checkboxes"
+        },
+        "references": {
+          "inputType": "checkboxes"
+        },
+        "BuildingPart-map": {
+          "inputType": "checkboxes"
+        },
+        "pencilDrawing": {
+          "inputType": "input"
+        },
+        "inkDrawing": {
+          "inputType": "input"
+        },
+        "note": {
+          "inputType": "input"
+        }
       }
+    },
+    "Inscription:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Excavation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
     }
   },
-  "Inscription:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Image:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Photo:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Drawing:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Excavation:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
-  }
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Inscription",
+    "BuildingPart",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

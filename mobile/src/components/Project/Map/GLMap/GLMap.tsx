@@ -66,6 +66,7 @@ const GLMap: React.FC<GLMapProps> = ({
     
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
     const [pointRadius, setPointRadius] = useState<number>(getMapSettings(preferences.currentProject).pointRadius);
+    const [layerInfo, setLayerInfo] = useState<{doc: Document, visible: boolean}[]>([]);
 
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
@@ -97,6 +98,22 @@ const GLMap: React.FC<GLMapProps> = ({
                                         setHighlightedDocId,highlightedDocId,selectParentId,
                                         screen, camera, scene, pressStartTime);
     
+
+    const showLayer = (docId: string) => {
+
+        const layer = scene.getObjectByProperty('uuid',docId);
+        const layerDocIndex = layerInfo.findIndex(doc => doc.doc.resource.id === docId);
+        if(!layer || layerDocIndex < 0) return;
+        layer.visible = layerInfo[layerDocIndex].visible ? false : true;
+        setLayerInfo(layerInfo.map((item, i) => i !== layerDocIndex ?
+                                                    item :
+                                                    { doc: item.doc, visible: !item.visible }));
+        renderScene();
+    };
+    
+
+    useEffect(() => setLayerInfo( layerDocuments.map(doc => ({ doc, visible: false }))),[layerDocuments]);
+
     
     useEffect(() => {
 
@@ -234,7 +251,9 @@ const GLMap: React.FC<GLMapProps> = ({
             {isSettingsModalOpen && <MapSettingsModal
                 onClose={ () => setIsSettingsModalOpen(false) }
                 pointRadius={ pointRadius }
-                onChangePointRadius={ (radius:number) => setPointRadius(radius) } />}
+                onChangePointRadius={ (radius:number) => setPointRadius(radius) }
+                layerInfo={ layerInfo }
+                showLayer={ showLayer } />}
             <TouchableOpacity onPress={ () => setIsSettingsModalOpen(true) } style={ styles.mapSettings } >
                 <MaterialIcons name="layers" size={ 30 } color="black" />
             </TouchableOpacity>

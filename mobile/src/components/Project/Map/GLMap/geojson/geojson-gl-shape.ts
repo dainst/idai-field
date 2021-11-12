@@ -356,6 +356,7 @@ export const addLayerToScene = (doc: Document, documentToWorldMatrix: Matrix4, s
     layerObject.renderOrder = - Infinity; //top put all layers behind other polygons
     layerObject.name = doc.resource.identifier;
     layerObject.uuid = doc.resource.id;
+    layerObject.visible = false;
 
     scene.add(layerObject);
 };

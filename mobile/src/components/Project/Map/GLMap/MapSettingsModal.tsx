@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
+import { Document } from 'idai-field-core';
 import React from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../../../utils/colors';
 import Button from '../../../common/Button';
 import Card from '../../../common/Card';
@@ -13,9 +14,23 @@ interface MapSettingsModalProps {
     onClose: () => void;
     pointRadius: number;
     onChangePointRadius: (radius: number) => void;
+    layerInfo: {doc: Document, visible: boolean}[];
+    showLayer: (docId: string) => void;
 }
 
-const MapSettingsModal: React.FC<MapSettingsModalProps> = ({ onClose, pointRadius, onChangePointRadius }) => {
+const MapSettingsModal: React.FC<MapSettingsModalProps> = (
+        { onClose, pointRadius, onChangePointRadius, layerInfo, showLayer }) => {
+
+    const renderItem = ({ item }: { item: {doc: Document, visible: boolean} }) => (
+        <Row style={ { margin: 2 } }>
+            <TouchableOpacity style={ { marginRight: 5 } } onPress={ () => showLayer(item.doc.resource.id) }>
+                <Ionicons name={ item.visible ? 'eye' : 'eye-off' } size={ 24 } color="#565350" />
+            </TouchableOpacity>
+            <Text style={ { fontSize: 18 } }>{item.doc.resource.id}</Text>
+        </Row>
+    );
+
+    
     return (
         <Modal onRequestClose={ onClose } animationType="fade" transparent visible={ true }>
             <View style={ styles.container }>
@@ -36,7 +51,7 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({ onClose, pointRadiu
                             icon={ <Ionicons name="close-outline" size={ 16 } /> }
                             onPress={ onClose } /> } />
                     <Row style={ styles.sliderContainer }>
-                        <Text>Point radius: </Text>
+                        <Text style={ styles.sectionHeader }>Point radius: </Text>
                         <Slider
                             style={ styles.slider }
                             minimumValue={ 0.2 }
@@ -48,6 +63,11 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({ onClose, pointRadiu
                             step={ 0.25 }
                             onValueChange={ onChangePointRadius } />
                     </Row>
+                    <Text style={ styles.sectionHeader }>Layers</Text>
+                    <FlatList
+                        data={ layerInfo }
+                        keyExtractor={ item => item.doc.resource.id }
+                        renderItem={ renderItem } />
                 </Card>
             </View>
         </Modal>
@@ -79,6 +99,9 @@ const styles = StyleSheet.create({
     slider: {
         width: 200,
         height: 40,
+    },
+    sectionHeader: {
+        fontSize: 18
     }
   
   

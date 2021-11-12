@@ -21,6 +21,7 @@ import configOlympia from '../../../config/Config-Olympia.json';
 import configPergamon from '../../../config/Config-Pergamon.json';
 import configPostumii from '../../../config/Config-Postumii.json';
 import configSelinunt from '../../../config/Config-Selinunt.json';
+import configSelinuntBauteile from '../../../config/Config-SelinuntBauteile.json;
 import configSudanHeritage from '../../../config/Config-SudanHeritage.json';
 import configUruk from '../../../config/Config-Uruk.json';
 import coreLanguageDe from '../../../config/Core/Language.de.json';
@@ -60,6 +61,9 @@ import languagePostumii_de from '../../../config/Language-Postumii.de.json';
 import languagePostumii_it from '../../../config/Language-Postumii.it.json';
 import languageSelinunt_de from '../../../config/Language-Selinunt.de.json';
 import languageSelinunt_it from '../../../config/Language-Selinunt.it.json';
+import languageSelinuntBauteile_de from '../../../config/Language-SelinuntBauteile.de.json';
+import llanguageSelinuntBauteile_en from '../../../config/Language-SelinuntBauteile.en.json';
+import llanguageSelinuntBauteile_it from '../../../config/Language-SelinuntBauteile.it.json';
 import languageSudanHeritage_en from '../../../config/Language-SudanHeritage.en.json';
 import languageUruk_en from '../../../config/Language-Uruk.en.json';
 import libraryForms from '../../../config/Library/Forms.json';
@@ -108,6 +112,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Pergamon.json': configPergamon,
     '/Config-Postumii.json': configPostumii,
     '/Config-Selinunt.json': configSelinunt,
+    '/Config-SelinuntBauteile.json': configSelinuntBauteile,
     '/Config-SudanHeritage.json': configSudanHeritage,
     '/Config-Uruk.json': configUruk
 };
@@ -133,6 +138,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Pergamon': { de: languagePergamon_de, en: languagePergamon_en },
     'Postumii': { de: languagePostumii_de, it: languagePostumii_it },
     'Selinunt': { de: languageSelinunt_de, it: languageSelinunt_it },
+    'SelinuntBauteile' : { de: languageSelinuntBauteile_de, en: languageSelinuntBauteile_en, it: languageSelinuntBauteile_it },
     'SudanHeritage': { en: languageSudanHeritage_en },
     'Uruk': { en: languageUruk_en }
 };

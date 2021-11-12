@@ -1,0 +1,244 @@
+{
+  "categories": {
+    "Operation": {
+      "fields": {
+        "researchHistory": {
+          "label": "Forschungsgeschichte"
+        },
+        "researchPerspective": {
+          "label": "Forschungsperspektive"
+        },
+        "researchMethod": {
+          "label": "Forschungsmethode"
+        }
+      }
+    },
+    "Place": {
+      "fields": {
+        "placeCondition": {
+          "label": "Erhaltungszustand"
+        }
+      }
+    },
+    "Survey": {
+      "fields": {
+        "Survey-description-Selinunt": {
+          "label": "Beschreibung des Areals"
+        },
+        "currentUse": {
+          "label": "Aktuelle Oberflächennutzung"
+        },
+        "slope": {
+          "label": "Gefälle"
+        },
+        "visibility": {
+          "label": "Sichtbarkeit"
+        },
+        "chronologyFinds": {
+          "label": "Chronologie Fundverteilung"
+        },
+        "interpretation": {
+          "label": "Interpretation"
+        }
+      } 
+    },
+    "Area": {
+      "fields": {
+        "dimensionVerticalExtent": {
+          "label": "Vertikale Ausdehnung"
+        },
+        "description": {
+          "label": "Beschreibung"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Planquadrat",
+      "fields": {
+        "currentSurfaceUtilization": {
+          "label": "Aktuelle Oberflächennutzung"
+        },
+        "visibility": {
+          "label": "Sichtbarkeit"
+        },
+        "shade": {
+          "label": "Lichtverhältnisse"
+        },
+        "slope": {
+          "label": "Gefälle"
+        },
+        "humidity": {
+          "label": "Feuchtigkeit"
+        },
+        "vegetation": {
+          "label": "Bewuchs"
+        },
+        "buildingStructures": {
+          "label": "Bebauung"
+        },
+        "soilComposition": {
+          "label": "Zusammensetzung Boden"
+        },
+        "consistency": {
+          "label": "Konsistenz"
+        },
+        "clumps": {
+          "label": "Klumpen"
+        },
+        "stones": {
+          "label": "Steine"
+        },
+        "surveyUnit-description": {
+          "label": "Beschreibung"
+        },
+        "samplingMethod": {
+          "label": "Probenentnahme"
+        },
+        "surfaceTreatment": {
+          "label": "Behandlung der Oberfläche"
+        },
+        "quantityOfFinds": {
+          "label": "Fundmenge"
+        },
+        "findDensity": {
+          "label": "Funddichte"
+        },
+        "finds": {
+          "label": "Funde"
+        },
+        "remarks": {
+          "label": "Bemerkungen"
+        } 
+      }
+    },
+    "BuildingPart": {
+      "label": "Architektur",
+      "fields": {
+        "descriptionFindingPlace": {
+          "label": "Beschreibung des Fundortes"
+        },
+        "storageLocation": {
+          "label": "Ort der Aufbewahrung"
+        },
+        "BuildingPart-dates": {
+          "label": "Daten",
+          "description": "RD = Aufnahmedatum, UD = Aktualisierungsdatum"
+        },
+        "denomination": {
+          "label": "Ansprache"
+        },
+        "BuildingPart-description": {
+          "label": "Beschreibung"
+        },
+        "specialDimensions": {
+          "label": "Spezielle Maße",
+          "description": "TrB = Triglyphenbreite, MB = Metopenbreite , H = Höhe, OL = obere Länge, UL = untere Länge, OT = obere Tiefe, UT = untere Tiefe, OD = oberer Durchmesser, UD = unterer Durchmesser, n.m. = nicht messbar"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "conservationStatus": {
+          "label": "Erhaltungszustand"
+        },
+        "BuildingPart-dating": {
+          "label": "Zeitstellung"
+        },
+        "assignment": {
+          "label": "Zuordnung"
+        },
+        "evaluationAssignment": {
+          "label": "Bewertung Zuordnung"
+        },
+        "positionAtBuilding": {
+          "label": "Position am Bauwerk"
+        },
+        "front": {
+          "label": "Bauteilseite: Vorderseite"
+        },
+        "back": {
+          "label": "Bauteilseite: Rückseite"
+        },
+        "leftSide": {
+          "label": "Bauteilseite: Linke Seite"
+        },
+        "rightSide": {
+          "label": "Bauteilseite: Rechte Seite"
+        },
+        "references": {
+          "label": "Referenzen"
+        },
+        "BuildingPart-map": {
+          "label": "Zugehörige Karte"
+        },
+        "pencilDrawing": {
+          "label": "Maßstab der Bleistiftzeichnung"
+        },
+        "inkDrawing": {
+          "label":"Maßstab der Tuschezeichnung"
+        },
+        "note": {
+          "label": "Anmerkung",
+          "description": "gehört zu..., vorher..., jetzt..."
+        }
+      }
+    },
+    "ColumnDrum": {
+      "label": "Säulentrommel",
+      "fields": {
+        "column": {
+          "label": "Säule",
+          "description": "Von Ost/Süd nach West/Nord"
+        },
+        "columnDrum": {
+          "label": "Säulentrommel",
+          "description": "Von unten nach oben"
+        },
+        "ODk": {
+          "label": "Oberer Durchmesser Kannelur"
+        },
+        "UDk": {
+          "label": "Unterer Durchmesser Kannelur"
+        },
+        "ODm": {
+          "label": "Oberer Durchmesser Mantel"
+        },
+        "UDm": {
+          "label": "Unterer Durchmesser Mantel"
+        },
+        "H": {
+          "label": "Höhe"
+        },
+        "Nummer": {
+          "label": "Nummer"
+        },
+        "entasisDetermination": {
+          "label": "Bestimmung Entasis"
+        },
+        "top": {
+          "label": "Oberseite"
+        },
+        "bottom": {
+          "label": "Unterseite"
+        },
+        "ColumnCoat": {
+          "label": "Mantel"
+        },
+        "comment": {
+          "label": "Bemerkung"
+        }
+      }
+    },
+    "SurfaceCleaning": {
+      "label": "Oberflächenreinigung",
+      "fields": {
+        "SurfaceCleaning-operation": {
+          "label": "Maßnahme"
+        },
+        "surfaceCleaning-description": {
+          "label": "Beschreibung"
+        }
+      }
+    }
+  }
+}
+

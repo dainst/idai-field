@@ -1,0 +1,200 @@
+{
+  "categories": {
+    "Operation": {
+      "fields": {
+        "researchHistory": {
+          "label": "Research history" 
+        },
+        "researchPerspective": {
+          "label": "Research perspective" 
+        },
+        "researchMethod": {
+          "label": "Research method" 
+        }
+      }
+    },
+    "Place": {
+      "fields": {
+        "placeName": {
+          "label": "Place name"
+        },
+        "siteClassification": {
+          "label": "Site classification"
+        },
+        "buildingResearchHistory": {
+          "label": "Research history of building"
+        },
+        "placeCondition": {
+          "label": "Condition of place"
+        },
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+    "Survey": {
+      "fields": {
+        "Survey-description-Selinunt": {
+          "label": "Description of the area"
+        },
+        "currentUse": {
+          "label": "Current use"
+        },
+        "slope": {
+          "label": "Slope"
+        },
+        "visibility": {
+          "label": "Visibility"
+        },
+        "chronologyFinds": {
+          "label": "Chronology of finds"
+        },
+        "interpretation": {
+          "label": "Interpretation"
+        }
+      } 
+    },
+    "Area": {
+      "label": "Area",
+      "fields": {
+        "dimensionVerticalExtent": {
+          "label": "Dimensions vertival extent"
+        },
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Grid square",
+      "fields": {
+        "currentSurfaceUtilization": {
+          "label": "Current surface utilization"
+        },
+        "visibility": {
+          "label": "Visibility"
+        },
+        "shade": {
+          "label": "Light conditions"
+        },
+        "slope": {
+          "label": "Slope"
+        },
+        "humidity": {
+          "label": "Humidity"
+        },
+        "vegetation": {
+          "label": "Vegetation"
+        },
+        "buildingStructures": {
+          "label": "Building structures"
+        },
+        "soilComposition": {
+          "label": "Soil composition"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "clumps": {
+          "label": "Clumps"
+        },
+        "stones": {
+          "label": "Stones"
+        },
+        "surveyUnit-description": {
+          "label": "Description"
+        },
+        "samplingMethod": {
+          "label": "Sampling method"
+        },
+        "surfaceTreatment": {
+          "label": "Surface treatment"
+        },
+        "quantityOfFinds": {
+          "label": "Quantity of finds"
+        },
+        "findDensity": {
+          "label": "Find density"
+        },
+        "finds": {
+          "label": "Finds"
+        },
+        "remarks": {
+          "label": "Remarks"
+        } 
+      }
+    },
+    "BuildingPart": {
+      "label": "Architecture",
+      "fields": {
+        "descriptionFindingPlace": {
+          "label": "Description of finding place"
+        },
+        "storageLocation": {
+          "label": "Location of storage"
+        },
+        "BuildingPart-dates": {
+          "label": "Dates",
+          "description": "RD = Date of recording, UD = date of update"
+        },
+        "denomination": {
+          "label": "Denomination"
+        },
+        "BuildingPart-description": {
+          "label": "Description"
+        },
+        "specialDimensions": {
+          "label": "Special dimensions",
+          "description": "TrB = width of triglyphes, MB = width of metopes , H = hight, OL = upper length, UL = lower length, OT = upper depth, UT = lower depth, OD = upper diameter, UD = lower diameter, n.m. = not measurable"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "conservationStatus": {
+          "label": "Conservation status"
+        },
+        "BuildingPart-dating": {
+          "label": "Dating"
+        },
+        "assignment": {
+          "label": "Assignment"
+        },
+        "evaluationAssignment": {
+          "label": "Evaluation of assignment"
+        },
+        "positionAtBuilding": {
+          "label": "Position at building"
+        },
+        "front": {
+          "label": "Side of building part: front"
+        },
+        "back": {
+          "label": "Side of building part: back"
+        },
+        "leftSide": {
+          "label": "Side of building part: left side"
+        },
+        "rightSide": {
+          "label": "Side of building part: right side"
+        },
+        "references": {
+          "label": "References"
+        },
+        "BuildingPart-map": {
+          "label": "Related map"
+        },
+        "pencilDrawing": {
+          "label": "Scale of pencil drawing"
+        },
+        "inkDrawing": {
+          "label":"Scale of ink drawing"
+        },
+        "note": {
+          "label": "Note",
+          "description": "belongs to..., former..., now..."
+        }
+      }
+    }
+  }
+}
+

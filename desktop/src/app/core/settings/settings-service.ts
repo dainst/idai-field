@@ -37,6 +37,7 @@ export const PROJECT_MAPPING = {
     'postumii': { prefix: 'Postumii', label: 'Postumii' },
     'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
     'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
+    'seli-bauteile': { prefix: 'SelinuntBauteile', label: 'Selinunt Bauteile' },
     'uruk': { prefix: 'Uruk', label: 'Uruk' }
 };
 

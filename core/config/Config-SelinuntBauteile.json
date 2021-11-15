@@ -32,18 +32,34 @@
       "hidden": [],
       "fields": {}
     },
-    "BuildingPart:default": {
+    "Feature:default": {
       "hidden": [],
+      "fields": {}
+    },
+    "Find:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "BuildingPart": {
+      "color": "#707070",
+      "commons": [
+        "period",
+        "description"
+      ],
+      "hidden": ["borders"],
       "valuelists": {
         "denomination": "BuildingPart-denomination-Selinunt",
-        "BuildingPart-dating": "BuildingPart-dating-Selinunt",
+        "period": "BuildingPart-dating-Selinunt",
         "material": "BuildingPart-material-Selinunt",
         "conservationStatus": "BuildingPart-conservationStatus-Selinunt",
         "assignment": "BuildingPart-assignment-Selinunt",
         "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
         "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt",
-        "references": "BuildingPart-references-Selinunt",
-        "BuildingPart-map": "BuildingPart-map-Selinunt"
+        "referenceTypes": "BuildingPart-references-Selinunt",
+        "belongingMap": "BuildingPart-map-Selinunt"
+      },
+      "positionValuelists": {
+        "dimensionBuildingResearch": "position-values-expansion-default"
       },
       "fields": {
         "descriptionFindingPlace": {
@@ -52,26 +68,20 @@
         "storageLocation": {
           "inputType": "text"
         },
-        "BuildingPart-dates": {
-          "inputType": "text"
+        "editingDates": {
+          "inputType": "multiInput"
         },
         "denomination": {
           "inputType": "dropdown"
         },
-        "BuildingPart-description": {
-          "inputType": "text"
-        },
-        "specialDimensions": {
-          "inputType": "text"
+        "dimensionBuildingResearch": {
+          "inputType": "dimension"
         },
         "material": {
           "inputType": "checkboxes"
         },
         "conservationStatus": {
           "inputType": "checkboxes"
-        },
-        "BuildingPart-dating": {
-          "inputType": "dropdown"
         },
         "assignment": {
           "inputType": "dropdown"
@@ -82,10 +92,10 @@
         "positionAtBuilding": {
           "inputType": "checkboxes"
         },
-        "references": {
+        "referenceTypes": {
           "inputType": "checkboxes"
         },
-        "BuildingPart-map": {
+        "belongingMap": {
           "inputType": "checkboxes"
         },
         "pencilDrawing": {
@@ -138,6 +148,7 @@
     "Area",
     "SurveyUnit",
     "Excavation",
+    "Find",
     "Inscription",
     "BuildingPart",
     "Image",

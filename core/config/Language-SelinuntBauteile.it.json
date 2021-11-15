@@ -1,128 +1,10 @@
 {
   "categories": {
-    "Operation": {
-      "fields": {
-        "researchHistory": {
-          "label": "Indagini precedenti" 
-        },
-        "researchPerspective": {
-          "label": "Prospettiva di ricerca" 
-        },
-        "researchMethod": {
-          "label": "Metodo di ricerca" 
-        }
-      }
-    },
-    "Place": {
-      "fields": {
-        "placeName": {
-          "label": "Nome del luogo"
-        },
-        "siteClassification": {
-          "label": "Classificazione"
-        },
-        "buildingResearchHistory": {
-          "label": "Storia della ricerca"
-        },
-        "placeCondition": {
-          "label": "Stato di conservazione"
-        },
-        "description": {
-          "label": "Descrizione"
-        }
-      }
-    },
-    "Survey": {
-      "fields": {
-        "Survey-description-Selinunt": {
-          "label": "Descrizione dell‘area"
-        },
-        "currentUse": {
-          "label": "Attuale utilizzo del suolo"
-        },
-        "slope": {
-          "label": "Pendenza"
-        },
-        "visibility": {
-          "label": "Visibilità"
-        },
-        "chronologyFinds": {
-          "label": "Cronologia reperti"
-        },
-        "interpretation": {
-          "label": "Interpretazione"
-        }
-      } 
-    },
     "Area": {
-      "label": "Area",
-      "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Quota"
-        },
-        "description": {
-          "label": "Descrizione"
-        }
-      }
+      "label": "Area"
     },
     "SurveyUnit": {
-      "label": "Quadrato",
-      "fields": {
-        "currentSurfaceUtilization": {
-          "label": "Utilizzo del suolo attuale"
-        },
-        "visibility": {
-          "label": "Visibilità"
-        },
-        "shade": {
-          "label": "Condizioni illuminazione"
-        },
-        "slope": {
-          "label": "Pendenza"
-        },
-        "humidity": {
-          "label": "Umidità"
-        },
-        "vegetation": {
-          "label": "Vegetazione"
-        },
-        "buildingStructures": {
-          "label": "Strutture architettoniche"
-        },
-        "soilComposition": {
-          "label": "Composizione terreno"
-        },
-        "consistency": {
-          "label": "Consistenza"
-        },
-        "clumps": {
-          "label": "Zolle"
-        },
-        "stones": {
-          "label": "Pietre"
-        },
-        "surveyUnit-description": {
-          "label": "Descrizione"
-        },
-        "samplingMethod": {
-          "label": "Campionatura"
-        },
-        "surfaceTreatment": {
-          "label": "Azione sulla superficie"
-        },
-        "quantityOfFinds": {
-          "label": "Conteggio reperti"
-        },
-        "findDensity": {
-          "label": "Densità reperti"
-        },
-        "finds": {
-          "label": "Reperti"
-        },
-        "remarks": {
-          "label": "Osservazioni"
-        } 
-      }
+      "label": "Quadrato"
     },
     "BuildingPart": {
       "label": "Architettura",
@@ -133,8 +15,8 @@
         "storageLocation": {
           "label": "Luogo di deposito"
         },
-        "BuildingPart-dates": {
-          "label": "Date",
+        "editingDates": {
+          "label": "Date di elaborazione",
           "description": "RD = Data di registrazione, UD = Data di aggiornamento"
         },
         "denomination": {
@@ -143,7 +25,7 @@
         "BuildingPart-description": {
           "label": "Descrizone"
         },
-        "specialDimensions": {
+        "dimensionBuildingResearch": {
           "label": "Dimensioni particolari",
           "description": "TrB = larghezza del triglifo, MB = larghezza della metopa , H = altezza, OL = lunghezza superiore, UL = lunghezza inferiore, OT = profondità superiore, UT = profondità inferiore, OD = diametro superiore , UD = diametro inferiore, n.m. = non misurabile"
         },
@@ -177,10 +59,10 @@
         "rightSide": {
           "label": "Lato del componente: destra"
         },
-        "references": {
+        "referenceTypes": {
           "label": "Riferimenti"
         },
-        "BuildingPart-map": {
+        "belongingMap": {
           "label": "Mappa associata"
         },
         "pencilDrawing": {

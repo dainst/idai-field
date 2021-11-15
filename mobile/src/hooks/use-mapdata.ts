@@ -4,7 +4,7 @@ import { LayoutRectangle } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
 import {
     defineWorldCoordinateSystem, GeometryBoundings, getDocumentToWorldTransform,
-    getDocumentToWorldTransformMatrix, getGeometryBoundings, getMinMaxGeometryCoords,
+    getDocumentToWorldTransformMatrix, getGeometryBoundings, getLayerCoordinates, getMinMaxGeometryCoords,
     getScreenToWorldTransformationMatrix, processTransform2d, Transformation
 } from '../components/Project/Map/GLMap/cs-transform';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -50,13 +50,9 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
 
         if(!documentToWorldMatrix) return;
         
-        const geoDocs: FieldGeometry[] = [];
         const docs = await repository.getMultiple(docIds);
-        docs.forEach(doc => doc.resource.geometry && geoDocs.push(doc.resource.geometry));
-        
-        if(!geoDocs.length) return;
-
-        const geometryBoundings = getMinMaxGeometryCoords(geoDocs);
+        const geometryBoundings = getDocumentsGeometryBoundings(docs);
+  
         if(!geometryBoundings) return;
         
         const { minX, minY, maxX, maxY } = geometryBoundings;
@@ -68,10 +64,39 @@ const useMapData = (repository: DocumentRepository, selectedDocumentIds: string[
             height: Math.max(top - bottom,right - left) + viewBoxPaddingY,
             width: Math.max(top - bottom,right - left) + viewBoxPaddingX,
         },defineWorldCoordinateSystem()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[repository,documentToWorldMatrix]);
 
     const focusMapOnDocumentId = (docId: string) => focusMapOnDocumentIds([docId]);
 
+    const getDocumentsGeometryBoundings = (docs: Document[]): GeometryBoundings | null => {
+
+        if(!docs.length) return null;
+
+        let geometryBoundings: GeometryBoundings | null;
+        if(isDocumentLayer(docs)){
+            const layerVertices = getLayerCoordinates(docs[0].resource.georeference);
+            geometryBoundings = {
+                minX: Math.min(layerVertices.bottomLeftCoordinates[0], layerVertices.topLeftCoordinates[0]),
+                maxX: Math.max(layerVertices.bottomRightCoordinates[0], layerVertices.topRightCoordinates[0]),
+                minY: Math.min(layerVertices.bottomLeftCoordinates[1], layerVertices.bottomRightCoordinates[1]),
+                maxY: Math.max(layerVertices.topLeftCoordinates[1], layerVertices.topRightCoordinates[1])
+            };
+        } else {
+            const geoDocs = docs.map(doc => doc.resource.geometry || null)
+                                .filter(doc => doc !== null) as FieldGeometry[];
+            geometryBoundings = getMinMaxGeometryCoords(geoDocs);
+        }
+
+        return geometryBoundings;
+    };
+
+    const isDocumentLayer = (documents: Document[]) => {
+        
+        if(documents.length > 1) return false;
+        if(documents[0].resource.georeference) return true;
+        else return false;
+    };
 
     useEffect(() => {
 

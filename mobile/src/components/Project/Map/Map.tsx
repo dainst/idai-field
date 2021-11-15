@@ -90,7 +90,8 @@ const Map: React.FC<MapProps> = (props) => {
                 location={ location }
                 updateDoc={ updateDoc }
                 selectParentId={ onParentIdSelected }
-                layerDocuments={ layerDocuments } />}
+                layerDocuments={ layerDocuments }
+                focusMapOnDocumentId={ focusMapOnDocumentId } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

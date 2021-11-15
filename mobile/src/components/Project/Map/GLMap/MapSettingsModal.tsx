@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Document } from 'idai-field-core';
 import React from 'react';
@@ -10,23 +10,32 @@ import Heading from '../../../common/Heading';
 import Row from '../../../common/Row';
 import TitleBar from '../../../common/TitleBar';
 
+const ICON_SIZE = 24;
+const ICON_COLOR = '#565350';
+
 interface MapSettingsModalProps {
     onClose: () => void;
     pointRadius: number;
     onChangePointRadius: (radius: number) => void;
     layerInfo: {doc: Document, visible: boolean}[];
     showLayer: (docId: string) => void;
+    focusMapOnLayer: (docId: string) => void;
 }
 
 const MapSettingsModal: React.FC<MapSettingsModalProps> = (
-        { onClose, pointRadius, onChangePointRadius, layerInfo, showLayer }) => {
+        { onClose, pointRadius, onChangePointRadius, layerInfo, showLayer, focusMapOnLayer }) => {
 
     const renderItem = ({ item }: { item: {doc: Document, visible: boolean} }) => (
         <Row style={ { margin: 2 } }>
             <TouchableOpacity style={ { marginRight: 5 } } onPress={ () => showLayer(item.doc.resource.id) }>
-                <Ionicons name={ item.visible ? 'eye' : 'eye-off' } size={ 24 } color="#565350" />
+                <Ionicons name={ item.visible ? 'eye' : 'eye-off' } size={ 24 } color={ ICON_COLOR } />
             </TouchableOpacity>
-            <Text style={ { fontSize: 18 } }>{item.doc.resource.id}</Text>
+            {item.visible && <TouchableOpacity onPress={ () => focusMapOnLayer(item.doc.resource.id) }>
+                <MaterialIcons name="center-focus-strong" size={ ICON_SIZE } color={ ICON_COLOR } />
+            </TouchableOpacity>}
+            <Text style={ { fontSize: 18, marginLeft: !item.visible ? ICON_SIZE : 0, padding: 2 } }>
+                {item.doc.resource.id}
+            </Text>
         </Row>
     );
 
@@ -102,9 +111,7 @@ const styles = StyleSheet.create({
     },
     sectionHeader: {
         fontSize: 18
-    }
-  
-  
+    },
 });
 
 export default MapSettingsModal;

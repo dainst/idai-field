@@ -42,6 +42,7 @@ interface GLMapProps {
     updateDoc?: UpdatedDocument;
     selectParentId: (docId: string) => void,
     layerDocuments: Document[],
+    focusMapOnDocumentId: (docId: string) => void;
 }
 
 
@@ -58,6 +59,7 @@ const GLMap: React.FC<GLMapProps> = ({
     updateDoc,
     selectParentId,
     layerDocuments,
+    focusMapOnDocumentId
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -253,7 +255,8 @@ const GLMap: React.FC<GLMapProps> = ({
                 pointRadius={ pointRadius }
                 onChangePointRadius={ (radius:number) => setPointRadius(radius) }
                 layerInfo={ layerInfo }
-                showLayer={ showLayer } />}
+                showLayer={ showLayer }
+                focusMapOnLayer={ focusMapOnDocumentId } />}
             <TouchableOpacity onPress={ () => setIsSettingsModalOpen(true) } style={ styles.mapSettings } >
                 <MaterialIcons name="layers" size={ 30 } color="black" />
             </TouchableOpacity>

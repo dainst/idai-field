@@ -8,6 +8,7 @@ import { LibraryFieldDefinition } from './library-field-definition';
 export interface TransientFieldDefinition extends BuiltInFieldDefinition, LibraryFieldDefinition, Named {
 
     valuelist?: Valuelist;
+    positionValues?: Valuelist;
     valuelistId?: string,
     valuelistFromProjectField?: string;
     defaultConstraintIndexed?: boolean;

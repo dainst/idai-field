@@ -1,5 +1,5 @@
-import { compose, cond, detach, filter, flow, identity, includedIn, isDefined, isNot, Map, map, Mapping,
-    on, or, update as updateStruct, assoc, isUndefinedOrEmpty, not, curry } from 'tsfun';
+import { compose, cond, filter, flow, identity, includedIn, isDefined, isNot, Map, Mapping,
+    update as updateStruct, curry } from 'tsfun';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { LanguageConfigurations } from '../model/language/language-configurations';
@@ -8,7 +8,6 @@ import { TransientFieldDefinition } from '../model/field/transient-field-definit
 import { RawProjectConfiguration } from '../../services/project-configuration';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';
-import { applyLanguageConfigurations } from './apply-language-configurations';
 import { Assertions } from './assertions';
 import { iterateOverFields } from './helpers';
 import { hideFields } from './hide-fields';
@@ -27,6 +26,10 @@ import { Forest, Tree } from '../../tools/forest';
 import { sortStructArray } from '../../tools/sort-struct-array';
 import { withDissoc } from '../../tools/utils';
 import { linkParentAndChildInstances } from '../category-forest';
+import { Field } from '../../model/configuration/field';
+import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm, applyLanguagesToRelations } from './apply-languages-configurations';
+import { Category } from '../../model/configuration/category';
+import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 
 
 const CATEGORIES = 0;
@@ -40,49 +43,98 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              libraryCategories: Map<LibraryCategoryDefinition>,
                                              libraryForms: Map<LibraryFormDefinition>,
                                              customForms?: Map<CustomFormDefinition>,
-                                             commonFields: Map<any> = {},
-                                             valuelistsConfiguration: Map<Valuelist> = {},
-                                             builtInFields: Map<any> = {},
-                                             relations: Array<Relation> = [],
+                                             commonFieldDefinitions: Map<BuiltInFieldDefinition> = {},
+                                             valuelists: Map<Valuelist> = {},
+                                             builtInFieldDefinitions: Map<BuiltInFieldDefinition> = {},
+                                             relationDefinitions: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
                                              selectedParentForms?: string[]): RawProjectConfiguration {
 
     Assertions.performAssertions(
-        builtInCategories, libraryCategories, libraryForms, commonFields, valuelistsConfiguration, customForms
+        builtInCategories, libraryCategories, libraryForms, commonFieldDefinitions, valuelists, customForms
     );
-    addSourceField(builtInCategories, libraryCategories, libraryForms, commonFields, customForms);
+    addSourceField(builtInCategories, libraryCategories, libraryForms, commonFieldDefinitions, customForms);
 
-    const categories: Map<TransientCategoryDefinition> = mergeBuiltInWithLibraryCategories(
-        builtInCategories, libraryCategories
-    );
+    const categories: Map<TransientCategoryDefinition>
+        = buildCategories(builtInCategories, libraryCategories, languageConfigurations, valuelists);
+    const builtInFields: Map<Field>
+        = buildFields(builtInFieldDefinitions, languageConfigurations, valuelists, 'fields');
+    const commonFields: Map<Field>
+        = buildFields(commonFieldDefinitions, languageConfigurations, valuelists, 'commons');
+    applyLanguagesToRelations(languageConfigurations, relationDefinitions);
 
-    return flow(
-        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relations),
+    const [forms, relations] = flow(
+        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions),
         cond(isDefined(customForms), Assertions.assertNoDuplicationInSelection(customForms)),
         setDefaultConstraintIndexed,
-        cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relations)),
+        cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relationDefinitions)),
         cond(isDefined(customForms), removeUnusedForms(Object.keys(customForms ?? {}))),
         insertValuelistIds,
         Assertions.assertValuelistIdsProvided,
-        replaceValuelistIdsWithValuelists(valuelistsConfiguration),
+        replaceValuelistIdsWithValuelists(valuelists),
         cond(isDefined(customForms), hideFields),
+        applyLanguagesForCustomFormFields(languageConfigurations, categories),
         prepareRawProjectConfiguration,
-        addRelations(relations),
-        applyLanguageConfigurations(languageConfigurations, categories),
+        addRelations(relationDefinitions),
         updateStruct(
             CATEGORIES,
             processForms(
-                validateFields, languageConfigurations, categoriesOrder, relations, categories,
+                validateFields, languageConfigurations, categoriesOrder, relationDefinitions, categories,
                 selectedParentForms
             )
         )
     );
+
+    return {
+        forms,
+        categories: finalizeCategories(categories),
+        relations,
+        commonFields
+    };
 }
 
 
 const prepareRawProjectConfiguration = (forms: Map<TransientFormDefinition>) => [forms, [] /* relations */];
+
+
+function buildCategories(builtInCategories: Map<BuiltInCategoryDefinition>,
+                         libraryCategories: Map<LibraryCategoryDefinition>,
+                         languageConfigurations: LanguageConfigurations,
+                         valuelists: Map<Valuelist>): Map<TransientCategoryDefinition> {
+
+    const categories: Map<TransientCategoryDefinition> = mergeBuiltInWithLibraryCategories(
+        builtInCategories, libraryCategories
+    );
+    
+    for (const categoryDefinition of Object.values(categories)) {
+        applyLanguagesToCategory(languageConfigurations, categoryDefinition);
+        for (const fieldName of Object.keys(categoryDefinition.fields)) {
+            categoryDefinition.fields[fieldName].name = fieldName;
+            Assertions.assertValuelistIdsProvided(categories);
+            replaceValuelistIdWithValuelist(categoryDefinition.fields[fieldName], valuelists);
+        }
+    }
+
+    return categories;
+}
+
+
+function buildFields(fieldDefinitions: Map<BuiltInFieldDefinition>, languageConfigurations: LanguageConfigurations,
+                     valuelists: Map<Valuelist>, section: 'fields'|'commons'): Map<Field> {
+    
+    const fields: Map<TransientFieldDefinition> = fieldDefinitions as Map<TransientFieldDefinition>;
+
+    for (const fieldName of Object.keys(fields)) {
+        fields[fieldName].name = fieldName;
+        replaceValuelistIdWithValuelist(fields[fieldName], valuelists);
+    }
+
+    applyLanguagesToFields(languageConfigurations, fields, section);
+
+    return fields as Map<Field>;
+}
 
 
 function processForms(validateFields: any,
@@ -132,36 +184,44 @@ function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientF
 }
 
 
-function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>): Mapping<Map<TransientFormDefinition>> {
+function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
+    
+    return (forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> => {
 
-    return map(
-        cond(
-            on(TransientFormDefinition.FIELDS, not(isUndefinedOrEmpty)),
-            assoc(TransientFormDefinition.FIELDS,
-                map(
-                    cond(
-                        or(
-                            on(TransientFieldDefinition.VALUELISTID, isDefined),
-                            on(TransientFieldDefinition.POSITION_VALUELIST_ID, isDefined)
-                        ),
-                        replaceValuelistIdWithActualValuelist(valuelists)
-                    )
-                )
-            )
-        )
-    ) as any;
+        for (const form of Object.values(forms)) {
+            if (!form.fields) continue;
+            for (const field of Object.values(form.fields)) {
+                replaceValuelistIdWithValuelist(field, valuelists);
+            }
+        }
+
+        return forms;
+    }
 }
 
 
-function replaceValuelistIdWithActualValuelist(valuelists: Map<Valuelist>) {
+function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuelists: Map<Valuelist>) {
 
-    return (field: TransientFieldDefinition) => flow(
-        field,
-        assoc(TransientFieldDefinition.VALUELIST, valuelists[field.valuelistId!]),
-        assoc(TransientFieldDefinition.POSITION_VALUES, valuelists[field.positionValuelistId!]),
-        detach(TransientFieldDefinition.VALUELISTID),
-        detach(TransientFieldDefinition.POSITION_VALUELIST_ID)
-    );
+    if (!field.valuelistId && !field.positionValuelistId) return;
+
+    field.valuelist = valuelists[field.valuelistId!];
+    field.positionValues = valuelists[field.positionValuelistId!];
+    delete field.valuelistId;
+    delete field.positionValuelistId;
+}
+
+
+function applyLanguagesForCustomFormFields(languageConfigurations: LanguageConfigurations,
+                                           categories: Map<TransientCategoryDefinition>) {
+    
+    return (forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> => {
+
+        for (const form of Object.values(forms)) {
+            applyLanguagesToForm(languageConfigurations, form, form.parent ?? categories[form.categoryName].parent);
+        }
+        
+        return forms;
+    }
 }
 
 
@@ -177,4 +237,14 @@ function removeUnusedForms(selectedFormsNames: string[]): Mapping<Map<TransientF
 
         return formsToRemove.reduce(withDissoc, forms) as Map<TransientFormDefinition>;
     }
+}
+
+
+function finalizeCategories(categories: Map<TransientCategoryDefinition>): Map<Category> {
+
+    for (const category of Object.values(categories)) {
+        delete category.minimalForm;
+    }
+    
+    return categories as Map<Category>;
 }

@@ -4,7 +4,6 @@ import { BaseFieldDefinition } from './base-field-definition';
 export interface CustomFieldDefinition extends BaseFieldDefinition {
 
     inputType?: string;
-    positionValues?: string;
 }
 
 

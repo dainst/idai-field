@@ -1,6 +1,5 @@
-import { Map } from 'tsfun';
+/*import { Map } from 'tsfun';
 import { LanguageConfigurations } from '../../../src/configuration/model/language/language-configurations';
-import { applyLanguageConfigurations } from '../../../src/configuration/boot/apply-language-configurations';
 import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
 import { Relation } from '../../../src/model/configuration/relation';
 import { TransientCategoryDefinition } from '../../../src/configuration/model/category/transient-category-definition';
@@ -10,7 +9,7 @@ import { TransientCategoryDefinition } from '../../../src/configuration/model/ca
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('applyLanguageConfigurations', () => {
+/*describe('applyLanguageConfigurations', () => {
 
     let configuration: [Map<TransientFormDefinition>, Array<Relation>];
 
@@ -311,3 +310,4 @@ describe('applyLanguageConfigurations', () => {
         expect(relations[0].defaultLabel.de).toEqual('Liegt in (Library)');
     });
 });
+*/

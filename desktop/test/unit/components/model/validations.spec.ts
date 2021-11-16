@@ -11,8 +11,8 @@ import InputType = Field.InputType;
  */
 describe('Validations', () => {
 
-    const projectConfiguration = new ProjectConfiguration(
-        [Forest.build(
+    const projectConfiguration = new ProjectConfiguration({
+        forms: Forest.build(
             [[{
                 name: 'T',
                 groups: [{
@@ -75,37 +75,39 @@ describe('Validations', () => {
                         { name: 'period', inputType: 'dropdownRange' }
                     ]}]
                 }, []]
-            ] as any), [
-                {
-                    name: 'isRelatedTo',
-                    domain: ['T'],
-                    range: ['T'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                },
-                {
-                    name: 'isDepictedIn',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                },
-                {
-                    name: 'isRecordedIn',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                }
-            ]
-        ]
-    );
+            ] as any),
+        categories: {},
+        relations: [
+            {
+                name: 'isRelatedTo',
+                domain: ['T'],
+                range: ['T'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'isDepictedIn',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'isRecordedIn',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            }
+        ],
+        commonFields: {}
+    });
 
 
     it('validate defined fields', () => {

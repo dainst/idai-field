@@ -13,9 +13,11 @@ describe('Datastore', () => {
 
     function createMockedDatastore(mockdb: any) {
 
-        const categories = [createCategory('Find')];
+        const forms = [createCategory('Find')];
 
-        const projectConfiguration = new ProjectConfiguration([categories, []]);
+        const projectConfiguration = new ProjectConfiguration({
+            forms, categories: {}, relations: [], commonFields: {}
+        });
 
         const documentCache = new DocumentCache();
         return new Datastore(

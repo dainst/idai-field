@@ -10,9 +10,8 @@ import { ImportErrors } from '../../../../../src/app/components/import/import/im
  */
 describe('ImportValidator', () => {
 
-    const projectConfiguration = new ProjectConfiguration(
-        [
-          Forest.build([
+    const projectConfiguration = new ProjectConfiguration({
+        forms: Forest.build([
             [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [
@@ -39,55 +38,56 @@ describe('ImportValidator', () => {
                 mustLieWithin: true
             }, []]
         ] as any),
-            [
-                {
-                    name: 'isRelatedTo',
-                    domain: ['T'],
-                    range: ['T'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                },
-                {
-                    name: 'isDepictedIn',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                },
-                {
-                    name: 'isRecordedIn',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                },
-                {
-                    name: 'includes',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                }, // defined but not allowed
-                {
-                    name: 'liesWithin',
-                    domain: ['T3'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE',
-                    editable: false,
-                    visible: false,
-                    inputType: 'relation'
-                }
-            ]
-        ]
-    );
+        categories: {},
+        relations: [
+            {
+                name: 'isRelatedTo',
+                domain: ['T'],
+                range: ['T'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'isDepictedIn',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'isRecordedIn',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'includes',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            }, // defined but not allowed
+            {
+                name: 'liesWithin',
+                domain: ['T3'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            }
+        ],
+        commonFields: {}
+    });
 
 
     it('should report error when omitting mandatory property', () => {

@@ -1,5 +1,6 @@
 import { Map } from 'tsfun';
-import { BuiltInCategoryDefinition, CustomFormDefinition, LibraryCategoryDefinition, LibraryFormDefinition } from '../../../src/configuration';
+import { BuiltInCategoryDefinition, CustomFormDefinition, LibraryCategoryDefinition,
+    LibraryFormDefinition } from '../../../src/configuration';
 import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/boot';
 import { CategoryForm, Groups } from '../../../src/model';
 import { Named, Tree } from '../../../src/tools';

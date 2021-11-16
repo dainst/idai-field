@@ -6,32 +6,31 @@ import { LanguageConfigurations } from '../model/language/language-configuration
 
 /**
  * @param languageConfigurations 
- * @param category mutated in place
- * @returns category
+ * @param form mutated in place
  */
 export function setGroupLabels(languageConfigurations: LanguageConfigurations,
-                               category: CategoryForm): CategoryForm {
+                               form: CategoryForm): CategoryForm {
 
-    category.groups.forEach(group => {
-        group.label = getGroupLabel(category, group.name, 'complete', languageConfigurations);
-        group.defaultLabel = getGroupLabel(category, group.name, 'default', languageConfigurations);
+    form.groups.forEach(group => {
+        group.label = getGroupLabel(form, group.name, 'complete', languageConfigurations);
+        group.defaultLabel = getGroupLabel(form, group.name, 'default', languageConfigurations);
     });
 
-    return category;
+    return form;
 }
 
 
-function getGroupLabel(category: CategoryForm, 
+function getGroupLabel(form: CategoryForm, 
                        groupName: string, 
                        configuration: 'default'|'complete',
                        languageConfigurations: LanguageConfigurations) {
 
     if (groupName === Groups.PARENT) {
-        return category.parentCategory
-            ? category.parentCategory.label
-            : category.label;
+        return form.parentCategory
+            ? form.parentCategory.label
+            : form.label;
     } else if (groupName === Groups.CHILD) {
-        return category.label;
+        return form.label;
     } else {
         return LanguageConfiguration.getI18nString(
             languageConfigurations[configuration], 'groups', groupName

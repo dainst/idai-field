@@ -27,7 +27,7 @@ export function createContextIndependentCategories(builtInCategories: Map<BuiltI
                                                    languages: { [language: string]: Array<LanguageConfiguration> })
                                                    : Array<CategoryForm> {
 
-    const [categories,]: RawProjectConfiguration = buildRawProjectConfiguration(
+    const rawConfiguration: RawProjectConfiguration = buildRawProjectConfiguration(
         builtInCategories,
         libraryCategories,
         libraryForms,
@@ -42,5 +42,5 @@ export function createContextIndependentCategories(builtInCategories: Map<BuiltI
         selectedParentForms
     );
 
-   return Tree.flatten(categories);
+   return Tree.flatten(rawConfiguration.forms);
 }  

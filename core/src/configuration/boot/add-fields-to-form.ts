@@ -1,8 +1,7 @@
 import { clone, flatten, Map, set, to } from 'tsfun';
+import { Field } from '../../model/configuration/field';
 import { Relation } from '../../model/configuration/relation';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
-import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
-import { TransientFieldDefinition } from '../model/field/transient-field-definition';
 import { BuiltInFormDefinition } from '../model/form/built-in-form-definition';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
@@ -13,8 +12,8 @@ import { ConfigurationErrors } from './configuration-errors';
  * @author Thomas Kleinke 
  */
 export function addFieldsToForm(form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                                builtInFields: Map<BuiltInFieldDefinition>,
-                                commonFields: Map<BuiltInFieldDefinition>,
+                                builtInFields: Map<Field>,
+                                commonFields: Map<Field>,
                                 relations: Array<Relation>,
                                 extendedForm?: TransientFormDefinition): TransientFormDefinition {
 
@@ -58,26 +57,25 @@ function getFieldNames(form: TransientFormDefinition, categories: Map<TransientC
  * @returns the field definition or undefined if the field is a relation
  */
 function getField(fieldName: string, form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                  builtInFields: Map<BuiltInFieldDefinition>, commonFields: Map<BuiltInFieldDefinition>,
-                  relations: Array<Relation>): TransientFieldDefinition|undefined {
+                  builtInFields: Map<Field>, commonFields: Map<Field>, relations: Array<Relation>): Field|undefined {
     
     const parentName: string|undefined = form.parent ?? categories[form.categoryName]?.parent;
 
-    const parentCategoryFields: Map<BuiltInFieldDefinition> = parentName
-        ? categories[parentName].fields
+    const parentCategoryFields: Map<Field> = parentName
+        ? categories[parentName].fields as Map<Field>
         : {};
 
-    const field: TransientFieldDefinition = builtInFields[fieldName] as TransientFieldDefinition
-        ?? commonFields[fieldName] as TransientFieldDefinition
-        ?? parentCategoryFields[fieldName] as TransientFieldDefinition
-        ?? categories[form.categoryName]?.fields[fieldName] as TransientFieldDefinition
-        ?? (form.fields ? form.fields[fieldName] : undefined);
+    const field: Field = builtInFields[fieldName]
+        ?? commonFields[fieldName]
+        ?? parentCategoryFields[fieldName]
+        ?? categories[form.categoryName]?.fields[fieldName] as Field
+        ?? (form.fields ? form.fields[fieldName] as Field : undefined);
 
     if (!field && !relations.find(relation => relation.name === fieldName)) {
         throw [[ConfigurationErrors.FIELD_NOT_FOUND, form.categoryName, fieldName]];
     }
 
-    if (field) field.name = fieldName;
+    if (field && !field.name) field.name = fieldName;
 
-    return field;
+    return clone(field);
 }

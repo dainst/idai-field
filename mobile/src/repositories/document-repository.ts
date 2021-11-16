@@ -27,14 +27,16 @@ export class DocumentRepository {
 
     public static async init(
         username: string,
-        categories: Forest<CategoryForm>,
+        categoryForms: Forest<CategoryForm>,
         pouchdbDatastore: PouchdbDatastore
     ) : Promise<DocumentRepository> {
 
         const db = pouchdbDatastore.getDb();
-        const projectConfiguration = new ProjectConfiguration([categories, []]);
+        const projectConfiguration = new ProjectConfiguration({
+            forms: categoryForms, categories: {}, relations: [], commonFields: {}
+        });
         const [datastore, changesStream] = await buildDatastore(
-            categories, pouchdbDatastore, db, username, projectConfiguration);
+            categoryForms, pouchdbDatastore, db, username, projectConfiguration);
 
         return new DocumentRepository(pouchdbDatastore, datastore, changesStream);
     }

@@ -1,10 +1,12 @@
-import { CategoryForm, Name } from 'idai-field-core';
+import { Category, CategoryForm, Field, Name } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
+import { FieldIndex } from './field-index';
 
 
 export interface ConfigurationIndex {
 
     categoryFormIndex: CategoryFormIndex;
+    fieldIndex: FieldIndex;
 }
 
 
@@ -13,10 +15,12 @@ export interface ConfigurationIndex {
  */
 export namespace ConfigurationIndex {
 
-    export function create(contextIndependentCategories: Array<CategoryForm>): ConfigurationIndex {
+    export function create(forms: Array<CategoryForm>, categories: Array<Category>,
+                           commonFields: Array<Field>): ConfigurationIndex {
 
         return {
-            categoryFormIndex: CategoryFormIndex.create(contextIndependentCategories)
+            categoryFormIndex: CategoryFormIndex.create(forms),
+            fieldIndex: FieldIndex.create(categories, commonFields)
         };
     }
 
@@ -25,5 +29,11 @@ export namespace ConfigurationIndex {
                                       onlySupercategories?: boolean): Array<CategoryForm> {
 
         return CategoryFormIndex.find(index.categoryFormIndex, searchTerm, parentCategory, onlySupercategories);
+    }
+
+
+    export function findFields(index: ConfigurationIndex, searchTerm: string, categoryName: string): Array<Field> {
+
+        return FieldIndex.find(index.fieldIndex, searchTerm, categoryName);
     }
 }

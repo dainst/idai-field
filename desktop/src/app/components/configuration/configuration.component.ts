@@ -526,7 +526,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 languages
             );
 
-            this.configurationIndex = ConfigurationIndex.create(Tree.flatten(rawConfiguration.forms));
+            this.configurationIndex = ConfigurationIndex.create(
+                Tree.flatten(rawConfiguration.forms),
+                Object.values(rawConfiguration.categories),
+                Object.values(rawConfiguration.commonFields)
+            );
 
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);

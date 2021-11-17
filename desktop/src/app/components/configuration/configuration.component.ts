@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
-    createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
+    createContextIndependentCategories, Labels, IndexFacade, Tree, RawProjectConfiguration } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -514,7 +514,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const valuelists = await this.configReader.read('/Library/Valuelists.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
 
-            const categories = createContextIndependentCategories(
+            const rawConfiguration: RawProjectConfiguration = createContextIndependentCategories(
                 builtInConfiguration.builtInCategories,
                 libraryCategories,
                 builtInConfiguration.builtInRelations,
@@ -526,7 +526,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 languages
             );
 
-            this.configurationIndex = ConfigurationIndex.create(categories);
+            this.configurationIndex = ConfigurationIndex.create(Tree.flatten(rawConfiguration.forms));
 
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);

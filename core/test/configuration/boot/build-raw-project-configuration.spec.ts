@@ -1024,7 +1024,6 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-
     it('field property validation - illegal property in library category field', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

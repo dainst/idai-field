@@ -14,9 +14,9 @@ export interface CategoryFormIndex {
  */
 export namespace CategoryFormIndex {
 
-    export function create(contextIndependentCategories: Array<CategoryForm>): CategoryFormIndex {
+    export function create(categoryForms: Array<CategoryForm>): CategoryFormIndex {
 
-        return contextIndependentCategories.reduce((index, category) => {
+        return categoryForms.reduce((index, category) => {
 
             const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
             if (category.libraryId) terms.push(category.libraryId);

@@ -30,27 +30,21 @@ const TYPE = 'Type';
  */
 export class ProjectConfiguration {
 
-    private forms: Forest<CategoryForm>;
-    private categories: Map<Category>;
+    private categoryForms: Forest<CategoryForm>;
     private relations: Array<Relation>;
-    private commonFields: Map<Field>;
 
 
     constructor(rawConfiguration: RawProjectConfiguration) {
 
-        this.forms = rawConfiguration.forms;
-        this.categories = rawConfiguration.categories;
+        this.categoryForms = rawConfiguration.forms;
         this.relations = rawConfiguration.relations || [];
-        this.commonFields = rawConfiguration.commonFields;
     }
 
 
     public update(newProjectConfiguration: ProjectConfiguration) {
 
-        this.forms = newProjectConfiguration.forms;
-        this.categories = newProjectConfiguration.categories;
+        this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
-        this.commonFields = newProjectConfiguration.commonFields;
     }
 
 
@@ -66,15 +60,15 @@ export class ProjectConfiguration {
             ? (arg as Name) 
             : (arg as Document).resource.category;
         
-        return Tree.find(this.forms, category => category.name === name)?.item;
+        return Tree.find(this.categoryForms, category => category.name === name)?.item;
     }
 
 
     public getCategories(...selectedTopLevelCategories: Array<Name>): Forest<CategoryForm> {
 
         return selectedTopLevelCategories.length === 0
-            ? this.forms
-            : this.forms.filter(
+            ? this.categoryForms
+            : this.categoryForms.filter(
                 on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
@@ -89,20 +83,20 @@ export class ProjectConfiguration {
     public isSubcategory(category: Name, superCategoryName: string): boolean {
 
         if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
-        return isTopLevelItemOrChildThereof(this.forms, category, superCategoryName);
+        return isTopLevelItemOrChildThereof(this.categoryForms, category, superCategoryName);
     }
 
 
     public isGeometryCategory(category: Name): boolean {
 
-        return !isTopLevelItemOrChildThereof(this.forms, category,
+        return !isTopLevelItemOrChildThereof(this.categoryForms, category,
             'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
     }
 
 
     public getRegularCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
             Tree.flatten
         );
@@ -111,7 +105,7 @@ export class ProjectConfiguration {
 
     public getConcreteFieldCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
             Tree.flatten
         );
@@ -120,7 +114,7 @@ export class ProjectConfiguration {
 
     public getFieldCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             removeTrees('Image', 'Project'),
             Tree.flatten
         );
@@ -129,7 +123,7 @@ export class ProjectConfiguration {
 
     public getOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),
             Tree.flatten
         );
@@ -138,7 +132,7 @@ export class ProjectConfiguration {
 
     public getConreteOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
             remove(Named.onName(is('Operation')))
@@ -148,7 +142,7 @@ export class ProjectConfiguration {
 
     public getOverviewToplevelCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
             filter(Named.onName(includedIn(['Operation', 'Place']))) as any
@@ -158,7 +152,7 @@ export class ProjectConfiguration {
 
     public getTypeCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             filterTrees(TYPE, TYPE_CATALOG),
             Tree.flatten
         );
@@ -167,7 +161,7 @@ export class ProjectConfiguration {
 
     public getImageCategories(): Array<CategoryForm> {
 
-        return flow(this.forms,
+        return flow(this.categoryForms,
             filterTrees('Image'),
             Tree.flatten
         );
@@ -217,7 +211,7 @@ export class ProjectConfiguration {
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<CategoryForm> {
 
-        return Tree.flatten(this.forms)
+        return Tree.flatten(this.categoryForms)
             .filter(category => {
                 return Relation.isAllowedRelationDomainCategory(
                     this.relations, category.name, rangeCategoryName, relationName
@@ -231,7 +225,7 @@ export class ProjectConfiguration {
     public getAllowedRelationRangeCategories(relationName: string,
                                              domainCategoryName: string): Array<CategoryForm> {
 
-        return Tree.flatten(this.forms)
+        return Tree.flatten(this.categoryForms)
             .filter(category => {
                 return Relation.isAllowedRelationDomainCategory(
                     this.relations, domainCategoryName, category.name, relationName
@@ -245,7 +239,7 @@ export class ProjectConfiguration {
     private getSuperCategories(superCategoryName: string) {
 
         return flow(
-            this.forms,
+            this.categoryForms,
             filterTrees(superCategoryName),
             Tree.flatten);
     }

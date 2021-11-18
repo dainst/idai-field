@@ -9,8 +9,14 @@ describe('ConfigurationIndex', () => {
         const forms = [
             {
                 name: 'A:default',
-                label: { de: 'A' },
-                defaultLabel: { de: 'A' },
+                label: {
+                    de: 'Kategorie A',
+                    en: 'Category A',
+                },
+                defaultLabel: {
+                    de: 'Kategorie A',
+                    en: 'Category A',
+                },
                 parentCategory: {
                     name: 'A:parent'
                 }
@@ -18,8 +24,12 @@ describe('ConfigurationIndex', () => {
         ]
         const index = ConfigurationIndex.create(forms as any, [], []);
 
-        const result = ConfigurationIndex.findCategoryForms(index, '', 'A:parent');
-        expect(result[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, '', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'A', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'A:default', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'Kategorie', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'Category', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'XYZ', 'A:parent').length).toBe(0);
     });
 
 
@@ -48,6 +58,7 @@ describe('ConfigurationIndex', () => {
         ];
         const index = ConfigurationIndex.create([], categories, []);
 
+        expect(ConfigurationIndex.findFields(index, '', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'field1', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'Erstes', 'A')[0].name).toEqual('field1');

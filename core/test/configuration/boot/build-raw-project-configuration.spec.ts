@@ -1,5 +1,6 @@
-import { Map, left, to } from 'tsfun';
-import { BuiltInFieldDefinition } from '../../../src/configuration';
+import { Map, to } from 'tsfun';
+import { RawProjectConfiguration } from '../../..';
+import { BuiltInFieldDefinition, LanguageConfigurations } from '../../../src/configuration';
 import { buildRawProjectConfiguration } from '../../../src/configuration/boot/build-raw-project-configuration';
 import { ConfigurationErrors } from '../../../src/configuration/boot/configuration-errors';
 import { BuiltInCategoryDefinition } from '../../../src/configuration/model/category/built-in-category-definition';
@@ -1904,5 +1905,149 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].defaultColor).toBe('blue');
         expect(result['B'].color).toBe('red');
         expect(result['B'].defaultColor).toBe('#000042');   // Auto-generated color
+    });
+
+
+   it('return categories, common fields and relations with correct labels', () => {
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: Field.InputType.TEXT }
+        };
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: Field.InputType.TEXT }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]   
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {
+                    field2: { inputType: Field.InputType.TEXT }
+                },
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    field3: { inputType: Field.InputType.TEXT }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] },
+                    { name: Groups.PARENT, fields: ['aCommon', 'field2', 'field3'] },
+                ]
+            }
+        };
+
+        const relationDefinitions: Array<Relation> = [{
+            name: 'isRelated',
+            domain: ['A'],
+            range: ['A'],
+            inputType: 'relation'
+        }];
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [{
+                    categories: {
+                        A: {
+                            label: 'Custom category label',
+                            fields: {
+                                field1: { label: 'Field 1 Custom' },
+                                field2: { label: 'Field 2' },
+                                field3: { label: 'Field 3' },
+                                aCommon: { label: 'Custom common field label' }
+                            }
+                        }
+                    },
+                    commons: {
+                        aCommon: { label: 'Common field A' }
+                    },
+                    relations: {
+                        isRelated: { label: 'Custom relation label' }
+                    }
+                }]
+            },
+            default: {
+                en: [{
+                    categories: {
+                        A: {
+                            label: 'Default category label',
+                            fields: {
+                                field1: { label: 'Field 1 Default' },
+                                field2: { label: 'Field 2' }
+                            }
+                        }
+                    },
+                    commons: {
+                        aCommon: { label: 'Common field A' }
+                    },
+                    relations: {
+                        isRelated: { label: 'Default relation label' }
+                    }
+                }]
+            }
+        };
+
+        const rawConfiguration: RawProjectConfiguration = buildRawProjectConfiguration(
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            commonFields,
+            {},
+            {},
+            relationDefinitions,
+            languageConfigurations
+        );
+
+        const forms: Map<CategoryForm> = Named.arrayToMap(Tree.flatten<CategoryForm>(rawConfiguration.forms));
+
+        expect(rawConfiguration.commonFields['aCommon'].label.en).toBe('Common field A');
+        expect(rawConfiguration.commonFields['aCommon'].defaultLabel.en).toBe('Common field A');
+
+        expect(rawConfiguration.categories['A'].label.en).toBe('Custom category label');
+        expect(rawConfiguration.categories['A'].defaultLabel.en).toBe('Default category label');
+        expect(rawConfiguration.categories['A'].fields['field1'].label.en).toBe('Field 1 Custom');
+        expect(rawConfiguration.categories['A'].fields['field1'].defaultLabel.en).toBe('Field 1 Default');
+        expect(rawConfiguration.categories['A'].fields['field2'].label.en).toBe('Field 2');
+        expect(rawConfiguration.categories['A'].fields['field2'].defaultLabel.en).toBe('Field 2');
+        expect(rawConfiguration.categories['A'].fields['field3']).toBe(undefined);
+
+        expect(rawConfiguration.relations[0].label.en).toBe('Custom relation label');
+        expect(rawConfiguration.relations[0].defaultLabel.en).toBe('Default relation label');
+
+        expect(forms['A'].label.en).toBe('Custom category label');
+        expect(forms['A'].defaultLabel.en).toBe('Default category label');
+        expect(forms['A'].groups[0].fields[0].label.en).toBe('Field 1 Custom');
+        expect(forms['A'].groups[0].fields[0].defaultLabel.en).toBe('Field 1 Default');
+        expect(forms['A'].groups[1].fields[0].label.en).toBe('Custom common field label');
+        expect(forms['A'].groups[1].fields[0].defaultLabel.en).toBe('Common field A');
+        expect(forms['A'].groups[1].fields[1].label.en).toBe('Field 2');
+        expect(forms['A'].groups[1].fields[1].defaultLabel.en).toBe('Field 2');
+        expect(forms['A'].groups[1].fields[2].label.en).toBe('Field 3');
+        expect(forms['A'].groups[1].fields[2].defaultLabel.en).toBe(undefined);
     });
 });

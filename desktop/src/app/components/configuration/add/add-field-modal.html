@@ -2,15 +2,33 @@
     <h5 class="modal-title" i18n="@@configuration.addField">Feld hinzufügen</h5>
 </div>
 
-<div class="modal-body">
-    <input type="text" id="field-name" class="form-control" [(ngModel)]="fieldName">
+<div class="modal-body row add-field-modal-body">
+    <div class="col-md-6">
+        <div class="input-group mb-2">
+            <input type="text"
+                   id="field-name"
+                   class="form-control"
+                   [(ngModel)]="searchTerm"
+                   (ngModelChange)="applyFieldNameSearch()">
+        </div>
+        <field-listing [fields]="fields"
+                       [selectedField]="selectedField"
+                       [emptyField]="emptyField"
+                       [searchTerm]="searchTerm"
+                       (onFieldSelected)="select($event)">
+        </field-listing>
+    </div>
+    <div class="col-md-6">
+        <!-- TODO Add field preview -->
+    </div>
 </div>
 
 <div class="modal-footer">
-    <div id="create-field-button"
+    <div id="add-field-button"
          class="btn btn-success"
-         (click)="createField()">
-        <span i18n="@@configuration.createField">Neues Feld erstellen</span>
+         [class.disabled]="!selectedField"
+         (click)="confirmSelection()">
+        <span i18n="@@configuration.selectField">Feld auswählen</span>
     </div>
     <div id="cancel-add-field-modal-button"
          class="btn btn-secondary"

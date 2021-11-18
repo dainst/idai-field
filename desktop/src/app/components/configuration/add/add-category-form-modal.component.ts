@@ -27,14 +27,13 @@ export class AddCategoryFormModalComponent {
     public parentCategory: CategoryForm|undefined;
     public categoryToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
+        Promise<ErrWithParams|undefined>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;
     public emptyForm: CategoryForm|undefined;
     public categoryForms: Array<CategoryForm> = [];
-
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<ErrWithParams|undefined>;
 
 
     constructor(public activeModal: NgbActiveModal,

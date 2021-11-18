@@ -9,7 +9,9 @@ export interface Category {
     parent?: string;
 
     label: I18N.String;
+    defaultLabel?: I18N.String;
     description: I18N.String;
+    defaultDescription?: I18N.String;
 
     fields: Map<Field>;
 

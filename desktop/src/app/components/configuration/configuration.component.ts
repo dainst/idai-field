@@ -20,7 +20,7 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
 import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { ConfigurationIndex } from './configuration-index';
+import { ConfigurationIndex } from './index/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';

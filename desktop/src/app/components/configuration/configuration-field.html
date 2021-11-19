@@ -30,21 +30,8 @@
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
                 <span>{{getInputTypeLabel()}}</span>
             </li>
-
             <li *ngIf="field.valuelist" class="list-group-item">
-                <div *ngIf="getValuelistDescription(field.valuelist)"
-                     class="valuelist-description">
-                    {{getValuelistDescription(field.valuelist)}}
-                </div>
-                <div class="row valuelist">
-                    <div *ngFor="let value of getValues(field.valuelist)"
-                         class="col-2 value-col">
-                        <span class="badge badge-light value-badge">
-                            {{getValueLabel(field.valuelist, value)}}
-                            <code>{{value}}</code>
-                        </span>
-                    </div>
-                </div>
+                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
             </li>
         </ul>
     </div>

@@ -1,37 +1,10 @@
-#category-preview {
-  display: block;
-  width: 100%;
-  height: calc(100vh - 226px);
-  background-color: white;
-  user-select: none;
-
-  #category-preview-header {
-    position: relative;
-    top: 5px;
-    left: 5px;
-    height: 40px;
-
+.preview {
+  #preview-header {
     category-icon {
       position: relative;
       top: 2px;
       margin-left: 4px;
       margin-right: 3px;
-    }
-
-    .mdi-plus-circle {
-      color: #28a745;
-    }
-    
-    .category-title {
-      b {
-        margin: 6px;
-      }
-
-      b,
-      code {
-        position: relative;
-        bottom: 2px;
-      }
     }
 
     .badge {
@@ -47,18 +20,7 @@
     }
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  #category-preview-body {
-    height: calc(100% - 45px);
-    margin: 5px;
-    overflow: hidden;
-    overflow-y: scroll;
-    background-color: white;
-    
+  #preview-body {
     #category-description {
       padding: 12px;
       font-size: 14px;

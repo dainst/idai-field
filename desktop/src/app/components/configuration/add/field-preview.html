@@ -1,0 +1,20 @@
+<div *ngIf="field" class="preview">
+    <div id="preview-header">
+        <span *ngIf="!field.label" class="mdi mdi-plus-circle mdi-24px"></span>
+        <span class="preview-item-title">
+            <b>{{getLabel(field)}}</b>
+            <code>{{field.name}}</code>
+        </span>
+    </div>
+    <div id="preview-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+                <span>{{getInputTypeLabel()}}</span>
+            </li>
+            <li *ngIf="field.valuelist" class="list-group-item">
+                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
+            </li>
+        </ul>
+    </div>
+</div>

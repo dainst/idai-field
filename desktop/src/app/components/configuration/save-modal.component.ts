@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    selector: 'save-modal',
     templateUrl: './save-modal.html'
 })
 /**

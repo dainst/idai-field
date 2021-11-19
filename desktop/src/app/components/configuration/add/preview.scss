@@ -1,0 +1,44 @@
+.preview {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 226px);
+    background-color: white;
+    user-select: none;
+  
+    #preview-header {
+      position: relative;
+      top: 5px;
+      left: 5px;
+      height: 40px;
+  
+      .mdi-plus-circle {
+        color: #28a745;
+      }
+      
+      .preview-item-title {
+        b {
+          margin: 6px;
+        }
+  
+        b,
+        code {
+          position: relative;
+          bottom: 2px;
+        }
+      }
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    #preview-body {
+      height: calc(100% - 45px);
+      margin: 5px;
+      overflow: hidden;
+      overflow-y: scroll;
+      background-color: white;
+    }
+  }
+  

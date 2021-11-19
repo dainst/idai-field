@@ -6,11 +6,6 @@ import { ConfigurationUtil } from '../../components/configuration/configuration-
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 
 
-const locale: string = typeof window !== 'undefined'
-    ? window.require('@electron/remote').getGlobal('config').locale
-    : 'de';
-
-
 @Component({
     selector: 'configuration-field',
     templateUrl: './configuration-field.html'
@@ -50,14 +45,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
         this.updateLabelAndDescription();
     }
-
-
-    public getValuelistDescription = (valuelist: Valuelist) => valuelist.description?.[locale];
-
-    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
-
-    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
-        this.labels.getValueLabel(valuelist, valueId);
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 

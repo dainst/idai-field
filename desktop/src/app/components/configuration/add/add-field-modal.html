@@ -19,7 +19,9 @@
         </field-listing>
     </div>
     <div class="col-md-6">
-        <!-- TODO Add field preview -->
+        <field-preview [field]="selectedField"
+                       [availableInputTypes]="availableInputTypes">
+        </field-preview>
     </div>
 </div>
 

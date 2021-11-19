@@ -8,7 +8,7 @@
     </div>
     <div id="preview-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li *ngIf="field.inputType" class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
                 <span>{{getInputTypeLabel()}}</span>
             </li>

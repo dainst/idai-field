@@ -2,9 +2,8 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
-import { ConfigurationUtil } from '../../components/configuration/configuration-util';
+import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
-import { InputType } from './configuration.component';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';

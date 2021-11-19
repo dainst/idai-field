@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Valuelist,
     Labels } from 'idai-field-core';
-import { InputType } from './configuration.component';
-import { ConfigurationUtil } from '../../components/configuration/configuration-util';
+import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 
 
@@ -52,20 +51,16 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 
+    public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
+        this.field.inputType, this.availableInputTypes
+    );
+
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 
         return this.configurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
-    }
-
-
-    public getInputTypeLabel(): string {
-
-        return this.availableInputTypes
-            .find(inputType => inputType.name === this.field.inputType)
-            .label;
     }
 
 

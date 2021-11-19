@@ -7,8 +7,7 @@ import { ConfigurationIndex } from '../index/configuration-index';
 import { Modals } from '../../../services/modals';
 import { FieldEditorModalComponent } from '../editor/field-editor-modal.component';
 import { MenuContext } from '../../../services/menu-context';
-import { InputType } from '../configuration.component';
-import { ConfigurationUtil } from '../configuration-util';
+import { ConfigurationUtil, InputType } from '../configuration-util';
 
 
 @Component({
@@ -104,7 +103,6 @@ export class AddFieldModalComponent {
 
         try {
             this.saveAndReload(clonedConfigurationDocument, this.category.name);
-            console.log('saved and reloaded!');
             this.activeModal.close();
         } catch {
             // Stay in modal

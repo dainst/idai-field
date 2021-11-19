@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Field, Labels } from 'idai-field-core';
-import { InputType } from '../configuration.component';
+import { ConfigurationUtil, InputType } from '../configuration-util';
 
 
 @Component({
@@ -24,12 +24,7 @@ export class FieldPreviewComponent {
 
     public getLabel = (value: any) => this.labels.get(value);
 
-
-    // TODO Move to ConfigurationUtil
-    public getInputTypeLabel(): string {
-
-        return this.availableInputTypes
-            .find(inputType => inputType.name === this.field.inputType)
-            .label;
-    }
+    public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
+        this.field.inputType, this.availableInputTypes
+    );
 }

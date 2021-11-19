@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, on, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Document, GroupDefinition, CustomFormDefinition } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
 import { ErrWithParams } from '../../import/import/import-documents';
 import { ConfigurationIndex } from '../index/configuration-index';
 import { Modals } from '../../../services/modals';
@@ -38,7 +38,8 @@ export class AddFieldModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private modals: Modals) {}
+                private modals: Modals,
+                private labels: Labels) {}
 
 
     public initialize() {
@@ -81,8 +82,8 @@ export class AddFieldModalComponent {
 
         this.fields = ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, this.category.name)
             .concat(ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, 'commons'))
-            .filter(field => !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
-        );
+            .filter(field => !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
+            .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
 
         this.selectedField = this.fields?.[0];
         this.emptyField = this.getEmptyField();

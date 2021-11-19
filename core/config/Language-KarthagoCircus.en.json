@@ -12,6 +12,9 @@
           "fields":{
             "diaryAbstract": {
               "label": "Diary abstract"
+            },
+            "supervisor": {
+              "label": "Trench director"
             }
           }
         },
@@ -476,6 +479,13 @@
              "label": "Sample type"
            }
         }
+      },
+      "Image": {
+        "fields": {
+          "draughtsmen": {
+            "label": "Creator"
+          }
+        }
       }
       },
       "commons": {
@@ -493,9 +503,6 @@
         },
         "campaign": {
             "label": "Campaign"
-        },
-        "supervisor": {
-            "label": "Trench director"
         },
         "description": {
             "label": "Description"
@@ -544,9 +551,6 @@
         },
         "provenance": {
           "label": "Provenance"
-        },
-        "draughtsmen": {
-          "label": "Creator"
         },
         "literature": {
           "label": "Literature reference"

@@ -68,11 +68,6 @@ export class BuiltInConfiguration {
         endDate: {
             inputType: Field.InputType.DATE,
         },
-        supervisor: {
-            inputType: Field.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'staff',
-            constraintIndexed: true
-        },
         processor: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
@@ -82,11 +77,6 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
-            constraintIndexed: true
-        },
-        draughtsmen: {
-            inputType: Field.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'staff',
             constraintIndexed: true
         },
         description: {
@@ -160,6 +150,11 @@ export class BuiltInConfiguration {
                 geometry: {
                     inputType: Field.InputType.GEOMETRY,
                     visible: false
+                },
+                supervisor: {
+                    inputType: Field.InputType.CHECKBOXES,
+                    valuelistFromProjectField: 'staff',
+                    constraintIndexed: true
                 }
             },
             minimalForm: {
@@ -551,6 +546,11 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.NONE,
                     visible: false,
                     editable: false
+                },
+                draughtsmen: {
+                    inputType: Field.InputType.CHECKBOXES,
+                    valuelistFromProjectField: 'staff',
+                    constraintIndexed: true
                 }
             },
             minimalForm: {

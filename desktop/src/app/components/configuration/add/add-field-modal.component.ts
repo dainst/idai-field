@@ -79,8 +79,8 @@ export class AddFieldModalComponent {
 
     public applyFieldNameSearch() {
 
-        this.fields = ConfigurationIndex
-            .findFields(this.configurationIndex, this.searchTerm, this.category.name)
+        this.fields = ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, this.category.name)
+            .concat(ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, 'commons'))
             .filter(field => !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
         );
 

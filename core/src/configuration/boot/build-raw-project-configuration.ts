@@ -112,6 +112,7 @@ function buildCategories(builtInCategories: Map<BuiltInCategoryDefinition>,
         applyLanguagesToCategory(languageConfigurations, categoryDefinition);
         for (const fieldName of Object.keys(categoryDefinition.fields)) {
             categoryDefinition.fields[fieldName].name = fieldName;
+            setDefaultFieldVisibility(categoryDefinition.fields[fieldName]);
             Assertions.assertValuelistIdsProvided(categories);
             replaceValuelistIdWithValuelist(categoryDefinition.fields[fieldName], valuelists);
         }
@@ -128,6 +129,7 @@ function buildFields(fieldDefinitions: Map<BuiltInFieldDefinition>, languageConf
 
     for (const fieldName of Object.keys(fields)) {
         fields[fieldName].name = fieldName;
+        setDefaultFieldVisibility(fields[fieldName]);
         replaceValuelistIdWithValuelist(fields[fieldName], valuelists);
     }
 
@@ -166,6 +168,13 @@ function setDefaultConstraintIndexed(forms: Map<TransientFormDefinition>): Map<T
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<CategoryForm>): Forest<CategoryForm> =>
     Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<CategoryForm>;
+
+
+function setDefaultFieldVisibility(field: TransientFieldDefinition) {
+
+    if (field.visible === undefined) field.visible = true;
+    if (field.editable === undefined) field.editable = true;
+}
 
 
 function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {

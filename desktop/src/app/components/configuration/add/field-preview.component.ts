@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 
@@ -19,10 +20,13 @@ export class FieldPreviewComponent {
     public description: string;
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private i18n: I18n) {}
 
 
-    public getLabel = (value: any) => this.labels.get(value);
+    public getLabel = (value: any) => this.field.label
+        ? this.labels.get(value)
+        : this.i18n({ id: 'configuration.newField', value: 'Neues Feld' });
 
     public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
         this.field.inputType, this.availableInputTypes

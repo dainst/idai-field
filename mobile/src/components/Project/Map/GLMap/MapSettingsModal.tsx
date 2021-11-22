@@ -72,11 +72,13 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = (
                             step={ 0.25 }
                             onValueChange={ onChangePointRadius } />
                     </Row>
-                    <Text style={ styles.sectionHeader }>Layers</Text>
-                    <FlatList
-                        data={ layerInfo }
-                        keyExtractor={ item => item.doc.resource.id }
-                        renderItem={ renderItem } />
+                   { layerInfo.length > 0 && <>
+                        <Text style={ styles.sectionHeader }>Layers</Text>
+                        <FlatList
+                            data={ layerInfo }
+                            keyExtractor={ item => item.doc.resource.id }
+                            renderItem={ renderItem } />
+                    </>}
                 </Card>
             </View>
         </Modal>

@@ -24,13 +24,13 @@ export interface Field extends I18N.LabeledValue {
     defaultConstraintIndexed?: boolean;
     mandatory?: true;
     allowOnlyValuesOfParent?: true;
-    source?: Field.SourceTypes;
+    source?: Field.SourceType;
 }
 
 
 export module Field {
 
-    export type SourceTypes = 'builtIn'|'library'|'custom'|'common';
+    export type SourceType = 'builtIn'|'library'|'custom'|'common';
 
     export const INPUTTYPE = 'inputType';
     export const SOURCE = 'source';

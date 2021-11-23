@@ -31,7 +31,7 @@ export function addSourceField(builtInCategories: Map<BuiltInCategoryDefinition>
 }
 
 
-function setFieldSourceOnForms(forms: Map<BaseFormDefinition|undefined>, value: Field.SourceTypes) {
+function setFieldSourceOnForms(forms: Map<BaseFormDefinition|undefined>, value: Field.SourceType) {
 
     for (const form of Object.values(forms)) {
         if (!form) continue;
@@ -40,7 +40,7 @@ function setFieldSourceOnForms(forms: Map<BaseFormDefinition|undefined>, value: 
 }
 
 
-function setFieldSourceOnFields(fields: Map<BaseFieldDefinition>, value: Field.SourceTypes) {
+function setFieldSourceOnFields(fields: Map<BaseFieldDefinition>, value: Field.SourceType) {
 
     for (const field of Object.values(fields)) {
         

@@ -16,7 +16,7 @@ export class RemoteFilestore {
                 private httpAdapter: HttpAdapter) {}
 
 
-    public isOn = () => isOk(this.getLoginData()) && this.mySyncIsOn();
+    public isOn = () => isOk(this.getRequestContext()) && this.mySyncIsOn();
 
 
     /**
@@ -27,12 +27,12 @@ export class RemoteFilestore {
      */
     public get(path: string) {
 
-        const maybeRequestContext = this.getLoginData();
+        const maybeRequestContext = this.getRequestContext();
         if (!isOk(maybeRequestContext) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
-        const loginData  = ok(maybeRequestContext);
-        const {url, user: project} = loginData;
-        loginData.url = url + '/files/' + project + path;
-        return this.httpAdapter.getWithBinaryData(loginData);
+        const requestContext  = ok(maybeRequestContext);
+        const {url, user: project} = requestContext;
+        requestContext.url = url + '/files/' + project + path;
+        return this.httpAdapter.getWithBinaryData(requestContext);
     }
 
 
@@ -44,11 +44,11 @@ export class RemoteFilestore {
      */
     public post(path: string, binaryContents: any) {
 
-        const maybeLoginData = this.getLoginData();
-        if (!isOk(maybeLoginData) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
-        const loginData = ok(maybeLoginData);
-        loginData.url = loginData.url + '/files/' + this.settingsProvider.getSettings().selectedProject + path;
-        return this.httpAdapter.postBinaryData(loginData, binaryContents);
+        const maybeRequestContext = this.getRequestContext();
+        if (!isOk(maybeRequestContext) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
+        const requestContext = ok(maybeRequestContext);
+        requestContext.url = requestContext.url + '/files/' + this.settingsProvider.getSettings().selectedProject + path;
+        return this.httpAdapter.postBinaryData(requestContext, binaryContents);
     }
 
 
@@ -60,7 +60,7 @@ export class RemoteFilestore {
     }
 
 
-    private getLoginData(): Maybe<HttpAdapter.BasicAuthRequestContext> {
+    private getRequestContext(): Maybe<HttpAdapter.RequestContext> {
 
         const settings = this.settingsProvider.getSettings();
         const project = settings.selectedProject;

@@ -3,7 +3,7 @@ const axios = typeof window !== 'undefined' ? window.require('axios') : require(
 
 export namespace HttpAdapter{
 
-    export type BasicAuthRequestContext = {
+    export type RequestContext = {
         user: string,
         pass: string,
         url: string, // except protocol. For example 'localhost:4000/abcd'
@@ -17,7 +17,7 @@ export namespace HttpAdapter{
  */
 export class HttpAdapter {
 
-    public getWithBinaryData({user, pass, url, protocol}: HttpAdapter.BasicAuthRequestContext) {
+    public getWithBinaryData({user, pass, url, protocol}: HttpAdapter.RequestContext) {
 
         return new Promise<any>(resolve => {
 
@@ -28,7 +28,7 @@ export class HttpAdapter {
 
 
     // https://stackoverflow.com/a/59032305
-    public async postBinaryData({user, pass, url, protocol}: HttpAdapter.BasicAuthRequestContext,
+    public async postBinaryData({user, pass, url, protocol}: HttpAdapter.RequestContext,
                                 binaryContents: any) {
 
         await axios({

@@ -521,7 +521,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.configurationIndex = ConfigurationIndex.create(
                 Tree.flatten(rawConfiguration.forms),
                 Object.values(rawConfiguration.categories),
-                Object.values(rawConfiguration.commonFields)
+                Object.values(rawConfiguration.commonFields),
+                Object.values(rawConfiguration.valuelists)
             );
 
         } catch (e) {

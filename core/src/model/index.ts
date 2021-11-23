@@ -32,3 +32,4 @@ export { ConfigurationResource } from './configuration-resource';
 export { ConnectedDocs as ConnectedDocsWriter } from '../services/utilities/connected-docs';
 export { updateRelations } from '../services/utilities/update-relations';
 export { RelationsManager } from '../services/relations-manager';
+export { Category } from './configuration/category';

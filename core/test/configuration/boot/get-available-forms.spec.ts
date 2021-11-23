@@ -1,6 +1,7 @@
 import { Map } from 'tsfun';
-import { BuiltInFieldDefinition, LibraryFormDefinition, TransientFormDefinition } from '../../../src/configuration';
+import { LibraryFormDefinition, TransientFormDefinition } from '../../../src/configuration';
 import { getAvailableForms } from '../../../src/configuration/boot/get-available-forms';
+import { Field } from '../../../src/model/configuration/field';
 import { Relation } from '../../../src/model/configuration/relation';
 
 
@@ -11,14 +12,16 @@ describe('get available forms', () => {
 
     it('get available forms', () => {
 
-        const builtInFields: Map<BuiltInFieldDefinition> = {
+        const builtInFields: Map<Field> = {
             builtInField: {
+                name: 'builtInField',
                 inputType: 'boolean'
             }
         };
 
-        const commonFields: Map<BuiltInFieldDefinition> = {
+        const commonFields: Map<Field> = {
             commonField: {
+                name: 'builtInField',
                 inputType: 'literature'
             }
         };

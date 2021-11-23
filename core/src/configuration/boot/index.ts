@@ -1,7 +1,5 @@
 export { addRelations } from './add-relations';
 export { addSourceField } from './add-source-field';
-export { applyLanguageConfigurations } from './apply-language-configurations';
-export { applyLanguagesToForm as applyLanguagesToCategory } from './apply-languages-to-form';
 export { assertFieldsAreValid } from '../model/field/assert-fields-are-valid';
 export { Assertions } from './assertions';
 export { buildRawProjectConfiguration } from './build-raw-project-configuration';

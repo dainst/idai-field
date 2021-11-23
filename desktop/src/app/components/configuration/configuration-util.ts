@@ -2,6 +2,14 @@ import { clone, flatten, to } from 'tsfun';
 import { CategoryForm, Field, GroupDefinition, Group, Groups, Named } from 'idai-field-core';
 
 
+export type InputType = {
+    name: string;
+    label: string;
+    searchable?: boolean;
+    customFields?: boolean;
+};
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -62,5 +70,13 @@ export module ConfigurationUtil {
     export function isEditableGroup(group: Group): boolean {
 
         return group.name !== Groups.PARENT && group.name !== Groups.CHILD;
+    }
+
+
+    export function getInputTypeLabel(inputTypeName: string, availableInputTypes: Array<InputType>): string {
+
+        return availableInputTypes
+            .find(inputType => inputType.name === inputTypeName)
+            .label;
     }
 }

@@ -1,7 +1,7 @@
 import { clone, map, Map } from 'tsfun';
+import { Field } from '../../model/configuration/field';
 import { Relation } from '../../model/configuration/relation';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
-import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { LibraryFormDefinition } from '../model/form/library-form-definition';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { addFieldsToForm } from './add-fields-to-form';
@@ -14,8 +14,8 @@ import { ConfigurationErrors } from './configuration-errors';
  */
 export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
                                   libraryForms: Map<LibraryFormDefinition>,
-                                  builtInFields: Map<BuiltInFieldDefinition>,
-                                  commonFields: Map<BuiltInFieldDefinition>,
+                                  builtInFields: Map<Field>,
+                                  commonFields: Map<Field>,
                                   relations: Array<Relation>): Map<TransientFormDefinition> {
 
     const builtInForms: Map<TransientFormDefinition> = map(getMinimalForm(categories), categories);
@@ -52,6 +52,10 @@ function getMinimalForm(categories: Map<TransientCategoryDefinition>) {
         minimalForm.description = {};
         minimalForm.name = categoryName;
         minimalForm.categoryName = categoryName;
+        minimalForm.label = category.label;
+        minimalForm.defaultLabel = category.defaultLabel;
+        minimalForm.description = category.description;
+        minimalForm.defaultDescription = category.defaultDescription;
         minimalForm.parent = category.parent;
         minimalForm.color = category.color;
     
@@ -65,6 +69,10 @@ function makeTransientForm(libraryForm: LibraryFormDefinition, formName: string,
 
     const clonedForm: TransientFormDefinition = clone(libraryForm) as TransientFormDefinition;
     clonedForm.name = formName;
+    clonedForm.label = category.label;
+    clonedForm.defaultLabel = category.defaultLabel;
+    clonedForm.description = category.description;
+    clonedForm.defaultDescription = category.defaultDescription;
     clonedForm.parent = category.parent;
     clonedForm.color = category.color;
 

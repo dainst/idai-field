@@ -14,4 +14,3 @@ ENV EXPO_ANDROID_KEY_PASSWORD="keypassword"
 
 WORKDIR /mobile
 ENTRYPOINT [ "sh","./build-container/entrypoint.sh" ]
-#ENTRYPOINT [ "python3", "-m", "http.server", "-d", "dist", "--cgi","8000","&", "&&", "disown","&&","turtle","build:android","--type","apk", "--keystore-path", "./keystore.jks","--keystore-alias" ,"keyalias", "--allow-non-https-public-url","--public-url","host.docker.internal:8000/android-index.json"]

@@ -22,6 +22,9 @@ import { DeleteFieldModalComponent } from './delete/delete-field-modal.component
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { SaveModalComponent } from './save-modal.component';
+import { FieldListingComponent } from './add/field-listing.component';
+import { FieldPreviewComponent } from './add/field-preview.component';
+import { ValuelistViewComponent } from './valuelist-view.component';
 
 
 @NgModule({
@@ -39,9 +42,11 @@ import { SaveModalComponent } from './save-modal.component';
         MultiLanguageInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
-        CategoryPreviewComponent,
-        CategoryListingComponent,
         AddCategoryFormModalComponent,
+        CategoryPreviewComponent,
+        FieldPreviewComponent,
+        CategoryListingComponent,
+        FieldListingComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
@@ -50,7 +55,8 @@ import { SaveModalComponent } from './save-modal.component';
         DeleteFieldModalComponent,
         DeleteGroupModalComponent,
         DeleteCategoryModalComponent,
-        SaveModalComponent
+        SaveModalComponent,
+        ValuelistViewComponent
     ],
     exports: [
         ConfigurationComponent

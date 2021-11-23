@@ -1,5 +1,5 @@
 import { Document, ProjectConfiguration, Forest } from 'idai-field-core';
-import {DocumentHolder} from '../../../../src/app/components/docedit/document-holder';
+import { DocumentHolder } from '../../../../src/app/components/docedit/document-holder';
 import { M } from '../../../../src/app/components/messages/m';
 
 
@@ -19,30 +19,32 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration([Forest.build(
-            [
-                [{
-                    name: 'Trench',
-                    groups: [{ name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'category' },
-                        { name: 'emptyfield' }
-                    ]}]}
-                , []],
-                [{
-                    name: 'Find',
-                    groups: [{
-                        name: 'stem', fields: [
-                            {name: 'id'},
-                            {name: 'category'},
-                            {name: 'unsignedIntField', inputType: 'unsignedInt'},
-                            {name: 'unsignedFloatField', inputType: 'unsignedFloat'},
-                            {name: 'floatField', inputType: 'float'}
-                        ]
-                    }]
-                }, []]
-            ] as any),
-            [
+        const pconf = new ProjectConfiguration({
+            forms: Forest.build(
+                [
+                    [{
+                        name: 'Trench',
+                        groups: [{ name: 'stem', fields: [
+                            { name: 'id' },
+                            { name: 'category' },
+                            { name: 'emptyfield' }
+                        ]}]}
+                    , []],
+                    [{
+                        name: 'Find',
+                        groups: [{
+                            name: 'stem', fields: [
+                                {name: 'id'},
+                                {name: 'category'},
+                                {name: 'unsignedIntField', inputType: 'unsignedInt'},
+                                {name: 'unsignedFloatField', inputType: 'unsignedFloat'},
+                                {name: 'floatField', inputType: 'float'}
+                            ]
+                        }]
+                    }, []]
+                ]) as any,
+            categories: {},
+            relations: [
                 {
                     name: 'isFoundOn',
                     inverse: 'bears',
@@ -69,8 +71,9 @@ describe('DocumentHolder', () => {
                     visible: false,
                     inputType: 'relation'
                 }
-            ]
-        ]);
+            ],
+            commonFields: {}
+        });
 
         defaultDocument = {
             _id: '1',

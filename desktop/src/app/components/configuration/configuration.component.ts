@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
-    createContextIndependentCategories, Labels, IndexFacade, Tree } from 'idai-field-core';
+    createContextIndependentCategories, Labels, IndexFacade, Tree, RawProjectConfiguration } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -15,25 +15,17 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
-import { ConfigurationUtil } from '../../components/configuration/configuration-util';
+import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { ConfigurationIndex } from './configuration-index';
+import { ConfigurationIndex } from './index/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
-
-
-export type InputType = {
-    name: string;
-    label: string;
-    searchable?: boolean;
-    customFields?: boolean;
-};
 
 
 @Component({
@@ -53,10 +45,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public topLevelCategoriesArray: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public configurationDocument: ConfigurationDocument;
+    public configurationIndex: ConfigurationIndex;
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
-
-    private configurationIndex: ConfigurationIndex = {};
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
@@ -514,7 +505,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const valuelists = await this.configReader.read('/Library/Valuelists.json');
             const languages = await this.configLoader.readDefaultLanguageConfigurations();
 
-            const categories = createContextIndependentCategories(
+            const rawConfiguration: RawProjectConfiguration = createContextIndependentCategories(
                 builtInConfiguration.builtInCategories,
                 libraryCategories,
                 builtInConfiguration.builtInRelations,
@@ -526,7 +517,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 languages
             );
 
-            this.configurationIndex = ConfigurationIndex.create(categories);
+            this.configurationIndex = ConfigurationIndex.create(
+                Tree.flatten(rawConfiguration.forms),
+                Object.values(rawConfiguration.categories),
+                Object.values(rawConfiguration.commonFields)
+            );
 
         } catch (e) {
             console.error('error while reading config in AddCategoryModalComponent', e);

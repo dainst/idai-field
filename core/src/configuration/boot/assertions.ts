@@ -10,6 +10,8 @@ import { LibraryCategoryDefinition } from '../model/category/library-category-de
 import { BuiltInCategoryDefinition } from '../model/category/built-in-category-definition';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { BaseCategoryDefinition, BaseFieldDefinition } from '../model';
+import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
+import { Field } from '../../model/configuration/field';
 
 
 /**
@@ -81,24 +83,24 @@ export module Assertions {
     }
 
 
-    export function assertValuelistIdsProvided(forms: Map<TransientFormDefinition>) {
+    export function assertValuelistIdsProvided(definitions: Map<TransientFormDefinition|TransientCategoryDefinition>) {
 
-        iterateOverFields(forms, (formName, _, fieldName, field) => {
+        iterateOverFields(definitions, (formName, _, fieldName, field) => {
 
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
-                if (!field.valuelistId && !field.valuelistFromProjectField) {
+                if (!field.valuelistId && !field.valuelist && !field.valuelistFromProjectField) {
                     throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, formName, fieldName]];
                 }
             }
 
             if (['dimension'].includes(field.inputType ? field.inputType : '')) {
-                if (!field.positionValuelistId) {
+                if (!field.positionValuelistId && !(field as Field).positionValues) {
                     throw [[ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, formName, fieldName]];
                 }
             }
         });
 
-        return forms;
+        return definitions;
     }
 
 

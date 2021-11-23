@@ -3,52 +3,14 @@ category-listing {
   width: 100%;
   height: calc(100vh - 273px);
 
-  #category-listing {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-    overflow-y: scroll;
-    list-style: none;
-
+  .listing {
     li {
       height: 45px;
-      padding: 12px 5px 5px 45px;
-      margin-top: 1px;
-      margin-bottom: 1px;
-      background-color: #fff;
-      border: none;
-      user-select: none;
-      transition: background-color .25s ease;
-
+      
       &.category-header {
         padding: 5px;
       }
 
-      &.new-category-option {
-        padding: 3px 5px 5px 5px;
-        background-color: #d7ffd9;
-
-        &.selected,
-        &:hover {
-          background-color: darken(#d7ffd9, 10%);
-          transition: background-color .5s ease;
-        }
-
-        .mdi-plus-circle {
-          position: relative;
-          top: 1px;
-          left: 9px;
-          margin-right: 21px;
-          color: #28a745;
-        }
-        
-        .category-label {
-          font-style: italic;
-        }
-      }
-
-      &.selected,
       &:hover:not(.category-header) {
         background-color: darken($list-item-hover-color, 5%);
         transition: background-color .5s ease;
@@ -59,22 +21,6 @@ category-listing {
         top: 2px;
         margin-left: 4px;
         margin-right: 10px;
-      }
-
-      .category-label,
-      .search-result-label,
-      code {
-        position: relative;
-        bottom: 2px;
-      }
-
-      code {
-        margin-left: 6px;
-      }
-
-      .search-result-label {
-        font-style: italic;
-        font-size: 14px;
       }
 
       .badge {

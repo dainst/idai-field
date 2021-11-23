@@ -7,6 +7,7 @@ import { TransientCategoryDefinition } from '../model/category/transient-categor
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { addFieldsToForm } from './add-fields-to-form';
 import { Relation } from '../../model/configuration/relation';
+import { Field } from '../../model/configuration/field';
 
 
 /**
@@ -15,8 +16,8 @@ import { Relation } from '../../model/configuration/relation';
  */
 export function mergeWithCustomForms(customForms: Map<CustomFormDefinition>,
                                      categories: Map<TransientCategoryDefinition>,
-                                     builtInFields: Map<BuiltInFieldDefinition>,
-                                     commonFields: Map<BuiltInFieldDefinition>,
+                                     builtInFields: Map<Field>,
+                                     commonFields: Map<Field>,
                                      relations: Array<Relation>) {
 
     return (forms: Map<TransientFormDefinition>) => {
@@ -44,8 +45,8 @@ export function mergeWithCustomForms(customForms: Map<CustomFormDefinition>,
 function handleDirectExtension(customForm: CustomFormDefinition,
                                extendedForm: TransientFormDefinition,
                                categories: Map<TransientCategoryDefinition>,
-                               builtInFields: Map<BuiltInFieldDefinition>,
-                               commonFields: Map<BuiltInFieldDefinition>,
+                               builtInFields: Map<Field>,
+                               commonFields: Map<Field>,
                                relations: Array<Relation>): TransientFormDefinition {
 
     const clonedCustomForm: TransientFormDefinition = clone(customForm) as TransientFormDefinition;
@@ -60,8 +61,8 @@ function handleDirectExtension(customForm: CustomFormDefinition,
 function handleChildExtension(customFormName: string, 
                               customForm: CustomFormDefinition,
                               categories: Map<TransientCategoryDefinition>,
-                              builtInFields: Map<BuiltInFieldDefinition>,
-                              commonFields: Map<BuiltInFieldDefinition>,
+                              builtInFields: Map<Field>,
+                              commonFields: Map<Field>,
                               relations: Array<Relation>): TransientFormDefinition {
 
     if (!customForm.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customFormName];

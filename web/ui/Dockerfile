@@ -1,4 +1,4 @@
-FROM node:latest as builder
+FROM node:lts as builder
 
 COPY ./src /ui/src
 COPY ./public /ui/public

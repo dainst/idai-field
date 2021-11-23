@@ -2,7 +2,7 @@ import { flatten, keysValues, right, set } from 'tsfun';
 import { CategoryForm, Name } from 'idai-field-core';
 
 
-export interface ConfigurationIndex {
+export interface CategoryFormIndex {
 
     [term: string]: Array<CategoryForm>;
 }
@@ -12,11 +12,11 @@ export interface ConfigurationIndex {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export namespace ConfigurationIndex {
+export namespace CategoryFormIndex {
 
-    export function create(contextIndependentCategories: Array<CategoryForm>): ConfigurationIndex {
+    export function create(categoryForms: Array<CategoryForm>): CategoryFormIndex {
 
-        return contextIndependentCategories.reduce((index, category) => {
+        return categoryForms.reduce((index, category) => {
 
             const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
             if (category.libraryId) terms.push(category.libraryId);
@@ -31,7 +31,7 @@ export namespace ConfigurationIndex {
     }
 
 
-    export function find(index: ConfigurationIndex,
+    export function find(index: CategoryFormIndex,
                          searchTerm: string,
                          parentCategory?: Name,
                          onlySupercategories?: boolean): Array<CategoryForm> {

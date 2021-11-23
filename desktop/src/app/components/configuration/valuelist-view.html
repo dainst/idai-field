@@ -1,0 +1,13 @@
+<div *ngIf="getValuelistDescription(valuelist)"
+        class="valuelist-description">
+    {{getValuelistDescription(valuelist)}}
+</div>
+<div class="row valuelist">
+    <div *ngFor="let value of getValues(valuelist)"
+            class="col-2 value-col">
+        <span class="badge badge-light value-badge">
+            {{getValueLabel(valuelist, value)}}
+            <code>{{value}}</code>
+        </span>
+    </div>
+</div>

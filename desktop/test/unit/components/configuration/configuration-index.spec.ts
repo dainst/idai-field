@@ -1,23 +1,68 @@
-import {ConfigurationIndex} from '../../../../src/app/components/configuration/configuration-index';
+import { Field } from 'idai-field-core';
+import { ConfigurationIndex } from '../../../../src/app/components/configuration/index/configuration-index';
 
 
 describe('ConfigurationIndex', () => {
 
-    it('base case', () => {
+    it('find category forms', () => {
 
-        const categories = [
+        const forms = [
             {
-                name: 'a:default',
-                label: { de: 'A' },
-                defaultLabel: { de: 'A' },
+                name: 'A:default',
+                label: {
+                    de: 'Kategorie A',
+                    en: 'Category A',
+                },
+                defaultLabel: {
+                    de: 'Kategorie A',
+                    en: 'Category A',
+                },
                 parentCategory: {
-                    name: 'a:parent'
+                    name: 'A:parent'
                 }
             }
         ]
-        const index = ConfigurationIndex.create(categories as any);
+        const index = ConfigurationIndex.create(forms as any, [], []);
 
-        const result = ConfigurationIndex.find(index, '', 'a:parent');
-        expect(result[0].name).toEqual('a:default');
-    })
+        expect(ConfigurationIndex.findCategoryForms(index, '', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'A', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'A:default', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'Kategorie', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'Category', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'XYZ', 'A:parent').length).toBe(0);
+    });
+
+
+    it('find fields', () => {
+
+        const categories = [
+            {
+                name: 'A',
+                label: {},
+                description: {},
+                fields: {
+                    field1: {
+                        name: 'field1',
+                        inputType: Field.InputType.TEXT as Field.InputType,
+                        label: {
+                            de: 'Erstes Feld',
+                            en: 'First field'
+                        },
+                        defaultLabel: {
+                            de: 'Erstes Feld',
+                            en: 'First field'
+                        }
+                    }
+                }
+            }
+        ];
+        const index = ConfigurationIndex.create([], categories, []);
+
+        expect(ConfigurationIndex.findFields(index, '', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'field1', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'Erstes', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'First', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'Abc', 'A').length).toBe(0);
+    });
 });

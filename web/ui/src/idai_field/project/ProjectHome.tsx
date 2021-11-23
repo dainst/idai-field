@@ -268,7 +268,6 @@ const imageCarouselStyle: CSSProperties = {
     background: '#d3d3cf',
     width: '30vw',
     maxWidth: '600px',
-    height: '20vw',
     maxHeight: '400px'
 };
 

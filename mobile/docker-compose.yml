@@ -6,7 +6,5 @@ services:
       context: ./build-container
       network: host
       dockerfile: Dockerfile
-    # ports:
-    #   - 8000:8000
     volumes:
       - ./:/mobile

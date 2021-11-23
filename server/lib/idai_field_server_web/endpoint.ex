@@ -35,10 +35,6 @@ defmodule IdaiFieldServerWeb.Endpoint do
     # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :idai_field_server
   end
 
-  plug Phoenix.LiveDashboard.RequestLogger,
-    param_key: "request_logger",
-    cookie_key: "request_logger"
-
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 

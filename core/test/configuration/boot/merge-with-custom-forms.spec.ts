@@ -7,8 +7,9 @@ describe('mergeWithCustomForms', () => {
 
     it('extend category directly - inherit and add fields', () => {
 
-        const commonFields = {
+        const commonFields: Map<Field> = {
             c1: {
+                name: 'c1',
                 inputType: Field.InputType.INPUT
             }
         };
@@ -76,8 +77,9 @@ describe('mergeWithCustomForms', () => {
 
     it('extend parent category - inherit and add fields', () => {
 
-        const commonFields = {
+        const commonFields: Map<Field> = {
             c1: {
+                name: 'c1',
                 inputType: Field.InputType.INPUT
             }
         };

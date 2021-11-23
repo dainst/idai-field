@@ -1,63 +1,69 @@
 import { sameset } from 'tsfun';
+import { CategoryForm } from '../../src/model/configuration/category-form';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
 import { Forest, Named } from '../../src/tools';
 
 
 describe('ProjectConfiguration', () => {
 
-    const projectConfiguration = new ProjectConfiguration([Forest.build([
-        [
-            { name: 'Image' },
+    const projectConfiguration = new ProjectConfiguration({
+        forms: Forest.build([
             [
+                { name: 'Image' },
                 [
-                    { name: 'Drawing' },
-                    []
+                    [
+                        { name: 'Drawing' },
+                        []
+                    ]
+                ]
+            ],
+            [
+                { name: 'Operation' },
+                [
+                    [
+                        { name: 'Trench' },
+                        []
+                    ]
+                ]
+            ],
+            [
+                { name: 'Place' },
+                []
+            ],
+            [
+                { name: 'Inscription' },
+                []
+            ],
+            [
+                { name: 'Type' },
+                []
+            ],
+            [
+                { name: 'TypeCatalog' },
+                []
+            ],
+            [
+                { name: 'Project' },
+                []
+            ],
+            [
+                { name: 'Find' },
+                []
+            ],
+            [
+                { name: 'Feature' },
+                [
+                    [
+                        { name: 'Architecture' },
+                        []
+                    ]
                 ]
             ]
-        ],
-        [
-            { name: 'Operation' },
-            [
-                [
-                    { name: 'Trench' },
-                    []
-                ]
-            ]
-        ],
-        [
-            { name: 'Place' },
-            []
-        ],
-        [
-            { name: 'Inscription' },
-            []
-        ],
-        [
-            { name: 'Type' },
-            []
-        ],
-        [
-            { name: 'TypeCatalog' },
-            []
-        ],
-        [
-            { name: 'Project' },
-            []
-        ],
-        [
-            { name: 'Find' },
-            []
-        ],
-        [
-            { name: 'Feature' },
-            [
-                [
-                    { name: 'Architecture' },
-                    []
-                ]
-            ]
-        ]
-    ]), []] as any);
+        ]) as Forest<CategoryForm>,
+        categories: {},
+        relations: [],
+        commonFields: {}
+    });
 
 
     it('isGeometryCategory', () => {

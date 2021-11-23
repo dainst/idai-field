@@ -1,0 +1,12 @@
+field-listing {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 273px);
+
+  .listing {
+    li:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .5s ease;
+    }
+  }
+}

@@ -1,14 +1,20 @@
 @import './configuration-category';
 @import './configuration-field';
 @import './configuration-field-drag-element';
+@import './valuelist-view';
 @import './editor/configuration-editor-modal';
 @import './editor/field-editor-modal';
 @import './editor/category-editor-modal';
 @import './editor/multi-language-input';
-@import './add/add-category-modal';
 @import './delete/delete-category-modal';
-@import './add/category-preview';
+@import './add/add-category-modal';
+@import './add/add-field-modal';
+@import './add/listing';
 @import './add/category-listing';
+@import './add/field-listing';
+@import './add/preview';
+@import './add/category-preview';
+@import './add/field-preview';
 
 .project-configuration {
   &.dragging {

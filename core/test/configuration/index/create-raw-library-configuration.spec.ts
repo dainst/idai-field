@@ -1,12 +1,13 @@
-import { createContextIndependentCategories } from '../../../src/configuration/index/create-context-independent-categories';
+import { createRawLibraryConfiguration } from '../../../src/configuration/index/create-raw-library-configuration';
 import { Field } from '../../../src/model/configuration/field';
+import { Tree } from '../../../src/tools/forest';
 
 
-describe('createContextIndependentCategories', () => {
+describe('createRawLibraryConfiguration', () => {
 
     it('base case', () => {
     
-        const result = createContextIndependentCategories(
+        const result = createRawLibraryConfiguration(
             {
                 Find: { 
                     supercategory: true,
@@ -107,31 +108,33 @@ describe('createContextIndependentCategories', () => {
             }
         );
 
-        expect(result.length).toBe(6);
+        const forms = Tree.flatten(result.forms);
 
-        expect(result[0].name).toEqual('Find');
-        expect(result[0].libraryId).toEqual('Find');
+        expect(forms.length).toBe(6);
 
-        expect(result[1].name).toEqual('Find');
-        expect(result[1].libraryId).toEqual('Find:a');
+        expect(forms[0].name).toEqual('Find');
+        expect(forms[0].libraryId).toEqual('Find');
 
-        expect(result[2].name).toEqual('Pottery');
-        expect(result[2].libraryId).toEqual('Pottery');
-        expect(result[2].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[1].name).toEqual('Find');
+        expect(forms[1].libraryId).toEqual('Find:a');
 
-        expect(result[3].name).toEqual('Pottery');
-        expect(result[3].libraryId).toEqual('Pottery:a');
-        expect(result[3].parentCategory.libraryId).toEqual('Find:a');
-        expect(result[3].groups[0].name).toEqual('group-a');
-        expect(result[3].groups[0].label['de']).toEqual('Group-a');
+        expect(forms[2].name).toEqual('Pottery');
+        expect(forms[2].libraryId).toEqual('Pottery');
+        expect(forms[2].parentCategory.libraryId).toEqual('Find:a');
 
-        expect(result[4].name).toEqual('Pottery');
-        expect(result[4].libraryId).toEqual('Pottery:b');
-        expect(result[4].parentCategory.libraryId).toEqual('Find:a');
-        expect(result[4].groups[0].name).toEqual('group-b');
-        expect(result[4].groups[0].label['de']).toEqual('Group-b');
+        expect(forms[3].name).toEqual('Pottery');
+        expect(forms[3].libraryId).toEqual('Pottery:a');
+        expect(forms[3].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[3].groups[0].name).toEqual('group-a');
+        expect(forms[3].groups[0].label['de']).toEqual('Group-a');
 
-        expect(result[5].name).toEqual('Find');
-        expect(result[5].libraryId).toEqual('Find:b');
+        expect(forms[4].name).toEqual('Pottery');
+        expect(forms[4].libraryId).toEqual('Pottery:b');
+        expect(forms[4].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[4].groups[0].name).toEqual('group-b');
+        expect(forms[4].groups[0].label['de']).toEqual('Group-b');
+
+        expect(forms[5].name).toEqual('Find');
+        expect(forms[5].libraryId).toEqual('Find:b');
     });
 });

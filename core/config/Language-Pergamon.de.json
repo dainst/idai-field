@@ -754,6 +754,43 @@
         }
       }
     },
+    "Place": {
+      "fields": {
+        "findSpot": {
+          "label": "Fundplatz (allgemeine Einordnung)"
+        },
+        "surfaceContextsAndFinds": {
+          "label": "Oberflächen(be)funde"
+        },
+        "researchHistory": {
+          "label": "Forschungsgeschichte / bisherige Maßnahmen)"
+        },
+        "descriptions": {
+          "label": "Beschreibung"
+        },
+        "stateOfPreservation": {
+          "label": "Erhaltungszustand / Gefährdungslage"
+        },
+        "gazId": {
+          "label": "iDAI.gazetteer-ID"
+        },
+        "iDAI-objects-ID": {
+          "label": "iDAI.objects-ID"
+        },
+        "iDAI-archives-ID": {
+          "label": "iDAI.archives-ID"
+        },
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "recordedOnMaps": {
+          "label": "Auf Karten verzeichnet"
+        },
+        "buildingResearchHistory": {
+          "label": "Baugeschichte"
+        }
+      }
+    },
     "SurveyUnit": {
       "fields": {
         "hasFinds": {

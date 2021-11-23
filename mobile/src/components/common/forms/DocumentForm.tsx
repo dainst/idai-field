@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
         color: colors.secondary,
         padding: 5,
         backgroundColor: colors.primary,
-        borderRadius: 5,
     }
 });
 

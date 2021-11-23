@@ -1,10 +1,10 @@
-import {ProjectConfiguration} from '../configuration';
-import {Relation} from '../model/configuration/relation';
+import { Relation } from '../model/configuration/relation';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
-import {  Tree } from '../tools/forest';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
-import {Named} from '../tools/named';
+import { Named } from '../tools/named';
 import { Migrator } from './migrator';
 
 

@@ -2,10 +2,8 @@ import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
-import { ConfigurationUtil } from '../../components/configuration/configuration-util';
+import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { AddFieldModalComponent } from './add/add-field-modal.component';
-import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { InputType } from './configuration.component';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
@@ -13,6 +11,7 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { MenuContext } from '../../services/menu-context';
 import { Modals } from '../../services/modals';
+import { ConfigurationIndex } from './index/configuration-index';
 
 
 @Component({
@@ -27,6 +26,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     @Input() category: CategoryForm;
     @Input() configurationDocument: ConfigurationDocument;
+    @Input() configurationIndex: ConfigurationIndex;
     @Input() showHiddenFields: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -140,15 +140,22 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async addField() {
 
-        const [result] = this.modals.make<AddFieldModalComponent>(
+        const [result, componentInstance] = this.modals.make<AddFieldModalComponent>(
             AddFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
         );
 
-        await this.modals.awaitResult(result,
-            async fieldName => await this.createNewField(fieldName),
-            nop
-        );
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.groupName = this.selectedGroup;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -214,37 +221,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
-    }
-
-
-    private async createNewField(fieldName: string) {
-
-        const [result, componentInstance] =
-            this.modals.make<FieldEditorModalComponent>(
-                FieldEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
-
-        componentInstance.saveAndReload = this.saveAndReload;
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.category;
-        componentInstance.field = {
-            name: fieldName,
-            inputType: 'input',
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            source: 'custom'
-        };
-        componentInstance.groupName = this.selectedGroup;
-        componentInstance.availableInputTypes = this.availableInputTypes;
-        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        componentInstance.new = true;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(result, nop, nop);
     }
 
 

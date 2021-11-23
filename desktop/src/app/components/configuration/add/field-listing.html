@@ -1,0 +1,18 @@
+<ul class="bg-light listing">
+    <li *ngFor="let field of fields"
+        [class.selected]="selectedField === field"
+        (click)="select(field)">
+        <span class="item-label">{{getLabel(field)}}</span>
+        <code>{{field.name}}</code>
+        <span *ngIf="getSearchResultLabel(field)"
+                class="search-result-label"> ({{getSearchResultLabel(field)}})</span>
+    </li>
+    <li *ngIf="isNewFieldOptionShown()"
+        class="new-item-option"
+        [class.selected]="selectedField === emptyField"
+        (click)="select(emptyField)">
+        <span class="mdi mdi-plus-circle mdi-24px"></span>
+        <span class="item-label" i18n="@@configuration.newField">Neues Feld</span>
+        <code>{{searchTerm}}</code>
+    </li>
+</ul>

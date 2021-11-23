@@ -1,5 +1,5 @@
 import { I18N } from '../../tools/i18n';
-import {ValuelistValue} from './valuelist-value';
+import { ValuelistValue } from './valuelist-value';
 
 
 export type ValuelistId = string;
@@ -12,7 +12,7 @@ export type Valuelists = { [fieldName: string]: ValuelistId }
  */
 export interface Valuelist {
 
-    id: string;
+    id?: string;
     values: { [key: string]: ValuelistValue }
 
     description?: { [language: string]: string }
@@ -23,12 +23,17 @@ export interface Valuelist {
     // For cases in which another order is required, it can be specified in this property.
     order?: string[];
 
+    source?: Valuelist.SourceTypes;
+
     extends?: string; // to be implemented
     constraints?: any; // to be implemented
 }
 
 
 export module Valuelist {
+
+    export type SourceTypes = 'library'|'custom';
+
 
     export function getValueLabel(valuelist: Valuelist, valueId: string): I18N.String|undefined {
 

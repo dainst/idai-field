@@ -34,6 +34,7 @@ const Map: React.FC<MapProps> = (props) => {
     
     const [
         geoDocuments,
+        layerDocuments,
         documentToWorldMatrix,
         screenToWorldMatrix,
         viewBox,
@@ -76,7 +77,8 @@ const Map: React.FC<MapProps> = (props) => {
 
     return (
         <View style={ styles.container } onLayout={ handleLayoutChange }>
-            {(screen && documentToWorldMatrix && screenToWorldMatrix) && <GLMap
+            {(screen && documentToWorldMatrix && screenToWorldMatrix) &&
+            <GLMap
                 setHighlightedDocId={ setHighlightedDocFromId }
                 highlightedDocId={ highlightedDoc?.resource.id }
                 screen={ screen }
@@ -87,7 +89,9 @@ const Map: React.FC<MapProps> = (props) => {
                 geoDocuments={ geoDocuments }
                 location={ location }
                 updateDoc={ updateDoc }
-                selectParentId={ onParentIdSelected } />}
+                selectParentId={ onParentIdSelected }
+                layerDocuments={ layerDocuments }
+                focusMapOnDocumentId={ focusMapOnDocumentId } />}
             <MapBottomSheet
                 document={ highlightedDoc }
                 addDocument={ props.addDocument }

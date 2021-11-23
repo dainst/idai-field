@@ -9,9 +9,10 @@ import { ProjectConfiguration } from '../../src/services/project-configuration';
  */
 describe('RelationsManager', () => {
 
-    const projectConfiguration = new ProjectConfiguration([
-        [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,
-        [
+    const projectConfiguration = new ProjectConfiguration({
+        forms: [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,
+        categories: {},
+        relations: [
             {
                 name: 'BelongsTo',
                 inverse: 'Contains',
@@ -35,7 +36,9 @@ describe('RelationsManager', () => {
                 editable: false,
                 inputType: 'relation'
             }
-        ]]);
+        ],
+        commonFields: {}
+    });
 
     let mockDatastore;
     let persistenceManager;

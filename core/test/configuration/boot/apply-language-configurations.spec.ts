@@ -1,9 +1,8 @@
 import { Map } from 'tsfun';
 import { LanguageConfigurations } from '../../../src/configuration/model/language/language-configurations';
-import { applyLanguageConfigurations } from '../../../src/configuration/boot/apply-language-configurations';
-import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
 import { Relation } from '../../../src/model/configuration/relation';
 import { TransientCategoryDefinition } from '../../../src/configuration/model/category/transient-category-definition';
+import { applyLanguagesToCategory, applyLanguagesToRelations } from '../../../src/configuration/boot/apply-languages-configurations';
 
 
 /**
@@ -12,26 +11,17 @@ import { TransientCategoryDefinition } from '../../../src/configuration/model/ca
  */
 describe('applyLanguageConfigurations', () => {
 
-    let configuration: [Map<TransientFormDefinition>, Array<Relation>];
-
-
     it('apply language', () => {
-
-        configuration = [
-            {
-                A: { categoryName: 'A', fields: { a: {}, a1: {} } } as any,
-                B: { categoryName: 'B', fields: { b: {} } } as any
-            },
-            [
-                { name: 'isRecordedIn' } as Relation,
-                { name: 'isContemporaryWith' } as Relation
-            ]
-        ];
         
         const categories: Map<TransientCategoryDefinition> = {
-            A: { fields: { a: {}, a1: {} } } as any,
-            B: { fields: { b: {} } } as any
-        }
+            A: { name: 'A', fields: { a: {}, a1: {} } } as any,
+            B: { name: 'B', fields: { b: {} } } as any
+        };
+
+        const relations: Array<Relation> = [
+            { name: 'isRecordedIn' } as Relation,
+            { name: 'isContemporaryWith' } as Relation
+        ];
 
         const languageConfigurations: LanguageConfigurations = {
             complete: {
@@ -59,14 +49,16 @@ describe('applyLanguageConfigurations', () => {
             default: {}
         };
 
-        const [forms, relations] = applyLanguageConfigurations(languageConfigurations, categories)(configuration);
+        applyLanguagesToCategory(languageConfigurations, categories['A']);
+        applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToRelations(languageConfigurations, relations);
 
-        expect(forms['A'].label.en).toEqual('A_');
-        expect(forms['B'].label).toEqual({});
-        expect(forms['A'].fields['a'].label.en).toEqual('a_');
-        expect(forms['A'].fields['a1'].label.en).toBeUndefined();
-        expect(forms['A'].fields['a'].description).toEqual({});
-        expect(forms['A'].fields['a1'].description.en).toEqual('a1_desc');
+        expect(categories['A'].label.en).toEqual('A_');
+        expect(categories['B'].label).toEqual({});
+        expect(categories['A'].fields['a'].label.en).toEqual('a_');
+        expect(categories['A'].fields['a1'].label.en).toBeUndefined();
+        expect(categories['A'].fields['a'].description).toEqual({});
+        expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');
         expect(relations[0].label.en).toEqual('isRecordedIn_');
         expect(relations[1].label).toEqual({});
     });
@@ -74,20 +66,14 @@ describe('applyLanguageConfigurations', () => {
 
     it('apply multiple language configurations', () => {
 
-        configuration = [
-            {
-                A: { categoryName: 'A', fields: { a: {} } } as any,
-                B: { categoryName: 'B', fields: { b: {} } } as any
-            },
-            [
-                { name: 'isRecordedIn' } as Relation
-            ]
-        ];
-
         const categories: Map<TransientCategoryDefinition> = {
-            A: { fields: { a: {} } } as any,
-            B: { fields: { b: {} } } as any
+            A: { name: 'A', fields: { a: {} } } as any,
+            B: { name: 'B', fields: { b: {} } } as any
         };
+
+        const relations: Array<Relation> = [
+            { name: 'isRecordedIn' } as Relation
+        ];
 
         const languageConfigurations: LanguageConfigurations = {
             complete: {
@@ -155,27 +141,29 @@ describe('applyLanguageConfigurations', () => {
             default: {}
         };
 
-        const [forms, relations] = applyLanguageConfigurations(languageConfigurations, categories)(configuration);
+        applyLanguagesToCategory(languageConfigurations, categories['A']);
+        applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToRelations(languageConfigurations, relations);
 
-        expect(forms['A'].label.de).toEqual('A Deutsch');
-        expect(forms['A'].label.en).toEqual('A Englisch');
-        expect(forms['A'].label.es).toBeUndefined();
-        expect(forms['B'].label.de).toEqual('B Deutsch');
-        expect(forms['B'].label.en).toEqual('B Englisch');
-        expect(forms['B'].label.es).toBeUndefined();
+        expect(categories['A'].label.de).toEqual('A Deutsch');
+        expect(categories['A'].label.en).toEqual('A Englisch');
+        expect(categories['A'].label.es).toBeUndefined();
+        expect(categories['B'].label.de).toEqual('B Deutsch');
+        expect(categories['B'].label.en).toEqual('B Englisch');
+        expect(categories['B'].label.es).toBeUndefined();
 
-        expect(forms['A'].fields['a'].label.de).toEqual('a Deutsches Label');
-        expect(forms['A'].fields['a'].label.en).toEqual('a Englisches Label');
-        expect(forms['A'].fields['a'].label.es).toEqual('a Spanisches Label');
-        expect(forms['A'].fields['a'].description.de).toEqual('a Deutsche Beschreibung');
-        expect(forms['A'].fields['a'].description.en).toEqual('a Englische Beschreibung');
-        expect(forms['A'].fields['a'].description.es).toEqual('a Spanische Beschreibung');
-        expect(forms['B'].fields['b'].label.de).toBeUndefined();
-        expect(forms['B'].fields['b'].label.en).toEqual('b Englisches Label');
-        expect(forms['B'].fields['b'].label.es).toBeUndefined();
-        expect(forms['B'].fields['b'].description.de).toBeUndefined();
-        expect(forms['B'].fields['b'].description.en).toEqual('b Englische Beschreibung');
-        expect(forms['B'].fields['b'].description.es).toBeUndefined();
+        expect(categories['A'].fields['a'].label.de).toEqual('a Deutsches Label');
+        expect(categories['A'].fields['a'].label.en).toEqual('a Englisches Label');
+        expect(categories['A'].fields['a'].label.es).toEqual('a Spanisches Label');
+        expect(categories['A'].fields['a'].description.de).toEqual('a Deutsche Beschreibung');
+        expect(categories['A'].fields['a'].description.en).toEqual('a Englische Beschreibung');
+        expect(categories['A'].fields['a'].description.es).toEqual('a Spanische Beschreibung');
+        expect(categories['B'].fields['b'].label.de).toBeUndefined();
+        expect(categories['B'].fields['b'].label.en).toEqual('b Englisches Label');
+        expect(categories['B'].fields['b'].label.es).toBeUndefined();
+        expect(categories['B'].fields['b'].description.de).toBeUndefined();
+        expect(categories['B'].fields['b'].description.en).toEqual('b Englische Beschreibung');
+        expect(categories['B'].fields['b'].description.es).toBeUndefined();
 
         expect(relations[0].label.de).toEqual('Liegt in (Deutsch)');
         expect(relations[0].label.en).toEqual('Liegt in (Englisch)');
@@ -184,22 +172,15 @@ describe('applyLanguageConfigurations', () => {
 
     it('apply default and custom language configurations', () => {
 
-        configuration = [
-            {
-                A: { categoryName: 'A', fields: { a: {} } } as any,
-                B: { categoryName: 'B', fields: { b: {} } } as any,
-                C: { categoryName: 'C', fields: { c: {} } } as any
-            },
-            [
-                { name: 'isRecordedIn' } as Relation
-            ]
-        ];
-
         const categories: Map<TransientCategoryDefinition> = {
-            A: { fields: { a: {} } } as any,
-            B: { fields: { b: {} } } as any,
-            C: { fields: { c: {} } } as any
+            A: { name: 'A', fields: { a: {} } } as any,
+            B: { name: 'B', fields: { b: {} } } as any,
+            C: { name: 'C', fields: { c: {} } } as any
         };
+
+        const relations: Array<Relation> = [
+            { name: 'isRecordedIn' } as Relation
+        ];
 
         const libraryConfiguration = {
             categories: {
@@ -285,27 +266,30 @@ describe('applyLanguageConfigurations', () => {
             }
         };
 
-        const [forms, relations] = applyLanguageConfigurations(languageConfigurations, categories)(configuration);
+        applyLanguagesToCategory(languageConfigurations, categories['A']);
+        applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToCategory(languageConfigurations, categories['C']);
+        applyLanguagesToRelations(languageConfigurations, relations);
 
-        expect(forms['A'].label.de).toEqual('A Custom');
-        expect(forms['A'].defaultLabel.de).toEqual('A Library');
-        expect(forms['B'].label.de).toEqual('B Core');
-        expect(forms['B'].defaultLabel.de).toEqual('B Core');
-        expect(forms['C'].label.de).toEqual('C Custom');
-        expect(forms['C'].defaultLabel).toEqual({});
+        expect(categories['A'].label.de).toEqual('A Custom');
+        expect(categories['A'].defaultLabel.de).toEqual('A Library');
+        expect(categories['B'].label.de).toEqual('B Core');
+        expect(categories['B'].defaultLabel.de).toEqual('B Core');
+        expect(categories['C'].label.de).toEqual('C Custom');
+        expect(categories['C'].defaultLabel).toEqual({});
         
-        expect(forms['A'].fields['a'].label.de).toEqual('a Label Custom');
-        expect(forms['A'].fields['a'].defaultLabel.de).toEqual('a Label Library');
-        expect(forms['A'].fields['a'].description.de).toEqual('a Beschreibung Custom');
-        expect(forms['A'].fields['a'].defaultDescription.de).toEqual('a Beschreibung Library');
-        expect(forms['B'].fields['b'].label.de).toEqual('b Label Core');
-        expect(forms['B'].fields['b'].defaultLabel.de).toEqual('b Label Core');
-        expect(forms['B'].fields['b'].description.de).toEqual('b Beschreibung Core');
-        expect(forms['B'].fields['b'].defaultDescription.de).toEqual('b Beschreibung Core');
-        expect(forms['C'].fields['c'].label.de).toEqual('c Label Custom');
-        expect(forms['C'].fields['c'].defaultLabel).toEqual({});
-        expect(forms['C'].fields['c'].description.de).toEqual('c Beschreibung Custom');
-        expect(forms['C'].fields['c'].defaultDescription).toEqual({});
+        expect(categories['A'].fields['a'].label.de).toEqual('a Label Custom');
+        expect(categories['A'].fields['a'].defaultLabel.de).toEqual('a Label Library');
+        expect(categories['A'].fields['a'].description.de).toEqual('a Beschreibung Custom');
+        expect(categories['A'].fields['a'].defaultDescription.de).toEqual('a Beschreibung Library');
+        expect(categories['B'].fields['b'].label.de).toEqual('b Label Core');
+        expect(categories['B'].fields['b'].defaultLabel.de).toEqual('b Label Core');
+        expect(categories['B'].fields['b'].description.de).toEqual('b Beschreibung Core');
+        expect(categories['B'].fields['b'].defaultDescription.de).toEqual('b Beschreibung Core');
+        expect(categories['C'].fields['c'].label.de).toEqual('c Label Custom');
+        expect(categories['C'].fields['c'].defaultLabel).toEqual({});
+        expect(categories['C'].fields['c'].description.de).toEqual('c Beschreibung Custom');
+        expect(categories['C'].fields['c'].defaultDescription).toEqual({});
         
         expect(relations[0].label.de).toEqual('Liegt in (Custom)');
         expect(relations[0].defaultLabel.de).toEqual('Liegt in (Library)');

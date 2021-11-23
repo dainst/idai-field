@@ -12,6 +12,9 @@
         "fields":{
           "diaryAbstract": {
             "label": "Résumé du journal"
+          },
+          "supervisor": {
+            "label": "Direction sondage"
           }
         }
       },
@@ -499,6 +502,13 @@
            "label": "Type d'échantillon"
          }
       }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "Créateur"
+        }
+      }
     }
     },
     "commons": {
@@ -516,9 +526,6 @@
       },
       "campaign": {
           "label": "Campagne"
-      },
-      "supervisor": {
-          "label": "Direction sondage"
       },
       "description": {
           "label": "Description"
@@ -567,9 +574,6 @@
       },
       "provenance": {
         "label": "Provenance"
-      },
-      "draughtsmen": {
-        "label": "Créateur"
       },
       "literature": {
         "label": "Référence bibliographique"

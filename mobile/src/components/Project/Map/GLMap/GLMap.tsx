@@ -1,28 +1,26 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
-import { Position } from 'geojson';
 import { Document } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import {
-    GestureResponderEvent, LayoutRectangle, PanResponder, PanResponderGestureState, StyleSheet, TouchableOpacity, View
-} from 'react-native';
+import { LayoutRectangle, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Matrix4 } from 'react-native-redash';
-import { OrthographicCamera, Raycaster, Scene, Vector2 } from 'three';
+import { OrthographicCamera, Scene } from 'three';
 import { ConfigurationContext } from '../../../../contexts/configuration-context';
 import { PreferencesContext } from '../../../../contexts/preferences-context';
 import { UpdatedDocument } from '../../../../hooks/use-mapdata';
 import usePrevious from '../../../../hooks/use-previous';
 import { colors } from '../../../../utils/colors';
-import { LONG_PRESS_DURATION_MS } from './constants';
-import { processTransform2d, Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
+import { Transformation, WORLD_CS_HEIGHT, WORLD_CS_WIDTH } from './cs-transform';
 import {
     addDocumentToScene,
     addHighlightedDocToScene,
+    addLayerToScene,
     addlocationPointToScene, ObjectChildValues, removeDocumentFromScene, updateDocumentInScene, updatePointRadiusOfScene
 } from './geojson/geojson-gl-shape';
 import MapSettingsModal from './MapSettingsModal';
-import { calcCenter, calcDistance } from './math-utils';
+import useMapGestureHandler from './use-map-gesture-handler';
+import useMapPressHandler from './use-map-press-handler';
 
 
 const cameraDefaultPos = {
@@ -30,13 +28,6 @@ const cameraDefaultPos = {
     y: 0,
     z: 5,
 };
-
-
-const moveThreshold = 5;
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const no = () => {};
-const yes = () => true;
-
 
 interface GLMapProps {
     setHighlightedDocId: (docId: string) => void;
@@ -49,7 +40,9 @@ interface GLMapProps {
     geoDocuments: Document[];
     location: {x: number, y:number} | undefined;
     updateDoc?: UpdatedDocument;
-    selectParentId: (docId: string) => void
+    selectParentId: (docId: string) => void,
+    layerDocuments: Document[],
+    focusMapOnDocumentId: (docId: string) => void;
 }
 
 
@@ -65,6 +58,8 @@ const GLMap: React.FC<GLMapProps> = ({
     location,
     updateDoc,
     selectParentId,
+    layerDocuments,
+    focusMapOnDocumentId
 }) => {
 
     const previousSelectedDocIds = usePrevious(selectedDocumentIds);
@@ -73,6 +68,7 @@ const GLMap: React.FC<GLMapProps> = ({
     
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
     const [pointRadius, setPointRadius] = useState<number>(getMapSettings(preferences.currentProject).pointRadius);
+    const [layerInfo, setLayerInfo] = useState<{doc: Document, visible: boolean}[]>([]);
 
     const camera = useRef<OrthographicCamera>(new OrthographicCamera(0,WORLD_CS_WIDTH,WORLD_CS_HEIGHT,0) ).current;
     const scene = useRef<Scene>(new Scene() ).current;
@@ -80,23 +76,12 @@ const GLMap: React.FC<GLMapProps> = ({
     const glContext = useRef<ExpoWebGLRenderingContext>();
     const glContextToScreenFactor = useRef<number>(0);
 
-    //boolean to init gestures
-    const isZooming = useRef<boolean>(false);
-    const isMoving = useRef<boolean>(false);
-
-    //long press handler variables
     const pressStartTime = useRef<number>(0);
 
-    //reference values set at the beginning of the gesture
-    const initialTouch = useRef<{x: number, y: number}>({ x:0, y:0 });
-    const initialZoom = useRef<number>(1);
-    const initialDistance = useRef<number>(0);
+    // scene transformation refs
     const zoom = useRef<number>(1);
-
     const left = useRef<number>(0);
-    const initialLeft = useRef<number>(0);
     const top = useRef<number>(0);
-    const initialTop = useRef<number>(0);
    
     const renderScene = useCallback(() => {
 
@@ -110,84 +95,28 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     },[camera, scene]);
 
-    const screenToWorld = (point: Position) => processTransform2d(screenToWorldMatrix, point);
+    const panResponder = useMapGestureHandler(top,left,zoom,pressStartTime,screenToWorldMatrix,renderScene);
+    const { onPress, onTouchEnd } = useMapPressHandler(
+                                        setHighlightedDocId,highlightedDocId,selectParentId,
+                                        screen, camera, scene, pressStartTime);
+    
 
-    const screenToNormalizedDeviceCoordinates = (x: number, y: number) =>
-        new Vector2(
-            (x / screen.width ) * 2 - 1,
-            -(y / screen.height) * 2 + 1);
+    const showLayer = (docId: string) => {
 
-    const panResponder = useRef(PanResponder.create({
-        onPanResponderGrant: no,
-        onPanResponderTerminate: no,
-        onShouldBlockNativeResponder: yes,
-        onPanResponderTerminationRequest: yes,
-        onMoveShouldSetPanResponder: shouldRespond,
-        onStartShouldSetPanResponder: shouldRespond,
-        onMoveShouldSetPanResponderCapture: shouldRespond,
-        onStartShouldSetPanResponderCapture: shouldRespond,
-        onPanResponderMove: e => {
-            pressStartTime.current = performance.now();
-            const { nativeEvent: { touches } } = e;
-            if(touches.length === 1){
-                const [{ locationX, locationY }] = touches;
-                touchHandler(locationX, locationY);
-            } else if(touches.length === 2) {
-                const [touch1, touch2] = touches;
-                zoomHandler(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY);
-            } else return;
-            e.preventDefault();
-        },
-        onPanResponderRelease: () => {
-            isMoving.current = false;
-            isZooming.current = false;
-        }
-    })).current;
-
-    const touchHandler = (x: number, y: number): void => {
-
-        const [x_w, y_w] = screenToWorld([x,y]);
-        if(!isMoving.current || isZooming.current){
-            isMoving.current = true;
-            isZooming.current = false;
-            initialLeft.current = left.current;
-            initialTop.current = top.current;
-            initialTouch.current = { x:x_w, y:y_w };
-        } else {
-            const dx = x_w - initialTouch.current.x;
-            const dy = y_w - initialTouch.current.y;
-
-            left.current = initialLeft.current + dx;
-            top.current = initialTop.current + dy;
-            renderScene();
-        }
+        const layer = scene.getObjectByProperty('uuid',docId);
+        const layerDocIndex = layerInfo.findIndex(doc => doc.doc.resource.id === docId);
+        if(!layer || layerDocIndex < 0) return;
+        layer.visible = layerInfo[layerDocIndex].visible ? false : true;
+        setLayerInfo(layerInfo.map((item, i) => i !== layerDocIndex ?
+                                                    item :
+                                                    { doc: item.doc, visible: !item.visible }));
+        renderScene();
     };
+    
 
-    const zoomHandler = (x1: number, y1: number, x2: number, y2: number ): void => {
-        
-        const [x1_w, y1_w] = screenToWorld([x1,y1]);
-        const [x2_w, y2_w] = screenToWorld([x2,y2]);
-        const distance = calcDistance(x1_w, y1_w, x2_w, y2_w);
-        const { x, y } = calcCenter(x1_w , y1_w, x2_w , y2_w);
+    useEffect(() => setLayerInfo( layerDocuments.map(doc => ({ doc, visible: false }))),[layerDocuments]);
 
-        if(!isZooming.current){
-            isZooming.current = true;
-            initialTouch.current = { x,y };
-            initialTop.current = top.current;
-            initialLeft.current = left.current;
-            initialZoom.current = zoom.current;
-            initialDistance.current = distance;
-        } else {
-            const touchZoom = distance / initialDistance.current;
-            const dx = x - initialTouch.current.x;
-            const dy = y - initialTouch.current.y;
-            left.current = (initialLeft.current + dx - x) * touchZoom + x;
-            top.current = (initialTop.current + dy - y) * touchZoom + y;
-            zoom.current = initialZoom.current * touchZoom;
-            renderScene();
-        }
-    };
-
+    
     useEffect(() => {
 
         if(!viewBox) return;
@@ -206,8 +135,9 @@ const GLMap: React.FC<GLMapProps> = ({
 
         scene.clear();
         geoDocuments.forEach(doc => addDocumentToScene(doc,documentToWorldMatrix, scene, config));
+        layerDocuments.forEach(doc => addLayerToScene(doc, documentToWorldMatrix, scene));
         renderScene();
-    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene, pointRadius]);
+    },[geoDocuments, config ,scene, documentToWorldMatrix, renderScene, pointRadius, layerDocuments]);
 
 
     useEffect(() => {
@@ -241,6 +171,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     },[scene, selectedDocumentIds, previousSelectedDocIds, renderScene]);
    
+
     useEffect(() => {
         
         if(!location) return;
@@ -248,6 +179,7 @@ const GLMap: React.FC<GLMapProps> = ({
         renderScene();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[location, scene, documentToWorldMatrix]);
+
 
     useEffect(() => {
         if(renderer.current && glContextToScreenFactor.current){
@@ -258,6 +190,7 @@ const GLMap: React.FC<GLMapProps> = ({
             renderScene();
         }
     },[screen, renderScene]);
+
 
     useEffect(() => {
         if(!updateDoc) return;
@@ -272,6 +205,7 @@ const GLMap: React.FC<GLMapProps> = ({
 
     },[updateDoc, scene, documentToWorldMatrix, config, renderScene]);
     
+
     useEffect(() => {
         if(highlightedDocId) {
             addHighlightedDocToScene(highlightedDocId, scene);
@@ -279,6 +213,7 @@ const GLMap: React.FC<GLMapProps> = ({
         }
     },[highlightedDocId, scene, renderScene]);
 
+    
     useEffect(() => {
         updatePointRadiusOfScene(geoDocuments,documentToWorldMatrix,config,scene, pointRadius);
         setMapSettings(preferences.currentProject, { pointRadius });
@@ -295,34 +230,7 @@ const GLMap: React.FC<GLMapProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pointRadius, scene, geoDocuments, documentToWorldMatrix, renderScene]);
 
-    const onPress = (e: GestureResponderEvent) => {
 
-        const ndc_vec = screenToNormalizedDeviceCoordinates(e.nativeEvent.locationX, e.nativeEvent.locationY);
-        const raycaster = new Raycaster();
-        raycaster.setFromCamera(ndc_vec, camera);
-        const intersections = raycaster.intersectObjects(scene.children,true);
-        pressStartTime.current = performance.now();
-        // filter objects to be selected and sort by renderOrder in descending order
-        const filteredSortedInters = intersections
-            .filter(intersection => intersection.object.parent?.userData['isSelected'])
-            .sort((a,b) => {
-                const aOrder = a.object.renderOrder;
-                const bOrder = b.object.renderOrder;
-                return (aOrder < bOrder) ? 1 : (aOrder > bOrder) ? -1 : 0;
-            });
-        if(filteredSortedInters.length){
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const docId = filteredSortedInters[0].object.parent!.uuid;
-            setHighlightedDocId(docId);
-        }
-    };
-
-    const onTouchEnd = () => {
-
-        if( performance.now() - pressStartTime.current > LONG_PRESS_DURATION_MS && highlightedDocId)
-            selectParentId(highlightedDocId);
-    };
-    
     const onContextCreate = async(gl: ExpoWebGLRenderingContext) => {
 
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
@@ -345,7 +253,10 @@ const GLMap: React.FC<GLMapProps> = ({
             {isSettingsModalOpen && <MapSettingsModal
                 onClose={ () => setIsSettingsModalOpen(false) }
                 pointRadius={ pointRadius }
-                onChangePointRadius={ (radius:number) => setPointRadius(radius) } />}
+                onChangePointRadius={ (radius:number) => setPointRadius(radius) }
+                layerInfo={ layerInfo }
+                showLayer={ showLayer }
+                focusMapOnLayer={ focusMapOnDocumentId } />}
             <TouchableOpacity onPress={ () => setIsSettingsModalOpen(true) } style={ styles.mapSettings } >
                 <MaterialIcons name="layers" size={ 30 } color="black" />
             </TouchableOpacity>
@@ -359,11 +270,6 @@ const GLMap: React.FC<GLMapProps> = ({
         </View>
     );
 };
-
-
-const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
-        e.nativeEvent.touches.length === 2 ||
-        Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
 
 
 const styles = StyleSheet.create({

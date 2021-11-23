@@ -1,8 +1,8 @@
 import { ProjectConfiguration } from '../../../src/services/project-configuration';
 import { Document } from '../../../src/model/document';
 import { ConnectedDocs } from '../../../src/services/utilities/connected-docs'
-import {Relation} from '../../../src/model';
-import {Name, Named} from '../../../src/tools';
+import { Relation } from '../../../src/model';
+import { Name, Named } from '../../../src/tools';
 
 
 /**
@@ -11,9 +11,10 @@ import {Name, Named} from '../../../src/tools';
  */
 describe('ConnectedDocs', () => {
 
-    const projectConfiguration = new ProjectConfiguration(
-        [[] as any,
-         [
+    const projectConfiguration = new ProjectConfiguration({
+        forms: [],
+        categories: {},
+        relations: [
             {
                 name: 'BelongsTo',
                 inverse: 'Contains',
@@ -36,7 +37,10 @@ describe('ConnectedDocs', () => {
                 range: [],
                 editable: false,
                 inputType: 'relation'
-            }]]);
+            }
+        ],
+        commonFields: {}
+    });
 
     let mockDatastore;
     let inverseRelationsMap: Relation.InverseRelationsMap;

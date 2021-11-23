@@ -1,14 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Valuelist,
     Labels } from 'idai-field-core';
-import { InputType } from './configuration.component';
-import { ConfigurationUtil } from '../../components/configuration/configuration-util';
+import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-
-
-const locale: string = typeof window !== 'undefined'
-    ? window.require('@electron/remote').getGlobal('config').locale
-    : 'de';
 
 
 @Component({
@@ -51,19 +45,15 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-
-    public getValuelistDescription = (valuelist: Valuelist) => valuelist.description?.[locale];
-
-    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
-
-    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
-        this.labels.getValueLabel(valuelist, valueId);
-
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
     public isCustomField = () => this.field.source === 'custom';
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
+
+    public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
+        this.field.inputType, this.availableInputTypes
+    );
 
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
@@ -71,14 +61,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         return this.configurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
-    }
-
-
-    public getInputTypeLabel(): string {
-
-        return this.availableInputTypes
-            .find(inputType => inputType.name === this.field.inputType)
-            .label;
     }
 
 

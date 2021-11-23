@@ -1,5 +1,6 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
+import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
+    ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../src/app/services/datastore/pouchdb/pouchdb-server';
@@ -13,16 +14,16 @@ import { ImageRelationsManager } from '../../../src/app/services/image-relations
 import { Validator } from '../../../src/app/model/validator';
 import { ResourcesStateManager } from '../../../src/app/components/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../src/app/components/resources/view/view-facade';
-import { SyncTarget } from '../../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../../src/app/services/settings/settings-provider';
 import { SettingsService } from '../../../src/app/services/settings/settings-service';
 import { TabManager } from '../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../core/test/test-helpers';
-
 import PouchDB = require('pouchdb-node');
-import {DocumentHolder} from '../../../src/app/components/docedit/document-holder';
+import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
+import { Filestore } from '../../../src/app/services/filestore/filestore';
+import { FsAdapter } from '../../../src/app/services/filestore/fs-adapter';
 
 const fs = require('fs');
 
@@ -37,15 +38,17 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbdatastore, pouchdbserver, projectName = 'testdb') {
+export async function setupSettingsService(pouchdbdatastore, projectName = 'testdb') {
 
+    const pouchdbServer = new PouchdbServer(undefined);
     const settingsProvider = new SettingsProvider();
+    const filestore = new Filestore(settingsProvider, new FsAdapter());
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
-            undefined, undefined, pouchdbdatastore.getDb()) as Imagestore,
+            filestore, undefined, undefined, pouchdbdatastore.getDb()) as Imagestore,
         pouchdbdatastore,
-        pouchdbserver,
+        pouchdbServer,
         undefined,
         new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbdatastore)),
         undefined,
@@ -66,7 +69,7 @@ export async function setupSettingsService(pouchdbdatastore, pouchdbserver, proj
     await settingsService.bootProjectDb(settings.selectedProject, true);
 
     const projectConfiguration = await settingsService.loadConfiguration();
-    return { settingsService, projectConfiguration, settingsProvider };
+    return { settingsService, projectConfiguration, filestore, settingsProvider };
 }
 
 
@@ -90,27 +93,30 @@ export interface App {
 
 export async function createApp(projectName = 'testdb'): Promise<App> {
 
-    const pouchdbServer = new PouchdbServer();
-
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
         new IdGenerator());
     pouchdbDatastore.createDbForTesting(projectName);
     pouchdbDatastore.setupChangesEmitter();
 
-    const { settingsService, projectConfiguration, settingsProvider } = await setupSettingsService(
-        pouchdbDatastore, pouchdbServer, projectName);
+    const {
+        settingsService,
+        projectConfiguration,
+        settingsProvider,
+        filestore
+    } = await setupSettingsService(pouchdbDatastore, projectName);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbDatastore.getDb());
+    const imagestore = new PouchDbFsImagestore(filestore, undefined, undefined, pouchdbDatastore.getDb());
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
     const categoryConverter = new CategoryConverter(projectConfiguration);
 
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => settingsProvider.getSettings().username);
+        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter,
+        () => settingsProvider.getSettings().username);
 
     const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
@@ -231,12 +237,9 @@ function makeCreateProjectDir(projectImageDir) {
 
     return function createProjectDir() {
         try {
-            // TODO node 12 supports fs.rmdirSync(path, {recursive: true})
-            const files = fs.readdirSync(projectImageDir);
-            for (const file of files) {
-                fs.unlinkSync(projectImageDir + file);
+            if (fs.existsSync(projectImageDir)) {
+                fs.rmdirSync(projectImageDir, { recursive: true });
             }
-            if (fs.existsSync(projectImageDir)) fs.rmdirSync(projectImageDir);
         } catch (e) {
             console.log("error deleting tmp project dir", e)
         }

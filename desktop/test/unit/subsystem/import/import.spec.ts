@@ -1,5 +1,4 @@
 import { CategoryForm, PouchdbDatastore } from 'idai-field-core';
-import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../src/app/components/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
@@ -53,7 +52,7 @@ describe('Import/Subsystem', () => {
 
         await setupSyncTestDb();
         const pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), undefined);
-        const {projectConfiguration} = await setupSettingsService(pouchdbDatastore, new PouchdbServer());
+        const {projectConfiguration} = await setupSettingsService(pouchdbDatastore);
         _projectConfiguration = projectConfiguration;
         const app = await createApp();
         const {datastore: d} = app;

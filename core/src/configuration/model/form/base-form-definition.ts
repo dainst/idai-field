@@ -6,7 +6,7 @@ export interface BaseFormDefinition {
 
     groups?: Array<BaseGroupDefinition>;
     valuelists?: Valuelists;
-    source?: Field.SOURCE_TYPES;
+    source?: Field.SourceTypes;
 }
 
 

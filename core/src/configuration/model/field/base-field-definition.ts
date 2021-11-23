@@ -6,7 +6,7 @@ export interface BaseFieldDefinition {
     inputType?: string;
     constraintIndexed?: boolean;
     fulltextIndexed?: boolean;
-    source?: Field.SOURCE_TYPES;
+    source?: Field.SourceTypes;
     // TODO Add default valuelist
 }
 

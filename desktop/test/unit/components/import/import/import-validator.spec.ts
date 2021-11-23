@@ -86,7 +86,8 @@ describe('ImportValidator', () => {
                 inputType: 'relation'
             }
         ],
-        commonFields: {}
+        commonFields: {},
+        valuelists: {}
     });
 
 

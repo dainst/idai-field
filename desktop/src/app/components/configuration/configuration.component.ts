@@ -513,6 +513,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 builtInConfiguration.commonFields,
                 builtInConfiguration.builtInFields,
                 valuelists,
+                this.configurationDocument.resource.valuelists,
                 this.topLevelCategoriesArray.map(to('libraryId')),
                 languages
             );

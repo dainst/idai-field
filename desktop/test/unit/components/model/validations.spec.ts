@@ -106,7 +106,8 @@ describe('Validations', () => {
                 inputType: 'relation'
             }
         ],
-        commonFields: {}
+        commonFields: {},
+        valuelists: {}
     });
 
 

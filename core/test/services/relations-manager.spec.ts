@@ -37,7 +37,8 @@ describe('RelationsManager', () => {
                 inputType: 'relation'
             }
         ],
-        commonFields: {}
+        commonFields: {},
+        valuelists: {}
     });
 
     let mockDatastore;

@@ -39,7 +39,8 @@ describe('ConnectedDocs', () => {
                 inputType: 'relation'
             }
         ],
-        commonFields: {}
+        commonFields: {},
+        valuelists: {}
     });
 
     let mockDatastore;

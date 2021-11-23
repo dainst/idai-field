@@ -72,7 +72,8 @@ describe('DocumentHolder', () => {
                     inputType: 'relation'
                 }
             ],
-            commonFields: {}
+            commonFields: {},
+            valuelists: {}
         });
 
         defaultDocument = {

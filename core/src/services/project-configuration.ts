@@ -6,6 +6,7 @@ import { CategoryForm } from '../model/configuration/category-form';
 import { Relation } from '../model/configuration/relation';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
+import { Valuelist } from '../model';
 
 
 export interface RawProjectConfiguration {
@@ -13,6 +14,7 @@ export interface RawProjectConfiguration {
     categories: Map<Category>;
     relations: Array<Relation>;
     commonFields: Map<Field>;
+    valuelists: Map<Valuelist>;
 };
 
 const TYPE_CATALOG = 'TypeCatalog';

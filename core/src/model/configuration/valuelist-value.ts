@@ -1,4 +1,5 @@
-import {I18N} from '../../tools';
+import { I18N } from '../../tools';
+
 
 export interface ValuelistValue extends I18N.Labeled {
 

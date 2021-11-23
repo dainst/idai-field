@@ -1,4 +1,4 @@
-import { clone, Map, map } from 'tsfun';
+import { clone, Map } from 'tsfun';
 import { PouchdbDatastore } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { Relation } from '../../model/configuration/relation';
@@ -56,6 +56,7 @@ export class ConfigLoader {
 
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories();
         const libraryForms: Map<LibraryFormDefinition> = this.readLibraryForms();
+        const libraryValuelists: Map<Valuelist> = this.readLibraryValuelists();
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtInCategories as any)
@@ -66,6 +67,7 @@ export class ConfigLoader {
             builtInCategories,
             libraryCategories,
             libraryForms,
+            libraryValuelists,
             commonFields,
             relations,
             builtInFields,
@@ -102,9 +104,23 @@ export class ConfigLoader {
     }
 
 
+    private readLibraryValuelists(): Map<Valuelist> {
+
+        const appConfigurationPath = '/Library/Valuelists.json';
+
+        try {
+            return this.configReader.read(appConfigurationPath);
+        } catch (msgWithParams) {
+            throw [msgWithParams];
+        }
+    }
+    
+
+
     private async loadConfiguration(builtInCategories: Map<BuiltInCategoryDefinition>,
                                     libraryCategories: Map<LibraryCategoryDefinition>,
                                     libraryForms: Map<LibraryFormDefinition>,
+                                    libraryValuelists: Map<Valuelist>,
                                     commonFields: Map<BuiltInFieldDefinition>,
                                     relations: Array<Relation>,
                                     builtInFields: Map<BuiltInFieldDefinition>,
@@ -112,12 +128,9 @@ export class ConfigLoader {
                                     customConfigurationName?: string|undefined,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
-        const valuelistsConfigurationPath = '/Library/Valuelists.json';
-
         let customForms;
         let languageConfigurations: LanguageConfigurations;
         let categoriesOrder: string[];
-        let libraryValuelists: Map<Valuelist>;
         let customValuelists: Map<Valuelist>;
 
         try {
@@ -134,7 +147,6 @@ export class ConfigLoader {
                 default: defaultLanguageConfigurations
             };
             categoriesOrder = configurationDocument.resource.order;
-            libraryValuelists = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             customValuelists = configurationDocument.resource.valuelists;
         } catch (msgWithParams) {
             throw [msgWithParams];
@@ -241,12 +253,6 @@ export class ConfigLoader {
         }, clone(defaultLanguageConfigurations));
     }
 
-
-    private readValuelistsConfiguration(path: string): Map<Valuelist> {
-
-        return this.configReader.read(path);
-    }
-    
 
     private static createConfigurationDocument(customConfiguration: CustomConfiguration,
                                                languageConfigurations: { [language: string]: LanguageConfiguration },

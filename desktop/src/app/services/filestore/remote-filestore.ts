@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Maybe, isOk, ok, just, nothing } from 'tsfun';
+import { Maybe, isOk, ok, just, nothing, update, assoc } from 'tsfun';
 import { SettingsProvider } from '../settings/settings-provider';
 import { HttpAdapter } from './http-adapter';
+
+
+
 
 @Injectable()
 /**
@@ -37,12 +40,13 @@ export class RemoteFilestore {
      * @param path should start with /
      * @throws NOT_ONLINE. Make sure checking isOn() before calling this method
      */
-    public post(path: string, contents: any) {
+    public post(path: string, binaryContents: any) {
 
-        const address = this.getAddress();
-        if (!isOk(address) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
-        const url = ok(address) + path;
-        return this.httpAdapter.postBinaryData(url, contents);
+        const maybeLoginData = this.getLoginData();
+        if (!isOk(maybeLoginData) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
+        const loginData = ok(maybeLoginData);
+        loginData.url = loginData.url + '/files/' + this.settingsProvider.getSettings().selectedProject + path;
+        return this.httpAdapter.postBinaryData(loginData, binaryContents);
     }
 
 
@@ -54,6 +58,34 @@ export class RemoteFilestore {
     }
 
 
+    // TODO see below
+    private getLoginData(): Maybe<HttpAdapter.BasicAuthRequestContext> {
+
+        const settings = this.settingsProvider.getSettings();
+        const project = settings.selectedProject;
+        if (project === 'test') return nothing();
+
+        const syncSource = settings.syncTargets[project];
+        if (!syncSource) return nothing();
+        // TODO remove duplication with getAdress
+
+        const address = syncSource.address;
+        // TODO do not rewrite the adress but instead store the address parts in syncSource.address
+        const protocol = address.startsWith('https') ? 'https' : 'http';
+        const addressSegment = address
+            .replace('https://', '')
+            .replace('http://', '');
+
+        return just({
+            protocol: protocol,
+            user: project,
+            pass: syncSource.password,
+            url: addressSegment
+        });
+    }
+
+
+    // TODO remove and use getAddress()
     /*
      * @returns url, ending slash not included
      */
@@ -73,7 +105,6 @@ export class RemoteFilestore {
             .replace('https://', '')
             .replace('http://', '');
         const syncUrl = protocol + '://' + project + ':' + syncSource.password + '@' + addressSegment + '/files/' + project;
-        console.log(syncUrl)
         return just(syncUrl);
     }
 }

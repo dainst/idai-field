@@ -1,6 +1,16 @@
 const http = typeof window !== 'undefined' ? window.require('http') : require('http');
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+export namespace HttpAdapter{
+
+    export type BasicAuthRequestContext = {
+        user: string,
+        pass: string,
+        url: string, // except protocol. For example 'localhost:4000/abcd'
+        protocol: 'http'|'https'
+    }
+}
+
 
 /**
  * @author Daniel de Oliveira
@@ -17,14 +27,21 @@ export class HttpAdapter {
 
 
     // https://stackoverflow.com/a/59032305
-    public async postBinaryData(url: string, contents: any) {
+    public async postBinaryData({user, pass, url, protocol}: HttpAdapter.BasicAuthRequestContext,
+                                binaryContents: any) {
 
-        await axios({
+        console.log(url)
+
+        const result = await axios({
             method: 'post',
-            url: url,
-            data: Buffer.from(contents),
-            headers: { 'Content-Type': 'application/x-binary' }
+            url: `${protocol}://${url}`,
+            data: Buffer.from(binaryContents),
+            headers: {
+                'Content-Type': 'application/x-binary',
+                'Authorization': `Basic ${btoa(user + ':' + pass)}`
+            }
         });
+        console.log(result)
     }
 
 

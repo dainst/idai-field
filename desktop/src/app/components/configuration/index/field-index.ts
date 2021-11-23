@@ -31,7 +31,7 @@ export namespace FieldIndex {
                          categoryName: string): Array<Field> {
 
         return set(flatten(keysValues(index[categoryName])
-            .filter(([fieldName, _]) => fieldName.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
+            .filter(([indexTerm, _]) => indexTerm.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
             .map(right)
         ));
     }

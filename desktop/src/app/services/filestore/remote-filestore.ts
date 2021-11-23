@@ -67,9 +67,13 @@ export class RemoteFilestore {
         if (!syncSource) return nothing();
 
         const address = syncSource.address;
-        const protocol = 'http'; // TODO be able to deal with both http and https
-        const syncUrl = protocol + '://' + project + ':' + syncSource.password + '@' + address + '/files/' + project;
-
+        // TODO do not rewrite the adress but instead store the address parts in syncSource.address
+        const protocol = address.startsWith('https') ? 'https' : 'http';
+        const addressSegment = address
+            .replace('https://', '')
+            .replace('http://', '');
+        const syncUrl = protocol + '://' + project + ':' + syncSource.password + '@' + addressSegment + '/files/' + project;
+        console.log(syncUrl)
         return just(syncUrl);
     }
 }

@@ -50,7 +50,7 @@ export class PouchdbServer {
                 self.filestore.writeFile('/' + req.params['project'] + '/' + req.params[0], data)
             });
             req.on('end', function() {
-                res.status(200).send( { status: 'ok' });
+                res.status(200).send({ status: 'ok' });
             });
         });
 

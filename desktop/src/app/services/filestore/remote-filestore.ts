@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Maybe, isOk, ok, just, nothing, update, assoc } from 'tsfun';
+import { Maybe, isOk, ok, just, nothing } from 'tsfun';
 import { SettingsProvider } from '../settings/settings-provider';
 import { HttpAdapter } from './http-adapter';
 

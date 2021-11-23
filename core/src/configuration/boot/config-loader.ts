@@ -117,7 +117,8 @@ export class ConfigLoader {
         let customForms;
         let languageConfigurations: LanguageConfigurations;
         let categoriesOrder: string[];
-        let valuelistsConfiguration: any;
+        let libraryValuelists: Map<Valuelist>;
+        let customValuelists: Map<Valuelist>;
 
         try {
             const configurationDocument = customConfigurationDocument ?? (await this.loadCustomConfiguration(
@@ -133,7 +134,8 @@ export class ConfigLoader {
                 default: defaultLanguageConfigurations
             };
             categoriesOrder = configurationDocument.resource.order;
-            valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
+            libraryValuelists = this.readValuelistsConfiguration(valuelistsConfigurationPath);
+            customValuelists = configurationDocument.resource.valuelists;
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -149,7 +151,8 @@ export class ConfigLoader {
                     libraryForms,
                     customForms,
                     commonFields,
-                    valuelistsConfiguration,
+                    libraryValuelists,
+                    customValuelists,
                     builtInFields,
                     relations,
                     languageConfigurations,
@@ -176,7 +179,8 @@ export class ConfigLoader {
             return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
         }
 
-        if (!customConfiguration.resource.forms || !customConfiguration.resource.languages) {
+        if (!customConfiguration.resource.forms || !customConfiguration.resource.languages
+                || !customConfiguration.resource.order || !customConfiguration.resource.valuelists) {
             return await this.storeCustomConfigurationInDatabase(
                 customConfigurationName, username, customConfiguration._rev
             );
@@ -240,10 +244,7 @@ export class ConfigLoader {
 
     private readValuelistsConfiguration(path: string): Map<Valuelist> {
 
-        const valuelistsConfiguration = this.configReader.read(path);
-        map((definition: Valuelist, id: string) => definition.id = id, valuelistsConfiguration);
-
-        return valuelistsConfiguration;
+        return this.configReader.read(path);
     }
     
 
@@ -265,7 +266,8 @@ export class ConfigLoader {
                 relations: {},
                 forms: customConfiguration.forms,
                 order: customConfiguration.order,
-                languages: languageConfigurations
+                languages: languageConfigurations,
+                valuelists: {}
             }
         };
 

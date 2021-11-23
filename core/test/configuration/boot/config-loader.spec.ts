@@ -34,7 +34,9 @@ describe('ConfigLoader', () => {
             get: (_: string) => Promise.resolve({
                 resource: {
                     forms: customForms,
-                    languages: { de: customLanguageConfiguration }
+                    languages: { de: customLanguageConfiguration },
+                    order: [],
+                    valuelists: {}
                 }
             })
         });

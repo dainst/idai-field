@@ -1,5 +1,5 @@
 import { compose, cond, filter, flow, identity, includedIn, isDefined, isNot, Map, Mapping,
-    update as updateStruct, curry } from 'tsfun';
+    update as updateStruct, curry, clone } from 'tsfun';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { LanguageConfigurations } from '../model/language/language-configurations';
@@ -44,13 +44,16 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              libraryForms: Map<LibraryFormDefinition>,
                                              customForms?: Map<CustomFormDefinition>,
                                              commonFieldDefinitions: Map<BuiltInFieldDefinition> = {},
-                                             valuelists: Map<Valuelist> = {},
+                                             libraryValuelists: Map<Valuelist> = {},
+                                             customValuelists: Map<Valuelist> = {},
                                              builtInFieldDefinitions: Map<BuiltInFieldDefinition> = {},
                                              relationDefinitions: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
                                              selectedParentForms?: string[]): RawProjectConfiguration {
+
+    const valuelists: Map<Valuelist> = mergeValuelists(libraryValuelists, customValuelists);
 
     Assertions.performAssertions(
         builtInCategories, libraryCategories, libraryForms, commonFieldDefinitions, valuelists, customForms
@@ -136,6 +139,26 @@ function buildFields(fieldDefinitions: Map<BuiltInFieldDefinition>, languageConf
     applyLanguagesToFields(languageConfigurations, fields, section);
 
     return fields as Map<Field>;
+}
+
+
+function mergeValuelists(libraryValuelists: Map<Valuelist>, customValuelists: Map<Valuelist>): Map<Valuelist> {
+
+    const valuelists: Map<Valuelist> = Object.keys(libraryValuelists).reduce((result, valuelistId) => {
+        result[valuelistId] = clone(libraryValuelists[valuelistId]);
+        result[valuelistId].id = valuelistId;
+        result[valuelistId].source = 'library';
+        return result;
+    }, {});
+
+    return Object.keys(customValuelists).reduce((result, valuelistId) => {
+        if (!result[valuelistId]) {
+            result[valuelistId] = clone(customValuelists[valuelistId]);
+            result[valuelistId].id = valuelistId;
+            result[valuelistId].source = 'custom';
+        }
+        return result;
+    }, valuelists);
 }
 
 

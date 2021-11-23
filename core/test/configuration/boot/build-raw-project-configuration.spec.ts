@@ -490,6 +490,126 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('use a valuelist from custom configuration', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    a1: {
+                        inputType: 'dropdown',
+                        valuelistId: 'a1-library'
+                    }
+                },
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['a1'] }],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                valuelists: { a1: 'a1-custom' },
+                fields: {}
+            }
+        };
+
+        const libraryValuelists: Map<Valuelist> = {
+            'a1-library': {
+                values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const customValuelists: Map<Valuelist> = {
+            'a1-custom': {
+                values: { b: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            {},
+            libraryValuelists,
+            customValuelists
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+    });
+
+
+    it('prevent overwriting library valuelist in custom configuration', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    a1: {
+                        inputType: 'dropdown',
+                        valuelistId: 'a1-library'
+                    }
+                },
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['a1'] }],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                valuelists: {},
+                fields: {}
+            }
+        };
+
+        const libraryValuelists: Map<Valuelist> = {
+            'a1-library': {
+                values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const customValuelists: Map<Valuelist> = {
+            'a1-library': {
+                values: { b: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            {},
+            libraryValuelists,
+            customValuelists
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['source']).toBe('library');
+    });
+
+
     it('duplication in selection - two library forms of the same category', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
@@ -1145,8 +1265,7 @@ describe('buildRawProjectConfiguration', () => {
             libraryForms,
             customForms,
             {},
-            valuelistsConfiguration,
-            {}
+            valuelistsConfiguration
         );
 
         expect(result['A'].groups[0].fields[0].valuelist.values).toEqual({
@@ -1642,7 +1761,7 @@ describe('buildRawProjectConfiguration', () => {
             libraryCategories,
             {},
             customForms,
-            {}, {}, {}, [],
+            {}, {}, {}, {}, [],
             languageConfigurations
         );
 
@@ -1691,7 +1810,7 @@ describe('buildRawProjectConfiguration', () => {
             {},
             {},
             customForms,
-            {}, {}, {}, [],
+            {}, {}, {}, {}, [],
             { default: {}, complete: {} },
             orderConfiguration
         ).map(Named.toName);
@@ -1746,7 +1865,7 @@ describe('buildRawProjectConfiguration', () => {
             {},
             {},
             customForms,
-            {}, {}, {}, [],
+            {}, {}, {}, {}, [],
             { default: {}, complete: {} },
             orderConfiguration
         )['D'].children.map(to(Named.NAME));
@@ -1797,7 +1916,7 @@ describe('buildRawProjectConfiguration', () => {
             {},
             {},
             customForms,
-            {}, {}, {},
+            {}, {}, {}, {},
             relationDefinitions
         );
 
@@ -2017,6 +2136,7 @@ describe('buildRawProjectConfiguration', () => {
             libraryForms,
             customForms,
             commonFields,
+            {},
             {},
             {},
             relationDefinitions,

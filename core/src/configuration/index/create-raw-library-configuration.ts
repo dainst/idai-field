@@ -32,6 +32,7 @@ export function createRawLibraryConfiguration(builtInCategories: Map<BuiltInCate
         undefined,
         commonFields,
         valuelists,
+        {},
         builtInFields,
         builtInRelations,
         { default: languages, complete: languages },

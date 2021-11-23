@@ -95,9 +95,7 @@ export class ConfigLoader {
         const appConfigurationPath = '/Library/Forms.json';
 
         try {
-            return addKeyAsProp('libraryId')(
-                this.configReader.read(appConfigurationPath)
-            ) as Map<LibraryFormDefinition>;
+            return this.configReader.read(appConfigurationPath);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }

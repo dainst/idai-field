@@ -152,9 +152,6 @@ export class ConfigLoader {
             throw [msgWithParams];
         }
 
-        // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
-        // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
-
         try {
             return new ProjectConfiguration(
                 buildRawProjectConfiguration(

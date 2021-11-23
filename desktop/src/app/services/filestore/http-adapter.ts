@@ -17,11 +17,12 @@ export namespace HttpAdapter{
  */
 export class HttpAdapter {
 
-    public getWithBinaryData(url: string) {
+    public getWithBinaryData({user, pass, url, protocol}: HttpAdapter.BasicAuthRequestContext) {
 
         return new Promise<any>(resolve => {
 
-            http.get(url, HttpAdapter.getBinaryDataFromResponse(resolve));
+            http.get(protocol + '://' + user + ':' + pass + '@' + url,
+                     HttpAdapter.getBinaryDataFromResponse(resolve));
         })
     }
 
@@ -30,9 +31,7 @@ export class HttpAdapter {
     public async postBinaryData({user, pass, url, protocol}: HttpAdapter.BasicAuthRequestContext,
                                 binaryContents: any) {
 
-        console.log(url)
-
-        const result = await axios({
+        await axios({
             method: 'post',
             url: `${protocol}://${url}`,
             data: Buffer.from(binaryContents),
@@ -41,7 +40,6 @@ export class HttpAdapter {
                 'Authorization': `Basic ${btoa(user + ':' + pass)}`
             }
         });
-        console.log(result)
     }
 
 

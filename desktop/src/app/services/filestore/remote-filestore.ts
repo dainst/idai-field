@@ -16,7 +16,7 @@ export class RemoteFilestore {
                 private httpAdapter: HttpAdapter) {}
 
 
-    public isOn = () => isOk(this.getAddress()) && this.mySyncIsOn();
+    public isOn = () => isOk(this.getLoginData()) && this.mySyncIsOn();
 
 
     /**
@@ -27,10 +27,12 @@ export class RemoteFilestore {
      */
     public get(path: string) {
 
-        const address = this.getAddress();
-        if (!isOk(address) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
-        const url = ok(address) + path;
-        return this.httpAdapter.getWithBinaryData(url);
+        const maybeRequestContext = this.getLoginData();
+        if (!isOk(maybeRequestContext) || !this.mySyncIsOn()) throw 'NOT_ONLINE';
+        const loginData  = ok(maybeRequestContext);
+        const {url, user: project} = loginData;
+        loginData.url = url + '/files/' + project + path;
+        return this.httpAdapter.getWithBinaryData(loginData);
     }
 
 
@@ -58,7 +60,6 @@ export class RemoteFilestore {
     }
 
 
-    // TODO see below
     private getLoginData(): Maybe<HttpAdapter.BasicAuthRequestContext> {
 
         const settings = this.settingsProvider.getSettings();
@@ -67,7 +68,6 @@ export class RemoteFilestore {
 
         const syncSource = settings.syncTargets[project];
         if (!syncSource) return nothing();
-        // TODO remove duplication with getAdress
 
         const address = syncSource.address;
         // TODO do not rewrite the adress but instead store the address parts in syncSource.address
@@ -82,29 +82,5 @@ export class RemoteFilestore {
             pass: syncSource.password,
             url: addressSegment
         });
-    }
-
-
-    // TODO remove and use getAddress()
-    /*
-     * @returns url, ending slash not included
-     */
-    private getAddress(): Maybe<string> {
-
-        const settings = this.settingsProvider.getSettings();
-        const project = settings.selectedProject;
-        if (project === 'test') return nothing();
-
-        const syncSource = settings.syncTargets[project];
-        if (!syncSource) return nothing();
-
-        const address = syncSource.address;
-        // TODO do not rewrite the adress but instead store the address parts in syncSource.address
-        const protocol = address.startsWith('https') ? 'https' : 'http';
-        const addressSegment = address
-            .replace('https://', '')
-            .replace('http://', '');
-        const syncUrl = protocol + '://' + project + ':' + syncSource.password + '@' + addressSegment + '/files/' + project;
-        return just(syncUrl);
     }
 }

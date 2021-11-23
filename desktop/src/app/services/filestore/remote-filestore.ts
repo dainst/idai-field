@@ -70,7 +70,7 @@ export class RemoteFilestore {
         if (!syncSource) return nothing();
 
         const address = syncSource.address;
-        // TODO do not rewrite the adress but instead store the address parts in syncSource.address
+
         const protocol = address.startsWith('https') ? 'https' : 'http';
         const addressSegment = address
             .replace('https://', '')

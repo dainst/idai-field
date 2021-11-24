@@ -33,7 +33,7 @@ export class DocumentRepository {
 
         const db = pouchdbDatastore.getDb();
         const projectConfiguration = new ProjectConfiguration({
-            forms: categoryForms, categories: {}, relations: [], commonFields: {}
+            forms: categoryForms, categories: {}, relations: [], commonFields: {}, valuelists: {}
         });
         const [datastore, changesStream] = await buildDatastore(
             categoryForms, pouchdbDatastore, db, username, projectConfiguration);

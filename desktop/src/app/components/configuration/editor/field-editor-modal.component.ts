@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty } from 'tsfun';
-import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS, CustomLanguageConfigurations } from 'idai-field-core';
-import { ConfigurationUtil, InputType} from '../../../components/configuration/configuration-util';
+import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
+    CustomLanguageConfigurations } from 'idai-field-core';
+import { ConfigurationUtil, InputType } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -46,6 +47,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
+
+    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.field.inputType);
 
 
     public initialize() {
@@ -137,7 +140,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.category.name !== 'Project'
             && (this.field.source === 'custom' || this.field.defaultConstraintIndexed)
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
-    };
+    }
 
 
     public getConstraintIndexedTooltip(): string {

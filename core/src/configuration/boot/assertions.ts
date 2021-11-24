@@ -87,7 +87,7 @@ export module Assertions {
 
         iterateOverFields(definitions, (formName, _, fieldName, field) => {
 
-            if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
+            if (Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType ? field.inputType : '')) {
                 if (!field.valuelistId && !field.valuelist && !field.valuelistFromProjectField) {
                     throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, formName, fieldName]];
                 }

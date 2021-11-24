@@ -524,9 +524,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 Object.values(rawConfiguration.commonFields),
                 Object.values(rawConfiguration.valuelists)
             );
-
         } catch (e) {
-            console.error('error while building configuration index', e);
+            console.error('Error while building configuration index', e);
         }
     }
 }

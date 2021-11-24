@@ -67,7 +67,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('find valuelists', () => {
+   it('find valuelists', () => {
 
         const valuelists: Array<Valuelist> = [
             {
@@ -75,7 +75,8 @@ describe('ConfigurationIndex', () => {
                 values: {
                     'value1': {
                         label: { de: 'Wert 1', en: 'Value 1' }
-                    }
+                    },
+                    'no-label-value': {}
                 }
             }
         ];
@@ -89,6 +90,7 @@ describe('ConfigurationIndex', () => {
         expect(ConfigurationIndex.findValuelists(index, 'Wert 1')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Value')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Value 1')[0].id).toEqual('valuelist-1');
+        expect(ConfigurationIndex.findValuelists(index, 'no-label-value')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Abc').length).toBe(0);
     });
 });

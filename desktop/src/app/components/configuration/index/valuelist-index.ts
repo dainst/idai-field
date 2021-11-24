@@ -41,6 +41,8 @@ export namespace ValuelistIndex {
 
         return [valuelist.id]
             .concat(Object.keys(valuelist.values))
-            .concat(flatten(Object.values(valuelist.values).map(value => Object.values(value.label))));
+            .concat(flatten(
+                Object.values(valuelist.values).map(value => value.label ? Object.values(value.label) : [])
+            ));
     }
 }

@@ -526,7 +526,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
 
         } catch (e) {
-            console.error('error while reading config in AddCategoryModalComponent', e);
+            console.error('error while building configuration index', e);
         }
     }
 }

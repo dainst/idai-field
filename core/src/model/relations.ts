@@ -73,6 +73,9 @@ export namespace Relations {
     export const SAME_AS = 'isSameAs';
 
 
+    export const IS_IN_CROSS_SECTION = 'isInCrossSection';
+
+    
     // Used to connect finds with type resources
     export module Type {
 

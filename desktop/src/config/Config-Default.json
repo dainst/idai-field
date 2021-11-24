@@ -3,6 +3,18 @@
     "hidden": [],
     "fields": {}
   },
+  "CrossSection": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Profile": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Planum": {
+    "hidden": [],
+    "fields": {}
+  },
   "Operation:default": {
     "hidden": [],
     "fields": {}

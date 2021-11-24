@@ -36,6 +36,9 @@
     }
   },
   "relations": {
+    "isInCrossSection": {
+      "label": "Teil eines Querschnittes"
+    },
     "isRecordedIn": {
       "label": "Aufgenommen in Maßnahme"
     },

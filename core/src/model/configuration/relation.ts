@@ -55,10 +55,30 @@ export namespace Relation {
 
 
     /**
+     * This relation spans a general tree with resources as nodes and leafs.
+     * 
+     * Although the inspiration for this relation is that of spatial inclusion, the actual semantics
+     * are not defined precisely as spatial inclusion of volumes within other volumes but rather depend 
+     * on the specific context, as per the categories involved. For example in the case of a Find and
+     * a Feature we would use the relation to express that the Find is mostly included in that specific
+     * Feature. In the case of an Inscription and a Find we would use it to express that the Find has that
+     * specific inscription, which is then a specific instance of an inscription (a token, rather than a type)
+     * found on a particular Find.
+     * 
+     * Having most of the resources of the application in such a forest allows for widely used 
+     * and commonly understood hierarchical navigation, as you have it in file browsers etc.
+     */
+    export const PARENT = 'isChildOf';
+
+    /**
+     * @deprecated use isChildOf instead. 
+     *   Our index already works exclusively with isChildOf, while
+     *   in the documents the legacy relations are still stored.
+     * 
      * These relations exists for one to many assignments between operations and contained
      * and between resources and resources contained within those. It does not necessarily
      * describe a spatial relationship (also it may, depending of the concrete resource domain and range)
-     * but says that the app handles it as that structural on-to-many relationship and displays it
+     * but says that the app handles it as that structural one-to-many relationship and displays it
      * accordingly (so that operations get views, in which other resoures are listed, and resources
      * are displayed as nested within other resources). The semantics of a hierarchical relation depends on
      * its context, as constituted by the categories involved. For example a liesWithin between 'Inscription'
@@ -67,13 +87,10 @@ export namespace Relation {
      */
     export module Hierarchy {
 
-        export const RECORDEDIN = 'isRecordedIn';        // TODO get rid of this, in favor of isChildOf
-        export const LIESWITHIN = 'liesWithin';          // TODO get rid of this, in favor of isChildOf 
+        export const RECORDEDIN = 'isRecordedIn';        
+        export const LIESWITHIN = 'liesWithin';          
         export const ALL = [LIESWITHIN, RECORDEDIN];
     }
-
-
-    export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
 
 
     // Used to signal sameness (a claim of identity) in a generic manner, for example in order to say

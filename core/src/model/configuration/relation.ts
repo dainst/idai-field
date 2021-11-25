@@ -128,7 +128,7 @@ export namespace Relation {
     }
 
 
-    export const UNIDIRECTIONAL = Hierarchy.ALL;
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
     /**

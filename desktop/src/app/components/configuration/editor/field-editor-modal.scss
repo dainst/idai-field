@@ -1,6 +1,6 @@
 .field-editor-modal-body {
   #constraint-indexed-switch {
-    width: 340px;;
+    width: 340px;
     
     div span {
       user-select: none;
@@ -14,6 +14,15 @@
   .basic-settings-label {
     width: 300px;
     float: left;
+    user-select: none;
+  }
+
+  #swap-valuelist-button {
+    height: 38px;
+    margin-right: 12px;
+  }
+
+  code {
     user-select: none;
   }
 }

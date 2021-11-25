@@ -54,7 +54,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
-    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.field.inputType);
+    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
+        this.getClonedFieldDefinition().inputType ?? this.field.inputType
+    );
 
 
     public initialize() {
@@ -108,12 +110,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     
     public selectValuelist() {
 
-        const [result, componentInstance] =
-            this.modals.make<AddValuelistModalComponent>(
-                AddValuelistModalComponent,
-                MenuContext.CONFIGURATION_MODAL,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
+            AddValuelistModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
 
         componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;

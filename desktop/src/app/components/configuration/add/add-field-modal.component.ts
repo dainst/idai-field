@@ -119,6 +119,7 @@ export class AddFieldModalComponent {
         );
 
         componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {

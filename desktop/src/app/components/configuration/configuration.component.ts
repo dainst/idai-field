@@ -290,6 +290,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
 
         componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.field = field;

@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.selectValuelist">Werteliste auswählen</h5>
+</div>
+
+<div class="modal-body row add-valuelist-modal-body">
+    <div class="col-md-6">
+        <div class="input-group mb-2">
+            <input type="text"
+                   id="field-name"
+                   class="form-control"
+                   [(ngModel)]="searchTerm"
+                   (ngModelChange)="applyValuelistSearch()">
+        </div>
+        <valuelist-listing [valuelists]="valuelists"
+                           [selectedValuelist]="selectedValuelist"
+                           [searchTerm]="searchTerm"
+                           (onValuelistSelected)="select($event)">
+        </valuelist-listing>
+    </div>
+    <div class="col-md-6">
+        <valuelist-preview [valuelist]="selectedValuelist"></valuelist-preview>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="add-field-button"
+         class="btn btn-success"
+         [class.disabled]="!selectedValuelist"
+         (click)="confirmSelection()">
+        <span i18n="@@configuration.selectValuelist">Werteliste auswählen</span>
+    </div>
+    <div id="cancel-add-field-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

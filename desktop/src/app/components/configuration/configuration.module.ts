@@ -25,6 +25,9 @@ import { SaveModalComponent } from './save-modal.component';
 import { FieldListingComponent } from './add/field-listing.component';
 import { FieldPreviewComponent } from './add/field-preview.component';
 import { ValuelistViewComponent } from './valuelist-view.component';
+import { AddValuelistModalComponent } from './add/add-valuelist-modal.component';
+import { ValuelistListingComponent } from './add/valuelist-listing.component';
+import { ValuelistPreviewComponent } from './add/valuelist-preview.component';
 
 
 @NgModule({
@@ -43,10 +46,13 @@ import { ValuelistViewComponent } from './valuelist-view.component';
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,
+        AddValuelistModalComponent,
         CategoryPreviewComponent,
         FieldPreviewComponent,
+        ValuelistPreviewComponent,
         CategoryListingComponent,
         FieldListingComponent,
+        ValuelistListingComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

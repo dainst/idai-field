@@ -84,10 +84,33 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
             Werteliste
         </div>
-        <ul class="list-group list-group-flush">
-            <li *ngIf="field.valuelist" class="list-group-item">
-                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
-            </li>
-        </ul>
+        <div *ngIf="field.valuelist">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <code>{{field.valuelist.id}}</code>
+                    <button class="btn btn-primary" type="button"
+                            (click)="selectValuelist()"
+                            ngbTooltip="Werteliste wechseln"
+                            i18n-ngbTooltip="@@configiguration.swapValuelist"
+                            container="body"
+                            placement="right">
+                        <span class="mdi mdi-swap-horizontal"></span>
+                    </button>
+                </li>
+                <li *ngIf="field.valuelist" class="list-group-item">
+                    <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!field.valuelist">
+            <button class="btn btn-success" type="button"
+                    (click)="selectValuelist()"
+                    ngbTooltip="Werteliste hinzufügen"
+                    i18n-ngbTooltip="@@configiguration.swapValuelist"
+                    container="body"
+                    placement="right">
+                <span class="mdi mdi-plus"></span>
+            </button>
+        </div>
     </div>
 </div>

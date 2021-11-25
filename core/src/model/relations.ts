@@ -68,12 +68,11 @@ export namespace Relations {
     export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
 
 
+    export const IS_PRESENT_IN = 'isPresentIn';
+
     // Used to signal sameness in a generic manner, for example in order to say
     // two resources, recorded in different operations, are the same
     export const SAME_AS = 'isSameAs';
-
-
-    export const IS_IN_CROSS_SECTION = 'isInCrossSection';
 
     
     // Used to connect finds with type resources

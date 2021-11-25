@@ -381,7 +381,7 @@ export class AppConfigurator {
             range: ['Find:inherit']
         },
         {
-            name: Relations.IS_IN_CROSS_SECTION,
+            name: Relations.IS_PRESENT_IN,
             label: '',
             domain: ['Feature:inherit'],
             range: ['CrossSection:inherit'],

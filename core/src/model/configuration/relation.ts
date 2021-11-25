@@ -71,6 +71,17 @@ export namespace Relation {
     export const PARENT = 'isChildOf';
 
     /**
+     * This relation spans a directed acyclical graph between resources. Note that
+     * there should not be any redundant paths. That means, if A -> B -> C, there should 
+     * not be an explicit relation between A and C. Instead the relation is implicit as per the 
+     * path from A to C.
+     * 
+     * It can be used to model relationships where one entity belongs to multiple other entities in some
+     * way, as it is the case for example with Doors and Room, where a Door can be part of two Rooms.
+     */
+    export const IS_PRESENT_IN = 'isPresentIn';
+
+    /**
      * @deprecated use isChildOf instead. 
      *   Our index already works exclusively with isChildOf, while
      *   in the documents the legacy relations are still stored.

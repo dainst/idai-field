@@ -104,12 +104,27 @@ export namespace Relation {
     }
 
 
-    // Used to signal sameness (a claim of identity) in a generic manner, for example in order to say
-    // two resources, recorded in different operations, are the same
+    /**
+     * Used to signal sameness (a claim of identity) in a generic manner, for example in order to say
+     * two resources, recorded in different operations, are the same. 
+     * 
+     * This relation complements isChildOf in so far as the tree spanned by the latter gains the
+     * possibility to express sameness, while retaining its relatively simple structure 
+     * (more complex graphs; see also: isPresentIn). Sameness in this way can be seen as an 
+     * *interpretation* that parts of an entity, each found in its own (spatial) context and also maybe 
+     * described by different persons, actually *are* (rather than are parts of) the *same* entity. 
+     * For example one could have two parts of a wall which are not (visibly) physically connected, 
+     * but which are taken as having been the *same* wall.
+     */ 
     export const SAME_AS = 'isSameAs';
 
 
-    // Used to connect finds with type resources
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
+
+
+    /**
+     * Used to connect finds with type resources
+     */
     export module Type {
 
         export const INSTANCEOF = 'isInstanceOf';
@@ -126,9 +141,6 @@ export namespace Relation {
         export const ISMAPLAYEROF = 'isMapLayerOf';
         export const ALL = [DEPICTS, ISDEPICTEDIN, HASMAPLAYER, ISMAPLAYEROF];
     }
-
-
-    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
     /**

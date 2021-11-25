@@ -120,6 +120,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.category = this.category;
         componentInstance.field = this.field;
         componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
 
         this.modals.awaitResult(result, nop, nop);
     }

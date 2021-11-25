@@ -88,6 +88,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
+        if (!Field.InputType.VALUELIST_INPUT_TYPES
+                .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType)
+                && this.getClonedFormDefinition().valuelists) {
+            delete this.getClonedFormDefinition().valuelists[this.field.name];
+        }
+
         await super.save(this.isConstraintIndexedChanged());
     }
 

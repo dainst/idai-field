@@ -94,7 +94,7 @@ export namespace Relations {
     }
 
 
-    export const UNIDIRECTIONAL = Hierarchy.ALL;
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
     export function getAllTargets(relations: Relations, allowedRelations?: string[]): Array<string> {

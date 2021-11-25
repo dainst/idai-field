@@ -66,7 +66,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         return groupName === Groups.STEM
             ? relations.filter((relation: RelationDefinition) =>
                 relation.name === Relations.SAME_AS
-                || relation.name === Relations.IS_IN_CROSS_SECTION
+                || relation.name === Relations.IS_PRESENT_IN
             )
             : relations.filter((relation: RelationDefinition) => relation.name !== Relations.Type.INSTANCEOF);
     }

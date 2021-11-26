@@ -10,13 +10,14 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
+ * @author Simon Hohl
  */
 export class SampleDataLoader extends SampleDataLoaderBase {
 
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
                 locale: string) {
-                    super(locale)
+                    super(locale);
                 }
 
 
@@ -26,40 +27,37 @@ export class SampleDataLoader extends SampleDataLoaderBase {
             await this.loadSampleDocuments(db);
             await this.loadSampleImages(
                 remote.getGlobal('samplesPath'),
-                this.imagestorePath + project,
-                db
+                this.imagestorePath + project
             );
-        } catch(err) {
+        } catch (err) {
             console.error('Failed to load sample data', err);
         }
     }
 
 
-    private async loadSampleImages(srcFolderPath: string, destFolderPath: string, db: any) {
+    private async loadSampleImages(srcFolderPath: string, destFolderPath: string) {
 
         const fileNames: string[] = await SampleDataLoader.getFileNames(srcFolderPath);
 
-        for (let fileName of fileNames) {
+        for (const fileName of fileNames) {
             if (!fs.statSync(srcFolderPath + fileName).isDirectory()) {
-                SampleDataLoader.copyImageFile(srcFolderPath, destFolderPath, fileName);
-                await this.createThumbnail(srcFolderPath, fileName, db);
+                await this.copyImageFiles(srcFolderPath, destFolderPath, fileName);
             }
         }
     }
 
+    private async copyImageFiles(srcFolderPath: string, destFolderPath: string, fileName: string) {
 
-    private async createThumbnail(filePath: string, fileName: string, db: PouchDB.Database) {
-
-        const buffer: Buffer = await this.imageConverter.convert(fs.readFileSync(filePath + fileName)) as Buffer;
-        const imageDocument: ImageDocument = await db.get(fileName);
-
-        await db.putAttachment(
-            fileName,
-            'thumb',
-            imageDocument._rev,
-            new Blob([buffer]),
-            'image/jpeg'
+        fs.mkdirSync(destFolderPath, {recursive: true});
+        fs.createReadStream(srcFolderPath + fileName).pipe(
+            fs.createWriteStream(destFolderPath + '/' + fileName)
         );
+
+        const buffer: Buffer = await this.imageConverter.convert(fs.readFileSync(srcFolderPath + fileName)) as Buffer;
+        const thumbnailDir = destFolderPath + '/thumbs';
+
+        fs.mkdirSync(thumbnailDir, {recursive: true});
+        fs.writeFileSync(thumbnailDir + '/' + fileName, buffer);
     }
 
 
@@ -76,32 +74,4 @@ export class SampleDataLoader extends SampleDataLoaderBase {
             });
         });
     }
-
-
-    private static copyImageFile(srcFolderPath: string, destFolderPath: string, fileName: string) {
-
-        fs.createReadStream(srcFolderPath + fileName).pipe(
-            fs.createWriteStream(destFolderPath + '/' + fileName)
-        );
-    }
-
-
-    // private static async createDocument(document: Document, db: PouchDB.Database) {
-
-    //     document.created = { user: 'sample_data', date: new Date() };
-    //     document.modified = [{ user: 'sample_data', date: new Date() }];
-    //     document._id = document.resource.id;
-    //     document.resource.type = document.resource.category;
-    //     delete document.resource.category;
-
-    //     if (document.resource.id === 'project') {
-    //         try {
-    //             const project = await db.get('project');
-    //             await db.remove('project', project._rev);
-    //         } catch {
-    //             // Ignore errors
-    //         }
-    //     }
-    //     await db.put(document);
-    // }
 }

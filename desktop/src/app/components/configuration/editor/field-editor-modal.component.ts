@@ -54,6 +54,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
+    public getAvailableInputTypes = () => this.availableInputTypes.filter(inputType => inputType.customFields);
+
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition().inputType ?? this.field.inputType
     );

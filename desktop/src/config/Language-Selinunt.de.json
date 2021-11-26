@@ -1,31 +1,66 @@
 {
   "categories": {
+    "Operation": {
+      "fields": {
+        "researchHistory": {
+          "label": "Forschungsgeschichte"
+        },
+        "researchPerspective": {
+          "label": "Forschungsperspektive"
+        },
+        "researchMethod": {
+          "label": "Forschungsmethode"
+        }
+      }
+    },
     "Place": {
       "fields": {
-        "placeCondition": {
+        "condition": {
           "label": "Erhaltungszustand"
         }
       }
     },
+    "Survey": {
+      "fields": {
+        "descriptionOfArea": {
+          "label": "Beschreibung des Areals"
+        },
+        "currentUse": {
+          "label": "Aktuelle Oberflächennutzung"
+        },
+        "slope": {
+          "label": "Gefälle"
+        },
+        "visibility": {
+          "label": "Sichtbarkeit"
+        },
+        "chronologyFinds": {
+          "label": "Chronologie Fundverteilung"
+        },
+        "interpretation": {
+          "label": "Interpretation"
+        }
+      } 
+    },
     "Architecture": {
       "label": "Gebaute Struktur",
       "fields": {
-        "architectureClassification": {
+        "classification": {
           "label": "Ansprache"
         },
-        "architectureMaterial": {
+        "material": {
           "label": "Baumaterial"
         },
-        "architectureMasonry": {
+        "masonry": {
           "label": "Mauer: Mauerwerk"
         },
         "masonryJoint": {
           "label": "Mauer: Verbindung"
         },
-        "architectureLayerType": {
+        "layerType": {
           "label": "Mauer: Lagenart"
         },
-        "architectureMasonryCoating": {
+        "cladding": {
           "label": "Mauer: Verkleidung"
         },
         "floorClassification": {
@@ -47,66 +82,107 @@
         "period": {
           "label": "Epoche"
         },
-        "featureBibliography": {
+        "furtherReading": {
           "label": "Bibliographie"
         }
       }
     },
     "Layer": {
       "fields": {
+        "distinguishingCriteria": {
+          "label": "Erdbefund: Unterscheidungskriterium"
+        },
         "layerClassification": {
           "label": "Erdbefund: Ansprache"
-        },
-        "layerColorLightness": {
-          "label": "Erdbefund: Farbhelligkeit"
-        },
-        "layerColor": {
-          "label": "Erdbefund: Farbe"
         },
         "soilType": {
           "label": "Erdbefund: Zusammensetzung"
         },
-        "findComposition": {
-          "label": "Erdbefund: Zusammensetzung Fundmaterial"
-        },
-        "distinguishingCriteria": {
-          "label": "Erdbefund: Unterscheidungskriterium"
-        },
-        "layerContentPotteryOrigin": {
-          "label": "Inhalt: Keramik Provenienz"
-        },
-        "layerContentPotteryShape": {
-          "label": "Inhalt: Keramik Form"
-        },
-        "layerContentPotteryDecoration": {
-          "label": "Inhalt: Keramik Dekoration"
-        },
-        "layerContentTerracotta": {
-          "label": "Inhalt: Terracotta"
-        },
-        "layerContentInorganic": {
-          "label": "Inhalt: Anorganisches Material"
-        },
-        "layerContentOrganic": {
-          "label": "Inhalt: Organisches Material"
-        },
-        "layerContentBuildingMaterial": {
-          "label": "Inhalt: Baumaterial"
-        },
-        "layerForm": {
-          "label": "Erdbefund: Form"
-        },
-        "layerBorders": {
-          "label": "Erdbefund: Grenzen"
-        },
         "consistency": {
           "label": "Erdbefund: Konsistenz"
+        },
+        "colorLightness": {
+          "label": "Erdbefund: Farbhelligkeit"
+        },
+        "colorDetermination": {
+          "label": "Erdbefund: Farbe"
+        },
+        "borders": {
+          "label": "Erdbefund: Grenzen"
+        },
+        "form": {
+          "label": "Erdbefund: Form"
+        },
+        "findComposition": {
+          "label": "Erdbefund: Zusammensetzung Fundmaterial"
         },
         "workflowOptions": {
           "label": "Erdbefund: Arbeitsschritte"
         },
         "workflowSampleDescription": {
           "label": "Erdbefund: Beschreibung der Probe / Analyse"
+        }
+      }
+    },
+    "GeoLayer": {
+      "label": "Schicht",
+      "fields": {
+        "facies": {
+          "label": "Fazies"
+        },
+        "depthRange": {
+          "label": "Tiefenbereich"
+        },
+        "boundariesUpwards": {
+          "label": "Schichtgrenzen nach oben"
+        },
+        "boundariesDownwards": {
+          "label": "Schichtgrenzen nach unten"
+        },
+        "grainSizeSmallerThan2mm": {
+          "label": "Korngröße, Feinfraktion <2mm"
+        },
+        "descriptionGrainSize": {
+          "label": "Beschreibung"
+        },
+        "grainSizeBiggerThan2mm": {
+          "label": "Fraktion des Skelettanteils, Korngröße >2mm"
+        },
+        "boneAmount": {
+          "label": "Skelettanteil"
+        },
+        "soilColor": {
+          "label": "Farbe"
+        },
+        "soilConsistency": {
+          "label": "Konsistenz"
+        },
+        "moistureCondition": {
+          "label": "Feuchtezustand"
+        },
+        "hydromorphologyOxidativeFeatures": {
+          "label": "Hydromorphie, oxidative Merkmale"
+        },
+        "hydromorphologyReductiveFeatures": {
+          "label": "Hydromorphie, reduktive Merkmale"
+        },
+        "humusContent": {
+          "label": "Humusgehalt"
+        },
+        "limeContent": {
+          "label": "Kalkhgehalt"
+        },
+        "rootPenetration": {
+          "label": "Durchwurzelung"
+        },
+        "macroStructuralForms": {
+          "label": "Makrogefügeformen"
+        },
+        "constituents": {
+          "label": "Beimengungen"
+        },
+        "notes": {
+          "label": "Anmerkungen"
         }
       }
     },
@@ -118,7 +194,7 @@
         "miniatureVesselForm": {
           "label": "Form Miniatur Keramik"
         },
-        "potteryProvenance": {
+        "provenance": {
           "label": "Provenienz"
         },
         "vesselDecorationOutside": {
@@ -133,38 +209,24 @@
         "clayDensity": {
           "label": "Tondichte"
         },
-        "potteryWeight": {
+        "weight": {
           "label": "Gewicht (g)"
         },
         "amountSherds": {
           "label": "Anzahl Fragmente"
         },
-        "potteryDiameterExternal": {
-          "label": "Durchmesser Rand außen"
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "Durchmesser Rand außen; Durchmesser Rand innen; Durchmesser Henkel; Durchmesser Fuß; Durchmesser Boden; Durchmesser Deckel"
         },
-        "potteryDiameterInternal": {
-          "label": "Durchmesser Rand innen"
-        },
-        "potteryThickness": {
+        "dimensionThickness": {
           "label": "Wandstärke"
         },
-        "pottyDiameterHandle": {
-          "label": "Durchmesser Henkel"
+        "dimensionHeight": {
+          "label": "Objekthöhe"
         },
-        "potteryDiameterFoot": {
-          "label": "Durchmesser Fuß"
-        },
-        "potteryDiameterBase": {
-          "label": "Durchmesser Boden"
-        },
-        "potteryDiameterLid": {
-          "label": "Durchmesser Deckel"
-        },
-        "potteryHeight": {
-          "label": "Höhe Objekt"
-        },
-        "potteryWidth": {
-          "label": "Breite Objekt"
+        "dimensionWidth": {
+          "label": "Objektbreite"
         },
         "coatTypeOutside": {
           "label": "Überzug Außen"
@@ -201,16 +263,81 @@
         }
       }
     },
+    "FindCollection": {
+      "label": "Fundkollektion",
+      "fields": {
+        "potteryFormsOverview": {
+          "label": "Überblick über die Keramikformen"
+        },
+        "potteryFineWareByProvenance": {
+          "label": "1. Feinware nach Provenienz"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "label": "1. Anzahl, Gewicht, Besonderheiten"
+        },
+        "potteryAmphoraeByProvenance": {
+          "label": "2. Amphoren nach Provenienz"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "label": "2. Anzahl, Gewicht, Besonderheiten"
+        },
+        "potteryCoarseWareByFunction": {
+          "label": "3. Gebrauchskeramik nach Funktion"
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "label": "3. Anzahl, Gewicht, Besonderheiten"
+        },
+        "miniaturePotteryCollection": {
+          "label": "4. Miniaturkeramik"
+        },
+        "terracottaCollection": {
+          "label": "5. Terrakotten"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "label": "5. Anzahl, Gewicht, Besonderheiten"
+        },
+        "buildingMaterialCollection": {
+          "label": "6. Baumaterialien"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "label": "6. Anzahl, Gewicht, Besonderheiten"
+        },
+        "stoneCollection": {
+          "label": "7. Steine und Steinobjekte"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "label": "7. Anzahl, Gewicht, Besonderheiten"
+        },
+        "metalAndGlasCollection": {
+          "label": "8. Metall und Glas"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "label": "8. Anzahl, Gewicht, Besonderheiten"
+        },
+        "organicMaterialCollection": {
+          "label": "9. Organische Materialien"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "label": "9. Anzahl, Gewicht, Besonderheiten"
+        }
+      }
+    },
     "StratigraphicSequence": {
       "label": "Stratigraphische Sequenz"
     },
     "Find": {
       "fields": {
-        "findOtherIdentificationNumber": {
+        "otherIdentificationNumber": {
           "label": "Andere Identifikationsnummer"
         },
         "restorationDescription": {
           "label": "Restaurierungsmaßnahmen"
+        },
+        "furtherAnalysis": {
+          "label": "Weiterführende Analysen"
+        },
+        "analysisMethod": {
+          "label": "Analysemethode"
         },
         "alignments": {
           "label": "Anpassungen"
@@ -221,63 +348,71 @@
       }
     },
     "Brick": {
+      "label": "Dach- und Mauerziegel",
       "fields": {
-        "brickProvenance": {
-          "label": "Provenienz"
+        "applicationInArchitecture": {
+          "label": "Verwendung in der Architektur"
         },
-        "brickForm": {
-          "label": "Ziegel: Form"
+        "tileType": {
+          "label": "Dachziegeltyp"
         },
-        "brickFormDescription": {
-          "label": "Ziegel: Beschreibung der Form"
+        "roofingSystem": {
+          "label": "Dachdeckungssystem"
+        },
+        "type": {
+          "label": "Mauerziegel"
         },
         "manufacturing": {
           "label": "Ziegel: Herstellungstechnik"
         },
+        "temper": {
+          "label": "Magerungsart",
+          "description": "Grundsätzliche Art der Magerung"
+        },
+        "clayColorOutside": {
+          "label": "Außen: Tonfarbe und -intensität"
+        },
         "clayColorInside": {
           "label": "Innen: Tonfarbe und -intensität"
         },
-        "featureText": {
-          "label": "Beschreibung Stempel"
+        "coatColor": {
+          "label": "Überzug: Farbe und Intensität"
         },
-        "brickWeight": {
+        "decorationTechnique": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekoration"
+        },
+        "weight": {
           "label": "Gewicht (g)"
         },
         "amountSherds": {
           "label": "Anzahl Fragmente"
         },
-        "descriptionDecorationTechnique": {
-          "label": "Beschreibung der Dekoration"
-        },
-        "coatColor": {
-          "label": "Überzug: Farbe und Intensität"
-        },
-        "roofingSystem": {
-          "label": "Dachdeckungssystem"
+        "remarks": {
+          "label": "Bemerkungen"
         }
       }
     },
     "Metal": {
       "fields": {
-        "metalProvenance": {
+        "origins": {
           "label": "Provenienz"
         },
-        "metalWeaponsArmor": {
+        "weaponsArmor": {
           "label": "Bestimmung: Waffen und Rüstungsstücke"
         },
-        "metalSchmuckTrachtbestandteile": {
+        "jewelryTrachtComponents": {
           "label": "Bestimmung: Schmuck und Trachtbestandteile"
         },
-        "metalVesselParts": {
+        "vesselParts": {
           "label": "Bestimmung: Gefäßteile"
         },
-        "metalToolsEquipment": {
+        "toolsEquipment": {
           "label": "Bestimmung: Werkzeug und Gerät"
         },
-        "metalMiscellaneous": {
+        "miscellaneous": {
           "label": "Bestimmung: Sonstiges"
         },
-        "metalWeight": {
+        "weight": {
           "label": "Gewicht (g)"
         },
         "amountFragments": {
@@ -295,19 +430,19 @@
     "ProcessUnit": {
       "label": "Profil",
       "fields": {
-        "operationClassification": {
+        "classification": {
           "label": "Klassifikation Profil"
         },
-        "operationOrientation": {
+        "orientationTowardsCardinalPoints": {
           "label": "Orientierung"
         },
-        "operationHorizontalDescription": {
+        "horizontalCourse": {
           "label": "Horizontalverlauf"
         },
-        "operationVerticalDescription": {
+        "verticalCourse": {
           "label": "Vertikalverlauf"
         },
-        "operationIdentifiability": {
+        "identifiability": {
           "label": "Erkennbarkeit"
         }
       }
@@ -332,10 +467,10 @@
         "coatColorMunsell": {
           "label": "Überzug Farbe (Munsell)"
         },
-        "terracottaInscription": {
+        "inscription": {
           "label": "Inschrift: Text"
         },
-        "terracottaDecorationDescription": {
+        "decorationDescription": {
           "label": "Dekoration: Beschreibung"
         },
         "architecturalDecorationType": {
@@ -347,7 +482,7 @@
         "toolType": {
           "label": "Bestimmung: Gerät"
         },
-        "terracottaProvenance": {
+        "origins": {
           "label": "Provenienz"
         }
       }
@@ -355,7 +490,7 @@
     "Stone": {
       "fields": {
         "colorMunsell": {
-          "label": "Fabrbe (Munsell)"
+          "label": "Farbe (Munsell)"
         },
         "objectType": {
           "label": "Bestimmung: Steinobjekt"
@@ -372,14 +507,14 @@
         "inscriptionDescription": {
           "label": "Inschrift Beschreibung"
         },
-        "decoration": {
+        "decorationType": {
           "label": "Dekoration"
         }
       }
     },
     "Coin": {
       "fields": {
-        "coinWeight": {
+        "weight": {
           "label": "Gewicht (g)"
         },
         "legend": {
@@ -387,64 +522,139 @@
         }
       }
     },
-    "FindCollection": {
-      "label": "Fundzusammensetzung",
+    "Area": {
       "fields": {
-        "potteryFormsOverview": {
-          "label": "Keramikformen Gesamtübersicht"
+        "dimensionVerticalExtent": {
+          "label": "Vertikale Ausdehnung"
         },
-        "potteryFineWareByProvenance": {
-          "label": "1. Feinkeramik nach Provenienz"
+        "description": {
+          "label": "Beschreibung"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Planquadrat",
+      "fields": {
+        "currentSurfaceUtilization": {
+          "label": "Aktuelle Oberflächennutzung"
         },
-        "potteryFineWareByProvenanceQuantityWeightDetails": {
-          "label": "1. Menge, Gewicht, Details"
+        "visibility": {
+          "label": "Sichtbarkeit"
         },
-        "potteryAmphoraeByProvenance": {
-          "label": "2. Amphoren nach Provenienz"
+        "shade": {
+          "label": "Lichtverhältnisse"
         },
-        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
-          "label": "2. Menge, Gewicht, Details"
+        "slope": {
+          "label": "Gefälle"
         },
-        "potteryCoarseWareByFunction": {
-          "label": "3. Gebrauchskeramik nach Funktion "
+        "humidity": {
+          "label": "Feuchtigkeit"
         },
-        "potteryCoarseWareByFunctionQuantityWeightDetails": {
-          "label": "3. Menge, Gewicht, Details"
+        "vegetation": {
+          "label": "Bewuchs"
         },
-        "miniaturePotteryCollection": {
-          "label": "4. Miniaturkeramik"
+        "buildingStructures": {
+          "label": "Bebauung"
         },
-        "terracottaCollection": {
-          "label": "5. Terrakotta"
+        "soilComposition": {
+          "label": "Zusammensetzung Boden"
         },
-        "terracottaCollectionQuantityWeightDetails": {
-          "label": "5. Menge, Gewicht, Details"
+        "consistency": {
+          "label": "Konsistenz"
         },
-        "buildingMaterialCollection": {
-          "label": "6. Baumaterialien"
+        "clumps": {
+          "label": "Klumpen"
         },
-        "buildingMaterialCollectionQuantityWeightDetails": {
-          "label": "6. Menge, Gewicht, Details"
+        "stones": {
+          "label": "Steine"
         },
-        "stoneCollection": {
-          "label": "7. Steine und Steinobjekte"
+        "samplingMethod": {
+          "label": "Probenentnahme"
         },
-        "stoneCollectionQuantityWeightDetails": {
-          "label": "7. Menge, Gewicht, Details"
+        "surfaceTreatment": {
+          "label": "Behandlung der Oberfläche"
         },
-        "metalAndGlasCollection": {
-          "label": "8. Metalle und Glas"
+        "quantityOfFinds": {
+          "label": "Fundmenge"
         },
-        "metalAndGlasCollectionQuantityWeightDetails": {
-          "label": "8. Menge, Gewicht, Details"
+        "findDensity": {
+          "label": "Funddichte"
         },
-        "organicMaterialCollection": {
-          "label": "9. Organisches"
+        "qualityOfFinds": {
+          "label": "Funde"
         },
-        "organicMaterialCollectionQuantityWeightDetails": {
-          "label": "9. Menge, Gewicht, Details"
+        "remarks": {
+          "label": "Bemerkungen"
+        } 
+      }
+    },
+    "SurfaceCleaning": {
+      "label": "Oberflächenreinigung",
+      "fields": {
+        "operation": {
+          "label": "Maßnahme"
+        }
+      }
+    },
+    "AnimalBones": {
+      "label": "Tierknochen",
+      "fields": {
+        "biologicalAge": {
+          "label": "Biologisches Alter",
+          "description": "Alter des Tieres zum Zeitpunkt des Todes (z. B. Infans I)"
+        },
+        "boneClassification": {
+          "label": "Knochenklassifizierung"
+        },
+        "burningGrade": {
+          "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)"
+        },
+        "sex": {
+          "label": "Geschlecht"
+        },
+        "species": {
+          "label": "Spezies"
+        }
+      }
+    },
+    "HumanBones": {
+      "label": "Anthropologische Reste",
+      "fields": {}
+    },
+    "BoneObjects": {
+      "label": "Beinobjekte",
+      "fields": {
+        "objectType": {
+          "label": "Bezeichnung oder Art des Objekts"
+        },
+        "boneType": {
+          "label": "Grobe Klassifizierung der Knochen"
+        }
+      }
+    },
+    "ConstructionMaterial": {
+      "label": "Bauausstattung",
+      "fields": {
+        "denomination": {
+          "label": "Ansprache"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "floorCovering": {
+          "label": "Bodenbelag"
+        },
+        "floorCoveringDescription": {
+          "label": "Beschreibung"
+        },
+        "wallCovering": {
+          "label": "Wandverkleidung"
+        },
+        "wallCoveringDescription": {
+          "label": "Beschreibung"
         }
       }
     }
   }
 }
+

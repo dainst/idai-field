@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Field, Labels } from 'idai-field-core';
-import { ConfigurationUtil, InputType } from '../configuration-util';
+import { ConfigurationUtil, InputType } from '../../configuration-util';
 
 
 @Component({

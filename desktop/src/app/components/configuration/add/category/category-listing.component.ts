@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CategoryForm, I18N, Labels } from 'idai-field-core';
-import { getSearchResultLabel } from './getSearchResultLabel';
+import { getSearchResultLabel } from '../getSearchResultLabel';
 
 
 type CategoryListingItem = {

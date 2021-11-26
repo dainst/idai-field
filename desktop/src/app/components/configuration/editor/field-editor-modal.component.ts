@@ -9,7 +9,7 @@ import { ConfigurationEditorModalComponent } from './configuration-editor-modal.
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Modals } from '../../../services/modals';
-import { AddValuelistModalComponent } from '../add/add-valuelist-modal.component';
+import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../index/configuration-index';
 

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
-import { ConfigurationIndex } from '../index/configuration-index';
-import { MenuContext } from '../../../services/menu-context';
-import { AngularUtility } from '../../../angular/angular-utility';
-import { CategoryEditorModalComponent } from '../editor/category-editor-modal.component';
-import { ErrWithParams } from '../../import/import/import-documents';
-import { Modals } from '../../../services/modals';
-import { ConfigurationUtil } from '../configuration-util';
+import { ConfigurationIndex } from '../../index/configuration-index';
+import { MenuContext } from '../../../../services/menu-context';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
+import { ErrWithParams } from '../../../import/import/import-documents';
+import { Modals } from '../../../../services/modals';
+import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({

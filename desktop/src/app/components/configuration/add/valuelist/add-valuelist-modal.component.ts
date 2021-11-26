@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil, Valuelist } from 'idai-field-core';
-import { ErrWithParams } from '../../import/import/import-documents';
-import { ConfigurationIndex } from '../index/configuration-index';
+import { ErrWithParams } from '../../../import/import/import-documents';
+import { ConfigurationIndex } from '../../index/configuration-index';
 
 
 @Component({

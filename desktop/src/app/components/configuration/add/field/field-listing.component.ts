@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Field, Labels } from 'idai-field-core';
-import { getSearchResultLabel } from './getSearchResultLabel';
+import { getSearchResultLabel } from '../getSearchResultLabel';
 
 
 @Component({

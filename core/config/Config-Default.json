@@ -1,5 +1,13 @@
 {
   "forms": {
+    "CrossSection": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Profile": {
+      "hidden": [],
+      "fields": {}
+    },
     "Project:default": {
       "hidden": [],
       "fields": {}

@@ -42,11 +42,11 @@ export class PouchDbFsImagestore /* implements Imagestore */{
             this.path = '/' + settings.selectedProject;
 
             if (!this.filestore.fileExists(this.path)) {
-                this.filestore.mkdir(this.path);
+                this.filestore.mkdir(this.path, true);
                 // reject([ImagestoreErrors.INVALID_PATH]); TODO remove; not longer necessary
             }
             if (!this.filestore.fileExists(this.path + '/thumbs')) {
-                this.filestore.mkdir(this.path + '/thumbs');
+                this.filestore.mkdir(this.path + '/thumbs', true);
                 // reject([ImagestoreErrors.INVALID_PATH]); TODO remove; not longer necessary
             }
 

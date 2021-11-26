@@ -60,10 +60,14 @@ export class Filestore {
         if (this.fileExists(path)) this.fsAdapter.removeFile(this.getFullPath(path));
     }
 
+    /**
+     * Create a directory
+     * @param path the directory's path
+     * @param recursive (optional) create missing parent directories, default: `false`
+     */
+    public mkdir(path: string, recursive: boolean = false) {
 
-    public mkdir(path: string) {
-
-        this.fsAdapter.mkdir(this.getFullPath(path));
+        this.fsAdapter.mkdir(this.getFullPath(path), recursive);
     }
 
 

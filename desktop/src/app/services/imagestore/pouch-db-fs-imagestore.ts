@@ -62,7 +62,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
      */
     public create(key: string, data: ArrayBuffer, documentExists: boolean = false): Promise<any> {
 
-        return this.write(key, data, false, documentExists);
+        return this.write(key, data);
     }
 
 
@@ -157,7 +157,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
      */
     public update(key: string, data: ArrayBuffer): Promise<any> {
 
-        return this.write(key, data, true, true);
+        return this.write(key, data);
     }
 
 
@@ -191,7 +191,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     }
 
 
-    private async write(key: any, data: any, update: any, documentExists: any): Promise<any> {
+    private async write(key: any, data: any): Promise<any> {
 
         // let flag = update ? 'w' : 'wx';
 
@@ -204,7 +204,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
                     // reject([ImagestoreErrors.GENERIC_ERROR]);
                 // }
                 // else {
-        await this.putAttachment(data, key, documentExists)
+        await this.createThumnail(data, key);
                 // .then(() => resolve(undefined)
             // ).catch((warning: any) => {
                 // console.warn(warning);
@@ -215,26 +215,16 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     }
 
 
-    private async putAttachment(data: any, key: any, documentExists: boolean) {
+    private async createThumnail(originalImageData: any, imageName: any) {
 
-        const buffer: Buffer|undefined = await this.converter.convert(data);
+        const buffer: Buffer|undefined = await this.converter.convert(originalImageData);
 
         if (!buffer) {
-            return Promise.reject('Failed to create thumbnail for image document ' + key);
+            return 'Failed to create thumbnail for image document ' + imageName;
         }
 
-        let promise;
-        if (documentExists) {
-            promise = this.db.get(key).then((doc: any) => doc._rev);
-        } else {
-            promise = Promise.resolve();
-        }
-
-        return promise.then((_rev: any) => {
-
-            const path = this.path + '/thumbs/' + key;
-            this.filestore.writeFile(path, buffer);
-        });
+        const thumnailPath = this.path + '/thumbs/' + imageName;
+        this.filestore.writeFile(thumnailPath, buffer);
     }
 
 

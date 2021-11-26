@@ -1,5 +1,6 @@
 import { flatten, keysValues, right, set } from 'tsfun';
 import { CategoryForm, Name } from 'idai-field-core';
+import { tokenize } from './tokenize';
 
 
 export interface CategoryFormIndex {
@@ -18,7 +19,7 @@ export namespace CategoryFormIndex {
 
         return categoryForms.reduce((index, category) => {
 
-            const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
+            const terms: string[] = tokenize(Object.values(category.defaultLabel).concat([category.name]));
             if (category.libraryId) terms.push(category.libraryId);
 
             for (const term of terms) {

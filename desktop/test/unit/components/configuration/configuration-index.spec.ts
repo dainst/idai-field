@@ -29,6 +29,7 @@ describe('ConfigurationIndex', () => {
         expect(ConfigurationIndex.findCategoryForms(index, 'A:default', 'A:parent')[0].name).toEqual('A:default');
         expect(ConfigurationIndex.findCategoryForms(index, 'Kategorie', 'A:parent')[0].name).toEqual('A:default');
         expect(ConfigurationIndex.findCategoryForms(index, 'Category', 'A:parent')[0].name).toEqual('A:default');
+        expect(ConfigurationIndex.findCategoryForms(index, 'default', 'A:parent')[0].name).toEqual('A:default');
         expect(ConfigurationIndex.findCategoryForms(index, 'XYZ', 'A:parent').length).toBe(0);
     });
 
@@ -62,7 +63,9 @@ describe('ConfigurationIndex', () => {
         expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'field1', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'Erstes', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'Feld', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'First', 'A')[0].name).toEqual('field1');
+        expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'Abc', 'A').length).toBe(0);
     });
 
@@ -91,6 +94,7 @@ describe('ConfigurationIndex', () => {
         expect(ConfigurationIndex.findValuelists(index, 'Value')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Value 1')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'no-label-value')[0].id).toEqual('valuelist-1');
+        expect(ConfigurationIndex.findValuelists(index, 'label')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Abc').length).toBe(0);
     });
 });

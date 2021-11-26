@@ -32,7 +32,7 @@ export class FsAdapter {
 
     public mkdir(path: string, recursive: boolean) {
 
-        fs.mkdirSync(path, {recursive});
+        fs.mkdirSync(path, { recursive });
     }
 
 

@@ -43,7 +43,13 @@
     "color": "#707070",
     "commons": [
       "period",
-      "description"
+      "description",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionDepth",
+      "dimensionWidth",
+      "dimensionDiameter",
+      "dimensionOther"
     ],
     "hidden": ["borders"],
     "valuelists": {
@@ -57,9 +63,6 @@
       "referenceTypes": "BuildingPart-references-Selinunt",
       "belongingMap": "BuildingPart-map-Selinunt"
     },
-    "positionValuelists": {
-      "dimensionBuildingResearch": "position-values-expansion-default"
-    },
     "fields": {
       "descriptionFindingPlace": {
         "inputType": "text"
@@ -72,9 +75,6 @@
       },
       "denomination": {
         "inputType": "dropdown"
-      },
-      "dimensionBuildingResearch": {
-        "inputType": "dimension"
       },
       "material": {
         "inputType": "checkboxes"

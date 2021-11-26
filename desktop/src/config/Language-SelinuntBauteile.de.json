@@ -20,21 +20,30 @@
         "denomination": {
           "label": "Ansprache"
         },
-        "BuildingPart-description": {
-          "label": "Beschreibung"
+        "dimensionHeight": {
+          "label": "Höhe"
         },
-        "dimensionBuildingResearch": {
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "OL = obere Länge, UL = untere Länge"
+        },
+        "dimensionWidth": {
+          "label": "Tiefe",
+          "description": "OT = obere Tiefe, UT = untere Tiefe"
+        },
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "OD = oberer Durchmesser, UD = unterer Durchmesser"
+        },
+        "dimensionOther": {
           "label": "Spezielle Maße",
-          "description": "TrB = Triglyphenbreite, MB = Metopenbreite , H = Höhe, OL = obere Länge, UL = untere Länge, OT = obere Tiefe, UT = untere Tiefe, OD = oberer Durchmesser, UD = unterer Durchmesser, n.m. = nicht messbar"
+          "description": "TrB = Triglyphenbreite, MB = Metopenbreite"
         },
         "material": {
           "label": "Material"
         },
         "conservationStatus": {
           "label": "Erhaltungszustand"
-        },
-        "BuildingPart-dating": {
-          "label": "Zeitstellung"
         },
         "assignment": {
           "label": "Zuordnung"
@@ -44,18 +53,6 @@
         },
         "positionAtBuilding": {
           "label": "Position am Bauwerk"
-        },
-        "front": {
-          "label": "Bauteilseite: Vorderseite"
-        },
-        "back": {
-          "label": "Bauteilseite: Rückseite"
-        },
-        "leftSide": {
-          "label": "Bauteilseite: Linke Seite"
-        },
-        "rightSide": {
-          "label": "Bauteilseite: Rechte Seite"
         },
         "referenceTypes": {
           "label": "Referenzen"

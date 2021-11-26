@@ -22,12 +22,24 @@
         "denomination": {
           "label": "Denominazione"
         },
-        "BuildingPart-description": {
-          "label": "Descrizone"
+        "dimensionHeight": {
+          "label": "Altezza"
         },
-        "dimensionBuildingResearch": {
+        "dimensionLength": {
+          "label": "Lunghezza",
+          "description": "OL = lunghezza superiore, UL = lunghezza inferiore"
+        },
+        "dimensionWidth": {
+          "label": "Profondità",
+          "description": "OT = profondità superiore, UT = profondità inferiore"
+        },
+        "dimensionDiameter": {
+          "label": "Diametro",
+          "description": "OD = diametro superiore , UD = diametro inferiore"
+        },
+        "dimensionOther": {
           "label": "Dimensioni particolari",
-          "description": "TrB = larghezza del triglifo, MB = larghezza della metopa , H = altezza, OL = lunghezza superiore, UL = lunghezza inferiore, OT = profondità superiore, UT = profondità inferiore, OD = diametro superiore , UD = diametro inferiore, n.m. = non misurabile"
+          "description": "TrB = larghezza del triglifo, MB = larghezza della metopa"
         },
         "material": {
           "label": "Materiale"
@@ -46,18 +58,6 @@
         },
         "positionAtBuilding": {
           "label": "Posizione nell'edificio"
-        },
-        "front": {
-          "label": "Lato del componente: frontale"
-        },
-        "back": {
-          "label": "Lato del componente: posteriore"
-        },
-        "leftSide": {
-          "label": "Lato del componente: sinistra"
-        },
-        "rightSide": {
-          "label": "Lato del componente: destra"
         },
         "referenceTypes": {
           "label": "Riferimenti"

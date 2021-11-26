@@ -19,10 +19,10 @@ export namespace CategoryFormIndex {
 
         return categoryForms.reduce((index, category) => {
 
-            const terms: string[] = tokenize(Object.values(category.defaultLabel).concat([category.name]));
+            const terms: string[] = Object.values(category.defaultLabel).concat([category.name]);
             if (category.libraryId) terms.push(category.libraryId);
 
-            for (const term of terms) {
+            for (const term of tokenize(terms)) {
                 if (!index[term]) index[term] = [];
                 if (!index[term].includes(category)) index[term].push(category);
             }

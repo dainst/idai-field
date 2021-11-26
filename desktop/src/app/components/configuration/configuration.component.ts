@@ -513,6 +513,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 builtInConfiguration.commonFields,
                 builtInConfiguration.builtInFields,
                 valuelists,
+                this.configurationDocument.resource.valuelists,
                 this.topLevelCategoriesArray.map(to('libraryId')),
                 languages
             );
@@ -520,11 +521,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.configurationIndex = ConfigurationIndex.create(
                 Tree.flatten(rawConfiguration.forms),
                 Object.values(rawConfiguration.categories),
-                Object.values(rawConfiguration.commonFields)
+                Object.values(rawConfiguration.commonFields),
+                Object.values(rawConfiguration.valuelists)
             );
-
         } catch (e) {
-            console.error('error while reading config in AddCategoryModalComponent', e);
+            console.error('Error while building configuration index', e);
         }
     }
 }

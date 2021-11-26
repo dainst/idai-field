@@ -80,4 +80,14 @@
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="field.defaultDescription" [disabled]="hidden"></multi-language-input>
     </div>
+    <div *ngIf="isValuelistSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
+            Werteliste
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngIf="field.valuelist" class="list-group-item">
+                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -14,7 +14,6 @@ import { BuiltInCategoryDefinition } from '../model/category/built-in-category-d
 import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { Valuelist } from '../../model/configuration/valuelist';
-import { addKeyAsProp } from '../../tools/transformers';
 
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
@@ -54,9 +53,9 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories();
-        const libraryForms: Map<LibraryFormDefinition> = this.readLibraryForms();
-        const libraryValuelists: Map<Valuelist> = this.readLibraryValuelists();
+        const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryFile('Categories.json');
+        const libraryForms: Map<LibraryFormDefinition> = this.readLibraryFile('Forms.json');
+        const libraryValuelists: Map<Valuelist> = this.readLibraryFile('Valuelists.json');
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtInCategories as any)
@@ -78,43 +77,14 @@ export class ConfigLoader {
     }
 
 
-    private readLibraryCategories(): Map<LibraryCategoryDefinition> {
-
-        const appConfigurationPath = '/Library/Categories.json';
+    private readLibraryFile(fileName: string): any {
 
         try {
-            return this.configReader.read(appConfigurationPath);
+            return this.configReader.read('/Library/' + fileName);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
     }
-
-
-    private readLibraryForms(): Map<LibraryFormDefinition> {
-
-        const appConfigurationPath = '/Library/Forms.json';
-
-        try {
-            return addKeyAsProp('libraryId')(
-                this.configReader.read(appConfigurationPath)
-            ) as Map<LibraryFormDefinition>;
-        } catch (msgWithParams) {
-            throw [msgWithParams];
-        }
-    }
-
-
-    private readLibraryValuelists(): Map<Valuelist> {
-
-        const appConfigurationPath = '/Library/Valuelists.json';
-
-        try {
-            return this.configReader.read(appConfigurationPath);
-        } catch (msgWithParams) {
-            throw [msgWithParams];
-        }
-    }
-    
 
 
     private async loadConfiguration(builtInCategories: Map<BuiltInCategoryDefinition>,
@@ -151,9 +121,6 @@ export class ConfigLoader {
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
-
-        // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
-        // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
         try {
             return new ProjectConfiguration(

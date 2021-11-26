@@ -16,7 +16,7 @@ describe('Datastore', () => {
         const forms = [createCategory('Find')];
 
         const projectConfiguration = new ProjectConfiguration({
-            forms, categories: {}, relations: [], commonFields: {}
+            forms, categories: {}, relations: [], commonFields: {}, valuelists: {}
         });
 
         const documentCache = new DocumentCache();

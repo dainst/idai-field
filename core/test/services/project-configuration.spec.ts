@@ -62,7 +62,8 @@ describe('ProjectConfiguration', () => {
         ]) as Forest<CategoryForm>,
         categories: {},
         relations: [],
-        commonFields: {}
+        commonFields: {},
+        valuelists: {}
     });
 
 

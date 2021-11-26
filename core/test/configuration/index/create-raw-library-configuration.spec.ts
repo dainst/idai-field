@@ -73,7 +73,26 @@ describe('createRawLibraryConfiguration', () => {
             },
             {},
             {},
-            {},
+            {
+                'valuelist-1': {
+                    description: {},
+                    createdBy: '',
+                    creationDate: '',
+                    values: {
+                        'a': {}
+                    }
+                }
+            },
+            {
+                'valuelist-2': {
+                    description: {},
+                    createdBy: '',
+                    creationDate: '',
+                    values: {
+                        'b': {}
+                    }
+                }
+            },
             ['Find:a'],
             {
                 de: [
@@ -136,5 +155,8 @@ describe('createRawLibraryConfiguration', () => {
 
         expect(forms[5].name).toEqual('Find');
         expect(forms[5].libraryId).toEqual('Find:b');
+
+        expect(result.valuelists['valuelist-1'].values['a']).toBeDefined();
+        expect(result.valuelists['valuelist-2'].values['b']).toBeDefined();
     });
 });

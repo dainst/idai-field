@@ -94,7 +94,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         forms,
         categories: finalizeCategories(categories),
         relations,
-        commonFields
+        commonFields,
+        valuelists
     };
 }
 

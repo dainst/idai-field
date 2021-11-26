@@ -1,13 +1,11 @@
-import {
-    append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract,
-} from 'tsfun';
+import { append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract } from 'tsfun';
 import { Document } from '../model/document';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { ConnectedDocs } from './utilities/connected-docs'
 import { NewDocument } from '../model/document';
 import { ProjectConfiguration } from './project-configuration'
-import {  ON_RESOURCE_ID } from '../constants';
+import { ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { childrenOf } from '../base-config';
@@ -23,9 +21,8 @@ import { Name, Named } from '../tools/named';
  */
 export class RelationsManager {
 
-    constructor(
-        private datastore: Datastore,
-        private projectConfiguration: ProjectConfiguration) {}
+    constructor(private datastore: Datastore,
+                private projectConfiguration: ProjectConfiguration) {}
 
     /**
      * Persists document and all the objects that are or have been in relation

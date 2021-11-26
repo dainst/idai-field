@@ -20,10 +20,11 @@ export function createRawLibraryConfiguration(builtInCategories: Map<BuiltInCate
                                               libraryForms: Map<LibraryFormDefinition>,
                                               commonFields: Map<BuiltInFieldDefinition>,
                                               builtInFields: Map<BuiltInFieldDefinition>,
-                                              valuelists: Map<Valuelist>,
+                                              libraryValuelists: Map<Valuelist>,
+                                              customValuelists: Map<Valuelist>,
                                               selectedParentForms: string[],
                                               languages: { [language: string]: Array<LanguageConfiguration> })
-                                              : RawProjectConfiguration{
+                                              : RawProjectConfiguration {
 
     return buildRawProjectConfiguration(
         builtInCategories,
@@ -31,8 +32,8 @@ export function createRawLibraryConfiguration(builtInCategories: Map<BuiltInCate
         libraryForms,
         undefined,
         commonFields,
-        valuelists,
-        {},
+        libraryValuelists,
+        customValuelists,
         builtInFields,
         builtInRelations,
         { default: languages, complete: languages },

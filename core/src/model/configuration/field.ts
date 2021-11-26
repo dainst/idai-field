@@ -96,5 +96,7 @@ export module Field {
         export const CATEGORY = 'category';
         export const NONE = 'none';
         export const DEFAULT = 'default';
+
+        export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO];
     }
 }

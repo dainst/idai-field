@@ -28,16 +28,7 @@ export class PouchdbServer {
         const self = this;
         const app = express();
 
-        const app2 = express();
-
         app.use(expressBasicAuth({
-            challenge: true,
-            authorizer: (_: string, password: string) =>
-                expressBasicAuth.safeCompare(password, this.password),
-            unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
-        }));
-
-        app2.use(expressBasicAuth({
             challenge: true,
             authorizer: (_: string, password: string) =>
                 expressBasicAuth.safeCompare(password, this.password),
@@ -87,15 +78,15 @@ export class PouchdbServer {
         }));
 
         // Out of the box, Fauxton (with PouchDB, as well as with CouchDB) does
-        // not work with paths other than '/', which is why we create a separate
-        // express app.
+        // not work with paths other than '/', which is why we duplicate the /sync route
+        // at / app.
         //
         // Related GitHub issues:
         // - https://stackoverflow.com/questions/41658926/express-pouchdb-fauxton-on-non-root-route
         // - https://github.com/pouchdb/pouchdb-server/issues/183#issuecomment-280862350
         // - https://stackoverflow.com/questions/64056888/how-can-i-create-separate-pouchdbs-on-separate-endpoints-in-the-same-node-app-l
         //
-        app2.use('/', expressPouchDB(PouchDB, {
+        app.use('/', expressPouchDB(PouchDB, {
             logPath: remote.getGlobal('appDataPath') + '/pouchdb-server-2.log',
             mode: 'fullCouchDB',
             overrideMode: {
@@ -110,9 +101,6 @@ export class PouchdbServer {
 
         await app.listen(3000, function() {
             console.debug('PouchDB Server is listening on port 3000');
-        });
-        await app2.listen(3002, function() {
-            console.debug('Fauxton is listening on port 3002');
         });
     }
 }

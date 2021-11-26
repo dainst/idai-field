@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Labels, Valuelist } from 'idai-field-core';
+import { containsSearchTerm } from './getSearchResultLabel';
 
 
 @Component({
@@ -28,22 +29,21 @@ export class ValuelistListingComponent {
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {
 
-        if (this.searchTerm === ''
-                || valuelist.id.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())) {
+        if (this.searchTerm === '' || containsSearchTerm(valuelist.id, this.searchTerm)) {
             return undefined;
         }
-
+    
         for (let valueId of Object.keys(valuelist.values)) {
-            if (valueId.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())) {
+            if (containsSearchTerm(valueId, this.searchTerm)) {
                 return valueId;
             } else if (valuelist.values[valueId].label) {
                 const label: string|undefined = Object.values(valuelist.values[valueId].label).find(translation => {
-                    return translation.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase());
+                    return containsSearchTerm(translation, this.searchTerm);
                 });
                 if (label) return label;
             }
         }
-
+    
         return undefined;
     }
 }

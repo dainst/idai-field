@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { CategoryForm, Labels } from 'idai-field-core';
+import { CategoryForm, I18N, Labels } from 'idai-field-core';
+import { getSearchResultLabel } from './getSearchResultLabel';
 
 
 type CategoryListingItem = {
@@ -39,27 +40,15 @@ export class CategoryListingComponent implements OnChanges {
 
     public selectForm = (form: CategoryForm) => this.onFormSelected.emit(form);
 
-    public getLabel = (value: any) => this.labels.get(value);
+    public getLabel = (value: I18N.LabeledValue) => this.labels.get(value);
 
     public getForms = (categoryName: string) => this.categoryForms.filter(form => form.name === categoryName);
 
     public isNewCategoryOptionShown = (): boolean => this.emptyForm
         && !this.items.map(item => item.form.libraryId).includes(this.searchTerm);
 
-
-    public getSearchResultLabel(category: CategoryForm): string|undefined {
-
-        if (this.searchTerm === ''
-                || this.getLabel(category).toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())
-                || category.name.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())) {
-            return undefined;
-        }
-
-        return Object.values(category.label).find(translation => {
-            return translation.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase());
-        });
-    }
-
+    public getSearchResultLabel = (form: CategoryForm) => getSearchResultLabel(form, this.searchTerm, this.getLabel);
+    
     
     private createItems(): Array<CategoryListingItem> {
 

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Field, Labels } from 'idai-field-core';
+import { getSearchResultLabel } from './getSearchResultLabel';
 
 
 @Component({
@@ -29,18 +30,5 @@ export class FieldListingComponent {
     public isNewFieldOptionShown = (): boolean => this.emptyField !== undefined
         && !this.fields.map(field => field.name).includes(this.searchTerm);
 
-
-    // TODO Extract to util
-    public getSearchResultLabel(field: Field): string|undefined {
-
-        if (this.searchTerm === ''
-                || this.getLabel(field).toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())
-                || field.name.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase())) {
-            return undefined;
-        }
-
-        return Object.values(field.label).find(translation => {
-            return translation.toLocaleLowerCase().startsWith(this.searchTerm.toLocaleLowerCase());
-        });
-    }
+    public getSearchResultLabel = (field: Field) => getSearchResultLabel(field, this.searchTerm, this.getLabel);
 }

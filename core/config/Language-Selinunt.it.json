@@ -1,5 +1,18 @@
 {
   "categories": {
+    "Operation": {
+      "fields": {
+        "researchHistory": {
+          "label": "Indagini precedenti" 
+        },
+        "researchPerspective": {
+          "label": "Prospettiva di ricerca" 
+        },
+        "researchMethod": {
+          "label": "Metodo di ricerca" 
+        }
+      }
+    },
     "Place": {
       "fields": {
         "placeName": {
@@ -11,7 +24,7 @@
         "buildingResearchHistory": {
           "label": "Storia della ricerca"
         },
-        "placeCondition": {
+        "condition": {
           "label": "Stato di conservazione"
         },
         "description": {
@@ -19,13 +32,35 @@
         }
       }
     },
+    "Survey": {
+      "fields": {
+        "descriptionOfArea": {
+          "label": "Descrizione dell‘area"
+        },
+        "currentUse": {
+          "label": "Attuale utilizzo del suolo"
+        },
+        "slope": {
+          "label": "Pendenza"
+        },
+        "visibility": {
+          "label": "Visibilità"
+        },
+        "chronologyFinds": {
+          "label": "Cronologia reperti"
+        },
+        "interpretation": {
+          "label": "Interpretazione"
+        }
+      } 
+    },
     "Architecture": {
       "label": "Costruzione",
       "fields": {
-        "architectureClassification": {
+        "classification": {
           "label": "Designazione"
         },
-        "architectureMaterial": {
+        "material": {
           "label": "Materiale"
         },
         "brickwork": {
@@ -34,16 +69,16 @@
         "construction": {
           "label": "Muro: Construzione"
         },
-        "architectureMasonry": {
+        "masonry": {
           "label": "Muro: Opera"
         },
         "masonryJoint": {
           "label": "Muro: Adesione"
         },
-        "architectureLayerType": {
+        "layerType": {
           "label": "Muro: Tipo dei filari"
         },
-        "architectureMasonryCoating": {
+        "cladding": {
           "label": "Muro: Rivestimento"
         },
         "floorClassification": {
@@ -70,50 +105,92 @@
     "Layer": {
       "label": "Strato di terra",
       "fields": {
+        "distinguishingCriteria": {
+          "label": "Strato di terra: Criterio discriminante "
+        },
         "layerClassification": {
           "label": "Strato di terra: Designazione"
-        },
-        "layerColorLightness": {
-          "label": "Strato di terra: Tono"
-        },
-        "layerColor": {
-          "label": "Strato di terra: Colore"
-        },
-        "consistency": {
-          "label": "Strato di terra: Consistenza"
         },
         "soilType": {
           "label": "Strato di terra: Composizione"
         },
-        "distinguishingCriteria": {
-          "label": "Strato di terra: Criterio discriminante "
+        "consistency": {
+          "label": "Strato di terra: Consistenza"
         },
-        "layerContentPotteryOrigin": {
-          "label": "Contenuto: Ceramica provenienza"
+        "colorLightness": {
+          "label": "Strato di terra: Tono"
         },
-        "layerContentPotteryShape": {
-          "label": "Contenuto: Ceramica forma"
+        "colorDetermination": {
+          "label": "Strato di terra: Colore"
         },
-        "layerContentPotteryDecoration": {
-          "label": "Contenuto: Ceramica decorazione"
+        "borders": {
+          "label": "Strato di terra: Limiti"
         },
-        "layerContentTerracotta": {
-          "label": "Contenuto: Ogetti di terracotta"
-        },
-        "layerContentInorganic": {
-          "label": "Contenuto: Materiale anorganico"
-        },
-        "layerContentOrganic": {
-          "label": "Contenuto: Materiale organico"
-        },
-        "layerContentBuildingMaterial": {
-          "label": "Contenuto: Materiale da costruzione"
-        },
-        "layerForm": {
+        "form": {
           "label": "Strato di terra: Forma"
         },
-        "layerBorders": {
-          "label": "Strato di terra: Limiti"
+        "findComposition": {
+          "label": "Strato di terra: Composizione del materiale trovato"
+        },
+        "workflowOptions": {
+          "label": "Strato di terra: Passi di lavoro"
+        },
+        "workflowSampleDescription": {
+          "label": "Strato di terra: Descrizione del campione / analisi"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "furtherAnalysis": {
+          "label": "Ulteriori analisi"
+        },
+        "analysisMethod": {
+          "label": "Metodo di analisi"
+        }
+      }
+    },
+    "Brick": {
+      "label": "Tegole e laterizi",
+      "fields": {
+        "applicationInArchitecture": {
+          "label": "Impiego nell’architettura"
+        },
+        "tileType": {
+          "label": "Tipo di tegola"
+        },
+        "roofingSystem": {
+          "label": "Sistema di copertura"
+        },
+        "brickType": {
+          "label": "Laterizio"
+        },
+        "manufacturing": {
+          "label": "Tecnica di produzione"
+        },
+        "temper": {
+          "label": "Tipo di inclusi"
+        },
+        "clayColorOutside": {
+          "label": "Esterno: Colore e intensità"
+        },
+        "clayColorInside": {
+          "label": "Interno: Colore e intensità"
+        },
+        "coatColor": {
+          "label": "Vernice: Colore e intensità"
+        },
+        "decorationTechnique": {
+          "label": "Particolari, decorazione"
+        },
+        "weight": {
+          "label": "Peso (g)"
+        },
+        "amountSherds": {
+          "label": "Numero di frammenti"
+        },
+        "remarks": {
+          "label": "Osservazioni"
         }
       }
     },
@@ -131,7 +208,7 @@
         "miniatureVesselForm": {
           "label": "Forma ceramica miniaturistica"
         },
-        "potteryProvenance": {
+        "provenance": {
           "label": "Provenienza"
         },
         "vesselDecoration": {
@@ -195,6 +272,140 @@
         },
         "organicMaterialCollectionQuantityWeightDetails": {
           "label": "9. Quantità, Peso, Particolari"
+        }
+      }
+    },
+    "Area": {
+      "label": "Area",
+      "fields": {
+        "dimensionVerticalExtent": {
+          "label": "Quota"
+        },
+        "description": {
+          "label": "Descrizione"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Quadrato",
+      "fields": {
+        "currentSurfaceUtilization": {
+          "label": "Utilizzo del suolo attuale"
+        },
+        "visibility": {
+          "label": "Visibilità"
+        },
+        "shade": {
+          "label": "Condizioni illuminazione"
+        },
+        "slope": {
+          "label": "Pendenza"
+        },
+        "humidity": {
+          "label": "Umidità"
+        },
+        "vegetation": {
+          "label": "Vegetazione"
+        },
+        "buildingStructures": {
+          "label": "Strutture architettoniche"
+        },
+        "soilComposition": {
+          "label": "Composizione terreno"
+        },
+        "consistency": {
+          "label": "Consistenza"
+        },
+        "clumps": {
+          "label": "Zolle"
+        },
+        "stones": {
+          "label": "Pietre"
+        },
+        "samplingMethod": {
+          "label": "Campionatura"
+        },
+        "surfaceTreatment": {
+          "label": "Azione sulla superficie"
+        },
+        "quantityOfFinds": {
+          "label": "Conteggio reperti"
+        },
+        "findDensity": {
+          "label": "Densità reperti"
+        },
+        "qualityOfFinds": {
+          "label": "Reperti"
+        },
+        "remarks": {
+          "label": "Osservazioni"
+        } 
+      }
+    },
+    "SurfaceCleaning": {
+      "label": "Pulizia in superficie",
+      "fields": {
+        "operation": {
+          "label": "Operazione"
+        }
+      }
+    },
+    "AnimalBones": {
+      "label": "Ossa di animali",
+      "fields": {
+        "biologicalAge": {
+          "label": "Età biologica",
+          "description": "Età dell'animale al momento della morte (es. Infans I)"
+        },
+        "boneClassification": {
+          "label": "Classificazione delle ossa"
+        },
+        "burningGrade": {
+          "label": "Grado di bruciatura delle ossa (secondo Wahl 1982)"
+        },
+        "sex": {
+          "label": "Sesso"
+        },
+        "species": {
+          "label": "Specie"
+        }
+      }
+    },
+    "HumanBones": {
+      "label": "Resti antropologici",
+      "fields": {}
+    },
+    "BoneObjects": {
+      "label": "Bone Objects",
+      "fields": {
+        "objectType": {
+          "label": "Designazione o tipo di oggetto"
+        },
+        "boneType": {
+          "label": "Classificazione approssimativa delle ossa"
+        }
+      }
+    },
+    "ConstructionMaterial": {
+      "label": "Attrezzature per l‘edilizia",
+      "fields": {
+        "denomination": {
+          "label": "Denominazione"
+        },
+        "material": {
+          "label": "Materiale"
+        },
+        "floorCovering": {
+          "label": "Pavimentazione"
+        },
+        "floorCoveringDescription": {
+          "label": "Descrizione"
+        },
+        "wallCovering": {
+          "label": "Rivestimento parete"
+        },
+        "wallCoveringDescription": {
+          "label": "Descrizione"
         }
       }
     }

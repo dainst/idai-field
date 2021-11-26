@@ -62,7 +62,7 @@ export class PouchdbServer {
         });
 
         // prevent the creation of new databases when syncing
-        app.put('/:db', (_: any, res: any) =>
+        app.put('/sync/:db', (_: any, res: any) =>
             res.status(401).send( { status: 401 }));
 
         app.use('/sync/', expressPouchDB(PouchDB, {
@@ -86,6 +86,11 @@ export class PouchdbServer {
         // - https://github.com/pouchdb/pouchdb-server/issues/183#issuecomment-280862350
         // - https://stackoverflow.com/questions/64056888/how-can-i-create-separate-pouchdbs-on-separate-endpoints-in-the-same-node-app-l
         //
+
+        // prevent the creation of new databases when syncing
+        app.put('/:db', (_: any, res: any) =>
+            res.status(401).send( { status: 401 }));
+
         app.use('/', expressPouchDB(PouchDB, {
             logPath: remote.getGlobal('appDataPath') + '/pouchdb-server-2.log',
             mode: 'fullCouchDB',

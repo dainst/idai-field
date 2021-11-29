@@ -60088,5 +60088,645 @@
         }
       }
     }
-  }   
+  },
+  "Architecture-position-SelinuntAkropolis": {
+    "creationDate": "15.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "inSitu": {
+        "labels": {
+          "de": "in situ",
+          "en": "in situ"
+        }
+      },
+      "layerOfDebrisFromCollapse": {
+        "labels": {
+          "de": "in Versturzlage",
+          "en": "layer of debris from collapse"
+        }
+      },
+      "unclear": {
+        "de": "unklar",
+        "en": "unclear"
+      }
+    },
+    "order":["inSitu", "layerOfDebrisFromCollapse", "unclear"]
+  },
+  "Architecture-blockProcessing-SelinuntAkropolis": {
+    "creationDate": "15.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Bruchsteine": {
+        "labels": {
+          "de": "Bruchsteine",
+          "it": "Conci"
+        }
+      },
+      "Hausteine": {
+        "labels": {
+          "de": "Hausteine",
+          "it": "Pietre battute"
+        }
+      },
+      "Lesesteine": {
+        "labels": {
+          "de": "Lesesteine",
+          "it": "Scapoli"
+        }
+      },
+      "Werksteine": {
+        "labels": {
+          "de": "Werksteine",
+          "it": "Pietre da taglio"
+        }
+      },
+      "spolia": {
+        "labels": {
+          "de": "Spolie",
+          "en": "spolia"
+        }
+      }
+    }
+  },
+  "Architecture-wallClassification-SelinuntAkropolis": {
+    "creationDate": "15.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Aufgehendes": {
+        "labels": {
+          "de": "Aufgehendes",
+          "it": "Emergente"
+        }
+      },
+      "Fensterzusetzung": {
+        "labels": {
+          "de": "Fensterzusetzung",
+          "it": "Inserimento finestra"
+        }
+      },
+      "Flickung": {
+        "labels": {
+          "de": "Flickung",
+          "it": "Riparazione"
+        }
+      },
+      "Fundament": {
+        "labels": {
+          "de": "Fundament",
+          "it": "Fondazione"
+        }
+      },
+      "Gewölbe": {
+        "labels": {
+          "de": "Gewölbe",
+          "it": "Volta"
+        }
+      },
+      "Mauer": {
+        "labels": {
+          "de": "Mauer",
+          "it": "Muro"
+        }
+      },
+      "Mauerbettung": {
+        "labels": {
+          "de": "Mauerbettung",
+          "it": "Massicciata del muro"
+        }
+      },
+      "Mauerdurchbruch": {
+        "labels": {
+          "de": "Mauerdurchbruch",
+          "it": "Breccia del muro"
+        }
+      },
+      "Mosaik": {
+        "labels": {
+          "de": "Mosaik",
+          "it": "Mosaico"
+        }
+      },
+      "Opus sectile": {
+        "labels": {
+          "de": "Opus sectile",
+          "it": "Opus sectile"
+        }
+      },
+      "Türzusetzung": {
+        "labels": {
+          "de": "Türzusetzung",
+          "it": "Inserimento porta"
+        }
+      },
+      "Wandgestaltung": {
+        "labels": {
+          "de": "Wandgestaltung",
+          "it": "Conformazione parete"
+        }
+      },
+      "Bodenplatten": {
+        "labels": {
+          "de": "Bodenplatten"
+        }
+      },
+      "Steinsetzung": {
+        "labels": {
+          "de": "Steinsetzung"
+        }
+      },
+      "Schwelle": {
+        "labels": {
+          "de": "Schwelle"
+        }
+      },
+      "Auffüllung/Zusetzung": {
+        "labels": {
+          "de": "Auffüllung/Zusetzung"
+        }
+      },
+      "Einrahmung": {
+        "labels": {
+          "de": "Einrahmung"
+        }
+      },
+      "Unterbau": {
+        "labels": {
+          "de": "Unterbau"
+        }
+      }
+    }
+  },
+  "Layer-designation-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "burntLayer": {
+        "labels": {
+          "de": "Brandschicht",
+          "it": "Strato di incendio"
+        }
+      },
+      "culturalLayer": {
+        "labels": {
+          "de": "Kulturschicht",
+          "it": "Strato di insediamento"
+        }
+      },
+      "occupationLayer": {
+        "labels": {
+          "de": "Laufhorizont",
+          "it": "Piano di calpestio"
+        }
+      },
+      "levellingLayer": {
+        "labels": {
+          "de": "Planierschicht",
+          "it": "Strato di livellamento"
+        }
+      },
+      "soilLayer": {
+        "labels": {
+          "de": "Erdschicht"
+        }
+      },
+      "humus": {
+        "labels": {
+          "de": "Humus"
+        }
+      },      
+      "debrisLayer": {
+        "labels": {
+          "de": "Schuttschicht"
+        }
+      },      
+      "filling": {
+        "labels": {
+          "de": "Auffüllung"
+        }
+      },      
+      "collapse": {
+        "labels": {
+          "de": "Versturz"
+        }
+      },
+      "geologicallyGrownSoil": {
+        "labels": {
+          "de": "geologisch gewachsener Boden"
+        }
+      },
+      "geologicallyGrownRock": {
+        "labels": {
+          "de": "geologisch gewachsener Fels"
+        }
+      }
+    }
+  },
+  "Layer-componentsCeramics-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "clayFineWare": {
+        "labels": {
+          "de": "Ton: Feine Ware"
+        }
+      },
+      "clayHouseWare": {
+        "labels": {
+          "de": "Ton: Haushaltsware"
+        }
+      }, 
+      "clayCoarseWare": {
+        "labels": {
+          "de": "Ton: Grobe Ware"
+        }
+      },      
+      "clayTools": {
+        "labels": {
+          "de": "Ton: Geräte"
+        }
+      },      
+      "brokenBricks": {
+        "labels": {
+          "de": "Ziegelbruch"
+        }
+      },      
+      "ceramicSlag": {
+        "labels": {
+          "de": "Keramikschlacke"
+        }
+      },
+      "burntClayOrCeramics": {
+        "labels": {
+          "de": "Verbrannte/r Ton/Keramik" 
+        }
+      },
+      "clayLumps": {
+        "labels": {
+          "de": "Tonbrocken"
+        }
+      }
+    }
+  },
+  "Layer-componentsStone-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "limeStone": {
+        "labels": {
+          "de": "Kalkstein"
+        }
+      },
+      "Basalt": {
+        "labels": {
+          "de": "Basalt"
+        }
+      },      
+      "Marmor": {
+        "labels": {
+          "de": "Marmor"
+        }
+      },      
+      "Sandstein": {
+        "labels": {
+          "de": "Sandstein"
+        }
+      },      
+      "Tuff": {
+        "labels": {
+          "de": "Tuff"
+        }
+      },
+      "Silex": {
+        "labels": {
+          "de": "Silex"
+        }
+      },
+      "Travertin": {
+        "labels": {
+          "de": "Travertin"
+        }
+      }
+    }
+  },
+  "Layer-componentsOrganic-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Knochen": {
+        "labels": {
+          "de": "Knochen"
+        }
+      },
+      "Muscheln": {
+        "labels": {
+          "de": "Muscheln"
+        }
+      },
+      "Schnecken": {
+        "labels": {
+          "de": "Schnecken"
+        }
+      },
+      "Horn": {
+        "labels": {
+          "de": "Horn"
+        }
+      },
+      "Zahn": {
+        "labels": {
+          "de": "Zahn"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "de": "Holzkohle"
+        }
+      }
+    }
+  },
+  "Layer-componentsMetal-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Bronze": {
+        "labels": {
+          "de": "Bronze"
+        }
+      },
+      "Eisen": {
+        "labels": {
+          "de": "Eisen"
+        }
+      },
+      "Blei": {
+        "labels": {
+          "de": "Blei"
+        }
+      },
+      "Metallschlacke": {
+        "labels": {
+          "de": "Metallschlacke"
+        }
+      },
+      "sonstigesMetall": {
+        "labels": {
+          "de": "Sonstiges Metall"
+        }
+      }
+    }
+  },
+  "Layer-componentsOthers-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Putz": {
+        "labels": {
+          "de": "Putz"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "de": "Glas"
+        }
+      },
+      "Mörtel": {
+        "labels": {
+          "de": "Mörtel"
+        }
+      },
+      "Tesserae": {
+        "labels": {
+          "de": "Tesserae"
+        }
+      }
+    }
+  },
+  "NegativeFeature-classificationFeature-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Graben": {
+        "labels": {
+          "de": "Graben"
+        }
+      },
+      "Grube": {
+        "labels": {
+          "de": "Grube"
+        }
+      },
+      "Raubgrube": {
+        "labels": {
+          "de": "Raubgrube"
+        }
+      },
+      "Feuergrube": {
+        "labels": {
+          "de": "Feuergrube"
+        }
+      },
+      "Baugrube": {
+        "labels": {
+          "de": "Baugrube"
+        }
+      },
+      "Pfostenloch": {
+        "labels": {
+          "de": "Pfostenloch"
+        }
+      },
+      "Fundamentgraben": {
+        "labels": {
+          "de": "Fundamentgraben"
+        }
+      },
+      "Drehpfanne": {
+        "labels": {
+          "de": "Drehpfanne"
+        }
+      },
+      "Störung": {
+        "labels": {
+          "de": "Störung"
+        }
+      },
+      "Ausschachtung": {
+        "labels": {
+          "de": "Ausschachtung"
+        }
+      },
+      "AbarbeitungVertikal": {
+        "labels": {
+          "de": "Abarbeitung: vertikal"
+        }
+      },
+      "AbarbeitungHorizontal": {
+        "labels": {
+          "de": "Abarbeitung: horizontal"
+        }
+      },
+      "Sonstiges": {
+        "labels": {
+          "de": "Sonstiges"
+        }
+      }
+    }
+  },
+  "NegativeFeature-toolTraces-SelinuntAkropolis": {
+    "creationDate": "17.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "klarErkennbar": {
+        "labels": {
+          "de": "klar erkennbar"
+        }
+      },
+      "erkennbar": {
+        "labels": {
+          "de": "erkennbar"
+        }
+      },
+      "nichtZuErkennen": {
+        "labels": {
+          "de": "nicht zu erkennen"
+        }
+      },
+      "unklar": {
+        "labels": {
+          "de": "unklar"
+        }
+      }
+    }
+  },
+  "Architecture-construction-SelinuntAkropolis": {
+    "creationDate": "26.11.2021",
+    "createdBy": "Julius Bussilliat",
+    "description": {},
+    "values": {
+      "Fundament: Geschüttet": {
+        "labels": {
+          "de": "Fundament: Geschüttet",
+          "it": "Fondamenta: gettate"
+        }
+      },
+      "Fundament: gesetzt": {
+        "labels": {
+          "de": "Fundament: gesetzt",
+          "it": "Fondamenta: poste"
+        }
+      },
+      "Mauerkern: Lesesteine": {
+        "labels": {
+          "de": "Mauerkern: Lesesteine",
+          "it": "Nucleo del muro: pietre raccolte"
+        }
+      },
+      "einschalig vor Feld/Hang": {
+        "labels": {
+          "de": "einschalig vor Feld/Hang",
+          "it": "con paramento davanti il campo/pendio"
+        }
+      },
+      "ohne Schalen/keine durchgehenden Lagen": {
+        "labels": {
+          "de": "ohne Schalen/keine durchgehenden Lagen",
+          "it": "senza paramento/senza filari continui"
+        }
+      },
+      "ohne Schalen/nur durchgehende Lagen": {
+        "labels": {
+          "de": "ohne Schalen/nur durchgehende Lagen",
+          "it": "senza paramento/solo filari continui"
+        }
+      },
+      "zweischalig": {
+        "labels": {
+          "de": "zweischalig",
+          "it": "a due paramenti"
+        }
+      },
+      "zweischalig mit Binderlagen": {
+        "labels": {
+          "de": "zweischalig mit Binderlagen",
+          "it": "a due paramenti con blocchi di testa "
+        }
+      },
+      "Quadermauerwerk, einschalig": {
+        "labels": {
+          "de": "Quadermauerwerk, einschalig"
+        }
+      }
+    }
+  },
+  "Architecture-wallType-SelinuntAkropolis": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Außenmauer": {
+        "labels": {
+          "de": "Außenmauer",
+          "it": "Muro perimetrale"
+        }
+      },
+      "Befestigugsmauer": {
+        "labels": {
+          "de": "Befestigugsmauer",
+          "it": "Mura urbiche"
+        }
+      },
+      "Blockmauerwerk": {
+        "labels": {
+          "de": "Blockmauerwerk",
+          "it": "Muratura a blocchi"
+        }
+      },
+      "Bruchsteinmauer": {
+        "labels": {
+          "de": "Bruchsteinmauer",
+          "it": "Muro a conci"
+        }
+      },
+      "Fachwerk": {
+        "labels": {
+          "de": "Fachwerk",
+          "it": "Costruzione a traliccio"
+        }
+      },
+      "Feldsteinmauer": {
+        "labels": {
+          "de": "Feldsteinmauer",
+          "it": "Muro in pietrame"
+        }
+      },
+      "Grenzmauer": {
+        "labels": {
+          "de": "Grenzmauer",
+          "it": "Muro di confine"
+        }
+      },
+      "Ziegelmauer": {
+        "labels": {
+          "de": "Ziegelmauer",
+          "it": "Muro di mattoni"
+        }
+      },
+      "Mischmauerwerk": {
+        "labels": {
+          "de": "Mischmauerwerk"
+        }
+      }
+    }
+  }
 }

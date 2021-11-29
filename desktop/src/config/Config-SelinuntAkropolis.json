@@ -1,0 +1,422 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {},
+    "commons": []
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "BuildingPart": {
+      "color": "#707070",
+      "commons": [
+        "period",
+        "description",
+        "dimensionHeight",
+        "dimensionLength",
+        "dimensionDepth",
+        "dimensionWidth",
+        "dimensionDiameter",
+        "dimensionOther"
+      ],
+      "hidden": ["borders"],
+      "valuelists": {
+        "denomination": "BuildingPart-denomination-Selinunt",
+        "period": "BuildingPart-dating-Selinunt",
+        "material": "BuildingPart-material-Selinunt",
+        "conservationStatus": "BuildingPart-conservationStatus-Selinunt",
+        "assignment": "BuildingPart-assignment-Selinunt",
+        "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
+        "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt",
+        "referenceTypes": "BuildingPart-references-Selinunt",
+        "belongingMap": "BuildingPart-map-Selinunt"
+      },
+      "fields": {
+        "descriptionFindingPlace": {
+          "inputType": "text"
+        },
+        "storageLocation": {
+          "inputType": "text"
+        },
+        "editingDates": {
+          "inputType": "multiInput"
+        },
+        "denomination": {
+          "inputType": "dropdown"
+        },
+        "material": {
+          "inputType": "checkboxes"
+        },
+        "conservationStatus": {
+          "inputType": "checkboxes"
+        },
+        "assignment": {
+          "inputType": "dropdown"
+        },
+        "evaluationAssignment": {
+          "inputType": "checkboxes"
+        },
+        "positionAtBuilding": {
+          "inputType": "checkboxes"
+        },
+        "referenceTypes": {
+          "inputType": "checkboxes"
+        },
+        "belongingMap": {
+          "inputType": "checkboxes"
+        },
+        "pencilDrawing": {
+          "inputType": "input"
+        },
+        "inkDrawing": {
+          "inputType": "input"
+        },
+        "note": {
+          "inputType": "input"
+        }
+      }
+    },
+    "ColumnDrum": {
+      "commons": [],
+      "hidden": ["dimensionOther"],
+      "parent": "BuildingPart",
+      "valuelists": {
+        "material": "BuildingPart-material-Selinunt",
+        "assignment": "BuildingPart-assignment-Selinunt",
+        "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
+        "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt"
+      },
+      "fields": {
+        "column": {
+          "inputType": "input"
+        },
+        "fromBottomToTop": {
+          "inputType": "input"
+        },
+        "number": {
+          "inputType": "input"
+        },
+        "top": {
+          "inputType": "text"
+        },
+        "bottom": {
+          "inputType": "text"
+        },
+        "coat": {
+          "inputType": "text"
+        },
+        "comment": {
+          "inputType": "text"
+        }
+      }
+    },
+  "Find:default": {
+    "commons": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Feature:default": {
+    "commons": [],
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Architecture:default": {
+    "commons": [
+      "dimensionOther",
+      "dimensionHeight"
+    ],
+    "hidden": ["muralCrown","brickwork","descriptionOfBuildingTechnique","materialCharacteristic","layerHeight"],
+    "valuelists": {
+      "position": "Architecture-position-SelinuntAkropolis",
+      "wallClassification": "Architecture-wallClassification-SelinuntAkropolis",
+      "blockProcessing": "Architecture-blockProcessing-SelinuntAkropolis",
+      "construction": "Architecture-construction-SelinuntAkropolis",
+      "wallType": "Architecture-wallType-SelinuntAkropolis"
+    },
+    "fields": {
+      "templePositionOnTheStructure": {
+        "inputType": "text"
+      },
+      "position": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Layer:default": {
+    "hidden": ["layerClassification"],
+    "fields": {
+      "designation": {
+        "inputType": "checkboxes"
+      },
+      "componentsCeramics": {
+        "inputType": "checkboxes"
+      },
+      "componentsStone": {
+        "inputType": "checkboxes"
+      },
+      "componentsOrganic": {
+        "inputType": "checkboxes"
+      },
+      "componentsMetal": {
+        "inputType": "checkboxes"
+      },
+      "componentsOthers": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "designation": "Layer-designation-SelinuntAkropolis",
+      "componentsCeramics": "Layer-componentsCeramics-SelinuntAkropolis",
+      "componentsStone": "Layer-componentsStone-SelinuntAkropolis",
+      "componentsOrganic": "Layer-componentsOrganic-SelinuntAkropolis",
+      "componentsMetal": "Layer-componentsMetal-SelinuntAkropolis",
+      "componentsOthers": "Layer-componentsOthers-SelinuntAkropolis"
+    }
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Metal:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Grave:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Coin:default": {
+    "hidden": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "FindCollection": {
+    "hidden": [],
+    "fields": {
+      "potteryFormsOverview": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryAmphoraeByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryCoarseWareByFunction": {
+        "inputType": "checkboxes"
+      },
+      "potteryCoarseWareByFunctionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "miniaturePotteryCollection": {
+        "inputType": "text"
+      },
+      "terracottaCollection": {
+        "inputType": "checkboxes"
+      },
+      "terracottaCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "buildingMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "buildingMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "stoneCollection": {
+        "inputType": "checkboxes"
+      },
+      "stoneCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "metalAndGlasCollection": {
+        "inputType": "checkboxes"
+      },
+      "metalAndGlasCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "organicMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "organicMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Find",
+    "valuelists": {
+      "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
+      "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
+      "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
+      "terracottaCollection": "Terracotta-Collection-Selinunt",
+      "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
+      "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
+      "stoneCollection": "Stone-Collection-Selinunt",
+      "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
+      "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
+    }
+  },
+  "NegativeFeature": {
+    "commons": [
+      "spatialLocation",
+      "orientation"
+    ],
+    "hidden": [],
+    "parent": "Feature",
+    "valuelists": {
+      "position": "Architecture-position-SelinuntAkropolis",
+      "orientation": "orientation-default-1",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "classificationFeature": "NegativeFeature-classificationFeature-SelinuntAkropolis",
+      "toolTraces": "NegativeFeature-toolTraces-SelinuntAkropolis"
+    },
+    "fields": {
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "templePositionOnTheStructure": {
+        "inputType": "text"
+      },
+      "position": {
+        "inputType": "checkboxes"
+      },
+      "classificationFeature": {
+        "inputType": "checkboxes"
+      },
+      "toolTraces": {
+        "inputType": "checkboxes"
+      },
+      "form": {
+        "inputType": "text"
+      },
+      "maximumHeight": {
+        "inputType": "text"
+      },
+      "bibliography": {
+        "inputType": "text"
+      }
+    }
+  }
+}

@@ -57,7 +57,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getAvailableInputTypes = () => this.availableInputTypes.filter(inputType => inputType.customFields);
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
-        this.getClonedFieldDefinition().inputType ?? this.field.inputType
+        this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
     );
 
 
@@ -86,14 +86,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        if (isEmpty(this.getClonedFieldDefinition())) {
-            delete this.getClonedFormDefinition().fields[this.field.name];
-        }
-
         if (!Field.InputType.VALUELIST_INPUT_TYPES
                 .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType)
                 && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
+        }
+
+        if (isEmpty(this.getClonedFieldDefinition())) {
+            delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
         await super.save(this.isConstraintIndexedChanged());

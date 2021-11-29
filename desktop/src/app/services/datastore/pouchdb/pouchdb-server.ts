@@ -62,37 +62,11 @@ export class PouchdbServer {
         });
 
         // prevent the creation of new databases when syncing
-        app.put('/sync/:db', (_: any, res: any) =>
-            res.status(401).send( { status: 401 }));
-
-        app.use('/sync/', expressPouchDB(PouchDB, {
-            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
-            mode: 'fullCouchDB',
-            overrideMode: {
-                exclude: [
-                    'routes/authentication',
-                    'routes/authorization',
-                    'routes/session'
-                ]
-            }
-        }));
-
-        // Out of the box, Fauxton (with PouchDB, as well as with CouchDB) does
-        // not work with paths other than '/', which is why we duplicate the /sync route
-        // at / app.
-        //
-        // Related GitHub issues:
-        // - https://stackoverflow.com/questions/41658926/express-pouchdb-fauxton-on-non-root-route
-        // - https://github.com/pouchdb/pouchdb-server/issues/183#issuecomment-280862350
-        // - https://stackoverflow.com/questions/64056888/how-can-i-create-separate-pouchdbs-on-separate-endpoints-in-the-same-node-app-l
-        //
-
-        // prevent the creation of new databases when syncing
         app.put('/:db', (_: any, res: any) =>
             res.status(401).send( { status: 401 }));
 
         app.use('/', expressPouchDB(PouchDB, {
-            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server-2.log',
+            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
             mode: 'fullCouchDB',
             overrideMode: {
                 include: ['routes/fauxton'],

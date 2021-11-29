@@ -41,6 +41,10 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
+        dimensionDepth: {
+            inputType: Field.InputType.DIMENSION,
+            positionValuelistId: 'position-values-expansion-default'
+        },
         dimensionDiameter: {
             inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'

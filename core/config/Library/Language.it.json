@@ -19,6 +19,10 @@
       "label": "Altezza",
       "description": "Altezza alla massima/minima estensione"
     },
+    "dimensionDepth": {
+      "label": "Profondità",
+      "description": "Profondità alla massima/minima estensione"
+    },
     "dimensionThickness": {
       "label": "Spessore",
       "description": "Spessore dell'oggetto"

@@ -19,6 +19,9 @@
     "dimensionHeight": {
       "label": "Height"
     },
+    "dimensionDepth": {
+      "label": "Depth"
+    },
     "dimensionThickness": {
       "label": "Thickness"
     },

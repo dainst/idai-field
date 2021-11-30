@@ -14,6 +14,7 @@ export class ValuelistListingComponent {
 
     @Input() valuelists: Array<Valuelist> = [];
     @Input() selectedValuelist: Valuelist;
+    @Input() emptyValuelist: Valuelist|undefined;
     @Input() searchTerm: string = '';
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
@@ -25,6 +26,9 @@ export class ValuelistListingComponent {
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
 
     public getLabel = (value: any) => this.labels.get(value);
+
+    public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
+        && !this.valuelists.map(valuelist => valuelist.id).includes(this.searchTerm);
 
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {

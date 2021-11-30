@@ -125,6 +125,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         );
 
         componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = this.field;

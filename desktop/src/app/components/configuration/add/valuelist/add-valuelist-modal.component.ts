@@ -3,6 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil, Valuelist } from 'idai-field-core';
 import { ErrWithParams } from '../../../import/import/import-documents';
 import { ConfigurationIndex } from '../../index/configuration-index';
+import { Modals } from '../../../../services/modals';
+import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -17,6 +20,7 @@ import { ConfigurationIndex } from '../../index/configuration-index';
 export class AddValuelistModalComponent {
 
     public configurationIndex: ConfigurationIndex;
+    public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
     public field: Field;
@@ -25,10 +29,12 @@ export class AddValuelistModalComponent {
 
     public searchTerm: string = '';
     public selectedValuelist: Valuelist|undefined;
+    public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private modals: Modals) {}
 
 
     public initialize() {
@@ -53,7 +59,11 @@ export class AddValuelistModalComponent {
 
         if (!this.selectedValuelist) return;
 
-        this.addSelectedValuelist();
+        if (this.selectedValuelist === this.emptyValuelist) {
+            this.createNewValuelist();
+        } else {
+            this.addValuelist(this.selectedValuelist);
+        }
     }
 
 
@@ -70,17 +80,69 @@ export class AddValuelistModalComponent {
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 
         this.selectedValuelist = this.valuelists?.[0];
+        this.emptyValuelist = this.getEmptyValuelist();
     }
 
 
-    private addSelectedValuelist() {
+    private addValuelist(valuelist: Valuelist) {
 
         const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name];
         if (!form.valuelists) form.valuelists = {};
-        form.valuelists[this.field.name] = this.selectedValuelist.id;
-        this.field.valuelist = this.selectedValuelist;
+        form.valuelists[this.field.name] = valuelist.id;
+        this.field.valuelist = valuelist;
 
         this.activeModal.close();
+    }
+
+
+    private async createNewValuelist() {
+
+        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
+            ValuelistEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
+
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.valuelist = {
+            id: this.searchTerm,
+            values: {},
+            description: {}
+        };
+        componentInstance.new = true;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            newConfigurationDocument => this.addNewValuelist(newConfigurationDocument),
+            () => this.activeModal.close()
+        );
+    }
+
+
+    private addNewValuelist(newConfigurationDocument: ConfigurationDocument) {
+
+        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
+        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
+        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
+        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+
+        const valuelist: Valuelist = this.clonedConfigurationDocument.resource.valuelists[this.searchTerm];
+        valuelist.id = this.searchTerm;
+        
+        this.addValuelist(valuelist);
+    }
+
+
+    private getEmptyValuelist(): Valuelist|undefined {
+
+        if (this.searchTerm.length === 0) return undefined;
+
+        return {
+            id: this.searchTerm
+        } as Valuelist;
     }
 }

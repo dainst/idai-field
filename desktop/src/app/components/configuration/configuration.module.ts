@@ -28,6 +28,7 @@ import { ValuelistViewComponent } from './valuelist-view.component';
 import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
 import { ValuelistListingComponent } from './add/valuelist/valuelist-listing.component';
 import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.component';
+import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.com
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
+        ValuelistEditorModalComponent,
         ConfigurationFieldDragElement,
         ConfigurationContextMenuComponent,
         DeleteFieldModalComponent,
@@ -74,6 +76,7 @@ import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.com
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
+        ValuelistEditorModalComponent,
         DeleteFieldModalComponent,
         DeleteGroupModalComponent,
         DeleteCategoryModalComponent,

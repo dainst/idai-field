@@ -1,9 +1,9 @@
 <div class="modal-header configuration-editor-modal-header">
-    <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificGroup">
-        Gruppe <code>{{group.name}}</code> erstellen
+    <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificValuelist">
+        Werteliste <code>{{valuelist.id}}</code> erstellen
     </h5>
-    <h5 *ngIf="!new" class="modal-title" i18n="@@configuration.editSpecificGroup">
-        Gruppe <code>{{group.name}}</code> bearbeiten
+    <h5 *ngIf="!new" class="modal-title" i18n="@@configuration.editSpecificValuelist">
+        Werteliste <code>{{valuelist.id}}</code> bearbeiten
     </h5>
     <button id="save-button" class="btn btn-success"
             [ngClass]="{ 'disabled': saving || !isChanged() }"
@@ -20,10 +20,10 @@
 
 <div class="modal-body configuration-editor-modal-body">
     <div class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.groupLabel">
-            Gruppenbezeichnung
+        <div class="configuration-editor-section-title" i18n="@@configuration.valuelistDescription">
+            Beschreibung der Werteliste
         </div>
-        <multi-language-input [translations]="clonedLabel"
-                              [defaultTranslations]="group.defaultLabel"></multi-language-input>
+        <multi-language-input [translations]="clonedDescription"
+                              [defaultTranslations]="{}"></multi-language-input>
     </div>
 </div>

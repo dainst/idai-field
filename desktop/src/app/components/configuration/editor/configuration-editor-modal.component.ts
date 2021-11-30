@@ -103,7 +103,7 @@ export abstract class ConfigurationEditorModalComponent {
             this.messages.add(optionalErrWithParams);
             this.saving = false;
         } else {
-            this.activeModal.close();
+            this.activeModal.close(this.clonedConfigurationDocument);
         }
     }
 

@@ -10,6 +10,7 @@ import { Tile as TileLayer } from 'ol/layer';
 import { flatten } from 'tsfun';
 import { NAVBAR_HEIGHT } from '../../constants';
 import { ResultDocument } from '../../api/result';
+import { Document } from '../../api/document';
 import './layer-controls.css';
 
 
@@ -18,9 +19,9 @@ type VisibleTileLayersSetter = React.Dispatch<React.SetStateAction<string[]>>;
 type LayerGroup = { document?: ResultDocument, tileLayers: TileLayer[] };
 
 
-export default function LayerControls({ map, tileLayers, fitOptions, predecessors, project }
-    : { map: Map, tileLayers: TileLayer[], fitOptions: FitOptions, predecessors: ResultDocument[],
-            project: string }): ReactElement {
+export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project }
+    : { map: Map, tileLayers: TileLayer[], fitOptions: FitOptions, selectedDocument: Document,
+            predecessors: ResultDocument[], project: string }): ReactElement {
 
         const [visibleTileLayers, setVisibleTileLayers] = useState<string[]|null>(null);
         const [layerControlsVisible, setLayerControlsVisible] = useState<boolean>(false);
@@ -40,14 +41,14 @@ export default function LayerControls({ map, tileLayers, fitOptions, predecessor
 
         useEffect(() => {
 
-            const newLayerGroups: LayerGroup[] = createLayerGroups(tileLayers, predecessors);
+            const newLayerGroups: LayerGroup[] = createLayerGroups(tileLayers, selectedDocument, predecessors);
             setLayerGroups(newLayerGroups);
             updateZIndices(newLayerGroups);
             if (newLayerGroups.length > 0 && !visibleTileLayers) {
                 setVisibleTileLayers(getDefaultVisibleTileLayers(newLayerGroups));
             }
             updateTileLayerVisibility(tileLayers, newLayerGroups, visibleTileLayers);
-        }, [tileLayers, predecessors, visibleTileLayers]);
+        }, [tileLayers, selectedDocument, predecessors, visibleTileLayers]);
 
 
         return <>
@@ -184,12 +185,15 @@ const getLayerControlsCloseClickFunction = (setLayerControlsVisible: (visible: b
 };
 
 
-const createLayerGroups = (tileLayers: TileLayer[], predecessors: ResultDocument[]): LayerGroup[] => {
+const createLayerGroups = (tileLayers: TileLayer[], selectedDocument: ResultDocument,
+                           predecessors: ResultDocument[]): LayerGroup[] => {
 
-    const layerGroups: LayerGroup[] = predecessors.map(predecessor => {
+    const documents: ResultDocument[] = (selectedDocument ? [selectedDocument] : []).concat(predecessors);
+
+    const layerGroups: LayerGroup[] = documents.map(document => {
         return {
-            document: predecessor,
-            tileLayers: getLinkedTileLayers(predecessor.resource.id, tileLayers)
+            document,
+            tileLayers: getLinkedTileLayers(document.resource.id, tileLayers)
         };
     });
 

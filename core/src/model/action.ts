@@ -1,4 +1,5 @@
 export interface Action {
-    user : string;
+    
+    user: string;
     date: Date;
 }

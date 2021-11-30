@@ -259,7 +259,7 @@
       "architecturalOrder": "architecturalOrder-milet",
       "conditionAmount": "Building-conditionAmount-default",
       "condition": "Building-condition-default",
-      "material": "Building-material-default",
+      "material": "Building-material-milet",
       "context": "Building-context-milet",
       "buildingTechnique": "Building-buildingTechnique-default",
       "period": "periods-milet",
@@ -326,6 +326,9 @@
       "comparison": {
         "inputType": "text"
       },
+      "comparisonLit": {
+        "inputType": "literature"
+      },
       "MuseumInventoryNr": {
         "inputType": "input"
       },
@@ -351,6 +354,81 @@
       "period": "periods-milet"
     }
   },
+  "Loomweight": {
+    "parent": "Find",
+    "color": "#7c5286",
+    "fields": {
+      "loomweightCategory": {
+        "inputType": "dropdown"
+      },
+      "loomweightOther": {
+        "inputType": "input"
+      },
+      "loomweightDetail": {
+        "inputType": "dropdown"
+      },
+      "loomweightDetailOther": {
+        "inputType": "input"
+      },
+      "formDescription": {
+        "inputType": "text"
+      },
+      "amountSherdsTotal": {
+        "inputType": "unsignedInt"
+      },
+      "weightTotal": {
+        "inputType": "unsignedFloat"
+      },
+      "potteryCondition": {
+        "inputType": "checkboxes"
+      },
+      "fabricGroup": {
+        "inputType": "input"
+      },
+      "fabricColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "fabricColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "fabricColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "fabricHardness": {
+        "inputType": "dropdown"
+      },
+      "fabricStructure": {
+        "inputType": "text"
+      }, 
+      "temperType": {
+        "inputType": "checkboxes"
+      },
+      "temperTypeOther": {
+        "inputType": "input"
+      }, 
+      "temperAmount": {
+        "inputType": "dropdownRange"
+      }, 
+      "temperGrain": {
+        "inputType": "dropdownRange"
+      }, 
+      "surfaceTreatmentDescription": {
+        "inputType": "text"
+      }, 
+      "otherNotes": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "loomweightCategory": "Loomweight-loomweightCategory-milet",
+      "loomweightDetail": "Loomweight-loomweightDetail-milet",
+      "potteryCondition": "Pottery-potteryCondition-milet",
+      "fabricHardness": "Pottery-fabricHardness-milet",
+      "temperType": "Pottery-temperType-milet",
+      "temperAmount": "Pottery-temperAmount-milet",
+      "temperGrain": "Pottery-temperGrain-milet"
+    }
+  },  
   "Pottery": {
     "parent": "Find",
     "commons": ["provenance"],
@@ -474,7 +552,36 @@
   },
   "Brick:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "temperTypeOther": {
+        "inputType": "input"
+      }, 
+      "temperAmount": {
+        "inputType": "dropdownRange"
+      }, 
+      "temperGrain": {
+        "inputType": "dropdownRange"
+      }, 
+      "fabricColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "surfaceTreatment": {
+        "inputType": "checkboxes"
+      }, 
+      "surfaceTreatmentDescription": {
+        "inputType": "text"
+      }, 
+      "fabricHardness": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists": {
+      "fabricHardness": "Pottery-fabricHardness-milet",
+      "temper": "Pottery-temperType-milet",
+      "temperAmount": "Pottery-temperAmount-milet",
+      "temperGrain": "Pottery-temperGrain-milet",
+      "surfaceTreatment": "Pottery-surfaceTreatment-milet"
+    }
   },
   "Burial:default": {
     "hidden": [],
@@ -502,7 +609,11 @@
   },
   "Terracotta:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "TKdescription": {
+        "inputType": "text"
+      }
+    }
   },
   "Stone:default": {
     "hidden": [],
@@ -684,6 +795,9 @@
     }
   },
   "Photo:default": {
+    "commons": [
+      "date"
+    ],
     "fields": {
       "otherNotes": {
         "inputType": "text"
@@ -702,7 +816,9 @@
   "Quantification": {
     "color": "#1E6161",
     "commons": [
-      "processor"
+      "processor",
+      "campaign", 
+      "date"
     ],
     "fields": {
       "quantificationType": {
@@ -804,6 +920,9 @@
       "countTransportamphoraeBase": {
         "inputType": "unsignedInt"
       }, 
+      "countTransportamphoraeWall": {
+        "inputType": "unsignedInt"
+      }, 
       "countTransportamphoraeHandle": {
         "inputType": "unsignedInt"
       }, 
@@ -894,7 +1013,8 @@
     "commons": [
       "processor",
       "date",
-      "period"
+      "period",
+      "campaign"
     ],
     "fields": {
       "infoFromField": {

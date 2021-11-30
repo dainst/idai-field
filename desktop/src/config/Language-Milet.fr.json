@@ -79,6 +79,33 @@
         "quantificationOther": {
             "label": "Autres éléments (pas sur le formulaire)",
             "description": "Enregistrez les autres fragments de céramique qui ne peuvent pas être saisis dans le formulaire ci-dessus - utilisez-le avec précaution et uniquement si cela est absolument nécessaire."
+        },
+        "fabricColorBreakMunsell": {
+            "label": "Matériau: Couleur au coeur/tranche (Munsell, Format!)"
+        },
+        "fabricHardness": {
+            "label": "Matériau: Dureté"
+        },
+        "fabricStructure": {
+            "label": "Matériau: Structure à la cassure/tranche"
+        },
+        "temperType": {
+            "label": "Matériau: Type de dégraissant"
+        },
+        "temperTypeOther": {
+            "label": "Matériau: Type de dégraissant (autres composants)"
+        },
+        "temperAmount": {
+            "label": "Matériau: Quantité"
+        },
+        "temperGrain": {
+            "label": "Matériau: Grain"
+        },
+        "surfaceTreatment": {
+            "label": "Surface et Décoration: Traitement"
+        },
+        "surfaceTreatmentDescription": {
+            "label": "Surface et décoration: Traitement - Description"
         }
     },
     "relations": {
@@ -463,6 +490,9 @@
         },
         "Photo": {
             "fields": {
+                "date": {
+                  "label": "Date (at which the Photograph was taken) #todo"
+                },
                 "viewDirection": {
                     "label": "Vue en direction du/de ...",
                     "description": "Direction de la prise de la photographie"
@@ -584,6 +614,9 @@
                 },
                 "countTransportamphoraeBase": {
                     "label": "Amphores de transport (Fragments de bases/pieds)"
+                },
+                "countTransportamphoraeWall": {
+                    "label": "Amphores de transport (Fragments de panses)"
                 },
                 "countTransportamphoraeHandle": {
                     "label": "Amphores de transport (Fragments d'anses)"

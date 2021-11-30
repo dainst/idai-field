@@ -80,6 +80,33 @@
     "quantificationOther": {
       "label": "Andere Elemente (nicht in Formular vorgesehen)",
       "description": "Zum Nachhalten von Bestandteilen die nicht in dem Formular widergegeben werden können - bitte vorsichtig und nur wenn absolut nötig benutzen!"
+    },
+    "fabricColorBreakMunsell": {
+      "label": "Fabrikat: Farbe Bruchkern (Munsell, Format!)"
+    },
+    "fabricHardness": {
+      "label": "Fabrikat: Härte"
+    },
+    "fabricStructure": {
+      "label": "Fabrikat: Bruchstruktur"
+    },
+    "temperType": {
+      "label": "Fabrikat: Magerungsart"
+    },
+    "temperTypeOther": {
+      "label": "Fabrikat: Magerungsart (Sonstige Bestandteile)"
+    },
+    "temperAmount": {
+      "label": "Fabrikat: Menge"
+    },
+    "temperGrain": {
+      "label": "Fabrikat: Körnung"
+    },
+    "surfaceTreatment": {
+      "label": "Oberfläche und Dekoration: Behandlung"
+    },
+    "surfaceTreatmentDescription": {
+      "label": "Oberfläche und Dekoration: Behandlung - Beschreibung"
     }
   },
   "relations": {
@@ -459,14 +486,62 @@
     },
     "Photo": {
       "fields": {
+        "date": {
+          "label": "Datum (Aufnahmedatum des Fotos)"
+        },
         "viewDirection": {
           "label": "Blick nach ...",
           "description": "Blickrichtung des Fotos"
         }
       }
     },
+    "Loomweight": {
+      "label": "Webgewicht",
+      "fields": {
+        "loomweightCategory": {
+          "label": "Kategorie / Gruppe"
+        },
+        "loomweightOther": {
+          "label": "Andere Kategorie, wenn nicht aufgeführt"
+        },
+        "loomweightDetail": {
+          "label": "Dekoration / Beschriftung"
+        },
+        "loomweightDetailOther": {
+          "label": "Kurzbeschreibung Dekoration / Beschriftung"
+        },
+        "formDescription": {
+          "label": "Beschreibung der Form"
+        },
+        "amountSherdsTotal": {
+          "label": "Anzahl Fragmente"
+        },
+        "weightTotal": {
+          "label": "Gewicht (in Gramm)"
+        },
+        "potteryCondition": {
+          "label": "Erhaltungszustand"
+        },
+        "fabricGroup": {
+          "label": "Fabrikat: Gruppe"
+        },
+        "fabricColorInsideMunsell": {
+          "label": "Fabrikat: Farbe innen (Munsell, Format!)"
+        },
+        "fabricColorOutsideMunsell": {
+          "label": "Fabrikat: Farbe außen (Munsell, Format!)"
+        }
+      }
+    },
     "Drawing": {
       "fields": {}
+    },
+    "Terracotta": {
+      "fields": {
+        "TKdescription": {
+          "label": "Beschreibung"
+        }
+      }
     },
     "Sample": {
       "fields": {
@@ -500,7 +575,7 @@
           "label": "Anzahl der Fragmente (gesamt)"
         },
         "weightTotal": {
-          "label": "Gewicht (gesamt)"
+          "label": "Gewicht (gesamt, in Gramm)"
         },
         "quantificationNotes": {
           "label": "Bemerkungen zur Quantifizierung"
@@ -580,6 +655,9 @@
         },
         "countTransportamphoraeBase": {
           "label": "Transportamphoren (Bodenfragmente)"
+        },
+        "countTransportamphoraeWall": {
+          "label": "Transportamphoren (Wandfragmente)"
         },
         "countTransportamphoraeHandle": {
           "label": "Transportamphoren (Henkelfragmente)"

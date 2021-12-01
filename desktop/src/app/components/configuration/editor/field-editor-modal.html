@@ -84,7 +84,7 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
             Werteliste
         </div>
-        <div *ngIf="field.valuelist">
+        <div *ngIf="clonedField.valuelist">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <button id="swap-valuelist-button" class="btn btn-primary" type="button"
@@ -95,14 +95,14 @@
                             placement="right">
                         <span class="mdi mdi-swap-horizontal"></span>
                     </button>
-                    <code>{{field.valuelist.id}}</code>
+                    <code>{{clonedField.valuelist.id}}</code>
                 </li>
-                <li *ngIf="field.valuelist" class="list-group-item">
-                    <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
+                <li *ngIf="clonedField.valuelist" class="list-group-item">
+                    <valuelist-view [valuelist]="clonedField.valuelist"></valuelist-view>
                 </li>
             </ul>
         </div>
-        <div *ngIf="!field.valuelist">
+        <div *ngIf="!clonedField.valuelist">
             <button id="add-valuelist-button" class="btn btn-success" type="button"
                     (click)="selectValuelist()"
                     ngbTooltip="Werteliste hinzufügen"

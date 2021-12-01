@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop } from 'tsfun';
+import { clone, equal, isEmpty, nop } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../../../components/configuration/configuration-util';
@@ -32,6 +32,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public permanentlyHiddenFields: string[];
     public configurationIndex: ConfigurationIndex;
 
+    public clonedField: Field|undefined;
     public hideable: boolean;
     public hidden: boolean;
 
@@ -79,6 +80,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedFormDefinition().fields[this.field.name] = {};
         }
 
+        this.clonedField = clone(this.field);
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
     }
@@ -128,7 +130,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;
-        componentInstance.field = this.field;
+        componentInstance.clonedField = this.clonedField;
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 

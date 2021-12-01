@@ -23,7 +23,7 @@ export class AddValuelistModalComponent {
     public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
-    public field: Field;
+    public clonedField: Field;
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<ErrWithParams|undefined>;
 
@@ -76,7 +76,7 @@ export class AddValuelistModalComponent {
     public applyValuelistSearch() {
 
         this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchTerm)
-            .filter(valuelist => !this.field.valuelist || valuelist.id !== this.field.valuelist.id)
+            .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 
         this.selectedValuelist = this.valuelists?.[0];
@@ -89,8 +89,8 @@ export class AddValuelistModalComponent {
         const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name];
         if (!form.valuelists) form.valuelists = {};
-        form.valuelists[this.field.name] = valuelist.id;
-        this.field.valuelist = valuelist;
+        form.valuelists[this.clonedField.name] = valuelist.id;
+        this.clonedField.valuelist = valuelist;
 
         this.activeModal.close();
     }

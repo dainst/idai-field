@@ -5,7 +5,6 @@ import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
     SyncService } from 'idai-field-core';
 import { PouchdbServer } from '../../../src/app/services/datastore/pouchdb/pouchdb-server';
 import { Imagestore } from '../../../src/app/services/imagestore/imagestore';
-import { PouchDbFsImagestore } from '../../../src/app/services/imagestore/pouch-db-fs-imagestore';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
@@ -45,7 +44,7 @@ export async function setupSettingsService(pouchdbdatastore, projectName = 'test
     const filestore = new Filestore(settingsProvider, new FsAdapter());
 
     const settingsService = new SettingsService(
-        new PouchDbFsImagestore(
+        new Imagestore(
             filestore, undefined, undefined, pouchdbdatastore.getDb()) as Imagestore,
         pouchdbdatastore,
         pouchdbServer,
@@ -108,7 +107,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    const imagestore = new PouchDbFsImagestore(filestore, undefined, undefined, pouchdbDatastore.getDb());
+    const imagestore = new Imagestore(filestore, undefined, undefined, pouchdbDatastore.getDb());
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();

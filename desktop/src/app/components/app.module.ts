@@ -17,7 +17,6 @@ import { PouchdbServer } from '../services/datastore/pouchdb/pouchdb-server';
 import { BlobMaker } from '../services/imagestore/blob-maker';
 import { ImageConverter } from '../services/imagestore/image-converter';
 import { Imagestore } from '../services/imagestore/imagestore';
-import { PouchDbFsImagestore } from '../services/imagestore/pouch-db-fs-imagestore';
 import { ImportValidator } from '../components/import/import/process/import-validator';
 import { InitializationProgress } from './initialization-progress';
 import { ImageRelationsManager } from '../services/image-relations-manager';
@@ -153,7 +152,7 @@ registerLocaleData(localeIt, 'it');
         {
             provide: Imagestore,
             useFactory: function(filestore: Filestore, pouchdbManager: PouchdbDatastore, converter: ImageConverter, blobMaker: BlobMaker) {
-                return new PouchDbFsImagestore(filestore, converter, blobMaker, pouchdbManager.getDb());
+                return new Imagestore(filestore, converter, blobMaker, pouchdbManager.getDb());
             },
             deps: [Filestore, PouchdbDatastore, ImageConverter, BlobMaker]
         },

@@ -3,7 +3,7 @@ import rimraf = require('rimraf');
 import PouchDB = require('pouchdb-node');
 import { ConstraintIndex, Indexer, IndexFacade, PouchdbDatastore } from 'idai-field-core';
 import { ImagestoreErrors } from '../../../../../src/app/services/imagestore/imagestore-errors';
-import { PouchDbFsImagestore } from '../../../../../src/app/services/imagestore/pouch-db-fs-imagestore';
+import { Imagestore } from '../../../../../src/app/services/imagestore/imagestore';
 import { Filestore } from '../../../../../src/app/services/filestore/filestore';
 import { FsAdapter } from '../../../../../src/app/services/filestore/fs-adapter';
 
@@ -23,9 +23,9 @@ function str2ab(str: string): ArrayBuffer {
 }
 
 
-xdescribe('PouchDbFsImagestore', () => {
+xdescribe('Imagestore', () => {
 
-    let store: PouchDbFsImagestore;
+    let store: Imagestore;
     let datastore: PouchdbDatastore;
     const storeProjectPath = 'test/store/unittest/';
 
@@ -51,7 +51,7 @@ xdescribe('PouchDbFsImagestore', () => {
                               datastore.getDb(), null, null);
 
         const filestore = new Filestore(mockSettingsProvider, new FsAdapter());
-        store = new PouchDbFsImagestore(filestore, mockImageConverter, mockBlobMaker, datastore.getDb());
+        store = new Imagestore(filestore, mockImageConverter, mockBlobMaker, datastore.getDb());
         await store.init({ imagestorePath: 'test/store/', selectedProject: 'unittest' } as any);
 
         done();

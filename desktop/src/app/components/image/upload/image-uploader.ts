@@ -228,7 +228,7 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(async () =>
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any).then(async () =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
                             (await this.datastore.get(doc.resource.id, { skipCache: true })) as ImageDocument
                         ))

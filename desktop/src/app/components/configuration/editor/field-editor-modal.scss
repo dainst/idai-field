@@ -17,12 +17,23 @@
     user-select: none;
   }
 
-  #swap-valuelist-button {
+  #swap-valuelist-button,
+  #edit-valuelist-button {
     height: 38px;
-    margin-right: 12px;
+    float: right;
   }
 
-  code {
-    user-select: none;
+  #edit-valuelist-button {
+    margin-right: 8px;
+  }
+
+  #valuelist-header {
+    padding: 8px 8px 8px 16px;
+
+    code {
+      position: relative;
+      top: 7px;
+      user-select: none;
+    }
   }
 }

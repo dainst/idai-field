@@ -4,8 +4,8 @@ import {Imagestore, IMAGEVERSION} from './imagestore';
 
 @Injectable()
 /**
- * This tool is used to get binary data from a
- * mediastore and put them as blobs into html img tags.
+ * Provides URLs for binary data read from the {@link ImageStore} for
+ * usage in the Angular application.
  *
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -22,11 +22,14 @@ export class ImageUrlMaker {
     constructor(private sanitizer: DomSanitizer, private imagestore: Imagestore) {}
 
     /**
-     * Returns a URL for the image for the requested image resource. Actually creates a link to in memory
-     * image data using {@link URL.createObjectURL}, you may want to call {@link revokeImageUrl} or {@link revokeAllImageUrls}
-     * prematurely if you run into memory issues. See also https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL.
+     * Returns a URL to the image for the requested image resource.
+     *
+     * Internally creates a link to in-memory image data using {@link URL.createObjectURL}, you may want to call
+     * {@link revokeImageUrl} or {@link revokeAllImageUrls} prematurely if you run into memory issues.
+     * See also https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL.
+     *
      * @param imageId the image's id
-     * @param type the imageversion, for possible values see {@link IMAGEVERSION}
+     * @param type the image's version, for possible values see {@link IMAGEVERSION}
      */
      public async getUrl(imageId: string, type: IMAGEVERSION): Promise<SafeResourceUrl> {
 
@@ -46,7 +49,8 @@ export class ImageUrlMaker {
 
 
     /**
-     * Calls {@link revokeUrl} for all images in the datastore.
+     * Forces a revokation of all URLs objects created by {@link getUrl}, freeing the linked binary data
+     * up for garbage collection.
      */
      public revokeAllUrls() {
 
@@ -59,10 +63,6 @@ export class ImageUrlMaker {
         }
     }
 
-    /**
-     * Revokes the object URLs for an image created by {@link getUrl}.
-     * @param imageId the image's id
-     */
      private revokeUrl(imageId: string, type: IMAGEVERSION) {
 
         const requestedList = (type === IMAGEVERSION.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;

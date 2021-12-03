@@ -220,7 +220,7 @@ export class ImageUploader {
 
         return new Promise<any>((resolve, reject) => {
 
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, category, depictsRelationTarget)
@@ -228,10 +228,7 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.store(doc.resource.id, reader.result as any).then(async () =>
-                            // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
-                            (await this.datastore.get(doc.resource.id, { skipCache: true })) as ImageDocument
-                        ))
+                        .then(doc => that.imagestore.store(doc.resource.id, reader.result as any))
                         .then(() =>
                             resolve(undefined)
                         )
@@ -239,13 +236,13 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_WRITE, file.name]);
                         });
-                }
+                };
             })(this);
             reader.onerror = () => {
                 return (error: any) => {
                     console.error(error);
                     reject([M.IMAGES_ERROR_FILEREADER, file.name]);
-                }
+                };
             };
             reader.readAsArrayBuffer(file);
         });

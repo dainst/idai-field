@@ -179,6 +179,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
             <LayerControls map={ map }
                         tileLayers={ tileLayers }
                         fitOptions={ fitOptions }
+                        selectedDocument={ selectedDocument }
                         predecessors={ predecessors }
                         project={ project }></LayerControls>)
         }

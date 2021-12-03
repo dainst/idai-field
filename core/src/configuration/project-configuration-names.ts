@@ -24,6 +24,7 @@ export const PROJECT_MAPPING = {
     'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
     'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
     'seli-bauteile': { prefix: 'SelinuntBauteile', label: 'Selinunt Bauteile' },
+    'sel-akropolis': { prefix: 'SelinuntAkropolis', label: 'Selinunt Akropolis' },
     'uruk': { prefix: 'Uruk', label: 'Uruk' }
 };
 

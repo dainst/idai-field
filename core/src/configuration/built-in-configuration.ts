@@ -41,6 +41,10 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
+        dimensionDepth: {
+            inputType: Field.InputType.DIMENSION,
+            positionValuelistId: 'position-values-expansion-default'
+        },
         dimensionDiameter: {
             inputType: Field.InputType.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
@@ -170,6 +174,28 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        CrossSection: {
+            supercategory: true,
+            abstract: true,
+            fields: {
+                geometry: {
+                    inputType: Field.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         Building: {
             parent: 'Operation',
             fields: {},
@@ -204,6 +230,22 @@ export class BuiltInConfiguration {
         },
         Trench: {
             parent: 'Operation',
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Profile: {
+            parent: 'CrossSection',
             fields: {},
             minimalForm: {
                 groups: [
@@ -735,6 +777,22 @@ export class BuiltInConfiguration {
             sameMainCategoryResource: true,
             editable: true,
             visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: Relation.IS_PRESENT_IN,
+            domain: ['Feature:inherit'],
+            range: ['CrossSection:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isRecordedIn',
+            domain: ['CrossSection'],
+            range: ['Trench'],
+            editable: false,
+            visible: false,
             inputType: 'relation'
         },
         {

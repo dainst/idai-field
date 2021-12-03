@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty } from 'tsfun';
+import { clone, equal, isEmpty, nop } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
+import { Modals } from '../../../services/modals';
+import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
+import { MenuContext } from '../../../services/menu-context';
+import { ConfigurationIndex } from '../index/configuration-index';
 
 
 @Component({
@@ -26,7 +30,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public configurationIndex: ConfigurationIndex;
 
+    public clonedField: Field|undefined;
     public hideable: boolean;
     public hidden: boolean;
 
@@ -39,6 +45,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modalService: NgbModal,
                 menuService: Menus,
                 messages: Messages,
+                private modals: Modals,
                 private i18n: I18n) {
 
         super(activeModal, modalService, menuService, messages);
@@ -48,7 +55,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
-    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.field.inputType);
+    public getAvailableInputTypes = () => this.availableInputTypes.filter(inputType => inputType.customFields);
+
+    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
+        this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
+    );
 
 
     public initialize() {
@@ -69,12 +80,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedFormDefinition().fields[this.field.name] = {};
         }
 
+        this.clonedField = clone(this.field);
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
     }
 
 
     public async save() {
+
+        if (!Field.InputType.VALUELIST_INPUT_TYPES
+                .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType)
+                && this.getClonedFormDefinition().valuelists) {
+            delete this.getClonedFormDefinition().valuelists[this.field.name];
+        }
 
         if (isEmpty(this.getClonedFieldDefinition())) {
             delete this.getClonedFormDefinition().fields[this.field.name];
@@ -97,6 +115,26 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
         this.getClonedFieldDefinition().inputType = newInputType;
+    }
+
+    
+    public selectValuelist() {
+
+        const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
+            AddValuelistModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.clonedField = this.clonedField;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -171,6 +209,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
+            || !equal(this.getCustomFormDefinition().valuelists)(this.getClonedFormDefinition().valuelists)
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);

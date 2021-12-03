@@ -1,838 +1,1176 @@
 {
-  "forms": {
-    "Project:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Operation:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Survey:default": {
-      "hidden": [],
-      "valuelists": {
-        "researchMethod": "Survey-researchMethod-Selinunt"
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {
+      "researchHistory": {
+        "inputType": "text"
       },
-      "fields": {}
-    },
-    "SurveyUnit:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Place:default": {
-      "hidden": [
-        "findspotClassification",
-        "modernIntervention",
-        "excavationHistory",
-        "buildingHistory",
-        "findSituation"
-      ],
-      "valuelists": {
-        "siteClassification": "Place-siteClassification-Selinunt"
+      "researchPerspective": {
+        "inputType": "text"
       },
-      "fields": {
-        "placeCondition": {
-          "inputType": "text"
-        }
+      "researchMethod": {
+        "inputType": "checkboxes"
       }
     },
-    "Area:default": {
-      "hidden": [],
-      "fields": {}
+    "valuelists": {
+      "researchMethod": "Survey-researchMethod-Selinunt"
+    }
+  },
+  "Survey": {
+    "hidden": ["researchMethod"],
+    "valuelists": {
+      "slope": "Survey-slope-Seliunt",
+      "visibility": "Survey-visibility-Seliunt",
+      "chronologyFinds": "Survey-chronologyFinds-Selinunt",
+      "researchMethod": "Survey-researchMethod-default"
     },
-    "Trench:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Building:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "BuildingPart:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Find:default": {
-      "hidden": [
-        "hasRestoration",
-        "catalogueNumber",
-        "amount",
-        "conditionAmount",
-        "conditionPercent",
-        "condition",
-        "weight",
-        "storageInventoryNumber"
-      ],
-      "valuelists": {
-        "storagePlace": "Find-storagePlace-Selinunt",
-        "period": "periods-Selinunt-1"
+    "fields": {
+      "descriptionOfArea": {
+        "inputType": "text"
       },
-      "fields": {
-        "findOtherIdentificationNumber": {
-          "inputType": "input"
-        },
-        "restorationDescription": {
-          "inputType": "text"
-        },
-        "alignments": {
-          "inputType": "input"
-        }
-      }
-    },
-    "Feature:default": {
-      "hidden": [
-        "color",
-        "featureForm",
-        "featureBorders",
-        "hasDisturbance"
-      ],
-      "valuelists": {
-        "period": "periods-Selinunt-1"
+      "currentUse": {
+        "inputType": "text"
       },
-      "fields": {
-        "featureBibliography": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Room:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "RoomCeiling:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "RoomFloor:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "RoomWall:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Inscription:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Image:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Glass:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Mollusk:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Brick:default": {
-      "hidden": [
-        "manufacturingMethod",
-        "provenance",
-        "formDescription",
-        "specificType",
-        "coatColorOutside",
-        "coatColorInside"
-      ],
-      "valuelists": {
-        "brickForm": "Brick-brickForm-Selinunt",
-        "brickUsage": "Brick-brickUsage-Selinunt",
-        "clayColorInside": "colors-default-1",
-        "decorationTechnique": "Brick-decorationTechnique-Selinunt",
-        "coatColor": "colors-default-1",
-        "roofingSystem": "Brick-roofingSystem-Selinunt"
+      "slope": {
+        "inputType": "dropdown"
       },
-      "fields": {
-        "brickProvenance": {
-          "inputType": "input"
-        },
-        "brickForm": {
-          "inputType": "radio"
-        },
-        "brickFormDescription": {
-          "inputType": "input"
-        },
-        "clayColorInside": {
-          "inputType": "checkboxes"
-        },
-        "brickWeight": {
-          "inputType": "unsignedInt"
-        },
-        "amountSherds": {
-          "inputType": "unsignedInt"
-        },
-        "decorationTechnique": {
-          "inputType": "checkboxes"
-        },
-        "descriptionDecorationTechnique": {
-          "inputType": "text"
-        },
-        "coatColor": {
-          "inputType": "checkboxes"
-        },
-        "roofingSystem": {
-          "inputType": "radio"
-        }
-      }
-    },
-    "Burial:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Wood:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Architecture:default": {
-      "hidden": [
-        "condition",
-        "conditionAmount",
-        "conditionComment",
-        "layerAmount",
-        "layerHeight",
-        "muralCrown",
-        "mortarBinder",
-        "mortarColor",
-        "mortarConsistency",
-        "materialForm",
-        "materialCharacteristic",
-        "constructionDetailsDescription",
-        "blockTreatment",
-        "blockProcessing",
-        "bibliography",
-        "hasGrouting",
-        "wallClassification",
-        "wallType"
-      ],
-      "valuelists": {
-        "architectureClassification": "Architecture-architectureClassification-Selinunt",
-        "architectureMaterial": "Architecture-architectureMaterial-Selinunt",
-        "brickwork": "Architecture-brickwork-Selinunt",
-        "construction": "Architecture-construction-Selinunt",
-        "architectureMasonry": "Architecture-masonry-Selinunt",
-        "masonryJoint": "Architecture-masonryJoint-Selinunt",
-        "architectureLayerType": "Architecture-masonryLayerType-Selinunt",
-        "architectureMasonryCoating": "Architecture-masonryCoating-Selinunt",
-        "floorClassification": "Floor-floorClassification-Selinunt"
+      "visibility": {
+        "inputType": "dropdown"
       },
-      "fields": {
-        "architectureClassification": {
-          "inputType": "dropdown"
-        },
-        "architectureMaterial": {
-          "inputType": "checkboxes"
-        },
-        "architectureLayerType": {
-          "inputType": "dropdown"
-        },
-        "brickwork": {
-          "inputType": "dropdown"
-        },
-        "architectureMasonry": {
-          "inputType": "dropdown"
-        },
-        "masonryJoint": {
-          "inputType": "dropdown"
-        },
-        "architectureMasonryCoating": {
-          "inputType": "dropdown"
-        },
-        "floorClassification": {
-          "inputType": "dropdown"
-        },
-        "descriptionOfBuildingTechnique": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Layer:default": {
-      "hidden": [
-        "isNatural"
-      ],
-      "valuelists": {
-        "layerClassification": "Layer-layerClassification-Selinunt",
-        "layerColorLightness": "colorsLightness-Selinunt-1",
-        "layerColor": "Layer-colors-Selinunt-1",
-        "consistency": "Layer-consistency-Selinunt-1",
-        "soilType": "Layer-soilType-Selinunt-1",
-        "findComposition": "Layer-findComposition-Selinunt",
-        "distinguishingCriteria": "Layer-distinguishingCriteria-Selinunt",
-        "layerContentPotteryOrigin": "Layer-contentPotteryOrigin-Selinunt",
-        "layerContentPotteryShape": "Layer-contentPotteryShape-Selinunt",
-        "layerContentPotteryDecoration": "Layer-contentPotteryDecoration-Selinunt",
-        "layerContentTerracotta": "Layer-contentTerracotta-Selinunt",
-        "layerContentInorganic": "Layer-contentInorganic-Selinunt",
-        "layerContentOrganic": "Layer-contentOrganic-Selinunt",
-        "layerContentBuildingMaterial": "Layer-contentBuildingMaterial-Selinunt",
-        "layerBorders": "Feature-featureBorders-Selinunt",
-        "layerForm": "Feature-featureForm-Selinunt",
-        "workflowOptions": "Layer-workflowOptions-Selinunt"
+      "chronologyFinds": {
+        "inputType": "checkboxes"
       },
-      "fields": {
-        "layerColorLightness": {
-          "inputType": "checkboxes"
-        },
-        "layerColor": {
-          "inputType": "checkboxes"
-        },
-        "distinguishingCriteria": {
-          "inputType": "checkboxes"
-        },
-        "layerBorders": {
-          "inputType": "checkboxes"
-        },
-        "layerForm": {
-          "inputType": "checkboxes"
-        },
-        "consistency": {
-          "inputType": "radio"
-        },
-        "soilType": {
-          "inputType": "checkboxes"
-        },
-        "findComposition": {
-          "inputType": "checkboxes"
-        },
-        "workflowOptions": {
-          "inputType": "checkboxes"
-        },
-        "workflowSampleDescription": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Pottery:default": {
-      "hidden": [
-        "vesselFormSpecific",
-        "typeNumber",
-        "manufacturing",
-        "temperParticles",
-        "temperTypeClay",
-        "breakStructure",
-        "coatInside",
-        "coatColorInside",
-        "coatInsideType",
-        "coatOutside",
-        "coatColorOutside",
-        "coatOutsideType",
-        "formDescription",
-        "decorationTechnique",
-        "decorationDescription",
-        "objectType",
-        "purpose",
-        "residueAnalysis",
-        "amountSherdsWall",
-        "amountSherdsBase",
-        "amountSherdsHandles",
-        "amountSherdsLip",
-        "amountSherdsPedestal",
-        "amountSherdsLid",
-        "amountSherdsRim",
-        "amountSherdsRimBase",
-        "amountSherdsRimShoulder",
-        "amountSherdsOther",
-        "amountSherdsShoulder",
-        "amountSherdsPercent",
-        "hasCoat",
-        "specificType",
-        "materialType",
-        "provenance"
-      ],
-      "valuelists": {
-        "vesselForm": "Pottery-vesselForm-Selinunt",
-        "potteryProvenance": "Layer-contentPotteryOrigin-Selinunt",
-        "vesselDecorationInside": "Layer-contentPotteryDecoration-Selinunt",
-        "vesselDecorationOutside": "Layer-contentPotteryDecoration-Selinunt",
-        "miniatureVesselForm": "Pottery-miniatureVesselForm-Selinunt",
-        "clayHardness": "Terracotta-clayStructure-default",
-        "clayDensity": "Pottery-clayDensity-Selinunt",
-        "manufacturingMethod": "Pottery-manufacturingMethod-Selinunt",
-        "coatTypeOutside": "Pottery-coat-Selinunt",
-        "coatTypeInside": "Pottery-coat-Selinunt",
-        "coatQuality": "Pottery-coatQuality-Selinunt",
-        "period": "periods-Selinunt-1"
-      },
-      "positionValuelists": {
-        "potteryDiameterExternal": "position-values-expansion-default",
-        "potteryDiameterInternal": "position-values-expansion-default",
-        "potteryThickness": "position-values-expansion-default",
-        "pottyDiameterHandle": "position-values-expansion-default",
-        "potteryDiameterFoot": "position-values-expansion-default",
-        "potteryDiameterBase": "position-values-expansion-default",
-        "potteryDiameterLid": "position-values-expansion-default",
-        "potteryHeight": "position-values-expansion-default",
-        "potteryWidth": "position-values-expansion-default"
-      },
-      "fields": {
-        "potteryProvenance": {
-          "inputType": "radio"
-        },
-        "vesselForm": {
-          "inputType": "radio"
-        },
-        "miniatureVesselForm": {
-          "inputType": "radio"
-        },
-        "vesselDecorationOutside": {
-          "inputType": "checkboxes"
-        },
-        "vesselDecorationInside": {
-          "inputType": "checkboxes"
-        },
-        "clayHardness": {
-          "inputType": "radio"
-        },
-        "clayDensity": {
-          "inputType": "radio"
-        },
-        "clayDescription": {
-          "inputType": "input"
-        },
-        "manufacturingMethod": {
-          "inputType": "radio"
-        },
-        "potteryDiameterExternal": {
-          "inputType": "dimension"
-        },
-        "potteryDiameterInternal": {
-          "inputType": "dimension"
-        },
-        "potteryThickness": {
-          "inputType": "dimension"
-        },
-        "pottyDiameterHandle": {
-          "inputType": "dimension"
-        },
-        "potteryDiameterFoot": {
-          "inputType": "dimension"
-        },
-        "potteryDiameterBase": {
-          "inputType": "dimension"
-        },
-        "potteryDiameterLid": {
-          "inputType": "dimension"
-        },
-        "potteryHeight": {
-          "inputType": "dimension"
-        },
-        "potteryWidth": {
-          "inputType": "dimension"
-        },
-        "potteryWeight": {
-          "inputType": "unsignedInt"
-        },
-        "amountSherds": {
-          "inputType": "unsignedInt"
-        },
-        "coatTypeOutside": {
-          "inputType": "checkboxes"
-        },
-        "coatTypeInside": {
-          "inputType": "checkboxes"
-        },
-        "sample": {
-          "inputType": "boolean"
-        },
-        "sampleDescription": {
-          "inputType": "text"
-        },
-        "coatQuality": {
-          "inputType": "checkboxes"
-        },
-        "potteryInscription": {
-          "inputType": "input"
-        },
-        "potteryInscriptionDescription": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Metal:default": {
-      "hidden": [
-        "formDescription",
-        "objectType",
-        "vesselForm",
-        "vesselFormSpecific",
-        "provenance",
-        "decorationTechnique"
-      ],
-      "valuelists": {
-        "metalMaterial": "Metal-metalMaterial-Selinunt",
-        "metalWeaponsArmor": "Metal-metalWeaponsArmor-Selinunt",
-        "metalSchmuckTrachtbestandteile": "Metal-metalSchmuckTrachtbestandteile-Selinunt",
-        "metalVesselParts": "Metal-metalVesselParts-Selinunt",
-        "metalToolsEquipment": "Metal-metalToolsEquipment-Selinunt",
-        "metalMiscellaneous": "Metal-metalMiscellaneous-Selinunt"
-      },
-      "fields": {
-        "metalProvenance": {
-          "inputType": "input"
-        },
-        "metalWeaponsArmor": {
-          "inputType": "radio"
-        },
-        "metalSchmuckTrachtbestandteile": {
-          "inputType": "radio"
-        },
-        "metalVesselParts": {
-          "inputType": "radio"
-        },
-        "metalToolsEquipment": {
-          "inputType": "radio"
-        },
-        "metalMiscellaneous": {
-          "inputType": "radio"
-        },
-        "metalWeight": {
-          "inputType": "unsignedInt"
-        },
-        "amountFragments": {
-          "inputType": "unsignedInt"
-        }
-      }
-    },
-    "Grave:default": {
-      "hidden": [
-        "soilType",
-        "condition",
-        "conditionAmount",
-        "conditionComment",
-        "distinguishingCriteria",
-        "specificType",
-        "tombBuilding",
-        "findingPlace",
-        "bibliography"
-      ],
-      "valuelists": {
-        "graveType": "Grave-graveType-Selinunt"
-      },
-      "fields": {
-        "graveTypeDescription": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Bone:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Terracotta:default": {
-      "hidden": [
-        "coatColorInside",
-        "coatColorOutside",
-        "surfaceCondition",
-        "formDescription",
-        "vesselForm",
-        "vesselFormSpecific",
-        "provenance",
-        "clayColorInside",
-        "clayColorOutside"
-      ],
-      "valuelists": {
-        "coatColor": "colors-default-1",
-        "clayColor": "colors-default-1",
-        "decorationTechnique": "Terracotta-decorationTechnique-Selinunt",
-        "manufacturingMethod": "Pottery-manufacturingMethod-Selinunt",
-        "architecturalDecorationType": "Terracotta-architecturalDecorationType-Selinunt",
-        "architecturalScupltureType": "Terracotta-architecturalScupltureType-Selinunt",
-        "toolType": "Terracotta-toolType-Selinunt"
-      },
-      "fields": {
-        "clayColorBreakMunsell": {
-          "inputType": "input"
-        },
-        "coatColor": {
-          "inputType": "checkboxes"
-        },
-        "coatColorMunsell": {
-          "inputType": "input"
-        },
-        "clayColor": {
-          "inputType": "checkboxes"
-        },
-        "clayColorMunsell": {
-          "inputType": "input"
-        },
-        "terracottaInscription": {
-          "inputType": "input"
-        },
-        "terracottaDecorationDescription": {
-          "inputType": "text"
-        },
-        "decorationTechnique": {
-          "inputType": "checkboxes"
-        },
-        "architecturalDecorationType": {
-          "inputType": "checkboxes"
-        },
-        "architecturalScupltureType": {
-          "inputType": "checkboxes"
-        },
-        "toolType": {
-          "inputType": "checkboxes"
-        },
-        "terracottaProvenance": {
-          "inputType": "input"
-        }
-      }
-    },
-    "Photo:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Drawing:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Stone:default": {
-      "hidden": [
-        "temperAmount",
-        "formDescription",
-        "provenance",
-        "origin"
-      ],
-      "valuelists": {
-        "color": "Stone-color-Selinunt",
-        "objectType": "Stone-objectType-Selinunt",
-        "architectureElement": "Stone-architectureElement-Selinunt",
-        "material": "Stone-material-Selinunt",
-        "decoration": "Stone-decoration-Selinunt"
-      },
-      "fields": {
-        "originStone": {
-          "inputType": "input"
-        },
-        "colorMunsell": {
-          "inputType": "input"
-        },
-        "inscription": {
-          "inputType": "input"
-        },
-        "decoration": {
-          "inputType": "checkboxes"
-        },
-        "inscriptionDescription": {
-          "inputType": "text"
-        }
-      }
-    },
-    "Coin:default": {
-      "hidden": [],
-      "valuelists": {
-        "provenance": "Coin-provenance-Selinunt",
-        "mint": "Coin-mint-Selinunt",
-        "denomination": "Coin-denomination-Selinunt"
-      },
-      "fields": {
-        "coinWeight": {
-          "inputType": "unsignedInt"
-        },
-        "legend": {
-          "inputType": "text"
-        },
-        "stampPositioning": {
-          "inputType": "input"
-        }
-      }
-    },
-    "PlasterFragment:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Excavation:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "TypeCatalog:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Type:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "Bedrock": {
-      "hidden": [],
-      "fields": [],
-      "parent": "Feature",
-      "valuelists": {}
-    },
-    "ProcessUnit": {
-      "parent": "Feature",
-      "hidden": [],
-      "commons": [],
-      "color": "#f779e7",
-      "valuelists": {
-        "operationClassification": "ProcessUnit-operationClassification-Selinunt",
-        "operationOrientation": "ProcessUnit-operationOrientation-Selinunt",
-        "operationHorizontalDescription": "ProcessUnit-operationHorizontalDescription-Selinunt",
-        "operationVerticalDescription": "ProcessUnit-operationVerticalDescription-Selinunt",
-        "operationIdentifiability": "ProcessUnit-operationIdentifiability-Selinunt"
-      },
-      "fields": {
-        "operationClassification": {
-          "inputType": "radio"
-        },
-        "operationOrientation": {
-          "inputType": "dropdown"
-        },
-        "operationHorizontalDescription": {
-          "inputType": "checkboxes"
-        },
-        "operationVerticalDescription": {
-          "inputType": "checkboxes"
-        },
-        "operationIdentifiability": {
-          "inputType": "radio"
-        }
-      }
-    },
-    "Interface": {
-      "hidden": [],
-      "fields": {
-        "interfaceClassification": {
-          "inputType": "radio"
-        },
-        "breakSlopeTop": {
-          "inputType": "radio"
-        },
-        "sides": {
-          "inputType": "radio"
-        },
-        "breakSlopeBase": {
-          "inputType": "radio"
-        },
-        "base": {
-          "inputType": "radio"
-        },
-        "interfaceComment": {
-          "inputType": "text"
-        }
-      },
-      "parent": "Feature",
-      "valuelists": {
-        "interfaceClassification": "Interface-interfaceClassification-Campidoglio",
-        "breakSlopeTop": "Interface-breakSlopeTop-Campidoglio",
-        "sides": "Interface-sides-Campidoglio",
-        "breakSlopeBase": "Interface-breakSlopeTop-Campidoglio",
-        "base": "Interface-base-Campidoglio"
-      }
-    },
-    "FindCollection": {
-      "hidden": [],
-      "fields": {
-        "potteryFormsOverview": {
-          "inputType": "checkboxes"
-        },
-        "potteryFineWareByProvenance": {
-          "inputType": "checkboxes"
-        },
-        "potteryFineWareByProvenanceQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "potteryAmphoraeByProvenance": {
-          "inputType": "checkboxes"
-        },
-        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "potteryCoarseWareByFunction": {
-          "inputType": "checkboxes"
-        },
-        "potteryCoarseWareByFunctionQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "miniaturePotteryCollection": {
-          "inputType": "text"
-        },
-        "terracottaCollection": {
-          "inputType": "checkboxes"
-        },
-        "terracottaCollectionQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "buildingMaterialCollection": {
-          "inputType": "checkboxes"
-        },
-        "buildingMaterialCollectionQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "stoneCollection": {
-          "inputType": "checkboxes"
-        },
-        "stoneCollectionQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "metalAndGlasCollection": {
-          "inputType": "checkboxes"
-        },
-        "metalAndGlasCollectionQuantityWeightDetails": {
-          "inputType": "text"
-        },
-        "organicMaterialCollection": {
-          "inputType": "checkboxes"
-        },
-        "organicMaterialCollectionQuantityWeightDetails": {
-          "inputType": "text"
-        }
-      },
-      "parent": "Find",
-      "valuelists": {
-        "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
-        "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
-        "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
-        "terracottaCollection": "Terracotta-Collection-Selinunt",
-        "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
-        "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
-        "stoneCollection": "Stone-Collection-Selinunt",
-        "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
-        "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
+      "interpretation": {
+        "inputType": "text"
       }
     }
   },
-  "order": [
-    "Project",
-    "Operation",
-    "Trench",
-    "Building",
-    "Survey",
-    "Place",
-    "Feature",
-    "Layer",
-    "Grave",
-    "Burial",
-    "Architecture",
-    "Bedrock",
-    "ProcessUnit",
-    "Interface",
-    "Area",
-    "SurveyUnit",
-    "Excavation",
-    "Find",
-    "Pottery",
-    "Terracotta",
-    "Brick",
-    "Bone",
-    "Glass",
-    "Metal",
-    "Stone",
-    "Wood",
-    "Coin",
-    "PlasterFragment",
-    "Mollusk",
-    "FindCollection",
-    "Inscription",
-    "BuildingPart",
-    "Room",
-    "RoomCeiling",
-    "RoomWall",
-    "RoomFloor",
-    "Image",
-    "Drawing",
-    "Photo",
-    "TypeCatalog",
-    "Type"
-  ]
+  "SurveyUnit:default": {
+    "hidden": [],
+    "color": "#88292F",
+    "valuelists": {
+      "visibility": "SurveyUnit-visibility-Selinunt",
+      "shade": "SurveyUnit-shade-Selinunt",
+      "humidity": "SurveyUnit-humidity-Selinunt",
+      "slope": "SurveyUnit-slope-Selinunt",
+      "vegetation": "SurveyUnit-vegetation-Selinunt",
+      "consistency": "SurveyUnit-consistency-Selinunt",
+      "clumps": "SurveyUnit-clumps-Selinunt",
+      "stones": "SurveyUnit-stones-Selinunt",
+      "samplingMethod": "SurveyUnit-samplingMethod-Selinunt",
+      "surfaceTreatment": "SurveyUnit-surfaceTreatment-Selinunt",
+      "quantityOfFinds": "SurveyUnit-quantityOfFinds-Selinunt",
+      "qualityOfFinds": "SurveyUnit-qualityOfFinds-Selinunt"
+    },
+    "fields": {
+      "currentSurfaceUtilization": {
+        "inputType": "text"
+      },
+      "visibility": {
+        "inputType": "dropdown"
+      },
+      "shade": {
+        "inputType": "dropdown"
+      },
+      "humidity": {
+        "inputType": "dropdown"
+      },
+      "slope": {
+        "inputType": "dropdown"
+      },
+      "vegetation": {
+        "inputType": "checkboxes"
+      },
+      "buildingStructures": {
+        "inputType": "text"
+      },
+      "soilComposition": {
+        "inputType": "text"
+      },
+      "consistency": {
+        "inputType": "dropdown"
+      },
+      "clumps": {
+        "inputType": "checkboxes"
+      },
+      "stones": {
+        "inputType": "checkboxes"
+      },
+      "samplingMethod": {
+        "inputType": "dropdown"
+      },
+      "surfaceTreatment": {
+        "inputType": "dropdown"
+      },
+      "quantityOfFinds": {
+        "inputType": "dropdown"
+      },
+      "findDensity": {
+        "inputType": "text"
+      },
+      "qualityOfFinds": {
+        "inputType": "checkboxes"
+      },
+      "remarks": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Place:default": {
+    "hidden": [
+      "findspotClassification",
+      "modernIntervention",
+      "excavationHistory",
+      "buildingHistory",
+      "findSituation"
+    ],
+    "valuelists": {
+      "siteClassification": "Place-siteClassification-Selinunt"
+    },
+    "fields": {
+      "condition" : {
+        "inputType": "text"
+      }
+    }
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": ["researchHistory"],
+    "fields": {},
+    "commons": []
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find": {
+    "color": "black",
+    "commons": [
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "date"
+    ],
+    "valuelists": {
+      "period": "periods-Selinunt-1",
+      "storagePlace": "Find-storagePlace-Selinunt",
+      "furtherAnalysis": "Find-furtherAnalysis-Selinunt"
+    },
+    "fields": {
+      "bibliography": {
+        "inputType": "text"
+      },
+      "comparison": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "storagePlace": {
+        "inputType": "radio"
+      },
+      "otherIdentificationNumber": {
+        "inputType": "input"
+      },
+      "restorationDescription": {
+        "inputType": "text"
+      },
+      "furtherAnalysis": {
+        "inputType": "radio"
+      },
+      "analysisMethod": {
+        "inputType": "text"
+      },
+      "alignments": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Feature": {
+    "color": "black",
+    "commons": [
+      "beginningDate",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "campaign",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "period": "periods-Selinunt-1"
+    },
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "furtherReading": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [
+      "manufacturingMethod",
+      "provenance",
+      "formDescription",
+      "specificType",
+      "coatColorOutside",
+      "coatColorInside",
+      "brickForm",
+      "brickUsage",
+      "featureText"
+    ],
+    "valuelists": {
+      "applicationInArchitecture": "Brick-brickUsage-Selinunt",
+      "tileType": "Brick-tileType-Selinunt",
+      "roofingSystem": "Brick-roofingSystem-Selinunt",
+      "type": "Brick-type-Selinunt",
+      "clayColorInside": "colors-default-1",
+      "coatColor": "colors-default-1",
+      "decorationTechnique": "Brick-decorationTechnique-Selinunt"
+    },
+    "fields": {
+      "applicationInArchitecture": {
+        "inputType": "radio"
+      },
+      "tileType": {
+        "inputType": "radio"
+      },
+      "roofingSystem": {
+        "inputType": "radio"
+      },
+      "type": {
+        "inputType": "checkboxes"
+      },
+      "manufacturing": {
+        "inputType": "checkboxes"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes"
+      },
+      "coatColor": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes"
+      },
+      "weight": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherds": {
+        "inputType": "unsignedInt"
+      },
+      "remarks": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "fields": {}
+  },
+  "Architecture:default": {
+    "hidden": [
+      "condition",
+      "conditionAmount",
+      "conditionComment",
+      "layerAmount",
+      "layerHeight",
+      "muralCrown",
+      "mortarBinder",
+      "mortarColor",
+      "mortarConsistency",
+      "materialForm",
+      "materialCharacteristic",
+      "constructionDetailsDescription",
+      "blockTreatment",
+      "blockProcessing",
+      "bibliography",
+      "hasGrouting",
+      "wallClassification",
+      "wallType"
+    ],
+    "valuelists": {
+      "classification": "Architecture-architectureClassification-Selinunt",
+      "material": "Architecture-architectureMaterial-Selinunt",
+      "brickwork": "Architecture-brickwork-Selinunt",
+      "construction": "Architecture-construction-Selinunt",
+      "masonry": "Architecture-masonry-Selinunt",
+      "masonryJoint": "Architecture-masonryJoint-Selinunt",
+      "layerType": "Architecture-masonryLayerType-Selinunt",
+      "cladding": "Architecture-masonryCoating-Selinunt"
+    },
+    "fields": {
+      "classification": {
+        "inputType": "dropdown"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "layerType": {
+        "inputType": "dropdown"
+      },
+      "brickwork": {
+        "inputType": "dropdown"
+      },
+      "masonry": {
+        "inputType": "dropdown"
+      },
+      "masonryJoint": {
+        "inputType": "dropdown"
+      },
+      "cladding": {
+        "inputType": "dropdown"
+      },
+      "descriptionOfBuildingTechnique": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Layer:default": {
+    "hidden": [
+      "isNatural"
+    ],
+    "valuelists": {
+      "distinguishingCriteria": "Layer-distinguishingCriteria-Selinunt",
+      "classification": "Layer-layerClassification-Selinunt",
+      "soilType": "Layer-soilType-Selinunt-1",
+      "consistency": "Layer-consistency-Selinunt-1",
+      "colorLightness": "colorsLightness-Selinunt-1",
+      "colorDetermination": "Layer-colors-Selinunt-1",
+      "borders": "Feature-featureBorders-Selinunt",
+      "form": "Feature-featureForm-Selinunt",
+      "findComposition": "Layer-findComposition-Selinunt",
+      "workflowOptions": "Layer-workflowOptions-Selinunt"
+    },
+    "fields": {
+      "distinguishingCriteria": {
+        "inputType": "checkboxes"
+      },
+      "soilType": {
+        "inputType": "checkboxes"
+      },
+      "consistency": {
+        "inputType": "radio"
+      },
+      "colorLightness": {
+        "inputType": "checkboxes"
+      },
+      "colorDetermination": {
+        "inputType": "checkboxes"
+      },
+      "borders": {
+        "inputType": "checkboxes"
+      },
+      "form": {
+        "inputType": "checkboxes"
+      },
+      "findComposition": {
+        "inputType": "checkboxes"
+      },
+      "workflowOptions": {
+        "inputType": "checkboxes"
+      },
+      "workflowSampleDescription": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Pottery": {
+    "hidden": [],
+    "commons": [      
+      "dimensionHeight",
+      "dimensionWidth",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent"
+    ],
+    "valuelists": {
+      "clayColorBreak": "colors-default-1",
+      "clayColorInside": "colors-default-1",
+      "clayColorOutside": "colors-default-1",
+      "temper": "Brick-temper-default",
+      "temperAmount": "Pottery-temperAmount-default",
+      "vesselForm": "Pottery-vesselForm-Selinunt",
+      "provenance": "Layer-contentPotteryOrigin-Selinunt",
+      "vesselDecorationInside": "Layer-contentPotteryDecoration-Selinunt",
+      "vesselDecorationOutside": "Layer-contentPotteryDecoration-Selinunt",
+      "miniatureVesselForm": "Pottery-miniatureVesselForm-Selinunt",
+      "clayHardness": "Terracotta-clayStructure-default",
+      "clayDensity": "Pottery-clayDensity-Selinunt",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Selinunt",
+      "coatTypeOutside": "Pottery-coat-Selinunt",
+      "coatTypeInside": "Pottery-coat-Selinunt",
+      "coatQuality": "Pottery-coatQuality-Selinunt",
+      "period": "periods-Selinunt-1"
+    },
+    "fields": {
+      "clayColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "clayColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "clayColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "clayColorBreak": {
+        "inputType": "checkboxes"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      },
+      "vesselForm": {
+        "inputType": "radio"
+      },
+      "miniatureVesselForm": {
+        "inputType": "radio"
+      },
+      "vesselDecorationOutside": {
+        "inputType": "checkboxes"
+      },
+      "vesselDecorationInside": {
+        "inputType": "checkboxes"
+      },
+      "clayHardness": {
+        "inputType": "radio"
+      },
+      "clayDensity": {
+        "inputType": "radio"
+      },
+      "clayDescription": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio"
+      },
+      "weight": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherds": {
+        "inputType": "unsignedInt"
+      },
+      "coatTypeOutside": {
+        "inputType": "checkboxes"
+      },
+      "coatTypeInside": {
+        "inputType": "checkboxes"
+      },
+      "sample": {
+        "inputType": "boolean"
+      },
+      "coatQuality": {
+        "inputType": "checkboxes"
+      }
+    },
+    "parent": "Find"
+  },
+  "Metal:default": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [
+      "formDescription",
+      "objectType",
+      "vesselForm",
+      "vesselFormSpecific",
+      "provenance",
+      "decorationTechnique"
+    ],
+    "valuelists": {
+      "metalMaterial": "Metal-metalMaterial-Selinunt",
+      "weaponsArmor": "Metal-metalWeaponsArmor-Selinunt",
+      "jewelryTrachtComponents": "Metal-metalSchmuckTrachtbestandteile-Selinunt",
+      "vesselParts": "Metal-metalVesselParts-Selinunt",
+      "toolsEquipment": "Metal-metalToolsEquipment-Selinunt",
+      "miscellaneous": "Metal-metalMiscellaneous-Selinunt"
+    },
+    "fields": {
+      "origins": {
+        "inputType": "input"
+      },
+      "weaponsArmor": {
+        "inputType": "radio"
+      },
+      "jewelryTrachtComponents": {
+        "inputType": "radio"
+      },
+      "vesselParts": {
+        "inputType": "radio"
+      },
+      "toolsEquipment": {
+        "inputType": "radio"
+      },
+      "miscellaneous": {
+        "inputType": "radio"
+      },
+      "weight": {
+        "inputType": "unsignedInt"
+      },
+      "amountFragments": {
+        "inputType": "unsignedInt"
+      }
+    }
+  },
+  "Grave:default": {
+    "hidden": [
+      "soilType",
+      "condition",
+      "conditionAmount",
+      "conditionComment",
+      "distinguishingCriteria",
+      "specificType",
+      "tombBuilding",
+      "findingPlace",
+      "bibliography"
+    ],
+    "valuelists": {
+      "graveType": "Grave-graveType-Selinunt"
+    },
+    "fields": {}
+  },
+  "AnimalBones": {
+    "color": "#CCFFFF",
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "valuelists": {
+      "biologicalAge": "Bone-biologicalAge-default",
+      "boneClassification": "AnimalBones-boneClassification-Selinunt",
+      "burningGrade": "Bone-burningGrade-default",
+      "sex": "Bone-sex-default",
+      "species": "Bone-species-default"
+    },
+    "fields": {
+      "biologicalAge": {
+        "inputType": "dropdown"
+      },
+      "boneClassification": {
+        "inputType": "dropdown"
+      },
+      "burningGrade": {
+        "inputType": "dropdown"
+      },
+      "sex": {
+        "inputType": "radio"
+      },
+      "species": {
+        "inputType": "dropdown"
+      }
+    },
+    "parent": "Find"
+  },
+  "HumanBones": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "fields": {},
+    "parent": "Find"
+  },
+  "BoneObjects": {
+    "hidden": [],
+    "valuelists": {  
+      "objectType": "Bone-objectType-default",
+      "boneType": "Bone-boneType-default"
+    },
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "boneType": {
+        "inputType": "radio"
+      }
+    },
+    "parent": "Find"
+  },
+  "Terracotta": {
+    "color": "#FF6600",
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "coatColor": "colors-default-1",
+      "clayColor": "colors-default-1",
+      "decorationTechnique": "Terracotta-decorationTechnique-Selinunt",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Selinunt",
+      "architecturalDecorationType": "Terracotta-architecturalDecorationType-Selinunt",
+      "architecturalScupltureType": "Terracotta-architecturalScupltureType-Selinunt",
+      "toolType": "Terracotta-toolType-Selinunt",
+      "clayColorBreak": "colors-default-1",
+      "clayStructure": "Terracotta-clayStructure-default",
+      "temper": "Brick-temper-default",
+      "temperAmount": "Pottery-temperAmount-default",
+      "temperParticles": "Pottery-temperParticles-default"
+    },
+    "fields": {
+      "clayColorBreak": {
+        "inputType": "checkboxes"
+      },
+      "clayStructure": {
+        "inputType": "radio"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      },
+      "temperParticles": {
+        "inputType": "radio"
+      },
+      "clayColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "coatColor": {
+        "inputType": "checkboxes"
+      },
+      "coatColorMunsell": {
+        "inputType": "input"
+      },
+      "clayColor": {
+        "inputType": "checkboxes"
+      },
+      "clayColorMunsell": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes"
+      },
+      "architecturalDecorationType": {
+        "inputType": "checkboxes"
+      },
+      "architecturalScupltureType": {
+        "inputType": "checkboxes"
+      },
+      "toolType": {
+        "inputType": "checkboxes"
+      },
+      "origins": {
+        "inputType": "input"
+      }
+    },
+    "parent": "Find"
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone": {
+    "color": "#5c5c8a",
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "color": "Stone-color-Selinunt",
+      "objectType": "Stone-objectType-Selinunt",
+      "architectureElement": "Stone-architectureElement-Selinunt",
+      "material": "Stone-material-Selinunt",
+      "decorationType": "Stone-decoration-Selinunt"
+    },
+    "fields": {
+      "purpose": {
+        "inputType": "input"
+      },
+      "treatment": {
+        "inputType": "input"
+      },
+      "workmanship": {
+        "inputType": "input"
+      },
+      "architectureElement": {
+        "inputType": "dropdown"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "origin": {
+        "inputType": "input"
+      },
+      "colorMunsell": {
+        "inputType": "input"
+      },
+      "decorationType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "parent": "Find"
+  },
+  "Coin:default": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "provenance": "Coin-provenance-Selinunt",
+      "mint": "Coin-mint-Selinunt",
+      "denomination": "Coin-denomination-Selinunt"
+    },
+    "fields": {
+      "weight": {
+        "inputType": "unsignedInt"
+      },
+      "legend": {
+        "inputType": "text"
+      },
+      "stampPositioning": {
+        "inputType": "input"
+      }
+    }
+  },
+  "ConstructionMaterial": {
+    "color": "#737373",
+    "hidden": [],
+    "commons": [
+      "area",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "valuelists": {
+      "denomination": "ConstructionMaterial-denomination-Selinunt",
+      "material": "ConstructionMaterial-material-Selinunt",
+      "floorCovering": "ConstructionMaterial-floorCovering-Selinunt",
+      "wallCovering": "ConstructionMaterial-wallCovering-Selinunt",
+      "plasterComponents": "PlasterFragment-plasterComponents-default",
+      "color": "colors-default-1"
+    },
+    "fields": {
+      "denomination": {
+        "inputType": "dropdown"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "floorCovering": {
+        "inputType":"dropdown"
+      },
+      "floorCoveringDescription": {
+        "inputType": "text"
+      },
+      "wallCovering": {
+        "inputType": "dropdown"
+      },
+      "wallCoveringDescription": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Find"
+  },
+  "SurfaceCleaning": {
+    "hidden": [],
+    "valuelists": {
+      "operation": "SurfaceCleaning-operation-Selinunt"
+    },
+    "fields": {
+      "operation": {
+        "inputType": "checkboxes"
+      }
+    },
+    "parent": "Area"
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Bedrock": {
+    "hidden": [],
+    "fields": [],
+    "parent": "Feature",
+    "valuelists": {}
+  },
+  "ProcessUnit": {
+    "parent": "Feature",
+    "hidden": [],
+    "commons": [],
+    "color": "#f779e7",
+    "valuelists": {
+      "classification": "ProcessUnit-operationClassification-Selinunt",
+      "orientationTowardsCardinalPoints": "ProcessUnit-operationOrientation-Selinunt",
+      "horizontalCourse": "ProcessUnit-operationHorizontalDescription-Selinunt",
+      "verticalCourse": "ProcessUnit-operationVerticalDescription-Selinunt",
+      "identifiability": "ProcessUnit-operationIdentifiability-Selinunt"
+    },
+    "fields": {
+      "classification": {
+        "inputType": "radio"
+      },
+      "orientationTowardsCardinalPoints": {
+        "inputType": "dropdown"
+      },
+      "horizontalCourse": {
+        "inputType": "checkboxes"
+      },
+      "verticalCourse": {
+        "inputType": "checkboxes"
+      },
+      "identifiability": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Interface": {
+    "hidden": [],
+    "fields": {
+      "classification": {
+        "inputType": "radio"
+      },
+      "breakSlopeTop": {
+        "inputType": "radio"
+      },
+      "sides": {
+        "inputType": "radio"
+      },
+      "breakSlopeBase": {
+        "inputType": "radio"
+      },
+      "base": {
+        "inputType": "radio"
+      },
+      "comment": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Feature",
+    "valuelists": {
+      "classification": "Interface-interfaceClassification-Campidoglio",
+      "breakSlopeTop": "Interface-breakSlopeTop-Campidoglio",
+      "sides": "Interface-sides-Campidoglio",
+      "breakSlopeBase": "Interface-breakSlopeTop-Campidoglio",
+      "base": "Interface-base-Campidoglio"
+    }
+  },
+  "FindCollection": {
+    "commons": [
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther"
+    ],
+    "hidden": [],
+    "fields": {
+      "potteryFormsOverview": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryAmphoraeByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryCoarseWareByFunction": {
+        "inputType": "checkboxes"
+      },
+      "potteryCoarseWareByFunctionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "miniaturePotteryCollection": {
+        "inputType": "text"
+      },
+      "terracottaCollection": {
+        "inputType": "checkboxes"
+      },
+      "terracottaCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "buildingMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "buildingMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "stoneCollection": {
+        "inputType": "checkboxes"
+      },
+      "stoneCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "metalAndGlasCollection": {
+        "inputType": "checkboxes"
+      },
+      "metalAndGlasCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "organicMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "organicMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Find",
+    "valuelists": {
+      "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
+      "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
+      "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
+      "terracottaCollection": "Terracotta-Collection-Selinunt",
+      "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
+      "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
+      "stoneCollection": "Stone-Collection-Selinunt",
+      "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
+      "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
+    }
+  },
+  "GeoLayer": {
+    "hidden": [],
+    "valuelists": {
+      "boundariesUpwards": "layerBoundariesUpwards-Selinunt",
+      "boundariesDownwards": "layerBoundariesDownwards-Selinunt",
+      "grainSizeSmallerThan2mm": "grainSize1-Selinunt",
+      "grainSizeBiggerThan2mm": "grainSize2-Selinunt",
+      "boneAmount": "boneAmount-Selinunt",
+      "soilConsistency": "soilConsistency-Selinunt",
+      "moistureCondition": "moistureCondition-Selinunt",
+      "hydromorphologyOxidativeFeatures": "hydromorphology1-Selinunt",
+      "hydromorphologyReductiveFeatures": "hydromorphology2-Selinunt",
+      "humusContent": "humusContent-Selinunt",
+      "limeContent": "limeContent-Selinunt",
+      "rootPenetration": "rootPenetration-Selinunt",
+      "constituents": "constituents-Selinunt",
+      "macroStructuralForms": "macroStructuralForms-Selinunt"
+    },
+    "fields": {
+      "facies": {
+        "inputType": "text"
+      },
+      "depthRange": {
+        "inputType": "text"
+      },
+      "boundariesUpwards": {
+        "inputType": "checkboxes"
+      },
+      "boundariesDownwards": {
+        "inputType": "checkboxes"
+      },
+      "grainSizeSmallerThan2mm": {
+        "inputType": "dropdown"
+      },
+      "grainSizeBiggerThan2mm": {
+        "inputType": "dropdown"
+      },
+      "boneAmount": {
+        "inputType": "dropdown"
+      },
+      "soilColor": {
+        "inputType": "text"
+      },
+      "soilConsistency": {
+        "inputType": "dropdown"
+      },
+      "moistureCondition": {
+        "inputType": "dropdown"
+      },
+      "hydromorphologyOxidativeFeatures": {
+        "inputType": "checkboxes"
+      },
+      "hydromorphologyReductiveFeatures": {
+        "inputType": "checkboxes"
+      },
+      "humusContent": {
+        "inputType": "dropdown"
+      },
+      "limeContent": {
+        "inputType": "dropdown"
+      },
+      "rootPenetration": {
+        "inputType": "checkboxes"
+      },
+      "constituents": {
+        "inputType": "checkboxes"
+      },
+      "notes": {
+        "inputType": "text"
+      },
+      "macroStructuralForms": {
+        "inputType": "dropdown"
+      }
+    },
+    "parent": "Feature"
+  }
 }

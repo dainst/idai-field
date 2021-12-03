@@ -8,23 +8,27 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
 import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
-import { AddFieldModalComponent } from './add/add-field-modal.component';
+import { AddFieldModalComponent } from './add/field/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
 import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
-import { CategoryPreviewComponent } from './add/category-preview.component';
-import { CategoryListingComponent } from './add/category-listing.component';
-import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
+import { CategoryPreviewComponent } from './add/category/category-preview.component';
+import { CategoryListingComponent } from './add/category/category-listing.component';
+import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { ConfigurationFieldDragElement } from './configuration-field-drag-element.component';
-import { AddGroupModalComponent } from './add/add-group-modal.component';
+import { AddGroupModalComponent } from './add/group/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenuComponent } from './context-menu/configuration-context-menu.component';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { SaveModalComponent } from './save-modal.component';
-import { FieldListingComponent } from './add/field-listing.component';
-import { FieldPreviewComponent } from './add/field-preview.component';
+import { FieldListingComponent } from './add/field/field-listing.component';
+import { FieldPreviewComponent } from './add/field/field-preview.component';
 import { ValuelistViewComponent } from './valuelist-view.component';
+import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
+import { ValuelistListingComponent } from './add/valuelist/valuelist-listing.component';
+import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.component';
+import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.component';
 
 
 @NgModule({
@@ -43,13 +47,17 @@ import { ValuelistViewComponent } from './valuelist-view.component';
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,
+        AddValuelistModalComponent,
         CategoryPreviewComponent,
         FieldPreviewComponent,
+        ValuelistPreviewComponent,
         CategoryListingComponent,
         FieldListingComponent,
+        ValuelistListingComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
+        ValuelistEditorModalComponent,
         ConfigurationFieldDragElement,
         ConfigurationContextMenuComponent,
         DeleteFieldModalComponent,
@@ -68,6 +76,7 @@ import { ValuelistViewComponent } from './valuelist-view.component';
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,
+        ValuelistEditorModalComponent,
         DeleteFieldModalComponent,
         DeleteGroupModalComponent,
         DeleteCategoryModalComponent,

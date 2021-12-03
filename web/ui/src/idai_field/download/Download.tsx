@@ -91,8 +91,13 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
         <div style={ downloadContainerStyle }>
             <hr className="m-5" />
             <h3>{ t('download.download') }</h3>
-            <p>{ t('download.packageInfo') }</p>
             <p>{ t('download.currentVersion') } <strong>{ latestVersion }</strong></p>
+            <p>{ t('download.packageInfo') }</p>
+            <div style={ osInfoStyle }>
+                <div>{ t('download.windowsInfo') }</div>
+                <div>{ t('download.macInfo') }</div>
+                <div>{ t('download.linuxInfo') }</div>
+            </div>
             <p>
                 <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/iDAI.field-'
                 + latestVersion + '-Windows.exe' } className="btn btn-primary my-2 mr-1">
@@ -166,3 +171,8 @@ const carouselContainerStyle: CSSProperties = {
 const downloadContainerStyle: CSSProperties = {
     textAlign: 'center'
 };
+
+
+const osInfoStyle: CSSProperties = {
+    marginBottom: '1rem'
+}

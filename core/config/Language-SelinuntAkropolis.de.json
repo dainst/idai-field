@@ -15,14 +15,14 @@
     },
     "Place": {
       "fields": {
-        "condition": {
+        "placeCondition": {
           "label": "Erhaltungszustand"
         }
       }
     },
     "Survey": {
       "fields": {
-        "descriptionOfArea": {
+        "Survey-description-Selinunt": {
           "label": "Beschreibung des Areals"
         },
         "currentUse": {
@@ -43,34 +43,25 @@
       } 
     },
     "Architecture": {
-      "label": "Gebaute Struktur",
+      "label": "Struktur",
       "fields": {
-        "classification": {
-          "label": "Ansprache"
+        "wallClassification": {
+          "label": "Klassifikation Struktur"
         },
-        "material": {
-          "label": "Baumaterial"
+        "templePositionOnTheStructure": {
+          "label": "Tempel - Position am Bauwerk"
         },
-        "masonry": {
-          "label": "Mauer: Mauerwerk"
+        "position": {
+          "label": "Lage"
         },
-        "masonryJoint": {
-          "label": "Mauer: Verbindung"
+        "layerAmount": {
+          "label": "Max. erhaltene Lagenanzahl"
         },
-        "layerType": {
-          "label": "Mauer: Lagenart"
+        "materialForm": {
+          "label": "Materialbeschreibung"
         },
-        "cladding": {
-          "label": "Mauer: Verkleidung"
-        },
-        "floorClassification": {
-          "label": "Fußboden"
-        },
-        "construction": {
-          "label": "Mauer: Konstruktion"
-        },
-        "descriptionOfBuildingTechnique": {
-          "label": "Beschreibung"
+        "dimensionOther": {
+          "label": "Lagenhöhe"
         }
       }
     },
@@ -82,107 +73,30 @@
         "period": {
           "label": "Epoche"
         },
-        "furtherReading": {
+        "featureBibliography": {
           "label": "Bibliographie"
         }
       }
     },
     "Layer": {
       "fields": {
-        "distinguishingCriteria": {
-          "label": "Erdbefund: Unterscheidungskriterium"
+        "componentsCeramics": {
+          "label": "Bestandteile: Keramik"
         },
-        "layerClassification": {
-          "label": "Erdbefund: Ansprache"
+        "componentsStone": {
+          "label": "Bestandteile: Stein"
         },
-        "soilType": {
-          "label": "Erdbefund: Zusammensetzung"
+        "componentsOrganic": {
+          "label": "Bestandteile: Organisch"
         },
-        "consistency": {
-          "label": "Erdbefund: Konsistenz"
+        "componentsMetal": {
+          "label": "Bestandteile: Metall"
         },
-        "colorLightness": {
-          "label": "Erdbefund: Farbhelligkeit"
+        "componentsOthers": {
+          "label": "Bestandteile: Andere"
         },
-        "colorDetermination": {
-          "label": "Erdbefund: Farbe"
-        },
-        "borders": {
-          "label": "Erdbefund: Grenzen"
-        },
-        "form": {
-          "label": "Erdbefund: Form"
-        },
-        "findComposition": {
-          "label": "Erdbefund: Zusammensetzung Fundmaterial"
-        },
-        "workflowOptions": {
-          "label": "Erdbefund: Arbeitsschritte"
-        },
-        "workflowSampleDescription": {
-          "label": "Erdbefund: Beschreibung der Probe / Analyse"
-        }
-      }
-    },
-    "GeoLayer": {
-      "label": "Schicht",
-      "fields": {
-        "facies": {
-          "label": "Fazies"
-        },
-        "depthRange": {
-          "label": "Tiefenbereich"
-        },
-        "boundariesUpwards": {
-          "label": "Schichtgrenzen nach oben"
-        },
-        "boundariesDownwards": {
-          "label": "Schichtgrenzen nach unten"
-        },
-        "grainSizeSmallerThan2mm": {
-          "label": "Korngröße, Feinfraktion <2mm"
-        },
-        "descriptionGrainSize": {
-          "label": "Beschreibung"
-        },
-        "grainSizeBiggerThan2mm": {
-          "label": "Fraktion des Skelettanteils, Korngröße >2mm"
-        },
-        "boneAmount": {
-          "label": "Skelettanteil"
-        },
-        "soilColor": {
-          "label": "Farbe"
-        },
-        "soilConsistency": {
-          "label": "Konsistenz"
-        },
-        "moistureCondition": {
-          "label": "Feuchtezustand"
-        },
-        "hydromorphologyOxidativeFeatures": {
-          "label": "Hydromorphie, oxidative Merkmale"
-        },
-        "hydromorphologyReductiveFeatures": {
-          "label": "Hydromorphie, reduktive Merkmale"
-        },
-        "humusContent": {
-          "label": "Humusgehalt"
-        },
-        "limeContent": {
-          "label": "Kalkhgehalt"
-        },
-        "rootPenetration": {
-          "label": "Durchwurzelung"
-        },
-        "macroStructuralForms": {
-          "label": "Makrogefügeformen"
-        },
-        "constituents": {
-          "label": "Beimengungen"
-        },
-        "notes": {
-          "label": "Anmerkungen"
+        "designation": {
+          "label": "Bezeichnung bzw. Klassifikation der Schicht"
         }
       }
     },
@@ -194,7 +108,7 @@
         "miniatureVesselForm": {
           "label": "Form Miniatur Keramik"
         },
-        "provenance": {
+        "potteryProvenance": {
           "label": "Provenienz"
         },
         "vesselDecorationOutside": {
@@ -209,24 +123,38 @@
         "clayDensity": {
           "label": "Tondichte"
         },
-        "weight": {
+        "potteryWeight": {
           "label": "Gewicht (g)"
         },
         "amountSherds": {
           "label": "Anzahl Fragmente"
         },
-        "dimensionDiameter": {
-          "label": "Durchmesser",
-          "description": "Durchmesser Rand außen; Durchmesser Rand innen; Durchmesser Henkel; Durchmesser Fuß; Durchmesser Boden; Durchmesser Deckel"
+        "potteryDiameterExternal": {
+          "label": "Durchmesser Rand außen"
         },
-        "dimensionThickness": {
+        "potteryDiameterInternal": {
+          "label": "Durchmesser Rand innen"
+        },
+        "potteryThickness": {
           "label": "Wandstärke"
         },
-        "dimensionHeight": {
-          "label": "Objekthöhe"
+        "pottyDiameterHandle": {
+          "label": "Durchmesser Henkel"
         },
-        "dimensionWidth": {
-          "label": "Objektbreite"
+        "potteryDiameterFoot": {
+          "label": "Durchmesser Fuß"
+        },
+        "potteryDiameterBase": {
+          "label": "Durchmesser Boden"
+        },
+        "potteryDiameterLid": {
+          "label": "Durchmesser Deckel"
+        },
+        "potteryHeight": {
+          "label": "Höhe Objekt"
+        },
+        "potteryWidth": {
+          "label": "Breite Objekt"
         },
         "coatTypeOutside": {
           "label": "Überzug Außen"
@@ -327,7 +255,7 @@
     },
     "Find": {
       "fields": {
-        "otherIdentificationNumber": {
+        "findOtherIdentificationNumber": {
           "label": "Andere Identifikationsnummer"
         },
         "restorationDescription": {
@@ -356,63 +284,68 @@
         "tileType": {
           "label": "Dachziegeltyp"
         },
-        "roofingSystem": {
-          "label": "Dachdeckungssystem"
-        },
-        "type": {
+        "brick": {
           "label": "Mauerziegel"
+        },
+        "brickProvenance": {
+          "label": "Provenienz"
+        },
+        "brickForm": {
+          "label": "Ziegel: Form"
+        },
+        "brickFormDescription": {
+          "label": "Ziegel: Beschreibung der Form"
         },
         "manufacturing": {
           "label": "Ziegel: Herstellungstechnik"
         },
-        "temper": {
-          "label": "Magerungsart",
-          "description": "Grundsätzliche Art der Magerung"
-        },
-        "clayColorOutside": {
-          "label": "Außen: Tonfarbe und -intensität"
-        },
         "clayColorInside": {
           "label": "Innen: Tonfarbe und -intensität"
         },
-        "coatColor": {
-          "label": "Überzug: Farbe und Intensität"
+        "featureText": {
+          "label": "Beschreibung Stempel"
         },
-        "decorationTechnique": {
-          "label": "Besonderheiten der Oberfläche bzw. Dekoration"
+        "brick-description": {
+        "label": "Beschreibung"
         },
-        "weight": {
+        "brickWeight": {
           "label": "Gewicht (g)"
         },
         "amountSherds": {
           "label": "Anzahl Fragmente"
         },
-        "remarks": {
-          "label": "Bemerkungen"
+        "descriptionDecorationTechnique": {
+          "label": "Beschreibung der Dekoration"
+        },
+        "coatColor": {
+          "label": "Überzug: Farbe und Intensität"
+        },
+        "roofingSystem": {
+          "label": "Dachdeckungssystem"
         }
       }
     },
     "Metal": {
       "fields": {
-        "origins": {
+        "metalProvenance": {
           "label": "Provenienz"
         },
-        "weaponsArmor": {
+        "metalWeaponsArmor": {
           "label": "Bestimmung: Waffen und Rüstungsstücke"
         },
-        "jewelryTrachtComponents": {
+        "metalSchmuckTrachtbestandteile": {
           "label": "Bestimmung: Schmuck und Trachtbestandteile"
         },
-        "vesselParts": {
+        "metalVesselParts": {
           "label": "Bestimmung: Gefäßteile"
         },
-        "toolsEquipment": {
+        "metalToolsEquipment": {
           "label": "Bestimmung: Werkzeug und Gerät"
         },
-        "miscellaneous": {
+        "metalMiscellaneous": {
           "label": "Bestimmung: Sonstiges"
         },
-        "weight": {
+        "metalWeight": {
           "label": "Gewicht (g)"
         },
         "amountFragments": {
@@ -430,19 +363,19 @@
     "ProcessUnit": {
       "label": "Profil",
       "fields": {
-        "classification": {
+        "operationClassification": {
           "label": "Klassifikation Profil"
         },
-        "orientationTowardsCardinalPoints": {
+        "operationOrientation": {
           "label": "Orientierung"
         },
-        "horizontalCourse": {
+        "operationHorizontalDescription": {
           "label": "Horizontalverlauf"
         },
-        "verticalCourse": {
+        "operationVerticalDescription": {
           "label": "Vertikalverlauf"
         },
-        "identifiability": {
+        "operationIdentifiability": {
           "label": "Erkennbarkeit"
         }
       }
@@ -467,10 +400,10 @@
         "coatColorMunsell": {
           "label": "Überzug Farbe (Munsell)"
         },
-        "inscription": {
+        "terracottaInscription": {
           "label": "Inschrift: Text"
         },
-        "decorationDescription": {
+        "terracottaDecorationDescription": {
           "label": "Dekoration: Beschreibung"
         },
         "architecturalDecorationType": {
@@ -482,7 +415,7 @@
         "toolType": {
           "label": "Bestimmung: Gerät"
         },
-        "origins": {
+        "terracottaProvenance": {
           "label": "Provenienz"
         }
       }
@@ -490,7 +423,7 @@
     "Stone": {
       "fields": {
         "colorMunsell": {
-          "label": "Farbe (Munsell)"
+          "label": "Fabrbe (Munsell)"
         },
         "objectType": {
           "label": "Bestimmung: Steinobjekt"
@@ -507,14 +440,14 @@
         "inscriptionDescription": {
           "label": "Inschrift Beschreibung"
         },
-        "decorationType": {
+        "decoration": {
           "label": "Dekoration"
         }
       }
     },
     "Coin": {
       "fields": {
-        "weight": {
+        "coinWeight": {
           "label": "Gewicht (g)"
         },
         "legend": {
@@ -568,6 +501,9 @@
         "stones": {
           "label": "Steine"
         },
+        "surveyUnit-description": {
+          "label": "Beschreibung"
+        },
         "samplingMethod": {
           "label": "Probenentnahme"
         },
@@ -580,7 +516,7 @@
         "findDensity": {
           "label": "Funddichte"
         },
-        "qualityOfFinds": {
+        "finds": {
           "label": "Funde"
         },
         "remarks": {
@@ -588,70 +524,161 @@
         } 
       }
     },
-    "SurfaceCleaning": {
-      "label": "Oberflächenreinigung",
+    "BuildingPart": {
+      "label": "Architektur",
       "fields": {
-        "operation": {
-          "label": "Maßnahme"
-        }
-      }
-    },
-    "AnimalBones": {
-      "label": "Tierknochen",
-      "fields": {
-        "biologicalAge": {
-          "label": "Biologisches Alter",
-          "description": "Alter des Tieres zum Zeitpunkt des Todes (z. B. Infans I)"
+        "descriptionFindingPlace": {
+          "label": "Beschreibung des Fundortes"
         },
-        "boneClassification": {
-          "label": "Knochenklassifizierung"
+        "storageLocation": {
+          "label": "Ort der Aufbewahrung"
         },
-        "burningGrade": {
-          "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)"
+        "editingDates": {
+          "label": "Daten",
+          "description": "RD = Aufnahmedatum, UD = Aktualisierungsdatum"
         },
-        "sex": {
-          "label": "Geschlecht"
-        },
-        "species": {
-          "label": "Spezies"
-        }
-      }
-    },
-    "HumanBones": {
-      "label": "Anthropologische Reste",
-      "fields": {}
-    },
-    "BoneObjects": {
-      "label": "Beinobjekte",
-      "fields": {
-        "objectType": {
-          "label": "Bezeichnung oder Art des Objekts"
-        },
-        "boneType": {
-          "label": "Grobe Klassifizierung der Knochen"
-        }
-      }
-    },
-    "ConstructionMaterial": {
-      "label": "Bauausstattung",
-      "fields": {
         "denomination": {
           "label": "Ansprache"
+        },
+        "dimensionHeight": {
+          "label": "Höhe"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "OL = obere Länge, UL = untere Länge"
+        },
+        "dimensionWidth": {
+          "label": "Tiefe",
+          "description": "OT = obere Tiefe, UT = untere Tiefe"
+        },
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "OD = oberer Durchmesser, UD = unterer Durchmesser"
+        },
+        "dimensionOther": {
+          "label": "Spezielle Maße",
+          "description": "TrB = Triglyphenbreite, MB = Metopenbreite"
         },
         "material": {
           "label": "Material"
         },
-        "floorCovering": {
-          "label": "Bodenbelag"
+        "conservationStatus": {
+          "label": "Erhaltungszustand"
         },
-        "floorCoveringDescription": {
-          "label": "Beschreibung"
+        "assignment": {
+          "label": "Zuordnung"
         },
-        "wallCovering": {
-          "label": "Wandverkleidung"
+        "evaluationAssignment": {
+          "label": "Bewertung Zuordnung"
         },
-        "wallCoveringDescription": {
-          "label": "Beschreibung"
+        "positionAtBuilding": {
+          "label": "Position am Bauwerk"
+        },
+        "front": {
+          "label": "Bauteilseite: Vorderseite"
+        },
+        "back": {
+          "label": "Bauteilseite: Rückseite"
+        },
+        "leftSide": {
+          "label": "Bauteilseite: Linke Seite"
+        },
+        "rightSide": {
+          "label": "Bauteilseite: Rechte Seite"
+        },
+        "referenceTypes": {
+          "label": "Referenzen"
+        },
+        "belongingMap": {
+          "label": "Zugehörige Karte"
+        },
+        "pencilDrawing": {
+          "label": "Maßstab der Bleistiftzeichnung"
+        },
+        "inkDrawing": {
+          "label": "Maßstab der Tuschezeichnung"
+        },
+        "note": {
+          "label": "Anmerkung",
+          "description": "gehört zu..., vorher..., jetzt..., etc." 
+        }
+      }
+    },
+    "ColumnDrum": {
+      "label": "Säulentrommel",
+      "fields": {
+        "column": {
+          "label": "Säule",
+          "description": "Von Ost/Süd nach West/Nord"
+        },
+        "fromBottomToTop": {
+          "label": "Säulentrommel",
+          "description": "Von unten nach oben"
+        },
+        "dimensionHeight": {
+          "label": "Höhe"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "OL = obere Länge, UL = untere Länge"
+        },
+        "dimensionDepth": {
+          "label": "Tiefe",
+          "description": "OT = obere Tiefe, UT = untere Tiefe"
+        },
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "OD = oberer Durchmesser, UD = unterer Durchmesser; ODk = Oberer Durchmesser Kannelur, UDk = Unterer Durchmesser Kannelur, ODm = Oberer Durchmesser Mantel, UDm = Unterer Durchmesser Mantel"
+        },
+        "number": {
+          "label": "Nummer"
+        },
+        "top": {
+          "label": "Oberseite"
+        },
+        "bottom": {
+          "label": "Unterseite"
+        },
+        "coat": {
+          "label": "Mantel"
+        },
+        "comment": {
+          "label": "Bemerkung"
+        }
+      }
+    },
+    "NegativeFeature": {
+      "label": "Negativbefund",
+      "fields": {
+        "position": {
+          "label": "Lage"
+        },
+        "condition": {
+          "label": "Erhaltungszustand"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil"
+        },
+        "conditionComment": {
+          "label": "Kommentar zum Erhaltungszustand"
+        },
+        "templePositionOnTheStructure": {
+          "label": "Tempel - Position am Bauwerk"
+        },
+        "classificationFeature": {
+          "label": "Klassifikation Befund"
+        },
+        "toolTraces": {
+          "label": "Werkzeugspuren"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "maximumHeight": {
+          "label": "Maximale Höhe"
+        },
+        "bibliography": {
+          "label": "Bibliographie"
         }
       }
     }

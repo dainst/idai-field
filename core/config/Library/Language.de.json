@@ -20,6 +20,10 @@
       "label": "Höhe",
       "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
     },
+    "dimensionDepth": {
+      "label": "Tiefe",
+      "description": "Angabe der Tiefe an der maximalen/minimalen Ausdehnung"
+    },
     "dimensionThickness": {
       "label": "Stärke",
       "description": "Dicke bzw. Stärke des Objekts"

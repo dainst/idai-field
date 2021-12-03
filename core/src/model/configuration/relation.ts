@@ -55,33 +55,66 @@ export namespace Relation {
 
 
     /**
-     * These relations exists for one to many assignments between operations and contained
-     * and between resources and resources contained within those. It does not necessarily
-     * describe a spatial relationship (also it may, depending of the concrete resource domain and range)
-     * but says that the app handles it as that structural on-to-many relationship and displays it
-     * accordingly (so that operations get views, in which other resoures are listed, and resources
-     * are displayed as nested within other resources). The semantics of a hierarchical relation depends on
-     * its context, as constituted by the categories involved. For example a liesWithin between 'Inscription'
-     * and 'Find' is, what a user would describe as meaningful relationship between them, in this case that
-     * a Find can be marked with (one or more) letter-type embellishments.
+     * This relation spans a general tree with resources as nodes and leafs.
+     * 
+     * Although the inspiration for this relation is that of spatial inclusion, the actual semantics
+     * are not defined precisely as spatial inclusion of volumes within other volumes but rather depend 
+     * on the specific context, as per the categories involved. For example in the case of a Find and
+     * a Feature we would use the relation to express that the Find is mostly included in that specific
+     * Feature. In the case of an Inscription and a Find we would use it to express that the Find has that
+     * specific inscription, which is then a specific instance of an inscription (a token, rather than a type)
+     * found on a particular Find.
+     * 
+     * Having most of the resources of the application in such a forest allows for widely used 
+     * and commonly understood hierarchical navigation, as you have it in file browsers etc.
      */
-    export module Hierarchy {
+    export const PARENT = 'isChildOf';
 
-        export const RECORDEDIN = 'isRecordedIn';        // TODO get rid of this, in favor of isChildOf
-        export const LIESWITHIN = 'liesWithin';          // TODO get rid of this, in favor of isChildOf 
+    /**
+     * This relation spans a directed acyclical graph between resources. Note that
+     * there should not be any redundant paths. That means, if A -> B -> C, there should 
+     * not be an explicit relation between A and C. Instead the relation is implicit as per the 
+     * path from A to C.
+     * 
+     * It can be used to model relationships where one entity belongs to multiple other entities in some
+     * way, as it is the case for example with Doors and Room, where a Door can be part of two Rooms.
+     */
+    export const IS_PRESENT_IN = 'isPresentIn';
+
+    /**
+     * @deprecated use isChildOf instead. 
+     *   Our index already works exclusively with isChildOf, while
+     *   in the documents the legacy relations are still stored.
+     */
+    export namespace Hierarchy {
+
+        export const RECORDEDIN = 'isRecordedIn';        
+        export const LIESWITHIN = 'liesWithin';          
         export const ALL = [LIESWITHIN, RECORDEDIN];
     }
 
 
-    export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
-
-
-    // Used to signal sameness (a claim of identity) in a generic manner, for example in order to say
-    // two resources, recorded in different operations, are the same
+    /**
+     * Used to signal sameness (a claim of identity) in a generic manner, for example in order to say
+     * two resources, recorded in different operations, are the same. 
+     * 
+     * This relation complements isChildOf in so far as the tree spanned by the latter gains the
+     * possibility to express sameness, while retaining its relatively simple structure 
+     * (more complex graphs; see also: isPresentIn). Sameness in this way can be seen as an 
+     * *interpretation* that parts of an entity, each found in its own (spatial) context and also maybe 
+     * described by different persons, actually *are* (rather than are parts of) the *same* entity. 
+     * For example one could have two parts of a wall which are not (visibly) physically connected, 
+     * but which are taken as having been the *same* wall.
+     */ 
     export const SAME_AS = 'isSameAs';
 
 
-    // Used to connect finds with type resources
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
+
+
+    /**
+     * Used to connect finds with type resources
+     */
     export module Type {
 
         export const INSTANCEOF = 'isInstanceOf';
@@ -98,9 +131,6 @@ export namespace Relation {
         export const ISMAPLAYEROF = 'isMapLayerOf';
         export const ALL = [DEPICTS, ISDEPICTEDIN, HASMAPLAYER, ISMAPLAYEROF];
     }
-
-
-    export const UNIDIRECTIONAL = Hierarchy.ALL;
 
 
     /**

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, on, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
-import { ErrWithParams } from '../../import/import/import-documents';
-import { ConfigurationIndex } from '../index/configuration-index';
-import { Modals } from '../../../services/modals';
-import { FieldEditorModalComponent } from '../editor/field-editor-modal.component';
-import { MenuContext } from '../../../services/menu-context';
-import { ConfigurationUtil, InputType } from '../configuration-util';
+import { ErrWithParams } from '../../../import/import/import-documents';
+import { ConfigurationIndex } from '../../index/configuration-index';
+import { Modals } from '../../../../services/modals';
+import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
+import { MenuContext } from '../../../../services/menu-context';
+import { ConfigurationUtil, InputType } from '../../configuration-util';
 
 
 @Component({
@@ -119,6 +119,7 @@ export class AddFieldModalComponent {
         );
 
         componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {

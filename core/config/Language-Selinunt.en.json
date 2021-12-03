@@ -1,0 +1,404 @@
+{
+  "categories": {
+    "Operation": {
+      "fields": {
+        "researchHistory": {
+          "label": "Research history" 
+        },
+        "researchPerspective": {
+          "label": "Research perspective" 
+        },
+        "researchMethod": {
+          "label": "Research method" 
+        }
+      }
+    },
+    "Place": {
+      "fields": {
+        "placeName": {
+          "label": "Place name"
+        },
+        "siteClassification": {
+          "label": "Site classification"
+        },
+        "buildingResearchHistory": {
+          "label": "Research history of building"
+        },
+        "condition": {
+          "label": "Condition of place"
+        },
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+    "Survey": {
+      "fields": {
+        "descriptionOfArea": {
+          "label": "Description of the area"
+        },
+        "currentUse": {
+          "label": "Current use"
+        },
+        "slope": {
+          "label": "Slope"
+        },
+        "visibility": {
+          "label": "Visibility"
+        },
+        "chronologyFinds": {
+          "label": "Chronology of finds"
+        },
+        "interpretation": {
+          "label": "Interpretation"
+        }
+      } 
+    },
+    "Architecture": {
+      "label": "Architecture",
+      "fields": {
+        "classification": {
+          "label": "Classification"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "brickwork": {
+          "label": "Brickwork"
+        },
+        "construction": {
+          "label": "Wall: construction"
+        },
+        "masonry": {
+          "label": "Wall: masonry"
+        },
+        "masonryJoint": {
+          "label": "Wall: joint"
+        },
+        "layerType": {
+          "label": "Wall: layer type"
+        },
+        "cladding": {
+          "label": "Wall: masonry coating"
+        },
+        "floorClassification": {
+          "label": "Floor classification"
+        }
+      }
+    },
+    "Bedrock": {
+      "label": "Bedrock"
+    },
+    "Feature": {
+      "fields": {
+        "featureForm": {
+          "label": "Feature form"
+        },
+        "featureBorders": {
+          "label": "Feature borders"
+        },
+        "period": {
+          "label": "Period"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Layer",
+      "fields": {
+        "distinguishingCriteria": {
+          "label": "Layer: distinguishing criteria"
+        },
+        "classification": {
+          "label": "Layer: classification"
+        },
+        "soilType": {
+          "label": "Layer: soil type"
+        },
+        "consistency": {
+          "label": "Layer: consistency"
+        },
+        "colorLightness": {
+          "label": "Layer: color lightness"
+        },
+        "colorDetermination": {
+          "label": "Layer: color"
+        },
+        "borders": {
+          "label": "Layer: Borders"
+        },
+        "form": {
+          "label": "Layer: Form"
+        },
+        "findComposition": {
+          "label": "Layer: Composition of find material"
+        },
+        "workflowOptions": {
+          "label": "Layer: Work flow options"
+        },
+        "workflowSampleDescription": {
+          "label": "Layer: Description of sample / analysis"
+        }
+      }
+    },
+    "Brick": {
+      "label": "Brick and tile",
+      "fields": {
+        "applicationInArchitecture": {
+          "label": "Application in architecture"
+        },
+        "tileType": {
+          "label": "Tile type"
+        },
+        "roofingSystem": {
+          "label": "Roofing system"
+        },
+        "brickType": {
+          "label": "Brick"
+        },
+        "manufacturing": {
+          "label": "Brick: Manufacturing"
+        },
+        "temper": {
+          "label": "Temper"
+        },
+        "clayColorOutside": {
+          "label": "Outside: Color and intensity"
+        },
+        "clayColorInside": {
+          "label": "Inside: Color and intensity"
+        },
+        "coatColor": {
+          "label": "Coating: Color and intensity"
+        },
+        "decorationTechnique": {
+          "label": "Decoration technique"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "amountSherds": {
+          "label": "Number of fragments"
+        },
+        "remarks": {
+          "label": "Remarks"
+          }
+      }
+    },
+    "Burial": {
+      "label": "Burial"
+    },
+    "Grave": {
+      "label": "Grave"
+    },
+    "Pottery": {
+      "fields": {
+        "vesselForm": {
+          "label": "Vessel form"
+        },
+        "miniatureVesselForm": {
+          "label": "Miniature vessel form"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "vesselDecoration": {
+          "label": "Decoration"
+        }
+      }
+    },
+    "FindCollection": {
+      "label": "Find collection",
+      "fields": {
+        "potteryFormsOverview": {
+          "label": "Overview of pottery forms"
+        },
+        "potteryFineWareByProvenance": {
+          "label": "1. Fine ceramics by provenance"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "label": "1. Quantity, weight, details"
+        },
+        "potteryAmphoraeByProvenance": {
+          "label": "2. Amphorae by provenance"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "label": "2. Quantity, weight, details"
+        },
+        "potteryCoarseWareByFunction": {
+          "label": "3. Coarse ware by function"
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "label": "3. Quantity, weight, details"
+        },
+        "miniaturePotteryCollection": {
+          "label": "4. Miniature pottery "
+        },
+        "terracottaCollection": {
+          "label": "5. Terracotta"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "label": "5. Quantity, weight, details"
+        },
+        "buildingMaterialCollection": {
+          "label": "6. Building material"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "label": "6. Quantity, weight, details"
+        },
+        "stoneCollection": {
+          "label": "7. Stone and stone objects"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "label": "7. Quantity, weight, details"
+        },
+        "metalAndGlasCollection": {
+          "label": "8. Metal and glas"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "label": "8. Quantity, weight, details"
+        },
+        "organicMaterialCollection": {
+          "label": "9. Organic material"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "label": "9. Quantity, weight, details"
+        }
+      }
+    },
+    "Area": {
+      "label": "Area",
+      "fields": {
+        "dimensionVerticalExtent": {
+          "label": "Dimensions vertival extent"
+        },
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Grid square",
+      "fields": {
+        "currentSurfaceUtilization": {
+          "label": "Current surface utilization"
+        },
+        "visibility": {
+          "label": "Visibility"
+        },
+        "shade": {
+          "label": "Light conditions"
+        },
+        "slope": {
+          "label": "Slope"
+        },
+        "humidity": {
+          "label": "Humidity"
+        },
+        "vegetation": {
+          "label": "Vegetation"
+        },
+        "buildingStructures": {
+          "label": "Building structures"
+        },
+        "soilComposition": {
+          "label": "Soil composition"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "clumps": {
+          "label": "Clumps"
+        },
+        "stones": {
+          "label": "Stones"
+        },
+        "samplingMethod": {
+          "label": "Sampling method"
+        },
+        "surfaceTreatment": {
+          "label": "Surface treatment"
+        },
+        "quantityOfFinds": {
+          "label": "Quantity of finds"
+        },
+        "findDensity": {
+          "label": "Find density"
+        },
+        "qualityOfFinds": {
+          "label": "Finds"
+        },
+        "remarks": {
+          "label": "Remarks"
+        } 
+      }
+    },
+    "SurfaceCleaning": {
+      "label": "Surface cleaning",
+      "fields": {
+        "operation": {
+          "label": "Operation"
+        }
+      }
+    },
+    "AnimalBones": {
+      "label": "Animal Bones",
+      "fields": {
+        "biologicalAge": {
+          "label": "Biological age",
+          "description": "Age of the animal at the time of death (e. g. Infans I)"
+        },
+        "boneClassification": {
+          "label": "Bone classification"
+        },
+        "burningGrade": {
+          "label": "Burning grade of the bones (according to Wahl 1982)"
+        },
+        "sex": {
+          "label": "Sex"
+        },
+        "species": {
+          "label": "Species"
+        }
+      }
+    },
+    "HumanBones": {
+      "label": "Human Remains",
+      "fields": {}
+    },
+    "BoneObjects": {
+      "label": "Bone Objects",
+      "fields": {
+        "objectType": {
+          "label": "Designation or type of the object"
+        },
+        "boneType": {
+          "label": "Coarse classification of the bones"
+        }
+      }
+    },
+    "ConstructionMaterial": {
+      "label": "Construction material",
+      "fields": {
+        "denomination": {
+          "label": "Denomination"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "floorCovering": {
+          "label": "Floor covering"
+        },
+        "floorCoveringDescription": {
+          "label": "Description"
+        },
+        "wallCovering": {
+          "label": "Wall covering"
+        },
+        "wallCoveringDescription": {
+          "label": "Description"
+        }
+      }
+    }
+  }
+}
+

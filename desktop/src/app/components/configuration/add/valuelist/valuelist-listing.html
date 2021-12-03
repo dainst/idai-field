@@ -1,0 +1,18 @@
+<ul class="bg-light listing">
+    <li *ngFor="let valuelist of valuelists"
+        [class.selected]="selectedValuelist === valuelist"
+        (click)="select(valuelist)">
+        <code>{{valuelist.id}}</code>
+        <span *ngIf="getSearchResultLabel(valuelist)"
+              class="search-result-label"> ({{getSearchResultLabel(valuelist)}})</span>
+    </li>
+    <li *ngIf="isNewValuelistOptionShown()"
+        class="new-item-option"
+        [class.selected]="selectedValuelist === emptyValuelist"
+        (click)="select(emptyValuelist)">
+        <span class="mdi mdi-plus-circle mdi-24px"></span>
+        <span class="item-label" i18n="@@configuration.newValuelist">Neue Werteliste</span>
+        <code>{{searchTerm}}</code>
+    </li>
+</ul>
+    

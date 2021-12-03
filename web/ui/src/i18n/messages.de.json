@@ -82,8 +82,11 @@
   },
   "download": {
     "download": "iDAI.field-Desktopanwendung herunterladen",
-    "packageInfo": "Es werden Pakete für Windows, macOS und Linux zur Verfügung gestellt.",
     "currentVersion": "Aktuelle Version:",
+    "packageInfo": "iDAI.field kann auf den folgenden Betriebssystemen eingesetzt werden:",
+    "windowsInfo": "Windows 7 und höher",
+    "macInfo": "macOS 10.11 und höher",
+    "linuxInfo": "Linux (Ubuntu 14.04, Fedora 24, Debian 8 und höher)",
     "allVersions": "Alle Versionen...",
     "sourceCode": "Quellcode auf GitHub",
     "windows": "Windows (.exe)",

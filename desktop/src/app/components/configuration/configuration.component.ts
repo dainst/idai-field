@@ -17,7 +17,7 @@ import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
-import { AddCategoryFormModalComponent } from './add/add-category-form-modal.component';
+import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from './index/configuration-index';
@@ -290,6 +290,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
 
         componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.field = field;

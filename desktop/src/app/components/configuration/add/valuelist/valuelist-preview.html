@@ -1,0 +1,15 @@
+<div *ngIf="valuelist" class="preview">
+    <div id="preview-header">
+        <span *ngIf="!valuelist.values" class="mdi mdi-plus-circle mdi-24px"></span>
+        <span class="preview-item-title">
+            <code>{{valuelist.id}}</code>
+        </span>
+    </div>
+    <div id="preview-body">
+        <ul class="list-group list-group-flush">
+            <li *ngIf="valuelist.values" class="list-group-item">
+                <valuelist-view [valuelist]="valuelist"></valuelist-view>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -7,14 +7,17 @@
 @import './editor/category-editor-modal';
 @import './editor/multi-language-input';
 @import './delete/delete-category-modal';
-@import './add/add-category-modal';
-@import './add/add-field-modal';
 @import './add/listing';
-@import './add/category-listing';
-@import './add/field-listing';
 @import './add/preview';
-@import './add/category-preview';
-@import './add/field-preview';
+@import './add/category/add-category-modal';
+@import './add/category/category-listing';
+@import './add/category/category-preview';
+@import './add/field/add-field-modal';
+@import './add/field/field-listing';
+@import './add/field/field-preview';
+@import './add/valuelist/add-valuelist-modal';
+@import './add/valuelist/valuelist-listing';
+
 
 .project-configuration {
   &.dragging {

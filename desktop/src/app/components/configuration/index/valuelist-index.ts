@@ -1,5 +1,6 @@
 import { flatten, keysValues, right, set } from 'tsfun';
 import { Valuelist } from 'idai-field-core';
+import { tokenize } from './tokenize';
 
 
 export interface ValuelistIndex {
@@ -39,10 +40,11 @@ export namespace ValuelistIndex {
 
     function getTerms(valuelist: Valuelist): string[] {
 
-        return [valuelist.id]
-            .concat(Object.keys(valuelist.values))
-            .concat(flatten(
-                Object.values(valuelist.values).map(value => value.label ? Object.values(value.label) : [])
-            ));
+        return tokenize(
+            [valuelist.id].concat(Object.keys(valuelist.values))
+                .concat(flatten(
+                    Object.values(valuelist.values).map(value => value.label ? Object.values(value.label) : [])
+                ))
+        );
     }
 }

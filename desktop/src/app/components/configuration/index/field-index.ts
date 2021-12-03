@@ -1,5 +1,6 @@
 import { flatten, keysValues, right, set } from 'tsfun';
 import { Field, Category } from 'idai-field-core';
+import { tokenize } from './tokenize';
 
 
 type IndexSection = { [term: string]: Array<Field> };
@@ -48,7 +49,7 @@ export namespace FieldIndex {
 
     function addToSection(field: Field, section: IndexSection) {
 
-        const terms: string[] = Object.values(field.defaultLabel).concat([field.name]);
+        const terms: string[] = tokenize(Object.values(field.defaultLabel).concat([field.name]));
     
         for (const term of terms) {
             if (!section[term]) section[term] = [];

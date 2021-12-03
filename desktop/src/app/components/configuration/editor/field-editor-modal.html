@@ -24,7 +24,7 @@
             i18n="@@configuration.field.inputType">Eingabetyp</div>
         <select (change)="setInputType($event.target.value)" [disabled]="hidden"
                 class="form-control">
-            <option *ngFor="let inputType of availableInputTypes"
+            <option *ngFor="let inputType of getAvailableInputTypes()"
                     value="{{inputType.name}}"
                     [selected]="getInputType() === inputType.name">
                 {{inputType.label}}
@@ -84,10 +84,33 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
             Werteliste
         </div>
-        <ul class="list-group list-group-flush">
-            <li *ngIf="field.valuelist" class="list-group-item">
-                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
-            </li>
-        </ul>
+        <div *ngIf="clonedField.valuelist">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <button id="swap-valuelist-button" class="btn btn-primary" type="button"
+                            (click)="selectValuelist()"
+                            ngbTooltip="Werteliste wechseln"
+                            i18n-ngbTooltip="@@configiguration.swapValuelist"
+                            container="body"
+                            placement="right">
+                        <span class="mdi mdi-swap-horizontal"></span>
+                    </button>
+                    <code>{{clonedField.valuelist.id}}</code>
+                </li>
+                <li *ngIf="clonedField.valuelist" class="list-group-item">
+                    <valuelist-view [valuelist]="clonedField.valuelist"></valuelist-view>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!clonedField.valuelist">
+            <button id="add-valuelist-button" class="btn btn-success" type="button"
+                    (click)="selectValuelist()"
+                    ngbTooltip="Werteliste hinzufügen"
+                    i18n-ngbTooltip="@@configiguration.swapValuelist"
+                    container="body"
+                    placement="right">
+                <span class="mdi mdi-plus"></span>
+            </button>
+        </div>
     </div>
 </div>

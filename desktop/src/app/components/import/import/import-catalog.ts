@@ -117,7 +117,7 @@ async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
             await services.datastore.get(document.resource.id);
         } catch {
             try {
-                await services.imagestore.remove(document.resource.id, { fs: true });
+                await services.imagestore.remove(document.resource.id);
             } catch (e) {
                 console.error('error during cleanup', e);
             }
@@ -264,7 +264,7 @@ function importOneDocument(services: ImportCatalogServices,
         if (!existingDocument) {
             await services.datastore.create(updateDocument);
             if (!isTypeOrCatalog(updateDocument)) {
-                await services.imagestore.readThumbnails([updateDocument.resource.id]);
+                await services.imagestore.getThumbnailData([updateDocument.resource.id]);
             }
             return updateDocument;
         }

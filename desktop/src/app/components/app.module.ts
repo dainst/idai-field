@@ -4,7 +4,7 @@ import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
@@ -151,10 +151,10 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: Imagestore,
-            useFactory: function(filestore: Filestore, pouchdbManager: PouchdbDatastore, converter: ImageConverter, blobMaker: BlobMaker) {
-                return new Imagestore(filestore, converter, blobMaker, pouchdbManager.getDb());
+            useFactory: function(filestore: Filestore, pouchdbManager: PouchdbDatastore, converter: ImageConverter, sanitizer: DomSanitizer) {
+                return new Imagestore(filestore, converter, pouchdbManager.getDb(), sanitizer);
             },
-            deps: [Filestore, PouchdbDatastore, ImageConverter, BlobMaker]
+            deps: [Filestore, PouchdbDatastore, ImageConverter,  DomSanitizer]
         },
         ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },

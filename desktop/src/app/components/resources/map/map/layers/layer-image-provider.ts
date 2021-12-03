@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
-import {Imagestore} from '../../../../../services/imagestore/imagestore';
+import {Injectable, SecurityContext} from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {Imagestore, IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
 import {ImageContainer} from '../../../../../services/imagestore/image-container';
 import {BlobMaker} from '../../../../../services/imagestore/blob-maker';
-
 
 @Injectable()
 /**
@@ -15,7 +14,7 @@ export class LayerImageProvider {
     private imageContainers: { [resourceId: string]: ImageContainer } = {};
 
 
-    constructor(private imagestore: Imagestore) {}
+    constructor(private imagestore: Imagestore, private sanitizer: DomSanitizer) {}
 
 
     public async getImageContainer(resourceId: string): Promise<ImageContainer> {
@@ -27,14 +26,8 @@ export class LayerImageProvider {
         return this.imageContainers[resourceId];
     }
 
-
     public reset() {
-
-        for (let resourceId of Object.keys(this.imageContainers)) {
-            const thumb: boolean = !this.imageContainers[resourceId].imgSrc;
-            this.imagestore.revoke(resourceId, thumb);
-        }
-
+        this.imagestore.revokeAllUrls();
         this.imageContainers = {};
     }
 
@@ -43,8 +36,11 @@ export class LayerImageProvider {
 
         let url: string|SafeResourceUrl;
         try {
-            url = await this.imagestore.read(resourceId, true, false);
+            url = this.sanitizer.sanitize(
+                SecurityContext.RESOURCE_URL, await this.imagestore.getUrl(resourceId, IMAGEVERSION.ORIGINAL)
+            );
         } catch (err) {
+            console.error(err);
             console.error('Error while creating image container. Original image not found in imagestore ' +
                 'for document:', document);
             return { imgSrc: BlobMaker.blackImg };
@@ -54,7 +50,11 @@ export class LayerImageProvider {
             return { imgSrc: url };
         } else {
             try {
-                return { thumbSrc: await this.imagestore.read(resourceId, true, true) };
+                return {
+                    thumbSrc: this.sanitizer.sanitize(
+                        SecurityContext.RESOURCE_URL, await this.imagestore.getUrl(resourceId, IMAGEVERSION.THUMBNAIL)
+                    )
+                };
             } catch (err) {
                 return { imgSrc: BlobMaker.blackImg };
             }

@@ -4,7 +4,7 @@ import {ImageContainer} from '../../../services/imagestore/image-container';
 import {BlobMaker} from '../../../services/imagestore/blob-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
 import {M} from '../../messages/m';
-import {Imagestore} from '../../../services/imagestore/imagestore';
+import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
 import {Messages} from '../../messages/messages';
 
 
@@ -50,17 +50,13 @@ export class ImageViewerComponent implements OnInit, OnChanges {
         const image: ImageContainer = { document: document };
 
         try {
-            image.imgSrc = await this.imagestore.read(
-                document.resource.id, false, false
-            );
+            image.imgSrc = await this.imagestore.getUrl(document.resource.id, IMAGEVERSION.ORIGINAL);
         } catch (e) {
             image.imgSrc = BlobMaker.blackImg;
         }
 
         try {
-            image.thumbSrc = await this.imagestore.read(
-                document.resource.id, false, true
-            );
+            image.thumbSrc = await this.imagestore.getUrl(document.resource.id, IMAGEVERSION.THUMBNAIL);
         } catch (e) {
             image.thumbSrc = BlobMaker.blackImg;
         }

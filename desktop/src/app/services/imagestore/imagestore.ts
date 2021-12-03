@@ -1,10 +1,13 @@
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { to } from 'tsfun';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Settings } from '../settings/settings';
-import { BlobMaker, BlobUrlSet } from './blob-maker';
 import { Filestore } from '../filestore/filestore';
 import { ImageConverter } from './image-converter';
 import { ImagestoreErrors } from './imagestore-errors';
+import { SecurityContext } from '@angular/core';
+
+export enum IMAGEVERSION {
+    ORIGINAL, THUMBNAIL
+}
 
 
 /**
@@ -18,23 +21,22 @@ import { ImagestoreErrors } from './imagestore-errors';
  */
 export class Imagestore {
 
-    private projectPath: string|undefined = undefined; // TODO deprecated
-    private path: string|undefined = undefined; // expected to have no ending slash
+    private projectPath: string | undefined = undefined; // TODO deprecated
+    private path: string | undefined = undefined; // expected to have no ending slash
 
-    private thumbBlobUrls: { [key: string]: BlobUrlSet } = {};
-    private originalBlobUrls: { [key: string]: BlobUrlSet } = {};
-
+    private originalUrls: { [imageKey: string]: SafeResourceUrl} = {};
+    private thumbnailUrls: { [imageKey: string]: SafeResourceUrl} = {};
 
     constructor(
         private filestore: Filestore,
         private converter: ImageConverter,
-        private blobMaker: BlobMaker,
-        private db: PouchDB.Database) {
+        private db: PouchDB.Database,
+        private sanitizer: DomSanitizer) {
     }
 
     public setDb = (db: PouchDB.Database) => this.db = db;
 
-    public getPath = (): string|undefined => this.projectPath;
+    public getPath = (): string | undefined => this.projectPath;
 
     public init(settings: Settings): Promise<any> {
 
@@ -58,170 +60,121 @@ export class Imagestore {
 
 
     /**
-     * @param key the identifier for the data
+     * Store data with the provided id.
+     * @param imageId the identifier for the data
      * @param data the binary data to be stored
      */
-    public create(key: string, data: ArrayBuffer): Promise<any> {
+    public async store(imageId: string, data: ArrayBuffer): Promise<any> {
+        this.filestore.writeFile(this.path + '/' + imageId, Buffer.from(data));
+        const buffer: Buffer | undefined = await this.converter.convert(data);
 
-        return this.write(key, data);
-    }
-
-
-    /**
-     * Implements {@link ReadImagestore#read}
-     *
-     * @param key
-     * @param sanitizeAfter
-     * @param asThumb image will be loaded as thumb, default: true
-     *
-     *   File not found errors are not thrown when an original is requested
-     *   (thumb == false) because missing files in the filesystem can be a
-     *   normal result of syncing.
-     */
-    public read(key: string, sanitizeAfter: boolean = false,
-                asThumb: boolean = true): Promise<string|SafeResourceUrl> {
-
-        const readFun = asThumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
-        const blobUrls = asThumb ? this.thumbBlobUrls : this.originalBlobUrls;
-
-        if (blobUrls[key]) return Promise.resolve(Imagestore.getUrl(blobUrls[key], sanitizeAfter));
-
-        return readFun(key).then((data: any) => {
-
-            if (data == undefined) {
-                console.error('data read was undefined for', key, 'thumbnails was', asThumb);
-                return Promise.reject([ImagestoreErrors.EMPTY]);
-            }
-
-            // if (asThumb && this.isThumbBroken(data)) return Promise.reject('thumb broken'); // Can't happen any longer. What can happen, though, is that the original is missing
-
-            blobUrls[key] = this.blobMaker.makeBlob(data);
-
-            return Imagestore.getUrl(blobUrls[key], sanitizeAfter);
-
-        }).catch((err: any) => {
-
-            if (!asThumb) return Promise.resolve(''); // handle missing files by showing black placeholder
-            // return Promise.reject([ImagestoreErrors.NOT_FOUND]); // if both thumb and original missing
-        });
-    }
-
-
-    public async readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: Blob }> {
-
-        const options = {
-            keys: imageIds,
-            include_docs: true,
-            attachments: true,
-            binary: true
-        };
-
-        const imageDocuments = (await this.db.allDocs(options)).rows.map(to('doc'));
-
-        const result: { [imageId: string]: Blob } = {};
-
-        for (let imageDocument of imageDocuments) {
-            result[imageDocument.resource.id] =
-                await this.readThumb(imageDocument.resource.id)
+        if (!buffer) {
+            return 'Failed to create thumbnail for image document ' + imageId;
         }
 
+        const thumnailPath = this.path + '/thumbs/' + imageId;
+        this.filestore.writeFile(thumnailPath, buffer);
+    }
+
+    /**
+     * Returns a URL for the image for the requested image resource. Actually creates a link to in memory
+     * image data using {@link URL.createObjectURL}, you may want to call {@link revokeImageUrl} or {@link revokeAllImageUrls}
+     * prematurely if you run into memory issues. See also https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL.
+     * @param imageId the image's id
+     * @param type the imageversion, for possible values see {@link IMAGEVERSION}
+     */
+     public async getUrl(imageId: string, type: IMAGEVERSION): Promise<SafeResourceUrl> {
+        const relevantList = (type === IMAGEVERSION.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+
+        if (relevantList[imageId]) {
+            return relevantList[imageId];
+        }
+        const data = await this.readFileSystem(imageId, type);
+
+        relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
+            URL.createObjectURL(new Blob([data]))
+        );
+
+        return relevantList[imageId];
+    }
+
+    /**
+     * Returns the raw Blob data for the requested images' thumbnails.
+     * @param imageIds An array containing the requested images' thumbnails.
+     * TODO: Überhaupt noch benötigt von außerhalb?
+     */
+    public async getThumbnailData(imageIds: string[]): Promise<{ [imageId: string]: Blob }> {
+        const result: { [imageId: string]: Blob } = {};
+        for (const imageId of imageIds) {
+            result[imageId] = await this.readFileSystem(imageId, IMAGEVERSION.THUMBNAIL);
+        }
         return result;
     }
 
+    /**
+     * Revokes the object URLs for an image created by {@link getUrl}.
+     * @param imageId the image's id
+     */
+    private revokeUrl(imageId: string, type: IMAGEVERSION) {
+        const requestedList = (type === IMAGEVERSION.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+        if (!requestedList[imageId]) return;
 
-    public revoke(key: string, thumb: boolean) {
-
-        const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
-
-        if (!blobUrls[key]) return;
-
-        BlobMaker.revokeBlob(blobUrls[key].url);
-        delete blobUrls[key];
-    }
-
-
-    public revokeAll() {
-
-        for (let key of Object.keys(this.originalBlobUrls)) {
-            this.revoke(key, false);
-        }
-
-        for (let key of Object.keys(this.thumbBlobUrls)) {
-            this.revoke(key, true);
-        }
+        URL.revokeObjectURL(this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, requestedList[imageId]));
+        delete requestedList[imageId];
     }
 
 
     /**
-     * @param key the identifier for the data
-     * @param data the binary data to be stored
+     * Calls {@link revokeUrl} for all images in the datastore.
      */
-    public update(key: string, data: ArrayBuffer): Promise<any> {
+    public revokeAllUrls() {
 
-        return this.write(key, data);
+        for (const imageId of Object.keys(this.originalUrls)) {
+            this.revokeUrl(imageId, IMAGEVERSION.ORIGINAL);
+        }
+
+        for (const imageId of Object.keys(this.originalUrls)) {
+            this.revokeUrl(imageId, IMAGEVERSION.THUMBNAIL);
+        }
     }
-
 
     /**
      * @param key the identifier for the data to be removed
      * @param options
      */
-    public async remove(key: string, options?: { fs?: true } /* TODO review */): Promise<any> {
+    public async remove(key: string/*,  options?: { fs?: true } TODO review */): Promise<any> {
 
-        if (options?.fs === true) {
-            this.filestore.removeFile(this.path + '/' + key)
-            return;
-        }
+        this.revokeUrl(key, IMAGEVERSION.ORIGINAL);
+        this.revokeUrl(key, IMAGEVERSION.THUMBNAIL);
 
-        this.filestore.removeFile(this.path + '/' + key); // original file may be missing due to syncing, but then removeFile will do nothing
+        // if (options?.fs === true) {
+        //     this.filestore.removeFile(this.path + '/' + key)
+        //     return;
+        // }
+
+        // original file may be missing due to syncing, but then removeFile will do nothing
+        this.filestore.removeFile(this.path + '/' + key); 
         this.filestore.removeFile(this.path + '/thumbs/' + key);
 
         // return new Promise((resolve, reject) => {
-            // this.db.get(key)
-                // .then((result: any) => result._rev)
-                // .then((rev: any) => {
-                    //
-                // })
-                // .then(() => resolve(undefined))
-                // .catch((err: any) => {
-                    // console.error(err);
-                    // console.error(key);
-                    // return reject([ImagestoreErrors.GENERIC_ERROR])
-                    // });
+        // this.db.get(key)
+        // .then((result: any) => result._rev)
+        // .then((rev: any) => {
+        //
+        // })
+        // .then(() => resolve(undefined))
+        // .catch((err: any) => {
+        // console.error(err);
+        // console.error(key);
+        // return reject([ImagestoreErrors.GENERIC_ERROR])
+        // });
         // });
     }
 
+    private async readFileSystem(key: string, type: IMAGEVERSION): Promise<Blob> {
+        const relativeImageDirectory = (type === IMAGEVERSION.ORIGINAL) ? '/' : '/thumbs';
 
-    private async write(key: any, data: any): Promise<any> {
-
-        this.filestore.writeFile(this.path + '/' + key, Buffer.from(data));
-        const buffer: Buffer|undefined = await this.converter.convert(data);
-
-        if (!buffer) {
-            return 'Failed to create thumbnail for image document ' + key;
-        }
-
-        const thumnailPath = this.path + '/thumbs/' + key;
-        this.filestore.writeFile(thumnailPath, buffer);
-    }
-
-
-    private async readOriginal(key: string): Promise<any> {
-
-        const path = this.path + '/' + key;
+        const path = this.path + relativeImageDirectory + '/' + key;
         return this.filestore.readFile(path);
-    }
-
-
-    private async readThumb(key: string): Promise<any> {
-
-        const path = this.path + '/thumbs/' + key;
-        return this.filestore.readFile(path);
-    }
-
-
-    private static getUrl(blobUrlSet: BlobUrlSet, sanitizeAfter: boolean = false): string | SafeResourceUrl {
-
-        return sanitizeAfter ? blobUrlSet.sanitizedSafeResourceUrl : blobUrlSet.safeResourceUrl;
     }
 }

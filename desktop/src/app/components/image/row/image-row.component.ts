@@ -7,7 +7,7 @@ import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { BlobMaker } from '../../../services/imagestore/blob-maker';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { Imagestore, IMAGEVERSION } from '../../../services/imagestore/imagestore';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -163,7 +163,7 @@ export class ImageRowComponent implements OnChanges {
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {
                     try {
-                        result[imageId] = await this.imagestore.read(imageId, false, true);
+                        result[imageId] = await this.imagestore.getUrl(imageId, IMAGEVERSION.THUMBNAIL);
                     } catch (e) {
                         result[imageId] = BlobMaker.blackImg;
                         showMissingThumbnailMessageOnConsole(imageId);

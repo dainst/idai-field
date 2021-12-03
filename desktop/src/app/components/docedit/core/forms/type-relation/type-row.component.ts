@@ -3,7 +3,7 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../../../../model/model-util';
 import {ImageRowItem} from '../../../../image/row/image-row';
-import {Imagestore} from '../../../../../services/imagestore/imagestore';
+import {Imagestore, IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
 
 
 @Component({
@@ -36,6 +36,6 @@ export class TypeRowComponent implements OnChanges {
         const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
         if (!mainImageId) return undefined;
 
-        return await this.imagestore.read(mainImageId, false, true);
+        return await this.imagestore.getUrl(mainImageId, IMAGEVERSION.THUMBNAIL);
     }
 }

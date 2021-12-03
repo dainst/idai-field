@@ -51,7 +51,7 @@ export class AppComponent {
         //
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationStart) {
-                imagestore.revokeAll();
+                imagestore.revokeAllUrls();
                 this.messages.removeAllMessages();
             }
         });

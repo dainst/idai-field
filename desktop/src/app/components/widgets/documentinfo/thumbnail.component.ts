@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldResource} from 'idai-field-core';
-import {Imagestore} from '../../../services/imagestore/imagestore';
+import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
 import {BlobMaker} from '../../../services/imagestore/blob-maker';
 
 
@@ -70,7 +70,7 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return await this.imagestore.read(relations[0], false, true);
+            return this.imagestore.getUrl(relations[0], IMAGEVERSION.THUMBNAIL);
         } catch (e) {
             return BlobMaker.blackImg;
         }

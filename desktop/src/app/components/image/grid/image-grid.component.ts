@@ -3,7 +3,7 @@ import {flatten} from 'tsfun';
 import {Datastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {Imagestore} from '../../../services/imagestore/imagestore';
+import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
 import {constructGrid} from './construct-grid';
 import {BlobMaker} from '../../../services/imagestore/blob-maker';
 
@@ -122,33 +122,19 @@ export class ImageGridComponent implements OnChanges {
 
 
     private async loadImages(rows: any) {
-
-        const imageData: { [imageId: string]: Blob } = await this.getImageData(rows);
-
-        for (let row of rows) {
-            for (let cell of row) {
-                if (!cell.document
+        for (const row of rows) {
+            for (const cell of row) {
+                if (
+                    !cell.document
                     || !cell.document.resource
                     || !cell.document.resource.id
-                    || cell.document.resource.id === DROPAREA) continue;
+                    || cell.document.resource.id === DROPAREA
+                ) continue;
 
-                if (imageData[cell.document.resource.id] ) {
-                    cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
-                }
+                cell.imgSrc = await this.imagestore.getUrl(cell.document.resource.id, IMAGEVERSION.THUMBNAIL);
             }
         }
     }
-
-
-    private getImageData(rows: any): Promise<{ [imageId: string]: Blob }> {
-
-        const imageIds: string[] =
-            (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
-                .filter(id => id !== DROPAREA);
-
-        return this.imagestore.readThumbnails(imageIds);
-    }
-
 
     /**
      * Insert stub document for first cell that will act as drop area for uploading images

@@ -150,6 +150,15 @@ registerLocaleData(localeIt, 'it');
             deps: [MD]
         },
         {
+            provide: Filestore,
+            useFactory: function(
+                settingsProvider: SettingsProvider,
+                fsAdapter: FsAdapter) {
+                    return new Filestore(settingsProvider, fsAdapter);
+                },
+                deps: [SettingsProvider, FsAdapter]
+        },
+        {
             provide: Imagestore,
             useFactory: function(filestore: Filestore, converter: ImageConverter) {
                 return new Imagestore(filestore, converter);
@@ -190,7 +199,6 @@ registerLocaleData(localeIt, 'it');
         },
         FsAdapter,
         HttpAdapter,
-        Filestore,
         RemoteFilestore,
         ImageRelationsManager,
         {

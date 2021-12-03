@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { FsAdapter } from './fs-adapter';
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */
@@ -109,6 +107,6 @@ export class Filestore {
 
     private static performAssert(path: string) {
 
-        if (!path.startsWith('/')) throw 'illegal argument - path should start with /';
+        if (!path.startsWith('/')) throw new Error('illegal argument - path should start with /');
     }
 }

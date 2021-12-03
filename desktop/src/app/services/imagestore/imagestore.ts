@@ -73,7 +73,7 @@ export class Imagestore {
      * @param key the identifier for the data to be removed
      */
     public async remove(key: string): Promise<any> {
-        this.filestore.removeFile(this.path + '/' + key); 
+        this.filestore.removeFile(this.path + '/' + key);
         this.filestore.removeFile(this.path + '/thumbs/' + key);
     }
 

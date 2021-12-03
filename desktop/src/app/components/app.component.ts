@@ -9,7 +9,7 @@ import { Settings } from '../services/settings/settings';
 import { MenuNavigator } from './menu-navigator';
 import {UtilTranslations} from '../util/util-translations';
 import {AppController} from '../services/app-controller';
-import {Imagestore} from '../services/imagestore/imagestore';
+import {ImageUrlMaker} from '../services/imagestore/image-url-maker';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -39,7 +39,7 @@ export class AppComponent {
                 private changeDetectorRef: ChangeDetectorRef,
                 menuService: Menus,
                 appController: AppController,
-                imagestore: Imagestore,
+                imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 imageChangesStream: ImageChangesStream /* require it so that it starts */) {
 
@@ -51,7 +51,7 @@ export class AppComponent {
         //
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationStart) {
-                imagestore.revokeAllUrls();
+                imageUrlMaker.revokeAllUrls();
                 this.messages.removeAllMessages();
             }
         });

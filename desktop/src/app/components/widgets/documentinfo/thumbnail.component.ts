@@ -3,7 +3,7 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldResource} from 'idai-field-core';
 import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 
 
 @Component({
@@ -22,11 +22,14 @@ export class ThumbnailComponent implements OnChanges {
     public thumbnailUrl: SafeResourceUrl|undefined;
 
 
-    constructor(private imagestore: Imagestore,
-                private i18n: I18n) {}
+    constructor(
+        private imageUrlMaker: ImageUrlMaker,
+        private i18n: I18n
+    ) {}
 
 
-    public isThumbnailFound = (): boolean => this.thumbnailUrl !== BlobMaker.blackImg;
+    public isThumbnailFound = (): boolean => this.thumbnailUrl !== ImageUrlMaker.blackImg;
+
 
     public onImageClicked = () => this.onClick.emit();
 
@@ -70,9 +73,9 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return this.imagestore.getUrl(relations[0], IMAGEVERSION.THUMBNAIL);
+            return this.imageUrlMaker.getUrl(relations[0], IMAGEVERSION.THUMBNAIL);
         } catch (e) {
-            return BlobMaker.blackImg;
+            return ImageUrlMaker.blackImg;
         }
     }
 }

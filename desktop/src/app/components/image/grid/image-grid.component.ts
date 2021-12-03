@@ -1,11 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {flatten} from 'tsfun';
 import {Datastore, ImageDocument} from 'idai-field-core';
-import {Document} from 'idai-field-core';
-import {ImageUploadResult} from '../upload/image-uploader';
-import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
 import {constructGrid} from './construct-grid';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
+import {IMAGEVERSION} from '../../../services/imagestore/imagestore';
 
 
 const DROPAREA = 'droparea';
@@ -48,9 +45,8 @@ export class ImageGridComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private imagestore: Imagestore,
                 private datastore: Datastore,
-                private blobMaker: BlobMaker) {}
+                private imageUrlMaker: ImageUrlMaker) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -75,7 +71,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.showLinkBadges) return;
 
-        for (let depictsRelId of doc.resource.relations.depicts) {
+        for (const depictsRelId of doc.resource.relations.depicts) {
 
             if (!this.resourceIdentifiers[depictsRelId]) {
                 const target = await this.datastore.get(depictsRelId);
@@ -131,7 +127,7 @@ export class ImageGridComponent implements OnChanges {
                     || cell.document.resource.id === DROPAREA
                 ) continue;
 
-                cell.imgSrc = await this.imagestore.getUrl(cell.document.resource.id, IMAGEVERSION.THUMBNAIL);
+                cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, IMAGEVERSION.THUMBNAIL);
             }
         }
     }

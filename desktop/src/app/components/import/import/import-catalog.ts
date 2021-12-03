@@ -1,7 +1,7 @@
 import {ImageRelationsManager} from '../../../services/image-relations-manager';
 import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager, Resource, childrenOf } from 'idai-field-core';
 import { aMap, isArray, clone, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { Imagestore, IMAGEVERSION } from '../../../services/imagestore/imagestore';
 import { makeDocumentsLookup } from './utils';
 
 
@@ -263,9 +263,10 @@ function importOneDocument(services: ImportCatalogServices,
 
         if (!existingDocument) {
             await services.datastore.create(updateDocument);
-            if (!isTypeOrCatalog(updateDocument)) {
-                await services.imagestore.getThumbnailData([updateDocument.resource.id]);
-            }
+            // TODO: Testen ob das so raus kann.
+            // if (!isTypeOrCatalog(updateDocument)) {
+            //     await services.imagestore.getData(updateDocument.resource.id, IMAGEVERSION.THUMBNAIL);
+            // }
             return updateDocument;
         }
 

@@ -18,7 +18,7 @@ export class FsAdapter {
     }
 
 
-    public readFile(path: string) {
+    public readFile(path: string): Buffer {
 
         return fs.readFileSync(path);
     }

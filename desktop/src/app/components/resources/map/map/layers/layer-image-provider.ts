@@ -2,7 +2,7 @@ import {Injectable, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Imagestore, IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
 import {ImageContainer} from '../../../../../services/imagestore/image-container';
-import {BlobMaker} from '../../../../../services/imagestore/blob-maker';
+import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
 
 @Injectable()
 /**
@@ -14,7 +14,7 @@ export class LayerImageProvider {
     private imageContainers: { [resourceId: string]: ImageContainer } = {};
 
 
-    constructor(private imagestore: Imagestore, private sanitizer: DomSanitizer) {}
+    constructor(private imageUrlMaker: ImageUrlMaker, private sanitizer: DomSanitizer) {}
 
 
     public async getImageContainer(resourceId: string): Promise<ImageContainer> {
@@ -27,7 +27,7 @@ export class LayerImageProvider {
     }
 
     public reset() {
-        this.imagestore.revokeAllUrls();
+        this.imageUrlMaker.revokeAllUrls();
         this.imageContainers = {};
     }
 
@@ -37,13 +37,13 @@ export class LayerImageProvider {
         let url: string|SafeResourceUrl;
         try {
             url = this.sanitizer.sanitize(
-                SecurityContext.RESOURCE_URL, await this.imagestore.getUrl(resourceId, IMAGEVERSION.ORIGINAL)
+                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, IMAGEVERSION.ORIGINAL)
             );
         } catch (err) {
             console.error(err);
             console.error('Error while creating image container. Original image not found in imagestore ' +
                 'for document:', document);
-            return { imgSrc: BlobMaker.blackImg };
+            return { imgSrc: ImageUrlMaker.blackImg };
         }
 
         if (url !== '') {
@@ -52,11 +52,11 @@ export class LayerImageProvider {
             try {
                 return {
                     thumbSrc: this.sanitizer.sanitize(
-                        SecurityContext.RESOURCE_URL, await this.imagestore.getUrl(resourceId, IMAGEVERSION.THUMBNAIL)
+                        SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, IMAGEVERSION.THUMBNAIL)
                     )
                 };
             } catch (err) {
-                return { imgSrc: BlobMaker.blackImg };
+                return { imgSrc: ImageUrlMaker.blackImg };
             }
         }
     }

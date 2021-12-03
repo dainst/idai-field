@@ -6,7 +6,7 @@ import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
-import { BlobMaker } from '../../../services/imagestore/blob-maker';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { Imagestore, IMAGEVERSION } from '../../../services/imagestore/imagestore';
 
 
@@ -46,7 +46,7 @@ export class ImageRowComponent implements OnChanges {
     private imageRow: ImageRow;
 
 
-    constructor(private imagestore: Imagestore,
+    constructor(private imageUrlMaker: ImageUrlMaker,
                 private datastore: Datastore) {}
 
 
@@ -163,9 +163,9 @@ export class ImageRowComponent implements OnChanges {
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {
                     try {
-                        result[imageId] = await this.imagestore.getUrl(imageId, IMAGEVERSION.THUMBNAIL);
+                        result[imageId] = await this.imageUrlMaker.getUrl(imageId, IMAGEVERSION.THUMBNAIL);
                     } catch (e) {
-                        result[imageId] = BlobMaker.blackImg;
+                        result[imageId] = ImageUrlMaker.blackImg;
                         showMissingThumbnailMessageOnConsole(imageId);
                     }
                 }

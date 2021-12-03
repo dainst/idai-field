@@ -3,7 +3,8 @@ import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'ts
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource,
     ProjectConfiguration, Named, Hierarchy } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { IMAGEVERSION } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -19,6 +20,7 @@ import {Routing} from '../../../services/routing';
 import {Menus} from '../../../services/menus';
 import {MenuContext} from '../../../services/menu-context';
 import {TypeImagesUtil} from '../../../util/type-images-util';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -60,7 +62,7 @@ export class TypesComponent extends BaseList implements OnChanges {
      */
     public linkedDocuments: Array<FieldDocument> = [];
 
-    public images: { [resourceId: string]: Array<Blob> } = {};
+    public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     private expandAllGroups: boolean = false;
@@ -68,7 +70,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private imagestore: Imagestore,
+                private imageUrlMaker: ImageUrlMaker,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: Routing,
                 private tabManager: TabManager,
@@ -289,23 +291,17 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.images) this.images = {};
 
-        const imageLinks: Array<{ resourceId: string, imageIds: string[] }> = [];
-
         for (const document of documents) {
             if (!reload && this.images[document.resource.id]) continue;
-            imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
+
+            const linkedImageIds = this.getLinkedImageIds(document);
+
+            this.images[document.resource.id] = await Promise.all(
+                linkedImageIds.map(async (id): Promise<SafeResourceUrl> => {
+                    return this.imageUrlMaker.getUrl(id, IMAGEVERSION.THUMBNAIL);
+                })
+            );
         }
-
-        const imageIds: string[] = flatten(imageLinks.map(_ => _.imageIds));
-
-        const urls: { [imageId: string]: Blob } = await this.imagestore.getThumbnailData(imageIds);
-
-        console.log("types component load images");
-        console.log(imageLinks);
-        console.log(imageIds);
-        console.log(urls);
-
-        imageLinks.forEach(imageLink => this.images[imageLink.resourceId] = imageLink.imageIds.map(id => urls[id]));
     }
 
 

@@ -87,8 +87,6 @@ export const appInitializerFactory = (
 
     await setUpDatabase(settingsService, settings, progress);
 
-    imagestore.setDb(pouchdbDatastore.getDb());
-
     await loadSampleData(settings, pouchdbDatastore.getDb(), imageConverter, progress);
 
     const services = await loadConfiguration(settingsService, progress);

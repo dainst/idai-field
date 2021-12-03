@@ -3,7 +3,8 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../../../../model/model-util';
 import {ImageRowItem} from '../../../../image/row/image-row';
-import {Imagestore, IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
+import {IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
+import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class TypeRowComponent implements OnChanges {
     @Output() onSelect: EventEmitter<void> = new EventEmitter<void>();
 
 
-    constructor(private imagestore: Imagestore) {}
+    constructor(private imageUrlMaker: ImageUrlMaker) {}
 
 
     async ngOnChanges() {
@@ -36,6 +37,6 @@ export class TypeRowComponent implements OnChanges {
         const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
         if (!mainImageId) return undefined;
 
-        return await this.imagestore.getUrl(mainImageId, IMAGEVERSION.THUMBNAIL);
+        return await this.imageUrlMaker.getUrl(mainImageId, IMAGEVERSION.THUMBNAIL);
     }
 }

@@ -1,7 +1,7 @@
 import {Component, OnChanges, Input, OnInit} from '@angular/core';
 import {ImageDocument} from 'idai-field-core';
 import {ImageContainer} from '../../../services/imagestore/image-container';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
 import {M} from '../../messages/m';
 import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
@@ -16,21 +16,24 @@ import {Messages} from '../../messages/messages';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageViewerComponent implements OnInit, OnChanges {
+export class ImageViewerComponent implements /* OnInit,*/ OnChanges {
 
     @Input() image: ImageDocument;
 
     public imageContainer: ImageContainer;
 
 
-    constructor(private imagestore: Imagestore,
-                private messages: Messages) {}
+    constructor(
+        private imageUrlMaker: ImageUrlMaker,
+        private messages: Messages
+    ) {}
 
 
-    ngOnInit() {
+    // TODO: Was wird hier genau gecheckt? Ob die Ordner bereist angelegt wurden? Das sollte der ImageStore eigentlich selber machen.
+    // ngOnInit() {
 
-        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
-    }
+    //     if (!this.imageStore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+    // }
 
 
     async ngOnChanges() {
@@ -50,15 +53,15 @@ export class ImageViewerComponent implements OnInit, OnChanges {
         const image: ImageContainer = { document: document };
 
         try {
-            image.imgSrc = await this.imagestore.getUrl(document.resource.id, IMAGEVERSION.ORIGINAL);
+            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, IMAGEVERSION.ORIGINAL);
         } catch (e) {
-            image.imgSrc = BlobMaker.blackImg;
+            image.imgSrc = ImageUrlMaker.blackImg;
         }
 
         try {
-            image.thumbSrc = await this.imagestore.getUrl(document.resource.id, IMAGEVERSION.THUMBNAIL);
+            image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, IMAGEVERSION.THUMBNAIL);
         } catch (e) {
-            image.thumbSrc = BlobMaker.blackImg;
+            image.thumbSrc = ImageUrlMaker.blackImg;
         }
 
         this.showConsoleErrorIfImageIsMissing(image);
@@ -75,7 +78,7 @@ export class ImageViewerComponent implements OnInit, OnChanges {
             ? image.document.resource.id
             : 'unknown';
 
-        if (image.thumbSrc === BlobMaker.blackImg) {
+        if (image.thumbSrc === ImageUrlMaker.blackImg) {
             showMissingImageMessageOnConsole(imageId);
         } else {
             showMissingOriginalImageMessageOnConsole(imageId);

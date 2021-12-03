@@ -68,7 +68,6 @@ export class AppController {
 
         const db = this.pouchdbDatastore.createDbForTesting('test');
         this.pouchdbDatastore.setDb_e2e(db);
-        this.imagestore.setDb(db);
 
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();

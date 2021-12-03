@@ -138,7 +138,7 @@ export class ImageUploader {
 
         const duplicateFilenames: string[] = [];
 
-        for (let file of files) {
+        for (const file of files) {
             if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
@@ -150,14 +150,14 @@ export class ImageUploader {
                         await this.uploadFile(file, category, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
-                } catch(e) {
+                } catch (e) {
                     uploadResult.messages.push(e);
                 }
             }
         }
 
         uploadResult.uploadedImages = this.uploadStatus.getHandledImages() - duplicateFilenames.length;
-        if (duplicateFilenames.length == 1) {
+        if (duplicateFilenames.length === 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
         } else if (duplicateFilenames.length > 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
@@ -169,11 +169,11 @@ export class ImageUploader {
 
     private async uploadWldFiles(files: File[]) {
 
-        let messages: string[][] = [];
-        let unmatchedWldFiles = [];
+        const messages: string[][] = [];
+        const unmatchedWldFiles = [];
 
-        outer: for (let file of files) {
-            for (let extension of ImageUploader.supportedImageFileTypes) {
+        outer: for (const file of files) {
+            for (const extension of ImageUploader.supportedImageFileTypes) {
                 const candidateName = ExtensionUtil.replaceExtension(file.name, extension);
                 const result = await this.findImageByFilename(candidateName);
                 if (result.totalCount > 0) {
@@ -188,12 +188,11 @@ export class ImageUploader {
             unmatchedWldFiles.push(file.name);
         }
 
-        (unmatchedWldFiles.length > 0)
-            && messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        if (unmatchedWldFiles.length > 0) messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
 
         const matchedFiles = files.length - unmatchedWldFiles.length;
-        (matchedFiles == 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
-        (matchedFiles > 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
 
         return messages;
     }
@@ -254,7 +253,7 @@ export class ImageUploader {
 
         return new Promise((resolve, reject) => {
 
-            let img = new Image();
+            const img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
                 const doc: NewImageDocument = {
@@ -271,7 +270,7 @@ export class ImageUploader {
                 };
 
                 if (depictsRelationTarget && depictsRelationTarget.resource.id) {
-                    doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
+                    doc.resource.relations.depicts = [depictsRelationTarget.resource.id];
                 }
 
                 this.relationsManager.update(doc)
@@ -283,17 +282,17 @@ export class ImageUploader {
     }
 
 
-    private static getFiles(_event: Event): Array<File> {
+    private static getFiles(e: Event): Array<File> {
 
-        const event = _event as any;
+        const event = e as any;
 
         if (!event) return [];
         let files = [];
 
-        if (event['dataTransfer']) {
-            if (event['dataTransfer']['files']) files = event['dataTransfer']['files'];
-        } else if (event['srcElement']) {
-            if (event['srcElement']['files']) files = event['srcElement']['files'];
+        if (event.dataTransfer) {
+            if (event.dataTransfer.files) files = event.dataTransfer.files;
+        } else if (event.srcElement) {
+            if (event.srcElement.files) files = event.srcElement.files;
         }
 
         return Array.from(files);

@@ -6,7 +6,8 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class FsAdapter {
 
-    public fileExists(path: string) {
+
+    public fileExists(path: string): boolean {
 
         return fs.existsSync(path);
     }
@@ -31,25 +32,24 @@ export class FsAdapter {
 
 
     public mkdir(path: string, recursive: boolean) {
-
         fs.mkdirSync(path, { recursive });
     }
 
 
-    public isDirectory(path: string) {
+    public isDirectory(path: string): boolean{
 
         return fs.lstatSync(path).isDirectory();
     }
 
 
     // see https://stackoverflow.com/a/16684530
-    public listFiles(dir) {
+    public listFiles(dir: string): string[] {
 
-        var results = [];
-        var list = fs.readdirSync(dir);
+        let results = [];
+        const list: string[] = fs.readdirSync(dir);
         list.forEach(file => {
             file = dir + '/' + file;
-            var stat = fs.statSync(file);
+            const stat = fs.statSync(file);
             if (stat && stat.isDirectory()) {
                 /* Recurse into a subdirectory */
                 results = results.concat(this.listFiles(file));

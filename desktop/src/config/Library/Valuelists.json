@@ -41940,52 +41940,62 @@
       },
       "Phase 1": {
         "labels": {
-          "de": "Phase 1"
+          "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+          "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
         }
       },
       "Phase 2": {
         "labels": {
-          "de": "Phase 2"
+          "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+          "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
         }
       },
       "Phase 3": {
         "labels": {
-          "de": "Phase 3"
+          "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+          "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
         }
       },
       "Phase 4": {
         "labels": {
-          "de": "Phase 4"
+          "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+          "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
         }
       },
       "Phase 5": {
         "labels": {
-          "de": "Phase 5"
+          "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+          "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
         }
       },
       "Phase 6": {
         "labels": {
-          "de": "Phase 6"
+          "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+          "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
         }
       },
       "Phase 7": {
         "labels": {
-          "de": "Phase 7"
+          "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+          "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
         }
       },
       "Phase 8": {
         "labels": {
-          "de": "Phase 8"
+          "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+          "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
         }
       },
       "Phase 9": {
         "labels": {
-          "de": "Phase 9"
+          "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+          "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
         }
       },
       "Phase 10": {
         "labels": {
-          "de": "Phase 10"
+          "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+          "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
         }
       }
     },
@@ -52428,7 +52438,19 @@
       }
     },
     "order": [
-      "geodeticSurvey","observationAndDescription","architecturalSurvey", "excavation", "cleaning", "overflying", "archaeologicalSurvey", "electricalResistivityTomography", "geomagnetics", "groundPenetratingRadar", "seismicSurvey", "LIDAR", "coring"
+      "geodeticSurvey",
+      "observationAndDescription",
+      "architecturalSurvey",
+      "excavation",
+      "cleaning",
+      "overflying",
+      "archaeologicalSurvey",
+      "electricalResistivityTomography",
+      "geomagnetics",
+      "groundPenetratingRadar",
+      "seismicSurvey",
+      "LIDAR",
+      "coring"
     ]
   },
   "Place-siteClassification-Selinunt": {
@@ -52502,7 +52524,7 @@
         }
       },
       "Planierschicht": {
-        "labels":{
+        "labels": {
           "it": "Strato di Livellamento",
           "de": "Planierschicht"
         }
@@ -52567,7 +52589,7 @@
           "de": "Fundamentgraben"
         }
       },
-      "Zerstörungshorizont":{
+      "Zerstörungshorizont": {
         "labels": {
           "it": "Livello di distruzione",
           "de": "Zerstörungshorizont"
@@ -53688,7 +53710,7 @@
           "de": "Chytra"
         }
       },
-      "Cup-skyphos":{
+      "Cup-skyphos": {
         "labels": {
           "de": "Cup-skyphos"
         }
@@ -54682,7 +54704,20 @@
         }
       }
     },
-    "order": ["Estricht", "Cocciopesto", "Mosaik", "Opus sectile", "Opus signinum", "Steinboden", "Stampflehm", "Terrazzo", "Plattenboden", "Ziegelboden", "vergängliches Material", "Anderes"]
+    "order": [
+      "Estricht",
+      "Cocciopesto",
+      "Mosaik",
+      "Opus sectile",
+      "Opus signinum",
+      "Steinboden",
+      "Stampflehm",
+      "Terrazzo",
+      "Plattenboden",
+      "Ziegelboden",
+      "vergängliches Material",
+      "Anderes"
+    ]
   },
   "Find-storagePlace-Selinunt": {
     "createdBy": "",
@@ -54940,7 +54975,16 @@
         }
       }
     },
-    "order": ["fingerprints", "animalTracks", "otherImprints", "graffito", "painting", "stamp", "inscription", "combIncision"]
+    "order": [
+      "fingerprints",
+      "animalTracks",
+      "otherImprints",
+      "graffito",
+      "painting",
+      "stamp",
+      "inscription",
+      "combIncision"
+    ]
   },
   "Brick-roofingSystem-Selinunt": {
     "creationDate": "28-6-2020",
@@ -57304,7 +57348,7 @@
       }
     }
   },
-"BuildingPart-denomination-Selinunt": {
+  "BuildingPart-denomination-Selinunt": {
     "createdBy": "Julius Bussilliat",
     "creationDate": "19.07.2021",
     "description": {},
@@ -57597,7 +57641,44 @@
         "it": "indeterminato"
       }
     },
-    "order": ["wall", "wallBlock", "column", "capital", "antaCapital", "pilasterCapital", "basis", "triglyph", "metope", "cyma", "sima", "cornice", "architrave", "stylobateBlock", "tympanumBlock", "blockWithMoulding", "corniceBlock", "toothCutEntablature", "concaveMoulding", "trapezoidArchBlock", "palisadeBlock", "loopHole", "crenelationBlock", "waterspout", "tile", "altarPiece", "blockWithFluting", "leseneBlock", "stela", "indeterminate", "collaps", "workedBedrock", "waterchannel", "well", "building", "other"]
+    "order": [
+      "wall",
+      "wallBlock",
+      "column",
+      "capital",
+      "antaCapital",
+      "pilasterCapital",
+      "basis",
+      "triglyph",
+      "metope",
+      "cyma",
+      "sima",
+      "cornice",
+      "architrave",
+      "stylobateBlock",
+      "tympanumBlock",
+      "blockWithMoulding",
+      "corniceBlock",
+      "toothCutEntablature",
+      "concaveMoulding",
+      "trapezoidArchBlock",
+      "palisadeBlock",
+      "loopHole",
+      "crenelationBlock",
+      "waterspout",
+      "tile",
+      "altarPiece",
+      "blockWithFluting",
+      "leseneBlock",
+      "stela",
+      "indeterminate",
+      "collaps",
+      "workedBedrock",
+      "waterchannel",
+      "well",
+      "building",
+      "other"
+    ]
   },
   "BuildingPart-dating-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -57633,7 +57714,12 @@
         }
       }
     },
-    "order": ["recent", "medieval", "antique", "unclear"]
+    "order": [
+      "recent",
+      "medieval",
+      "antique",
+      "unclear"
+    ]
   },
   "BuildingPart-material-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -57690,7 +57776,15 @@
         }
       }
     },
-    "order": ["stone", "brick", "ashlars", "cement", "wood", "metall", "other"]
+    "order": [
+      "stone",
+      "brick",
+      "ashlars",
+      "cement",
+      "wood",
+      "metall",
+      "other"
+    ]
   },
   "BuildingPart-conservationStatus-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -57740,7 +57834,14 @@
         }
       }
     },
-    "order": ["inSitu", "wellPreserved", "collapsed", "displaced", "damaged", "destroyed"]
+    "order": [
+      "inSitu",
+      "wellPreserved",
+      "collapsed",
+      "displaced",
+      "damaged",
+      "destroyed"
+    ]
   },
   "BuildingPart-references-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -57804,7 +57905,9 @@
         }
       }
     },
-    "order": [""]
+    "order": [
+      ""
+    ]
   },
   "BuildingPart-assignment-Selinunt": {
     "creationDate": "13.08.2021",
@@ -58110,9 +58213,23 @@
           "de": "unregelmäßig"
         }
       }
-    }, 
-    "order":["clear", "diffuse", "sharp", "horizontal", "inclined", "even", "wavy", "pouched", "wedge-shaped", "crevice-shaped", "drop-shaped", "maculopapular","irregular"]
-  }, 
+    },
+    "order": [
+      "clear",
+      "diffuse",
+      "sharp",
+      "horizontal",
+      "inclined",
+      "even",
+      "wavy",
+      "pouched",
+      "wedge-shaped",
+      "crevice-shaped",
+      "drop-shaped",
+      "maculopapular",
+      "irregular"
+    ]
+  },
   "layerBoundariesDownwards-Selinunt": {
     "createdBy": "Julius Bussilliat",
     "creationDate": "24. 06.2021",
@@ -58184,7 +58301,21 @@
         }
       }
     },
-    "order":["clear", "diffuse", "sharp", "horizontal", "inclined", "even", "wavy", "pouched", "wedge-shaped", "crevice-shaped", "drop-shaped", "maculopapular", "irregular"]
+    "order": [
+      "clear",
+      "diffuse",
+      "sharp",
+      "horizontal",
+      "inclined",
+      "even",
+      "wavy",
+      "pouched",
+      "wedge-shaped",
+      "crevice-shaped",
+      "drop-shaped",
+      "maculopapular",
+      "irregular"
+    ]
   },
   "grainSize1-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58347,7 +58478,38 @@
         }
       }
     },
-    "order":["Ss", "Su2", "S12", "S13", "St2", "Su3", "Su4", "Slu", "S14", "St3", "Ls2", "Ls3", "Ls4", "Lt2", "Lts", "Ts4", "Ts3", "Uu", "Us", "Ut2", "Ut3", "Uls", "Ut4", "Lu", "Lt3", "Tu3", "Tu4", "Ts2", "T1", "Tu2", "Tt"
+    "order": [
+      "Ss",
+      "Su2",
+      "S12",
+      "S13",
+      "St2",
+      "Su3",
+      "Su4",
+      "Slu",
+      "S14",
+      "St3",
+      "Ls2",
+      "Ls3",
+      "Ls4",
+      "Lt2",
+      "Lts",
+      "Ts4",
+      "Ts3",
+      "Uu",
+      "Us",
+      "Ut2",
+      "Ut3",
+      "Uls",
+      "Ut4",
+      "Lu",
+      "Lt3",
+      "Tu3",
+      "Tu4",
+      "Ts2",
+      "T1",
+      "Tu2",
+      "Tt"
     ]
   },
   "grainSize2-Selinunt": {
@@ -58364,7 +58526,7 @@
         "labels": {
           "de": "Mittelgrus"
         }
-      },  
+      },
       "Grobgrus": {
         "labels": {
           "de": "Grobgrus"
@@ -58374,7 +58536,7 @@
         "labels": {
           "de": "Feinkies"
         }
-      },    
+      },
       "Mittelkies": {
         "labels": {
           "de": "Mittelkies"
@@ -58384,30 +58546,40 @@
         "labels": {
           "de": "Grobkies"
         }
-      },  
+      },
       "Kantige Steine": {
         "labels": {
           "de": "Kantige Steine"
         }
-      },    
+      },
       "Kantige Blöcke": {
         "labels": {
           "de": "Kantige Blöcke"
         }
-      },  
+      },
       "Gerundete Steine": {
         "labels": {
           "de": "Gerundete Steine"
         }
-      },  
+      },
       "Gerundete Blöcke": {
         "labels": {
           "de": "Gerundete Blöcke"
         }
       }
     },
-    "order":["Feingrus", "Mittelgrus", "Grobgrus", "Feinkies", "Mittelkies", "Grobkies", "Kantige Steine", "Kantige Blöcke", "Gerundete Steine", "Gerundete Blöcke"
-    ]    
+    "order": [
+      "Feingrus",
+      "Mittelgrus",
+      "Grobgrus",
+      "Feinkies",
+      "Mittelkies",
+      "Grobkies",
+      "Kantige Steine",
+      "Kantige Blöcke",
+      "Gerundete Steine",
+      "Gerundete Blöcke"
+    ]
   },
   "boneAmount-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58445,7 +58617,14 @@
         }
       }
     },
-    "order": ["veryLow", "low", "medium", "high", "veryHigh", "extremlyHigh"]
+    "order": [
+      "veryLow",
+      "low",
+      "medium",
+      "high",
+      "veryHigh",
+      "extremlyHigh"
+    ]
   },
   "soilConsistency-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58483,7 +58662,14 @@
         }
       }
     },
-    "order": ["ko1", "ko2", "ko3", "ko4", "ko5", "ko6"]
+    "order": [
+      "ko1",
+      "ko2",
+      "ko3",
+      "ko4",
+      "ko5",
+      "ko6"
+    ]
   },
   "moistureCondition-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58516,7 +58702,13 @@
         }
       }
     },
-    "order": ["feu1", "feu2", "feu3", "feu4", "feu5"]
+    "order": [
+      "feu1",
+      "feu2",
+      "feu3",
+      "feu4",
+      "feu5"
+    ]
   },
   "hydromorphology1-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58549,7 +58741,13 @@
         }
       }
     },
-    "order": ["e", "ed", "eh", "eo", "es"]
+    "order": [
+      "e",
+      "ed",
+      "eh",
+      "eo",
+      "es"
+    ]
   },
   "hydromorphology2-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58582,7 +58780,13 @@
         }
       }
     },
-    "order": ["r", "rb", "rg", "rt", "rs"]
+    "order": [
+      "r",
+      "rb",
+      "rg",
+      "rt",
+      "rs"
+    ]
   },
   "humusContent-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58630,7 +58834,16 @@
         }
       }
     },
-    "order": ["h0", "h1", "h2", "h3", "h4", "h5", "h6", "h7"]
+    "order": [
+      "h0",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "h7"
+    ]
   },
   "limeContent-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58693,7 +58906,19 @@
         }
       }
     },
-    "order": ["c0", "c1", "c2", "c3", "c3.2", "c.3.3", "c3.4", "c4", "c5", "c6", "c7"]
+    "order": [
+      "c0",
+      "c1",
+      "c2",
+      "c3",
+      "c3.2",
+      "c.3.3",
+      "c3.4",
+      "c4",
+      "c5",
+      "c6",
+      "c7"
+    ]
   },
   "rootPenetration-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58736,7 +58961,15 @@
         }
       }
     },
-    "order": ["Wp0", "Wp1", "Wp2", "Wp3", "Wp4", "Wp5", "Wp6"]
+    "order": [
+      "Wp0",
+      "Wp1",
+      "Wp2",
+      "Wp3",
+      "Wp4",
+      "Wp5",
+      "Wp6"
+    ]
   },
   "macroStructuralForms-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58828,7 +59061,22 @@
         }
       }
     },
-    "order": ["singleGrainStructure", "massiveStructure", "coherentStructure", "crackStructure", "columnarStructure", "layerStructure", "crumblyStructure", "subangularBlockyStructure", "polyhedralStructure", "prismaticStructure", "platyStructure", "pedStructure", "clodStructure", "RollAggregateStructure"]
+    "order": [
+      "singleGrainStructure",
+      "massiveStructure",
+      "coherentStructure",
+      "crackStructure",
+      "columnarStructure",
+      "layerStructure",
+      "crumblyStructure",
+      "subangularBlockyStructure",
+      "polyhedralStructure",
+      "prismaticStructure",
+      "platyStructure",
+      "pedStructure",
+      "clodStructure",
+      "RollAggregateStructure"
+    ]
   },
   "constituents-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58854,7 +59102,11 @@
         }
       }
     },
-    "order": ["charcoal", "Schalenbruch", "Etc."]
+    "order": [
+      "charcoal",
+      "Schalenbruch",
+      "Etc."
+    ]
   },
   "SurveyUnit-visibility-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58890,7 +59142,12 @@
         }
       }
     },
-    "order": ["veryGood", "good", "mediocre", "bad"]
+    "order": [
+      "veryGood",
+      "good",
+      "mediocre",
+      "bad"
+    ]
   },
   "SurveyUnit-shade-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58907,15 +59164,20 @@
       "partially": {
         "de": "partiell beschattet",
         "en": "partially shaded",
-        "it": "in penombra"  
+        "it": "in penombra"
       },
       "complete": {
         "de": "komplett beschattet",
         "en": "completely shaded",
-        "it": "coperto"  
+        "it": "coperto"
       }
     },
-    "order": ["veryGood", "good", "mediocre", "bad"]
+    "order": [
+      "veryGood",
+      "good",
+      "mediocre",
+      "bad"
+    ]
   },
   "SurveyUnit-humidity-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58944,7 +59206,11 @@
         }
       }
     },
-    "order": ["dry", "wet", "soaked"]
+    "order": [
+      "dry",
+      "wet",
+      "soaked"
+    ]
   },
   "SurveyUnit-slope-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -58973,7 +59239,11 @@
         }
       }
     },
-    "order": ["steep", "slight", "none"]
+    "order": [
+      "steep",
+      "slight",
+      "none"
+    ]
   },
   "SurveyUnit-vegetation-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59009,7 +59279,12 @@
         }
       }
     },
-    "order": ["completeCover", "partialCover", "patches", "none"]
+    "order": [
+      "completeCover",
+      "partialCover",
+      "patches",
+      "none"
+    ]
   },
   "SurveyUnit-consistency-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59052,7 +59327,13 @@
         }
       }
     },
-    "order": ["hard", "compact", "loose", "porous", "tenacious"]
+    "order": [
+      "hard",
+      "compact",
+      "loose",
+      "porous",
+      "tenacious"
+    ]
   },
   "SurveyUnit-clumps-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59081,7 +59362,11 @@
         }
       }
     },
-    "order": ["many", "few", "none"]
+    "order": [
+      "many",
+      "few",
+      "none"
+    ]
   },
   "SurveyUnit-stones-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59166,7 +59451,19 @@
         }
       }
     },
-    "order": ["many", "few", "none", "large", "medium", "small", "allSizes", "pebbles", "boulders", "workedStones", "ashlars"]
+    "order": [
+      "many",
+      "few",
+      "none",
+      "large",
+      "medium",
+      "small",
+      "allSizes",
+      "pebbles",
+      "boulders",
+      "workedStones",
+      "ashlars"
+    ]
   },
   "SurveyUnit-samplingMethod-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59202,7 +59499,12 @@
         }
       }
     },
-    "order": ["totalCollection", "counting+sampling", "sampling", "noCollection"]
+    "order": [
+      "totalCollection",
+      "counting+sampling",
+      "sampling",
+      "noCollection"
+    ]
   },
   "SurveyUnit-surfaceTreatment-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59238,7 +59540,12 @@
         }
       }
     },
-    "order": ["surfaceCleaning", "shovelTest", "diggingPits", "none"]
+    "order": [
+      "surfaceCleaning",
+      "shovelTest",
+      "diggingPits",
+      "none"
+    ]
   },
   "SurveyUnit-quantityOfFinds-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59266,7 +59573,12 @@
         }
       }
     },
-    "order": ["1-20","20-50", "50-100", ">100"]
+    "order": [
+      "1-20",
+      "20-50",
+      "50-100",
+      ">100"
+    ]
   },
   "SurveyUnit-qualityOfFinds-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59386,7 +59698,22 @@
         }
       }
     },
-    "order": ["coarseWare", "fineWare", "largeContainers", "structuralElement", "architecturalDecoration", "terracotta", "stoneObjects", "bones", "iron", "bronze", "lead", "coin", "slags", "organicResidues"]
+    "order": [
+      "coarseWare",
+      "fineWare",
+      "largeContainers",
+      "structuralElement",
+      "architecturalDecoration",
+      "terracotta",
+      "stoneObjects",
+      "bones",
+      "iron",
+      "bronze",
+      "lead",
+      "coin",
+      "slags",
+      "organicResidues"
+    ]
   },
   "Survey-slope-Seliunt": {
     "createdBy": "Julius Bussilliat",
@@ -59415,7 +59742,11 @@
         }
       }
     },
-  "order": ["steep", "slight", "none"]
+    "order": [
+      "steep",
+      "slight",
+      "none"
+    ]
   },
   "Survey-visibility-Seliunt": {
     "createdBy": "Julius Bussilliat",
@@ -59451,7 +59782,12 @@
         }
       }
     },
-    "order": ["veryGood", "good", "mediocre", "bad"]
+    "order": [
+      "veryGood",
+      "good",
+      "mediocre",
+      "bad"
+    ]
   },
   "Survey-chronologyFinds-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59529,7 +59865,18 @@
         }
       }
     },
-    "order": ["prehistory", "bronzeAge", "ironAge", "greekPeriod", "hellenisticPeriod", "imperialPeriod", "lateAntiquity", "middleAges", "modernPeriod", "presentTime"]
+    "order": [
+      "prehistory",
+      "bronzeAge",
+      "ironAge",
+      "greekPeriod",
+      "hellenisticPeriod",
+      "imperialPeriod",
+      "lateAntiquity",
+      "middleAges",
+      "modernPeriod",
+      "presentTime"
+    ]
   },
   "SurfaceCleaning-operation-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59586,7 +59933,15 @@
         }
       }
     },
-    "order": ["uprooting", "mowing", "harking", "stoneRemoval", "swardRemoval", "uncoverArchaeologicalFinding", "cleaningOfArchitecture"]
+    "order": [
+      "uprooting",
+      "mowing",
+      "harking",
+      "stoneRemoval",
+      "swardRemoval",
+      "uncoverArchaeologicalFinding",
+      "cleaningOfArchitecture"
+    ]
   },
   "Find-furtherAnalysis-Selinunt": {
     "createdBy": "Julius Bussilliat",
@@ -59608,7 +59963,10 @@
         }
       }
     },
-    "order": ["yes", "no"]
+    "order": [
+      "yes",
+      "no"
+    ]
   },
   "AnimalBones-boneClassification-Selinunt": {
     "creationDate": "12.08.2021",
@@ -59791,7 +60149,14 @@
         }
       }
     },
-    "order": ["flooring", "wallCovering", "door", "window", "roof", "other"]
+    "order": [
+      "flooring",
+      "wallCovering",
+      "door",
+      "window",
+      "roof",
+      "other"
+    ]
   },
   "ConstructionMaterial-material-Selinunt": {
     "creationDate": "12.08.2021",
@@ -59981,7 +60346,18 @@
         }
       }
     },
-    "order": ["basin", "wellCasing", "roof", "flooring", "tomb", "waterchannel", "wall", "oven", "wallCovering", "other"]
+    "order": [
+      "basin",
+      "wellCasing",
+      "roof",
+      "flooring",
+      "tomb",
+      "waterchannel",
+      "wall",
+      "oven",
+      "wallCovering",
+      "other"
+    ]
   },
   "Brick-tileType-Selinunt": {
     "creationDate": "13.08.2021",
@@ -60031,7 +60407,14 @@
         }
       }
     },
-    "order": ["plainTile", "coverTile", "ridgeTile", "hollowTile", "other", "unspecified"]
+    "order": [
+      "plainTile",
+      "coverTile",
+      "ridgeTile",
+      "hollowTile",
+      "other",
+      "unspecified"
+    ]
   },
   "Brick-type-Selinunt": {
     "creationDate": "13.08.2021",
@@ -60060,7 +60443,7 @@
         }
       }
     }
-   },
+  },
   "BuildingPart-evaluationAssignment-Selinunt": {
     "creationDate": "13.08.2021",
     "createdBy": "Julius Bussilliat",
@@ -60111,7 +60494,11 @@
         "en": "unclear"
       }
     },
-    "order":["inSitu", "layerOfDebrisFromCollapse", "unclear"]
+    "order": [
+      "inSitu",
+      "layerOfDebrisFromCollapse",
+      "unclear"
+    ]
   },
   "Architecture-blockProcessing-SelinuntAkropolis": {
     "creationDate": "15.11.2021",
@@ -60297,17 +60684,17 @@
         "labels": {
           "de": "Humus"
         }
-      },      
+      },
       "debrisLayer": {
         "labels": {
           "de": "Schuttschicht"
         }
-      },      
+      },
       "filling": {
         "labels": {
           "de": "Auffüllung"
         }
-      },      
+      },
       "collapse": {
         "labels": {
           "de": "Versturz"
@@ -60339,22 +60726,22 @@
         "labels": {
           "de": "Ton: Haushaltsware"
         }
-      }, 
+      },
       "clayCoarseWare": {
         "labels": {
           "de": "Ton: Grobe Ware"
         }
-      },      
+      },
       "clayTools": {
         "labels": {
           "de": "Ton: Geräte"
         }
-      },      
+      },
       "brokenBricks": {
         "labels": {
           "de": "Ziegelbruch"
         }
-      },      
+      },
       "ceramicSlag": {
         "labels": {
           "de": "Keramikschlacke"
@@ -60362,7 +60749,7 @@
       },
       "burntClayOrCeramics": {
         "labels": {
-          "de": "Verbrannte/r Ton/Keramik" 
+          "de": "Verbrannte/r Ton/Keramik"
         }
       },
       "clayLumps": {
@@ -60386,17 +60773,17 @@
         "labels": {
           "de": "Basalt"
         }
-      },      
+      },
       "Marmor": {
         "labels": {
           "de": "Marmor"
         }
-      },      
+      },
       "Sandstein": {
         "labels": {
           "de": "Sandstein"
         }
-      },      
+      },
       "Tuff": {
         "labels": {
           "de": "Tuff"

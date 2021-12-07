@@ -6,6 +6,7 @@
         "de": "Ort",
         "en": "Heritage Site",
         "es": "Sitio",
+        "fr": "Lieu",
         "it": "Luogo"
       },
       "description": {},
@@ -21,6 +22,7 @@
                 "de": "Kategorie",
                 "en": "Category",
                 "es": "Categoría",
+                "fr": "Catégorie",
                 "it": "Categoria"
               },
               "description": {}
@@ -40,12 +42,14 @@
                 "de": "Bezeichner",
                 "en": "Identifier",
                 "es": "Identificador",
+                "fr": "Identifiant",
                 "it": "Identificatore"
               },
               "description": {
                 "de": "Eindeutiger Bezeichner dieser Ressource",
                 "en": "Unique identifier of this resource",
                 "es": "Identificador único de este recurso",
+                "fr": "Identifiant unique pour cette ressource",
                 "it": "Identificatore unico di questa risorsa"
               }
             },
@@ -56,6 +60,7 @@
                 "de": "Kurzbeschreibung",
                 "en": "Short description",
                 "es": "Breve descripción",
+                "fr": "Description sommaire",
                 "it": "Descrizione breve"
               },
               "description": {}
@@ -68,16 +73,8 @@
                 "de": "Wird gezeigt in",
                 "en": "Depicted in",
                 "es": "Representado en",
+                "fr": "Illustrée dans",
                 "it": "È rappresentato in"
-              },
-              "description": {}
-            },
-            {
-              "name": "hasMapLayer",
-              "label": {
-                "de": "Hat Kartenhintergrund",
-                "en": "Has map layer",
-                "it": "Ha lo sfondo cartografico"
               },
               "description": {}
             },
@@ -87,6 +84,7 @@
                 "de": "Liegt in",
                 "en": "Lies within",
                 "es": "Dentro de",
+                "fr": "Dans",
                 "it": "Dentro a"
               },
               "description": {}
@@ -96,6 +94,7 @@
             "de": "Stammdaten",
             "en": "Core",
             "es": "Datos maestros",
+            "fr": "Noyau",
             "it": "Dati base"
           }
         },
@@ -109,6 +108,7 @@
               "label": {
                 "de": "Gazetteer-ID",
                 "en": "Gazetteer ID",
+                "fr": "No. d'index géographique",
                 "it": "Gazetteer-ID"
               },
               "description": {
@@ -124,6 +124,7 @@
                 "de": "Ortsname",
                 "en": "Place name",
                 "es": "Yacimiento",
+                "fr": "Nom du lieu",
                 "it": "Nome del luogo"
               },
               "description": {
@@ -262,6 +263,7 @@
                 "de": "Klassifikation Fundplatz",
                 "en": "General archaeological classification for the site",
                 "es": "Clasificación del yacimiento",
+                "fr": "Classification du site",
                 "it": "Classificazione sito"
               },
               "description": {}
@@ -359,6 +361,7 @@
               "label": {
                 "de": "Klassifikation Fundstelle",
                 "en": "Findspot classification",
+                "fr": "Classification du lieu de découverte",
                 "it": "Classificazione luogo di ritrovamento"
               },
               "description": {}
@@ -370,6 +373,7 @@
               "label": {
                 "de": "Moderne Eingriffe",
                 "en": "Modern structures on the site",
+                "fr": "Intervention récente",
                 "it": "Interventi moderni"
               },
               "description": {
@@ -385,6 +389,7 @@
                 "de": "Ausgrabungsgeschichte",
                 "en": "Excavation history",
                 "es": "Historia de la excavación",
+                "fr": "Historique de la fouille",
                 "it": "Storia degli scavi"
               },
               "description": {
@@ -399,6 +404,7 @@
               "label": {
                 "de": "Forschungsgeschichte",
                 "en": "Research history",
+                "fr": "Historique de la recherche",
                 "it": "Storia della ricerca"
               },
               "description": {
@@ -413,6 +419,7 @@
               "label": {
                 "de": "Baugeschichte",
                 "en": "Building research history",
+                "fr": "Histoire du bâtiment/de la construction ? ",
                 "it": "Storia dell'edificio"
               },
               "description": {
@@ -427,11 +434,13 @@
               "label": {
                 "de": "Fundumstände",
                 "en": "Find situation",
+                "fr": "Contexte de la découverte",
                 "it": "Circostanze del ritrovamento"
               },
               "description": {
                 "de": "Nähere Beschreibung, unter welchen Bedingungen und von wem der Fundplatz entdeckt wurde",
                 "en": "Description of the circumstances of the finding place discovery and the persons involved",
+                "fr": "Description des circonstances de la découverte du lieu et personnes impliquées dans celle-ci",
                 "it": "Descrizione più dettagliata delle condizioni in cui e da chi è stato scoperto il sito"
               }
             },
@@ -597,6 +606,7 @@
                 "de": "Beschreibung",
                 "en": "Description",
                 "es": "Descripción",
+                "fr": "Description",
                 "it": "Descrizione"
               },
               "description": {
@@ -610,6 +620,7 @@
             "de": "Ort",
             "en": "Heritage Site",
             "es": "Sitio",
+            "fr": "Lieu",
             "it": "Luogo"
           }
         },
@@ -622,6 +633,7 @@
               "label": {
                 "de": "Geometrie",
                 "en": "Geometry",
+                "fr": "Géométrie",
                 "it": "Geometria"
               },
               "description": {}
@@ -634,6 +646,7 @@
                 "de": "Beschreibung der räumlichen Lage",
                 "en": "Spatial location",
                 "es": "Descripción de la ubicación",
+                "fr": "Localisation spatiale",
                 "it": "Descrizione della posizione spaziale"
               },
               "description": {
@@ -647,6 +660,7 @@
             "de": "Lage / Kontext",
             "en": "Position / Context",
             "es": "Ubicación / contexto",
+            "fr": "Position / Contexte",
             "it": "Posizione"
           }
         },
@@ -660,6 +674,7 @@
               "label": {
                 "de": "Datierung",
                 "en": "Dating",
+                "fr": "Datation",
                 "it": "Datazione"
               },
               "description": {}
@@ -670,6 +685,7 @@
             "de": "Zeit",
             "en": "Time",
             "es": "Cronología",
+            "fr": "Temps",
             "it": "Cronologia"
           }
         }
@@ -687,6 +703,7 @@
         "de": "Abbildung",
         "en": "Image",
         "es": "Imagen",
+        "fr": "Image",
         "it": "Immagine"
       },
       "description": {},
@@ -702,6 +719,7 @@
                 "de": "Kategorie",
                 "en": "Category",
                 "es": "Categoría",
+                "fr": "Catégorie",
                 "it": "Categoria"
               },
               "description": {}
@@ -721,12 +739,14 @@
                 "de": "Bezeichner",
                 "en": "Identifier",
                 "es": "Identificador",
+                "fr": "Identifiant",
                 "it": "Identificatore"
               },
               "description": {
                 "de": "Eindeutiger Bezeichner dieser Ressource",
                 "en": "Unique identifier of this resource",
                 "es": "Identificador único de este recurso",
+                "fr": "Identifiant unique pour cette ressource",
                 "it": "Identificatore unico di questa risorsa"
               }
             },
@@ -737,6 +757,7 @@
                 "de": "Kurzbeschreibung",
                 "en": "Short description",
                 "es": "Breve descripción",
+                "fr": "Description sommaire",
                 "it": "Descrizione breve"
               },
               "description": {}
@@ -749,11 +770,13 @@
               "label": {
                 "de": "Bildersteller/Bilderstellerin",
                 "en": "Creator",
+                "fr": "Auteur",
                 "it": "Autore dell'immagine"
               },
               "description": {
                 "de": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin",
                 "en": "Creator of the image, photographer respectively draughtsman",
+                "fr": "Auteur(s) de l'illustration / dessin / photographie",
                 "it": "Creatore dell'immagine, fotografo o disegnatore"
               }
             },
@@ -766,10 +789,12 @@
                 "de": "Bearbeiterin/Bearbeiter",
                 "en": "Processor",
                 "es": "Responsable",
+                "fr": "Processeur",
                 "it": "Responsabile"
               },
               "description": {
-                "en": "Processor of the image in case of changes after the creation of the image"
+                "en": "Processor of the image in case of changes after the creation of the image",
+                "fr": "Processeur de l'image en cas de modifications après la création de l'image"
               }
             },
             {
@@ -781,6 +806,7 @@
                 "de": "Kampagne",
                 "en": "Campaign",
                 "es": "Campaña",
+                "fr": "Campagne",
                 "it": "Campagna"
               },
               "description": {}
@@ -793,6 +819,7 @@
                 "de": "Zeigt",
                 "en": "Depicts",
                 "es": "Representa",
+                "fr": "Illustre",
                 "it": "Rappresenta"
               },
               "description": {}
@@ -802,6 +829,7 @@
               "label": {
                 "de": "Kartenhintergrund von",
                 "en": "Map layer of",
+                "fr": "Couche cartographique",
                 "it": "Sfondo cartografico di"
               },
               "description": {}
@@ -811,6 +839,7 @@
             "de": "Stammdaten",
             "en": "Core",
             "es": "Datos maestros",
+            "fr": "Noyau",
             "it": "Dati base"
           }
         },
@@ -825,6 +854,7 @@
                 "de": "Höhe",
                 "en": "Height",
                 "es": "Altura",
+                "fr": "Hauteur",
                 "it": "Altezza"
               },
               "description": {}
@@ -837,6 +867,7 @@
                 "de": "Breite",
                 "en": "Width",
                 "es": "Anchura",
+                "fr": "Largeur",
                 "it": "Larghezza"
               },
               "description": {}
@@ -870,6 +901,7 @@
                 "de": "Beschreibung",
                 "en": "Description",
                 "es": "Descripción",
+                "fr": "Description",
                 "it": "Descrizione"
               },
               "description": {
@@ -884,6 +916,7 @@
               "label": {
                 "de": "Literaturverweis",
                 "en": "Literature reference",
+                "fr": "Référence littéraire/bibliographique",
                 "it": "Bibliografia"
               },
               "description": {}
@@ -894,6 +927,7 @@
             "de": "Abbildung",
             "en": "Image",
             "es": "Imagen",
+            "fr": "Image",
             "it": "Immagine"
           }
         }
@@ -911,6 +945,7 @@
         "de": "Projekt",
         "en": "Project",
         "es": "Proyecto",
+        "fr": "Projet",
         "it": "Progetto"
       },
       "description": {},
@@ -926,6 +961,7 @@
                 "de": "Kategorie",
                 "en": "Category",
                 "es": "Categoría",
+                "fr": "Catégorie",
                 "it": "Categoria"
               },
               "description": {}
@@ -944,6 +980,7 @@
                 "de": "Kurzbeschreibung",
                 "en": "Short description",
                 "es": "Breve descripción",
+                "fr": "Description sommaire",
                 "it": "Descrizione breve"
               },
               "description": {}
@@ -956,16 +993,8 @@
                 "de": "Wird gezeigt in",
                 "en": "Depicted in",
                 "es": "Representado en",
+                "fr": "Illustrée dans",
                 "it": "È rappresentato in"
-              },
-              "description": {}
-            },
-            {
-              "name": "hasMapLayer",
-              "label": {
-                "de": "Hat Kartenhintergrund",
-                "en": "Has map layer",
-                "it": "Ha lo sfondo cartografico"
               },
               "description": {}
             }
@@ -974,6 +1003,7 @@
             "de": "Stammdaten",
             "en": "Core",
             "es": "Datos maestros",
+            "fr": "Noyau",
             "it": "Dati base"
           }
         },
@@ -986,7 +1016,8 @@
               "name": "shortName",
               "label": {
                 "de": "Kurzbezeichnung",
-                "en": "Short name"
+                "en": "Short name",
+                "it": "Nome abbreviato del progetto"
               },
               "description": {}
             },
@@ -998,6 +1029,7 @@
                 "de": "Beschreibung",
                 "en": "Description",
                 "es": "Descripción",
+                "fr": "Description",
                 "it": "Descrizione"
               },
               "description": {
@@ -1012,11 +1044,13 @@
               "label": {
                 "de": "Institution",
                 "en": "Institution",
+                "fr": "Institution",
                 "it": "Istituzione"
               },
               "description": {
                 "de": "Für das Projekt verantwortliche Institution",
                 "en": "Institution responsible for the project",
+                "fr": "Institution responsable du projet",
                 "it": "Istituzione responsabile del progetto"
               }
             },
@@ -1027,11 +1061,13 @@
               "label": {
                 "de": "Leiterin/Leiter",
                 "en": "Supervisor",
+                "fr": "Responsable",
                 "it": "Supervisore"
               },
               "description": {
                 "de": "Leitende Person des Projekts",
                 "en": "Person in charge of the project",
+                "fr": "Personne en charge du projet",
                 "it": "Responsabile del progetto"
               }
             },
@@ -1042,11 +1078,12 @@
               "label": {
                 "de": "Kontaktperson",
                 "en": "Contact person",
-                "it": "persona di contatto"
+                "fr": "Personne contact",
+                "it": "Persona di contatto"
               },
               "description": {
                 "de": "Kontaktperson des Projekts",
-                "it": "persona di contatto del progetto"
+                "it": "Persona di contatto del progetto"
               }
             },
             {
@@ -1056,11 +1093,13 @@
               "label": {
                 "de": "Mailadresse der Kontaktperson",
                 "en": "Mail address of the contact person",
+                "fr": "Adresse email de la personne contact",
                 "it": "Indirizzo e-mail della persona di contatto"
               },
               "description": {
                 "de": "Mailadresse des Projekts bzw. der Kontaktperson",
                 "en": "Mail address of the project or a contact person",
+                "fr": "Adresse email du projet ou de la personne contact",
                 "it": "Indirizzo e-mail del progetto o della persona di contatto"
               }
             },
@@ -1071,6 +1110,7 @@
               "label": {
                 "de": "Team",
                 "en": "Staff",
+                "fr": "Staff",
                 "it": "Team"
               },
               "description": {}
@@ -1082,6 +1122,7 @@
               "label": {
                 "de": "Kampagnen",
                 "en": "Campaigns",
+                "fr": "Campagnes",
                 "it": "Campagne"
               },
               "description": {}
@@ -1093,6 +1134,7 @@
               "label": {
                 "de": "Projekt-URL",
                 "en": "Project URL",
+                "fr": "URL du projet",
                 "it": "URL del progetto"
               },
               "description": {
@@ -1107,11 +1149,13 @@
               "label": {
                 "de": "Projekt-Homepage",
                 "en": "Project homepage",
+                "fr": "Page du projet",
                 "it": "Homepage del progetto"
               },
               "description": {
                 "de": "Externe Referenz(en) des Projekts",
                 "en": "External reference(s) of the project",
+                "fr": "Références externes au projet",
                 "it": "Riferimenti esterni del progetto"
               }
             },
@@ -1121,7 +1165,8 @@
               "name": "bibliographicReferences",
               "label": {
                 "de": "Bibliographie",
-                "en": "Bibliography"
+                "en": "Bibliography",
+                "it": "Bibliografia"
               },
               "description": {}
             },
@@ -1132,7 +1177,7 @@
               "label": {
                 "de": "Lizenzinformationen",
                 "en": "License information",
-                "it": "Licenza"
+                "it": "Informazioni sulla licenza"
               },
               "description": {}
             },
@@ -1143,6 +1188,7 @@
               "label": {
                 "de": "Gazetteer-ID",
                 "en": "Gazetteer ID",
+                "fr": "No. d'index",
                 "it": "Gazetteer-ID"
               },
               "description": {
@@ -1157,6 +1203,7 @@
               "label": {
                 "de": "Breitengrad",
                 "en": "Latitude",
+                "fr": "Latitude",
                 "it": "Latitudine"
               },
               "description": {
@@ -1171,6 +1218,7 @@
               "label": {
                 "de": "Längengrad",
                 "en": "Longitude",
+                "fr": "Longitude",
                 "it": "Longitudine"
               },
               "description": {
@@ -1185,11 +1233,13 @@
               "label": {
                 "de": "EPSG-Code",
                 "en": "EPSG Code",
+                "fr": "Code EPSG",
                 "it": "Codice-EPSG"
               },
               "description": {
                 "de": "Angabe des EPSG-Codes (siehe http://spatialreference.org/, z. B. 3004)",
                 "en": "Specification of the EPSG code (see http://spatialreference.org/, e. g. 3004)",
+                "fr": "Préciser le code EPSG (voir http://spatialreference.org/, ex. 3004)",
                 "it": "Indicazione del codice-EPSG (si veda http://spatialreference.org/, z. B. 3004)"
               }
             },
@@ -1229,6 +1279,7 @@
                 "de": "Koordinatenbezugssystem",
                 "en": "Coordinate reference system",
                 "es": "Sistema de referencia de coordenadas",
+                "fr": "Système de référence de coordonnées",
                 "it": "Sistema di riferimento delle coordinate"
               },
               "description": {}
@@ -1241,12 +1292,14 @@
                 "de": "Bezeichner",
                 "en": "Identifier",
                 "es": "Identificador",
+                "fr": "Identifiant",
                 "it": "Identificatore"
               },
               "description": {
                 "de": "Eindeutiger Bezeichner dieser Ressource",
                 "en": "Unique identifier of this resource",
                 "es": "Identificador único de este recurso",
+                "fr": "Identifiant unique pour cette ressource",
                 "it": "Identificatore unico di questa risorsa"
               }
             }
@@ -1256,6 +1309,7 @@
             "de": "Projekt",
             "en": "Project",
             "es": "Proyecto",
+            "fr": "Projet",
             "it": "Progetto"
           }
         }
@@ -1272,6 +1326,7 @@
       "label": {
         "de": "Typenkatalog",
         "en": "Type catalog",
+        "fr": "Type catalogue",
         "it": "Tipo di catalogo"
       },
       "description": {},
@@ -1287,6 +1342,7 @@
                 "de": "Kategorie",
                 "en": "Category",
                 "es": "Categoría",
+                "fr": "Catégorie",
                 "it": "Categoria"
               },
               "description": {}
@@ -1306,12 +1362,14 @@
                 "de": "Bezeichner",
                 "en": "Identifier",
                 "es": "Identificador",
+                "fr": "Identifiant",
                 "it": "Identificatore"
               },
               "description": {
                 "de": "Eindeutiger Bezeichner dieser Ressource",
                 "en": "Unique identifier of this resource",
                 "es": "Identificador único de este recurso",
+                "fr": "Identifiant unique pour cette ressource",
                 "it": "Identificatore unico di questa risorsa"
               }
             },
@@ -1322,6 +1380,7 @@
                 "de": "Kurzbeschreibung",
                 "en": "Short description",
                 "es": "Breve descripción",
+                "fr": "Description sommaire",
                 "it": "Descrizione breve"
               },
               "description": {}
@@ -1334,16 +1393,8 @@
                 "de": "Wird gezeigt in",
                 "en": "Depicted in",
                 "es": "Representado en",
+                "fr": "Illustrée dans",
                 "it": "È rappresentato in"
-              },
-              "description": {}
-            },
-            {
-              "name": "hasMapLayer",
-              "label": {
-                "de": "Hat Kartenhintergrund",
-                "en": "Has map layer",
-                "it": "Ha lo sfondo cartografico"
               },
               "description": {}
             }
@@ -1352,6 +1403,7 @@
             "de": "Stammdaten",
             "en": "Core",
             "es": "Datos maestros",
+            "fr": "Noyau",
             "it": "Dati base"
           }
         },
@@ -1401,6 +1453,7 @@
               "label": {
                 "de": "Kriterium",
                 "en": "Criterion",
+                "fr": "Critère",
                 "it": "Criterio"
               },
               "description": {}
@@ -1411,6 +1464,7 @@
             "de": "Bestimmung",
             "en": "Identification",
             "es": "Clasificación",
+            "fr": "Identification",
             "it": "Definizione"
           }
         },
@@ -1424,6 +1478,7 @@
               "label": {
                 "de": "Literaturverweis",
                 "en": "Literature reference",
+                "fr": "Référence littéraire/bibliographique",
                 "it": "Bibliografia"
               },
               "description": {}
@@ -1433,6 +1488,7 @@
           "label": {
             "de": "Typenkatalog",
             "en": "Type catalog",
+            "fr": "Type catalogue",
             "it": "Tipo di catalogo"
           }
         }
@@ -1451,6 +1507,7 @@
         "de": "Typ",
         "en": "Type",
         "es": "Tipo",
+        "fr": "Type",
         "it": "Tipo"
       },
       "description": {},
@@ -1466,6 +1523,7 @@
                 "de": "Kategorie",
                 "en": "Category",
                 "es": "Categoría",
+                "fr": "Catégorie",
                 "it": "Categoria"
               },
               "description": {}
@@ -1485,12 +1543,14 @@
                 "de": "Bezeichner",
                 "en": "Identifier",
                 "es": "Identificador",
+                "fr": "Identifiant",
                 "it": "Identificatore"
               },
               "description": {
                 "de": "Eindeutiger Bezeichner dieser Ressource",
                 "en": "Unique identifier of this resource",
                 "es": "Identificador único de este recurso",
+                "fr": "Identifiant unique pour cette ressource",
                 "it": "Identificatore unico di questa risorsa"
               }
             },
@@ -1501,6 +1561,7 @@
                 "de": "Kurzbeschreibung",
                 "en": "Short description",
                 "es": "Breve descripción",
+                "fr": "Description sommaire",
                 "it": "Descrizione breve"
               },
               "description": {}
@@ -1513,16 +1574,8 @@
                 "de": "Wird gezeigt in",
                 "en": "Depicted in",
                 "es": "Representado en",
+                "fr": "Illustrée dans",
                 "it": "È rappresentato in"
-              },
-              "description": {}
-            },
-            {
-              "name": "hasMapLayer",
-              "label": {
-                "de": "Hat Kartenhintergrund",
-                "en": "Has map layer",
-                "it": "Ha lo sfondo cartografico"
               },
               "description": {}
             },
@@ -1532,6 +1585,7 @@
                 "de": "Liegt in",
                 "en": "Lies within",
                 "es": "Dentro de",
+                "fr": "Dans",
                 "it": "Dentro a"
               },
               "description": {}
@@ -1541,6 +1595,7 @@
             "de": "Stammdaten",
             "en": "Core",
             "es": "Datos maestros",
+            "fr": "Noyau",
             "it": "Dati base"
           }
         },
@@ -1554,6 +1609,7 @@
                 "de": "Zugeordnete Funde",
                 "en": "Associated finds",
                 "es": "Hallazgos relacionados",
+                "fr": "Découvertes associées",
                 "it": "Reperti pertinenti"
               },
               "description": {}
@@ -1563,6 +1619,7 @@
             "de": "Bestimmung",
             "en": "Identification",
             "es": "Clasificación",
+            "fr": "Identification",
             "it": "Definizione"
           }
         },
@@ -1576,6 +1633,7 @@
               "label": {
                 "de": "Literaturverweis",
                 "en": "Literature reference",
+                "fr": "Référence littéraire/bibliographique",
                 "it": "Bibliografia"
               },
               "description": {}
@@ -1588,6 +1646,7 @@
                 "de": "Beschreibung",
                 "en": "Description",
                 "es": "Descripción",
+                "fr": "Description",
                 "it": "Descrizione"
               },
               "description": {
@@ -1601,6 +1660,7 @@
             "de": "Typ",
             "en": "Type",
             "es": "Tipo",
+            "fr": "Type",
             "it": "Tipo"
           }
         }

@@ -9,6 +9,7 @@ export const PROJECT_MAPPING = {
     'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
+    'chimtou': { prefix: 'Bourgou', label: 'Chimtou' },
     'elephantine': { prefix: 'Elephantine', label: 'Elephantine' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
     'heliopolis-project': { prefix: 'Heliopolis', label: 'Heliopolis' },
@@ -21,10 +22,10 @@ export const PROJECT_MAPPING = {
     'olympia': { prefix: 'Olympia', label: 'Olympia' },
     'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
     'postumii': { prefix: 'Postumii', label: 'Postumii' },
-    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
     'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
     'seli-bauteile': { prefix: 'SelinuntBauteile', label: 'Selinunt Bauteile' },
     'sel-akropolis': { prefix: 'SelinuntAkropolis', label: 'Selinunt Akropolis' },
+    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
     'uruk': { prefix: 'Uruk', label: 'Uruk' }
 };
 

@@ -41938,61 +41938,61 @@
           "de": "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
         }
       },
-      "Phase 1": {
+      "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
         "labels": {
           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
         }
       },
-      "Phase 2": {
+      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
         "labels": {
           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
         }
       },
-      "Phase 3": {
+      "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
         "labels": {
           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
         }
       },
-      "Phase 4": {
+      "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
         "labels": {
           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
         }
       },
-      "Phase 5": {
+      "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
         "labels": {
           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
         }
       },
-      "Phase 6": {
+      "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
         "labels": {
           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
         }
       },
-      "Phase 7": {
+      "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
         "labels": {
           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
         }
       },
-      "Phase 8": {
+      "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
         "labels": {
           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
         }
       },
-      "Phase 9": {
+      "Phase 9 (Mitte 2. Jh. n. Chr.)": {
         "labels": {
           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
         }
       },
-      "Phase 10": {
+      "Phase 10 (Ende 2. Jh. n. Chr.)": {
         "labels": {
           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
@@ -42000,16 +42000,16 @@
       }
     },
     "order": [
-      "Phase 1",
-      "Phase 2",
-      "Phase 3",
-      "Phase 4",
-      "Phase 5",
-      "Phase 6",
-      "Phase 7",
-      "Phase 8",
-      "Phase 9",
-      "Phase 10",
+      "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+      "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+      "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+      "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+      "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+      "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+      "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+      "Phase 9 (Mitte 2. Jh. n. Chr.)",
+      "Phase 10 (Ende 2. Jh. n. Chr.)",
       "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
       "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
       "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",

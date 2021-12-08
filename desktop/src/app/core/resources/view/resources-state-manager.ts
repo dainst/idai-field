@@ -7,7 +7,7 @@ import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, Document, ObserverUtil, IndexFacade, Datastore} from 'idai-field-core'
+import {FieldDocument, ObserverUtil, IndexFacade, Datastore} from 'idai-field-core'
 
 
 /**
@@ -79,7 +79,8 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
-        const currentMode: ResourcesViewMode = this.getMode();
+        let currentMode: ResourcesViewMode = this.getMode();
+        if (viewName !== 'types' && currentMode === 'types') currentMode = 'map';
 
         this.resourcesState.view = viewName;
 

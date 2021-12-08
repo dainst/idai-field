@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import { Imagestore, ImageVariant } from 'idai-field-core';
 import { FsAdapter } from '../../filestore/fs-adapter';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
@@ -17,7 +18,7 @@ export class PouchdbServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private filestore: FsAdapter) {}
+    constructor(private filesystem: FsAdapter, private imagestore: Imagestore) {}
 
 
     /**
@@ -38,7 +39,7 @@ export class PouchdbServer {
         app.post('/files/:project/*', (req: any, res: any, next: any) => {
             // https://stackoverflow.com/a/16599008
             req.on('data', function(data) {
-                self.filestore.writeFile('/' + req.params['project'] + '/' + req.params[0], data)
+                self.filesystem.writeFile('/' + req.params['project'] + '/' + req.params[0], data)
             });
             req.on('end', function() {
                 res.status(200).send({ status: 'ok' });
@@ -48,15 +49,15 @@ export class PouchdbServer {
         app.get('/files/:project/*', (req: any, res: any) => {
             const path = '/' + req.params['project'] + '/' + req.params[0];
 
-            if (!self.filestore.exists(path)) {
+            if (!self.filesystem.exists(path)) {
                 res.status(200).send({ status: 'notfound' });
             } else {
-                if (self.filestore.isDirectory(path)) {
-                    res.status(200).send({ files: self.filestore.listFiles(path) });
+                if (self.filesystem.isDirectory(path)) {
+                    res.status(200).send({ files: self.filesystem.listFiles(path) });
                 } else {
                     res
                         .header('Content-Type', 'image/png')
-                        .status(200).sendFile(self.filestore.getAbsolutePath(path));
+                        .status(200).sendFile(self.imagestore.getData(req.params[0], ImageVariant.ORIGINAL));
                 }
             }
         });

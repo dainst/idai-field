@@ -18,8 +18,7 @@ export const THUMBNAIL_TARGET_HEIGHT: number = 320;
  */
 export class Imagestore {
 
-    private absolutePath: string | undefined = undefined; // TODO deprecated
-    private relativePath: string | undefined = undefined; // expected to have no ending slash
+    private absolutePath: string | undefined = undefined;
 
     constructor(
         private filesystem: FilesystemAdapterInterface,
@@ -28,18 +27,15 @@ export class Imagestore {
 
     public getPath = (): string | undefined => this.absolutePath;
 
-    public init(fileSystemBasePath: string, projectName: string): void {
+    public init(fileSystemBasePath: string): void {
 
-        const basePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
+        this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
 
-        this.absolutePath = basePath + projectName + '/';
-        this.relativePath = '/' + projectName;
-
-        if (!this.filesystem.exists(this.relativePath)) {
-            this.filesystem.mkdir(this.relativePath);
+        if (!this.filesystem.exists(this.absolutePath)) {
+            this.filesystem.mkdir(this.absolutePath);
         }
-        if (!this.filesystem.exists(this.relativePath + '/thumbs')) {
-            this.filesystem.mkdir(this.relativePath + '/thumbs');
+        if (!this.filesystem.exists(this.absolutePath + 'thumbs/')) {
+            this.filesystem.mkdir(this.absolutePath + 'thumbs/');
         }
     }
 
@@ -52,7 +48,7 @@ export class Imagestore {
     public store(imageId: string, data: Buffer): void {
 
         const buffer = Buffer.from(data);
-        this.filesystem.writeFile(this.relativePath + '/' + imageId, Buffer.from(buffer));
+        this.filesystem.writeFile(this.absolutePath + imageId, Buffer.from(buffer));
         this.createThumbnail(imageId, buffer);
     }
 
@@ -69,23 +65,23 @@ export class Imagestore {
      */
     public async remove(key: string): Promise<any> {
         // TODO: Write tombstones
-        this.filesystem.removeFile(this.relativePath + '/' + key);
-        this.filesystem.removeFile(this.relativePath + '/thumbs/' + key);
+        this.filesystem.removeFile(this.absolutePath + key);
+        this.filesystem.removeFile(this.absolutePath + 'thumbs/' + key);
     }
 
     private async readFileSystem(key: string, type: ImageVariant): Promise<Buffer> {
-        const relativeImageDirectory = (type === ImageVariant.ORIGINAL) ? '/' : '/thumbs/';
+        const relativeImageDirectory = (type === ImageVariant.ORIGINAL) ? '' : 'thumbs/';
 
-        const path = this.relativePath + relativeImageDirectory + key;
+        const path = this.absolutePath + relativeImageDirectory + key;
 
 
         // TODO: An sich sollten immer die "original thumbnails" gesynct werden, anstatt dass eine Anwendung
         // sie neu generiert weil noch nicht vorhanden?
         if (type === ImageVariant.THUMBNAIL && !this.filesystem.exists(path))
         {
-            const originalFilePath = this.relativePath + '/' + key;
+            const originalFilePath = this.absolutePath + key;
             if (this.filesystem.exists(originalFilePath)) {
-                await this.createThumbnail(key, this.filesystem.readFile(this.relativePath + '/' + key));
+                await this.createThumbnail(key, this.filesystem.readFile(this.absolutePath + key));
             }
         }
 
@@ -95,7 +91,7 @@ export class Imagestore {
     private async createThumbnail(key: string, data: Buffer) {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
-        const thumbnailPath = this.relativePath + '/thumbs/' + key;
+        const thumbnailPath = this.absolutePath + 'thumbs/' + key;
         this.filesystem.writeFile(thumbnailPath, buffer);
     }
 }

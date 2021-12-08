@@ -48,12 +48,6 @@ export interface FilesystemAdapterInterface {
 
 
     /**
-     * @param path must start with /
-     */
-    getAbsolutePath(path: string): string;
-
-
-    /**
      * Returns a list of paths of all files contained in the given path.
      * @param path
      */

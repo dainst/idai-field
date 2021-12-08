@@ -23,36 +23,36 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public writeFile(path: string, contents: any) {
 
-        fs.writeFileSync(this.getAbsolutePath(path), contents);
+        fs.writeFileSync(path, contents);
     }
 
 
     public readFile(path: string): Buffer {
 
-        return fs.readFileSync(this.getAbsolutePath(path));
+        return fs.readFileSync(path);
     }
 
 
     public removeFile(path: string) {
 
-        fs.unlinkSync(this.getAbsolutePath(path));
+        fs.unlinkSync(path);
     }
 
 
     public mkdir(path: string, recursive: boolean) {
-        fs.mkdirSync(this.getAbsolutePath(path), { recursive });
+        fs.mkdirSync(path, { recursive });
     }
 
 
     public isFile(path: string): boolean {
 
-        return fs.lstatSync(this.getAbsolutePath(path)).isFile();
+        return fs.lstatSync(path).isFile();
     }
 
 
     public isDirectory(path: string): boolean{
 
-        return fs.lstatSync(this.getAbsolutePath(path)).isDirectory();
+        return fs.lstatSync(path).isDirectory();
     }
 
 
@@ -60,7 +60,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public listFiles(dir: string): string[] {
 
         let results = [];
-        const list: string[] = fs.readdirSync(this.getAbsolutePath(dir));
+        const list: string[] = fs.readdirSync(dir);
         list.forEach(file => {
             file = dir + '/' + file;
             const stat = fs.statSync(file);
@@ -73,16 +73,5 @@ export class FsAdapter implements FilesystemAdapterInterface {
             }
         });
         return results;
-    }
-
-
-     public getAbsolutePath(path: string): string {
-        return this.settingsProvider.getSettings().imagestorePath + path;
-    }
-
-
-    private performAssert(path: string) {
-
-        if (!path.startsWith('/')) throw new Error('illegal argument - path should start with /');
     }
 }

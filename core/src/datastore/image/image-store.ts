@@ -8,6 +8,8 @@ export enum ImageVariant {
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 
 const thumbnailDirectory = 'thumbs/';
+const tombstoneSuffix = '.deleted';
+
 /**
  * An image store that uses the file system to store the original images and
  * thumbnails in order to be able to sync them.
@@ -62,12 +64,21 @@ export class Imagestore {
     }
 
     /**
-     * @param key the identifier for the data to be removed
+     * @param imageId the identifier for the image to be removed
      */
-    public async remove(key: string): Promise<any> {
-        // TODO: Write tombstones
-        this.filesystem.removeFile(this.absolutePath + key);
-        this.filesystem.removeFile(this.absolutePath + 'thumbs/' + key);
+    public async remove(imageId: string): Promise<any> {
+        this.filesystem.removeFile(
+            this.absolutePath + imageId
+        );
+        this.filesystem.writeFile(
+            this.absolutePath + imageId + tombstoneSuffix, Buffer.from([])
+        );
+        this.filesystem.removeFile(
+            this.absolutePath + thumbnailDirectory + imageId
+        );
+        this.filesystem.writeFile(
+            this.absolutePath + thumbnailDirectory + imageId + tombstoneSuffix, Buffer.from([])
+        );
     }
 
     private async readFileSystem(imageId: string, type: ImageVariant): Promise<Buffer> {

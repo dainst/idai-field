@@ -32,13 +32,8 @@ export class Imagestore {
 
     /**
      * Initializiation function.
-<<<<<<< HEAD
      * @param fileSystemBasePath The base path for the project's image store. Will be used to construct absolute 
      * paths for the injected {@link FilesystemAdapterInterface} implementation.
-=======
-     * @param fileSystemBasePath The base path for the project's image store. Will be used to initialize 
-     * all required directories and to construct absolute paths for the injected {@link FilesystemAdapterInterface} implementation.
->>>>>>> bc048b8c6 (Update function doc strings)
      */
     public init(fileSystemBasePath: string): void {
 

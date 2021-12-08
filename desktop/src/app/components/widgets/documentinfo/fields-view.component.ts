@@ -133,7 +133,7 @@ export class FieldsViewComponent implements OnChanges {
     private makeField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return {
-            label: field.label,
+            label: field.label ?? field.name,
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(

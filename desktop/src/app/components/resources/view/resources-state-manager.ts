@@ -1,11 +1,11 @@
-import {Observer, Observable} from 'rxjs';
-import {ResourcesState} from './state/resources-state';
-import {StateSerializer} from '../../../services/state-serializer';
-import {ViewState} from './state/view-state';
-import {NavigationPath} from './state/navigation-path';
-import {TabManager} from '../../../services/tabs/tab-manager';
-import {ResourcesViewMode} from './view-facade';
-import {FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named} from 'idai-field-core'
+import { Observer, Observable } from 'rxjs';
+import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named } from 'idai-field-core'
+import { ResourcesState } from './state/resources-state';
+import { StateSerializer } from '../../../services/state-serializer';
+import { ViewState } from './state/view-state';
+import { NavigationPath } from './state/navigation-path';
+import { TabManager } from '../../../services/tabs/tab-manager';
+import { ResourcesViewMode } from './view-facade';
 
 
 /**
@@ -38,15 +38,13 @@ export class ResourcesStateManager {
     public get = (): ResourcesState => this.resourcesState;
 
 
-    constructor(
-        private datastore: Datastore,
-        private indexFacade: IndexFacade,
-        private serializer: StateSerializer,
-        private tabManager: TabManager,
-        private project: string,
-        private projectConfiguration: ProjectConfiguration,
-        private suppressLoadMapInTestProject: boolean = false
-    ) {}
+    constructor(private datastore: Datastore,
+                private indexFacade: IndexFacade,
+                private serializer: StateSerializer,
+                private tabManager: TabManager,
+                private project: string,
+                private projectConfiguration: ProjectConfiguration,
+                private suppressLoadMapInTestProject: boolean = false) {}
 
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
@@ -77,7 +75,8 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
-        const currentMode: ResourcesViewMode = this.getMode();
+        let currentMode: ResourcesViewMode = this.getMode();
+        if (viewName !== 'types' && currentMode === 'types') currentMode = 'map';
 
         this.resourcesState.view = viewName;
 

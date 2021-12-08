@@ -30,6 +30,11 @@ export class Imagestore {
 
     public getPath = (): string | undefined => this.absolutePath;
 
+    /**
+     * Initializiation function.
+     * @param fileSystemBasePath The base path for the project's image store. Will be used to construct absolute 
+     * paths for the injected {@link FilesystemAdapterInterface} implementation.
+     */
     public init(fileSystemBasePath: string): void {
 
         this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
@@ -56,8 +61,9 @@ export class Imagestore {
     }
 
     /**
-     * Returns the raw ArrayBuffer data for the requested images' thumbnails.
-     * @param imageId An array containing the requested images' thumbnails.
+     * Returns the raw Buffer data for the requested image.
+     * @param imageId the identifier for the image
+     * @param type variant type of the image, see {@link ImageVariant}.
      */
     public async getData(imageId: string, type: ImageVariant): Promise<Buffer> {
         return await this.readFileSystem(imageId, type);

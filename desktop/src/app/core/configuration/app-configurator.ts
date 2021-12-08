@@ -524,7 +524,7 @@ export class AppConfigurator {
             name: 'liesWithin',
             label: '',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Room'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room', 'Sample'],
             sameMainCategoryResource: true
         },
         {

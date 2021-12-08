@@ -64,6 +64,8 @@ export class Imagestore {
     }
 
     /**
+     * Removes the image from the filesystem and creates an empty tombstone file with
+     * the same name plus a {@link tombstoneSuffix}.
      * @param imageId the identifier for the image to be removed
      */
     public async remove(imageId: string): Promise<any> {

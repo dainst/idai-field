@@ -545,7 +545,7 @@ export class AppConfigurator {
             name: 'liesWithin',
             label: '',
             domain: ['Sample'],
-            range: ['Feature:inherit', 'Find:inherit'],
+            range: ['Sample', 'Feature:inherit', 'Find:inherit'],
             sameMainCategoryResource: true
         },
         {

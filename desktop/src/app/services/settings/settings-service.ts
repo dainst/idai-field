@@ -75,7 +75,6 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
-        // TODO: Check auf errors beim Erstellen der Ordner?
         this.imagestore.init(settings.imagestorePath, settings.selectedProject);
 
         this.pouchdbServer.setPassword(settings.hostPassword);

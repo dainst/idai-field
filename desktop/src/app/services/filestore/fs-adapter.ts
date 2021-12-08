@@ -1,15 +1,16 @@
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
-
 import { Injectable } from '@angular/core';
 import { FilesystemAdapterInterface } from 'idai-field-core/src/datastore/image/filesystem-adapter';
 import { SettingsProvider } from '../settings/settings-provider';
 
-@Injectable()
 /**
+ * Filesystem adapter implementation that uses node's `fs` see:
+ * https://nodejs.org/docs/latest/api/fs.html
  * @author Daniel de Oliveira
+ * @author Simon Hohl
  */
-
+@Injectable()
 export class FsAdapter implements FilesystemAdapterInterface {
 
     constructor(private settingsProvider: SettingsProvider) { }
@@ -41,6 +42,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public mkdir(path: string, recursive: boolean) {
         fs.mkdirSync(this.getAbsolutePath(path), { recursive });
     }
+
 
     public isFile(path: string): boolean {
 
@@ -74,9 +76,6 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    /**
-     * @param path must start with /
-     */
      public getAbsolutePath(path: string): string {
         return this.settingsProvider.getSettings().imagestorePath + path;
     }

@@ -1,43 +1,48 @@
 export interface FilesystemAdapterInterface {
 
     /**
-     * Writes a file to the Filestore.
-     * If it already exists, does nothing.
-     *
-     * @param path should start with /
+     * Writes a file to the filesystem. Does nothing if file already exists.     *
+     * @param path
      */
     writeFile(path: string, contents: any): void;
 
+
     /**
-     * Reads a file from the Filestore
-     * @param path must start with /
+     * Reads a file from the filesystem
+     * @param path
      */
     readFile(path: string): Buffer;
 
 
     /**
-     * @param path must start with /
+     * Returns if true if a directory or file exists for the for the given path
+     * @param path
      */
     exists(path: string): boolean;
 
     /**
-     * Removes a file from the Filestore.
-     * If it already exists, does nothing.
+     * Removes a file from the filesystem. Does nothing if file not found.
      *
-     * @param path must start with /
+     * @param path
      */
     removeFile(path: string): void;
 
     /**
      * Create a directory
-     * @param path the directory's path
+     * @param path the new directory's path
      * @param recursive (optional) create missing parent directories, default: `false`
      */
     mkdir(path: string, recursive?: boolean): void;
 
+    /**
+     * Returns `true` if the given path represents a file.
+     * @param path
+     */
+    isFile(path: string): boolean;
 
     /**
-     * @param path must start with /
+     * Returns `true` if the given path represents a directory.
+     * @param path
      */
     isDirectory(path: string): boolean;
 
@@ -49,7 +54,8 @@ export interface FilesystemAdapterInterface {
 
 
     /**
-     * @param path must start with /
+     * Returns a list of paths of all files contained in the given path.
+     * @param path
      */
     listFiles(path: string): string[];
 }

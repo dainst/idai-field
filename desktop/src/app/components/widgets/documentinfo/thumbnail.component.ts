@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldResource} from 'idai-field-core';
-import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
+import {Imagestore, ImageVariant} from 'idai-field-core';
 import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 
 
@@ -73,7 +73,7 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return this.imageUrlMaker.getUrl(relations[0], IMAGEVERSION.THUMBNAIL);
+            return this.imageUrlMaker.getUrl(relations[0], ImageVariant.THUMBNAIL);
         } catch (e) {
             return ImageUrlMaker.blackImg;
         }

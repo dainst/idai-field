@@ -1,7 +1,7 @@
 import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
-import { ImageConverter } from '../services/imagestore/image-converter';
-import { Imagestore } from '../services/imagestore/imagestore';
+import { ThumbnailGenerator } from '../services/imagestore/image-converter';
+import { Imagestore } from 'idai-field-core/src/datastore/image/image-store';
 import { InitializationProgress } from './initialization-progress';
 import { IndexerConfiguration } from '../indexer-configuration';
 import {SettingsService} from '../services/settings/settings-service';
@@ -76,7 +76,7 @@ export const appInitializerFactory = (
         pouchdbDatastore: PouchdbDatastore,
         pouchdbServer: PouchdbServer,
         documentCache: DocumentCache,
-        imageConverter: ImageConverter,
+        thumbnailGenerator: ThumbnailGenerator,
         imagestore: Imagestore,
         progress: InitializationProgress
     ) => async (): Promise<void> => {
@@ -87,7 +87,7 @@ export const appInitializerFactory = (
 
     await setUpDatabase(settingsService, settings, progress);
 
-    await loadSampleData(settings, pouchdbDatastore.getDb(), imageConverter, progress);
+    await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
 
     const services = await loadConfiguration(settingsService, progress);
     serviceLocator.init(services);
@@ -119,11 +119,11 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 }
 
 
-const loadSampleData = async (settings: Settings, db: PouchDB.Database, imageConverter: ImageConverter, progress: InitializationProgress) => {
+const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator, progress: InitializationProgress) => {
 
     if (settings.selectedProject === 'test') {
         await progress.setPhase('loadingSampleObjects');
-        const loader = new SampleDataLoader(imageConverter, settings.imagestorePath, Settings.getLocale());
+        const loader = new SampleDataLoader(thumbnailGenerator, settings.imagestorePath, Settings.getLocale());
         return loader.go(db, settings.selectedProject);
     }
 }
@@ -151,7 +151,12 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 };
 
 
-const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache, progress: InitializationProgress) => {
+const loadDocuments = async (
+    serviceLocator: AppInitializerServiceLocator,
+    db: PouchDB.Database<{}>,
+    documentCache: DocumentCache,
+    progress: InitializationProgress
+) => {
 
     await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await db.info()).doc_count);

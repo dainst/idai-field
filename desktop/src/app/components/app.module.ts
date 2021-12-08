@@ -8,15 +8,30 @@ import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService } from 'idai-field-core';
+import {
+    AppConfigurator,
+    ConfigLoader,
+    ConfigReader,
+    ConstraintIndex,
+    Datastore,
+    DocumentCache,
+    FulltextIndex,
+    IndexFacade,
+    PouchdbDatastore,
+    ProjectConfiguration,
+    Query,
+    RelationsManager,
+    SyncService,
+    Labels,
+    Imagestore
+} from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
 import { DatastoreModule } from '../services/datastore/datastore.module';
 import { PouchdbServer } from '../services/datastore/pouchdb/pouchdb-server';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
-import { ImageConverter } from '../services/imagestore/image-converter';
-import { Imagestore } from '../services/imagestore/imagestore';
+import { ThumbnailGenerator } from '../services/imagestore/image-converter';
 import { ImportValidator } from '../components/import/import/process/import-validator';
 import { InitializationProgress } from './initialization-progress';
 import { ImageRelationsManager } from '../services/image-relations-manager';
@@ -42,7 +57,6 @@ import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
-import { Labels } from 'idai-field-core';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsComponent } from './navbar/projects.component';
 import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
@@ -57,7 +71,6 @@ import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
-import { Filestore } from '../services/filestore/filestore';
 import { RemoteFilestore } from '../services/filestore/remote-filestore';
 import { FsAdapter } from '../services/filestore/fs-adapter';
 import { HttpAdapter } from '../services/filestore/http-adapter';
@@ -107,7 +120,7 @@ registerLocaleData(localeIt, 'it');
         Languages,
         {
             provide: Labels,
-            useFactory: function(languages: Languages) { return new Labels(() => languages.get()); },
+            useFactory: (languages: Languages) => new Labels(() => languages.get()),
             deps: [Languages]
         },
         DecimalPipe,
@@ -117,58 +130,67 @@ registerLocaleData(localeIt, 'it');
         I18n,
         {
             provide: ConfigReader,
-            useFactory: function() { return new ConfigReader(); }
+            useFactory: () => new ConfigReader()
         },
         {
             provide: ConfigLoader,
-            useFactory: function(configReader: ConfigReader, pouchdbDatastore: PouchdbDatastore) { return new ConfigLoader(configReader, pouchdbDatastore); },
+            useFactory: (configReader: ConfigReader, pouchdbDatastore: PouchdbDatastore) => {
+                return new ConfigLoader(configReader, pouchdbDatastore);
+            },
             deps: [ConfigReader, PouchdbDatastore]
         },
         {
             provide: AppConfigurator,
-            useFactory: function(configLoader: ConfigLoader) { return new AppConfigurator(configLoader); },
+            useFactory: (configLoader: ConfigLoader) => new AppConfigurator(configLoader),
             deps: [ConfigLoader]
         },
         SettingsProvider,
         SettingsService,
         {
             provide: AppInitializerServiceLocator,
-            useFactory: () => new AppInitializerServiceLocator
+            useFactory: () => new AppInitializerServiceLocator()
         },
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [AppInitializerServiceLocator, SettingsService, PouchdbDatastore, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress],
+            deps: [
+                AppInitializerServiceLocator,
+                SettingsService,
+                PouchdbDatastore,
+                PouchdbServer,
+                DocumentCache,
+                ThumbnailGenerator,
+                Imagestore,
+                InitializationProgress
+            ],
             useFactory: appInitializerFactory,
         },
         InitializationProgress,
         {
             provide: Messages,
-            useFactory: function(md: MD) {
+            useFactory: (md: MD) => {
                 return new Messages(md, remote.getGlobal('switches').messages_timeout);
             },
             deps: [MD]
         },
         {
-            provide: Filestore,
-            useFactory: function(
-                settingsProvider: SettingsProvider,
-                fsAdapter: FsAdapter) {
-                    return new Filestore(settingsProvider, fsAdapter);
-                },
-                deps: [SettingsProvider, FsAdapter]
+            provide: FsAdapter,
+            useFactory: (settingsProvider: SettingsProvider) => {
+                return new FsAdapter(settingsProvider);
+            },
+            deps: [SettingsProvider]
         },
         {
             provide: Imagestore,
-            useFactory: function(filestore: Filestore, converter: ImageConverter) {
-                return new Imagestore(filestore, converter);
+            useFactory: (filesystemAdapter: FsAdapter, converter: ThumbnailGenerator) => {
+                return new Imagestore(filesystemAdapter, converter);
             },
-            deps: [Filestore, ImageConverter]
+            deps: [FsAdapter, ThumbnailGenerator]
         },
         ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ImageUrlMaker,
-        ImageConverter,
+        ThumbnailGenerator,
         AppController,
         {
             provide: ProjectConfiguration,
@@ -192,12 +214,12 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: RelationsManager,
-            useFactory: (datastore: Datastore,
-                         projectConfiguration: ProjectConfiguration,
-                         settingsProvider: SettingsProvider) => new RelationsManager(datastore, projectConfiguration),
-            deps: [Datastore, ProjectConfiguration, SettingsProvider]
+            useFactory: (
+                datastore: Datastore,
+                projectConfiguration: ProjectConfiguration,
+            ) => new RelationsManager(datastore, projectConfiguration),
+            deps: [Datastore, ProjectConfiguration]
         },
-        FsAdapter,
         HttpAdapter,
         RemoteFilestore,
         ImageRelationsManager,
@@ -210,7 +232,7 @@ registerLocaleData(localeIt, 'it');
                 return new Validator(
                     projectConfiguration,
                     (q: Query) => DocumentDatastore.find(q),
-                )
+                );
             },
             deps: [Datastore, ProjectConfiguration]
         },
@@ -232,8 +254,12 @@ registerLocaleData(localeIt, 'it');
             ) => {
                 const tabManager = new TabManager(
                     indexFacade, tabSpaceCalculator, stateSerializer, datastore,
-                    async (path: string[]) => { await router.navigate(path) });
-                router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
+                    async (path: string[]) => {
+                        await router.navigate(path);
+                    });
+                router.events.subscribe(async () => {
+                    await tabManager.routeChanged(router.url);
+                });
                 return tabManager;
             },
             deps: [IndexFacade, TabSpaceCalculator, StateSerializer, Datastore, Router]

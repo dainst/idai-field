@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, Elemen
 import {Datastore, ImageDocument} from 'idai-field-core';
 import {constructGrid} from './construct-grid';
 import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
-import {IMAGEVERSION} from '../../../services/imagestore/imagestore';
+import {ImageVariant} from 'idai-field-core';
 
 
 const DROPAREA = 'droparea';
@@ -127,7 +127,7 @@ export class ImageGridComponent implements OnChanges {
                     || cell.document.resource.id === DROPAREA
                 ) continue;
 
-                cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, IMAGEVERSION.THUMBNAIL);
+                cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, ImageVariant.THUMBNAIL);
             }
         }
     }

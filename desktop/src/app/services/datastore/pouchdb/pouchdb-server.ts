@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { Filestore } from '../../filestore/filestore';
+import { FsAdapter } from '../../filestore/fs-adapter';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -17,7 +17,7 @@ export class PouchdbServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private filestore: Filestore) {}
+    constructor(private filestore: FsAdapter) {}
 
 
     /**
@@ -48,7 +48,7 @@ export class PouchdbServer {
         app.get('/files/:project/*', (req: any, res: any) => {
             const path = '/' + req.params['project'] + '/' + req.params[0];
 
-            if (!self.filestore.fileExists(path)) {
+            if (!self.filestore.exists(path)) {
                 res.status(200).send({ status: 'notfound' });
             } else {
                 if (self.filestore.isDirectory(path)) {
@@ -56,7 +56,7 @@ export class PouchdbServer {
                 } else {
                     res
                         .header('Content-Type', 'image/png')
-                        .status(200).sendFile(self.filestore.getFullPath(path));
+                        .status(200).sendFile(self.filestore.getAbsolutePath(path));
                 }
             }
         });

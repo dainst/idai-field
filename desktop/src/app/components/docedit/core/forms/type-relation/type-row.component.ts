@@ -3,7 +3,7 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../../../../model/model-util';
 import {ImageRowItem} from '../../../../image/row/image-row';
-import {IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
+import {ImageVariant} from 'idai-field-core';
 import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
 
 
@@ -37,6 +37,6 @@ export class TypeRowComponent implements OnChanges {
         const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
         if (!mainImageId) return undefined;
 
-        return await this.imageUrlMaker.getUrl(mainImageId, IMAGEVERSION.THUMBNAIL);
+        return await this.imageUrlMaker.getUrl(mainImageId, ImageVariant.THUMBNAIL);
     }
 }

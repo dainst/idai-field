@@ -1,10 +1,8 @@
 import {Component, OnChanges, Input, OnInit} from '@angular/core';
-import {ImageDocument} from 'idai-field-core';
+import {ImageDocument, ImageVariant} from 'idai-field-core';
 import {ImageContainer} from '../../../services/imagestore/image-container';
 import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
-import {M} from '../../messages/m';
-import {Imagestore, IMAGEVERSION} from '../../../services/imagestore/imagestore';
 import {Messages} from '../../messages/messages';
 
 
@@ -53,13 +51,13 @@ export class ImageViewerComponent implements /* OnInit,*/ OnChanges {
         const image: ImageContainer = { document: document };
 
         try {
-            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, IMAGEVERSION.ORIGINAL);
+            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.ORIGINAL);
         } catch (e) {
             image.imgSrc = ImageUrlMaker.blackImg;
         }
 
         try {
-            image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, IMAGEVERSION.THUMBNAIL);
+            image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
         } catch (e) {
             image.thumbSrc = ImageUrlMaker.blackImg;
         }

@@ -7,4 +7,5 @@ export * from './document-cache';
 export * from './helpers';
 export * from './migrator';
 export * from './pouchdb';
+export * from './image';
 export { SampleDataLoaderBase } from './sampledata/sample-data-loader-base'

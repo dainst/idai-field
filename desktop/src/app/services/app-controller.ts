@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
-import { ImageConverter } from './imagestore/image-converter';
-import { Imagestore } from './imagestore/imagestore';
+import { ThumbnailGenerator } from './imagestore/image-converter';
+import { Imagestore } from 'idai-field-core';
 import { ImagesState } from '../components/image/overview/view/images-state';
 import { ResourcesStateManager } from '../components/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
@@ -25,7 +25,7 @@ export class AppController {
                 private documentCache: DocumentCache,
                 private imagesState: ImagesState,
                 private indexFacade: IndexFacade,
-                private imageConverter: ImageConverter,
+                private thumbnailGenerator: ThumbnailGenerator,
                 private pouchdbDatastore: PouchdbDatastore,
                 private imagestore: Imagestore,
                 private settingsProvider: SettingsProvider,
@@ -75,7 +75,7 @@ export class AppController {
         this.documentCache.resetForE2E();
 
         await new SampleDataLoader(
-            this.imageConverter,
+            this.thumbnailGenerator,
             this.settingsProvider.getSettings().imagestorePath,
             Settings.getLocale())
             .go(db,this.settingsProvider.getSettings().selectedProject);

@@ -1,6 +1,6 @@
 import {Injectable, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {Imagestore, IMAGEVERSION} from './imagestore';
+import {Imagestore, ImageVariant} from 'idai-field-core';
 
 @Injectable()
 /**
@@ -29,11 +29,11 @@ export class ImageUrlMaker {
      * See also https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL.
      *
      * @param imageId the image's id
-     * @param type the image's version, for possible values see {@link IMAGEVERSION}
+     * @param type the image's version, for possible values see {@link ImageVariant}
      */
-     public async getUrl(imageId: string, type: IMAGEVERSION): Promise<SafeResourceUrl> {
+     public async getUrl(imageId: string, type: ImageVariant): Promise<SafeResourceUrl> {
 
-        const relevantList = (type === IMAGEVERSION.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+        const relevantList = (type === ImageVariant.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
 
         if (relevantList[imageId]) {
             return relevantList[imageId];
@@ -55,17 +55,17 @@ export class ImageUrlMaker {
      public revokeAllUrls() {
 
         for (const imageId of Object.keys(this.originalUrls)) {
-            this.revokeUrl(imageId, IMAGEVERSION.ORIGINAL);
+            this.revokeUrl(imageId, ImageVariant.ORIGINAL);
         }
 
         for (const imageId of Object.keys(this.originalUrls)) {
-            this.revokeUrl(imageId, IMAGEVERSION.THUMBNAIL);
+            this.revokeUrl(imageId, ImageVariant.THUMBNAIL);
         }
     }
 
-     private revokeUrl(imageId: string, type: IMAGEVERSION) {
+     private revokeUrl(imageId: string, type: ImageVariant) {
 
-        const requestedList = (type === IMAGEVERSION.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+        const requestedList = (type === ImageVariant.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
         if (!requestedList[imageId]) return;
 
         URL.revokeObjectURL(this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, requestedList[imageId]));

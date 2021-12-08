@@ -1,6 +1,6 @@
 import {Injectable, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {Imagestore, IMAGEVERSION} from '../../../../../services/imagestore/imagestore';
+import {ImageVariant} from 'idai-field-core';
 import {ImageContainer} from '../../../../../services/imagestore/image-container';
 import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
 
@@ -37,7 +37,7 @@ export class LayerImageProvider {
         let url: string|SafeResourceUrl;
         try {
             url = this.sanitizer.sanitize(
-                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, IMAGEVERSION.ORIGINAL)
+                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.ORIGINAL)
             );
         } catch (err) {
             console.error(err);
@@ -52,7 +52,7 @@ export class LayerImageProvider {
             try {
                 return {
                     thumbSrc: this.sanitizer.sanitize(
-                        SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, IMAGEVERSION.THUMBNAIL)
+                        SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.THUMBNAIL)
                     )
                 };
             } catch (err) {

@@ -1,5 +1,5 @@
-import { ImageDocument, SampleDataLoaderBase } from 'idai-field-core';
-import {ImageConverter} from '../../../imagestore/image-converter';
+import { Imagestore, SampleDataLoaderBase } from 'idai-field-core';
+import {ThumbnailGenerator} from '../../../imagestore/image-converter';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -14,7 +14,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  */
 export class SampleDataLoader extends SampleDataLoaderBase {
 
-    constructor(private imageConverter: ImageConverter,
+    constructor(private thumbnailGenerator: ThumbnailGenerator,
                 private imagestorePath: string,
                 locale: string) {
                     super(locale);
@@ -53,7 +53,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
             fs.createWriteStream(destFolderPath + '/' + fileName)
         );
 
-        const buffer: Buffer = await this.imageConverter.convert(fs.readFileSync(srcFolderPath + fileName)) as Buffer;
+        const buffer: Buffer = await this.thumbnailGenerator.generate(fs.readFileSync(srcFolderPath + fileName)) as Buffer;
         const thumbnailDir = destFolderPath + '/thumbs';
 
         fs.mkdirSync(thumbnailDir, {recursive: true});

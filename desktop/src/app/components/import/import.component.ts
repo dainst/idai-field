@@ -8,7 +8,7 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
-import { Imagestore } from '../../services/imagestore/imagestore';
+import { Imagestore } from 'idai-field-core';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';

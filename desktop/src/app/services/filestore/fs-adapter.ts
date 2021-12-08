@@ -1,44 +1,56 @@
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
+import { Injectable } from '@angular/core';
+import { FilesystemAdapterInterface } from 'idai-field-core/src/datastore/image/filesystem-adapter';
+import { SettingsProvider } from '../settings/settings-provider';
+
+@Injectable()
 /**
  * @author Daniel de Oliveira
  */
-export class FsAdapter {
 
+export class FsAdapter implements FilesystemAdapterInterface {
 
-    public fileExists(path: string): boolean {
+    constructor(private settingsProvider: SettingsProvider) { }
 
-        return fs.existsSync(path);
+    public exists(path: string): boolean {
+
+        return (this.isDirectory(path) || this.isFile(path));
     }
 
 
     public writeFile(path: string, contents: any) {
 
-        fs.writeFileSync(path, contents);
+        fs.writeFileSync(this.getAbsolutePath(path), contents);
     }
 
 
     public readFile(path: string): Buffer {
 
-        return fs.readFileSync(path);
+        return fs.readFileSync(this.getAbsolutePath(path));
     }
 
 
     public removeFile(path: string) {
 
-        fs.unlinkSync(path);
+        fs.unlinkSync(this.getAbsolutePath(path));
     }
 
 
     public mkdir(path: string, recursive: boolean) {
-        fs.mkdirSync(path, { recursive });
+        fs.mkdirSync(this.getAbsolutePath(path), { recursive });
+    }
+
+    public isFile(path: string): boolean {
+
+        return fs.lstatSync(this.getAbsolutePath(path)).isFile();
     }
 
 
     public isDirectory(path: string): boolean{
 
-        return fs.lstatSync(path).isDirectory();
+        return fs.lstatSync(this.getAbsolutePath(path)).isDirectory();
     }
 
 
@@ -46,7 +58,7 @@ export class FsAdapter {
     public listFiles(dir: string): string[] {
 
         let results = [];
-        const list: string[] = fs.readdirSync(dir);
+        const list: string[] = fs.readdirSync(this.getAbsolutePath(dir));
         list.forEach(file => {
             file = dir + '/' + file;
             const stat = fs.statSync(file);
@@ -59,5 +71,19 @@ export class FsAdapter {
             }
         });
         return results;
+    }
+
+
+    /**
+     * @param path must start with /
+     */
+     public getAbsolutePath(path: string): string {
+        return this.settingsProvider.getSettings().imagestorePath + path;
+    }
+
+
+    private performAssert(path: string) {
+
+        if (!path.startsWith('/')) throw new Error('illegal argument - path should start with /');
     }
 }

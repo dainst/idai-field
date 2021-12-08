@@ -7,7 +7,7 @@ import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
-import { Imagestore, IMAGEVERSION } from '../../../services/imagestore/imagestore';
+import { ImageVariant } from 'idai-field-core';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -163,7 +163,7 @@ export class ImageRowComponent implements OnChanges {
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {
                     try {
-                        result[imageId] = await this.imageUrlMaker.getUrl(imageId, IMAGEVERSION.THUMBNAIL);
+                        result[imageId] = await this.imageUrlMaker.getUrl(imageId, ImageVariant.THUMBNAIL);
                     } catch (e) {
                         result[imageId] = ImageUrlMaker.blackImg;
                         showMissingThumbnailMessageOnConsole(imageId);

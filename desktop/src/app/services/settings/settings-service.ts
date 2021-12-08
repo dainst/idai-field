@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService } from 'idai-field-core';
+import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService, Imagestore } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
-import { Imagestore } from '../imagestore/imagestore';
 import { ImagestoreErrors } from '../imagestore/imagestore-errors';
 import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
@@ -76,18 +75,12 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
+        // TODO: Check auf errors beim Erstellen der Ordner?
+        this.imagestore.init(settings.imagestorePath, settings.selectedProject);
+
         this.pouchdbServer.setPassword(settings.hostPassword);
 
-        return this.imagestore.init(settings)
-            .catch((errWithParams: any) => {
-                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
-                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
-                } else {
-                    console.error('Something went wrong with imagestore.setPath', errWithParams);
-                }
-            })
-            .then(() => this.settingsProvider.setSettingsAndSerialize(settings))
-            .then(() => settings);
+        return this.settingsProvider.setSettingsAndSerialize(settings).then(() => settings);
     }
 
 

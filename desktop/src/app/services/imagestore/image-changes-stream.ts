@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ChangesStream, Named, ProjectConfiguration, Document, PouchdbDatastore, CategoryConverter, Resource } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { Filestore } from '../filestore/filestore';
+import { Imagestore, ImageVariant } from 'idai-field-core';
 import { RemoteFilestore } from '../filestore/remote-filestore';
 
 
-// TODO in image overview, update images when new images come in
+// TODO in image overview, update images when new images come in,
+// DEPRECATED
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ImageChangesStream {
 
     // TODO reinit on runtime changes of sync settings
     constructor(datastore: PouchdbDatastore,
-                filestore: Filestore,
+                imagestore: Imagestore,
                 remoteFilestore: RemoteFilestore,
                 settingsProvider: SettingsProvider,
                 projectConfiguration: ProjectConfiguration,
@@ -34,32 +35,32 @@ export class ImageChangesStream {
 
             if (!ChangesStream.isRemoteChange(doc, settingsProvider.getSettings().username)) {
                 ImageChangesStream.postImages(
-                    document.resource.id, filestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
+                    document.resource.id, imagestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
             } else {
                 ImageChangesStream.fetchImages(
-                    document.resource.id, filestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
+                    document.resource.id, imagestore, remoteFilestore, settingsProvider.getSettings().selectedProject);
             }
         });
     }
 
 
     private static async postImages(id: Resource.Id,
-                                    filestore: Filestore,
+                                    imagestore: Imagestore,
                                     remoteFilestore: RemoteFilestore,
                                     project: string) {
 
-        await remoteFilestore.post('/' + id, filestore.readFile('/' + project + '/' + id));
-        await remoteFilestore.post('/thumbs/' + id , filestore.readFile('/' + project + '/thumbs/' + id));
+        await remoteFilestore.post('/' + id, imagestore.getData(id, ImageVariant.ORIGINAL));
+        await remoteFilestore.post('/thumbs/' + id , imagestore.getData(id, ImageVariant.ORIGINAL));
     }
 
 
     private static async fetchImages(id: Resource.Id,
-                                     filestore: Filestore,
+                                     imagestore: Imagestore,
                                      remoteFilestore: RemoteFilestore,
                                      project: string) {
 
-        filestore.writeFile('/' + project + '/' + id, await remoteFilestore.get('/' + id));
-        filestore.writeFile('/' + project + '/thumbs/' + id, await remoteFilestore.get('/thumbs/' + id));
+        imagestore.store(id, await remoteFilestore.get('/' + id));
+        imagestore.store(id, await remoteFilestore.get('/thumbs/' + id));
     }
 
 

@@ -1,10 +1,20 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource,
-    ProjectConfiguration, Named, Hierarchy } from 'idai-field-core';
+import {
+    Document,
+    Datastore,
+    FieldDocument,
+    Relation,
+    SyncService,
+    SyncStatus,
+    Resource,
+    ProjectConfiguration,
+    Named,
+    Hierarchy,
+    ImageVariant
+} from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
-import { IMAGEVERSION } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -298,7 +308,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
             this.images[document.resource.id] = await Promise.all(
                 linkedImageIds.map(async (id): Promise<SafeResourceUrl> => {
-                    return this.imageUrlMaker.getUrl(id, IMAGEVERSION.THUMBNAIL);
+                    return this.imageUrlMaker.getUrl(id, ImageVariant.THUMBNAIL);
                 })
             );
         }

@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 
+import { ThumbnailGeneratorInterface } from 'idai-field-core/src/datastore/image/thumbnail-generator';
+import { THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core/src/datastore/image/image-store';
+
 const nativeImage = typeof window !== 'undefined'
     ? window.require('electron').nativeImage : require('electron').nativeImage;
 const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
 const ExifImage = typeof window !== 'undefined' ? window.require('exif').ExifImage : require('exif').ExifImage;
 
-
-const TARGET_HEIGHT = 320;
-const TARGET_JPEG_QUALITY = 60;
-
+const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
 
 @Injectable()
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Simon Hohl
  *
  * The Electron nativeImage module is used per default. If the conversion process fails (which may happen
  * e. g. for CMYK images), Jimp is used. As Jimp is slower than nativeImage in most cases, it is only
  * used as a fallback in case the nativeImage conversion doesn't work.
  */
-export class ImageConverter {
+export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
-    public async convert(data: any): Promise<Buffer> {
 
-        const buffer: Buffer = Buffer.from(data);
+    public async generate(buffer: Buffer): Promise<Buffer> {
 
-        const image = await this.isRotatedJpeg(buffer) ? undefined : this.convertWithElectron(buffer);
+        const image = await this.isRotatedJpeg(buffer) ? undefined : this.convertWithElectron(buffer, THUMBNAIL_TARGET_HEIGHT);
         if (image && !image.isEmpty()) {
-            return image.toJPEG(TARGET_JPEG_QUALITY);
+            return image.toJPEG(THUMBNAIL_TARGET_JPEG_QUALITY);
         } else {
             try {
-                return await this.convertWithJimp(buffer);
+                return await this.convertWithJimp(buffer, THUMBNAIL_TARGET_HEIGHT);
             } catch (err) {
                 console.error('Failed to convert image using jimp:', err);
                 return undefined;
@@ -44,10 +44,13 @@ export class ImageConverter {
 
         return new Promise(resolve => {
             try {
-                new ExifImage({ image : buffer }, (error, exifData) => {
-                    if (error) return resolve(false);
-                    return resolve(exifData?.image?.Orientation > 1);
-                });
+                return new ExifImage(
+                    { image : buffer },
+                    (error: any, exifData: any) => {
+                        if (error) return resolve(false);
+                        return resolve(exifData?.image?.Orientation > 1);
+                    }
+                );
             } catch (error) {
                 return resolve(false);
             }
@@ -55,19 +58,19 @@ export class ImageConverter {
     }
 
 
-    private convertWithElectron(buffer: Buffer) {
+    private convertWithElectron(buffer: Buffer, targetHeight: number) {
 
         return nativeImage.createFromBuffer(buffer)
-            .resize({ height: TARGET_HEIGHT });
+            .resize({ height: targetHeight });
     }
 
 
-    private async convertWithJimp(buffer: Buffer) {
+    private async convertWithJimp(buffer: Buffer, targetHeight: number) {
 
         const image = await Jimp.read(buffer);
 
-        return image.resize(Jimp.AUTO, TARGET_HEIGHT)
-            .quality(TARGET_JPEG_QUALITY)
+        return image.resize(Jimp.AUTO, targetHeight)
+            .quality(THUMBNAIL_TARGET_JPEG_QUALITY)
             .getBufferAsync(Jimp.MIME_JPEG);
     }
 }

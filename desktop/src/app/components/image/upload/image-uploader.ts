@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Document, Datastore, NewImageDocument, ImageDocument } from 'idai-field-core';
-import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import {
+    CategoryForm,
+    Document,
+    Datastore,
+    NewImageDocument,
+    ProjectConfiguration,
+    RelationsManager,
+    Imagestore
+} from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';

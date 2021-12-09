@@ -55,9 +55,6 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public getClonedValuelistDefinition = () =>
         this.clonedConfigurationDocument.resource.valuelists?.[this.valuelist.id];
 
-    public getSortedValueIds = () => this.getClonedValuelistDefinition().order
-        ??  Object.keys(this.getClonedValuelistDefinition().values).sort(SortUtil.alnumCompare);
-
     public getValueLabel = (valueId: string) =>
         this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId);
 
@@ -92,6 +89,18 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         return this.new
             || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition())
             || !equal(this.description)(this.clonedDescription);
+    }
+
+
+    public getSortedValueIds(): string[] {
+
+        const valuelist: Valuelist = this.getClonedValuelistDefinition();
+
+        if (valuelist.order) return valuelist.order;
+
+        return Object.keys(valuelist.values).sort((valueId1: string, valueId2: string) => {
+            return SortUtil.alnumCompare(this.getValueLabel(valueId1),this.getValueLabel(valueId2));
+        });
     }
 
 

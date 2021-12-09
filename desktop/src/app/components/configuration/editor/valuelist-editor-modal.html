@@ -30,11 +30,15 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.values">
             Werte
         </div>
-        <div *ngFor="let valueId of getSortedValueIds()" (click)="editValue(valueId)">
-            <span class="badge badge-light value-badge">
-                {{getValueLabel(valueId)}}
-                <code>{{valueId}}</code>
-            </span>
-        </div>
+        <div *ngFor="let valueId of getSortedValueIds()" class="mb-2">
+            <div class="value-item-group input-group mb-2">
+                <div class="value-item form-control">
+                    {{getValueLabel(valueId)}}
+                    <code>{{valueId}}</code>
+                </div>
+                <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
+                <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
+            </div>
+        <div>
     </div>
 </div>

@@ -1,5 +1,22 @@
 .valuelist-editor-modal-body {
-  .badge {
-    user-select: none;
+  .value-item-group {
+    .value-item {
+      height: 33px;
+      color: #495057;
+      background-color: #e9ecef;
+      user-select: none;
+      font-size: 13px;
+    }
+
+    .btn {
+      width: 34px;
+      height: 33px;
+
+      .mdi {
+        position: relative;
+        bottom: 2px;
+        right: 4px;
+      }
+    }
   }
 }

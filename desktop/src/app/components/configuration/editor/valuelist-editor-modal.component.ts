@@ -108,6 +108,12 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     }
 
 
+    public deleteValue(valueId: string) {
+
+        delete this.getClonedValuelistDefinition().values[valueId];
+    }
+
+
     protected getLabel(): I18N.String {
 
         return undefined;

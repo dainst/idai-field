@@ -38,7 +38,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hidden: boolean;
 
     protected changeMessage = this.i18n({
-        id: 'docedit.saveModal.fieldChanged', value: 'Das Feld wurde geändert.'
+        id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
     });
 
 

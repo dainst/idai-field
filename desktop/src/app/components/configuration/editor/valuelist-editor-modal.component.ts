@@ -29,11 +29,11 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public newValueId: string;
 
     public inputPlaceholder: string = this.i18n({
-        id: 'configuration.valuelistEditor.newValue', value: 'Neuer Wert'
+        id: 'configuration.newValue', value: 'Neuer Wert'
     });
 
     protected changeMessage = this.i18n({
-        id: 'docedit.saveModal.valuelistChanged', value: 'Die Werteliste wurde geändert.'
+        id: 'configuration.valuelistChanged', value: 'Die Werteliste wurde geändert.'
     });
 
 

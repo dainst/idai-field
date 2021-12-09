@@ -5,7 +5,7 @@ import { ConstraintIndex, Indexer, IndexFacade, PouchdbDatastore } from 'idai-fi
 import { ImagestoreErrors } from '../../../../../src/app/services/imagestore/imagestore-errors';
 import { Imagestore } from '../../../../../src/app/services/imagestore/imagestore';
 import { Filestore } from '../../../../../src/app/services/filestore/filestore';
-import { FsAdapter } from '../../../../../src/app/services/filestore/fs-adapter';
+import { FsAdapter } from '../../../../../src/app/services/imagestore/fs-adapter';
 
 
 /**

@@ -72,7 +72,7 @@ import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 import { RemoteFilestore } from '../services/filestore/remote-filestore';
-import { FsAdapter } from '../services/filestore/fs-adapter';
+import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { HttpAdapter } from '../services/filestore/http-adapter';
 import { ImageSync } from '../services/imagestore/image-sync';
 

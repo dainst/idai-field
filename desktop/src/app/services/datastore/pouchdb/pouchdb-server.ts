@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Imagestore, ImageVariant } from 'idai-field-core';
-import { FsAdapter } from '../../filestore/fs-adapter';
+import { FsAdapter } from '../../imagestore/fs-adapter';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

@@ -22,7 +22,7 @@ import { makeExpectDocuments } from '../../../../core/test/test-helpers';
 import PouchDB = require('pouchdb-node');
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 import { Filestore } from '../../../src/app/services/filestore/filestore';
-import { FsAdapter } from '../../../src/app/services/filestore/fs-adapter';
+import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 
 const fs = require('fs');
 

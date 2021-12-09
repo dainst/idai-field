@@ -89,6 +89,24 @@ export class Imagestore {
         );
     }
 
+    public getOriginalFilePaths(): string[] {
+        return this.filesystem.listFiles(this.absolutePath)
+            .map((path) => {
+                return path.slice(this.absolutePath.length)
+            });
+    }
+
+    public getThumbnailFilePaths(): string[] {
+        return this.filesystem.listFiles(this.absolutePath + thumbnailDirectory)
+            .map((path) => {
+                return path.slice(this.absolutePath.length)
+            });
+    }
+
+    public getAllFilePaths(): string[]{
+        return this.getOriginalFilePaths().concat(this.getThumbnailFilePaths())
+    }
+
     private async readFileSystem(imageId: string, type: ImageVariant): Promise<Buffer> {
         const variantDirectory = (type === ImageVariant.ORIGINAL) ? '' : thumbnailDirectory;
 

@@ -50,6 +50,7 @@ export interface FilesystemAdapterInterface {
     /**
      * Returns a list of paths of all files contained in the given path.
      * @param path
+     * @param recursive (optional) also list files in subdirectories
      */
-    listFiles(path: string): string[];
+    listFiles(path: string, recursive?: boolean): string[];
 }

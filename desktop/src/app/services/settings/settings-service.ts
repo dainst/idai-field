@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService, Imagestore } from 'idai-field-core';
+import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService, Imagestore, ImageVariant } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
+import { ImageSync } from '../imagestore/image-sync';
 import { ImagestoreErrors } from '../imagestore/imagestore-errors';
 import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
@@ -34,6 +35,7 @@ export class SettingsService {
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
+                private imageSyncService: ImageSync,
                 private settingsProvider: SettingsProvider) {
     }
 
@@ -122,6 +124,11 @@ export class SettingsService {
             settings.selectedProject,
             syncTarget?.password
         );
+
+        this.imageSyncService.triggerImmediateSync(ImageVariant.ORIGINAL);
+        this.imageSyncService.triggerImmediateSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.activatePeriodicSync(ImageVariant.ORIGINAL);
+        this.imageSyncService.activatePeriodicSync(ImageVariant.THUMBNAIL);
 
         return this.synchronizationService.startSync();
     }

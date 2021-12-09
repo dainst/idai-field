@@ -62,22 +62,22 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    // see https://stackoverflow.com/a/16684530
-    public listFiles(dir: string): string[] {
-
+    public listFiles(dir: string, recursive: boolean = false): string[] {
+        // see https://stackoverflow.com/a/16684530
         let results = [];
         const list: string[] = fs.readdirSync(dir);
-        list.forEach(file => {
-            file = dir + '/' + file;
-            const stat = fs.statSync(file);
+
+        for (const file of list) {
+            const currentFile = dir + file;
+            const stat = fs.statSync(currentFile);
             if (stat && stat.isDirectory()) {
-                /* Recurse into a subdirectory */
-                results = results.concat(this.listFiles(file));
+                /* Recurse into a subdirectory, otherwise do not add directory to results. */
+                if (recursive) results = results.concat(this.listFiles(currentFile, recursive));
             } else {
                 /* Is a file */
-                results.push(file);
+                results.push(currentFile);
             }
-        });
+        }
         return results;
     }
 }

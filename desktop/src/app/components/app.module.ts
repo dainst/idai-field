@@ -74,6 +74,7 @@ import { ImageChangesStream } from '../services/imagestore/image-changes-stream'
 import { RemoteFilestore } from '../services/filestore/remote-filestore';
 import { FsAdapter } from '../services/filestore/fs-adapter';
 import { HttpAdapter } from '../services/filestore/http-adapter';
+import { ImageSync } from '../services/imagestore/image-sync';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -146,6 +147,7 @@ registerLocaleData(localeIt, 'it');
         },
         SettingsProvider,
         SettingsService,
+        ImageSync,
         {
             provide: AppInitializerServiceLocator,
             useFactory: () => new AppInitializerServiceLocator()

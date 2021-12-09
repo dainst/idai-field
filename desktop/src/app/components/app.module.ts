@@ -31,7 +31,7 @@ import { StateSerializer } from '../services/state-serializer';
 import { DatastoreModule } from '../services/datastore/datastore.module';
 import { PouchdbServer } from '../services/datastore/pouchdb/pouchdb-server';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
-import { ThumbnailGenerator } from '../services/imagestore/image-converter';
+import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { ImportValidator } from '../components/import/import/process/import-validator';
 import { InitializationProgress } from './initialization-progress';
 import { ImageRelationsManager } from '../services/image-relations-manager';

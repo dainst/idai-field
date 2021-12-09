@@ -1,6 +1,6 @@
 import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
-import { ThumbnailGenerator } from '../services/imagestore/image-converter';
+import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { Imagestore } from 'idai-field-core/src/datastore/image/image-store';
 import { InitializationProgress } from './initialization-progress';
 import { IndexerConfiguration } from '../indexer-configuration';

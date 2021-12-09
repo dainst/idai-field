@@ -1,5 +1,5 @@
 import { Imagestore, SampleDataLoaderBase } from 'idai-field-core';
-import {ThumbnailGenerator} from '../../../imagestore/image-converter';
+import {ThumbnailGenerator} from '../../../imagestore/thumbnail-generator';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

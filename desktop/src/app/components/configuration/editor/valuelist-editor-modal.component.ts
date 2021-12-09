@@ -26,6 +26,12 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public valuelist: Valuelist;
 
+    public newValueId: string;
+
+    public inputPlaceholder: string = this.i18n({
+        id: 'configuration.valuelistEditor.newValue', value: 'Neuer Wert'
+    });
+
     protected changeMessage = this.i18n({
         id: 'docedit.saveModal.valuelistChanged', value: 'Die Werteliste wurde geändert.'
     });
@@ -89,15 +95,16 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     }
 
 
-    public editValue(valueId: string) {
+    public editValue(valueId: string, isNewValue: boolean = false) {
 
         const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
             ValueEditorModalComponent,
             MenuContext.CONFIGURATION_MODAL
         );
 
-        componentInstance.value = this.getClonedValuelistDefinition().values[valueId];
+        componentInstance.value = this.getClonedValuelistDefinition().values[valueId] ?? {};
         componentInstance.valueId = valueId;
+        componentInstance.new = isNewValue;
         componentInstance.initialize();
 
         this.modals.awaitResult(
@@ -111,6 +118,12 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public deleteValue(valueId: string) {
 
         delete this.getClonedValuelistDefinition().values[valueId];
+    }
+
+
+    public isValidValue(valueId: string): boolean {
+
+        return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId);
     }
 
 

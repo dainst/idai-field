@@ -41,7 +41,11 @@
             </div>
         </div>
         <div class="input-group mb-2">
-            <input [(ngModel)]="newValueId" type="text" placeholder="{{inputPlaceholder}}" class="form-control">
+            <input id="new-value-input"
+                   [(ngModel)]="newValueId"
+                   type="text"
+                   placeholder="{{inputPlaceholder}}"
+                   class="form-control">
             <button class="btn btn-success" type="button"
                     [disabled]="!isValidValue(newValueId)" 
                     (click)="editValue(newValueId, true)">

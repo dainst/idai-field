@@ -254,6 +254,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
 
+        this.configurationDocument = newConfigurationDocument;
         this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
         this.clonedConfigurationDocument.created = newConfigurationDocument.created;
         this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;

@@ -46,13 +46,19 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public isFile(path: string): boolean {
 
-        return fs.lstatSync(path).isFile();
+        const stat = fs.statSync(path, {throwIfNoEntry: false});
+
+        if (!stat) return false;
+        return stat.isFile();
     }
 
 
     public isDirectory(path: string): boolean{
 
-        return fs.lstatSync(path).isDirectory();
+        const stat = fs.statSync(path, {throwIfNoEntry: false});
+
+        if (!stat) return false;
+        return stat.isDirectory();
     }
 
 

@@ -156,7 +156,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        this.modals.awaitResult(
+            result,
+            newConfigurationDocument => this.updateEditedValuelist(newConfigurationDocument),
+            nop
+        );
     }
 
 
@@ -245,6 +249,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
+    }
+
+
+    private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
+
+        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
+        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
+        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
+        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+
+        const valuelistId: string = this.clonedField.valuelist.id;
+        this.clonedField.valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
+        this.clonedField.valuelist.id = valuelistId;
     }
 
 

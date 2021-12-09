@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal } from 'tsfun';
-import { I18N, Valuelist } from 'idai-field-core';
+import { equal, nop } from 'tsfun';
+import { I18N, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
+import { Modals } from '../../../services/modals';
+import { MenuContext } from '../../../services/menu-context';
+import { ValueEditorModalComponent } from './value-editor-modal.component';
 
 
 @Component({
@@ -33,6 +36,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 menuService: Menus,
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
+                private labels: Labels,
+                private modals: Modals,
                 private i18n: I18n) {
 
         super(activeModal, modalService, menuService, messages);
@@ -43,6 +48,12 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public getClonedValuelistDefinition = () =>
         this.clonedConfigurationDocument.resource.valuelists?.[this.valuelist.id];
+
+    public getSortedValueIds = () => this.getClonedValuelistDefinition().order
+        ??  Object.keys(this.getClonedValuelistDefinition().values).sort(SortUtil.alnumCompare);
+
+    public getValueLabel = (valueId: string) =>
+        this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId);
 
 
     public initialize() {
@@ -75,6 +86,25 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         return this.new
             || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition())
             || !equal(this.description)(this.clonedDescription);
+    }
+
+
+    public editValue(valueId: string) {
+
+        const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
+            ValueEditorModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.value = this.getClonedValuelistDefinition().values[valueId];
+        componentInstance.valueId = valueId;
+        componentInstance.initialize();
+
+        this.modals.awaitResult(
+            result,
+            editedValue => this.getClonedValuelistDefinition().values[valueId] = editedValue,
+            nop
+        );
     }
 
 

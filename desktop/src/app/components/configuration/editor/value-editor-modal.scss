@@ -1,0 +1,9 @@
+.value-editor-modal-body {
+  height: initial;
+  background-color: initial;
+  max-height: calc(100vh - 140px);
+
+  .button-label {
+    margin-left: 0;
+  }
+}

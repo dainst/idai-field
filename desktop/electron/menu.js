@@ -252,7 +252,7 @@ const getTemplate = (mainWindow, context, config) => {
 
     if (process.platform === 'darwin') {
         // Remove 'Settings' option & separator from 'File' menu
-        template[1].submenu.splice(10, 2);
+        template[1].submenu.splice(12, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

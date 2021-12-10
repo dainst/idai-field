@@ -20,16 +20,15 @@ const getTemplate = (mainWindow, context) => {
             enabled: context === 'default'
         }]
     }, {
-        label: messages.get('menu.file'),
+        label: messages.get('menu.project'),
         submenu: [
             {
-                label: messages.get('menu.file.newProject'),
+                label: messages.get('menu.project.newProject'),
                 accelerator: 'CmdOrCtrl+N',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: context === 'default'
-            },
-            {
-                label: messages.get('menu.file.networkProject'),
+            }, {
+                label: messages.get('menu.project.networkProject'),
                 accelerator: 'CmdOrCtrl+D',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
                 enabled: context === 'default'
@@ -37,7 +36,7 @@ const getTemplate = (mainWindow, context) => {
                 type: 'separator'
             },
             {
-                label: messages.get('menu.file.openProject'),
+                label: messages.get('menu.project.openProject'),
                 enabled: context === 'default' && getNamesOfUnopenedProjects().length > 0,
                 submenu: getNamesOfUnopenedProjects().map(projectName => {
                     return {
@@ -48,33 +47,28 @@ const getTemplate = (mainWindow, context) => {
                 })
             }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.projectProperties'),
+            }, {
+                label: messages.get('menu.project.projectProperties'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: context === 'default',
             }, {
-                label: messages.get('menu.file.projectSynchronization'),
+                label: messages.get('menu.project.projectSynchronization'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: context === 'default'
                     && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
             }, {
-                label: messages.get('menu.file.deleteProject'),
+                label: messages.get('menu.project.deleteProject'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
                 enabled: context === 'default'
-            },
-            {
+            }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.import'),
-                accelerator: 'CmdOrCtrl+I',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
+            }, {
+                label: messages.get('menu.project.backupCreation'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
                 enabled: context === 'default'
             }, {
-                label: messages.get('menu.file.export'),
-                accelerator: 'CmdOrCtrl+E',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
+                label: messages.get('menu.project.backupLoading'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
                 enabled: context === 'default'
             }, {
                 type: 'separator'
@@ -86,9 +80,8 @@ const getTemplate = (mainWindow, context) => {
             },
             {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.exit'),
+            }, {
+                label: messages.get('menu.project.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: function () {
                     app.quit()
@@ -145,13 +138,15 @@ const getTemplate = (mainWindow, context) => {
             enabled: context === 'default'
         }, {
             type: 'separator'
-        }, {
-            label: messages.get('menu.tools.backupCreation'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
+        },  {
+            label: messages.get('menu.tools.import'),
+            accelerator: 'CmdOrCtrl+I',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
             enabled: context === 'default'
         }, {
-            label: messages.get('menu.tools.backupLoading'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
+            label: messages.get('menu.tools.export'),
+            accelerator: 'CmdOrCtrl+E',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
             enabled: context === 'default'
         }]
     }, {

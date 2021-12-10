@@ -7,12 +7,14 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
-
+const bodyParser =  typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
 
 @Injectable()
 export class PouchdbServer {
 
     private password: string;
+
+    private binaryBodyParser = bodyParser.raw({type: 'image/*', limit : '50mb'});
 
     public getPassword = () => this.password;
 
@@ -36,31 +38,64 @@ export class PouchdbServer {
             unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
         }));
 
-        app.post('/files/:project/*', (req: any, res: any, next: any) => {
-            // https://stackoverflow.com/a/16599008
-            req.on('data', function(data) {
-                self.filesystem.writeFile('/' + req.params['project'] + '/' + req.params[0], data)
-            });
-            req.on('end', function() {
-                res.status(200).send({ status: 'ok' });
-            });
+
+        app.get('/files/:project/list', (req: any, res: any) => {
+
+            const requestedType = this.parseFileType(req.query.type);
+            let list: string[];
+
+            if (requestedType === ImageVariant.ORIGINAL) {
+                list = this.imagestore.getOriginalFilePaths();
+            } else if (requestedType === ImageVariant.THUMBNAIL) {
+                list = this.imagestore.getThumbnailFilePaths();
+            } else {
+                list = this.imagestore.getAllFilePaths();
+            }
+            res.status(200).send({list});
         });
 
-        app.get('/files/:project/*', (req: any, res: any) => {
-            const path = '/' + req.params['project'] + '/' + req.params[0];
 
-            if (!self.filesystem.exists(path)) {
-                res.status(200).send({ status: 'notfound' });
-            } else {
-                if (self.filesystem.isDirectory(path)) {
-                    res.status(200).send({ files: self.filesystem.listFiles(path) });
-                } else {
-                    res
-                        .header('Content-Type', 'image/png')
-                        .status(200).sendFile(self.imagestore.getData(req.params[0], ImageVariant.ORIGINAL));
+        app.get('/files/:project/data', async (req: any, res: any) => {
+
+            const requestedType = this.parseFileType(req.query.type);
+
+            if (req.query.id && requestedType !== undefined) {
+                try {
+                    const data = await self.imagestore.getData(req.query.id, requestedType);
+                    res.header('Content-Type', 'image/*').status(200).send(
+                        data
+                    );
+                } catch (e) {
+                    if (e.code === 'ENOENT'){
+                        res.status(404).send({reason: 'Image files not found.'});
+                    } else {
+                        console.log(e);
+                        res.status(500).send({reason: 'Whoops?'});
+                    }
                 }
+            } else {
+
+                res.status(400).send({reason: 'Missing valid parameters for "id" and "type".'});
+            }
+
+        });
+
+
+        app.post('/files/:project', this.binaryBodyParser, (req: any, res: any) => {
+
+            if (req.query.id) {
+                try {
+                    this.imagestore.store(req.query.id, req.body);
+                    res.status(200).send({});
+                } catch (e) {
+                    console.error(e);
+                    res.status(500).send({reason: 'Whoops?'});
+                }
+            } else {
+                res.status(400).send({reason: 'Missing valid parameters for "id".'});
             }
         });
+
 
         // prevent the creation of new databases when syncing
         app.put('/:db', (_: any, res: any) =>
@@ -76,11 +111,21 @@ export class PouchdbServer {
                     'routes/authorization',
                     'routes/session'
                 ]
-            }
+            },
         }));
 
-        await app.listen(3000, function() {
-            console.debug('PouchDB Server is listening on port 3000');
+        await app.listen(3000, () => {
+            console.log('PouchDB Server is listening on port 3000');
         });
+    }
+
+    private parseFileType(query: string): ImageVariant|null {
+        if (query === 'original') {
+            return ImageVariant.ORIGINAL;
+        } else if (query === 'thumbnail') {
+            return ImageVariant.THUMBNAIL;
+        } else {
+            return undefined;
+        }
     }
 }

@@ -107,7 +107,7 @@ export class Imagestore {
     }
 
     public getAllFilePaths(project: string = this.activeProject): string[]{
-        return this.getOriginalFilePaths().concat(this.getThumbnailFilePaths())
+        return this.getOriginalFilePaths(project).concat(this.getThumbnailFilePaths(project))
     }
 
     private async readFileSystem(imageId: string, type: ImageVariant, project: string): Promise<Buffer> {

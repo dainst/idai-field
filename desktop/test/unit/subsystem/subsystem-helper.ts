@@ -3,7 +3,7 @@ import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
     ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService } from 'idai-field-core';
-import { PouchdbServer } from '../../../src/app/services/datastore/pouchdb/pouchdb-server';
+import { ExpressServer } from '../../../src/app/services/express-server';
 import { Imagestore } from '../../../src/app/services/imagestore/imagestore';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
@@ -39,7 +39,7 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbdatastore, projectName = 'testdb') {
 
-    const pouchdbServer = new PouchdbServer(undefined);
+    const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
     const filestore = new Filestore(settingsProvider, new FsAdapter());
 

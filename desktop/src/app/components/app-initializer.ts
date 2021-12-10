@@ -8,7 +8,7 @@ import {SettingsService} from '../services/settings/settings-service';
 import {SettingsSerializer} from '../services/settings/settings-serializer';
 import {Settings} from '../services/settings/settings';
 import {SampleDataLoader} from '../services/datastore/field/sampledata/sample-data-loader';
-import {PouchdbServer} from '../services/datastore/pouchdb/pouchdb-server';
+import {ExpressServer} from '../services/express-server';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -74,7 +74,7 @@ export const appInitializerFactory = (
         serviceLocator: AppInitializerServiceLocator,
         settingsService: SettingsService,
         pouchdbDatastore: PouchdbDatastore,
-        pouchdbServer: PouchdbServer,
+        pouchdbServer: ExpressServer,
         documentCache: DocumentCache,
         thumbnailGenerator: ThumbnailGenerator,
         imagestore: Imagestore,

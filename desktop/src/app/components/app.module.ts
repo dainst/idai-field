@@ -29,7 +29,7 @@ import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
 import { DatastoreModule } from '../services/datastore/datastore.module';
-import { PouchdbServer } from '../services/datastore/pouchdb/pouchdb-server';
+import { ExpressServer } from '../services/express-server';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { ImportValidator } from '../components/import/import/process/import-validator';
@@ -159,7 +159,7 @@ registerLocaleData(localeIt, 'it');
                 AppInitializerServiceLocator,
                 SettingsService,
                 PouchdbDatastore,
-                PouchdbServer,
+                ExpressServer,
                 DocumentCache,
                 ThumbnailGenerator,
                 Imagestore,

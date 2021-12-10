@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Imagestore, ImageVariant } from 'idai-field-core';
-import { FsAdapter } from '../../imagestore/fs-adapter';
+import { FsAdapter } from './imagestore/fs-adapter';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -10,7 +10,7 @@ const expressBasicAuth = typeof window !== 'undefined' ? window.require('express
 const bodyParser =  typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
 
 @Injectable()
-export class PouchdbServer {
+export class ExpressServer {
 
     private password: string;
 
@@ -42,16 +42,25 @@ export class PouchdbServer {
         app.get('/files/:project/list', (req: any, res: any) => {
 
             const requestedType = this.parseFileType(req.query.type);
-            let list: string[];
 
-            if (requestedType === ImageVariant.ORIGINAL) {
-                list = this.imagestore.getOriginalFilePaths();
-            } else if (requestedType === ImageVariant.THUMBNAIL) {
-                list = this.imagestore.getThumbnailFilePaths();
-            } else {
-                list = this.imagestore.getAllFilePaths();
+            try {
+                let list: string[];
+                if (requestedType === ImageVariant.ORIGINAL) {
+                    list = this.imagestore.getOriginalFilePaths(req.params.project);
+                } else if (requestedType === ImageVariant.THUMBNAIL) {
+                    list = this.imagestore.getThumbnailFilePaths(req.params.project);
+                } else {
+                    list = this.imagestore.getAllFilePaths(req.params.project);
+                }
+                res.status(200).send({list});
+            } catch (e) {
+                if (e.code === 'ENOENT'){
+                    res.status(404).send({reason: 'Unknown project.'});
+                } else {
+                    console.log(e);
+                    res.status(500).send({reason: 'Whoops?'});
+                }
             }
-            res.status(200).send({list});
         });
 
 
@@ -61,7 +70,7 @@ export class PouchdbServer {
 
             if (req.query.id && requestedType !== undefined) {
                 try {
-                    const data = await self.imagestore.getData(req.query.id, requestedType);
+                    const data = await self.imagestore.getData(req.query.id, requestedType, req.params.project);
                     res.header('Content-Type', 'image/*').status(200).send(
                         data
                     );
@@ -74,7 +83,6 @@ export class PouchdbServer {
                     }
                 }
             } else {
-
                 res.status(400).send({reason: 'Missing valid parameters for "id" and "type".'});
             }
 
@@ -85,14 +93,18 @@ export class PouchdbServer {
 
             if (req.query.id) {
                 try {
-                    this.imagestore.store(req.query.id, req.body);
+                    this.imagestore.store(req.query.id, req.body, req.params.project);
                     res.status(200).send({});
                 } catch (e) {
-                    console.error(e);
-                    res.status(500).send({reason: 'Whoops?'});
+                    if (e.code === 'ENOENT'){
+                        res.status(404).send({reason: 'Image files not found.'});
+                    } else {
+                        console.log(e);
+                        res.status(500).send({reason: 'Whoops?'});
+                    }
                 }
             } else {
-                res.status(400).send({reason: 'Missing valid parameters for "id".'});
+                res.status(400).send({reason: 'Missing parameter "id".'});
             }
         });
 

@@ -2,12 +2,13 @@ import { FilesystemAdapterInterface } from './filesystem-adapter';
 import { ThumbnailGeneratorInterface } from './thumbnail-generator';
 
 export enum ImageVariant {
-    ORIGINAL, THUMBNAIL
+    ORIGINAL = "ORIGINAL", 
+    THUMBNAIL = "THUMBNAIL"
 }
 
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 
-const thumbnailDirectory = 'thumbs/';
+export const thumbnailDirectory = 'thumbs/';
 const tombstoneSuffix = '.deleted';
 
 /**
@@ -22,6 +23,7 @@ const tombstoneSuffix = '.deleted';
 export class Imagestore {
 
     private absolutePath: string | undefined = undefined;
+    private activeProject: string | undefined = undefined;
 
     constructor(
         private filesystem: FilesystemAdapterInterface,
@@ -35,15 +37,16 @@ export class Imagestore {
      * @param fileSystemBasePath The base path for the project's image store. Will be used to construct absolute 
      * paths for the injected {@link FilesystemAdapterInterface} implementation.
      */
-    public init(fileSystemBasePath: string): void {
-
+    public init(fileSystemBasePath: string, activeProject: string): void {
+        
         this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
+        this.activeProject = activeProject;
 
-        if (!this.filesystem.exists(this.absolutePath)) {
-            this.filesystem.mkdir(this.absolutePath);
+        if (!this.filesystem.exists(this.absolutePath + activeProject + '/')) {
+            this.filesystem.mkdir(this.absolutePath + activeProject + '/', true);
         }
-        if (!this.filesystem.exists(this.absolutePath + thumbnailDirectory)) {
-            this.filesystem.mkdir(this.absolutePath + thumbnailDirectory);
+        if (!this.filesystem.exists(this.absolutePath + activeProject + '/' + thumbnailDirectory)) {
+            this.filesystem.mkdir(this.absolutePath + activeProject + '/' + thumbnailDirectory);
         }
     }
 
@@ -53,11 +56,11 @@ export class Imagestore {
      * @param imageId the identifier for the data
      * @param data the binary data to be stored
      */
-    public store(imageId: string, data: Buffer): void {
+    public store(imageId: string, data: Buffer, project: string = this.activeProject): void {
 
         const buffer = Buffer.from(data);
-        this.filesystem.writeFile(this.absolutePath + imageId, Buffer.from(buffer));
-        this.createThumbnail(imageId, buffer);
+        this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, Buffer.from(buffer));
+        this.createThumbnail(imageId, buffer, project);
     }
 
     /**
@@ -65,8 +68,8 @@ export class Imagestore {
      * @param imageId the identifier for the image
      * @param type variant type of the image, see {@link ImageVariant}.
      */
-    public async getData(imageId: string, type: ImageVariant): Promise<Buffer> {
-        return await this.readFileSystem(imageId, type);
+    public async getData(imageId: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
+        return await this.readFileSystem(imageId, type, project);
     }
 
     /**
@@ -74,59 +77,59 @@ export class Imagestore {
      * the same name plus a {@link tombstoneSuffix}.
      * @param imageId the identifier for the image to be removed
      */
-    public async remove(imageId: string): Promise<any> {
+    public async remove(imageId: string, project: string = this.activeProject): Promise<any> {
         this.filesystem.removeFile(
-            this.absolutePath + imageId
+            this.absolutePath + project + '/' + imageId
         );
         this.filesystem.writeFile(
-            this.absolutePath + imageId + tombstoneSuffix, Buffer.from([])
+            this.absolutePath + project + '/' + imageId + tombstoneSuffix, Buffer.from([])
         );
         this.filesystem.removeFile(
-            this.absolutePath + thumbnailDirectory + imageId
+            this.absolutePath + project + '/' + thumbnailDirectory + imageId
         );
         this.filesystem.writeFile(
-            this.absolutePath + thumbnailDirectory + imageId + tombstoneSuffix, Buffer.from([])
+            this.absolutePath + project + '/' + thumbnailDirectory + imageId + tombstoneSuffix, Buffer.from([])
         );
     }
 
-    public getOriginalFilePaths(): string[] {
-        return this.filesystem.listFiles(this.absolutePath)
+    public getOriginalFilePaths(project: string = this.activeProject): string[] {
+        return this.filesystem.listFiles(this.absolutePath + project + '/')
             .map((path) => {
-                return path.slice(this.absolutePath.length)
+                return path.slice((this.absolutePath + project + '/').length)
             });
     }
 
-    public getThumbnailFilePaths(): string[] {
-        return this.filesystem.listFiles(this.absolutePath + thumbnailDirectory)
+    public getThumbnailFilePaths(project: string = this.activeProject): string[] {
+        return this.filesystem.listFiles(this.absolutePath + project + '/' + thumbnailDirectory)
             .map((path) => {
-                return path.slice(this.absolutePath.length)
+                return path.slice((this.absolutePath + project + '/').length)
             });
     }
 
-    public getAllFilePaths(): string[]{
+    public getAllFilePaths(project: string = this.activeProject): string[]{
         return this.getOriginalFilePaths().concat(this.getThumbnailFilePaths())
     }
 
-    private async readFileSystem(imageId: string, type: ImageVariant): Promise<Buffer> {
+    private async readFileSystem(imageId: string, type: ImageVariant, project: string): Promise<Buffer> {
         const variantDirectory = (type === ImageVariant.ORIGINAL) ? '' : thumbnailDirectory;
 
-        const path = this.absolutePath + variantDirectory + imageId;
+        const path = this.absolutePath + project + '/' + variantDirectory + imageId;
 
         if (type === ImageVariant.THUMBNAIL && !this.filesystem.exists(path))
         {
-            const originalFilePath = this.absolutePath + imageId;
+            const originalFilePath = this.absolutePath + project + '/' + imageId;
             if (this.filesystem.exists(originalFilePath)) {
-                await this.createThumbnail(imageId, this.filesystem.readFile(this.absolutePath + imageId));
+                await this.createThumbnail(imageId, this.filesystem.readFile(this.absolutePath + project + '/' + imageId), project);
             }
         }
 
         return this.filesystem.readFile(path);
     }
 
-    private async createThumbnail(imageId: string, data: Buffer) {
+    private async createThumbnail(imageId: string, data: Buffer, project: string) {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
-        const thumbnailPath = this.absolutePath + thumbnailDirectory + imageId;
+        const thumbnailPath = this.absolutePath + project + '/' + thumbnailDirectory + imageId;
         this.filesystem.writeFile(thumbnailPath, buffer);
     }
 }

@@ -3,7 +3,7 @@ import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectC
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
-import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
+import { ExpressServer } from '../express-server';
 import { ImageSync } from '../imagestore/image-sync';
 import { ImagestoreErrors } from '../imagestore/imagestore-errors';
 import { Settings, SyncTarget } from './settings';
@@ -31,7 +31,7 @@ export class SettingsService {
 
     constructor(private imagestore: Imagestore,
                 private pouchdbDatastore: PouchdbDatastore,
-                private pouchdbServer: PouchdbServer,
+                private pouchdbServer: ExpressServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
@@ -77,7 +77,7 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
-        this.imagestore.init(settings.imagestorePath + settings.selectedProject);
+        this.imagestore.init(settings.imagestorePath, settings.selectedProject);
 
         this.pouchdbServer.setPassword(settings.hostPassword);
 

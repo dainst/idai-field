@@ -20,24 +20,22 @@ const getTemplate = (mainWindow, context, config) => {
             enabled: isDefaultContext(context)
         }]
     }, {
-        label: messages.get('menu.file'),
+        label: messages.get('menu.project'),
         submenu: [
             {
-                label: messages.get('menu.file.newProject'),
+                label: messages.get('menu.project.newProject'),
                 accelerator: 'CmdOrCtrl+N',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: isDefaultContext(context)
-            },
-            {
-                label: messages.get('menu.file.networkProject'),
+            }, {
+                label: messages.get('menu.project.networkProject'),
                 accelerator: 'CmdOrCtrl+D',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
                 enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.openProject'),
+            }, {
+                label: messages.get('menu.project.openProject'),
                 enabled: isDefaultContext(context) && getNamesOfUnopenedProjects().length > 0,
                 submenu: getNamesOfUnopenedProjects().map(projectName => {
                     return {
@@ -48,33 +46,28 @@ const getTemplate = (mainWindow, context, config) => {
                 })
             }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.projectProperties'),
+            }, {
+                label: messages.get('menu.project.projectProperties'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: isDefaultContext(context)
             }, {
-                label: messages.get('menu.file.projectSynchronization'),
+                label: messages.get('menu.project.projectSynchronization'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: isDefaultContext(context)
                     && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
             }, {
-                label: messages.get('menu.file.deleteProject'),
+                label: messages.get('menu.project.deleteProject'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
                 enabled: isDefaultContext(context)
-            },
-            {
+            }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.import'),
-                accelerator: 'CmdOrCtrl+I',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
+            }, {
+                label: messages.get('menu.project.backupCreation'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
                 enabled: isDefaultContext(context)
             }, {
-                label: messages.get('menu.file.export'),
-                accelerator: 'CmdOrCtrl+E',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
+                label: messages.get('menu.project.backupLoading'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
                 enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
@@ -83,12 +76,10 @@ const getTemplate = (mainWindow, context, config) => {
                 accelerator: 'CmdOrCtrl+Alt+S',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
                 enabled: isDefaultContext(context)
-            },
-            {
+            }, {
                 type: 'separator'
-            },
-            {
-                label: messages.get('menu.file.exit'),
+            }, {
+                label: messages.get('menu.project.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: function () {
                     app.quit()
@@ -132,36 +123,34 @@ const getTemplate = (mainWindow, context, config) => {
             accelerator: 'CmdOrCtrl+F',
             click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
             enabled: isDefaultContext(context)
-        },
-        {
+        }, {
             type: 'separator'
-        },
-        {
+        }, {
             label: messages.get('menu.tools.images'),
             accelerator: 'CmdOrCtrl+B',
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
             enabled: isDefaultContext(context)
-        },
-        {
+        }, {
             label: messages.get('menu.tools.types'),
             accelerator: 'CmdOrCtrl+T',
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),
             enabled: isDefaultContext(context)
-        },
-        {
+        }, {
             label: messages.get('menu.tools.matrix'),
             accelerator: 'CmdOrCtrl+Y',
             click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),
             enabled: isDefaultContext(context)
         }, {
             type: 'separator'
-        }, {
-            label: messages.get('menu.tools.backupCreation'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
+        },  {
+            label: messages.get('menu.tools.import'),
+            accelerator: 'CmdOrCtrl+I',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
             enabled: isDefaultContext(context)
         }, {
-            label: messages.get('menu.tools.backupLoading'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
+            label: messages.get('menu.tools.export'),
+            accelerator: 'CmdOrCtrl+E',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
             enabled: isDefaultContext(context)
         }]
     },

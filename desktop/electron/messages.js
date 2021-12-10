@@ -102,7 +102,6 @@ const messageDictionary = {
         'menu.file': 'File',
         'menu.file.newProject': 'Nuovo progetto...',
         'menu.file.openProject': 'Aprire un progetto',
-        'menu.file.currentProject': 'Progetto attuale',
         'menu.file.networkProject': 'Scaricare un progetto...',
         'menu.file.projectProperties': 'Proprietà',
         'menu.file.projectSynchronization': 'Sincronizzare...',

@@ -27,7 +27,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public valuelist: Valuelist;
 
-    public newValueId: string;
+    public newValueId: string = '';
     public order: string[];
     public sortAlphanumerically: boolean;
 
@@ -131,6 +131,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public async addValue(valueId: string) {
 
+        this.newValueId = '';
         await this.editValue(valueId, true);
         this.order.push(valueId);
     }

@@ -26,19 +26,41 @@
         <multi-language-input [translations]="clonedDescription"
                               [defaultTranslations]="{}"></multi-language-input>
     </div>
-    <div class="configuration-editor-section">
+    <div class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.values">
             Werte
         </div>
-        <div *ngFor="let valueId of getSortedValueIds()" class="mb-2">
-            <div class="value-item-group input-group mb-2">
-                <div class="value-item form-control">
-                    {{getValueLabel(valueId)}}
-                    <code>{{valueId}}</code>
-                </div>
-                <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
-                <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
+        <div>
+            <div id="sort-label">
+                <span i18n="@@configuration.sortValues">Automatische Sortierung</span>
             </div>
+            <div>
+                <label class="switch">
+                    <input type="checkbox"
+                        [checked]="sortAlphanumerically"
+                        (change)="toggleSort()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div id="value-items" cdkDropList
+             (cdkDropListDropped)="onDrop($event)"
+             [cdkDropListDisabled]="sortAlphanumerically">
+            <div *ngFor="let valueId of getValueIds()"
+                 class="mb-2"
+                 cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y">
+                <div class="value-item-group input-group mb-2">
+                    <span *ngIf="!sortAlphanumerically" class="mdi mdi-drag" cdkDragHandle></span>
+                    <div class="value-item form-control">
+                        {{getValueLabel(valueId)}}
+                        <code>{{valueId}}</code>
+                    </div>
+                    <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
+                    <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
+                </div>
+            </div>
+            <div *cdkDragPlaceholder class="value-drag-placeholder"></div>
         </div>
         <div class="input-group mb-2">
             <input id="new-value-input"
@@ -48,7 +70,7 @@
                    class="form-control">
             <button class="btn btn-success" type="button"
                     [disabled]="!isValidValue(newValueId)" 
-                    (click)="editValue(newValueId, true)">
+                    (click)="addValue(newValueId)">
                 <span class="mdi mdi-plus"></span>
             </button>
         </div>

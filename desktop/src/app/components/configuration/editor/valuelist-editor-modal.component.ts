@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, nop } from 'tsfun';
-import { I18N, Labels, SortUtil, Valuelist } from 'idai-field-core';
+import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -27,6 +28,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public valuelist: Valuelist;
 
     public newValueId: string;
+    public order: string[];
+    public sortAlphanumerically: boolean;
 
     public inputPlaceholder: string = this.i18n({
         id: 'configuration.newValue', value: 'Neuer Wert'
@@ -58,6 +61,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public getValueLabel = (valueId: string) =>
         this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId);
 
+    public getValueIds = () => this.sortAlphanumerically ? this.getSortedValueIds() : this.order;
+
 
     public initialize() {
 
@@ -73,12 +78,21 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 creationDate: new Date().toISOString().split('T')[0]
             }
         }
+
+        this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
+        this.order = this.getClonedValuelistDefinition().order ?? this.getSortedValueIds();
     }
 
 
     public async save() {
 
         this.getClonedValuelistDefinition().description = this.clonedDescription;
+        
+        if (this.sortAlphanumerically) {
+            delete this.getClonedValuelistDefinition().order;
+        } else {
+            this.getClonedValuelistDefinition().order = this.order;
+        }
 
         await super.save();
     }
@@ -88,23 +102,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         
         return this.new
             || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition())
-            || !equal(this.description)(this.clonedDescription);
+            || !equal(this.description)(this.clonedDescription)
+            || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
+            || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
+                || !equal(this.order, this.getClonedValuelistDefinition().order))
     }
 
 
-    public getSortedValueIds(): string[] {
-
-        const valuelist: Valuelist = this.getClonedValuelistDefinition();
-
-        if (valuelist.order) return valuelist.order;
-
-        return Object.keys(valuelist.values).sort((valueId1: string, valueId2: string) => {
-            return SortUtil.alnumCompare(this.getValueLabel(valueId1),this.getValueLabel(valueId2));
-        });
-    }
-
-
-    public editValue(valueId: string, isNewValue: boolean = false) {
+    public async editValue(valueId: string, isNewValue: boolean = false) {
 
         const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
             ValueEditorModalComponent,
@@ -116,11 +121,18 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         componentInstance.new = isNewValue;
         componentInstance.initialize();
 
-        this.modals.awaitResult(
+        await this.modals.awaitResult(
             result,
             editedValue => this.getClonedValuelistDefinition().values[valueId] = editedValue,
             nop
         );
+    }
+
+
+    public async addValue(valueId: string) {
+
+        await this.editValue(valueId, true);
+        this.order.push(valueId);
     }
 
 
@@ -133,6 +145,26 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public isValidValue(valueId: string): boolean {
 
         return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId);
+    }
+
+
+    public toggleSort() {
+
+        this.sortAlphanumerically = !this.sortAlphanumerically;
+    }
+
+
+    public onDrop(event: CdkDragDrop<any>) {
+
+        InPlace.moveInArray(this.order, event.previousIndex, event.currentIndex);
+    }
+
+
+    private getSortedValueIds(): string[] {
+
+        return Object.keys(this.getClonedValuelistDefinition().values).sort((valueId1: string, valueId2: string) => {
+            return SortUtil.alnumCompare(this.getValueLabel(valueId1),this.getValueLabel(valueId2));
+        });
     }
 
 

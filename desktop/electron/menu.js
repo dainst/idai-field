@@ -50,24 +50,18 @@ const getTemplate = (mainWindow, context) => {
                 type: 'separator'
             },
             {
-                label: messages.get('menu.file.currentProject'),
+                label: messages.get('menu.file.projectProperties'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: context === 'default',
-                submenu: [
-                    {
-                        label: messages.get('menu.file.projectProperties'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
-                        enabled: context === 'default'
-                    }, {
-                        label: messages.get('menu.file.projectSynchronization'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
-                        enabled: context === 'default'
-                            && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
-                    }, {
-                        label: messages.get('menu.file.deleteProject'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
-                        enabled: context === 'default'
-                    }
-                ]
+            }, {
+                label: messages.get('menu.file.projectSynchronization'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
+                enabled: context === 'default'
+                    && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
+            }, {
+                label: messages.get('menu.file.deleteProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
+                enabled: context === 'default'
             },
             {
                 type: 'separator'

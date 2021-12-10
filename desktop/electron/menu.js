@@ -50,24 +50,18 @@ const getTemplate = (mainWindow, context, config) => {
                 type: 'separator'
             },
             {
-                label: messages.get('menu.file.currentProject'),
-                enabled: isDefaultContext(context),
-                submenu: [
-                    {
-                        label: messages.get('menu.file.projectProperties'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
-                        enabled: isDefaultContext(context)
-                    }, {
-                        label: messages.get('menu.file.projectSynchronization'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
-                        enabled: isDefaultContext(context)
-                            && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
-                    }, {
-                        label: messages.get('menu.file.deleteProject'),
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
-                        enabled: isDefaultContext(context)
-                    }
-                ]
+                label: messages.get('menu.file.projectProperties'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
+                enabled: isDefaultContext(context)
+            }, {
+                label: messages.get('menu.file.projectSynchronization'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
+                enabled: isDefaultContext(context)
+                    && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
+            }, {
+                label: messages.get('menu.file.deleteProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
+                enabled: isDefaultContext(context)
             },
             {
                 type: 'separator'

@@ -2,8 +2,8 @@ import { FilesystemAdapterInterface } from './filesystem-adapter';
 import { ThumbnailGeneratorInterface } from './thumbnail-generator';
 
 export enum ImageVariant {
-    ORIGINAL = "ORIGINAL", 
-    THUMBNAIL = "THUMBNAIL"
+    ORIGINAL = "original_image", 
+    THUMBNAIL = "thumbnail_image"
 }
 
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
@@ -90,6 +90,45 @@ export class Imagestore {
         this.filesystem.writeFile(
             this.absolutePath + project + '/' + thumbnailDirectory + imageId + tombstoneSuffix, Buffer.from([])
         );
+    }
+
+    public getFileIds(project: string = this.activeProject, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
+        let originalFileNames = [];
+        let thumbnailFileNames = [];
+
+        if(types.length === 0){
+            originalFileNames = this.getFileNames(this.absolutePath + project + '/');
+            thumbnailFileNames = this.getFileNames(this.absolutePath + project + '/' + thumbnailDirectory);
+        } else {
+            if(types.includes(ImageVariant.ORIGINAL)){
+                originalFileNames = this.getFileNames(this.absolutePath + project + '/');
+            } else if(types.includes(ImageVariant.THUMBNAIL)) {
+                thumbnailFileNames = this.getFileNames(this.absolutePath + project + '/' + thumbnailDirectory);
+            }
+        }
+
+        console.log(originalFileNames);
+        console.log(thumbnailFileNames);
+
+        const result = {};
+        for(const fileName of originalFileNames){
+            if(fileName in result) result[fileName].push(ImageVariant.ORIGINAL)
+            else result[fileName] = [ImageVariant.ORIGINAL]
+        }
+        
+        for(const fileName of thumbnailFileNames){
+            if(fileName in result) result[fileName].push(ImageVariant.THUMBNAIL)
+            else result[fileName] = [ImageVariant.THUMBNAIL]
+        }
+
+        return result;
+    }
+
+    private getFileNames(path: string) {
+        return this.filesystem.listFiles(path)
+            .map((filePath) => {
+                return filePath.slice((path).length)
+            });
     }
 
     public getOriginalFilePaths(project: string = this.activeProject): string[] {

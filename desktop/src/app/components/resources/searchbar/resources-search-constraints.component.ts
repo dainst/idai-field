@@ -38,7 +38,6 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
         });
     }
 
-
     private initializeDefaultFields() {
 
         this.defaultFields = [];
@@ -58,6 +57,17 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             label: this.i18n({
                 id: 'resources.searchBar.constraints.linkedImages',
                 value: 'Verknüpfte Bilder'
+            }),
+            inputType: 'default',
+            constraintIndexed: true,
+            group: ''
+        });
+
+        this.defaultFields.push({
+            name: 'isSameAs',
+            label: this.i18n({
+                id: 'resources.searchBar.constraints.isSameAs',
+                value: 'Verknüpfte identische Ressourcen'
             }),
             inputType: 'default',
             constraintIndexed: true,

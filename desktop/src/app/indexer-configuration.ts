@@ -1,5 +1,5 @@
-import {ConstraintIndex, IndexFacade} from 'idai-field-core';
-import {ProjectConfiguration} from './core/configuration/project-configuration';
+import { ConstraintIndex, IndexFacade } from 'idai-field-core';
+import { ProjectConfiguration } from './core/configuration/project-configuration';
 
 /**
  * @author Thomas Kleinke
@@ -20,6 +20,7 @@ export module IndexerConfiguration {
             'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'links' },
             'isMapLayerOf:exist': { path: 'resource.relations.isMapLayerOf', pathArray: ['resource', 'relations', 'isMapLayerOf'], type: 'exist' },
             'isInstanceOf:contain': { path: 'resource.relations.isInstanceOf', pathArray: ['resource', 'relations', 'isInstanceOf'], type: 'contain' },
+            'isSameAs:exist': { path: 'resource.relations.isSameAs', pathArray: ['resource', 'relations', 'isSameAs'], type: 'exist' },
             'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
             'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },

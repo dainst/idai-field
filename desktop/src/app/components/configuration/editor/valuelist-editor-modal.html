@@ -48,9 +48,9 @@
              (cdkDropListDropped)="onDrop($event)"
              [cdkDropListDisabled]="sortAlphanumerically">
             <div *ngFor="let valueId of getValueIds()"
-                 class="mb-2"
+                 class="value-item"
                  cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y">
-                <div class="value-item-group input-group mb-2">
+                <div class="value-item-input-group input-group">
                     <span *ngIf="!sortAlphanumerically" class="mdi mdi-drag" cdkDragHandle></span>
                     <div class="value-item form-control">
                         {{getValueLabel(valueId)}}
@@ -59,8 +59,12 @@
                     <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
                     <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
                 </div>
+                <div *cdkDragPreview class="value-drag-preview value-item form-control">
+                    {{getValueLabel(valueId)}}
+                    <code>{{valueId}}</code>
+                </div>
+                <div *cdkDragPlaceholder class="value-drag-placeholder"></div>
             </div>
-            <div *cdkDragPlaceholder class="value-drag-placeholder"></div>
         </div>
         <div class="input-group mb-2">
             <input id="new-value-input"

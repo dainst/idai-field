@@ -30,6 +30,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public newValueId: string = '';
     public order: string[];
     public sortAlphanumerically: boolean;
+    public dragging: boolean;
 
     public inputPlaceholder: string = this.i18n({
         id: 'configuration.newValue', value: 'Neuer Wert'

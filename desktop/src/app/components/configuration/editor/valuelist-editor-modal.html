@@ -1,4 +1,5 @@
-<div class="modal-header configuration-editor-modal-header">
+<div class="modal-header configuration-editor-modal-header valuelist-editor-modal-body"
+     [class.dragging]="dragging">
     <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificValuelist">
         Werteliste <code>{{valuelist.id}}</code> erstellen
     </h5>
@@ -18,7 +19,8 @@
     </button>
 </div>
 
-<div class="modal-body configuration-editor-modal-body valuelist-editor-modal-body">
+<div class="modal-body configuration-editor-modal-body valuelist-editor-modal-body"
+     [class.dragging]="dragging">
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelistDescription">
             Beschreibung der Werteliste
@@ -49,7 +51,9 @@
              [cdkDropListDisabled]="sortAlphanumerically">
             <div *ngFor="let valueId of getValueIds()"
                  class="value-item"
-                 cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y">
+                 cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y"
+                 (cdkDragStarted)="dragging = true"
+                 (cdkDragEnded)="dragging = false">
                 <div class="value-item-input-group input-group">
                     <span *ngIf="!sortAlphanumerically" class="mdi mdi-drag" cdkDragHandle></span>
                     <div class="value-item form-control">

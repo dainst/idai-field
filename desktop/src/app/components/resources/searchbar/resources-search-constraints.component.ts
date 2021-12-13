@@ -38,6 +38,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
         });
     }
 
+
     private initializeDefaultFields() {
 
         this.defaultFields = [];
@@ -63,16 +64,40 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             group: ''
         });
 
-        this.defaultFields.push({
-            name: 'isSameAs',
-            label: this.i18n({
-                id: 'resources.searchBar.constraints.isSameAs',
-                value: 'Verknüpfte identische Ressourcen'
-            }),
-            inputType: 'default',
-            constraintIndexed: true,
-            group: ''
-        });
+        if (this.viewFacade.isInTypesManagement()) {
+            this.defaultFields.push({
+                name: 'hasInstance',
+                label: this.i18n({
+                    id: 'resources.searchBar.constraints.hasInstance',
+                    value: 'Verknüpfte Funde'
+                }),
+                inputType: 'default',
+                constraintIndexed: true,
+                group: ''
+            });
+        } else {
+            this.defaultFields.push({
+                name: 'isInstanceOf',
+                label: this.i18n({
+                    id: 'resources.searchBar.constraints.isInstanceOf',
+                    value: 'Verknüpfte Typen'
+                }),
+                inputType: 'default',
+                constraintIndexed: true,
+                group: ''
+            });
+
+            this.defaultFields.push({
+                name: 'isSameAs',
+                label: this.i18n({
+                    id: 'resources.searchBar.constraints.isSameAs',
+                    value: 'Verknüpfte identische Ressourcen'
+                }),
+                inputType: 'default',
+                constraintIndexed: true,
+                group: ''
+            });
+        }
     }
 
 

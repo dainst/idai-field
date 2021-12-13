@@ -1,7 +1,7 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
+import { Datastore, Field, ProjectConfiguration, Labels, Relation } from 'idai-field-core';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
@@ -51,6 +51,11 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 id: 'resources.searchBar.constraints.linkedImages',
                 value: 'Verknüpfte Bilder'
             });
+        } else if (field.name === 'isSameAs') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.isSameAs',
+                value: 'Verknüpfte identische Ressourcen'
+            });
         } else {
             return super.getFieldLabel(field);
         }
@@ -71,6 +76,12 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.defaultFields.push({
             name: 'isDepictedIn',
+            inputType: 'default',
+            constraintIndexed: true
+        });
+
+        this.defaultFields.push({
+            name: 'isSameAs',
             inputType: 'default',
             constraintIndexed: true
         });

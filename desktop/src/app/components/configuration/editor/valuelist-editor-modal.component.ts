@@ -74,7 +74,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 this.clonedConfigurationDocument.resource.valuelists = {};
             }
             this.clonedConfigurationDocument.resource.valuelists[this.valuelist.id] = {
-                values: { defaultValue: {} },
+                values: {},
                 createdBy: this.settingsProvider.getSettings().username,
                 creationDate: new Date().toISOString().split('T')[0]
             }

@@ -107,9 +107,6 @@ export class Imagestore {
             }
         }
 
-        console.log(originalFileNames);
-        console.log(thumbnailFileNames);
-
         const result = {};
         for(const fileName of originalFileNames){
             if(fileName in result) result[fileName].push(ImageVariant.ORIGINAL)

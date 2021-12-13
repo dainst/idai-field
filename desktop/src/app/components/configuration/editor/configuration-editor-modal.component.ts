@@ -36,7 +36,7 @@ export abstract class ConfigurationEditorModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private menuService: Menus,
-                private messages: Messages) {}
+                protected messages: Messages) {}
 
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;

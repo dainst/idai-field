@@ -5,7 +5,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { ErrWithParams } from '../../../components/import/import/import-documents';
+import { SaveResult } from '../configuration.component';
 
 
 /**
@@ -24,8 +24,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                           reindexConfiguration?: boolean) =>
-        Promise<ErrWithParams|undefined>;
+                           reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
@@ -94,18 +93,17 @@ export abstract class ConfigurationEditorModalComponent {
         this.saving = true;
         this.updateCustomLanguageConfigurations();
 
-        const optionalErrWithParams = await this.saveAndReload(
-            this.clonedConfigurationDocument,
-            reindexCategory ? this.category.name : undefined,
-            reindexConfiguration
-        );
-
-        if (optionalErrWithParams) {
+        try {
+            const result: SaveResult = await this.saveAndReload(
+                this.clonedConfigurationDocument,
+                reindexCategory ? this.category.name : undefined,
+                reindexConfiguration
+            );
+            this.activeModal.close(result);
+        } catch (errWithParams) {
             // TODO Show user-readable error messages
-            this.messages.add(optionalErrWithParams);
+            this.messages.add(errWithParams);
             this.saving = false;
-        } else {
-            this.activeModal.close(this.clonedConfigurationDocument);
         }
     }
 

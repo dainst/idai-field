@@ -13,6 +13,7 @@ import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../index/configuration-index';
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
+import { SaveResult } from '../configuration.component';
 
 
 @Component({
@@ -122,7 +123,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
     
-    public selectValuelist() {
+    public async selectValuelist() {
 
         const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
             AddValuelistModalComponent,
@@ -138,11 +139,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        await this.modals.awaitResult(
+            result,
+            (saveResult?: SaveResult) => {
+                if (!saveResult) return;
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+            },
+            nop
+        );
     }
 
 
-    public editValuelist() {
+    public async editValuelist() {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -156,9 +165,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 
-        this.modals.awaitResult(
+        await this.modals.awaitResult(
             result,
-            newConfigurationDocument => this.updateEditedValuelist(newConfigurationDocument),
+            (saveResult: SaveResult) => {
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+                this.updateEditedValuelist(this.configurationDocument);
+            },
             nop
         );
     }
@@ -254,7 +267,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
 
-        this.configurationDocument = newConfigurationDocument;
         this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
         this.clonedConfigurationDocument.created = newConfigurationDocument.created;
         this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;

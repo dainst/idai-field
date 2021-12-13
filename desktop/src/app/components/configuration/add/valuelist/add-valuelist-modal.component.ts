@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil, Valuelist } from 'idai-field-core';
-import { ErrWithParams } from '../../../import/import/import-documents';
 import { ConfigurationIndex } from '../../index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
+import { SaveResult } from '../../configuration.component';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class AddValuelistModalComponent {
     public category: CategoryForm;
     public clonedField: Field;
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<ErrWithParams|undefined>;
+        Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedValuelist: Valuelist|undefined;
@@ -63,6 +63,7 @@ export class AddValuelistModalComponent {
             this.createNewValuelist();
         } else {
             this.addValuelist(this.selectedValuelist);
+            this.activeModal.close();
         }
     }
 
@@ -91,8 +92,6 @@ export class AddValuelistModalComponent {
         if (!form.valuelists) form.valuelists = {};
         form.valuelists[this.clonedField.name] = valuelist.id;
         this.clonedField.valuelist = valuelist;
-
-        this.activeModal.close();
     }
 
 
@@ -117,23 +116,25 @@ export class AddValuelistModalComponent {
 
         await this.modals.awaitResult(
             result,
-            newConfigurationDocument => this.addNewValuelist(newConfigurationDocument),
+            (saveResult: SaveResult) => this.addNewValuelist(saveResult),
             () => this.activeModal.close()
         );
     }
 
 
-    private addNewValuelist(newConfigurationDocument: ConfigurationDocument) {
+    private addNewValuelist(saveResult: SaveResult) {
 
-        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
-        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
-        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+        this.configurationDocument = saveResult.configurationDocument;
+        this.clonedConfigurationDocument._rev = this.configurationDocument._rev;
+        this.clonedConfigurationDocument.created = this.configurationDocument.created;
+        this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
+        this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
 
         const valuelist: Valuelist = this.clonedConfigurationDocument.resource.valuelists[this.searchTerm];
         valuelist.id = this.searchTerm;
         
         this.addValuelist(valuelist);
+        this.activeModal.close(saveResult);
     }
 
 

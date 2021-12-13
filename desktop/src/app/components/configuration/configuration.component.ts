@@ -71,9 +71,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string)
+    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+                            reindexConfiguration?: boolean)
         : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(
-            configurationDocument, reindexCategory
+            configurationDocument, reindexCategory, reindexConfiguration
         );
 
 
@@ -441,7 +442,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
-                                                   reindexCategory?: string): Promise<ErrWithParams|undefined> {
+                                                   reindexCategory?: string,
+                                                   reindexConfiguration?: boolean): Promise<ErrWithParams|undefined> {
 
         const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             SaveModalComponent,
@@ -471,6 +473,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             }
             this.projectConfiguration.update(newProjectConfiguration);
             if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
+            if (reindexConfiguration) await this.buildConfigurationIndex();
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }

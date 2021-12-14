@@ -5,7 +5,7 @@ import { createApp, setupSyncTestDb } from '../../subsystem-helper';
 import { getImageSuggestions } from '../../../../../../src/app/core/docedit/widgets/get-image-suggestions';
 
 
-fdescribe('subsystem/getImageSuggestions', () => {
+describe('subsystem/getImageSuggestions', () => {
 
     let datastore: Datastore;
 

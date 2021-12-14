@@ -223,7 +223,12 @@ export class BuiltInConfiguration {
             }
         },
         Profile: {
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: Field.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             minimalForm: {
                 groups: [
                     {
@@ -238,7 +243,12 @@ export class BuiltInConfiguration {
             }
         },
         Planum: {
-            fields: {},
+            fields: {
+                geometry: {
+                    inputType: Field.InputType.GEOMETRY,
+                    visible: false
+                }
+            },
             minimalForm: {
                 groups: [
                     {

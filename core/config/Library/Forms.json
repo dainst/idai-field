@@ -1253,9 +1253,9 @@
       "categoryName": "Profile",
       "groups": [
         {
-            "name": "stem",
-            "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-              "beginningDate", "endDate"]
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
+            "beginningDate", "endDate"]
         },
         {
           "name": "parent",
@@ -1266,8 +1266,8 @@
           "fields": ["dimensionWidth", "dimensionHeight"]
         },
         {
-            "name": "position",
-            "fields": ["geometry", "dimensionVerticalExtent", "orientation"]
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent", "orientation"]
         },
         {
           "name": "time",
@@ -1282,9 +1282,9 @@
       "categoryName": "Planum",
       "groups": [
         {
-            "name": "stem",
-            "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-              "beginningDate", "endDate"]
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
+            "beginningDate", "endDate"]
         },
         {
           "name": "parent",
@@ -1295,8 +1295,8 @@
           "fields": ["dimensionWidth", "dimensionHeight"]
         },
         {
-            "name": "position",
-            "fields": ["geometry", "dimensionVerticalExtent"]
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent"]
         },
         {
           "name": "time",

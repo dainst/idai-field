@@ -157,6 +157,17 @@ describe('ConstraintIndex', () => {
     });
 
 
+    it('ignore case', () => {
+
+        ci = ConstraintIndex.make({
+            'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
+        }, categories);
+        const d = doc('1');
+        ConstraintIndex.put(ci, d);
+        expect(ConstraintIndex.get(ci, 'identifier:match', 'Identifier1')).toEqual(['1']);
+    });
+
+
     it('do not index if no identifier', () => { // tests interaction with IndexItem
 
         ci = ConstraintIndex.make({

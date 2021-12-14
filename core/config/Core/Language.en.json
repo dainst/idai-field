@@ -48,6 +48,9 @@
     "includes": {
       "label": "Includes"
     },
+    "isPresentIn": {
+      "label": "Is present in profile/planum"
+    },
     "isAbove": {
       "label": "Above"
     },

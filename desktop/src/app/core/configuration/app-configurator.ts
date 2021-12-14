@@ -379,7 +379,7 @@ export class AppConfigurator {
             range: ['Find:inherit']
         },
         {
-            name: Relations.IS_PRESENT_IN,
+            name: Relations.Position.IS_PRESENT_IN,
             label: '',
             domain: ['Feature:inherit'],
             range: ['Profile', 'Planum'],

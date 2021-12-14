@@ -164,6 +164,19 @@ export class FieldsViewComponent implements OnChanges {
                     }
                 })
             );
+
+            if (group.name === 'position') {
+                const presentDescendants = await this.datastore.find({ constraints: { 'isPresentIn:contain': resource.id }});
+                if (presentDescendants.totalCount > 0) {
+                    group.relations.push(
+                        {
+                            label: this.utilTranslations.getTranslation('hasPresentDescendants'),
+                            targets: presentDescendants.documents
+                        }
+                    );
+                }
+            }
+
             return group;
         }, $);
     }

@@ -99,6 +99,13 @@ export class AppComponent {
     private initializeUtilTranslations() {
 
         this.utilTranslations.addTranslation(
+            'hasPresentDescendants',
+            this.i18n({
+                id: 'util.fieldsView.relations.hasPresentRelations',
+                value: 'Umfasst Stratigraphische Einheiten'
+            })
+        )
+        this.utilTranslations.addTranslation(
             'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.' })
         );
         this.utilTranslations.addTranslation(

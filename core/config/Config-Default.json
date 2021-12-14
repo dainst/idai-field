@@ -1,6 +1,10 @@
 {
   "forms": {
-    "Profile": {
+    "Profile:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Planum:default": {
       "hidden": [],
       "fields": {}
     },

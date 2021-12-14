@@ -232,7 +232,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isPresentIn']
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -247,7 +247,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isPresentIn']
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -452,7 +452,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry'].concat(Relation.Position.ALL)
+                        fields: ['geometry', Relation.IS_PRESENT_IN].concat(Relation.Position.ALL)
                     },
                     {
                         name: Groups.TIME,

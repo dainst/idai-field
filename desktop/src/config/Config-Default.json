@@ -3,15 +3,11 @@
     "hidden": [],
     "fields": {}
   },
-  "CrossSection": {
+  "Profile:default": {
     "hidden": [],
     "fields": {}
   },
-  "Profile": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Planum": {
+  "Planum:default": {
     "hidden": [],
     "fields": {}
   },

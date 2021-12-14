@@ -41,8 +41,9 @@ export namespace Relations {
         export const BORDERS = 'borders';                 //
         export const CUTS = 'cuts';                       //
         export const CUTBY = 'isCutBy';               //
+        export const IS_PRESENT_IN = 'isPresentIn';
 
-        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW];
+        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW, IS_PRESENT_IN];
     }
 
 
@@ -68,8 +69,6 @@ export namespace Relations {
     export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
 
 
-    export const IS_PRESENT_IN = 'isPresentIn';
-
     // Used to signal sameness in a generic manner, for example in order to say
     // two resources, recorded in different operations, are the same
     export const SAME_AS = 'isSameAs';
@@ -94,7 +93,7 @@ export namespace Relations {
     }
 
 
-    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([Position.IS_PRESENT_IN]);
 
 
     export function getAllTargets(relations: Relations, allowedRelations?: string[]): Array<string> {

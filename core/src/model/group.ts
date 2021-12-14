@@ -29,7 +29,6 @@ export module Groups {
 
         if (Relations.Hierarchy.ALL.includes(relationName)
                 || Relations.Image.ALL.includes(relationName)
-                || Relations.IS_PRESENT_IN === relationName
                 || Relations.SAME_AS.includes(relationName)) {
             return STEM;
         } else if (Relations.Time.ALL.includes(relationName)) {

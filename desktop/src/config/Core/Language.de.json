@@ -36,9 +36,6 @@
     }
   },
   "relations": {
-    "isInCrossSection": {
-      "label": "Teil eines Querschnittes"
-    },
     "isRecordedIn": {
       "label": "Aufgenommen in Maßnahme"
     },
@@ -47,6 +44,9 @@
     },
     "includes": {
       "label": "Enthält"
+    },
+    "isPresentIn": {
+      "label": "Ist enthalten in Profil/Planum"
     },
     "isAbove": {
       "label": "Liegt über"

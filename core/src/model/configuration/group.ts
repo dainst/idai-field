@@ -1,7 +1,6 @@
 import { Named } from '../../tools/named';
 import { I18N } from '../../tools/i18n';
 import { Field } from './field';
-import { Relation } from './relation';
 
 
 export interface GroupDefinition {
@@ -23,23 +22,6 @@ export module Groups {
     export const CHILD = 'child';
     export const OTHER = 'other';
     export const HIDDEN_CORE_FIELDS = '_hiddenCoreFields';
-    
-
-    export function getGroupNameForRelation(relationName: string): string|undefined {
-
-        if (Relation.Hierarchy.ALL.includes(relationName)
-                || Relation.Image.ALL.includes(relationName)) {
-            return STEM;
-        } else if (Relation.Time.ALL.includes(relationName)) {
-            return TIME;
-        } else if (Relation.Position.ALL.includes(relationName)) {
-            return POSITION;
-        } else if (Relation.Type.ALL.includes(relationName)) {
-            return IDENTIFICATION;
-        } else {
-            return undefined;
-        }
-    }
 }
 
 

@@ -189,19 +189,20 @@
         "layerFinds": "Layer-layerFinds-milet"
       }
     },
-    "Profile": {
-      "parent": "Feature",
+    "Profile:default": {
       "color": "#6da4fc",
-      "commons": [
-        "orientation"
-      ],
       "fields": {
         "profileClassification": {
+          "inputType": "text"
+        },
+        "localization": {
+          "inputType": "radio"
+        },
+        "localizationDescription": {
           "inputType": "text"
         }
       },
       "valuelists": {
-        "orientation": "orientation-default-1",
         "localization": "localization-milet"
       }
     },

@@ -232,7 +232,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', 'isPresentIn']
                     }
                 ]
             }
@@ -247,7 +247,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', 'isPresentIn']
                     }
                 ]
             }

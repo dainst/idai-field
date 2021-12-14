@@ -104,7 +104,7 @@ export class AppComponent {
                 id: 'util.fieldsView.relations.hasPresentRelations',
                 value: 'Umfasst Stratigraphische Einheiten'
             })
-        )
+        );
         this.utilTranslations.addTranslation(
             'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.' })
         );

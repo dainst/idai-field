@@ -1657,8 +1657,56 @@
     "createdBy": "",
     "creationDate": "",
     "categoryName": "Type",
-    "commons": ["literature","description"],
+    "commons": ["literature", "description"],
     "valuelists": {},
+    "fields": {}
+  },
+  "Profile:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Profile",
+    "commons": [
+      "description",
+      "period",
+      "dating",
+      "dimensionVerticalExtent",
+      "dimensionWidth",
+      "dimensionHeight",
+      "processor",
+      "campaign",
+      "diary",
+      "beginningDate",
+      "endDate",
+      "orientation"
+    ],
+    "valuelists": {
+      "period": "periods-default-1",
+      "orientation": "orientation-default-1"
+    },
+    "fields": {}
+  },
+  "Planum:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Planum",
+    "commons": [
+      "description",
+      "period",
+      "dating",
+      "dimensionVerticalExtent",
+      "dimensionWidth",
+      "dimensionHeight",
+      "processor",
+      "campaign",
+      "diary",
+      "beginningDate",
+      "endDate"
+    ],
+    "valuelists": {
+      "period": "periods-default-1"
+    },
     "fields": {}
   }
 }

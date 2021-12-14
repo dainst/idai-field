@@ -36,9 +36,6 @@
     }
   },
   "relations": {
-    "isInCrossSection": {
-      "label": "Is in cross-section"
-    },
     "isRecordedIn": {
       "label": "Recorded in operation"
     },

@@ -34,7 +34,7 @@ describe('subsystem/getImageSuggestions', () => {
 
         const [,[[image], totalCount]] = await getImageSuggestions(
             datastore,
-            { resource: {} } as Document,
+            { resource: { id: 'some' } } as Document,
             'depicts',
             query
         );
@@ -66,7 +66,7 @@ describe('subsystem/getImageSuggestions', () => {
 
         const [,[images, totalCount]] = await getImageSuggestions(
             datastore,
-            { resource: {} } as Document,
+            { resource: { id: 'some' } } as Document,
             'depicts',
             query
         );

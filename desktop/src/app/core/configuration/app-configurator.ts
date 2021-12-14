@@ -643,18 +643,6 @@ export class AppConfigurator {
 
         if (customConfigurationName === 'Pergamon') {
 
-            (this.builtinCategories as any)['ProcessUnit'] = {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                abstract: true,
-                color: '#08306b',
-                fields: {}
-            };
-            (this.builtinCategories as any)['Profile'] = {
-                color: '#c6dbef',
-                parent: 'ProcessUnit',
-                fields: {}
-            };
             (this.builtinCategories as any)['BuildingFloor'] = {
                 color: '#6600cc',
                 fields: {}
@@ -663,13 +651,6 @@ export class AppConfigurator {
                 color: '#45ff95',
                 fields: {}
             };
-
-            this.defaultRelations.push({
-                name: 'isRecordedIn',
-                label: '',
-                domain: ['ProcessUnit'],
-                range: ['Trench']
-            });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',

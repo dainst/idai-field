@@ -1199,17 +1199,16 @@
       "specialFeatures": "PlasterFragment-specialFeatures-Pergamon"
     }
   },
-  "Profile": {
-    "hidden": [],
-    "commons": [
-      "dimensionHeight",
-      "dimensionVerticalExtent",
-      "orientation"
-    ],
-    "fields": {},
+  "Profile:default": {
     "color": "#c6dbef",
+    "hidden": [],
+    "fields": {
+      "operationClassification": {
+        "inputType": "dropdown"
+      }
+    },
     "valuelists": {
-      "orientation": "orientation-default-1"
+      "operationClassification": "operationClassification-Pergamon"
     }
   },
   "Sample:default": {
@@ -1225,24 +1224,7 @@
     "color": "#9ecae1",
     "valuelists": {
       "soilType": "Layer-soilType-default",
-      "operationClassification": "ProcessUnit-operationClassification-Pergamon"
-    }
-  },
-  "ProcessUnit": {
-    "hidden": [],
-    "commons": [
-      "date",
-      "description",
-      "processor"
-    ],
-    "fields": {
-      "operationClassification": {
-        "inputType": "dropdown"
-      }
-    },
-    "color": "#08306b",
-    "valuelists": {
-      "operationClassification": "ProcessUnit-operationClassification-Pergamon"
+      "operationClassification": "operationClassification-Pergamon"
     }
   },
   "SurveyBurial": {

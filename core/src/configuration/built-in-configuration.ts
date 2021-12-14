@@ -174,28 +174,6 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        CrossSection: {
-            supercategory: true,
-            abstract: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
-            }
-        },
         Building: {
             parent: 'Operation',
             fields: {},
@@ -245,7 +223,21 @@ export class BuiltInConfiguration {
             }
         },
         Profile: {
-            parent: 'CrossSection',
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Planum: {
             fields: {},
             minimalForm: {
                 groups: [
@@ -782,14 +774,14 @@ export class BuiltInConfiguration {
         {
             name: Relation.IS_PRESENT_IN,
             domain: ['Feature:inherit'],
-            range: ['CrossSection:inherit'],
+            range: ['Profile', 'Planum'],
             editable: true,
             visible: true,
             inputType: 'relation'
         },
         {
             name: 'isRecordedIn',
-            domain: ['CrossSection'],
+            domain: ['Profile', 'Planum'],
             range: ['Trench'],
             editable: false,
             visible: false,

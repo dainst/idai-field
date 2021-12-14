@@ -209,18 +209,11 @@ export class AppConfigurator {
             userDefinedSubcategoriesAllowed: true,
             fields: {}
         },
-        CrossSection: {
-            supercategory: true,
-            abstract: true,
+        Profile: {
             fields: {}
         },
-        Profile: {
-            fields: {},
-            parent: 'CrossSection'
-        },
         Planum: {
-            fields: {},
-            parent: 'CrossSection'
+            fields: {}
         },
         Feature: {
             supercategory: true,
@@ -389,7 +382,7 @@ export class AppConfigurator {
             name: Relations.IS_PRESENT_IN,
             label: '',
             domain: ['Feature:inherit'],
-            range: ['CrossSection:inherit'],
+            range: ['Profile', 'Planum'],
             sameMainCategoryResource: true
         },
         {
@@ -451,7 +444,7 @@ export class AppConfigurator {
         {
             name: 'isRecordedIn',
             label: '',
-            domain: ['CrossSection', 'Profile', 'Planum'],
+            domain: ['Profile', 'Planum'],
             range: ['Trench']
         },
         {

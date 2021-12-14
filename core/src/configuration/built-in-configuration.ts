@@ -1081,47 +1081,6 @@ export class BuiltInConfiguration {
 
         if (customConfigurationName === 'Pergamon') {
 
-            this.builtInCategories.ProcessUnit = {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                abstract: true,
-                color: '#08306b',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
-                minimalForm: {
-                    groups: [
-                        {
-                            name: Groups.STEM,
-                            fields: ['identifier', 'shortDescription']
-                        },
-                        {
-                            name: Groups.POSITION,
-                            fields: ['geometry']
-                        }
-                    ]
-                }
-            };
-            this.builtInCategories.Profile = {
-                parent: 'ProcessUnit',
-                color: '#c6dbef',
-                fields: {},
-                minimalForm: {
-                    groups: [
-                        {
-                            name: Groups.STEM,
-                            fields: ['identifier', 'shortDescription']
-                        },
-                        {
-                            name: Groups.POSITION,
-                            fields: ['geometry']
-                        }
-                    ]
-                }
-            };
             this.builtInCategories.BuildingFloor = {
                 color: '#6600cc',
                 fields: {
@@ -1164,14 +1123,6 @@ export class BuiltInConfiguration {
                     ]
                 }
             };
-
-            this.builtInRelations.push({
-                name: 'isRecordedIn',
-                domain: ['ProcessUnit'],
-                range: ['Trench'],
-                editable: false,
-                inputType: 'relation'
-            });
 
             this.builtInRelations.push({
                 name: 'isRecordedIn',

@@ -475,14 +475,8 @@
         "colorBreak": {
           "label": "Color(s) core"
         },
-        "usedAsSpolia": {
-          "label": "Used as spolia"
-        },
         "constructionDetails": {
           "label": "Construction details"
-        },
-        "treatment": {
-          "label": "Traces of surface treatment"
         },
         "decorationTechnique": {
           "label": "Decoration"
@@ -587,23 +581,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Process unit",
-      "fields": {
-        "date": {
-          "label": "Date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
-        "operationClassification": {
-          "label": "Operation classification"
-        }
-      }
-    },
     "Planum": {
       "label": "Planum",
       "fields": {
@@ -679,16 +656,9 @@
       }
     },
     "Profile": {
-      "label": "Profile",
       "fields": {
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "orientation": {
-          "label": "Orientation"
+        "operationClassification": {
+          "label": "Operation classification"
         }
       }
     },

@@ -161,9 +161,6 @@ export class FieldsViewComponent implements OnChanges {
                     return {
                         label: relation.label,
                         targets: (await this.datastore.getMultiple(resource.relations[relation.name]))
-                            .sort((target1, target2) => SortUtil.alnumCompare(
-                                target1.resource.identifier, target2.resource.identifier
-                            ))
                     }
                 })
             );
@@ -179,6 +176,12 @@ export class FieldsViewComponent implements OnChanges {
                     );
                 }
             }
+
+            group.relations.forEach(relation => {
+                relation.targets = relation.targets.sort((target1, target2) => SortUtil.alnumCompare(
+                    target1.resource.identifier, target2.resource.identifier
+                ));
+            });
 
             return group;
         }, $);

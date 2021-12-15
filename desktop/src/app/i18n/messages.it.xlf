@@ -1381,7 +1381,7 @@
       </trans-unit>
       <trans-unit id="configuration.values" datatype="html">
         <source> Werte </source>
-        <target state="new"> Anzeigetext für Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <target state="new">Werte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">100</context>

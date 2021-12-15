@@ -148,14 +148,7 @@
     },
     "Planum": {
       "label": "Planum",
-      "fields": {
-        "horizontalLocation": {
-          "label": "Position horizontale"
-        },
-        "planumForm": { 
-          "label": "Planum form"
-        }
-      }
+      "fields": {}
     },
     "Brick": {
       "label": "Brique",

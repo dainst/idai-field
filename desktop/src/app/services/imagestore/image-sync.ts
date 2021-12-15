@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ImageVariant, Imagestore } from 'idai-field-core';
+import { RemoteImageStore } from './remote-image-store';
 
 @Injectable()
 export class ImageSync {
@@ -7,44 +8,71 @@ export class ImageSync {
     private active: ImageVariant[] = [];
 
     constructor(
-        private imagestore: Imagestore
+        private imagestore: Imagestore,
+        private remoteImagestore: RemoteImageStore
     ) {
+
         this.scheduleNextSync();
     }
 
-    public activatePeriodicSync(variant: ImageVariant) {
-        if (this.active.includes(variant)) return;
+    public getActivePeriodicSync(): ImageVariant[] {
 
+        return this.active;
+    }
+
+    public activatePeriodicSync(variant: ImageVariant) {
+
+        if (this.active.includes(variant)) return;
         this.active.push(variant);
     }
 
     public deactivatePeriodicSync(variant: ImageVariant) {
+
         this.active = this.active.filter((val) => val !== variant);
     }
 
     public triggerImmediateSync(variant: ImageVariant) {
+
         this.sync(variant);
     }
 
     private scheduleNextSync() {
-        window.setTimeout(this.cycle.bind(this), this.intervalDuration);
+
+        setTimeout(this.cycle.bind(this), this.intervalDuration);
     }
 
     private cycle() {
-        console.log('cycle');
-        this.active.forEach((type) => this.sync(type));
 
+        this.active.forEach((type) => this.sync(type));
         this.scheduleNextSync();
     }
 
-    private sync(variant: ImageVariant) {
-        console.log('syncing variant ' + variant);
-        if (variant === ImageVariant.THUMBNAIL) {
-            const paths = this.imagestore.getThumbnailFilePaths();
-            console.log(paths);
-        } else {
-            const paths = this.imagestore.getOriginalFilePaths();
-            console.log(paths);
+    private async sync(variant: ImageVariant) {
+
+        try {
+            const activeProject = this.imagestore.getActiveProject();
+
+            const localPaths = Object.keys(this.imagestore.getFileIds(activeProject, [variant]));
+            const remotePaths = Object.keys(await this.remoteImagestore.getFileIds(activeProject, variant));
+
+            const missingLocally = remotePaths.filter(
+                    (remotePath: string) => !localPaths.includes(remotePath)
+            );
+
+            for (const uuid of missingLocally) {
+                const data = Buffer.from(await this.remoteImagestore.getData(uuid, variant, activeProject));
+                this.imagestore.store(uuid, data, activeProject);
+                console.log(data);
+            }
+
+            const missingRemotely = localPaths.filter(
+                (localPath: string) => !remotePaths.includes(localPath)
+            );
+
+            // TODO: Add remote.store() call for missingRemotely
+        }
+        catch (e){
+            console.error(e);
         }
     }
 }

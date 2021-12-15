@@ -75,6 +75,7 @@ import { RemoteFilestore } from '../services/filestore/remote-filestore';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { HttpAdapter } from '../services/filestore/http-adapter';
 import { ImageSync } from '../services/imagestore/image-sync';
+import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -188,6 +189,13 @@ registerLocaleData(localeIt, 'it');
                 return new Imagestore(filesystemAdapter, converter);
             },
             deps: [FsAdapter, ThumbnailGenerator]
+        },
+        {
+            provide: RemoteImageStore,
+            useFactory: (settingsProvider: SettingsProvider) => {
+                return new RemoteImageStore(settingsProvider);
+            },
+            deps: [SettingsProvider]
         },
         ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },

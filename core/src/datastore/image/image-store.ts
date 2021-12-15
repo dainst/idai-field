@@ -31,6 +31,7 @@ export class Imagestore {
     }
 
     public getPath = (): string | undefined => this.absolutePath;
+    public getActiveProject = (): string | undefined => this.activeProject;
 
     /**
      * Initializiation function.
@@ -92,7 +93,8 @@ export class Imagestore {
         );
     }
 
-    public getFileIds(project: string = this.activeProject, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
+    public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
+
         let originalFileNames = [];
         let thumbnailFileNames = [];
 
@@ -122,29 +124,13 @@ export class Imagestore {
     }
 
     private getFileNames(path: string) {
+
         return this.filesystem.listFiles(path)
             .map((filePath) => {
                 return filePath.slice((path).length)
             });
     }
 
-    public getOriginalFilePaths(project: string = this.activeProject): string[] {
-        return this.filesystem.listFiles(this.absolutePath + project + '/')
-            .map((path) => {
-                return path.slice((this.absolutePath + project + '/').length)
-            });
-    }
-
-    public getThumbnailFilePaths(project: string = this.activeProject): string[] {
-        return this.filesystem.listFiles(this.absolutePath + project + '/' + thumbnailDirectory)
-            .map((path) => {
-                return path.slice((this.absolutePath + project + '/').length)
-            });
-    }
-
-    public getAllFilePaths(project: string = this.activeProject): string[]{
-        return this.getOriginalFilePaths(project).concat(this.getThumbnailFilePaths(project))
-    }
 
     private async readFileSystem(imageId: string, type: ImageVariant, project: string): Promise<Buffer> {
         const variantDirectory = (type === ImageVariant.ORIGINAL) ? '' : thumbnailDirectory;

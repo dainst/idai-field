@@ -70,13 +70,6 @@ const getTemplate = (mainWindow, context) => {
                 label: messages.get('menu.project.backupLoading'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
                 enabled: context === 'default'
-            }, {
-                type: 'separator'
-            }, {
-                label: messages.get('menu.settings'),
-                accelerator: 'CmdOrCtrl+Alt+S',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
-                enabled: context === 'default'
             },
             {
                 type: 'separator'
@@ -148,7 +141,14 @@ const getTemplate = (mainWindow, context) => {
             accelerator: 'CmdOrCtrl+E',
             click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
             enabled: context === 'default'
-        }]
+        }, {
+            type: 'separator'
+        }, {
+            label: messages.get('menu.settings'),
+            accelerator: 'CmdOrCtrl+Alt+S',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
+            enabled: context === 'default'
+        },]
     }, {
         label: messages.get('menu.view'),
         submenu: [{
@@ -240,8 +240,8 @@ const getTemplate = (mainWindow, context) => {
     }];
 
     if (process.platform === 'darwin') {
-        // Remove 'Settings' option & separator from 'File' menu
-        template[1].submenu.splice(12, 2);
+        // Remove 'Settings' option & separator from 'Tools' menu
+        template[3].submenu.splice(6, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

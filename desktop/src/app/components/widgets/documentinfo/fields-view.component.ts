@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import { aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject, L, lookup, map,
     Mapping, on, pairWith, R, to, assoc, isEmpty, not, and, isUndefinedOrEmpty } from 'tsfun';
 import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore,
-    Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
+    Dating, Dimension, Literature, OptionalRange, Resource, SortUtil } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
 import { UtilTranslations } from '../../../core/util/util-translations';
@@ -160,7 +160,10 @@ export class FieldsViewComponent implements OnChanges {
                 aMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,
-                        targets: await this.datastore.getMultiple(resource.relations[relation.name])
+                        targets: (await this.datastore.getMultiple(resource.relations[relation.name]))
+                            .sort((target1, target2) => SortUtil.alnumCompare(
+                                target1.resource.identifier, target2.resource.identifier
+                            ))
                     }
                 })
             );

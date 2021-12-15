@@ -6,7 +6,7 @@
     "constraint": ["color", "decorationTechnique", "formDescription", "manufacturingMethod", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
   },
   "Planum": {
-    "constraint": ["horizontalLocation", "orientation", "planumForm"]
+    "constraint": ["orientation"]
   },
   "Brick": {
     "constraint": ["brickForm", "brickUsage", "clayColorOutside", "coatColorInside", "coatColorOutside", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "provenance", "specificType", "temper"]

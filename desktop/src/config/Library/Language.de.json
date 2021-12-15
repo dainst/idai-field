@@ -176,16 +176,7 @@
     },
     "Planum": {
       "label": "Planum",
-      "fields": {
-        "horizontalLocation": {
-          "label": "Horizontallage",
-          "description": "Ausrichtung des Planums"
-        },
-        "planumForm": {
-          "label": "Form Planum",
-          "description": "Form des angelegten Planums"
-        }
-      }
+      "fields": {}
     },
     "Brick": {
       "label": "Ziegel",

@@ -176,16 +176,7 @@
     },
     "Planum": {
       "label": "Pianta",
-      "fields": {
-        "horizontalLocation": {
-          "label": "Posizione orizzontale",
-          "description": "Orientamento della pianta"
-        },
-        "planumForm": {
-          "label": "Forma della pianta",
-          "description": "Forma della pianta creata"
-        }
-      }
+      "fields": {}
     },
     "Brick": {
       "label": "Mattoni",

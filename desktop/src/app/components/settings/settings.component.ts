@@ -44,6 +44,12 @@ export class SettingsComponent implements OnInit {
     }
 
 
+    public isLinux(): boolean {
+
+        return remote.getGlobal('os') === 'Linux';
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {

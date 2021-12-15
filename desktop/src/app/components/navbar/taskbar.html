@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav taskbar">
-    <li id="update" class="nav-item pr-2">
+    <li *ngIf="!isLinux()" id="update" class="nav-item pr-2">
         <taskbar-update></taskbar-update>
     </li>
 

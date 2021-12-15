@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
-import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource, SortUtil } from 'idai-field-core';
 import { curry, filter, flatten, flow, is, Map, map, remove, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
@@ -278,7 +278,12 @@ export class TypesComponent extends BaseList implements OnChanges {
             set as any // TODO any
         );
 
-        return (await this.datastore.getMultiple(linkedResourceIds)) as Array<FieldDocument>;
+        const linkedDocuments: Array<FieldDocument>
+            = await this.datastore.getMultiple(linkedResourceIds) as Array<FieldDocument>;
+
+        return linkedDocuments.sort((linkedDocument1, linkedDocument2) => {
+            return SortUtil.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
+        });
     }
 
 

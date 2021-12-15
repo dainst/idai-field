@@ -8,7 +8,7 @@ the test project.
 
 In order to work with iDAI.field productively and create your own project, you should first follow these steps:
 
-1. The submenu **Settings**, which is accessible via the menu "iDAI.field" (MacOS) respectively "File"
+1. The submenu **Settings**, which is accessible via the menu "iDAI.field" (MacOS) respectively "Tools"
 (Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
 your editor name. This name will be stored in the database along with every change you make. It is strongly
 recommended to fill in this field, especially if data is going to be synchronized.  
@@ -18,13 +18,13 @@ you want to access an image directory located on a network device (NAS) used by 
 Please note that in each case images must be imported via the iDAI.field application. Image files that are
 manually placed in the image directory can **not** be used by the application. 
 
-3. In the "File" menu, select the menu item **New project...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores.
+3. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores.
 
-4. As soon as the new project has been loaded, you can enter basic project data via the menu "File" ➝ "Current project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
+4. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
-Use the menu option **Create backup**, which is accessible via the menu "Tools", to create backup files of
+Use the menu option **Create backup...**, which is accessible via the menu "Project", to create backup files of
 your project data regularly.
 
 <hr>
@@ -352,7 +352,7 @@ Please make sure to fill in the field **Editor name** before setting up the conf
 
 ### Download project
 
-To work with an existing project that is available on another iDAI.field desktop installation or a database server, first download the project. To do this, select **Download project...** from the "File" menu and enter the access data:
+To work with an existing project that is available on another iDAI.field desktop installation or a database server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
 
 * *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
 * *Project name*: The name of the project you want to download.
@@ -363,7 +363,7 @@ Please note that the download may take a longer time for larger projects. The do
 
 ### Configuration
 
-Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "File" ➝ "Current project" ➝ "Synchronize...".
+Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
 
 * *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where iDAI.field is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI). 
 * *Password*: The password of the project or iDAI.field installation you want to establish the synchronization connection with.

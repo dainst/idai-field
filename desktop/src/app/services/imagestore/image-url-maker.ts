@@ -38,13 +38,18 @@ export class ImageUrlMaker {
         if (relevantList[imageId]) {
             return relevantList[imageId];
         }
-        const data = await this.imagestore.getData(imageId, type);
 
-        relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
-            URL.createObjectURL(new Blob([data]))
-        );
+        try {
+            const data = await this.imagestore.getData(imageId, type);
 
-        return relevantList[imageId];
+            relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
+                URL.createObjectURL(new Blob([data]))
+            );
+
+            return relevantList[imageId];
+        } catch (e) {
+            return ImageUrlMaker.blackImg;
+        }
     }
 
 

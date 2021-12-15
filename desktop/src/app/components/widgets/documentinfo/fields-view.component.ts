@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject, L, lookup, map,
-    Mapping, on, pairWith, R, to, assoc, isEmpty, not, and, isUndefinedOrEmpty } from 'tsfun';
+    Mapping, on, pairWith, R, to, assoc } from 'tsfun';
 import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore,
     Dating, Dimension, Literature, OptionalRange, Resource, SortUtil } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';

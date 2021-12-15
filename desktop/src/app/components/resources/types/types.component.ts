@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource,
-    ProjectConfiguration, Named, Hierarchy } from 'idai-field-core';
+    ProjectConfiguration, Named, Hierarchy, SortUtil } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { Imagestore } from '../../../services/imagestore/imagestore';
 import { PLACEHOLDER } from '../../image/row/image-row';
@@ -15,10 +15,10 @@ import { ViewModalLauncher } from '../service/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
-import {Routing} from '../../../services/routing';
-import {Menus} from '../../../services/menus';
-import {MenuContext} from '../../../services/menu-context';
-import {TypeImagesUtil} from '../../../util/type-images-util';
+import { Routing } from '../../../services/routing';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
+import { TypeImagesUtil } from '../../../util/type-images-util';
 
 
 @Component({
@@ -281,7 +281,12 @@ export class TypesComponent extends BaseList implements OnChanges {
             set as any // TODO any
         );
 
-        return (await this.datastore.getMultiple(linkedResourceIds)) as Array<FieldDocument>;
+        const linkedDocuments: Array<FieldDocument>
+            = await this.datastore.getMultiple(linkedResourceIds) as Array<FieldDocument>;
+
+        return linkedDocuments.sort((linkedDocument1, linkedDocument2) => {
+            return SortUtil.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
+        });
     }
 
 

@@ -59,11 +59,16 @@ export class Imagestore {
      */
     public store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL): void {
 
-        if (type === ImageVariant.THUMBNAIL) {
-            this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
+        if (imageId.endsWith(tombstoneSuffix)) {
+            const deletedUuid = imageId.replace(tombstoneSuffix, '');
+            this.remove(deletedUuid, project);
         } else {
-            this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
-            this.createThumbnail(imageId, data, project);
+            if (type === ImageVariant.THUMBNAIL) {
+                this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
+            } else {
+                this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
+                this.createThumbnail(imageId, data, project);
+            }
         }
     }
 

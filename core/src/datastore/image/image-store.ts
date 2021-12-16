@@ -30,7 +30,7 @@ export class ImageStore {
         private converter: ThumbnailGeneratorInterface) {
     }
 
-    public getPath = (): string | undefined => this.absolutePath;
+    public getAbsoluteRootPath = (): string | undefined => this.absolutePath;
     public getActiveProject = (): string | undefined => this.activeProject;
 
     /**
@@ -43,11 +43,14 @@ export class ImageStore {
         this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
         this.activeProject = activeProject;
 
-        if (!this.filesystem.exists(this.absolutePath + activeProject + '/')) {
-            this.filesystem.mkdir(this.absolutePath + activeProject + '/', true);
+        const originalsPath = this.getDirectoryPath(activeProject, ImageVariant.ORIGINAL)
+        if (!this.filesystem.exists(originalsPath)) {
+            this.filesystem.mkdir(originalsPath, true);
         }
-        if (!this.filesystem.exists(this.absolutePath + activeProject + '/' + thumbnailDirectory)) {
-            this.filesystem.mkdir(this.absolutePath + activeProject + '/' + thumbnailDirectory);
+
+        const thumbnailsPath = this.getDirectoryPath(activeProject, ImageVariant.THUMBNAIL);
+        if (!this.filesystem.exists(thumbnailsPath)) {
+            this.filesystem.mkdir(thumbnailsPath);
         }
     }
 
@@ -58,10 +61,12 @@ export class ImageStore {
      * @param data the binary data to be stored
      */
     public store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL): void {
-        if (type === ImageVariant.THUMBNAIL) {
-            this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
-        } else {
-            this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
+
+        const filePath = this.getFilePath(project, type, imageId);
+
+        this.filesystem.writeFile(filePath, data);
+
+        if (type === ImageVariant.ORIGINAL) {
             this.createThumbnail(imageId, data, project);
         }
     }
@@ -82,16 +87,16 @@ export class ImageStore {
      */
     public async remove(imageId: string, project: string = this.activeProject): Promise<any> {
         this.filesystem.removeFile(
-            this.absolutePath + project + '/' + imageId
+            this.getFilePath(project, ImageVariant.ORIGINAL, imageId)
         );
         this.filesystem.writeFile(
-            this.absolutePath + project + '/' + imageId + tombstoneSuffix, Buffer.from([])
+            this.getFilePath(project, ImageVariant.ORIGINAL, imageId) + tombstoneSuffix, Buffer.from([])
         );
         this.filesystem.removeFile(
-            this.absolutePath + project + '/' + thumbnailDirectory + imageId
+            this.getFilePath(project, ImageVariant.THUMBNAIL, imageId)
         );
         this.filesystem.writeFile(
-            this.absolutePath + project + '/' + thumbnailDirectory + imageId + tombstoneSuffix, Buffer.from([])
+            this.getFilePath(project, ImageVariant.THUMBNAIL, imageId) + tombstoneSuffix, Buffer.from([])
         );
     }
 
@@ -101,13 +106,13 @@ export class ImageStore {
         let thumbnailFileNames = [];
 
         if(types.length === 0){
-            originalFileNames = this.getFileNames(this.absolutePath + project + '/');
-            thumbnailFileNames = this.getFileNames(this.absolutePath + project + '/' + thumbnailDirectory);
+            originalFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
+            thumbnailFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
         } else {
             if(types.includes(ImageVariant.ORIGINAL)){
-                originalFileNames = this.getFileNames(this.absolutePath + project + '/');
+                originalFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
             } else if(types.includes(ImageVariant.THUMBNAIL)) {
-                thumbnailFileNames = this.getFileNames(this.absolutePath + project + '/' + thumbnailDirectory);
+                thumbnailFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
             }
         }
 
@@ -135,15 +140,14 @@ export class ImageStore {
 
 
     private async readFileSystem(imageId: string, type: ImageVariant, project: string): Promise<Buffer> {
-        const variantDirectory = (type === ImageVariant.ORIGINAL) ? '' : thumbnailDirectory;
 
-        const path = this.absolutePath + project + '/' + variantDirectory + imageId;
+        const path = this.getFilePath(project, type, imageId);
 
         if (type === ImageVariant.THUMBNAIL && !this.filesystem.exists(path))
         {
-            const originalFilePath = this.absolutePath + project + '/' + imageId;
+            const originalFilePath = this.getFilePath(project, ImageVariant.ORIGINAL, imageId);
             if (this.filesystem.exists(originalFilePath)) {
-                await this.createThumbnail(imageId, this.filesystem.readFile(this.absolutePath + project + '/' + imageId), project);
+                await this.createThumbnail(imageId, this.filesystem.readFile(originalFilePath), project);
             }
         }
 
@@ -153,7 +157,19 @@ export class ImageStore {
     private async createThumbnail(imageId: string, data: Buffer, project: string) {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
-        const thumbnailPath = this.absolutePath + project + '/' + thumbnailDirectory + imageId;
+        const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
         this.filesystem.writeFile(thumbnailPath, buffer);
+    }
+
+    private getDirectoryPath(project: string, type: ImageVariant) {
+        if (type === ImageVariant.ORIGINAL) {
+            return this.absolutePath + project + '/';
+        } else {
+            return this.absolutePath + project + '/' + thumbnailDirectory;
+        }
+    }
+
+    private getFilePath(project: string, type: ImageVariant, uuid: string) {
+        return this.getDirectoryPath(project, type) + uuid;
     }
 }

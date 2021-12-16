@@ -59,7 +59,7 @@ export class ImageRelationsManager {
      */
     public async remove(documents: Array<Document|ImageDocument>) {
 
-        if (this.imagestore.getPath() === undefined) {
+        if (this.imagestore.getAbsoluteRootPath() === undefined) {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
         const [imageDocuments, nonImageDocuments] = separate(documents,

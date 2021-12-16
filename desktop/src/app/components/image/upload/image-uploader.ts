@@ -55,7 +55,7 @@ export class ImageUploader {
 
         let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
-        if (!this.imagestore.getPath()) {
+        if (!this.imagestore.getAbsoluteRootPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
             return uploadResult;
         }

@@ -233,7 +233,7 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.store(doc.resource.id, reader.result as any))
+                        .then(doc => that.imagestore.store(doc.resource.id, Buffer.from(reader.result) as any))
                         .then(() =>
                             resolve(undefined)
                         )

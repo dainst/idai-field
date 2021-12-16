@@ -57,11 +57,14 @@ export class Imagestore {
      * @param imageId the identifier for the data
      * @param data the binary data to be stored
      */
-    public store(imageId: string, data: Buffer, project: string = this.activeProject): void {
+    public store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL): void {
 
-        const buffer = Buffer.from(data);
-        this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, Buffer.from(buffer));
-        this.createThumbnail(imageId, buffer, project);
+        if (type === ImageVariant.THUMBNAIL) {
+            this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
+        } else {
+            this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
+            this.createThumbnail(imageId, data, project);
+        }
     }
 
     /**

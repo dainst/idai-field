@@ -9,8 +9,41 @@ export class RemoteImageStore{
 
     constructor(private settingsProvider: SettingsProvider) {}
 
-    public store(imageId: string, data: Buffer, project: string) {
-        // TODO: Run POST request.
+    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
+        try {
+            const settings = this.settingsProvider.getSettings();
+            const syncSource = settings.syncTargets[project];
+            if (!syncSource) return;
+
+            const address = syncSource.address;
+            const password = syncSource.password;
+
+            const params = (type) ? { type } : {};
+            console.log('POSTing:');
+            console.log(data);
+            const response = await axios({
+                method: 'post',
+                url: address + '/files/' + project + '/' + uuid,
+                params,
+                data,
+                headers: {
+                    'Content-Type': 'image/x-www-form-urlencoded',
+                    Authorization: `Basic ${btoa(project + ':' + password)}`
+                }
+            });
+
+            console.log(response);
+        } catch (error) {
+            if (error.response) {
+                console.error(error.response.data);
+                console.error(error.response.status);
+                console.error(error.response.headers);
+              } else if (error.request) {
+                console.error(error.request);
+              } else {
+                console.error(error.message);
+              }
+        }
     }
 
     public async getFileIds(

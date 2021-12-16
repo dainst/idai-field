@@ -13,7 +13,7 @@ export class ExpressServer {
 
     private password: string;
 
-    private binaryBodyParser = bodyParser.raw({ type: 'image/*', limit: '50mb' });
+    private binaryBodyParser = bodyParser.raw({ type: '*/*' /* TODO: limit? , limit: '50mb' */});
 
     public getPassword = () => this.password;
 
@@ -94,11 +94,16 @@ export class ExpressServer {
         app.post('/files/:project/:uuid', this.binaryBodyParser, (req: any, res: any) => {
 
             try {
-                this.imagestore.store(req.params.uuid, req.body, req.params.project);
-                res.status(200).send({});
+                if (!req.query.type) {
+                    this.imagestore.store(req.params.uuid, req.body, req.params.project);
+                    res.status(200).send({});
+                } else if (Object.values(ImageVariant).includes(req.query.type)) {
+                    this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
+                    res.status(200).send({});
+                }
             } catch (e) {
                 if (e.code === 'ENOENT') {
-                    res.status(404).send({ reason: 'Invalid project.' });
+                    res.status(404).send({ reason: 'Unknown project.' });
                 } else {
                     console.log(e);
                     res.status(500).send({ reason: 'Whoops?' });

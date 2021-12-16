@@ -68,7 +68,10 @@ export class ImageSync {
                 (localPath: string) => !remotePaths.includes(localPath)
             );
 
-            // TODO: Add remote.store() call for missingRemotely
+            for (const uuid of missingRemotely) {
+                const data = await this.imagestore.getData(uuid, variant, activeProject);
+                this.remoteImagestore.store(uuid, data, activeProject, variant);
+            }
         }
         catch (e){
             console.error(e);

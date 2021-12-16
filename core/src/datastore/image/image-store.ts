@@ -50,7 +50,7 @@ export class ImageStore {
 
         const thumbnailsPath = this.getDirectoryPath(activeProject, ImageVariant.THUMBNAIL);
         if (!this.filesystem.exists(thumbnailsPath)) {
-            this.filesystem.mkdir(thumbnailsPath);
+            this.filesystem.mkdir(thumbnailsPath, true);
         }
     }
 

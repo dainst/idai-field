@@ -86,18 +86,22 @@ export class ImageStore {
      * @param imageId the identifier for the image to be removed
      */
     public async remove(imageId: string, project: string = this.activeProject): Promise<any> {
-        this.filesystem.removeFile(
+        this.filesystem.remove(
             this.getFilePath(project, ImageVariant.ORIGINAL, imageId)
         );
         this.filesystem.writeFile(
             this.getFilePath(project, ImageVariant.ORIGINAL, imageId) + tombstoneSuffix, Buffer.from([])
         );
-        this.filesystem.removeFile(
+        this.filesystem.remove(
             this.getFilePath(project, ImageVariant.THUMBNAIL, imageId)
         );
         this.filesystem.writeFile(
             this.getFilePath(project, ImageVariant.THUMBNAIL, imageId) + tombstoneSuffix, Buffer.from([])
         );
+    }
+
+    public deleteProject(project: string) {
+        this.filesystem.remove(this.getDirectoryPath(project), true);
     }
 
     public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
@@ -161,8 +165,8 @@ export class ImageStore {
         this.filesystem.writeFile(thumbnailPath, buffer);
     }
 
-    private getDirectoryPath(project: string, type: ImageVariant) {
-        if (type === ImageVariant.ORIGINAL) {
+    private getDirectoryPath(project: string, type?: ImageVariant) {
+        if (type === undefined || type === ImageVariant.ORIGINAL) {
             return this.absolutePath + project + '/';
         } else {
             return this.absolutePath + project + '/' + thumbnailDirectory;

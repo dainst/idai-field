@@ -33,13 +33,14 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public removeFile(path: string) {
+    public remove(path: string, recursive: boolean = false) {
 
-        fs.unlinkSync(path);
+        fs.rmSync(path, { recursive });
     }
 
 
-    public mkdir(path: string, recursive: boolean) {
+    public mkdir(path: string, recursive: boolean = false) {
+
         fs.mkdirSync(path, { recursive });
     }
 

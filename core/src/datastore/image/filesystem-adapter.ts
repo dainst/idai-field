@@ -25,7 +25,7 @@ export interface FilesystemAdapterInterface {
      *
      * @param path
      */
-    removeFile(path: string): void;
+     remove(path: string, recursive?: boolean): void;
 
     /**
      * Create a directory

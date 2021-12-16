@@ -69,16 +69,16 @@ export class SettingsService {
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      */
-    public async updateSettings(settings_: Settings): Promise<Settings> {
+    public async updateSettings(settingsParam: Settings): Promise<Settings> {
 
-        this.settingsProvider.setSettings(settings_);
+        this.settingsProvider.setSettings(settingsParam);
         const settings = this.settingsProvider.getSettings();
 
         Object.values(settings.syncTargets).forEach(syncTarget => {
             if (syncTarget.address) {
                 syncTarget.address = syncTarget.address.trim();
                 if (!SettingsService.validateAddress(syncTarget.address)) {
-                    throw 'malformed_address';
+                    throw Error('malformed_address');
                 }
             }
         });
@@ -167,6 +167,8 @@ export class SettingsService {
 
         this.synchronizationService.stopSync();
 
+        this.imagestore.deleteProject(project);
+
         await this.pouchdbDatastore.destroyDb(project);
         await this.settingsProvider.deleteProjectAndSerialize(project);
     }
@@ -211,7 +213,7 @@ export class SettingsService {
 
     private static validateAddress(address: any) {
 
-        return (address == '')
+        return (address === '')
             ? true
             : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
     }

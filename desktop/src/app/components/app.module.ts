@@ -70,7 +70,6 @@ import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
-import { ImageChangesStream } from '../services/imagestore/image-changes-stream';
 import { RemoteFilestore } from '../services/filestore/remote-filestore';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { HttpAdapter } from '../services/filestore/http-adapter';
@@ -197,7 +196,6 @@ registerLocaleData(localeIt, 'it');
             },
             deps: [SettingsProvider]
         },
-        ImageChangesStream,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ImageUrlMaker,
         ThumbnailGenerator,

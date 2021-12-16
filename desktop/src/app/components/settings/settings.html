@@ -93,14 +93,21 @@
                         <div class="input-group">
                             <input id="imagestorepath-input"
                                    [ngModel]="settings.imagestorePath"
+                                   disabled
+                                   class="form-control">
+                            <!-- SD-1618                            
+                            <input id="imagestorepath-input"
+                                   [ngModel]="settings.imagestorePath"
                                    (ngModelChange)="settings.imagestorePath = $event"
+                                   disabled
                                    class="form-control">
                             <label for="imagestorepath-input" class="btn btn-secondary file-input-label"
                                    (click)="chooseImagestoreDirectory()">
                                 <span class="mdi mdi-folder"></span>
-                            </label>
+                            </label> 
+                            -->
                         </div>
-
+                        <!-- SD-1618
                         <div class="small-info-text" i18n="@@settings.images.path.info">
                             Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
                             sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
@@ -110,6 +117,7 @@
                             verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
                             Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
                         </div>
+                        -->
                     </div>
 
 

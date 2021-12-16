@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ThumbnailGeneratorInterface } from 'idai-field-core/src/datastore/image/thumbnail-generator';
+import { ThumbnailGeneratorInterface } from 'idai-field-core';
 import { THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core/src/datastore/image/image-store';
 
 const nativeImage = typeof window !== 'undefined'

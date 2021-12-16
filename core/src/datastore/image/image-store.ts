@@ -1,5 +1,5 @@
-import { FilesystemAdapterInterface } from './filesystem-adapter';
-import { ThumbnailGeneratorInterface } from './thumbnail-generator';
+import { FilesystemAdapterInterface } from './filesystem-adapter-interface';
+import { ThumbnailGeneratorInterface } from './thumbnail-generator-interface';
 
 export enum ImageVariant {
     ORIGINAL = "original_image", 

@@ -1,7 +1,7 @@
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 import { Injectable } from '@angular/core';
-import { FilesystemAdapterInterface } from 'idai-field-core/src/datastore/image/filesystem-adapter';
+import { FilesystemAdapterInterface } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 
 /**

@@ -46,6 +46,25 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         }
     }
 
+    public async remove(uuid: string, project: string) {
+
+        const settings = this.settingsProvider.getSettings();
+
+        const syncSource = settings.syncTargets[project];
+        if (!syncSource) return {};
+
+        const address = syncSource.address;
+        const password = syncSource.password;
+
+        const response = await axios({
+            method: 'delete',
+            url: address + '/files/' + project + '/' + uuid,
+            headers: {
+                Authorization: `Basic ${btoa(project + ':' + password)}`
+            }
+        });
+    }
+
     public async getFileIds(
         project: string,
         type?: ImageVariant

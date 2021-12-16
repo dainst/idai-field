@@ -9,7 +9,7 @@ export enum ImageVariant {
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 
 export const thumbnailDirectory = 'thumbs/';
-const tombstoneSuffix = '.deleted';
+export const tombstoneSuffix = '.deleted';
 
 /**
  * An image store that uses the file system to store the original images and
@@ -58,17 +58,11 @@ export class ImageStore {
      * @param data the binary data to be stored
      */
     public store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL): void {
-
-        if (imageId.endsWith(tombstoneSuffix)) {
-            const deletedUuid = imageId.replace(tombstoneSuffix, '');
-            this.remove(deletedUuid, project);
+        if (type === ImageVariant.THUMBNAIL) {
+            this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
         } else {
-            if (type === ImageVariant.THUMBNAIL) {
-                this.filesystem.writeFile(this.absolutePath + project + '/' + thumbnailDirectory + imageId, data);
-            } else {
-                this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
-                this.createThumbnail(imageId, data, project);
-            }
+            this.filesystem.writeFile(this.absolutePath + project + '/' + imageId, data);
+            this.createThumbnail(imageId, data, project);
         }
     }
 

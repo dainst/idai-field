@@ -112,6 +112,22 @@ export class ExpressServer {
         });
 
 
+        app.delete('/files/:project/:uuid', (req: any, res: any) => {
+
+            try {
+                this.imagestore.remove(req.params.uuid, req.params.project);
+                res.status(200).send({});
+            } catch (e) {
+                if (e.code === 'ENOENT') {
+                    res.status(404).send({ reason: 'Unknown project.' });
+                } else {
+                    console.log(e);
+                    res.status(500).send({ reason: 'Whoops?' });
+                }
+            }
+        });
+
+
         // prevent the creation of new databases when syncing
         app.put('/:db', (_: any, res: any) =>
             res.status(401).send({ status: 401 }));

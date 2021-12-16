@@ -1,4 +1,4 @@
-import { ImageVariant, ImageStore } from './image-store';
+import { ImageVariant, ImageStore, tombstoneSuffix } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 export class ImageSync {
@@ -58,8 +58,12 @@ export class ImageSync {
             );
 
             for (const uuid of missingLocally) {
-                const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-                this.imageStore.store(uuid, data, activeProject, variant);
+                if (uuid.endsWith(tombstoneSuffix)) {
+                    this.imageStore.remove(uuid.replace(tombstoneSuffix, ''), activeProject)
+                } else {
+                    const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
+                    this.imageStore.store(uuid, data, activeProject, variant);
+                }
             }
 
             const missingRemotely = localPaths.filter(
@@ -67,8 +71,12 @@ export class ImageSync {
             );
 
             for (const uuid of missingRemotely) {
-                const data = await this.imageStore.getData(uuid, variant, activeProject);
-                this.remoteImagestore.store(uuid, data, activeProject, variant);
+                if (uuid.endsWith(tombstoneSuffix)) {
+                    this.remoteImagestore.remove(uuid.replace(tombstoneSuffix, ''), activeProject)
+                } else {
+                    const data = await this.imageStore.getData(uuid, variant, activeProject);
+                    this.remoteImagestore.store(uuid, data, activeProject, variant);
+                }
             }
         }
         catch (e){

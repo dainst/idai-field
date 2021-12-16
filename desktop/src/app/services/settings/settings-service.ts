@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService, Imagestore, ImageVariant } from 'idai-field-core';
+import {
+    AppConfigurator,
+    getConfigurationName,
+    Name,
+    PouchdbDatastore,
+    ProjectConfiguration,
+    SyncService,
+    Imagestore,
+    ImageVariant,
+    ImageSync
+} from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
-import { ImageSync } from '../imagestore/image-sync';
-import { ImagestoreErrors } from '../imagestore/imagestore-errors';
 import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
 

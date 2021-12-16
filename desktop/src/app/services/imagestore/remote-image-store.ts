@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ImageVariant } from 'idai-field-core';
+import { ImageVariant, RemoteImageStoreInterface } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
 @Injectable()
-export class RemoteImageStore{
+export class RemoteImageStore implements RemoteImageStoreInterface {
 
     constructor(private settingsProvider: SettingsProvider) {}
 

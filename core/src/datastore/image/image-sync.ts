@@ -1,15 +1,13 @@
-import { Injectable } from '@angular/core';
-import { ImageVariant, Imagestore } from 'idai-field-core';
-import { RemoteImageStore } from './remote-image-store';
+import { ImageVariant, Imagestore } from './image-store';
+import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
-@Injectable()
 export class ImageSync {
     private intervalDuration = 1000 * 60 * 5;
     private active: ImageVariant[] = [];
 
     constructor(
         private imagestore: Imagestore,
-        private remoteImagestore: RemoteImageStore
+        private remoteImagestore: RemoteImageStoreInterface
     ) {
 
         this.scheduleNextSync();

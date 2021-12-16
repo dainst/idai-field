@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectConfiguration,
     ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, Hierarchy} from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to, isnt, not, rest, first } from 'tsfun';
-import { Imagestore } from 'idai-field-core';
+import { ImageStore } from 'idai-field-core';
 import DEPICTS = Relation.Image.DEPICTS;
 import ISDEPICTEDIN = Relation.Image.ISDEPICTEDIN;
 
@@ -19,7 +19,7 @@ export class ImageRelationsManager {
 
     constructor(private datastore: Datastore,
                 private relationsManager: RelationsManager,
-                private imagestore: Imagestore,
+                private imagestore: ImageStore,
                 private projectConfiguration: ProjectConfiguration) {}
 
 

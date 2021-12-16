@@ -1,14 +1,22 @@
-import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import {
+    CategoryConverter,
+    ConstraintIndex,
+    DocumentCache,
+    FulltextIndex,
+    Indexer,
+    IndexFacade,
+    PouchdbDatastore,
+    ProjectConfiguration
+} from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
-import { Imagestore } from 'idai-field-core/src/datastore/image/image-store';
 import { InitializationProgress } from './initialization-progress';
 import { IndexerConfiguration } from '../indexer-configuration';
-import {SettingsService} from '../services/settings/settings-service';
-import {SettingsSerializer} from '../services/settings/settings-serializer';
-import {Settings} from '../services/settings/settings';
-import {SampleDataLoader} from '../services/datastore/field/sampledata/sample-data-loader';
-import {ExpressServer} from '../services/express-server';
+import { SettingsService } from '../services/settings/settings-service';
+import { SettingsSerializer } from '../services/settings/settings-serializer';
+import { Settings } from '../services/settings/settings';
+import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
+import { ExpressServer } from '../services/express-server';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -71,15 +79,14 @@ export class AppInitializerServiceLocator {
 
 
 export const appInitializerFactory = (
-        serviceLocator: AppInitializerServiceLocator,
-        settingsService: SettingsService,
-        pouchdbDatastore: PouchdbDatastore,
-        pouchdbServer: ExpressServer,
-        documentCache: DocumentCache,
-        thumbnailGenerator: ThumbnailGenerator,
-        imagestore: Imagestore,
-        progress: InitializationProgress
-    ) => async (): Promise<void> => {
+    serviceLocator: AppInitializerServiceLocator,
+    settingsService: SettingsService,
+    pouchdbDatastore: PouchdbDatastore,
+    pouchdbServer: ExpressServer,
+    documentCache: DocumentCache,
+    thumbnailGenerator: ThumbnailGenerator,
+    progress: InitializationProgress
+) => async (): Promise<void> => {
 
     await pouchdbServer.setupServer();
 
@@ -136,7 +143,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     let configuration: ProjectConfiguration;
     try {
         configuration = await settingsService.loadConfiguration();
-    } catch(err) {
+    } catch (err) {
         progress.setError('configurationError', err);
         return Promise.reject();
     }

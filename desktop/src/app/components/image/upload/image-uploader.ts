@@ -7,7 +7,7 @@ import {
     NewImageDocument,
     ProjectConfiguration,
     RelationsManager,
-    Imagestore
+    ImageStore
 } from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
@@ -37,7 +37,7 @@ export class ImageUploader {
     public static readonly supportedWorldFileTypes: string[] = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
 
 
-    public constructor(private imagestore: Imagestore,
+    public constructor(private imagestore: ImageStore,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,

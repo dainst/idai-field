@@ -1,4 +1,4 @@
-import { Imagestore, SampleDataLoaderBase } from 'idai-field-core';
+import { ImageStore, SampleDataLoaderBase } from 'idai-field-core';
 import {ThumbnailGenerator} from '../../../imagestore/thumbnail-generator';
 
 

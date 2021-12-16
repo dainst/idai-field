@@ -4,7 +4,7 @@ import { M } from '../../components/messages/m';
 import {
     ProjectConfiguration,
     RelationsManager,
-    Imagestore,
+    ImageStore,
     CategoryForm,
     Document,
     Datastore,
@@ -63,7 +63,7 @@ export interface ImporterServices {
     datastore: Datastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
-    imagestore: Imagestore;
+    imagestore: ImageStore;
 }
 
 

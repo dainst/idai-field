@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldResource} from 'idai-field-core';
-import {Imagestore, ImageVariant} from 'idai-field-core';
+import {ImageStore, ImageVariant} from 'idai-field-core';
 import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 
 

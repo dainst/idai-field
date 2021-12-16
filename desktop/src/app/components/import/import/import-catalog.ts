@@ -1,7 +1,7 @@
 import {ImageRelationsManager} from '../../../services/image-relations-manager';
 import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager, Resource, childrenOf } from 'idai-field-core';
 import { aMap, isArray, clone, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
-import { Imagestore } from 'idai-field-core';
+import { ImageStore } from 'idai-field-core';
 import { makeDocumentsLookup } from './utils';
 
 
@@ -10,7 +10,7 @@ export interface ImportCatalogServices {
     datastore: Datastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
-    imagestore: Imagestore
+    imagestore: ImageStore
 }
 
 

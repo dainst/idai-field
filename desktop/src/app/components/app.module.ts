@@ -23,7 +23,7 @@ import {
     RelationsManager,
     SyncService,
     Labels,
-    Imagestore,
+    ImageStore,
     ImageSync
 } from 'idai-field-core';
 import { Translations } from '../angular/translations';
@@ -161,7 +161,7 @@ registerLocaleData(localeIt, 'it');
                 ExpressServer,
                 DocumentCache,
                 ThumbnailGenerator,
-                Imagestore,
+                ImageStore,
                 InitializationProgress
             ],
             useFactory: appInitializerFactory,
@@ -182,9 +182,9 @@ registerLocaleData(localeIt, 'it');
             deps: [SettingsProvider]
         },
         {
-            provide: Imagestore,
+            provide: ImageStore,
             useFactory: (filesystemAdapter: FsAdapter, converter: ThumbnailGenerator) => {
-                return new Imagestore(filesystemAdapter, converter);
+                return new ImageStore(filesystemAdapter, converter);
             },
             deps: [FsAdapter, ThumbnailGenerator]
         },
@@ -197,8 +197,8 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: ImageSync,
-            useFactory: (imageStore: Imagestore, remoteImageStore: RemoteImageStore) => new ImageSync(imageStore, remoteImageStore),
-            deps: [Imagestore, RemoteImageStore]
+            useFactory: (imageStore: ImageStore, remoteImageStore: RemoteImageStore) => new ImageSync(imageStore, remoteImageStore),
+            deps: [ImageStore, RemoteImageStore]
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ImageUrlMaker,

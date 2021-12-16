@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import {
+    CategoryConverter,
+    DocumentCache,
+    Indexer,
+    IndexFacade,
+    PouchdbDatastore,
+    ProjectConfiguration,
+    ImageStore
+} from 'idai-field-core';
 import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
-import { Imagestore } from 'idai-field-core';
 import { ImagesState } from '../components/image/overview/view/images-state';
 import { ResourcesStateManager } from '../components/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
@@ -27,7 +34,7 @@ export class AppController {
                 private indexFacade: IndexFacade,
                 private thumbnailGenerator: ThumbnailGenerator,
                 private pouchdbDatastore: PouchdbDatastore,
-                private imagestore: Imagestore,
+                private imagestore: ImageStore,
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,

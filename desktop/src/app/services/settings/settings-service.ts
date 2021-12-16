@@ -6,7 +6,7 @@ import {
     PouchdbDatastore,
     ProjectConfiguration,
     SyncService,
-    Imagestore,
+    ImageStore,
     ImageVariant,
     ImageSync
 } from 'idai-field-core';
@@ -37,7 +37,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  */
 export class SettingsService {
 
-    constructor(private imagestore: Imagestore,
+    constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
                 private pouchdbServer: ExpressServer,
                 private messages: Messages,

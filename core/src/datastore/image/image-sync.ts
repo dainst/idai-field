@@ -1,4 +1,4 @@
-import { ImageVariant, Imagestore } from './image-store';
+import { ImageVariant, ImageStore } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 export class ImageSync {
@@ -6,7 +6,7 @@ export class ImageSync {
     private active: ImageVariant[] = [];
 
     constructor(
-        private imagestore: Imagestore,
+        private imageStore: ImageStore,
         private remoteImagestore: RemoteImageStoreInterface
     ) {
 
@@ -48,9 +48,9 @@ export class ImageSync {
     private async sync(variant: ImageVariant) {
 
         try {
-            const activeProject = this.imagestore.getActiveProject();
+            const activeProject = this.imageStore.getActiveProject();
 
-            const localPaths = Object.keys(this.imagestore.getFileIds(activeProject, [variant]));
+            const localPaths = Object.keys(this.imageStore.getFileIds(activeProject, [variant]));
             const remotePaths = Object.keys(await this.remoteImagestore.getFileIds(activeProject, variant));
 
             const missingLocally = remotePaths.filter(
@@ -59,7 +59,7 @@ export class ImageSync {
 
             for (const uuid of missingLocally) {
                 const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-                this.imagestore.store(uuid, data, activeProject, variant);
+                this.imageStore.store(uuid, data, activeProject, variant);
             }
 
             const missingRemotely = localPaths.filter(
@@ -67,7 +67,7 @@ export class ImageSync {
             );
 
             for (const uuid of missingRemotely) {
-                const data = await this.imagestore.getData(uuid, variant, activeProject);
+                const data = await this.imageStore.getData(uuid, variant, activeProject);
                 this.remoteImagestore.store(uuid, data, activeProject, variant);
             }
         }

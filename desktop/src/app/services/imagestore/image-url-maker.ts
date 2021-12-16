@@ -1,6 +1,6 @@
 import {Injectable, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {Imagestore, ImageVariant} from 'idai-field-core';
+import {ImageStore, ImageVariant} from 'idai-field-core';
 
 @Injectable()
 /**
@@ -19,7 +19,7 @@ export class ImageUrlMaker {
     private originalUrls: { [imageKey: string]: SafeResourceUrl} = {};
     private thumbnailUrls: { [imageKey: string]: SafeResourceUrl} = {};
 
-    constructor(private sanitizer: DomSanitizer, private imagestore: Imagestore) {}
+    constructor(private sanitizer: DomSanitizer, private imagestore: ImageStore) {}
 
     /**
      * Returns a URL to the image for the requested image resource.

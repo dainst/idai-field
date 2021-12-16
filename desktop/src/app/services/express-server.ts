@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Imagestore, ImageVariant } from 'idai-field-core';
+import { ImageStore, ImageVariant } from 'idai-field-core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -19,7 +19,7 @@ export class ExpressServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private imagestore: Imagestore) { }
+    constructor(private imagestore: ImageStore) { }
 
 
     /**

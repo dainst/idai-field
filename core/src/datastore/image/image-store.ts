@@ -20,7 +20,7 @@ const tombstoneSuffix = '.deleted';
  * @author Daniel De Oliviera
  * @author Simon Hohl
  */
-export class Imagestore {
+export class ImageStore {
 
     private absolutePath: string | undefined = undefined;
     private activeProject: string | undefined = undefined;

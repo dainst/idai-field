@@ -3873,7 +3873,23 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.showAdvanced" datatype="html">
+        <source>Erweiterte Optionen</source>
+        <target state="final">Advanced settings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.hideAdvanced" datatype="html">
+        <source>Erweiterte Optionen ausblenden</source>
+        <target state="final">Hide advanced settings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">

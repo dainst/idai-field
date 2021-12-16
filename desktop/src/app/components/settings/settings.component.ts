@@ -29,8 +29,8 @@ export class SettingsComponent implements OnInit {
 
     public settings: Settings;
     public ipAddress: string = address.ip();
-    public saving: boolean = false;
-
+    public saving = false;
+    public areAdvancedSettingCollapsed = true;
 
     constructor(private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,

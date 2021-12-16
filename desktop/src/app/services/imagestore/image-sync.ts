@@ -60,9 +60,8 @@ export class ImageSync {
             );
 
             for (const uuid of missingLocally) {
-                const data = Buffer.from(await this.remoteImagestore.getData(uuid, variant, activeProject));
-                this.imagestore.store(uuid, data, activeProject);
-                console.log(data);
+                const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
+                this.imagestore.store(uuid, data, activeProject, variant);
             }
 
             const missingRemotely = localPaths.filter(

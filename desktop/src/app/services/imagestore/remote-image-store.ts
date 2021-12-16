@@ -56,12 +56,13 @@ export class RemoteImageStore{
             method: 'get',
             url: address + '/files/' + project + '/' + uuid,
             params,
+            responseType: 'arraybuffer',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Basic ${btoa(project + ':' + password)}`
             }
         });
 
-        return response.data;
+        return Buffer.from(response.data);
     }
 }

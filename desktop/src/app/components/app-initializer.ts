@@ -1,12 +1,13 @@
-import {
-    CategoryConverter,
-    ConstraintIndex,
-    DocumentCache,
-    FulltextIndex,
-    Indexer,
-    IndexFacade,
-    PouchdbDatastore,
-    ProjectConfiguration
+import { 
+    CategoryConverter, 
+    ConstraintIndex, 
+    DocumentCache, 
+    FulltextIndex, 
+    Indexer, 
+    IndexFacade, 
+    PouchdbDatastore, 
+    ProjectConfiguration,
+    ImageStore
 } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
@@ -85,6 +86,7 @@ export const appInitializerFactory = (
     pouchdbServer: ExpressServer,
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
+    imagestore: ImageStore,
     progress: InitializationProgress
 ) => async (): Promise<void> => {
 

@@ -71,8 +71,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
 
     public isChanged(): boolean {
-
-        return this.new || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition());
+        
+        return this.new
+            || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition())
+            || !equal(this.description)(this.clonedDescription);
     }
 
 

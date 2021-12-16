@@ -175,4 +175,4 @@ const downloadContainerStyle: CSSProperties = {
 
 const osInfoStyle: CSSProperties = {
     marginBottom: '1rem'
-}
+};

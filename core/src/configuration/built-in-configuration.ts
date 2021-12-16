@@ -886,7 +886,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Room'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room', 'Sample'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -913,7 +913,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Sample'],
-            range: ['Feature:inherit', 'Find:inherit'],
+            range: ['Sample', 'Feature:inherit', 'Find:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

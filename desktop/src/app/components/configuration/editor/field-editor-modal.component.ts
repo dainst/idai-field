@@ -12,6 +12,7 @@ import { Modals } from '../../../services/modals';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../index/configuration-index';
+import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
 
 
 @Component({
@@ -60,6 +61,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
     );
+
+    public isEditValuelistButtonVisible = () => this.clonedField.valuelist
+        && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
 
 
     public initialize() {
@@ -131,6 +135,24 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;
         componentInstance.clonedField = this.clonedField;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    public editValuelist() {
+
+        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
+            ValuelistEditorModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.valuelist = this.clonedField.valuelist;
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 

@@ -1,5 +1,5 @@
-import {Component, NgZone} from '@angular/core';
-import {SettingsProvider} from '../../core/settings/settings-provider';
+import { Component, NgZone, Input } from '@angular/core';
+import { SettingsProvider } from '../../core/settings/settings-provider';
 
 
 const ipcRenderer = typeof window !== 'undefined'
@@ -15,6 +15,8 @@ const ipcRenderer = typeof window !== 'undefined'
  * @author Thomas Kleinke
  */
 export class TaskbarUpdateComponent {
+
+    @Input() isSyncStatusShown: boolean;
 
     public version: string;
     public progressPercent: number = -1;

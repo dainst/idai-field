@@ -102,7 +102,7 @@ export class AppComponent {
             'hasPresentDescendants',
             this.i18n({
                 id: 'util.fieldsView.relations.hasPresentRelations',
-                value: 'Umfasst Stratigraphische Einheiten'
+                value: 'Umfasst stratigraphische Einheiten'
             })
         );
         this.utilTranslations.addTranslation(

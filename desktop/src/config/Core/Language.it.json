@@ -45,6 +45,9 @@
     "includes": {
       "label": "Include"
     },
+    "isPresentIn": {
+      "label": "Fa parte della sezione/pianta"
+    },
     "isAbove": {
       "label": "Sopra a"
     },

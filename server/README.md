@@ -13,24 +13,20 @@ As an admin user, one gets the additional option to list the existing databases.
 
 * Docker
 * docker-compose
-* Postgres (optional, see below)
 * Couchdb (optional, see below)
 
 Make sure you have running postgres and couchdb instances before proceeding. If they do not run on the host machine, you can start them as containers via
 
-    $ docker-compose up postgres
     $ docker-compose up couchdb
 
 ### Preparations
 
     $ npm i --prefix=./assets
-    $ docker-compose up postgres
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb
     $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
 
 For the user interface credentials to work, create a `user-tokens` db.
-Please also note that we assume the (admin) passwords of the `postgres` and the `couchdb` to be the same.
 
 ### Run
 

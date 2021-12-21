@@ -56,10 +56,9 @@ defmodule Api.Documents.Query do
   def set_sort(query, field) do
     put_in(query, [:sort], field)
   end
-
   def set_vector_query(query, nil), do: query
   def set_vector_query(query, %{ "model" => model, "query_vector" => query_vector }) do
-    field = "resource.relations.isDepictedIn.resource.featureVectors.#{model}"
+    field = "resource.featureVectors.#{model}"
     query = add_exists(query, [field])
     script = %{
       source: "1 / (1 + l2norm(params.query_vector, '#{field}'))",
@@ -68,6 +67,10 @@ defmodule Api.Documents.Query do
       }
     }
     put_in(query.query.script_score.script, script)
+  end
+  def set_search_after(query, nil), do: query
+  def set_search_after(query, field) do
+    put_in(query, [:search_after], field)
   end
 
   def build(query) do

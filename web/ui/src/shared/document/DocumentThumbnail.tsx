@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ResultDocument } from '../../api/result';
 import Image from '../image/Image';
 import MultiImage from '../image/MultiImage';
+import { isImage } from './document-utils';
 
 
 const LABEL_HEIGHT = 30;
@@ -45,8 +46,13 @@ export default React.memo(function DocumentThumbnail({ document, linkUrl, maxWid
 });
 
 
-const getImageId = (document: ResultDocument): string => document.resource.relations.isDepictedIn?.[0].resource.id;
-
+const getImageId = (document: ResultDocument): string => {
+    if (isImage(document)) {
+        return document.resource.id;
+    }
+    else {return document.resource.relations.isDepictedIn?.[0].resource.id;
+    }
+};
 
 const outerStyle: CSSProperties = {
     display: 'flex',

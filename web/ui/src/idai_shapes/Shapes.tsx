@@ -25,8 +25,9 @@ export default function Shapes(): ReactElement {
             <LoginContext.Provider value={ loginData }>
                 <ShapesNav onLogout={ doLogout(setLoginData) } />
                 <Switch>
-                    <Route path={ '/' } exact component={ Home } />
-                    <Route path={ '/document/:documentId?' } component={ Browse } />
+                    <Route path={ '/home/' } exact component={ Home } />
+                    <Route path={ '/' } exact component={ Browse } />
+                    <Route path={ '/:documentId?' } component={ Browse } />
                     <Route path={ '/login' }>
                         <LoginForm onLogin={ setLoginData } />
                     </Route>

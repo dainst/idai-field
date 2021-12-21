@@ -34,6 +34,25 @@ defmodule Api.Documents.Index do
     |> Query.set_vector_query(vector_query)
     |> build_post_atomize
     |> Mapping.map(project_conf)
+
+  end
+
+  def search_withafter(q, size, from, filters, must_not, exists, not_exists, search_after, sort, vector_query, readable_projects) do
+    {filters, must_not, project_conf} = preprocess(filters, must_not)
+    Query.init(q, size, from)
+    |> Query.track_total
+    |> Query.add_aggregations()
+    |> Query.add_filters(filters)
+    |> Query.add_must_not(must_not)
+    |> Query.add_exists(exists)
+    |> Query.add_not_exists(not_exists)
+    |> Query.set_search_after(search_after)
+    |> Query.set_sort(sort)
+    |> Query.set_readable_projects(readable_projects)
+    |> Query.set_vector_query(vector_query)
+    |> build_post_atomize
+    |> Mapping.map(project_conf)
+
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do

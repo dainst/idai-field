@@ -3,6 +3,7 @@ import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
 import { isObject } from 'tsfun';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
+import { isImage } from '../shared/document/document-utils';
 
 
 export interface Document {
@@ -32,8 +33,6 @@ export interface Resource {
     grandparentId: string;
     license?: string;
 }
-
-
 export interface FieldGroup {
     name: string;
     fields: Field[];
@@ -107,9 +106,13 @@ export interface Relation {
     targets: ResultDocument[];
 }
 
-export const getDocumentImages = (document: Document): ResultDocument[] =>
-    document.resource.groups.find((group: FieldGroup) => group.name === 'stem')
-        .relations.find((rel: Relation) => rel.name === 'isDepictedIn')?.targets;
+export const getDocumentImages = (document: Document): ResultDocument[] =>{
+    if (isImage(document)) {
+        return [document];
+    }
+    else {return document.resource.groups.find((group: FieldGroup) => group.name === 'stem')
+    .relations.find((rel: Relation) => rel.name === 'isDepictedIn')?.targets;}
+};
 
 export const getDocumentDescription = (doc: Document): FieldValue => getFieldValue(doc, 'parent', 'description');
 

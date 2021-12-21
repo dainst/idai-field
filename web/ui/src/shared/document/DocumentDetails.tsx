@@ -18,7 +18,7 @@ import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
 import { getDocumentLink } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
 
-const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
+const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename', 'resnet', 'phaseFourier'];
 const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer'];
 
 

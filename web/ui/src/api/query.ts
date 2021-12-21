@@ -11,6 +11,7 @@ export type Query = {
     parent?: string,
     size?: number,
     from?: number,
+    search_after?: string,
     sort?: string,
     image_query?: ImageQuery
 };
@@ -37,6 +38,7 @@ export type BackendParams = {
     not?: string[],
     exists?: string[],
     not_exists?: string[],
+    search_after?: string[],
     sort?: string[],
     vector_query?: VectorQuery
 };
@@ -53,6 +55,8 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
     const params: BackendParams = {
         q: query.q && query.q.length > 0 ? query.q : '*',
         filters: [],
+        search_after: [],
+        sort: [],
         not: [],
         exists: [],
         not_exists: []
@@ -76,9 +80,10 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
 
     if (query.size) params.size = query.size;
     if (query.from) params.from = query.from;
+    if (query.search_after) params.search_after = [query.search_after];
     if (query.sort) params.sort = [query.sort];
     if (query.image_query) params.vector_query = await buildVectorQuery(query.image_query);
-
+    console.log(params)
     return params;
 };
 
@@ -89,7 +94,6 @@ export const buildProjectsOverviewQueryTemplate = (from: number, size: number, e
     not: excludedTypes.map(type => ({ field: 'resource.category.name', value: type }))
 });
 
-
 export const buildProjectQueryTemplate = (id: string, from: number, size: number, excludedTypes: string[]): Query => ({
     size,
     from,
@@ -99,11 +103,8 @@ export const buildProjectQueryTemplate = (id: string, from: number, size: number
     not: excludedTypes.map(type => ({ field: 'resource.category.name', value: type }))
 });
 
-
 export const parseFrontendGetParams = (params: URLSearchParams, query: Query = { filters: [] }): Query => {
-
     const newQuery = JSON.parse(JSON.stringify(query));
-
     if (params.has('q')) {
         newQuery.q = params.get('q');
     } else if (!params.has('parent')) {

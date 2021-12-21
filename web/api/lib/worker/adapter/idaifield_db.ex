@@ -6,7 +6,7 @@ defmodule Api.Worker.Adapter.IdaiFieldDb do
   alias Api.Core.Config
   alias Api.Core.CorePropertiesAtomizing
 
-  @batch_size 500
+  @batch_size 5
 
   @doc """
   returns nil if document not available
@@ -43,9 +43,12 @@ defmodule Api.Worker.Adapter.IdaiFieldDb do
 
   defp fetch_batch auth, db, url, batch_offset, batch_size do
     Logger.info "Fetching from \"#{db}\" - offset: #{batch_offset}"
+    
     "#{url}/#{db}/_all_docs?include_docs=true&skip=#{batch_offset}&limit=#{batch_size}"
     |> send_request(auth)
     |> get_in(["rows"])
+    
+    
   end
 
   defp send_request url, auth do

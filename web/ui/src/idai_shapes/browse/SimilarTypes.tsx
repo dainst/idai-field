@@ -17,8 +17,10 @@ export default function SimilarTypes({ type }: { type: Document }): ReactElement
 
         getSimilar(type.resource.id, loginData.token)
             .then(result => setSimilarTypes(result.documents));
-    }, [type, loginData.token]);
+            }, [type, loginData.token]);
+        console.log(similarTypes);
 
+    
     return <>
         <DocumentGrid documents={ similarTypes }
             getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />

@@ -5,10 +5,13 @@ defmodule Api.Documents.Router do
   alias Api.Documents.DescendantsImages
   import Api.RouterUtils
   import Api.Core.Layout
+  require Logger
 
   plug :match
   plug Api.Auth.ReadableProjectsPlug
   plug :dispatch
+
+
 
   match "/" do
     send_json(conn, Index.search(
@@ -24,7 +27,21 @@ defmodule Api.Documents.Router do
       conn.private[:readable_projects]
     ))
   end
-
+  match "/searchafter" do
+    send_json(conn, Index.search_withafter(
+      conn.params["q"] || "*",
+      conn.params["size"] || 100,
+      conn.params["from"] || 0,
+      conn.params["filters"],
+      conn.params["not"],
+      conn.params["exists"],
+      conn.params["not_exists"],
+      conn.params["search_after"],
+      conn.params["sort"],
+      conn.params["vector_query"],
+      conn.private[:readable_projects]
+    ))
+  end
   match "/map" do
     send_json(conn, Index.search_geometries(
       conn.params["q"] || "*",
@@ -81,14 +98,14 @@ defmodule Api.Documents.Router do
     doc = Index.get(id)
     vector_query = %{
       "model" => model,
-      "query_vector" => get_in(doc, [:resource, :relations ,:isDepictedIn, Access.at(0) ,:resource, :featureVectors, model])
+      "query_vector" => get_in(doc, [:resource, :featureVectors, model])
     }
     send_json(conn, Index.search(
       conn.params["q"] || "*",
       conn.params["size"] || 10,
       conn.params["from"] || 0,
-      conn.params["filters"],
-      conn.params["not"] || ["resource.id:#{id}"],
+      conn.params["filters"] ,
+      conn.params["not"] ,
       conn.params["exists"],
       conn.params["not_exists"],
       conn.params["sort"],

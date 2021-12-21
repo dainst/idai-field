@@ -33,7 +33,9 @@ export default function Home(): ReactElement {
     useEffect(() => {
         searchCatalogDocuments(loginData.token)
             .then(result => setDocuments(result.documents));
+            
     }, [loginData]);
+    
 
     const getDocumentLink = (document: ResultDocument): string => `document/${document.resource.id}`;
     const showFuncBarComp = (component: searchComp) => setsearchBarComp(component);
@@ -70,13 +72,15 @@ export default function Home(): ReactElement {
 const searchCatalogDocuments = async (token: string): Promise<Result> => {
     
     const query: Query = {
+        size: 100,
         filters: [
             { field: 'project', value: SHAPES_PROJECT_ID },
-            { field: 'resource.category.name', value: 'TypeCatalog' }
-        ],
-        parent: 'root'
+            { field: 'resource.category.name', value: 'Drawing' }
+
+        ]
+
     };
-    
+    console.log(search(query, token));
     return search(query, token);
 };
 

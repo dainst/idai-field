@@ -15,6 +15,7 @@ export interface CategoryForm {
     libraryId?: string;
 
     source?: 'builtin'|'library'|'custom';
+    customFields?: string[];
 
     isAbstract: boolean;
     mustLieWithin: boolean|undefined; // = undefined;

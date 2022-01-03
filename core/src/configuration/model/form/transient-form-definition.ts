@@ -17,6 +17,7 @@ export interface TransientFormDefinition extends BuiltInFormDefinition, LibraryF
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     defaultColor?: string;
+    customFields?: string[]
 }
 
 

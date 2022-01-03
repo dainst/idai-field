@@ -72,6 +72,7 @@ describe('mergeWithCustomForms', () => {
         expect(result['A:default'].fields['f3'].inputType).toEqual(Field.InputType.LITERATURE);
         expect(result['A:default'].fields['c1'].inputType).toEqual(Field.InputType.INPUT);
         expect(result['A:default'].hidden).toEqual(['f1']);
+        expect(result['A:default'].customFields).toEqual(['f2', 'f3']);
     });
 
 
@@ -126,5 +127,6 @@ describe('mergeWithCustomForms', () => {
         expect(result['NewCategory'].fields['f2'].inputType).toEqual(Field.InputType.BOOLEAN);
         expect(result['NewCategory'].fields['f3'].inputType).toEqual(Field.InputType.LITERATURE);
         expect(result['NewCategory'].fields['c1'].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['NewCategory'].customFields).toEqual(['c1', 'f2', 'f3']);
     });
 });

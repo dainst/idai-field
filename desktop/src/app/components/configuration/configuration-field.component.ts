@@ -47,7 +47,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
-    public isCustomField = () => this.category.customFields?.includes(this.field.name);
+    public isCustomField = () => this.category.customFields?.includes(this.field.name) && !this.parentField;
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 

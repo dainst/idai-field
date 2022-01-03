@@ -39,7 +39,8 @@ export class ConfigurationContextMenuComponent implements OnChanges {
     public areAnyOptionsAvailable(): boolean {
 
         return this.isDeleteOptionAvailable()
-            || this.isEditOptionAvailable();
+            || this.isEditOptionAvailable()
+            || this.isSwapOptionAvailable();
     }
 
 

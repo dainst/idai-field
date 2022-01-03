@@ -80,6 +80,9 @@
     },
     "literature": {
       "label": "Référence littéraire/bibliographique"
+    },
+    "geometry": {
+      "label": "Géométrie"
     }
   },
   "categories": {

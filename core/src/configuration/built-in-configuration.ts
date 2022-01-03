@@ -104,6 +104,10 @@ export class BuiltInConfiguration {
         },
         literature: {
             inputType: Field.InputType.LITERATURE
+        },
+        geometry: {
+            inputType: Field.InputType.GEOMETRY,
+            visible: false
         }
     };
     
@@ -151,10 +155,6 @@ export class BuiltInConfiguration {
             supercategory: true,
             abstract: true,
             fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                },
                 supervisor: {
                     inputType: Field.InputType.CHECKBOXES,
                     valuelistFromProjectField: 'staff',
@@ -223,12 +223,7 @@ export class BuiltInConfiguration {
             }
         },
         Profile: {
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -243,12 +238,7 @@ export class BuiltInConfiguration {
             }
         },
         Planum: {
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -267,10 +257,6 @@ export class BuiltInConfiguration {
                 gazId: {
                     inputType: Field.InputType.UNSIGNEDINT,
                     constraintIndexed: true
-                },
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
                 }
             },
             minimalForm: {
@@ -306,12 +292,7 @@ export class BuiltInConfiguration {
         Room: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -328,12 +309,7 @@ export class BuiltInConfiguration {
         // An idealized (non material) entity, must be created within a Room
         RoomWall: {
             mustLieWithin: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -351,10 +327,6 @@ export class BuiltInConfiguration {
         RoomFloor: {
             mustLieWithin: true,
             fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
             },
             minimalForm: {
                 groups: [
@@ -372,12 +344,7 @@ export class BuiltInConfiguration {
         // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
             mustLieWithin: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -395,12 +362,7 @@ export class BuiltInConfiguration {
         BuildingPart: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -417,12 +379,7 @@ export class BuiltInConfiguration {
         Area: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -448,10 +405,6 @@ export class BuiltInConfiguration {
                 },
                 dating: {
                     inputType: Field.InputType.DATING,
-                },
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
                 }
             },
             minimalForm: {
@@ -474,12 +427,7 @@ export class BuiltInConfiguration {
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -499,12 +447,7 @@ export class BuiltInConfiguration {
         },
         Sample: {
             mustLieWithin: true,
-            fields: {
-                geometry: {
-                    inputType: Field.InputType.GEOMETRY,
-                    visible: false
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {
@@ -1009,12 +952,7 @@ export class BuiltInConfiguration {
             this.builtInCategories.Other = {
                 parent: 'Feature',
                 color: '#CC6600',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1034,12 +972,7 @@ export class BuiltInConfiguration {
 
             this.builtInCategories.Wall_surface = {
                 color: '#ffff99',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1055,11 +988,7 @@ export class BuiltInConfiguration {
             };
             this.builtInCategories.Drilling = {
                 color: '#08519c',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1093,12 +1022,7 @@ export class BuiltInConfiguration {
 
             this.builtInCategories.BuildingFloor = {
                 color: '#6600cc',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1114,12 +1038,7 @@ export class BuiltInConfiguration {
             };
             this.builtInCategories.SurveyBurial = {
                 color: '#45ff95',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1187,12 +1106,7 @@ export class BuiltInConfiguration {
                 userDefinedSubcategoriesAllowed: true,
                 abstract: false,
                 color: '#c6dbef',
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {
@@ -1239,10 +1153,6 @@ export class BuiltInConfiguration {
                 fields: {
                     diameterPercentage: {
                         inputType: Field.InputType.UNSIGNEDFLOAT,
-                    },
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
                     }
                 },
                 minimalForm: {
@@ -1270,12 +1180,7 @@ export class BuiltInConfiguration {
             this.builtInCategories.Impression = {
                 supercategory: false,
                 userDefinedSubcategoriesAllowed: false,
-                fields: {
-                    geometry: {
-                        inputType: Field.InputType.GEOMETRY,
-                        visible: false
-                    }
-                },
+                fields: {},
                 minimalForm: {
                     groups: [
                         {

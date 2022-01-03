@@ -95,6 +95,9 @@
     },
     "literature": {
       "label": "Literaturverweis"
+    },
+    "geometry": {
+      "label": "Geometrie"
     }
   },
   "categories": {

@@ -84,6 +84,9 @@
     },
     "literature": {
       "label": "Literature reference"
+    },
+    "geometry": {
+      "label": "Geometry"
     }
   },
   "categories": {

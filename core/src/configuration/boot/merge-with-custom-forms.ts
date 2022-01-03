@@ -70,7 +70,7 @@ function handleChildExtension(customFormName: string,
     clonedCustomForm.name = customFormName;
     clonedCustomForm.categoryName = customFormName;
     
-    clonedCustomForm.customFields = flatten(clonedCustomForm.groups.map(to('fields')));
+    clonedCustomForm.customFields = clonedCustomForm.groups ? flatten(clonedCustomForm.groups.map(to('fields'))): [];
 
     return addFieldsToForm(clonedCustomForm, categories, builtInFields, commonFields, relations);
 }
@@ -92,7 +92,7 @@ function mergeFormProperties(target: TransientFormDefinition,
     if (source.color) target.color = source.color;
     if (source.groups) {
         const sourceFields: string[] = flatten(source.groups.map(to('fields')));
-        const targetFields: string[] = flatten(target.groups.map(to('fields')));
+        const targetFields: string[] = target.groups ? flatten(target.groups.map(to('fields'))) : [];
         target.customFields = sourceFields.filter(fieldName => !targetFields.includes(fieldName));
         target.groups = source.groups;
     }

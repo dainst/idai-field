@@ -25,6 +25,8 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { MenuNavigator } from '../menu-navigator';
+import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
 
 
 export type SaveResult = {
@@ -94,6 +96,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private labels: Labels,
                 private indexFacade: IndexFacade,
                 private menus: Menus,
+                private menuNavigator: MenuNavigator,
                 private i18n: I18n) {}
 
 
@@ -113,6 +116,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         ) as ConfigurationDocument;
 
         this.buildConfigurationIndex();
+
+        this.menuNavigator.valuelistsManagementNotifications().subscribe(() => this.openValuelistsManagementModal());
     }
 
 
@@ -429,6 +434,31 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             console.error(errWithParams);
             this.messages.add(errWithParams);
         }
+    }
+
+
+    private async openValuelistsManagementModal() {
+
+        const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
+            ManageValuelistsModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (saveResult?: SaveResult) => {
+                if (!saveResult) return;
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+            },
+            nop
+        );
     }
 
 

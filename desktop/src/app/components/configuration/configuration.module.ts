@@ -25,7 +25,7 @@ import { SaveModalComponent } from './save-modal.component';
 import { FieldListingComponent } from './add/field/field-listing.component';
 import { FieldPreviewComponent } from './add/field/field-preview.component';
 import { ValuelistViewComponent } from './valuelist-view.component';
-import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
+import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
 import { ValuelistListingComponent } from './add/valuelist/valuelist-listing.component';
 import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.component';
 import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.component';
@@ -48,7 +48,7 @@ import { ValueEditorModalComponent } from './editor/value-editor-modal.component
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,
-        AddValuelistModalComponent,
+        ManageValuelistsModalComponent,
         CategoryPreviewComponent,
         FieldPreviewComponent,
         ValuelistPreviewComponent,

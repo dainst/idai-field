@@ -9,7 +9,7 @@ import { SaveResult } from '../../configuration.component';
 
 
 @Component({
-    templateUrl: './add-valuelist-modal.html',
+    templateUrl: './manage-valuelists-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
     }
@@ -17,7 +17,7 @@ import { SaveResult } from '../../configuration.component';
 /**
  * @author Thomas Kleinke
  */
-export class AddValuelistModalComponent {
+export class ManageValuelistsModalComponent {
 
     public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
@@ -40,6 +40,12 @@ export class AddValuelistModalComponent {
     public initialize() {
 
         this.applyValuelistSearch();
+    }
+
+
+    public isSelectionMode(): boolean {
+
+        return this.category && this.clonedField && this.clonedConfigurationDocument !== undefined;
     }
 
 
@@ -77,7 +83,7 @@ export class AddValuelistModalComponent {
     public applyValuelistSearch() {
 
         this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchTerm)
-            .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
+            .filter(valuelist => !this.clonedField?.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 
         this.selectedValuelist = this.valuelists?.[0];
@@ -105,7 +111,7 @@ export class AddValuelistModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.category;
+        //componentInstance.category = this.category;
         componentInstance.valuelist = {
             id: this.searchTerm,
             values: {},
@@ -116,7 +122,9 @@ export class AddValuelistModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.addNewValuelist(saveResult),
+            (saveResult: SaveResult) => {
+                if (this.isSelectionMode()) this.addNewValuelist(saveResult);
+            },
             () => this.activeModal.close()
         );
     }

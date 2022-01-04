@@ -1,8 +1,13 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.selectValuelist">Werteliste auswählen</h5>
+    <h5 *ngIf="isSelectionMode()"
+        class="modal-title"
+        i18n="@@configuration.selectValuelist">Werteliste auswählen</h5>
+    <h5 *ngIf="!isSelectionMode()"
+        class="modal-title"
+        i18n="@@configuration.manageValuelists">Wertelisten verwalten</h5>
 </div>
 
-<div class="modal-body row add-valuelist-modal-body">
+<div class="modal-body row manage-valuelists-modal-body">
     <div class="col-md-6">
         <div class="input-group mb-2">
             <input type="text"
@@ -15,7 +20,7 @@
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
                            [searchTerm]="searchTerm"
-                           [currentValuelistId]="clonedField.valuelist.id"
+                           [currentValuelistId]="clonedField?.valuelist?.id"
                            (onValuelistSelected)="select($event)">
         </valuelist-listing>
     </div>
@@ -25,11 +30,13 @@
 </div>
 
 <div class="modal-footer">
-    <div id="add-field-button"
+    <div *ngIf="isSelectionMode() || selectedValuelist === emptyValuelist"
+         id="add-field-button"
          class="btn btn-success"
          [class.disabled]="!selectedValuelist"
          (click)="confirmSelection()">
-        <span i18n="@@configuration.selectValuelist">Werteliste auswählen</span>
+        <span *ngIf="isSelectionMode()" i18n="@@configuration.selectValuelist">Werteliste auswählen</span>
+        <span *ngIf="!isSelectionMode()" i18n="@@configuration.selectValuelist">Werteliste erstellen</span>
     </div>
     <div id="cancel-add-field-modal-button"
          class="btn btn-secondary"

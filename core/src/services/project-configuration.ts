@@ -1,4 +1,4 @@
-import { includedIn, on, isString, flow, filter, remove, is, Map } from 'tsfun';
+import { includedIn, on, isString, flow, filter, remove, is, Map, to } from 'tsfun';
 import { filterTrees, Forest, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree } from '../tools';
 import { ConfigurationErrors } from '../configuration/boot/configuration-errors';
 import { Category } from '../model/configuration/category';
@@ -91,8 +91,9 @@ export class ProjectConfiguration {
 
     public isGeometryCategory(category: Name): boolean {
 
-        return !isTopLevelItemOrChildThereof(this.categoryForms, category,
-            'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
+        return CategoryForm.getFields(this.getCategory(category))
+            .map(to(Field.NAME))
+            .includes('geometry');
     }
 
 

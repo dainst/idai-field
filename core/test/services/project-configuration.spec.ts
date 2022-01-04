@@ -1,5 +1,4 @@
 import { sameset } from 'tsfun';
-import { CategoryForm } from '../../src/model/configuration/category-form';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
 import { Forest, Named } from '../../src/tools';
 
@@ -9,57 +8,87 @@ describe('ProjectConfiguration', () => {
     const projectConfiguration = new ProjectConfiguration({
         forms: Forest.build([
             [
-                { name: 'Image' },
+                { name: 'Image', groups: [] },
                 [
                     [
-                        { name: 'Drawing' },
+                        { name: 'Drawing', groups: [] },
                         []
                     ]
                 ]
             ],
             [
-                { name: 'Operation' },
+                {
+                    name: 'Operation',
+                    groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                },
                 [
                     [
-                        { name: 'Trench' },
+                        {
+                            name: 'Trench',
+                            groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                        },
                         []
                     ]
                 ]
             ],
             [
-                { name: 'Place' },
+                {
+                    name: 'Place',
+                    groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                },
                 []
             ],
             [
-                { name: 'Inscription' },
+                {
+                    name: 'Inscription',
+                    groups: [{ name: 'default', fields: [{ name: 'description' }] }]
+                },
                 []
             ],
             [
-                { name: 'Type' },
+                {
+                    name: 'Type',
+                    groups: []
+                },
                 []
             ],
             [
-                { name: 'TypeCatalog' },
+                {
+                    name: 'TypeCatalog',
+                    groups: []
+                },
                 []
             ],
             [
-                { name: 'Project' },
+                {
+                    name: 'Project',
+                    groups: []
+                },
                 []
             ],
             [
-                { name: 'Find' },
+                {
+                    name: 'Find',
+                    groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                },
                 []
             ],
             [
-                { name: 'Feature' },
+                {
+                    name: 'Feature',
+                    groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                },
                 [
                     [
-                        { name: 'Architecture' },
+                        {
+                            name: 'Architecture',
+                            groups: [{ name: 'default', fields: [{ name: 'geometry' }] }]
+                        },
                         []
                     ]
                 ]
             ]
-        ]) as Forest<CategoryForm>,
+        ]) as any,
         categories: {},
         relations: [],
         commonFields: {},
@@ -75,8 +104,10 @@ describe('ProjectConfiguration', () => {
         expect(projectConfiguration.isGeometryCategory('TypeCatalog')).toBeFalsy();
         expect(projectConfiguration.isGeometryCategory('Inscription')).toBeFalsy();
         expect(projectConfiguration.isGeometryCategory('Project')).toBeFalsy();
-        expect(projectConfiguration.isGeometryCategory('Operation')).toBeTruthy();
         expect(projectConfiguration.isGeometryCategory('Project')).toBeFalsy();
+        expect(projectConfiguration.isGeometryCategory('Operation')).toBeTruthy();
+        expect(projectConfiguration.isGeometryCategory('Find')).toBeTruthy();
+        expect(projectConfiguration.isGeometryCategory('Feature')).toBeTruthy();
     });
 
 

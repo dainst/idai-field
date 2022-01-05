@@ -22,7 +22,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ]
-        const index = ConfigurationIndex.create(forms as any, [], [], []);
+        const index = ConfigurationIndex.create(forms as any, [], [], [], []);
 
         expect(ConfigurationIndex.findCategoryForms(index, '', 'A:parent')[0].name).toEqual('A:default');
         expect(ConfigurationIndex.findCategoryForms(index, 'A', 'A:parent')[0].name).toEqual('A:default');
@@ -57,7 +57,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], categories, [], []);
+        const index = ConfigurationIndex.create([], categories, [], [], []);
 
         expect(ConfigurationIndex.findFields(index, '', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
@@ -83,7 +83,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], [], [], valuelists);
+        const index = ConfigurationIndex.create([], [], [], valuelists, []);
 
         expect(ConfigurationIndex.findValuelists(index, '')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'valuelist')[0].id).toEqual('valuelist-1');

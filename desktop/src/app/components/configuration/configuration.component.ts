@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Subscription } from 'rxjs';
 import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
@@ -83,6 +84,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                             reindexConfiguration?: boolean): Promise<SaveResult> =>
         this.configureAppSaveChangesAndReload(configurationDocument, reindexCategory, reindexConfiguration);
 
+    private menuSubscription: Subscription;
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
@@ -117,13 +120,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.buildConfigurationIndex();
 
-        this.menuNavigator.valuelistsManagementNotifications().subscribe(() => this.openValuelistsManagementModal());
+        this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
+            .subscribe(() => this.openValuelistsManagementModal());
     }
 
 
     ngOnDestroy() {
 
         this.menus.setContext(MenuContext.DEFAULT);
+        this.menuSubscription.unsubscribe();
     }
 
 

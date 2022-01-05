@@ -259,6 +259,8 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)
             }, {
+                type: 'separator'
+            }, {
                 type: 'checkbox',
                 label: messages.get('menu.configuration.showHiddenFields'),
                 checked: !config.hideHiddenFieldsInConfigurationEditor,

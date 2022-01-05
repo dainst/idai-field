@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Labels, Valuelist } from 'idai-field-core';
+import { ConfigurationIndex } from '../../index/configuration-index';
 import { containsSearchTerm } from '../getSearchResultLabel';
 
 
@@ -15,6 +16,7 @@ export class ValuelistListingComponent {
     @Input() valuelists: Array<Valuelist> = [];
     @Input() selectedValuelist: Valuelist;
     @Input() emptyValuelist: Valuelist|undefined;
+    @Input() configurationIndex: ConfigurationIndex;
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
     @Input() showCreateOptionAsButton: boolean;
@@ -52,5 +54,11 @@ export class ValuelistListingComponent {
         }
     
         return undefined;
+    }
+
+
+    public isInUse(valuelist: Valuelist): boolean {
+     
+        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0;
     }
 }

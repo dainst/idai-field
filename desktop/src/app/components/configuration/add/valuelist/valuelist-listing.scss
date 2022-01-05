@@ -9,6 +9,10 @@ valuelist-listing {
           transition: background-color .5s ease;
       }
 
+      .in-use {
+        font-weight: bold; 
+      }
+
       .new-valuelist-button {
         height: 41px;
         width: 100%;

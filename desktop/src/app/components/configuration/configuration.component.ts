@@ -570,7 +570,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 Tree.flatten(rawConfiguration.forms),
                 Object.values(rawConfiguration.categories),
                 Object.values(rawConfiguration.commonFields),
-                Object.values(rawConfiguration.valuelists)
+                Object.values(rawConfiguration.valuelists),
+                Tree.flatten(this.projectConfiguration.getCategories())
             );
         } catch (e) {
             console.error('Error while building configuration index', e);

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Labels, Valuelist } from 'idai-field-core';
+import { Valuelist } from 'idai-field-core';
 
 
 @Component({
@@ -14,5 +14,5 @@ export class ValuelistPreviewComponent {
     @Input() valuelist: Valuelist|undefined;
 
 
-    constructor(private labels: Labels) {}
+    constructor() {}
 }

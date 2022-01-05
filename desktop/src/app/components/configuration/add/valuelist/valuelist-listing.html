@@ -1,6 +1,7 @@
 <ul class="bg-light listing">
     <li *ngFor="let valuelist of valuelists"
         [class.selected]="selectedValuelist === valuelist"
+        [class.in-use]="isInUse(valuelist)"
         (click)="select(valuelist)">
         <code>{{valuelist.id}}</code>
         <span *ngIf="getSearchResultLabel(valuelist)"

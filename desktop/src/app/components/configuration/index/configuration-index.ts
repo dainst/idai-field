@@ -2,6 +2,7 @@ import { Category, CategoryForm, Field, Name, Valuelist } from 'idai-field-core'
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
+import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
 
 
 export interface ConfigurationIndex {
@@ -9,6 +10,7 @@ export interface ConfigurationIndex {
     categoryFormIndex: CategoryFormIndex;
     fieldIndex: FieldIndex;
     valuelistIndex: ValuelistIndex;
+    valuelistUsageIndex: ValuelistUsageIndex;
 }
 
 
@@ -18,12 +20,14 @@ export interface ConfigurationIndex {
 export namespace ConfigurationIndex {
 
     export function create(forms: Array<CategoryForm>, categories: Array<Category>,
-                           commonFields: Array<Field>, valuelists: Array<Valuelist>): ConfigurationIndex {
+                           commonFields: Array<Field>, valuelists: Array<Valuelist>,
+                           usedCategories: Array<CategoryForm>): ConfigurationIndex {
 
         return {
             categoryFormIndex: CategoryFormIndex.create(forms),
             fieldIndex: FieldIndex.create(categories, commonFields),
-            valuelistIndex: ValuelistIndex.create(valuelists)
+            valuelistIndex: ValuelistIndex.create(valuelists),
+            valuelistUsageIndex: ValuelistUsageIndex.create(valuelists, usedCategories)
         };
     }
 
@@ -44,5 +48,11 @@ export namespace ConfigurationIndex {
     export function findValuelists(index: ConfigurationIndex, searchTerm: string): Array<Valuelist> {
 
         return ValuelistIndex.find(index.valuelistIndex, searchTerm);
+    }
+
+
+    export function getValuelistUsage(index: ConfigurationIndex, valuelistId: string): Array<ValuelistUsage> {
+
+        return ValuelistUsageIndex.get(index.valuelistUsageIndex, valuelistId);
     }
 }

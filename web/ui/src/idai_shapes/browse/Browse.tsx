@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, ReactElement, useContext, useEffect, useState} from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -43,12 +43,24 @@ export default function Browse(): ReactElement {
     type OnScroll = (e: React.UIEvent<Element, UIEvent>) => void;
     const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
         const el = e.currentTarget;
+        //console.log('scrollHeight:',el.scrollHeight)
+        //console.log('scrollTop:',el.scrollTop)
+        //console.log('scrollclientHeight:',el.clientHeight)
         if ((el.scrollTop + el.clientHeight) >= el.scrollHeight) {
             console.log('Scroll to the Bottom!', minmax)
             const scrollState:ScrollState = { 
                 'atBottom' : true,
                 'atTop' : false
              };
+            setScrollState(scrollState)
+        
+            }
+        if ((el.scrollTop) <= 0) {
+            console.log('Scroll to the Top!', minmax)
+            const scrollState:ScrollState = { 
+                'atBottom' : false,
+                'atTop' : true
+            };
             setScrollState(scrollState)
         
             }
@@ -81,15 +93,24 @@ export default function Browse(): ReactElement {
     }, [documentId, loginData, searchParams,]);
 
     useEffect(() => {
-        if (scrollState.atBottom) {
-            console.log('This is the documents:', documents)
-            getNextDocuments(loginData.token, documents)
-                .then(results => setDocuments(documents.concat(results.documents)));
+        if (scrollState.atTop) {
+            getPreviousDocuments(loginData.token, documents)
+                //.then(results => console.log('This is the previous results:',results.documents.reverse()));
+                .then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,documents.length-10))))
             setScrollState({ 
                 'atBottom' : false,
                 'atTop' : false
              });
-             setMinMaxSort(getMinMax(documents));
+             
+        }
+        if (scrollState.atBottom) {
+            getNextDocuments(loginData.token, documents)
+                //.then(results => console.log('This is the next results:',results));
+                .then(results => setDocuments(documents.slice(9).concat(results.documents)));
+            setScrollState({ 
+                'atBottom' : false,
+                'atTop' : false
+             });
         }
 
     }, [scrollState]);
@@ -101,7 +122,7 @@ export default function Browse(): ReactElement {
                 <Row>
                     { document
                         ? <>
-                            <Col style={ documentGridStyle } onScroll={onScroll}>
+                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScroll}>
                                 <Row className="catalog">
                                     <Col>
                                         <h1 className="my-5">{ }</h1>
@@ -111,7 +132,7 @@ export default function Browse(): ReactElement {
                                 </Row>
                             </Col>
                 
-                            <Col className="col-4 sidebar">
+                            <Col lg={3} className="catalog">
                                 <DocumentCard document={ document }
                                     baseUrl={ CONFIGURATION.shapesUrl }
                                     cardStyle={ cardStyle }
@@ -119,7 +140,7 @@ export default function Browse(): ReactElement {
                                     bodyStyle={ cardBodyStyle } />
                                     
                             </Col>
-                            <Col style={ documentGridStyle } onScroll={ onScroll }>
+                            <Col lg={4} style={ documentGridSimilarStyle } onScroll={ onScroll }>
                                 <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
                                     { document && document.resource.category.name === 'Drawing' &&
                                         <Tab eventKey="similarTypes" title={ t('shapes.browse.similarTypes') }>
@@ -180,7 +201,8 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
     return await search_after(query, token);
 };
 
-const getNextDocuments = async (token: string, olddocuments): Promise<Result> => {  
+const getNextDocuments = async (token: string, olddocuments): Promise<Result> => { 
+    const lastdoc : ResultDocument = olddocuments[olddocuments.length-1] 
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
@@ -194,7 +216,7 @@ const getNextDocuments = async (token: string, olddocuments): Promise<Result> =>
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after: [ olddocuments[olddocuments.length-1].resource.literature[0]['page'], olddocuments[olddocuments.length-1].resource.literature[0]['figure'], olddocuments[olddocuments.length-1].resource.id ],
+        search_after: [lastdoc.resource.literature[0]['page'], lastdoc.resource.literature[0]['figure'], lastdoc.resource.id ],
         sort: [{field:'resource.literature.page', order:'asc', nested: nest },
             {field:'resource.literature.figure', order:'asc', nested: nest },
             {field:'resource.id', order:'asc'}
@@ -204,6 +226,34 @@ const getNextDocuments = async (token: string, olddocuments): Promise<Result> =>
 
     return search_after(query, token);
 };
+
+
+const getPreviousDocuments = async (token: string, olddocuments): Promise<Result> => {  
+    const nest: NestedSortObject = {
+        path : 'resource.literature',
+        max_children: 1
+        };
+    const query: Query = {
+        size: 10,
+        from: 0,
+        filters: [
+            
+            { field: 'project', value: SHAPES_PROJECT_ID },
+            { field: 'resource.category.name', value: 'Drawing' }
+
+        ],
+        search_after: [ olddocuments[0].resource.literature[0]['page'], olddocuments[0].resource.literature[0]['figure'], olddocuments[0].resource.id ],
+        sort: [{field:'resource.literature.page', order:'desc', nested: nest },
+            {field:'resource.literature.figure', order:'desc', nested: nest },
+            {field:'resource.id', order:'desc'}
+        ]
+
+    };
+
+    return search_after(query, token);
+};
+
+
 
 const getMinMax = (documents) => {
     const resultBounds:MinMaxSort = { 
@@ -267,8 +317,12 @@ const cardBodyStyle: CSSProperties = {
     overflow: 'auto'
 };
 
+const documentGridSimilarStyle: CSSProperties = {
+    height: 'calc(100vh - ' + (NAVBAR_HEIGHT + BREADCRUMB_HEIGHT) + 'px)',
+    overflowY: 'auto'
+};
 
-const documentGridStyle: CSSProperties = {
+const documentGridBrowseStyle: CSSProperties = {
     height: 'calc(100vh - ' + (NAVBAR_HEIGHT + BREADCRUMB_HEIGHT) + 'px)',
     overflowY: 'auto'
 };

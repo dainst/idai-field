@@ -10,6 +10,8 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
     constructor(private settingsProvider: SettingsProvider) {}
 
     public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
+
+
         try {
             const settings = this.settingsProvider.getSettings();
             const syncSource = settings.syncTargets[project];
@@ -19,8 +21,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             const password = syncSource.password;
 
             const params = (type) ? { type } : {};
-            console.log('POSTing:');
-            console.log(data);
             const response = await axios({
                 method: 'post',
                 url: address + '/files/' + project + '/' + uuid,

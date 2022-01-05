@@ -9,11 +9,11 @@ import { ConfigurationEditorModalComponent } from './configuration-editor-modal.
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Modals } from '../../../services/modals';
-import { ManageValuelistsModalComponent } from '../add/valuelist/manage-valuelists-modal.component';
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../index/configuration-index';
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
 import { SaveResult } from '../configuration.component';
+import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 
 
 @Component({
@@ -125,8 +125,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     
     public async selectValuelist() {
 
-        const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
-            ManageValuelistsModalComponent,
+        const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
+            AddValuelistModalComponent,
             MenuContext.CONFIGURATION_MODAL,
             'lg'
         );

@@ -30,6 +30,7 @@ import { ValuelistListingComponent } from './add/valuelist/valuelist-listing.com
 import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.component';
 import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.component';
 import { ValueEditorModalComponent } from './editor/value-editor-modal.component';
+import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ValueEditorModalComponent } from './editor/value-editor-modal.component
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,
+        AddValuelistModalComponent,
         ManageValuelistsModalComponent,
         CategoryPreviewComponent,
         FieldPreviewComponent,
@@ -75,6 +77,7 @@ import { ValueEditorModalComponent } from './editor/value-editor-modal.component
         ConfigurationComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
+        AddValuelistModalComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,
         CategoryEditorModalComponent,

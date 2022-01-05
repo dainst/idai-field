@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 @Component({
     selector: 'taskbar',
@@ -19,6 +21,12 @@ export class TaskbarComponent {
     constructor(private settingsProvider: SettingsProvider) {
 
         this.projectName = this.settingsProvider.getSettings().selectedProject;
+    }
+
+
+    public isLinux(): boolean {
+
+        return remote.getGlobal('os') === 'Linux';
     }
 
 

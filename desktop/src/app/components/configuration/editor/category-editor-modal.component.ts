@@ -24,7 +24,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     private currentColor: string;
 
     protected changeMessage = this.i18n({
-        id: 'docedit.saveModal.categoryChanged', value: 'Die Kategorie wurde geändert.'
+        id: 'configuration.categoryChanged', value: 'Die Kategorie wurde geändert.'
     });
 
 

@@ -4,9 +4,33 @@ valuelist-listing {
     height: calc(100vh - 273px);
   
     .listing {
-      li:hover {
+      li:not(.btn):hover {
           background-color: darken($list-item-hover-color, 5%);
           transition: background-color .5s ease;
+      }
+
+      .new-valuelist-button {
+        height: 41px;
+        width: 100%;
+        padding: 12px;
+
+        .mdi {
+          position: relative;
+          bottom: 3px;
+        }
+
+        div {
+          position: relative;
+          bottom: 3px;
+          left: 4px;
+          display: inline;
+
+          code {
+            bottom: 0;
+            margin-left: 0;
+            color: #ffc2de;
+          }
+        }
       }
     }
   }

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, on, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
-import { ErrWithParams } from '../../../import/import/import-documents';
 import { ConfigurationIndex } from '../../index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { ConfigurationUtil, InputType } from '../../configuration-util';
+import { SaveResult } from '../../configuration.component';
 
 
 @Component({
@@ -21,14 +21,14 @@ import { ConfigurationUtil, InputType } from '../../configuration-util';
  */
 export class AddFieldModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
+    public configurationIndex: ConfigurationIndex;
     public category: CategoryForm;
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<ErrWithParams|undefined>;
+        Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedField: Field|undefined;
@@ -42,7 +42,7 @@ export class AddFieldModalComponent {
 
 
     public initialize() {
-
+    
         this.applyFieldNameSearch();
     }
 
@@ -79,7 +79,11 @@ export class AddFieldModalComponent {
 
     public applyFieldNameSearch() {
 
-        this.fields = ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, this.category.name)
+        this.fields = ConfigurationIndex.findFields(
+            this.configurationIndex,
+            this.searchTerm,
+            this.category.source === 'custom' ? this.category.parentCategory.name : this.category.name
+        )
             .concat(ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, 'commons'))
             .filter(field => (field.visible || field.editable)
                 && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
@@ -119,8 +123,8 @@ export class AddFieldModalComponent {
         );
 
         componentInstance.saveAndReload = this.saveAndReload;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = this.category;
         componentInstance.field = {
             name: this.searchTerm,

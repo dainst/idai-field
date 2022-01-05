@@ -280,7 +280,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
         },
         {
           "name": "time",
@@ -395,7 +395,7 @@
         {
           "name": "position",
           "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "orientation",
-            "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
+            "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
         },
         {
           "name": "time",
@@ -479,7 +479,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isBelow", "isAbove", "borders",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
             "cuts", "isCutBy"]
         },
         {
@@ -509,7 +509,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isBelow", "isAbove", "borders",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
             "cuts", "isCutBy"]
         },
         {
@@ -544,7 +544,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isBelow", "isAbove", "borders",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
             "cuts", "isCutBy"]
         },
         {
@@ -715,7 +715,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "isBelow", "isAbove",
+          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove",
             "borders", "cuts", "isCutBy"]
         },
         {
@@ -1243,6 +1243,64 @@
         {
           "name": "identification",
           "fields": ["hasInstance"]
+        }
+      ]
+    },
+    "Profile:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Profile",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
+            "beginningDate", "endDate"]
+        },
+        {
+          "name": "parent",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionWidth", "dimensionHeight"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent", "orientation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Planum:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Planum",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
+            "beginningDate", "endDate"]
+        },
+        {
+          "name": "parent",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionWidth", "dimensionHeight"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
         }
       ]
     }

@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, Document } from 'idai-field-core';
+import { Observable, Observer } from 'rxjs';
+import { Datastore, Document, ObserverUtil } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { DoceditComponent } from './docedit/docedit.component';
 import { SettingsService } from '../services/settings/settings-service';
@@ -10,6 +11,7 @@ import { DeleteProjectModalComponent } from './project/delete-project-modal.comp
 import { MenuContext } from '../services/menu-context';
 import { CreateProjectModalComponent } from './project/create-project-modal.component';
 import { SynchronizationModalComponent } from './project/synchronization-modal.component';
+import { ManageValuelistsModalComponent } from './configuration/add/valuelist/manage-valuelists-modal.component';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 
@@ -19,6 +21,9 @@ const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').i
  * @author Thomas Kleinke
  */
 export class MenuNavigator {
+
+    private valuelistsManagementObservers: Array<Observer<void>> = [];
+
 
     constructor(private router: Router,
                 private zone: NgZone,
@@ -51,17 +56,24 @@ export class MenuNavigator {
             await this.zone.run(async () => this.deleteProject());
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(async () => this.openSynchronizationModal());
+        } else if (menuItem === 'valuelists') {
+            await this.zone.run(async () => ObserverUtil.notify(this.valuelistsManagementObservers, undefined));
         } else {
             await this.zone.run(async () => await this.router.navigate([menuItem]));
         }
     }
 
 
+    public valuelistsManagementNotifications =
+        (): Observable<Document> => ObserverUtil.register(this.valuelistsManagementObservers);
+
+
     public async createProject() {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(CreateProjectModalComponent,
+        const modalRef = this.modalService.open(
+            CreateProjectModalComponent,
             { backdrop: 'static', keyboard: false }
         );
 
@@ -81,7 +93,8 @@ export class MenuNavigator {
 
         const projectDocument: Document = await this.datastore.get('project');
 
-        const modalRef = this.modalService.open(DoceditComponent,
+        const modalRef = this.modalService.open(
+            DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         modalRef.componentInstance.setDocument(projectDocument);
@@ -101,7 +114,8 @@ export class MenuNavigator {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(DeleteProjectModalComponent,
+        const modalRef = this.modalService.open(
+            DeleteProjectModalComponent,
             { backdrop: 'static', keyboard: false }
         );
 
@@ -119,7 +133,8 @@ export class MenuNavigator {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(SynchronizationModalComponent,
+        const modalRef = this.modalService.open(
+            SynchronizationModalComponent,
             { backdrop: 'static', keyboard: false }
         );
 

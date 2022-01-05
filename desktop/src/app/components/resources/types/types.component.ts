@@ -9,9 +9,10 @@ import {
     SyncStatus,
     Resource,
     ProjectConfiguration,
+    ImageVariant,
     Named,
     Hierarchy,
-    ImageVariant
+    SortUtil
 } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
@@ -26,11 +27,11 @@ import { ViewModalLauncher } from '../service/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
-import {Routing} from '../../../services/routing';
-import {Menus} from '../../../services/menus';
-import {MenuContext} from '../../../services/menu-context';
-import {TypeImagesUtil} from '../../../util/type-images-util';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { Routing } from '../../../services/routing';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
+import { TypeImagesUtil } from '../../../util/type-images-util';
 
 
 @Component({
@@ -293,7 +294,12 @@ export class TypesComponent extends BaseList implements OnChanges {
             set as any // TODO any
         );
 
-        return (await this.datastore.getMultiple(linkedResourceIds)) as Array<FieldDocument>;
+        const linkedDocuments: Array<FieldDocument>
+            = await this.datastore.getMultiple(linkedResourceIds) as Array<FieldDocument>;
+
+        return linkedDocuments.sort((linkedDocument1, linkedDocument2) => {
+            return SortUtil.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
+        });
     }
 
 

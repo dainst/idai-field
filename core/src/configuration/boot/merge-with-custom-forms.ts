@@ -1,10 +1,9 @@
 import { includedIn, isNot, isnt, Map, pairWith, flow, filter, clone, assoc, keysValues, map, forEach,
-    lookup } from 'tsfun';
+    lookup, to, flatten} from 'tsfun';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
-import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { addFieldsToForm } from './add-fields-to-form';
 import { Relation } from '../../model/configuration/relation';
 import { Field } from '../../model/configuration/field';
@@ -70,6 +69,8 @@ function handleChildExtension(customFormName: string,
     const clonedCustomForm = customForm as TransientFormDefinition;
     clonedCustomForm.name = customFormName;
     clonedCustomForm.categoryName = customFormName;
+    
+    clonedCustomForm.customFields = clonedCustomForm.groups ? flatten(clonedCustomForm.groups.map(to('fields'))): [];
 
     return addFieldsToForm(clonedCustomForm, categories, builtInFields, commonFields, relations);
 }
@@ -89,7 +90,12 @@ function mergeFormProperties(target: TransientFormDefinition,
     target.fields = source.fields;
     target.defaultColor = target.color;
     if (source.color) target.color = source.color;
-    if (source.groups) target.groups = source.groups;
+    if (source.groups) {
+        const sourceFields: string[] = flatten(source.groups.map(to('fields')));
+        const targetFields: string[] = target.groups ? flatten(target.groups.map(to('fields'))) : [];
+        target.customFields = sourceFields.filter(fieldName => !targetFields.includes(fieldName));
+        target.groups = source.groups;
+    }
 
     flow(
         source,

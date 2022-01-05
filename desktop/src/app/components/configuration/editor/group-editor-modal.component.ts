@@ -25,7 +25,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
     public permanentlyHiddenFields: string[];
 
     protected changeMessage = this.i18n({
-        id: 'docedit.saveModal.groupChanged', value: 'Die Gruppe wurde geändert.'
+        id: 'configuration.groupChanged', value: 'Die Gruppe wurde geändert.'
     });
 
 

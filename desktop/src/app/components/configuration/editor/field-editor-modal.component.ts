@@ -9,10 +9,11 @@ import { ConfigurationEditorModalComponent } from './configuration-editor-modal.
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Modals } from '../../../services/modals';
-import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../index/configuration-index';
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
+import { SaveResult } from '../configuration.component';
+import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hidden: boolean;
 
     protected changeMessage = this.i18n({
-        id: 'docedit.saveModal.fieldChanged', value: 'Das Feld wurde geändert.'
+        id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
     });
 
 
@@ -122,7 +123,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
     
-    public selectValuelist() {
+    public async selectValuelist() {
 
         const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
             AddValuelistModalComponent,
@@ -138,11 +139,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        await this.modals.awaitResult(
+            result,
+            (saveResult?: SaveResult) => {
+                if (!saveResult) return;
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+            },
+            nop
+        );
     }
 
 
-    public editValuelist() {
+    public async editValuelist() {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -156,7 +165,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
 
-        this.modals.awaitResult(result, nop, nop);
+        await this.modals.awaitResult(
+            result,
+            (saveResult: SaveResult) => {
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+                this.updateEditedValuelist(this.configurationDocument);
+            },
+            nop
+        );
     }
 
 
@@ -231,7 +248,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
-            || !equal(this.getCustomFormDefinition().valuelists)(this.getClonedFormDefinition().valuelists)
+            || !equal(this.getCustomFormDefinition().valuelists ?? {})(this.getClonedFormDefinition().valuelists ?? {})
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
@@ -245,6 +262,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
+    }
+
+
+    private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
+
+        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
+        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
+        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
+        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+
+        const valuelistId: string = this.clonedField.valuelist.id;
+        this.clonedField.valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
+        this.clonedField.valuelist.id = valuelistId;
     }
 
 

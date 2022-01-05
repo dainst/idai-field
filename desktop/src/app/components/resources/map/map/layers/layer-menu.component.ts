@@ -1,15 +1,16 @@
-import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument, Labels} from 'idai-field-core';
-import {LayerGroup, LayerManager} from './layer-manager';
-import {MenuComponent} from '../../../../widgets/menu.component';
+import { Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { flatten, to } from 'tsfun';
+import { ImageDocument, Labels } from 'idai-field-core';
+import { LayerGroup, LayerManager } from './layer-manager';
+import { MenuComponent } from '../../../../widgets/menu.component';
 import { MenuContext } from '../../../../../services/menu-context';
 import { Menus } from '../../../../../services/menus';
-import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
-import {LayerUtility} from './layer-utility';
-import {Loading} from '../../../../widgets/loading';
-import {ProjectConfiguration} from 'idai-field-core';
+import { ImagePickerComponent } from '../../../../docedit/widgets/image-picker.component';
+import { LayerUtility } from './layer-utility';
+import { Loading } from '../../../../widgets/loading';
+import { ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -60,9 +61,10 @@ export class LayerMenuComponent extends MenuComponent {
 
     public isInEditMode = () => this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT;
 
-    public isNoLayersInfoVisible = (layerGroup: LayerGroup) => layerGroup.layers.length === 0
-        && this.layerManager.getLayerGroups()[0] === layerGroup
-        && !this.layerManager.isInEditing(layerGroup);
+    public isNoLayersInfoVisible = (layerGroup: LayerGroup) =>
+        flatten(this.layerManager.getLayerGroups().map(to('layers'))).length === 0
+            && this.layerManager.getLayerGroups()[0] === layerGroup
+            && !this.layerManager.isInEditing(layerGroup);
 
 
     public isLoading = () => this.loading.isLoading('layerMenu');

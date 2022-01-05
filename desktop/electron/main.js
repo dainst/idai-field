@@ -31,6 +31,9 @@ const writeConfigFile = (path) => {
 };
 
 
+global.os = os.type();
+
+
 global.setConfigDefaults = config => {
 
     setSyncTargets(config);
@@ -57,7 +60,7 @@ const setSyncTargets = config => {
                 return result;
             }, {})
             : {};
-            
+
         delete config.syncTarget;
     }
 }

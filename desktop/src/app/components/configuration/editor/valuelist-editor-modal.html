@@ -1,4 +1,5 @@
-<div class="modal-header configuration-editor-modal-header">
+<div class="modal-header configuration-editor-modal-header valuelist-editor-modal-body"
+     [class.dragging]="dragging">
     <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificValuelist">
         Werteliste <code>{{valuelist.id}}</code> erstellen
     </h5>
@@ -18,12 +19,68 @@
     </button>
 </div>
 
-<div class="modal-body configuration-editor-modal-body">
+<div class="modal-body configuration-editor-modal-body valuelist-editor-modal-body"
+     [class.dragging]="dragging">
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelistDescription">
             Beschreibung der Werteliste
         </div>
         <multi-language-input [translations]="clonedDescription"
                               [defaultTranslations]="{}"></multi-language-input>
+    </div>
+    <div class="configuration-editor-section form-group">
+        <div class="configuration-editor-section-title" i18n="@@configuration.values">
+            Werte
+        </div>
+        <div>
+            <div id="sort-label">
+                <span i18n="@@configuration.sortValues">Automatische Sortierung</span>
+            </div>
+            <div>
+                <label class="switch">
+                    <input type="checkbox"
+                        [checked]="sortAlphanumerically"
+                        (change)="toggleSort()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div id="value-items" cdkDropList
+             (cdkDropListDropped)="onDrop($event)"
+             [cdkDropListDisabled]="sortAlphanumerically">
+            <div *ngFor="let valueId of getValueIds()"
+                 class="value-item"
+                 cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y"
+                 (cdkDragStarted)="dragging = true"
+                 (cdkDragEnded)="dragging = false">
+                <div class="value-item-input-group input-group">
+                    <span *ngIf="!sortAlphanumerically" class="mdi mdi-drag" cdkDragHandle></span>
+                    <div class="value-item form-control">
+                        {{getValueLabel(valueId)}}
+                        <code>{{valueId}}</code>
+                    </div>
+                    <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
+                    <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
+                </div>
+                <div *cdkDragPreview class="value-drag-preview value-item form-control">
+                    {{getValueLabel(valueId)}}
+                    <code>{{valueId}}</code>
+                </div>
+                <div *cdkDragPlaceholder class="value-drag-placeholder"></div>
+            </div>
+        </div>
+        <div class="input-group mb-2">
+            <input id="new-value-input"
+                   [(ngModel)]="newValueId"
+                   type="text"
+                   placeholder="{{inputPlaceholder}}"
+                   class="form-control">
+            <button class="btn btn-success" type="button"
+                    [disabled]="!isValidValue(newValueId)" 
+                    (click)="addValue(newValueId)">
+                <span class="mdi mdi-plus"></span>
+            </button>
+        </div>
     </div>
 </div>

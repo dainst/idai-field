@@ -78,20 +78,22 @@
                         </div>
                     </div>
 
-                    <hr>
+                    <div *ngIf="!isLinux()">
+                        <hr>
 
-                    <h5 style="margin-top: 32px;" i18n="@@settings.update">Update</h5>
+                        <h5 style="margin-top: 32px;" i18n="@@settings.update">Update</h5>
 
-                    <div class="row" style="margin: 15px 0 0;">
-                        <div class="col-auto mr-auto">
-                            <span i18n="@@settings.update.activate">Automatische Prüfung auf Updates aktivieren</span>
-                        </div>
-                        <div class="col-auto">
-                            <label class="switch" style="margin-bottom: 0;">
-                                <input type="checkbox" [checked]="settings.isAutoUpdateActive"
-                                       (change)="toggleAutoUpdate()">
-                                <span class="slider round"></span>
-                            </label>
+                        <div class="row" style="margin: 15px 0 0;">
+                            <div class="col-auto mr-auto">
+                                <span i18n="@@settings.update.activate">Automatische Prüfung auf Updates aktivieren</span>
+                            </div>
+                            <div class="col-auto">
+                                <label class="switch" style="margin-bottom: 0;">
+                                    <input type="checkbox" [checked]="settings.isAutoUpdateActive"
+                                        (change)="toggleAutoUpdate()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 

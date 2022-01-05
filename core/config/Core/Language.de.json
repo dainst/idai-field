@@ -9,9 +9,6 @@
     },
     "shortDescription": {
       "label": "Kurzbeschreibung"
-    },
-    "geometry": {
-      "label": "Geometrie"
     }
   },
   "categories": {
@@ -47,6 +44,9 @@
     },
     "includes": {
       "label": "Enthält"
+    },
+    "isPresentIn": {
+      "label": "Ist enthalten in Profil/Planum"
     },
     "isAbove": {
       "label": "Liegt über"

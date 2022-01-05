@@ -147,6 +147,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         category.libraryId = formDefinition.name;
         category.label = formDefinition.label;
         category.source = formDefinition.source;
+        category.customFields = formDefinition.customFields;
         category.description = formDefinition.description;
         category.defaultLabel = formDefinition.defaultLabel;
         category.defaultDescription = formDefinition.defaultDescription;

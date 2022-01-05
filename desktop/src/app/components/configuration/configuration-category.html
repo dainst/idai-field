@@ -38,7 +38,7 @@
             (cdkDropListDropped)="onGroupDrop($event)">
             <li *ngFor="let group of getGroups()"
                 class="flex-column group-element"
-                cdkDrag cdkDragBoundary=".groups" cdkDragLockAxis="y"
+                cdkDrag cdkDragBoundary=".groups-container" cdkDragLockAxis="y"
                 (cdkDragStarted)="onDragging.emit(true)"
                 (cdkDragEnded)="onDragging.emit(false)">
                 <a [id]="'group-' + group.name" class="list-group-item group-button"

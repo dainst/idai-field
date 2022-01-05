@@ -16,6 +16,8 @@ export class ValuelistListingComponent {
     @Input() selectedValuelist: Valuelist;
     @Input() emptyValuelist: Valuelist|undefined;
     @Input() searchTerm: string = '';
+    @Input() currentValuelistId: string|undefined;
+    @Input() showCreateOptionAsButton: boolean;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
 
@@ -28,7 +30,8 @@ export class ValuelistListingComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
     public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
-        && !this.valuelists.map(valuelist => valuelist.id).includes(this.searchTerm);
+        && !this.valuelists.map(valuelist => valuelist.id).includes(this.searchTerm)
+        && (!this.currentValuelistId || this.searchTerm !== this.currentValuelistId);
 
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {

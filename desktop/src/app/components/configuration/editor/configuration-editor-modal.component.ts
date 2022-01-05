@@ -5,7 +5,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { ErrWithParams } from '../../../components/import/import/import-documents';
+import { SaveResult } from '../configuration.component';
 
 
 /**
@@ -23,8 +23,8 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<ErrWithParams|undefined>;
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+                           reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
@@ -35,7 +35,7 @@ export abstract class ConfigurationEditorModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private menuService: Menus,
-                private messages: Messages) {}
+                protected messages: Messages) {}
 
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
@@ -88,22 +88,22 @@ export abstract class ConfigurationEditorModalComponent {
     }
 
 
-    public async save(reindex?: boolean) {
+    public async save(reindexCategory?: boolean, reindexConfiguration?: boolean) {
 
         this.saving = true;
         this.updateCustomLanguageConfigurations();
 
-        const optionalErrWithParams = await this.saveAndReload(
-            this.clonedConfigurationDocument,
-            reindex ? this.category.name : undefined
-        );
-
-        if (optionalErrWithParams) {
+        try {
+            const result: SaveResult = await this.saveAndReload(
+                this.clonedConfigurationDocument,
+                reindexCategory ? this.category.name : undefined,
+                reindexConfiguration
+            );
+            this.activeModal.close(result);
+        } catch (errWithParams) {
             // TODO Show user-readable error messages
-            this.messages.add(optionalErrWithParams);
+            this.messages.add(errWithParams);
             this.saving = false;
-        } else {
-            this.activeModal.close(this.clonedConfigurationDocument);
         }
     }
 

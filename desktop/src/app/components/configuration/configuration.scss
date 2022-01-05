@@ -5,6 +5,8 @@
 @import './editor/configuration-editor-modal';
 @import './editor/field-editor-modal';
 @import './editor/category-editor-modal';
+@import './editor/valuelist-editor-modal';
+@import './editor/value-editor-modal';
 @import './editor/multi-language-input';
 @import './delete/delete-category-modal';
 @import './add/listing';
@@ -15,7 +17,7 @@
 @import './add/field/add-field-modal';
 @import './add/field/field-listing';
 @import './add/field/field-preview';
-@import './add/valuelist/add-valuelist-modal';
+@import './add/valuelist/manage-valuelists-modal';
 @import './add/valuelist/valuelist-listing';
 
 

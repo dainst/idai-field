@@ -1,10 +1,10 @@
 {
   "forms": {
-    "CrossSection": {
+    "Profile:default": {
       "hidden": [],
       "fields": {}
     },
-    "Profile": {
+    "Planum:default": {
       "hidden": [],
       "fields": {}
     },

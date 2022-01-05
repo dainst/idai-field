@@ -5,9 +5,9 @@ import { ConfigurationIndex } from '../../index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
-import { ErrWithParams } from '../../../import/import/import-documents';
 import { Modals } from '../../../../services/modals';
 import { ConfigurationUtil } from '../../configuration-util';
+import { SaveResult } from '../../configuration.component';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class AddCategoryFormModalComponent {
     public categoryToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<ErrWithParams|undefined>;
+        Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;

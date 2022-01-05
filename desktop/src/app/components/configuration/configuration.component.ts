@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Subscription } from 'rxjs';
 import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
@@ -18,7 +19,6 @@ import { DeleteFieldModalComponent } from './delete/delete-field-modal.component
 import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
-import { ErrWithParams } from '../../components/import/import/import-documents';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from './index/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
@@ -26,6 +26,15 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { MenuNavigator } from '../menu-navigator';
+import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
+
+
+export type SaveResult = {
+    
+    configurationDocument: ConfigurationDocument,
+    configurationIndex: ConfigurationIndex
+};
 
 
 @Component({
@@ -71,10 +80,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string)
-        : Promise<ErrWithParams|undefined> => this.configureAppSaveChangesAndReload(
-            configurationDocument, reindexCategory
-        );
+    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+                            reindexConfiguration?: boolean): Promise<SaveResult> =>
+        this.configureAppSaveChangesAndReload(configurationDocument, reindexCategory, reindexConfiguration);
+
+    private menuSubscription: Subscription;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -89,6 +99,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private labels: Labels,
                 private indexFacade: IndexFacade,
                 private menus: Menus,
+                private menuNavigator: MenuNavigator,
                 private i18n: I18n) {}
 
 
@@ -108,12 +119,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         ) as ConfigurationDocument;
 
         this.buildConfigurationIndex();
+
+        this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
+            .subscribe(() => this.openValuelistsManagementModal());
     }
 
 
     ngOnDestroy() {
 
         this.menus.setContext(MenuContext.DEFAULT);
+        this.menuSubscription.unsubscribe();
     }
 
 
@@ -290,8 +305,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
 
         componentInstance.saveAndReload = this.saveAndReload;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = category;
         componentInstance.field = field;
         componentInstance.availableInputTypes = field.source === 'custom'
@@ -427,6 +442,31 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    private async openValuelistsManagementModal() {
+
+        const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
+            ManageValuelistsModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationIndex = this.configurationIndex;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (saveResult?: SaveResult) => {
+                if (!saveResult) return;
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+            },
+            nop
+        );
+    }
+
+
     private loadCategories() {
 
         this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
@@ -441,7 +481,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
-                                                   reindexCategory?: string): Promise<ErrWithParams|undefined> {
+                                                   reindexCategory?: string,
+                                                   reindexConfiguration?: boolean): Promise<SaveResult> {
 
         const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             SaveModalComponent,
@@ -457,7 +498,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
         } catch (errWithParams) {
             this.modals.closeModal(componentInstance);
-            return errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
+            throw errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
         try {
@@ -467,10 +508,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 ) as ConfigurationDocument;
             } catch (errWithParams) {
                 this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));
-                return;
+                throw errWithParams;
             }
             this.projectConfiguration.update(newProjectConfiguration);
             if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
+            if (reindexConfiguration) await this.buildConfigurationIndex();
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
@@ -480,6 +522,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         }
 
         this.modals.closeModal(componentInstance);
+
+        return {
+            configurationDocument: this.configurationDocument,
+            configurationIndex: this.configurationIndex
+        };
     }
 
 

@@ -213,6 +213,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
 
 
+    // Configuration Package
+    public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
+
     public msgs : { [id: string]: Message } = {};
 
 
@@ -1694,6 +1697,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.parentResourceDeleted',
                 value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST] = {
+            content: i18n({
+                id: 'messages.configuration.error.noValuesInValuelist',
+                value: 'Bitte tragen Sie mindestens einen Wert ein.'
             }),
             level: 'danger',
             params: [],

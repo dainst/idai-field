@@ -1,6 +1,6 @@
-import {is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, size,
-    isUndefinedOrEmpty, separate, cond, pairWith, left, same} from 'tsfun';
-import {Resource} from '../model/resource';
+import { is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, size, isUndefinedOrEmpty,
+    separate, cond, pairWith, left, same } from 'tsfun';
+import { Resource } from '../model/resource';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { Query } from '../model/query';
 import { SortUtil } from '../tools/sort-util';

@@ -14,6 +14,7 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { Field } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
+import { SortUtil } from './sort-util';
 
 
 type FieldContent = any;
@@ -195,7 +196,10 @@ async function getRelationTargets(resource: Resource, datastore: Datastore): Pro
     const targets: Map<Array<Document>> = {};
 
     for (let relationName of Object.keys(resource.relations)) {
-        targets[relationName] = await datastore.getMultiple(resource.relations[relationName]);
+        targets[relationName] = (await datastore.getMultiple(resource.relations[relationName]))
+            .sort((target1, target2) => SortUtil.alnumCompare(
+                target1.resource.identifier, target2.resource.identifier
+            ));
     }
 
     return targets;

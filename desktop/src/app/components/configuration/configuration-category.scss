@@ -37,10 +37,6 @@ configuration-category {
   .groups {
     padding: 0;
     width: 240px;
-    
-    &.dragging {
-      cursor: grabbing !important;
-    }
 
     ul {
       width: 100%;

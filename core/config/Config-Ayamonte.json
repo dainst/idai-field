@@ -413,14 +413,8 @@
       "hidden": [],
       "fields": {}
     },
-    "Profile": {
-      "parent": "Feature",
+    "Profile:default": {
       "color": "#6da4fc",
-      "commons": [
-        "campaign",
-        "dimensionHeight",
-        "orientation"
-      ],
       "fields": {
         "profileClassification": {
           "inputType": "input"
@@ -428,9 +422,6 @@
         "verticalPosition": {
           "inputType": "input"
         }
-      },
-      "valuelists": {
-        "orientation": "orientation-default-1"
       }
     },
     "Sample:default": {

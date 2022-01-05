@@ -8,10 +8,10 @@ import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/group/add-group-modal.component';
 import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import { ErrWithParams } from '../../components/import/import/import-documents';
 import { MenuContext } from '../../services/menu-context';
 import { Modals } from '../../services/modals';
 import { ConfigurationIndex } from './index/configuration-index';
+import { SaveResult } from './configuration.component';
 
 
 @Component({
@@ -31,8 +31,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() saveAndReload: (configurationDocument: ConfigurationDocument) =>
-        Promise<ErrWithParams|undefined>;
+    @Input() saveAndReload: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
@@ -146,8 +145,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
             'lg'
         );
 
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = this.category;
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;

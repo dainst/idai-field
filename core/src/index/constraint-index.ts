@@ -250,7 +250,7 @@ export module ConstraintIndex {
 
         if (definition.type === 'exist') return getMatchesFromExistIndex(index, definition, matchTerm);
 
-        const result = getIndex(index, definition)[definition.path][matchTerm];
+        const result = getIndex(index, definition)[definition.path][matchTerm.toLowerCase()];
         if (!result) return undefined;
         return Object.keys(result);
     }
@@ -424,6 +424,7 @@ export module ConstraintIndex {
 
     function addToIndex(index: any, doc: Document, path: string, target: string) {
 
+        target = target.toLowerCase();
         if (!index[path][target]) index[path][target] = {};
         index[path][target][doc.resource.id] = true;
     }

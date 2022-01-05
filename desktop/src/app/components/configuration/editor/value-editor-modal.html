@@ -1,0 +1,15 @@
+<div class="modal-body configuration-editor-modal-body value-editor-modal-body">
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.valueLabel">
+            Anzeigetext für Wert <code>{{valueId}}</code>
+        </div>
+        <multi-language-input [translations]="clonedValue.label"
+                              [defaultTranslations]="{}"></multi-language-input>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="ok-button" class="btn btn-primary" (click)="closeModal()">
+        <span class="button-label" i18n="@@buttons.ok">OK</span>
+    </button>
+</div>

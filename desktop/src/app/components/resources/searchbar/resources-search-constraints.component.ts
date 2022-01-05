@@ -51,6 +51,21 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 id: 'resources.searchBar.constraints.linkedImages',
                 value: 'Verknüpfte Bilder'
             });
+        } else if (field.name === 'isSameAs') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.isSameAs',
+                value: 'Verknüpfte identische Ressourcen'
+            });
+        } else if (field.name === 'isInstanceOf') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.isInstanceOf',
+                value: 'Verknüpfte Typen'
+            });
+        } else if (field.name === 'hasInstance') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.hasInstance',
+                value: 'Verknüpfte Funde'
+            });
         } else {
             return super.getFieldLabel(field);
         }
@@ -74,6 +89,25 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             inputType: 'default',
             constraintIndexed: true
         });
+
+        if (this.viewFacade.isInTypesManagement()) {
+            this.defaultFields.push({
+                name: 'hasInstance',
+                inputType: 'default',
+                constraintIndexed: true
+            });
+        } else {
+            this.defaultFields.push({
+                name: 'isInstanceOf',
+                inputType: 'default',
+                constraintIndexed: true
+            });
+            this.defaultFields.push({
+                name: 'isSameAs',
+                inputType: 'default',
+                constraintIndexed: true
+            });
+        }
     }
 
 

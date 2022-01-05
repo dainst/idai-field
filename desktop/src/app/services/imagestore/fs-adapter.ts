@@ -34,8 +34,11 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
 
     public remove(path: string, recursive: boolean = false) {
-
-        fs.rmSync(path, { recursive });
+        try {
+            fs.rmSync(path, { recursive });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
 

@@ -9,7 +9,9 @@
         <b i18n="@@configuration.values">Werte</b>
         <ul class="list-group list-group-flush">
             <li *ngIf="valuelist.values" class="list-group-item">
-                <valuelist-view [valuelist]="valuelist"></valuelist-view>
+                <valuelist-view [valuelist]="valuelist"
+                                [showDescription]="false"
+                                [largeList]="true"></valuelist-view>
             </li>
         </ul>
 

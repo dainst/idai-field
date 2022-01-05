@@ -18,6 +18,8 @@ const locale: string = typeof window !== 'undefined'
 export class ValuelistViewComponent {
 
     @Input() valuelist: Valuelist;
+    @Input() showDescription: boolean;
+    @Input() largeList: boolean;
 
 
     constructor(private labels: Labels) {}

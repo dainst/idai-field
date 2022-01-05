@@ -22,6 +22,8 @@ export class ValuelistPreviewComponent {
 
     public getLabel = (object: I18N.LabeledValue) => this.labels.get(object);
 
+    public getValuelistDescription = () => this.labels.getDescription(this.valuelist);
+
 
     public getUsage(): Array<ValuelistUsage> {
 

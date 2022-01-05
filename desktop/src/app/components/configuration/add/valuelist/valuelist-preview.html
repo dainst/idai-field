@@ -6,6 +6,8 @@
         </span>
     </div>
     <div id="preview-body">
+        <div *ngIf="getValuelistDescription()" id="valuelist-description">{{getValuelistDescription()}}</div>
+
         <b i18n="@@configuration.values">Werte</b>
         <ul class="list-group list-group-flush">
             <li *ngIf="valuelist.values" class="list-group-item">

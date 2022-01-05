@@ -2,7 +2,6 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 import { Injectable } from '@angular/core';
 import { FilesystemAdapterInterface } from 'idai-field-core';
-import { SettingsProvider } from '../settings/settings-provider';
 
 /**
  * Filesystem adapter implementation that uses node's `fs` see:
@@ -12,8 +11,6 @@ import { SettingsProvider } from '../settings/settings-provider';
  */
 @Injectable()
 export class FsAdapter implements FilesystemAdapterInterface {
-
-    constructor(private settingsProvider: SettingsProvider) { }
 
     public exists(path: string): boolean {
 

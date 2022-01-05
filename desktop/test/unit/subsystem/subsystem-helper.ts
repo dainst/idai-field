@@ -41,7 +41,7 @@ export async function setupSettingsService(pouchdbdatastore, projectName = 'test
 
     const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
-    const fileSystemAdapter = new FsAdapter(settingsProvider);
+    const fileSystemAdapter = new FsAdapter();
     const imageStore = new ImageStore(
         fileSystemAdapter,
         new ThumbnailGenerator()

@@ -175,13 +175,6 @@ registerLocaleData(localeIt, 'it');
             deps: [MD]
         },
         {
-            provide: FsAdapter,
-            useFactory: (settingsProvider: SettingsProvider) => {
-                return new FsAdapter(settingsProvider);
-            },
-            deps: [SettingsProvider]
-        },
-        {
             provide: ImageStore,
             useFactory: (filesystemAdapter: FsAdapter, converter: ThumbnailGenerator) => {
                 return new ImageStore(filesystemAdapter, converter);
@@ -203,6 +196,7 @@ registerLocaleData(localeIt, 'it');
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ImageUrlMaker,
         ThumbnailGenerator,
+        FsAdapter,
         AppController,
         {
             provide: ProjectConfiguration,

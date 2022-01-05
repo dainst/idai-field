@@ -14,7 +14,7 @@ describe('Imagestore', () => {
     let imageStore: ImageStore;
 
     beforeAll(async done => {
-        imageStore = new ImageStore(new FsAdapter(undefined), new ThumbnailGenerator());
+        imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
         imageStore.init(testFilePath, testProjectName);
 
         done();

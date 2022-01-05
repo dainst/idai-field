@@ -140,13 +140,15 @@ describe('ConfigurationIndex', () => {
 
         const index = ConfigurationIndex.create([], [], [], valuelists, [category1, category2]);
 
-        expect(ConfigurationIndex.getValuelistUsage(index, 'valuelist-1')).toEqual([
-            { category: category1, fields: ['field1-1'] },
-            { category: category2, fields: ['field2-1'] }
-        ]);
+        const result1 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-1');
+        expect(result1[0].category).toBe(category1);
+        expect(result1[0].fields[0].name).toBe('field1-1');
+        expect(result1[1].category).toBe(category2);
+        expect(result1[1].fields[0].name).toBe('field2-1');
 
-        expect(ConfigurationIndex.getValuelistUsage(index, 'valuelist-2')).toEqual([
-            { category: category1, fields: ['field1-2', 'field1-3'] }
-        ]);
+        const result2 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-2');
+        expect(result2[0].category).toBe(category1);
+        expect(result2[0].fields[0].name).toBe('field1-2');
+        expect(result2[0].fields[1].name).toBe('field1-3');
     });
 });

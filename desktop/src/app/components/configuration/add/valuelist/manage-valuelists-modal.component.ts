@@ -111,7 +111,6 @@ export class ManageValuelistsModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        //componentInstance.category = this.category;
         componentInstance.valuelist = {
             id: this.searchTerm,
             values: {},
@@ -122,17 +121,29 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => {
-                if (this.isSelectionMode()) this.addNewValuelist(saveResult);
-            },
-            () => this.activeModal.close()
+            (saveResult: SaveResult) => this.handleSaveResult(saveResult),
+            () => {
+                if (this.isSelectionMode()) {
+                    this.activeModal.close();
+                } else {
+                    this.applyValuelistSearch();
+                }
+            }
         );
+    }
+
+
+    private handleSaveResult(saveResult: SaveResult) {
+
+        this.configurationDocument = saveResult.configurationDocument;
+        this.configurationIndex = saveResult.configurationIndex;
+        
+        if (this.isSelectionMode()) this.addNewValuelist(saveResult);
     }
 
 
     private addNewValuelist(saveResult: SaveResult) {
 
-        this.configurationDocument = saveResult.configurationDocument;
         this.clonedConfigurationDocument._rev = this.configurationDocument._rev;
         this.clonedConfigurationDocument.created = this.configurationDocument.created;
         this.clonedConfigurationDocument.modified = this.configurationDocument.modified;

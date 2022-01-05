@@ -58,6 +58,7 @@ export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
 
     private convertWithElectron(buffer: Buffer, targetHeight: number) {
+        if (!nativeImage) return undefined;
 
         return nativeImage.createFromBuffer(buffer)
             .resize({ height: targetHeight });

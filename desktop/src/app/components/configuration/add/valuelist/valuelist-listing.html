@@ -6,12 +6,18 @@
         <span *ngIf="getSearchResultLabel(valuelist)"
               class="search-result-label"> ({{getSearchResultLabel(valuelist)}})</span>
     </li>
-    <li *ngIf="isNewValuelistOptionShown()"
+    <li *ngIf="isNewValuelistOptionShown() && !showCreateOptionAsButton"
         class="new-item-option"
         (click)="select(emptyValuelist)">
         <span class="mdi mdi-plus-circle mdi-24px"></span>
         <span class="item-label" i18n="@@configuration.newValuelist">Neue Werteliste</span>
         <code>{{searchTerm}}</code>
+    </li>
+    <li *ngIf="isNewValuelistOptionShown() && showCreateOptionAsButton"
+        class="new-valuelist-button btn btn-success"
+        (click)="select(emptyValuelist)">
+        <span class="mdi mdi-plus-circle"></span>
+        <div i18n="@@configuration.newValuelist">Neue Werteliste <code>{{searchTerm}}</code> erstellen</div>        
     </li>
 </ul>
     

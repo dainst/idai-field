@@ -21,7 +21,8 @@
                            [emptyValuelist]="emptyValuelist"
                            [searchTerm]="searchTerm"
                            [currentValuelistId]="clonedField?.valuelist?.id"
-                           (onValuelistSelected)="select($event)">
+                           (onValuelistSelected)="select($event)"
+                           (onCreateValuelist)="createNewValuelist()">
         </valuelist-listing>
     </div>
     <div class="col-md-6">

@@ -65,12 +65,11 @@ export class ManageValuelistsModalComponent {
 
         if (!this.selectedValuelist) return;
 
-        if (this.selectedValuelist === this.emptyValuelist) {
-            this.createNewValuelist();
-        } else {
-            this.addValuelist(this.selectedValuelist);
-            this.activeModal.close();
-        }
+        this.addValuelist(this.selectedValuelist);
+        this.activeModal.close({
+            configurationDocument: this.configurationDocument,
+            configurationIndex: this.configurationIndex
+        });
     }
 
 
@@ -91,17 +90,7 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    private addValuelist(valuelist: Valuelist) {
-
-        const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
-        if (!form.valuelists) form.valuelists = {};
-        form.valuelists[this.clonedField.name] = valuelist.id;
-        this.clonedField.valuelist = valuelist;
-    }
-
-
-    private async createNewValuelist() {
+    public async createNewValuelist() {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -122,13 +111,7 @@ export class ManageValuelistsModalComponent {
         await this.modals.awaitResult(
             result,
             (saveResult: SaveResult) => this.handleSaveResult(saveResult),
-            () => {
-                if (this.isSelectionMode()) {
-                    this.activeModal.close();
-                } else {
-                    this.applyValuelistSearch();
-                }
-            }
+            () => this.applyValuelistSearch()
         );
     }
 
@@ -137,23 +120,23 @@ export class ManageValuelistsModalComponent {
 
         this.configurationDocument = saveResult.configurationDocument;
         this.configurationIndex = saveResult.configurationIndex;
-        
-        if (this.isSelectionMode()) this.addNewValuelist(saveResult);
+
+        if (this.clonedConfigurationDocument) {
+            this.clonedConfigurationDocument._rev = this.configurationDocument._rev;
+            this.clonedConfigurationDocument.created = this.configurationDocument.created;
+            this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
+            this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
+        }
     }
 
 
-    private addNewValuelist(saveResult: SaveResult) {
+    private addValuelist(valuelist: Valuelist) {
 
-        this.clonedConfigurationDocument._rev = this.configurationDocument._rev;
-        this.clonedConfigurationDocument.created = this.configurationDocument.created;
-        this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
-
-        const valuelist: Valuelist = this.clonedConfigurationDocument.resource.valuelists[this.searchTerm];
-        valuelist.id = this.searchTerm;
-        
-        this.addValuelist(valuelist);
-        this.activeModal.close(saveResult);
+        const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
+            .forms[this.category.libraryId ?? this.category.name];
+        if (!form.valuelists) form.valuelists = {};
+        form.valuelists[this.clonedField.name] = valuelist.id;
+        this.clonedField.valuelist = valuelist;
     }
 
 

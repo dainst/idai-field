@@ -19,12 +19,15 @@ export class ValuelistListingComponent {
     @Input() currentValuelistId: string|undefined;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
+    @Output() onCreateValuelist = new EventEmitter<void>();
 
 
     constructor(private labels: Labels) {}
 
 
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
+
+    public createNewValuelist = () => this.onCreateValuelist.emit();
 
     public getLabel = (value: any) => this.labels.get(value);
 

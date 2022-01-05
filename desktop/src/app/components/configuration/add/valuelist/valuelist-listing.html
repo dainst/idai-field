@@ -8,8 +8,7 @@
     </li>
     <li *ngIf="isNewValuelistOptionShown()"
         class="new-item-option"
-        [class.selected]="selectedValuelist === emptyValuelist"
-        (click)="select(emptyValuelist)">
+        (click)="createNewValuelist()">
         <span class="mdi mdi-plus-circle mdi-24px"></span>
         <span class="item-label" i18n="@@configuration.newValuelist">Neue Werteliste</span>
         <code>{{searchTerm}}</code>

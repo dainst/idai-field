@@ -12,6 +12,8 @@ export namespace I18N {
 
     export interface Labeled { label?: String }
 
+    export interface Described { description?: String }
+
     export interface LabeledValue extends Named, Labeled {};
 
 
@@ -27,6 +29,12 @@ export namespace I18N {
     export function getLabel(labeledValue: LabeledValue, languages: string[]): string {
 
         return getTranslation(labeledValue.label, languages) ?? labeledValue.name;
+    }
+
+
+    export function getDescription(labeledValue: Described, languages: string[]): string {
+
+        return getTranslation(labeledValue.description, languages);
     }
     
 

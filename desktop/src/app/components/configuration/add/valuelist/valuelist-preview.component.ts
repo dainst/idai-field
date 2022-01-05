@@ -27,6 +27,6 @@ export class ValuelistPreviewComponent {
 
         if (!this.valuelist) return [];
 
-        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, this.valuelist.id);
+        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, this.valuelist.id) ?? [];
     }
 }

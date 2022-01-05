@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ThumbnailGeneratorInterface } from 'idai-field-core';
-import { THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core/src/datastore/image/image-store';
+import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
 
 const nativeImage = typeof window !== 'undefined'
     ? window.require('electron').nativeImage : require('electron').nativeImage;

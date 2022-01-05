@@ -30,7 +30,7 @@ describe('subsystem/import/importCatalog', () => {
                 datastore: app.datastore,
                 relationsManager: app.relationsManager,
                 imageRelationsManager: app.imageRelationsManager,
-                imagestore: app.imagestore
+                imagestore: app.imageStore
             },
             {
                 username: app.settingsProvider.getSettings().username,
@@ -88,6 +88,7 @@ describe('subsystem/import/importCatalog', () => {
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
         ]);
+
         await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
 
         helpers.expectImagesDontExist('i1');

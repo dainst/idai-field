@@ -60,14 +60,14 @@ export class ImageStore {
      * @param imageId the identifier for the data
      * @param data the binary data to be stored
      */
-    public store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL): void {
+    public async store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
 
         const filePath = this.getFilePath(project, type, imageId);
 
         this.filesystem.writeFile(filePath, data);
 
         if (type === ImageVariant.ORIGINAL) {
-            this.createThumbnail(imageId, data, project);
+            await this.createThumbnail(imageId, data, project);
         }
     }
 

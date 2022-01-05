@@ -1,5 +1,5 @@
-import { filter, flatMap, flow, isDefined, map, on, to } from 'tsfun';
-import { CategoryForm, Valuelist } from 'idai-field-core';
+import { filter, flatMap, flow, isDefined, on, to } from 'tsfun';
+import { CategoryForm, Field, Valuelist } from 'idai-field-core';
 
 
 export interface ValuelistUsageIndex {
@@ -11,7 +11,7 @@ export interface ValuelistUsageIndex {
 export interface ValuelistUsage {
 
     category: CategoryForm;
-    fields: string[];
+    fields: Array<Field>;
 }
 
 
@@ -48,14 +48,13 @@ export namespace ValuelistUsageIndex {
     }
 
 
-    function fetchUsingFieldsForCategory(category: CategoryForm, valuelistId: string): string[] {
+    function fetchUsingFieldsForCategory(category: CategoryForm, valuelistId: string): Array<Field> {
 
         return flow(
             category.groups,
             flatMap(to('fields')),
             filter(on('valuelist', isDefined)),
-            filter(on(['valuelist', 'id'], valuelistId)),
-            map(to('name'))
+            filter(on(['valuelist', 'id'], valuelistId))
         );
     }
 }

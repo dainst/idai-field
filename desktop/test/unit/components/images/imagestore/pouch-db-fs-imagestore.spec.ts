@@ -1,154 +1,81 @@
-import fs = require('fs');
-import rimraf = require('rimraf');
-import PouchDB = require('pouchdb-node');
-import { ConstraintIndex, Indexer, IndexFacade, PouchdbDatastore } from 'idai-field-core';
-import { ImagestoreErrors } from '../../../../../src/app/services/imagestore/imagestore-errors';
-import { Imagestore } from '../../../../../src/app/services/imagestore/imagestore';
-import { Filestore } from '../../../../../src/app/services/filestore/filestore';
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+
+import { ImageStore, ImageVariant } from 'idai-field-core';
 import { FsAdapter } from '../../../../../src/app/services/imagestore/fs-adapter';
+import { ThumbnailGenerator } from '../../../../../src/app/services/imagestore/thumbnail-generator';
 
 
-/**
- * @author Sebastian Cuy
- */
-// helper functions for converting strings to ArrayBuffers and vice versa
-function str2ab(str: string): ArrayBuffer {
+describe('Imagestore', () => {
 
-    const buf = new ArrayBuffer(str.length); // 2 bytes for each char
-    const bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-        bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
-}
+    const mockImage: Buffer = fs.readFileSync( process.cwd() + '/test/test-data/logo.png');
+    const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
+    const testProjectName = 'test_tmp_project';
 
+    let imageStore: ImageStore;
 
-xdescribe('Imagestore', () => {
-
-    let store: Imagestore;
-    let datastore: PouchdbDatastore;
-    const storeProjectPath = 'test/store/unittest/';
-
-
-    beforeEach(async done => {
-        const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
-        mockBlobMaker.makeBlob.and.callFake(data => { return { safeResourceUrl: data }; });
-        const mockImageConverter = jasmine.createSpyObj('imageConverter', ['convert']);
-        mockImageConverter.convert.and.callFake(data => { return data; });
-        const mockConfigProvider =  jasmine.createSpyObj('configProvider', ['getProjectConfiguration']);
-        mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
-        const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer', ['add', 'clear']);
-        datastore = new PouchdbDatastore((name: string) => new PouchDB(name), undefined);
-        const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
-        mockSettingsProvider.getSettings.and.returnValue({ imagestorePath: process.cwd() + '/test/test-temp/imagestore' });
-
-        const mockConstraintIndexer = ConstraintIndex.make(
-            {}, [] as any);
-
-        await datastore.createDb('unittest', { _id: 'project', resource: { id: 'project' }}, false);
-
-        await Indexer.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false),
-                              datastore.getDb(), null, null);
-
-        const filestore = new Filestore(mockSettingsProvider, new FsAdapter());
-        store = new Imagestore(filestore, mockImageConverter, mockBlobMaker, datastore.getDb());
-        await store.init({ imagestorePath: 'test/store/', selectedProject: 'unittest' } as any);
+    beforeAll(async done => {
+        imageStore = new ImageStore(new FsAdapter(undefined), new ThumbnailGenerator());
+        imageStore.init(testFilePath, testProjectName);
 
         done();
     });
 
 
-    afterEach(done => {
-        rimraf(storeProjectPath, () => {
-            return new PouchDB('unittest').destroy().then(done);
-        });
+    afterAll(async (done) => {
+        fs.rmSync(testFilePath, { recursive: true });
+        done();
     });
 
 
     it('should create a file', (done) => {
 
-        store.create('test_create', str2ab('asdf')).then(() => {
-            fs.readFile(storeProjectPath + 'test_create', (err, data) => {
-                if (err) fail(err);
-                expect(data.toString()).toEqual('asdf');
-                done();
-            });
-        }).catch(err => {
-            fail(err);
+        imageStore.store('test_create', mockImage);
+        const expectedPath = testFilePath + testProjectName + '/test_create';
+        fs.readFile(expectedPath, (err, data) => {
+            if (err) fail(err);
+            expect(data).toEqual(mockImage);
             done();
         });
     });
 
 
-    it('should read a file', (done) => {
+    it('should read a file', async (done) => {
 
-        store.create('test_read', str2ab('qwer'))
-            .then(() => { return store.read('test_read',false,false); })
-            .then((data) => {
-                expect(data.toString()).toEqual('qwer');
-                done();
-            })
-            .catch(err => {
-                fail(err);
-                done();
-            });
+        imageStore.store('test_read', mockImage);
+
+        const readFile = await imageStore.getData('test_read', ImageVariant.ORIGINAL);
+
+        expect(readFile).toEqual(mockImage);
+        done();
     });
 
 
-    it('should update a file', (done) => {
+    it('should remove a file', async (done) => {
 
-        store.create('test_update', str2ab('yxcv'))
-            .then(() => { return store.update('test_update', str2ab('yxcvb')); })
-            .then(() => {
-                fs.readFile(storeProjectPath + 'test_update', (err, data) => {
-                    expect(err).toBe(null);
-                    expect(data.toString()).toEqual('yxcvb');
-                    done();
-                });
-            })
-            .catch(err => {
-                fail(err);
-                done();
-            });
-    });
+        await imageStore.store('test_remove', mockImage);
 
+        const readFile = await imageStore.getData('test_remove', ImageVariant.ORIGINAL);
 
-    it('should remove a file', (done) => {
+        expect(readFile).toEqual(mockImage);
 
-        spyOn(console, 'error'); // to suppress console.error output
-        store.create('test_remove', str2ab('sdfg'))
-            .then(() => {
-                return store.remove('test_remove')
-                    .then(() => {
-                        store.read('test_remove', false, false)
-                            .then(result => {
-                                // missing original is ok
-                                expect(result).toEqual('');
-                                return store.read('test_remove', false, true);
-                            })
-                            .then(() => {
-                                // missing thumb is not ok
-                                fail('reading removed file worked unexpectedly');
-                                done();
-                            })
-                            .catch(err => {
-                                expect(err[0]).toEqual(ImagestoreErrors.NOT_FOUND);
+        await imageStore.remove('test_remove');
 
-                                fs.readFile(storeProjectPath + 'test_remove', (err) => {
-                                    expect(err).toBeTruthy();
-                                    expect(err.code).toEqual('ENOENT');
-                                    done();
-                                });
-                            });
-                    })
-                    .catch(err => {
-                        fail(err);
-                        done();
-                    })
-            })
-            .catch(err => {
-                fail(err);
-                done();
-            });
+        const expectedPath = testFilePath + testProjectName + '/test_remove';
+
+        try {
+            fs.readFileSync(expectedPath);
+            fail('Image should have been deleted and fs should throw exception an error.');
+        } catch (e) {
+            done();
+        }
+
+        const expectedThumbnailPath = testFilePath + testProjectName + '/thumbs/test_remove';
+
+        try {
+            fs.readFileSync(expectedThumbnailPath);
+            fail('Image should have been deleted and fs should throw exception an error.');
+        } catch (e) {
+            done();
+        }
     });
 });

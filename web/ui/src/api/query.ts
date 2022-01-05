@@ -11,8 +11,8 @@ export type Query = {
     parent?: string,
     size?: number,
     from?: number,
-    search_after?: string,
-    sort?: string,
+    search_after?: string[],
+    sort?: SortObject[],
     image_query?: ImageQuery
 };
 
@@ -49,6 +49,21 @@ export type VectorQuery = {
     query_vector: number[]
 };
 
+export type NestedSortObject = {
+    path? : string,
+    filter?: string,
+    max_children?: number
+};
+
+export type SortObject = {
+field : string,
+order?: string,
+format?: string,
+mode?: string,
+missing?: string,
+nested?: NestedSortObject
+};
+
 
 export const buildBackendPostParams = async (query: Query): Promise<BackendParams> => {
 
@@ -80,8 +95,19 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
 
     if (query.size) params.size = query.size;
     if (query.from) params.from = query.from;
-    if (query.search_after) params.search_after = [query.search_after];
-    if (query.sort) params.sort = [query.sort];
+    if (query.search_after) params.search_after = query.search_after;
+    if (query.sort) {
+        params.sort.push(...query.sort.map((sort: SortObject) => JSON.parse(JSON.stringify(
+            {
+                [sort.field]: {
+                    'order': sort.order, 
+                    'format': sort.format,
+                    'missing': sort.missing,
+                    'mode': sort.mode,
+                    'nested': sort.nested
+                } 
+            }))));
+    }
     if (query.image_query) params.vector_query = await buildVectorQuery(query.image_query);
     console.log(params)
     return params;

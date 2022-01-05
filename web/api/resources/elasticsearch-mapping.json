@@ -45,6 +45,16 @@
                         "type": "integer",
                         "store": true
                     },
+                    "literature":{
+                        "type": "nested",
+                        "properties":{
+                            "zenonId": { "type": "keyword"},
+                            "quotation": {"type": "text"},
+                            "page": {"type": "integer"},
+                            "figure": {"type": "keyword"}
+
+                        }
+                    },
                     "featureVectors":{
                         "properties":{
                             "resnet": {

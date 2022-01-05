@@ -28,6 +28,7 @@ export interface Resource {
     shortName?: string;
     groups: FieldGroup[];
     geometry: Geometry;
+    literature: Literature;
     childrenCount: number;
     parentId: string;
     grandparentId: string;

@@ -5,14 +5,14 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search, search_after } from '../../api/documents';
-import { parseFrontendGetParams, Query } from '../../api/query';
-import { Result, ResultDocument } from '../../api/result';
+import { parseFrontendGetParams, Query, NestedSortObject } from '../../api/query';
+import { Result, ResultDocument, MinMaxSort, ScrollState } from '../../api/result';
 import { BREADCRUMB_HEIGHT, NAVBAR_HEIGHT } from '../../constants';
 import DocumentBreadcrumb, { BreadcrumbItem } from '../../shared/documents/DocumentBreadcrumb';
 import DocumentGrid from '../../shared/documents/DocumentGrid';
+import DocumentGridShapes from '../../shared/documents/DocumentGridShapes';
 import { useSearchParams } from '../../shared/location';
 import { LoginContext } from '../../shared/login';
-import { useGetChunkOnScroll } from '../../shared/scroll';
 import { SHAPES_PROJECT_ID } from '../constants';
 import './browse.css';
 import LinkedFinds from './LinkedFinds';
@@ -31,30 +31,43 @@ export default function Browse(): ReactElement {
     const searchParams = useSearchParams();
     const { t } = useTranslation();
     const getDocumentLink = (document: ResultDocument): string => `/${document.resource.id}`;
-
     const [document, setDocument] = useState<Document>(null);
     const [documents, setDocuments] = useState<ResultDocument[]>(null);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
-
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
-
-        const promise = documentId
-            ? getChildren(documentId, newOffset, loginData.token)
-            : searchDocuments(searchParams, newOffset, loginData.token);
-        promise.then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)));
-    });
-
+    const [minmax, setMinMaxSort] = useState<MinMaxSort>(null);
+    const [scrollState, setScrollState] = useState<ScrollState>({ 
+        'atBottom' : false,
+        'atTop' : false
+     });  
+    type OnScroll = (e: React.UIEvent<Element, UIEvent>) => void;
+    const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
+        const el = e.currentTarget;
+        if ((el.scrollTop + el.clientHeight) >= el.scrollHeight) {
+            console.log('Scroll to the Bottom!', minmax)
+            const scrollState:ScrollState = { 
+                'atBottom' : true,
+                'atTop' : false
+             };
+            setScrollState(scrollState)
+        
+            }
+        
+    };
+    
 
     useEffect(() => {
-
         if (documentId) {
             
             get(documentId, loginData.token)
                 .then(doc => setDocument(doc))
-                .then(() => setTabKey('similarTypes'));
-            searchCatalogDocuments(loginData.token)
-                .then(result => setDocuments(result.documents));   
+                .then(() => setTabKey('similarTypes'));  
+            console.log('This is the DOC:', document);
+            searchCatalogDocuments(loginData.token, documentId)
+                .then(results => setDocuments(results.documents));
+            const minmax = getMinMax(documents)
+            setMinMaxSort(minmax);
+            console.log('This is the documents in the Browse.', documents);
             getPredecessors(documentId, loginData.token)
                 .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
         } else {
@@ -62,11 +75,24 @@ export default function Browse(): ReactElement {
             setBreadcrumb([]);
             searchDocuments(searchParams, 0, loginData.token).then(res => {
                 setDocuments(res.documents);
-                resetScrollOffset();
             });
         }
     // eslint-disable-next-line
-    }, [documentId, loginData, searchParams]);
+    }, [documentId, loginData, searchParams,]);
+
+    useEffect(() => {
+        if (scrollState.atBottom) {
+            console.log('This is the documents:', documents)
+            getNextDocuments(loginData.token, documents)
+                .then(results => setDocuments(documents.concat(results.documents)));
+            setScrollState({ 
+                'atBottom' : false,
+                'atTop' : false
+             });
+             setMinMaxSort(getMinMax(documents));
+        }
+
+    }, [scrollState]);
 
     return (
 
@@ -75,11 +101,12 @@ export default function Browse(): ReactElement {
                 <Row>
                     { document
                         ? <>
-                            <Col style={ documentGridStyle } >
+                            <Col style={ documentGridStyle } onScroll={onScroll}>
                                 <Row className="catalog">
                                     <Col>
                                         <h1 className="my-5">{ }</h1>
-                                        <DocumentGrid documents={ documents } getLinkUrl={ getDocumentLink } />
+                                        
+                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } />
                                     </Col>
                                 </Row>
                             </Col>
@@ -107,11 +134,12 @@ export default function Browse(): ReactElement {
                                 </Tabs>
                             </Col>
                         </>
-                        : <Col>
+                        : <Col >
                             <DocumentGrid documents={ documents }
                                 getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                         </Col>
                     }
+                
                 </Row>
             </Container>
 
@@ -120,7 +148,12 @@ export default function Browse(): ReactElement {
 
 
 const searchCatalogDocuments = async (token: string, documentId): Promise<Result> => {
-    
+    const doc = await get(documentId, token);
+    const nest: NestedSortObject = {
+        path : 'resource.literature',
+        max_children: 1
+        };
+
     const query: Query = {
         size: 50,
         from: 0,
@@ -130,22 +163,62 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after: 'Hayes1972_p114_67.9',
-        sort: 'resource.identifier'
+        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
+                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
+                    doc.resource.id],
+        //search_after: [ doc.resource.identifier, doc.resource.id ],
+        sort: [
+            
+            {field:'resource.literature.page', order:'asc', nested: nest},
+            {field:'resource.literature.figure', order:'asc', nested: nest },
+            {field:'resource.id', order:'asc'}
+        ]
 
     };
+    console.log('This is nest command Page:', )
+
+    return await search_after(query, token);
+};
+
+const getNextDocuments = async (token: string, olddocuments): Promise<Result> => {  
+    const nest: NestedSortObject = {
+        path : 'resource.literature',
+        max_children: 1
+        };
+    const query: Query = {
+        size: 10,
+        from: 0,
+        filters: [
+            
+            { field: 'project', value: SHAPES_PROJECT_ID },
+            { field: 'resource.category.name', value: 'Drawing' }
+
+        ],
+        search_after: [ olddocuments[olddocuments.length-1].resource.literature[0]['page'], olddocuments[olddocuments.length-1].resource.literature[0]['figure'], olddocuments[olddocuments.length-1].resource.id ],
+        sort: [{field:'resource.literature.page', order:'asc', nested: nest },
+            {field:'resource.literature.figure', order:'asc', nested: nest },
+            {field:'resource.id', order:'asc'}
+        ]
+
+    };
+
     return search_after(query, token);
 };
 
+const getMinMax = (documents) => {
+    const resultBounds:MinMaxSort = { 
+        'min' : documents[0].resource.identifier,
+        'max' : documents[documents.length-1].resource.identifier
+     };
+     
+    return resultBounds
 
-
-
+};
 
 const getChildren = async (parentId: string, from: number, token: string) => {
 
     const query: Query = getQueryTemplate(from);
     query.parent = parentId;
-    query.sort = 'sort';
     return search(query, token);
 };
 
@@ -167,7 +240,6 @@ const getQueryTemplate = (from: number): Query => ({
         { field: 'resource.category.name', value: 'Drawing' }
     ]
 });
-
 
 const predecessorsToBreadcrumbItems = (predecessors: ResultDocument[]): BreadcrumbItem[] => predecessors.map(predec => {
     return {

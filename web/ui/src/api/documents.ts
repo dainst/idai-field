@@ -1,6 +1,6 @@
 import { Document } from './document';
 import { buildBackendPostParams, Query } from './query';
-import { PredecessorResult, Result } from './result';
+import { PredecessorResult, Result, ResultDocument } from './result';
 import { getHeaders } from './utils';
 
 
@@ -10,7 +10,6 @@ export const get = async (id: string, token: string): Promise<Document> => {
     if (response.ok) return await response.json();
     else throw(response);
 };
-
 
 export const search = async (query: Query, token: string): Promise<Result> =>
     fetchPost('/api/documents', query, token);

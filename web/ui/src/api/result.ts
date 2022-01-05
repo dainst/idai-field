@@ -1,7 +1,19 @@
 import { Geometry } from 'geojson';
-import { ImageGeoreference } from 'idai-field-core';
+import { ImageGeoreference, Literature, Dating, Dimension } from 'idai-field-core';
 import { ChangeEvent, I18nString, LabeledValue } from './document';
 
+
+export interface ScrollState {
+    atBottom: boolean;
+    atTop: boolean;
+
+}
+
+export interface MinMaxSort {
+    min: string;
+    max: string;
+
+}
 export interface Result {
     size: number;
     documents: ResultDocument[];
@@ -10,6 +22,7 @@ export interface Result {
 
 
 export interface ResultDocument {
+    sort?: string;
     created: ChangeEvent;
     modified: ChangeEvent[];
     project: string;
@@ -27,6 +40,7 @@ export interface ResultResource {
     childrenCount: number;
     parentId: string;
     grandparentId: string;
+    literature: Literature;
     relations?: { [relationName: string]: ResultDocument[] };
     georeference?: ImageGeoreference;
     geometry: Geometry;

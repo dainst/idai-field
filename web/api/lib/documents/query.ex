@@ -50,9 +50,7 @@ defmodule Api.Documents.Query do
   end
 
   def set_sort(query, nil), do: query
-  def set_sort(query, fields = [_|_]) do
-    put_in(query, [:sort], fields)
-  end
+
   def set_sort(query, field) do
     put_in(query, [:sort], field)
   end

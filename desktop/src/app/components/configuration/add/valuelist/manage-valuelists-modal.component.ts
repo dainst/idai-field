@@ -127,8 +127,8 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.handleSaveResult(saveResult),
-            () => this.applyValuelistSearch()
+            (saveResult: SaveResult) => this.applySaveResult(saveResult),
+            nop
         );
     }
 
@@ -148,11 +148,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => {
-                this.configurationDocument = saveResult.configurationDocument;
-                this.configurationIndex = saveResult.configurationIndex;
-                this.applyValuelistSearch();
-            },
+            (saveResult: SaveResult) => this.applySaveResult(saveResult),
             nop
         );
     }
@@ -182,13 +178,9 @@ export class ManageValuelistsModalComponent {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteValuelist(
                 this.configurationDocument, valuelist
             );
-            const { configurationDocument, configurationIndex } = await this.saveAndReload(
-                changedConfigurationDocument, undefined, true
+            this.applySaveResult(
+                await this.saveAndReload(changedConfigurationDocument, undefined, true)
             );
-            this.configurationDocument = configurationDocument;
-            this.configurationIndex = configurationIndex;
-
-            this.applyValuelistSearch();
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -197,10 +189,11 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    private handleSaveResult(saveResult: SaveResult) {
+    private applySaveResult(saveResult: SaveResult) {
 
         this.configurationDocument = saveResult.configurationDocument;
         this.configurationIndex = saveResult.configurationIndex;
+        this.applyValuelistSearch();
     }
 
 

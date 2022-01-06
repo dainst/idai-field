@@ -52,6 +52,13 @@
           background-color: darken($list-item-hover-color, 5%) !important;
           transition: background-color .5s ease;
         }
+
+        .custom-category {
+          .category-item:hover,
+          &.selected-category .category-item {
+            background-color: darken($custom-highlight-color, 5%) !important;
+          }
+        }
     
         .list-group-item {
           border-top: 1px solid #f8f9fa !important;

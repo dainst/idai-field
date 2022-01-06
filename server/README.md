@@ -15,7 +15,7 @@ As an admin user, one gets the additional option to list the existing databases.
 * docker-compose
 * Couchdb (optional, see below)
 
-Make sure you have running postgres and couchdb instances before proceeding. If they do not run on the host machine, you can start them as containers via
+Make sure you have a running couchdb instance before proceeding. If they do not run on the host machine, you can start them as containers via
 
     $ docker-compose up couchdb
 

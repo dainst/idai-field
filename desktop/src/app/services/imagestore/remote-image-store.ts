@@ -12,7 +12,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
     /**
      * Remotely store data with the provided id.
-     * @param imageId the identifier for the data
+     * @param uuid the identifier for the data
      * @param data the binary data to be stored
      * @param project the project's name
      * @param type (optional) image's type. By convention, a missing `type` parameter will be
@@ -56,7 +56,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
     /**
      * Removes the image from the remote target.
-     * @param imageId the identifier for the image to be removed
+     * @param uuid the identifier for the image to be removed
      * @param project the project's name
      */
     public async remove(uuid: string, project: string) {
@@ -115,7 +115,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
     /**
      * Returns the raw Buffer data for the requested image on the sync target.
-     * @param imageId the identifier for the image
+     * @param uuid the identifier for the image
      * @param type variant type of the image
      * @param project the project's name
      */

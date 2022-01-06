@@ -58,50 +58,50 @@ export class ImageStore {
 
     /**
      * Store data with the provided id.
-     * @param imageId the identifier for the data
+     * @param uuid the identifier for the data
      * @param data the binary data to be stored
      * @param project (optional) the project's name, will default to the application's current active project
      * @param type (optional) image's type, will default to {@link ImageVariant.ORIGINAL}.
      */
-    public async store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
+    public async store(uuid: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
 
-        const filePath = this.getFilePath(project, type, imageId);
+        const filePath = this.getFilePath(project, type, uuid);
 
         this.filesystem.writeFile(filePath, data);
 
         if (type === ImageVariant.ORIGINAL) {
-            await this.createThumbnail(imageId, data, project);
+            await this.createThumbnail(uuid, data, project);
         }
     }
 
     /**
      * Returns the raw Buffer data for the requested image.
-     * @param imageId the identifier for the image
+     * @param uuid the identifier for the image
      * @param type variant type of the image, see {@link ImageVariant}.
      * @param project (optional) the project's name, will default to the application's current active project
      */
-    public async getData(imageId: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
-        return await this.readFileSystem(imageId, type, project);
+    public async getData(uuid: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
+        return await this.readFileSystem(uuid, type, project);
     }
 
     /**
      * Removes the image from the filesystem and creates an empty tombstone file with
      * the same name plus a {@link tombstoneSuffix}.
-     * @param imageId the identifier for the image to be removed
+     * @param uuid the identifier for the image to be removed
      * @param project (optional) the project's name, will default to the application's current active project
      */
-    public async remove(imageId: string, project: string = this.activeProject): Promise<any> {
+    public async remove(uuid: string, project: string = this.activeProject): Promise<any> {
         this.filesystem.remove(
-            this.getFilePath(project, ImageVariant.ORIGINAL, imageId)
+            this.getFilePath(project, ImageVariant.ORIGINAL, uuid)
         );
         this.filesystem.writeFile(
-            this.getFilePath(project, ImageVariant.ORIGINAL, imageId) + tombstoneSuffix, Buffer.from([])
+            this.getFilePath(project, ImageVariant.ORIGINAL, uuid) + tombstoneSuffix, Buffer.from([])
         );
         this.filesystem.remove(
-            this.getFilePath(project, ImageVariant.THUMBNAIL, imageId)
+            this.getFilePath(project, ImageVariant.THUMBNAIL, uuid)
         );
         this.filesystem.writeFile(
-            this.getFilePath(project, ImageVariant.THUMBNAIL, imageId) + tombstoneSuffix, Buffer.from([])
+            this.getFilePath(project, ImageVariant.THUMBNAIL, uuid) + tombstoneSuffix, Buffer.from([])
         );
     }
 

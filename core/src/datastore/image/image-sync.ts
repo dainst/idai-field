@@ -13,37 +13,59 @@ export class ImageSync {
         this.scheduleNextSync();
     }
 
+
+    /**
+     * @returns list of {@link ImageVariant} that are currently beeing synced every {@link intervalDuration}.
+     */
     public getActivePeriodicSync(): ImageVariant[] {
 
         return this.active;
     }
 
-    public activatePeriodicSync(variant: ImageVariant) {
+
+    /**
+     * Add a {@link ImageVariant} to the periodic syncing.
+     * @param variant the {@link ImageVariant}
+     */
+    public activatePeriodicSync(variant: ImageVariant): void {
 
         if (this.active.includes(variant)) return;
         this.active.push(variant);
     }
 
+
+    /**
+     * Remove a {@link ImageVariant} from the periodic syncing.
+     * @param variant the {@link ImageVariant}
+     */
     public deactivatePeriodicSync(variant: ImageVariant) {
 
         this.active = this.active.filter((val) => val !== variant);
     }
 
+    
+    /**
+     * Trigger an instant sync cycle without waiting for the periodic syncing.
+     * @param variant the {@link ImageVariant} to sync
+     */
     public triggerImmediateSync(variant: ImageVariant) {
 
         this.sync(variant);
     }
+
 
     private scheduleNextSync() {
 
         setTimeout(this.cycle.bind(this), this.intervalDuration);
     }
 
+
     private cycle() {
 
         this.active.forEach((type) => this.sync(type));
         this.scheduleNextSync();
     }
+
 
     private async sync(variant: ImageVariant) {
 

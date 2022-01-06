@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Labels, Valuelist } from 'idai-field-core';
+import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../index/configuration-index';
 import { containsSearchTerm } from '../getSearchResultLabel';
 
@@ -20,6 +21,7 @@ export class ValuelistListingComponent {
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
     @Input() showCreateOptionAsButton: boolean;
+    @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
 

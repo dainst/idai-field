@@ -6,12 +6,20 @@ import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { SaveResult } from '../../configuration.component';
+import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
+import { ConfigurationContextMenuAction } from '../../context-menu/configuration-context-menu.component';
+import { ComponentHelpers } from '../../../component-helpers';
+import { DeleteValuelistModalComponent } from '../../delete/delete-valuelist-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Messages } from '../../../messages/messages';
 
 
 @Component({
     templateUrl: './manage-valuelists-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:click)': 'onClick($event, false)',
+        '(window:contextmenu)': 'onClick($event, true)'
     }
 })
 /**
@@ -21,17 +29,19 @@ export class ManageValuelistsModalComponent {
 
     public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<SaveResult>;
+    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+            reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
+    public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
 
     constructor(public activeModal: NgbActiveModal,
-                private modals: Modals) {}
+                private modals: Modals,
+                private messages: Messages) {}
 
 
     public initialize() {
@@ -43,6 +53,17 @@ export class ManageValuelistsModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public onClick(event: any, rightClick: boolean = false) {
+
+        if (!this.contextMenu.position) return;
+
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+                || (rightClick && target.id && target.id.startsWith('valuelist-')))) {
+            this.contextMenu.close();
+        }
     }
 
 
@@ -70,6 +91,21 @@ export class ManageValuelistsModalComponent {
     }
 
 
+    public performContextMenuAction(action: ConfigurationContextMenuAction) {
+
+        this.contextMenu.close();
+
+        switch(action) {
+            case 'edit':
+                // TODO Implement
+                break;
+            case 'delete':
+                this.openDeleteValuelistModal(this.contextMenu.valuelist);
+                break;
+        }
+    }
+
+
     public async createNewValuelist() {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
@@ -93,6 +129,44 @@ export class ManageValuelistsModalComponent {
             (saveResult: SaveResult) => this.handleSaveResult(saveResult),
             () => this.applyValuelistSearch()
         );
+    }
+
+
+    public async openDeleteValuelistModal(valuelist: Valuelist) {
+
+        const [result, componentInstance] = this.modals.make<DeleteValuelistModalComponent>(
+            DeleteValuelistModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.valuelist = valuelist;
+        componentInstance.configurationIndex = this.configurationIndex;
+
+        this.modals.awaitResult(result,
+            () => this.deleteValuelist(valuelist),
+            () => AngularUtility.blurActiveElement()
+        );
+    }
+
+
+    private async deleteValuelist(valuelist: Valuelist) {
+
+        try {
+            const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteValuelist(
+                this.configurationDocument, valuelist
+            );
+            const { configurationDocument, configurationIndex } = await this.saveAndReload(
+                changedConfigurationDocument, undefined, true
+            );
+            this.configurationDocument = configurationDocument;
+            this.configurationIndex = configurationIndex;
+
+            this.applyValuelistSearch();
+        } catch (errWithParams) {
+            // TODO Show user-readable error messages
+            console.error(errWithParams);
+            this.messages.add(errWithParams);
+        }
     }
 
 

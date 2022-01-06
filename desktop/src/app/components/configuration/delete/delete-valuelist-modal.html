@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.deleteValuelist.header">Werteliste löschen?</h5>
+</div>
+
+<div id="delete-valuelist-modal-body configuration-delete-modal-body" class="modal-body">
+    <span *ngIf="getNumberOfUsingFields() === 0"
+          i18n="configuration.deleteValuelist.body">
+        Möchten Sie die Werteliste <code>{{valuelist.id}}</code> wirklich löschen?
+    </span>
+    <div *ngIf="getNumberOfUsingFields() === 0">
+        <div id="confirm-delete-info" i18n="@@configuration.deleteValuelist.confirmInfo">
+            Bitte geben Sie den Bezeichner der Werteliste ein, um den Löschvorgang zu bestätigen.
+        </div>
+        <div class="input-group">
+            <input id="delete-valuelist-input"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="confirmDeletionValuelistId"
+                   (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+        </div>
+    </div>
+    <div *ngIf="getNumberOfUsingFields() === 1" class="text-center alert alert-warning"
+         i18n="configuration.deleteValuelist.isInUse.single">
+         Die Werteliste <code>{{valuelist.id}}</code> kann nicht gelöscht werden, solange sie einem
+         Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu.
+    </div>
+    <div *ngIf="getNumberOfUsingFields() > 1" class="text-center alert alert-warning"
+         i18n="configuration.deleteValuelist.isInUse.multiple">
+         Die Werteliste <code>{{valuelist.id}}</code> kann nicht gelöscht werden, solange sie
+         Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu.
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div *ngIf="getNumberOfUsingFields() === 0"
+         class="btn btn-danger"
+         [ngClass]="{ 'disabled': !this.checkConfirmDeletionValuelistId() }"
+         (click)="confirmDeletion()">
+        <span i18n="@@buttons.delete">Löschen</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

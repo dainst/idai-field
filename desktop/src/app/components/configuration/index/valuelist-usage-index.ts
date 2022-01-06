@@ -30,7 +30,7 @@ export namespace ValuelistUsageIndex {
     }
 
 
-    export function get(index: ValuelistUsageIndex, valuelistId: string): Array<ValuelistUsage> {
+    export function get(index: ValuelistUsageIndex, valuelistId: string): Array<ValuelistUsage>|undefined {
 
         return index[valuelistId];
     }

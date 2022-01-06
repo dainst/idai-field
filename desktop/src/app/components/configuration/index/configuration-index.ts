@@ -51,7 +51,8 @@ export namespace ConfigurationIndex {
     }
 
 
-    export function getValuelistUsage(index: ConfigurationIndex, valuelistId: string): Array<ValuelistUsage> {
+    export function getValuelistUsage(index: ConfigurationIndex,
+                                      valuelistId: string): Array<ValuelistUsage>|undefined {
 
         return ValuelistUsageIndex.get(index.valuelistUsageIndex, valuelistId);
     }

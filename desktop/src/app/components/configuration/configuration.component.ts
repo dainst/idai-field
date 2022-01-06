@@ -211,12 +211,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async addSupercategory() {
 
-        const [result, componentInstance] =
-            this.modals.make<AddCategoryFormModalComponent>(
-                AddCategoryFormModalComponent,
-                MenuContext.CONFIGURATION_MODAL,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
+            AddCategoryFormModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -226,18 +225,18 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             nop,
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public async addSubcategory(parentCategory: CategoryForm) {
 
-        const [result, componentInstance] =
-            this.modals.make<AddCategoryFormModalComponent>(
-                AddCategoryFormModalComponent,
-                MenuContext.CONFIGURATION_MODAL,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
+            AddCategoryFormModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.parentCategory = parentCategory;
@@ -248,18 +247,18 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             nop,
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public async editCategory(category: CategoryForm) {
 
-        const [result, componentInstance] =
-            this.modals.make<CategoryEditorModalComponent>(
-                CategoryEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<CategoryEditorModalComponent>(
+            CategoryEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -268,7 +267,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             nop,
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
@@ -276,12 +276,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
-        const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(
-                GroupEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<GroupEditorModalComponent>(
+            GroupEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -291,18 +290,18 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             nop,
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public async editField(category: CategoryForm, field: Field) {
 
-        const [result, componentInstance] =
-            this.modals.make<FieldEditorModalComponent>(
-                FieldEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<FieldEditorModalComponent>(
+            FieldEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -316,18 +315,18 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             nop,
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public swapCategoryForm(category: CategoryForm) {
 
-        const [result, componentInstance] =
-            this.modals.make<AddCategoryFormModalComponent>(
-                AddCategoryFormModalComponent,
-                MenuContext.CONFIGURATION_MODAL,
-                'lg'
-            );
+        const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
+            AddCategoryFormModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
@@ -344,11 +343,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async openDeleteCategoryModal(category: CategoryForm) {
 
-        const [result, componentInstance] =
-            this.modals.make<DeleteCategoryModalComponent>(
-                DeleteCategoryModalComponent,
-                MenuContext.CONFIGURATION_MODAL
-            );
+        const [result, componentInstance] = this.modals.make<DeleteCategoryModalComponent>(
+            DeleteCategoryModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
 
         componentInstance.category = category;
         componentInstance.labels = this.labels;
@@ -358,39 +356,40 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.modals.awaitResult(result,
             () => this.deleteCategory(category),
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public async openDeleteGroupModal(category: CategoryForm, group: Group) {
 
-        const [result, componentInstance] =
-            this.modals.make<DeleteGroupModalComponent>(
-                DeleteGroupModalComponent,
-                MenuContext.CONFIGURATION_MODAL
-            );
+        const [result, componentInstance] = this.modals.make<DeleteGroupModalComponent>(
+            DeleteGroupModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
 
         componentInstance.group = group;
 
         this.modals.awaitResult(result,
             () => this.deleteGroup(category, group),
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 
     public async openDeleteFieldModal(category: CategoryForm, field: Field) {
 
-        const [result, componentInstance] =
-            this.modals.make<DeleteFieldModalComponent>(
-                DeleteFieldModalComponent,
-                MenuContext.CONFIGURATION_MODAL
-            );
+        const [result, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
+            DeleteFieldModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
 
         componentInstance.field = field;
 
         this.modals.awaitResult(result,
             () => this.deleteField(category, field),
-            () => AngularUtility.blurActiveElement());
+            () => AngularUtility.blurActiveElement()
+        );
     }
 
 

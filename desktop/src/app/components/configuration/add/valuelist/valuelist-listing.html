@@ -3,6 +3,7 @@
         [id]="'valuelist-' + valuelist.id"
         [class.selected]="selectedValuelist === valuelist"
         [class.in-use]="isInUse(valuelist)"
+        [class.custom]="isCustomValuelist(valuelist)"
         (click)="select(valuelist)"
         (contextmenu)="contextMenu && contextMenu.open($event, undefined, undefined, undefined, valuelist)">
         <code>{{valuelist.id}}</code>

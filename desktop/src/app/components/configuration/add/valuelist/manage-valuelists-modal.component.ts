@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../index/configuration-index';
 import { Modals } from '../../../../services/modals';
@@ -97,7 +98,7 @@ export class ManageValuelistsModalComponent {
 
         switch(action) {
             case 'edit':
-                // TODO Implement
+                this.openEditValuelistModal(this.contextMenu.valuelist);
                 break;
             case 'delete':
                 this.openDeleteValuelistModal(this.contextMenu.valuelist);
@@ -132,6 +133,31 @@ export class ManageValuelistsModalComponent {
     }
 
 
+    public async openEditValuelistModal(valuelist: Valuelist) {
+
+        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
+            ValuelistEditorModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.valuelist = valuelist;
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (saveResult: SaveResult) => {
+                this.configurationDocument = saveResult.configurationDocument;
+                this.configurationIndex = saveResult.configurationIndex;
+                this.applyValuelistSearch();
+            },
+            nop
+        );
+    }
+
+
     public async openDeleteValuelistModal(valuelist: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<DeleteValuelistModalComponent>(
@@ -142,7 +168,8 @@ export class ManageValuelistsModalComponent {
         componentInstance.valuelist = valuelist;
         componentInstance.configurationIndex = this.configurationIndex;
 
-        this.modals.awaitResult(result,
+        this.modals.awaitResult(
+            result,
             () => this.deleteValuelist(valuelist),
             () => AngularUtility.blurActiveElement()
         );

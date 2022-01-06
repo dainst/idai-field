@@ -160,7 +160,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.category;
         componentInstance.valuelist = this.clonedField.valuelist;
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();

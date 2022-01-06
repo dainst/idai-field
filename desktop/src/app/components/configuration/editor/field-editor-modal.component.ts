@@ -103,7 +103,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
-        await super.save(this.isConstraintIndexedChanged());
+        await super.save(this.isConstraintIndexedChanged(), this.isValuelistChanged());
     }
 
 
@@ -248,10 +248,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
-            || !equal(this.getCustomFormDefinition().valuelists ?? {})(this.getClonedFormDefinition().valuelists ?? {})
+            || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription);
+    }
+
+
+    private isValuelistChanged(): boolean {
+
+        return !equal(this.getCustomFormDefinition().valuelists ?? {})
+            (this.getClonedFormDefinition().valuelists ?? {});
     }
 
 

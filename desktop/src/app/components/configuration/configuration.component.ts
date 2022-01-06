@@ -445,7 +445,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
             ManageValuelistsModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.VALUELISTS_MANAGEMENT,
             'lg'
         );
 

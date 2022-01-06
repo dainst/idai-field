@@ -13,6 +13,7 @@ import { ComponentHelpers } from '../../../component-helpers';
 import { DeleteValuelistModalComponent } from '../../delete/delete-valuelist-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { Messages } from '../../../messages/messages';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class ManageValuelistsModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private modals: Modals,
+                private menus: Menus,
                 private messages: Messages) {}
 
 
@@ -53,7 +55,9 @@ export class ManageValuelistsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.VALUELISTS_MANAGEMENT) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
@@ -137,7 +141,7 @@ export class ManageValuelistsModalComponent {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_EDIT,
             'lg'
         );
 

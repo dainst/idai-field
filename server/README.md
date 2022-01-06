@@ -24,9 +24,7 @@ Make sure you have a running couchdb instance before proceeding. If they do not 
     $ npm i --prefix=./assets
     $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
     $ docker-compose up couchdb
-    $ curl -X PUT http://synctest:abcdef/localhost:5984/synctest
-
-For the user interface credentials to work, create a `user-tokens` db.
+    $ curl -X PUT http://admin:abcdef@localhost:5984/user-tokens # For the user interface credentials to work, this db is necessary
 
 ### Run
 

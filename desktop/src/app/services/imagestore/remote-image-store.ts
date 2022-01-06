@@ -9,8 +9,16 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
     constructor(private settingsProvider: SettingsProvider) {}
 
-    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
 
+    /**
+     * Remotely store data with the provided id.
+     * @param imageId the identifier for the data
+     * @param data the binary data to be stored
+     * @param project the project's name
+     * @param type (optional) image's type. By convention, a missing `type` parameter will be
+     * interpreted as {@link ImageVariant.ORIGINAL} by the syncing target.
+     */
+    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
 
         try {
             const settings = this.settingsProvider.getSettings();
@@ -46,6 +54,11 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         }
     }
 
+    /**
+     * Removes the image from the remote target.
+     * @param imageId the identifier for the image to be removed
+     * @param project the project's name
+     */
     public async remove(uuid: string, project: string) {
 
         const settings = this.settingsProvider.getSettings();
@@ -65,6 +78,13 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         });
     }
 
+    /**
+     * Returns all known images and lists their available variants for the remote sync target.
+     * @param project the project's name
+     * @param types List of variants one wants returned. If an empty list is provided, all images no matter which variants
+     * are returned, otherwise only images with the requested variants are returned.
+     * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
+     */
     public async getFileIds(
         project: string,
         type?: ImageVariant
@@ -93,6 +113,12 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         return response.data;
     }
 
+    /**
+     * Returns the raw Buffer data for the requested image on the sync target.
+     * @param imageId the identifier for the image
+     * @param type variant type of the image
+     * @param project the project's name
+     */
     public async getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer|null> {
         const settings = this.settingsProvider.getSettings();
 

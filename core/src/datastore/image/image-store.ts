@@ -37,6 +37,7 @@ export class ImageStore {
      * Initializiation function.
      * @param fileSystemBasePath The base path for the project's image store. Will be used to construct absolute 
      * paths for the injected {@link FilesystemAdapterInterface} implementation.
+     * @param activeProject the application's active project, will be used as the default project parameter for other functions.
      */
     public init(fileSystemBasePath: string, activeProject: string): void {
         
@@ -59,6 +60,8 @@ export class ImageStore {
      * Store data with the provided id.
      * @param imageId the identifier for the data
      * @param data the binary data to be stored
+     * @param project (optional) the project's name, will default to the application's current active project
+     * @param type (optional) image's type, will default to {@link ImageVariant.ORIGINAL}.
      */
     public async store(imageId: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
 
@@ -75,6 +78,7 @@ export class ImageStore {
      * Returns the raw Buffer data for the requested image.
      * @param imageId the identifier for the image
      * @param type variant type of the image, see {@link ImageVariant}.
+     * @param project (optional) the project's name, will default to the application's current active project
      */
     public async getData(imageId: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
         return await this.readFileSystem(imageId, type, project);
@@ -84,6 +88,7 @@ export class ImageStore {
      * Removes the image from the filesystem and creates an empty tombstone file with
      * the same name plus a {@link tombstoneSuffix}.
      * @param imageId the identifier for the image to be removed
+     * @param project (optional) the project's name, will default to the application's current active project
      */
     public async remove(imageId: string, project: string = this.activeProject): Promise<any> {
         this.filesystem.remove(
@@ -100,10 +105,23 @@ export class ImageStore {
         );
     }
 
-    public deleteProject(project: string) {
+
+    /**
+     * Remove the image store data for the given project.
+     * @param project the project's name
+     */
+    public deleteData(project: string) {
         this.filesystem.remove(this.getDirectoryPath(project), true);
     }
 
+    
+    /**
+     * Returns all known images and lists their available variants in a project.
+     * @param project the project's name
+     * @param types List of variants one wants returned. If an empty list is provided, all images no matter which variants
+     * are returned, otherwise only images with the requested variants are returned.
+     * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
+     */
     public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
 
         let originalFileNames = [];

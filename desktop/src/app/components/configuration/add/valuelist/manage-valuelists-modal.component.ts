@@ -35,10 +35,11 @@ export class ManageValuelistsModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
             reindexConfiguration?: boolean) => Promise<SaveResult>;
 
-    public searchQuery: ValuelistSearchQuery = { queryString: '' };
+    public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
+    public filteredValuelists: Array<Valuelist> = [];
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
 
@@ -98,6 +99,12 @@ export class ManageValuelistsModalComponent {
 
         this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+        
+        this.filteredValuelists = this.valuelists.filter(valuelist => {
+            return (!this.searchQuery.onlyCustom || valuelist.source === 'custom')
+                && (!this.searchQuery.onlyInUse
+                    || ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0);
+        });
 
         this.selectedValuelist = this.valuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();

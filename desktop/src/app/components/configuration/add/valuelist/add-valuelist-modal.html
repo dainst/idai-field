@@ -7,6 +7,7 @@
     <div class="col-md-6">
         <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
+                           [filteredValuelists]="filteredValuelists"
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
                            [configurationIndex]="configurationIndex"

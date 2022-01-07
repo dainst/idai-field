@@ -13,16 +13,31 @@ export class ValuelistSearchBarComponent {
 
     @Output() onQueryChanged: EventEmitter<ValuelistSearchQuery> = new EventEmitter<ValuelistSearchQuery>();
 
-    public queryString: string;
+    public queryString: string = '';
+    public onlyCustom: boolean = false;
+    public onlyInUse: boolean = false;
 
 
-    constructor() {}
+    public toggleCustomFilter() {
+
+        this.onlyCustom = !this.onlyCustom;
+        this.submitQuery();
+    }
+
+
+    public toggleInUseFilter() {
+
+        this.onlyInUse = !this.onlyInUse;
+        this.submitQuery();
+    }
 
 
     public submitQuery() {
 
         this.onQueryChanged.emit({
-            queryString: this.queryString
+            queryString: this.queryString,
+            onlyCustom: this.onlyCustom,
+            onlyInUse: this.onlyInUse
         });
     }
 }

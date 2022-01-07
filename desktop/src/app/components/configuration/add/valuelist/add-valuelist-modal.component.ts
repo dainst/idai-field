@@ -28,10 +28,11 @@ export class AddValuelistModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<SaveResult>;
 
-    public searchQuery: ValuelistSearchQuery = { queryString: '' };
+    public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
+    public filteredValuelists: Array<Valuelist> = [];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -87,6 +88,12 @@ export class AddValuelistModalComponent {
         this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
             .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+
+        this.filteredValuelists = this.valuelists.filter(valuelist => {
+            return (!this.searchQuery.onlyCustom || valuelist.source === 'custom')
+                && (!this.searchQuery.onlyInUse
+                    || ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0);
+        });
 
         this.selectedValuelist = this.valuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();

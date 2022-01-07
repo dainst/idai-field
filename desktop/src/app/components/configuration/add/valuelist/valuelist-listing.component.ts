@@ -15,6 +15,7 @@ import { containsSearchTerm } from '../getSearchResultLabel';
 export class ValuelistListingComponent {
 
     @Input() valuelists: Array<Valuelist> = [];
+    @Input() filteredValuelists: Array<Valuelist> = [];
     @Input() selectedValuelist: Valuelist;
     @Input() emptyValuelist: Valuelist|undefined;
     @Input() configurationIndex: ConfigurationIndex;

@@ -2,7 +2,7 @@ import { sameset } from 'tsfun';
 import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
     ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
-    SyncService, ImageStore, ImageSync } from 'idai-field-core';
+    SyncService, ImageStore, ImageSyncService } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
@@ -18,11 +18,13 @@ import { TabManager } from '../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../core/test/test-helpers';
-import PouchDB = require('pouchdb-node');
-import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
 import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
+
+import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
+
+import PouchDB = require('pouchdb-node');
 
 const fs = require('fs');
 
@@ -276,27 +278,6 @@ function makeExpectImagesDontExist(projectImageDir) {
             expect(fs.existsSync(projectImageDir + id)).not.toBeTruthy();
         }
     };
-}
-
-
-/**
- * Creates the db that is in the simulated client app
- * TODO: still necessary now that destroyBeforeCreate is set to true?
- */
-export async function setupSyncTestDb(projectName = 'testdb') {
-
-    let synctest = new PouchDB(projectName);
-    await synctest.destroy();
-    synctest = new PouchDB(projectName);
-    await synctest.put({
-        _id: 'project',
-        resource: {
-            category: 'Project',
-            id: 'project',
-            identifier: projectName
-        }
-    });
-    await synctest.close();
 }
 
 

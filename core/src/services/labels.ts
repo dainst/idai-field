@@ -34,6 +34,12 @@ export class Labels {
     }
 
 
+    public getDescription(describedValue: I18N.Described): string {
+
+        return I18N.getDescription(describedValue, this.getLanguages());
+    }
+
+
     public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
         const label = CategoryForm.getFieldLabelValue(category, fieldName);

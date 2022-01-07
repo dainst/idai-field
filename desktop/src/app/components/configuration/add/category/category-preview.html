@@ -12,10 +12,8 @@
         <div *ngIf="description" id="category-description">{{description}}</div>
         <ul id="groups-list">
             <li *ngFor="let group of getGroups()">
-                <span class="group-title">
-                    <b>{{getLabel(group)}}</b>
-                    <code>{{group.name}}</code>
-                </span>
+                <b>{{getLabel(group)}}</b>
+                <code>{{group.name}}</code>
                 <ul>
                     <li *ngFor="let field of group.fields">
                         <span class="field-title">

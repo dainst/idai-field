@@ -1,6 +1,6 @@
 import { fieldDoc } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
-import { createApp, setupSyncTestDb } from '../subsystem-helper';
+import { createApp } from '../subsystem-helper';
 import PouchDB =  require('pouchdb-node');
 
 
@@ -17,7 +17,6 @@ describe('ImageOverviewFacade/Subsystem', () => {
 
     beforeEach(async done => {
 
-        await setupSyncTestDb();
         const result = await createApp();
 
         const datastore = result.datastore;

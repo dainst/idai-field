@@ -8,7 +8,7 @@
 @import './editor/valuelist-editor-modal';
 @import './editor/value-editor-modal';
 @import './editor/multi-language-input';
-@import './delete/delete-category-modal';
+@import './delete/delete-modal';
 @import './add/listing';
 @import './add/preview';
 @import './add/category/add-category-modal';
@@ -19,6 +19,8 @@
 @import './add/field/field-preview';
 @import './add/valuelist/manage-valuelists-modal';
 @import './add/valuelist/valuelist-listing';
+@import './add/valuelist/valuelist-preview';
+@import './add/valuelist/valuelist-search-bar';
 
 
 .project-configuration {
@@ -50,6 +52,13 @@
         .selected-category .category-item {
           background-color: darken($list-item-hover-color, 5%) !important;
           transition: background-color .5s ease;
+        }
+
+        .custom-category {
+          .category-item:hover,
+          &.selected-category .category-item {
+            background-color: darken($custom-highlight-color, 5%) !important;
+          }
         }
     
         .list-group-item {

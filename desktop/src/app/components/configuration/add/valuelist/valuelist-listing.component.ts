@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Labels, Valuelist } from 'idai-field-core';
+import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
+import { ConfigurationIndex } from '../../index/configuration-index';
 import { containsSearchTerm } from '../getSearchResultLabel';
 
 
@@ -15,9 +17,11 @@ export class ValuelistListingComponent {
     @Input() valuelists: Array<Valuelist> = [];
     @Input() selectedValuelist: Valuelist;
     @Input() emptyValuelist: Valuelist|undefined;
+    @Input() configurationIndex: ConfigurationIndex;
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
     @Input() showCreateOptionAsButton: boolean;
+    @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
 
@@ -28,6 +32,8 @@ export class ValuelistListingComponent {
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
 
     public getLabel = (value: any) => this.labels.get(value);
+
+    public isCustomValuelist = (valuelist: Valuelist) => valuelist.source === 'custom';
 
     public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
         && !this.valuelists.map(valuelist => valuelist.id).includes(this.searchTerm)
@@ -52,5 +58,11 @@ export class ValuelistListingComponent {
         }
     
         return undefined;
+    }
+
+
+    public isInUse(valuelist: Valuelist): boolean {
+     
+        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0;
     }
 }

@@ -6,10 +6,26 @@
         </span>
     </div>
     <div id="preview-body">
+        <div *ngIf="getValuelistDescription()" id="valuelist-description">{{getValuelistDescription()}}</div>
+
+        <b i18n="@@configuration.values">Werte</b>
         <ul class="list-group list-group-flush">
             <li *ngIf="valuelist.values" class="list-group-item">
-                <valuelist-view [valuelist]="valuelist"></valuelist-view>
+                <valuelist-view [valuelist]="valuelist"
+                                [showDescription]="false"
+                                [largeList]="true"></valuelist-view>
             </li>
         </ul>
+
+        <b *ngIf="getUsage().length > 0" i18n="@@configuration.usedBy">Verwendet von:</b>
+        <div *ngFor="let categoryUsage of getUsage()">
+            <category-icon [category]="categoryUsage.category" size="23"></category-icon>
+            {{getLabel(categoryUsage.category)}}
+            <ul>
+                <li *ngFor="let field of categoryUsage.fields" class="field-in-use">
+                    {{getLabel(field)}}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

@@ -3,7 +3,7 @@ import { FieldDocument } from '../../../../../core/index';
 import { ResourcesStateManager } from '../../../../src/app/components/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/components/resources/view/view-facade';
 import { TabManager } from '../../../../src/app/services/tabs/tab-manager';
-import { createApp, setupSyncTestDb } from '../subsystem-helper';
+import { createApp } from '../subsystem-helper';
 import PouchDB =  require('pouchdb-node');
 
 
@@ -46,8 +46,6 @@ describe('ViewFacade/Subsystem', () => {
 
 
     beforeEach(async done => {
-
-        await setupSyncTestDb();
 
         const result = await createApp();
 

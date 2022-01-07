@@ -1,8 +1,5 @@
-import {
-    createApp, createHelpers,
-    setupSyncTestDb
-} from '../subsystem-helper';
-import {Relation} from 'idai-field-core';
+import { Relation } from 'idai-field-core';
+import { createApp, createHelpers } from '../subsystem-helper';
 
 
 describe('subsystem/image-relations-manager', () => {
@@ -13,7 +10,6 @@ describe('subsystem/image-relations-manager', () => {
 
     beforeEach(async done => {
 
-        await setupSyncTestDb();
         app = await createApp();
         helpers = createHelpers(app);
         helpers.createProjectDir();

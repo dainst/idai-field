@@ -1,11 +1,7 @@
-import {
-    createDocuments, NiceDocs, Relation
-} from 'idai-field-core';
-import {
-    buildImportCatalog,
-    ImportCatalogErrors
-} from '../../../../../src/app/components/import/import/import-catalog';
-import { createApp, createHelpers, setupSyncTestDb } from '../../subsystem-helper';
+import { createDocuments, NiceDocs, Relation } from 'idai-field-core';
+import { buildImportCatalog,
+        ImportCatalogErrors } from '../../../../../src/app/components/import/import/import-catalog';
+import { createApp, createHelpers } from '../../subsystem-helper';
 
 
 describe('subsystem/import/importCatalog', () => {
@@ -17,7 +13,6 @@ describe('subsystem/import/importCatalog', () => {
 
     beforeEach(async done => {
 
-        await setupSyncTestDb();
         app = await createApp();
         helpers = createHelpers(app);
         helpers.createProjectDir();

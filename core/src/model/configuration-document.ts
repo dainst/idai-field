@@ -9,6 +9,7 @@ import { Field } from './configuration/field';
 import { Named } from '../tools/named';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
+import { Valuelist } from './configuration/valuelist';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -107,6 +108,16 @@ export namespace ConfigurationDocument {
         CustomLanguageConfigurations.update(
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
         );
+
+        return clonedConfigurationDocument;
+    }
+
+
+    export function deleteValuelist(customConfigurationDocument: ConfigurationDocument,
+                                    valuelist: Valuelist): ConfigurationDocument {
+
+        const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
+        delete clonedConfigurationDocument.resource.valuelists[valuelist.id];
 
         return clonedConfigurationDocument;
     }

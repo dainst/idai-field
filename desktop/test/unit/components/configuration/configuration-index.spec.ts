@@ -22,7 +22,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ]
-        const index = ConfigurationIndex.create(forms as any, [], [], []);
+        const index = ConfigurationIndex.create(forms as any, [], [], [], []);
 
         expect(ConfigurationIndex.findCategoryForms(index, '', 'A:parent')[0].name).toEqual('A:default');
         expect(ConfigurationIndex.findCategoryForms(index, 'A', 'A:parent')[0].name).toEqual('A:default');
@@ -57,7 +57,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], categories, [], []);
+        const index = ConfigurationIndex.create([], categories, [], [], []);
 
         expect(ConfigurationIndex.findFields(index, '', 'A')[0].name).toEqual('field1');
         expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
@@ -83,7 +83,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], [], [], valuelists);
+        const index = ConfigurationIndex.create([], [], [], valuelists, []);
 
         expect(ConfigurationIndex.findValuelists(index, '')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'valuelist')[0].id).toEqual('valuelist-1');
@@ -96,5 +96,59 @@ describe('ConfigurationIndex', () => {
         expect(ConfigurationIndex.findValuelists(index, 'no-label-value')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'label')[0].id).toEqual('valuelist-1');
         expect(ConfigurationIndex.findValuelists(index, 'Abc').length).toBe(0);
+    });
+
+
+    it('get valuelist usage', () => {
+
+        const valuelists: Array<Valuelist> = [
+            {
+                id: 'valuelist-1',
+                values: {}
+            },
+            {
+                id: 'valuelist-2',
+                values: {}
+            }
+        ];
+
+        const category1: any = {
+            name: 'Category1',
+            groups: [
+                {
+                    name: 'group',
+                    fields: [
+                        { name: 'field1-1', valuelist: { id: 'valuelist-1' } },
+                        { name: 'field1-2', valuelist: { id: 'valuelist-2' } },
+                        { name: 'field1-3', valuelist: { id: 'valuelist-2' } }
+                    ]
+                }
+            ]
+        };
+
+        const category2: any = {
+            name: 'Category2',
+            groups: [
+                {
+                    name: 'group',
+                    fields: [
+                        { name: 'field2-1', valuelist: { id: 'valuelist-1' } }
+                    ]
+                }
+            ]
+        };
+
+        const index = ConfigurationIndex.create([], [], [], valuelists, [category1, category2]);
+
+        const result1 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-1');
+        expect(result1[0].category).toBe(category1);
+        expect(result1[0].fields[0].name).toBe('field1-1');
+        expect(result1[1].category).toBe(category2);
+        expect(result1[1].fields[0].name).toBe('field2-1');
+
+        const result2 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-2');
+        expect(result2[0].category).toBe(category1);
+        expect(result2[0].fields[0].name).toBe('field1-2');
+        expect(result2[0].fields[1].name).toBe('field1-3');
     });
 });

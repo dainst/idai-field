@@ -28,8 +28,7 @@ export namespace ValuelistIndex {
     }
 
 
-    export function find(index: ValuelistIndex,
-                         searchTerm: string): Array<Valuelist> {
+    export function find(index: ValuelistIndex, searchTerm: string): Array<Valuelist> {
 
         return set(flatten(keysValues(index)
             .filter(([term, _]) => term.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))

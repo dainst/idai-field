@@ -1,3 +1,8 @@
+
+<configuration-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
+
 <div class="modal-header manage-valuelists-modal-header configuration-editor-modal-header">
     <h5 class="modal-title"
         i18n="@@configuration.manageValuelists">Wertelisten verwalten</h5>
@@ -8,22 +13,19 @@
 
 <div class="modal-body row manage-valuelists-modal-body">
     <div class="col-md-6">
-        <div class="input-group mb-2">
-            <input type="text"
-                   id="field-name"
-                   class="form-control"
-                   [(ngModel)]="searchTerm"
-                   (ngModelChange)="applyValuelistSearch()">
-        </div>
+        <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
-                           [searchTerm]="searchTerm"
+                           [configurationIndex]="configurationIndex"
+                           [searchTerm]="searchQuery.queryString"
+                           [contextMenu]="contextMenu"
                            [showCreateOptionAsButton]="true"
                            (onValuelistSelected)="select($event)">
         </valuelist-listing>
     </div>
     <div class="col-md-6">
-        <valuelist-preview [valuelist]="selectedValuelist"></valuelist-preview>
+        <valuelist-preview [valuelist]="selectedValuelist"
+                           [configurationIndex]="configurationIndex"></valuelist-preview>
     </div>
 </div>

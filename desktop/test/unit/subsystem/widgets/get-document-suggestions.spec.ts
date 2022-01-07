@@ -1,7 +1,7 @@
 import PouchDB =  require('pouchdb-node');
 import * as tsfun from 'tsfun';
 import { getDocumentSuggestions } from '../../../../src/app/components/widgets/get-document-suggestions';
-import { createApp, setupSyncTestDb } from '../subsystem-helper';
+import { createApp } from '../subsystem-helper';
 
 
 describe('subsystem/getDocumentSuggestions', () => {
@@ -11,8 +11,7 @@ describe('subsystem/getDocumentSuggestions', () => {
     const doc = { resource: { id: '1', identifier: 'One', category: 'Feature', relations: {}}, project: undefined }
 
     beforeEach(async done => {
-
-        await setupSyncTestDb();
+        
         datastore = (await createApp()).datastore;
         done();
     });

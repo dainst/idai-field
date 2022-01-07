@@ -46,14 +46,17 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isEditOptionAvailable(): boolean {
 
-        return !this.contextMenu.group
-            || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group));
+        if (this.contextMenu.valuelist) return this.contextMenu.valuelist.source === 'custom';
+
+        return (!this.contextMenu.group
+            || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group)));
     }
 
 
     public isSwapOptionAvailable(): boolean {
 
-        return !this.contextMenu.group
+        return this.contextMenu.category
+            && !this.contextMenu.group
             && !this.contextMenu.field
             && this.contextMenu.category.source !== 'custom';
     }
@@ -61,9 +64,11 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
+        if (this.contextMenu.valuelist) return this.contextMenu.valuelist.source === 'custom';
+
         return (!this.contextMenu.field
-                || this.contextMenu.category.customFields.includes(this.contextMenu.field.name))
-            && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
-                || !this.contextMenu.category.required);
+            || this.contextMenu.category.customFields.includes(this.contextMenu.field.name))
+        && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
+            || !this.contextMenu.category.required);
     }
 }

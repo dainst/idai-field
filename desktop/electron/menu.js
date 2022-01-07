@@ -284,8 +284,9 @@ const getTemplate = (mainWindow, context, config) => {
 const isDefaultContext = context => ['default', 'configuration'].includes(context);
 
 
-const isConfigurationContext = context => ['configuration', 'configurationEdit', 'configurationModal']
-    .includes(context);
+const isConfigurationContext = context => [
+        'configuration', 'configurationEdit', 'configurationModal', 'valuelistsManagement'
+    ].includes(context);
 
 
 const getNamesOfUnopenedProjects = () => {

@@ -9,6 +9,20 @@ valuelist-listing {
           transition: background-color .5s ease;
       }
 
+      .in-use {
+        font-weight: bold; 
+      }
+      
+      .custom {
+        background-color: $custom-highlight-color;
+
+        &.selected,
+        &:not(.btn):hover {
+          background-color: darken($custom-highlight-color, 5%);
+          transition: background-color .5s ease;
+        }
+      }
+
       .new-valuelist-button {
         height: 41px;
         width: 100%;

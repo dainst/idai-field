@@ -173,6 +173,7 @@ export class SyncService {
         
         sync.on('change', info => this.setStatus(SyncService.getFromInfo(info)))
             .on('complete', () => this.setStatus(SyncStatus.InSync))
+            .on('paused', () => this.setStatus(SyncStatus.InSync))
             .on('denied', err => console.error('Document denied in sync', err))
             .on('error', err => {
                 this.setStatus(SyncService.getFromError(err));
@@ -197,7 +198,7 @@ export class SyncService {
             : syncTarget.replace(/(https?):\/\//, '$1://' +
                 project + ':' + encodeURIComponent(password) + '@');
 
-        return url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); 
+        return url + '/' + project;
     }
 
 

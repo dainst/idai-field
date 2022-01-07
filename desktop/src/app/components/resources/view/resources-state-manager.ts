@@ -261,7 +261,7 @@ export class ResourcesStateManager {
 
         let resourcesState = ResourcesState.makeDefaults();
 
-        if (this.project === 'test' || this.project === 'synctest') {
+        if (this.project === 'test') {
             if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults();
         } else {
             const loadedState = await this.serializer.load('resources-state');

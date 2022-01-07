@@ -14,7 +14,7 @@ import { ContextMenu } from '../../widgets/context-menu';
 
         if (documents.find(document => !document.resource.id)) return this.close();
 
-        super.open(event, documents);
+        super.open(event);
         this.documents = documents;
     }
  }

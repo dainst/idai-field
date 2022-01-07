@@ -2,7 +2,7 @@ import PouchDB =  require('pouchdb-node');
 import { Datastore, Document } from 'idai-field-core';
 import { update } from 'tsfun';
 import { getImageSuggestions } from '../../../../../src/app/components/docedit/widgets/get-image-suggestions';
-import { createApp, setupSyncTestDb } from '../../subsystem-helper';
+import { createApp } from '../../subsystem-helper';
 
 
 describe('subsystem/getImageSuggestions', () => {
@@ -20,7 +20,6 @@ describe('subsystem/getImageSuggestions', () => {
 
     beforeEach(async done => {
 
-        await setupSyncTestDb();
         datastore = (await createApp()).datastore;
         done();
     });

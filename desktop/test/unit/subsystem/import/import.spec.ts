@@ -3,7 +3,7 @@ import { PouchdbServer } from '../../../../src/app/services/datastore/pouchdb/po
 import { ImportErrors } from '../../../../src/app/components/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
-import { createApp, createHelpers, setupSettingsService, setupSyncTestDb } from '../subsystem-helper';
+import { createApp, createHelpers, setupSettingsService } from '../subsystem-helper';
 import PouchDB = require('pouchdb-node');
 
 /**
@@ -51,7 +51,6 @@ describe('Import/Subsystem', () => {
 
         spyOn(console, 'debug');
 
-        await setupSyncTestDb();
         const pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), undefined);
         const {projectConfiguration} = await setupSettingsService(pouchdbDatastore, new PouchdbServer());
         _projectConfiguration = projectConfiguration;

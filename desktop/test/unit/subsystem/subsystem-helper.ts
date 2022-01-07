@@ -266,27 +266,6 @@ function makeExpectImagesDontExist(projectImageDir) {
 }
 
 
-/**
- * Creates the db that is in the simulated client app
- * TODO: still necessary now that destroyBeforeCreate is set to true?
- */
-export async function setupSyncTestDb(projectName = 'testdb') {
-
-    let synctest = new PouchDB(projectName);
-    await synctest.destroy();
-    synctest = new PouchDB(projectName);
-    await synctest.put({
-        '_id': 'project',
-        'resource': {
-            'category': 'Project',
-            'id': 'project',
-            'identifier': projectName
-        }
-    });
-    await synctest.close();
-}
-
-
 function makeCreateDocuments(datastore: Datastore,
                              projectImageDir: string,
                              username: string) {

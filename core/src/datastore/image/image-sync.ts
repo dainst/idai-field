@@ -55,7 +55,7 @@ export class ImageSync {
 
 
     /**
-     * Get two lists of UUIDs that are currently missing locally and remotely respectively.
+     * Get two lists of UUIDs that are currently missing locally or remotely.
      * @param activeProject The project's name
      * @param variant The image variant type
      * @returns A tuple containing two string lists, the first one containing all UUIDs missing locally, the second containing all UUIDs missing remotely.

@@ -1,8 +1,5 @@
-import {
-    createApp, createHelpers,
-    setupSyncTestDb
-} from '../subsystem-helper';
-import {Relation} from 'idai-field-core';
+import { Relation } from 'idai-field-core';
+import { createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';
 
 
 describe('subsystem/image-relations-manager', () => {

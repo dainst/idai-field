@@ -1,10 +1,6 @@
-import {
-    createDocuments, NiceDocs, Relation
-} from 'idai-field-core';
-import {
-    buildImportCatalog,
-    ImportCatalogErrors
-} from '../../../../../src/app/components/import/import/import-catalog';
+import { createDocuments, NiceDocs, Relation } from 'idai-field-core';
+import { buildImportCatalog,
+        ImportCatalogErrors } from '../../../../../src/app/components/import/import/import-catalog';
 import { createApp, createHelpers, setupSyncTestDb } from '../../subsystem-helper';
 
 

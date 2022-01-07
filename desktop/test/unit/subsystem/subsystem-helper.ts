@@ -13,16 +13,15 @@ import { ImageRelationsManager } from '../../../src/app/services/image-relations
 import { Validator } from '../../../src/app/model/validator';
 import { ResourcesStateManager } from '../../../src/app/components/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../src/app/components/resources/view/view-facade';
-import { SyncTarget } from '../../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../../src/app/services/settings/settings-provider';
 import { SettingsService } from '../../../src/app/services/settings/settings-service';
 import { TabManager } from '../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../core/test/test-helpers';
+import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 
 import PouchDB = require('pouchdb-node');
-import {DocumentHolder} from '../../../src/app/components/docedit/document-holder';
 
 const fs = require('fs');
 

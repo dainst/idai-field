@@ -51,7 +51,7 @@ export async function setupSettingsService(pouchdbdatastore, projectName = 'test
 
     const remoteImageStore = new RemoteImageStore(settingsProvider);
 
-    const imageSync = new ImageSync(imageStore, remoteImageStore);
+    const imageSync = new ImageSyncService(imageStore, remoteImageStore);
 
     const settingsService = new SettingsService(
         imageStore,

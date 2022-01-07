@@ -2,7 +2,10 @@
   height: calc(100vh - 200px);
 
   valuelist-preview {
-    display: block;
+    height: calc(100vh - 226px);
+  }
+
+  valuelist-listing {
     height: calc(100vh - 273px);
   }
 }

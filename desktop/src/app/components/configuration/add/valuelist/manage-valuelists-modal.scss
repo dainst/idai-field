@@ -3,11 +3,14 @@
 }
 
 .manage-valuelists-modal-body {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 110px);
 
   valuelist-preview {
-    display: block;
-    height: calc(100vh - 273px);
+    height: calc(100vh - 136px);
+  }
+
+  valuelist-listing {
+    height: calc(100vh - 183px);
   }
 }
   

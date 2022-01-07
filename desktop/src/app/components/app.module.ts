@@ -24,7 +24,7 @@ import {
     SyncService,
     Labels,
     ImageStore,
-    ImageSync
+    ImageSyncService
 } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
@@ -189,8 +189,8 @@ registerLocaleData(localeIt, 'it');
             deps: [SettingsProvider]
         },
         {
-            provide: ImageSync,
-            useFactory: (imageStore: ImageStore, remoteImageStore: RemoteImageStore) => new ImageSync(imageStore, remoteImageStore),
+            provide: ImageSyncService,
+            useFactory: (imageStore: ImageStore, remoteImageStore: RemoteImageStore) => new ImageSyncService(imageStore, remoteImageStore),
             deps: [ImageStore, RemoteImageStore]
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },

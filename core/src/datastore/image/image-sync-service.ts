@@ -1,7 +1,7 @@
 import { ImageVariant, ImageStore, tombstoneSuffix } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
-export class ImageSync {
+export class ImageSyncService {
     private intervalDuration = 1000 * 30;
     private active: ImageVariant[] = [];
 

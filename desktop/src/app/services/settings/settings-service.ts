@@ -8,7 +8,7 @@ import {
     SyncService,
     ImageStore,
     ImageVariant,
-    ImageSync
+    ImageSyncService
 } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
@@ -43,7 +43,7 @@ export class SettingsService {
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
-                private imageSyncService: ImageSync,
+                private imageSyncService: ImageSyncService,
                 private settingsProvider: SettingsProvider) {
     }
 

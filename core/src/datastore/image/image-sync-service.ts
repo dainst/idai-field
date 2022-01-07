@@ -143,7 +143,7 @@ export class ImageSyncService {
         const missingRemotely = localPaths.filter(
             (localPath: string) => !remotePaths.includes(localPath)
         ).filter(
-            // Local images that got deleted remotely, are not to be considered missing remotely. Otherwise we would re-send an image 
+            // Local images that got deleted remotely, are not to be considered missing remotely. Otherwise we would re-upload an image 
             // that was already deleted remotely.
             (localPath: string) => !remotePaths.includes(`${localPath}${tombstoneSuffix}`)
         );

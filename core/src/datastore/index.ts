@@ -9,3 +9,4 @@ export * from './migrator';
 export * from './pouchdb';
 export * from './image';
 export { SampleDataLoaderBase } from './sampledata/sample-data-loader-base'
+export { SyncStatus } from './sync-status';

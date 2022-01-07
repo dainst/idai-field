@@ -1,19 +1,7 @@
 import { Observable, Observer } from 'rxjs';
 import { ObserverUtil } from '../../tools/observer-util';
 import { PouchdbDatastore } from './pouchdb-datastore';
-
-
-export enum SyncStatus {
-
-    Offline = 'OFFLINE',
-    Pushing = 'PUSHING',
-    Pulling = 'PULLING',
-    InSync = 'IN_SYNC',
-    Error = 'ERROR',
-    AuthenticationError = 'AUTHENTICATION_ERROR',
-    AuthorizationError = 'AUTHORIZATION_ERROR'
-}
-
+import { SyncStatus } from '../sync-status';
 
 type Sync = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
 

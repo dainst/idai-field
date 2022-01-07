@@ -13,7 +13,7 @@ export class ExpressServer {
 
     private password: string;
 
-    private binaryBodyParser = bodyParser.raw({ type: '*/*' /* TODO: limit? , limit: '50mb' */});
+    private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '200mb' });
 
     public getPassword = () => this.password;
 

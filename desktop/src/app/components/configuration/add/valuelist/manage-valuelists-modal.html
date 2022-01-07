@@ -13,18 +13,12 @@
 
 <div class="modal-body row manage-valuelists-modal-body">
     <div class="col-md-6">
-        <div class="input-group mb-2">
-            <input type="text"
-                   id="field-name"
-                   class="form-control"
-                   [(ngModel)]="searchTerm"
-                   (ngModelChange)="applyValuelistSearch()">
-        </div>
+        <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
                            [configurationIndex]="configurationIndex"
-                           [searchTerm]="searchTerm"
+                           [searchTerm]="searchQuery.queryString"
                            [contextMenu]="contextMenu"
                            [showCreateOptionAsButton]="true"
                            (onValuelistSelected)="select($event)">

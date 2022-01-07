@@ -14,6 +14,7 @@ import { DeleteValuelistModalComponent } from '../../delete/delete-valuelist-mod
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { Messages } from '../../../messages/messages';
 import { Menus } from '../../../../services/menus';
+import { ValuelistSearchQuery } from './valuelist-search-query';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class ManageValuelistsModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
             reindexConfiguration?: boolean) => Promise<SaveResult>;
 
-    public searchTerm: string = '';
+    public searchQuery: ValuelistSearchQuery = { queryString: '' };
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
@@ -86,9 +87,16 @@ export class ManageValuelistsModalComponent {
     }
 
 
+    public updateSearchQuery(newSearchQuery: ValuelistSearchQuery) {
+
+        this.searchQuery = newSearchQuery;
+        this.applyValuelistSearch();
+    }
+
+
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchTerm)
+        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 
         this.selectedValuelist = this.valuelists?.[0];
@@ -122,7 +130,7 @@ export class ManageValuelistsModalComponent {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = {
-            id: this.searchTerm,
+            id: this.searchQuery.queryString,
             values: {},
             description: {}
         };
@@ -203,10 +211,10 @@ export class ManageValuelistsModalComponent {
 
     private getEmptyValuelist(): Valuelist|undefined {
 
-        if (this.searchTerm.length === 0) return undefined;
+        if (this.searchQuery.queryString.length === 0) return undefined;
 
         return {
-            id: this.searchTerm
+            id: this.searchQuery.queryString
         } as Valuelist;
     }
 }

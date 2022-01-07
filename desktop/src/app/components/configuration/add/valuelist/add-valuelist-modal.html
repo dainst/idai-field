@@ -5,18 +5,12 @@
 
 <div class="modal-body row add-valuelist-modal-body">
     <div class="col-md-6">
-        <div class="input-group mb-2">
-            <input type="text"
-                   id="field-name"
-                   class="form-control"
-                   [(ngModel)]="searchTerm"
-                   (ngModelChange)="applyValuelistSearch()">
-        </div>
+        <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
                            [configurationIndex]="configurationIndex"
-                           [searchTerm]="searchTerm"
+                           [searchTerm]="searchQuery.queryString"
                            [currentValuelistId]="clonedField?.valuelist?.id"
                            (onValuelistSelected)="select($event)">
         </valuelist-listing>

@@ -32,6 +32,7 @@ import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.c
 import { ValueEditorModalComponent } from './editor/value-editor-modal.component';
 import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
 import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.component';
+import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.c
         DeleteGroupModalComponent,
         DeleteCategoryModalComponent,
         DeleteValuelistModalComponent,
+        ValuelistSearchBarComponent,
         SaveModalComponent,
         ValuelistViewComponent
     ],
@@ -89,6 +91,7 @@ import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.c
         DeleteGroupModalComponent,
         DeleteCategoryModalComponent,
         DeleteValuelistModalComponent,
+        ValuelistSearchBarComponent,
         SaveModalComponent
     ]
 })

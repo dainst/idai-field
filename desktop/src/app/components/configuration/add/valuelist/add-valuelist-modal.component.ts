@@ -6,6 +6,7 @@ import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { SaveResult } from '../../configuration.component';
+import { ValuelistSearchQuery } from './valuelist-search-query';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class AddValuelistModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<SaveResult>;
 
-    public searchTerm: string = '';
+    public searchQuery: ValuelistSearchQuery = { queryString: '' };
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
@@ -74,9 +75,16 @@ export class AddValuelistModalComponent {
     }
 
 
+    public updateSearchQuery(newSearchQuery: ValuelistSearchQuery) {
+
+        this.searchQuery = newSearchQuery;
+        this.applyValuelistSearch();
+    }
+
+
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchTerm)
+        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
             .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 
@@ -107,7 +115,7 @@ export class AddValuelistModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.valuelist = {
-            id: this.searchTerm,
+            id: this.searchQuery.queryString,
             values: {},
             description: {}
         };
@@ -130,8 +138,9 @@ export class AddValuelistModalComponent {
         this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
         this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
 
-        const valuelist: Valuelist = this.clonedConfigurationDocument.resource.valuelists[this.searchTerm];
-        valuelist.id = this.searchTerm;
+        const valuelist: Valuelist = this.clonedConfigurationDocument.resource
+            .valuelists[this.searchQuery.queryString];
+        valuelist.id = this.searchQuery.queryString;
         
         this.addValuelist(valuelist);
         this.activeModal.close(saveResult);
@@ -140,10 +149,10 @@ export class AddValuelistModalComponent {
 
     private getEmptyValuelist(): Valuelist|undefined {
 
-        if (this.searchTerm.length === 0) return undefined;
+        if (this.searchQuery.queryString.length === 0) return undefined;
 
         return {
-            id: this.searchTerm
+            id: this.searchQuery.queryString
         } as Valuelist;
     }
 }

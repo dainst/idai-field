@@ -28,13 +28,13 @@ export class ImageSyncService {
 
     public getStatus(variant: ImageVariant): SyncStatus {
         
-        if (!(variant in this.differences)) {
-            return SyncStatus.Error;
-        }
+        if (!(variant in this.differences)) return SyncStatus.Error;
+        if (!(variant in this.active)) return SyncStatus.Offline;
 
         if (this.differences[variant].missingLocally.length !== 0) return SyncStatus.Pulling;
-        else if (this.differences[variant].missingRemotely.length !== 0) return SyncStatus.Pushing;
-        else return SyncStatus.InSync;
+        if (this.differences[variant].missingRemotely.length !== 0) return SyncStatus.Pushing;
+        
+        return SyncStatus.InSync;
     }
 
 

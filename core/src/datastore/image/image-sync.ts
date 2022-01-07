@@ -2,7 +2,7 @@ import { ImageVariant, ImageStore, tombstoneSuffix } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 export class ImageSync {
-    private intervalDuration = 1000 * 60 * 5;
+    private intervalDuration = 1000 * 30;
     private active: ImageVariant[] = [];
 
     constructor(

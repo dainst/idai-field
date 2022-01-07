@@ -1,3 +1,7 @@
+import { Valuelist } from 'idai-field-core';
+import { ConfigurationIndex } from '../../index/configuration-index';
+
+
 export interface ValuelistSearchQuery {
 
     queryString: string;
@@ -6,6 +10,9 @@ export interface ValuelistSearchQuery {
 }
 
 
+/**
+ * @author Thomas Kleinke
+ */
 export module ValuelistSearchQuery {
 
     export function buildDefaultQuery(): ValuelistSearchQuery {
@@ -15,5 +22,16 @@ export module ValuelistSearchQuery {
             onlyCustom: false,
             onlyInUse: false
         };
+    }
+
+
+    export function applyFilters(query: ValuelistSearchQuery, valuelists: Array<Valuelist>,
+                                 configurationIndex: ConfigurationIndex): Array<Valuelist> {
+        
+        return valuelists.filter(valuelist => {
+            return (!query.onlyCustom || valuelist.source === 'custom')
+                && (!query.onlyInUse
+                    || ConfigurationIndex.getValuelistUsage(configurationIndex, valuelist.id).length > 0);
+        });
     }
 }

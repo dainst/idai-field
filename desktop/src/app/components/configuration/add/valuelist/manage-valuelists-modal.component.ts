@@ -100,11 +100,9 @@ export class ManageValuelistsModalComponent {
         this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
         
-        this.filteredValuelists = this.valuelists.filter(valuelist => {
-            return (!this.searchQuery.onlyCustom || valuelist.source === 'custom')
-                && (!this.searchQuery.onlyInUse
-                    || ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0);
-        });
+        this.filteredValuelists = ValuelistSearchQuery.applyFilters(
+            this.searchQuery, this.valuelists, this.configurationIndex
+        );
 
         this.selectedValuelist = this.valuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();

@@ -7,7 +7,9 @@ import {
     NewImageDocument,
     ProjectConfiguration,
     RelationsManager,
-    ImageStore
+    ImageStore,
+    ImageSyncService,
+    ImageVariant
 } from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
@@ -38,6 +40,7 @@ export class ImageUploader {
 
 
     public constructor(private imagestore: ImageStore,
+                       private imageSyncService: ImageSyncService,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
@@ -86,6 +89,9 @@ export class ImageUploader {
         if (wldFiles.length) {
             uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
         }
+
+        this.imageSyncService.triggerImmediateSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.triggerImmediateSync(ImageVariant.ORIGINAL);
 
         return uploadResult;
     }

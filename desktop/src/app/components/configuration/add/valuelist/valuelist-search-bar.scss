@@ -1,6 +1,7 @@
 valuelist-search-bar {
   #valuelist-search-input {
     width: calc(100% - 50px);
+    height: 39px;
     border-right: none;
   }
 
@@ -20,9 +21,18 @@ valuelist-search-bar {
 
   #valuelist-filter-menu {
     user-select: none;
-    
-    .form-check-inline {
-      padding-left: 10px;
+
+    .form-group {
+      margin-bottom: 0;
+
+      .form-check-inline {
+        padding-left: 10px;
+        padding-bottom: 10px;
+
+        &:first-child {
+          padding-top: 10px;
+        }
+      }
     }
   }
 }

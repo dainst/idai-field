@@ -209,7 +209,7 @@ export class SyncService {
             : syncTarget.replace(/(https?):\/\//, '$1://' +
                 project + ':' + encodeURIComponent(password) + '@');
 
-        return url + '/' + (project === 'synctest' ? 'synctestremotedb' : project); 
+        return url + '/' + project;
     }
 
 

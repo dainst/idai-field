@@ -84,7 +84,11 @@ export class ImageSync {
                     this.imageStore.remove(uuid.replace(tombstoneSuffix, ''), activeProject)
                 } else {
                     const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-                    this.imageStore.store(uuid, data, activeProject, variant);
+                    if (data !== null) {
+                        this.imageStore.store(uuid, data, activeProject, variant);
+                    } else {
+                        console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
+                    }
                 }
             }
 

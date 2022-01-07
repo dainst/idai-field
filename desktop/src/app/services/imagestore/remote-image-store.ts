@@ -23,7 +23,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         try {
             const settings = this.settingsProvider.getSettings();
             const syncSource = settings.syncTargets[project];
-            if (!syncSource) return;
+            if (!syncSource || !syncSource.isSyncActive) return;
 
             const address = syncSource.address;
             const password = syncSource.password;
@@ -40,7 +40,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 }
             });
 
-            console.log(response);
         } catch (error) {
             if (error.response) {
                 console.error(error.response.data);
@@ -64,7 +63,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-        if (!syncSource) return {};
+        if (!syncSource || !syncSource.isSyncActive) return {};
 
         const address = syncSource.address;
         const password = syncSource.password;
@@ -93,7 +92,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-        if (!syncSource) return {};
+        if (!syncSource || !syncSource.isSyncActive) return {};
 
         const address = syncSource.address;
         const password = syncSource.password;
@@ -123,7 +122,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-        if (!syncSource) return null;
+        if (!syncSource || !syncSource.isSyncActive) return null;
 
         const address = syncSource.address;
         const password = syncSource.password;

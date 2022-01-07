@@ -54,6 +54,39 @@ export class ImageSync {
     }
 
 
+    /**
+     * Get two lists of UUIDs that are currently missing locally and remotely respectively.
+     * @param activeProject The project's name
+     * @param variant The image variant type
+     * @returns A tuple containing two string lists, the first one containing all UUIDs missing locally, the second containing all UUIDs missing remotely.
+     */
+    public async getMissing(activeProject: string, variant: ImageVariant): Promise<[string[], string[]]> {
+
+        const localPaths = Object.keys(this.imageStore.getFileIds(activeProject, [variant]));
+        const remotePaths = Object.keys(await this.remoteImagestore.getFileIds(activeProject, variant));
+
+        const missingLocally = remotePaths.filter(
+            (remotePath: string) => !localPaths.includes(remotePath)
+        ).filter(
+            // Remote images that got deleted locally, are not to be considered missing locally. Otherwise we would re-download an image
+            // that was already deleted locally.
+            (remotePath: string) => !localPaths.includes(`${remotePath}${tombstoneSuffix}`)
+        );
+
+        const missingRemotely = localPaths.filter(
+            (localPath: string) => !remotePaths.includes(localPath)
+        ).filter(
+            // Local images that got deleted remotely, are not to be considered missing remotely. Otherwise we would re-send an image 
+            // that was already deleted remotely.
+            (localPath: string) => !remotePaths.includes(`${localPath}${tombstoneSuffix}`)
+        );;
+
+        return [
+            missingLocally, missingRemotely
+        ]
+    }
+
+
     private scheduleNextSync() {
 
         setTimeout(this.cycle.bind(this), this.intervalDuration);
@@ -72,12 +105,10 @@ export class ImageSync {
         try {
             const activeProject = this.imageStore.getActiveProject();
 
-            const localPaths = Object.keys(this.imageStore.getFileIds(activeProject, [variant]));
-            const remotePaths = Object.keys(await this.remoteImagestore.getFileIds(activeProject, variant));
+            let missingLocally = [];
+            let missingRemotely = [];
 
-            const missingLocally = remotePaths.filter(
-                    (remotePath: string) => !localPaths.includes(remotePath)
-            );
+            [missingLocally, missingRemotely] = await this.getMissing(activeProject, variant);
 
             for (const uuid of missingLocally) {
                 if (uuid.endsWith(tombstoneSuffix)) {
@@ -91,10 +122,6 @@ export class ImageSync {
                     }
                 }
             }
-
-            const missingRemotely = localPaths.filter(
-                (localPath: string) => !remotePaths.includes(localPath)
-            );
 
             for (const uuid of missingRemotely) {
                 if (uuid.endsWith(tombstoneSuffix)) {

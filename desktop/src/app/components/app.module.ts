@@ -71,9 +71,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
-import { RemoteFilestore } from '../services/filestore/remote-filestore';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
-import { HttpAdapter } from '../services/filestore/http-adapter';
 import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 
 
@@ -226,8 +224,6 @@ registerLocaleData(localeIt, 'it');
             ) => new RelationsManager(datastore, projectConfiguration),
             deps: [Datastore, ProjectConfiguration]
         },
-        HttpAdapter,
-        RemoteFilestore,
         ImageRelationsManager,
         {
             provide: Validator,

@@ -22,15 +22,16 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ]
-        const index = ConfigurationIndex.create(forms as any, [], [], [], []);
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices(forms as any, [], [], [], []);
 
-        expect(ConfigurationIndex.findCategoryForms(index, '', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'A', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'A:default', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'Kategorie', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'Category', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'default', 'A:parent')[0].name).toEqual('A:default');
-        expect(ConfigurationIndex.findCategoryForms(index, 'XYZ', 'A:parent').length).toBe(0);
+        expect(index.findCategoryForms( '', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('A', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('A:default', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('Kategorie', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('Category', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('default', 'A:parent')[0].name).toEqual('A:default');
+        expect(index.findCategoryForms('XYZ', 'A:parent').length).toBe(0);
     });
 
 
@@ -57,16 +58,17 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], categories, [], [], []);
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices([], categories, [], [], []);
 
-        expect(ConfigurationIndex.findFields(index, '', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'field1', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'Erstes', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'Feld', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'First', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'field', 'A')[0].name).toEqual('field1');
-        expect(ConfigurationIndex.findFields(index, 'Abc', 'A').length).toBe(0);
+        expect(index.findFields('', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('field', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('field1', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('Erstes', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('Feld', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('First', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('field', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('Abc', 'A').length).toBe(0);
     });
 
 
@@ -83,19 +85,20 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = ConfigurationIndex.create([], [], [], valuelists, []);
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices([], [], [], valuelists, []);
 
-        expect(ConfigurationIndex.findValuelists(index, '')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'valuelist')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'valuelist-1')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'value1')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'Wert')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'Wert 1')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'Value')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'Value 1')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'no-label-value')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'label')[0].id).toEqual('valuelist-1');
-        expect(ConfigurationIndex.findValuelists(index, 'Abc').length).toBe(0);
+        expect(index.findValuelists('')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('valuelist')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('valuelist-1')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('value1')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('Wert')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('Wert 1')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('Value')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('Value 1')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('no-label-value')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('label')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('Abc').length).toBe(0);
     });
 
 
@@ -138,15 +141,16 @@ describe('ConfigurationIndex', () => {
             ]
         };
 
-        const index = ConfigurationIndex.create([], [], [], valuelists, [category1, category2]);
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices([], [], [], valuelists, [category1, category2]);
 
-        const result1 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-1');
+        const result1 = index.getValuelistUsage('valuelist-1');
         expect(result1[0].category).toBe(category1);
         expect(result1[0].fields[0].name).toBe('field1-1');
         expect(result1[1].category).toBe(category2);
         expect(result1[1].fields[0].name).toBe('field2-1');
 
-        const result2 = ConfigurationIndex.getValuelistUsage(index, 'valuelist-2');
+        const result2 = index.getValuelistUsage('valuelist-2');
         expect(result2[0].category).toBe(category1);
         expect(result2[0].fields[0].name).toBe('field1-2');
         expect(result2[0].fields[1].name).toBe('field1-3');

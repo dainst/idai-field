@@ -61,6 +61,17 @@ export class ConfigurationIndex {
     }
 
 
+    public createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>,
+                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
+                             usedCategories: Array<CategoryForm>) {
+
+        this.categoryFormIndex = CategoryFormIndex.create(forms),
+        this.fieldIndex = FieldIndex.create(categories, commonFields),
+        this.valuelistIndex = ValuelistIndex.create(valuelists),
+        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories)
+    }
+
+
     private async buildConfigurationIndex(configurationDocument: ConfigurationDocument) {
 
         const builtInConfiguration = new BuiltInConfiguration('');
@@ -89,17 +100,6 @@ export class ConfigurationIndex {
             Object.values(rawConfiguration.valuelists),
             Tree.flatten(this.projectConfiguration.getCategories())
         );
-    }
-
-
-    private createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>,
-                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
-                             usedCategories: Array<CategoryForm>) {
-
-        this.categoryFormIndex = CategoryFormIndex.create(forms),
-        this.fieldIndex = FieldIndex.create(categories, commonFields),
-        this.valuelistIndex = ValuelistIndex.create(valuelists),
-        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories)
     }
 
 

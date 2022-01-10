@@ -18,12 +18,12 @@ import { ValuelistUsage } from '../index/valuelist-usage-index';
 export class DeleteValuelistModalComponent {
 
     public valuelist: Valuelist;
-    public configurationIndex: ConfigurationIndex;
 
     public confirmDeletionValuelistId: string;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex) {}
 
 
     public confirmDeletion = () => this.checkConfirmDeletionValuelistId() && this.activeModal.close();
@@ -39,9 +39,7 @@ export class DeleteValuelistModalComponent {
 
     public getNumberOfUsingFields(): number {
 
-        const usage: Array<ValuelistUsage>|undefined = ConfigurationIndex.getValuelistUsage(
-            this.configurationIndex, this.valuelist.id
-        );
+        const usage: Array<ValuelistUsage>|undefined = this.configurationIndex.getValuelistUsage(this.valuelist.id);
 
         return usage ? flatMap(usage, to('fields')).length : 0;
     }

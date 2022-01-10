@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Subscription } from 'rxjs';
-import { nop, to } from 'tsfun';
+import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, BuiltInConfiguration, ConfigReader, ConfigLoader,
-    createContextIndependentCategories, Labels, IndexFacade, Tree, RawProjectConfiguration } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -54,7 +53,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public topLevelCategoriesArray: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public configurationDocument: ConfigurationDocument;
-    public configurationIndex: ConfigurationIndex;
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
@@ -94,8 +92,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private modals: Modals,
                 private settingsProvider: SettingsProvider,
                 private appConfigurator: AppConfigurator,
-                private configReader: ConfigReader,
-                private configLoader: ConfigLoader,
+                private configurationIndex: ConfigurationIndex,
                 private labels: Labels,
                 private indexFacade: IndexFacade,
                 private menus: Menus,
@@ -117,8 +114,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'configuration',
             { skipCache: true }
         ) as ConfigurationDocument;
-
-        this.buildConfigurationIndex();
 
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
@@ -219,7 +214,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.initialize();
 
@@ -241,7 +235,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.initialize();
 
@@ -305,7 +298,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = category;
         componentInstance.field = field;
         componentInstance.availableInputTypes = field.source === 'custom'
@@ -330,7 +322,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.categoryToReplace = category;
         componentInstance.initialize();
 
@@ -449,7 +440,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();
@@ -511,7 +501,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             }
             this.projectConfiguration.update(newProjectConfiguration);
             if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
-            if (reindexConfiguration) await this.buildConfigurationIndex();
+            if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
@@ -540,40 +530,5 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         )).documents
 
         await this.indexFacade.putMultiple(documents);
-    }
-
-
-    private async buildConfigurationIndex() {
-
-        try {
-            const builtInConfiguration = new BuiltInConfiguration('');
-            const libraryCategories = await this.configReader.read('/Library/Categories.json');
-            const libraryForms = await this.configReader.read('/Library/Forms.json');
-            const valuelists = await this.configReader.read('/Library/Valuelists.json');
-            const languages = await this.configLoader.readDefaultLanguageConfigurations();
-
-            const rawConfiguration: RawProjectConfiguration = createContextIndependentCategories(
-                builtInConfiguration.builtInCategories,
-                libraryCategories,
-                builtInConfiguration.builtInRelations,
-                libraryForms,
-                builtInConfiguration.commonFields,
-                builtInConfiguration.builtInFields,
-                valuelists,
-                this.configurationDocument.resource.valuelists,
-                this.topLevelCategoriesArray.map(to('libraryId')),
-                languages
-            );
-
-            this.configurationIndex = ConfigurationIndex.create(
-                Tree.flatten(rawConfiguration.forms),
-                Object.values(rawConfiguration.categories),
-                Object.values(rawConfiguration.commonFields),
-                Object.values(rawConfiguration.valuelists),
-                Tree.flatten(this.projectConfiguration.getCategories())
-            );
-        } catch (e) {
-            console.error('Error while building configuration index', e);
-        }
     }
 }

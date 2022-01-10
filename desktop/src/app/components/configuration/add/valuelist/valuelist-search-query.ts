@@ -31,7 +31,7 @@ export module ValuelistSearchQuery {
         return valuelists.filter(valuelist => {
             return (!query.onlyCustom || valuelist.source === 'custom')
                 && (!query.onlyInUse
-                    || ConfigurationIndex.getValuelistUsage(configurationIndex, valuelist.id).length > 0);
+                    || configurationIndex.getValuelistUsage(valuelist.id).length > 0);
         });
     }
 }

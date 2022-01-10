@@ -22,7 +22,6 @@ import { SaveResult } from '../../configuration.component';
  */
 export class AddCategoryFormModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public parentCategory: CategoryForm|undefined;
     public categoryToReplace?: CategoryForm;
@@ -37,6 +36,7 @@ export class AddCategoryFormModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals) {}
 
 
@@ -78,8 +78,8 @@ export class AddCategoryFormModalComponent {
 
     public applyCategoryNameSearch() {
 
-        this.categoryForms = ConfigurationIndex
-            .findCategoryForms(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
+        this.categoryForms = this.configurationIndex
+            .findCategoryForms(this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.forms).includes(

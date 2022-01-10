@@ -57,6 +57,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
+import { ConfigurationIndex } from './configuration/index/configuration-index';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -134,7 +135,7 @@ registerLocaleData(localeIt, 'it');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [AppInitializerServiceLocator, SettingsService, PouchdbDatastore, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress],
+            deps: [AppInitializerServiceLocator, SettingsService, PouchdbDatastore, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress, ConfigReader, ConfigLoader],
             useFactory: appInitializerFactory,
         },
         InitializationProgress,
@@ -174,6 +175,11 @@ registerLocaleData(localeIt, 'it');
         {
             provide: IndexFacade,
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.indexFacade,
+            deps: [AppInitializerServiceLocator]
+        },
+        {
+            provide: ConfigurationIndex,
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.configurationIndex,
             deps: [AppInitializerServiceLocator]
         },
         {

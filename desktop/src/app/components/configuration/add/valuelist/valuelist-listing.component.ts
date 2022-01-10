@@ -18,7 +18,6 @@ export class ValuelistListingComponent {
     @Input() filteredValuelists: Array<Valuelist> = [];
     @Input() selectedValuelist: Valuelist;
     @Input() emptyValuelist: Valuelist|undefined;
-    @Input() configurationIndex: ConfigurationIndex;
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
     @Input() showCreateOptionAsButton: boolean;
@@ -27,7 +26,8 @@ export class ValuelistListingComponent {
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+               private configurationIndex: ConfigurationIndex) {}
 
 
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
@@ -64,6 +64,6 @@ export class ValuelistListingComponent {
 
     public isInUse(valuelist: Valuelist): boolean {
      
-        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, valuelist.id).length > 0;
+        return this.configurationIndex.getValuelistUsage(valuelist.id).length > 0;
     }
 }

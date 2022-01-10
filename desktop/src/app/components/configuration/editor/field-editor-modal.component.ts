@@ -32,7 +32,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public configurationIndex: ConfigurationIndex;
 
     public clonedField: Field|undefined;
     public hideable: boolean;
@@ -47,6 +46,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modalService: NgbModal,
                 menuService: Menus,
                 messages: Messages,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private i18n: I18n) {
 
@@ -131,7 +131,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             'lg'
         );
 
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;

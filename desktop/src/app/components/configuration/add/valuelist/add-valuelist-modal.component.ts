@@ -20,7 +20,6 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
  */
 export class AddValuelistModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
@@ -36,6 +35,7 @@ export class AddValuelistModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals) {}
 
 
@@ -85,7 +85,7 @@ export class AddValuelistModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
+        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
             .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
 

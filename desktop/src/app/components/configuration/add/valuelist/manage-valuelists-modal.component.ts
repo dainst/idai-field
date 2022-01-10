@@ -30,7 +30,6 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
  */
 export class ManageValuelistsModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
             reindexConfiguration?: boolean) => Promise<SaveResult>;
@@ -44,6 +43,7 @@ export class ManageValuelistsModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
                 private messages: Messages) {}
@@ -97,7 +97,7 @@ export class ManageValuelistsModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
+        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
         
         this.filteredValuelists = ValuelistSearchQuery.applyFilters(
@@ -179,7 +179,6 @@ export class ManageValuelistsModalComponent {
         );
 
         componentInstance.valuelist = valuelist;
-        componentInstance.configurationIndex = this.configurationIndex;
 
         this.modals.awaitResult(
             result,

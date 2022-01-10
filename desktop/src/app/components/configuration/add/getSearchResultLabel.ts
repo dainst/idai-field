@@ -1,5 +1,5 @@
 import { I18N } from 'idai-field-core';
-import { tokenize } from '../index/tokenize';
+import { tokenize } from '../../../services/configuration/index/tokenize';
 
 /**
  * @author Thomas Kleinke

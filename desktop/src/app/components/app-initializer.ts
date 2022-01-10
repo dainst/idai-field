@@ -10,7 +10,7 @@ import { SettingsSerializer } from '../services/settings/settings-serializer';
 import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
 import { PouchdbServer } from '../services/datastore/pouchdb/pouchdb-server';
-import { ConfigurationIndex } from './configuration/index/configuration-index';
+import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 
 
 interface Services {

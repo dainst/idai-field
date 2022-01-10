@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { flatMap, to } from 'tsfun';
 import { Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../index/configuration-index';
-import { ValuelistUsage } from '../index/valuelist-usage-index';
+import { ConfigurationIndex } from '../../../services/configuration/index/configuration-index';
+import { ValuelistUsage } from '../../../services/configuration/index/valuelist-usage-index';
 
 
 @Component({

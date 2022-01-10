@@ -19,7 +19,7 @@ import { ConfigurationUtil, InputType } from '../../components/configuration/con
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { ConfigurationIndex } from './index/configuration-index';
+import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';

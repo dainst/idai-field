@@ -57,7 +57,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import {UtilTranslations} from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
-import { ConfigurationIndex } from './configuration/index/configuration-index';
+import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

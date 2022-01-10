@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { I18N, Labels, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
-import { ValuelistUsage } from '../../index/valuelist-usage-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
+import { ValuelistUsage } from '../../../../services/configuration/index/valuelist-usage-index';
 
 
 @Component({

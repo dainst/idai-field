@@ -1,7 +1,7 @@
  import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';

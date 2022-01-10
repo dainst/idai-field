@@ -1,5 +1,5 @@
 import { Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 
 
 export interface ValuelistSearchQuery {

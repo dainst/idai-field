@@ -1,5 +1,5 @@
 import { Field, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../../../src/app/components/configuration/index/configuration-index';
+import { ConfigurationIndex } from '../../../../src/app/services/configuration/index/configuration-index';
 
 
 describe('ConfigurationIndex', () => {

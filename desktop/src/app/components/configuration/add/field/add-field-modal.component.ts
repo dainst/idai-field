@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, on, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';

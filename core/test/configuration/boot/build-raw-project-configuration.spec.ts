@@ -1068,45 +1068,6 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('field property validation - missing input type in field of entirely new custom category', () => {
-
-        const builtInCategories: Map<BuiltInCategoryDefinition> = {
-            A: {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-            }
-        };
-
-        const customForms: Map<CustomFormDefinition> = {
-            C: {
-                parent: 'A',
-                fields: {
-                    cField: {}
-                },
-                groups: [{ name: Groups.STEM, fields: ['cField'] }]
-            }
-        };
-
-        try {
-            buildRawProjectConfiguration(
-                builtInCategories,
-                {},
-                {},
-                customForms
-            );
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([
-                [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'C', 'cField']
-            ]);
-        }
-    });
-
-
     it('field property validation - missing input type in field of library category', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
@@ -2169,5 +2130,52 @@ describe('buildRawProjectConfiguration', () => {
         expect(forms['A'].groups[1].fields[1].defaultLabel.en).toBe('Field 2');
         expect(forms['A'].groups[1].fields[2].label.en).toBe('Field 3');
         expect(forms['A'].groups[1].fields[2].defaultLabel.en).toBe(undefined);
+    });
+
+
+    it('allow changing constraintIndexed via custom form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: 'input', constraintIndexed: false },
+                    field2: { inputType: 'input', constraintIndexed: true }
+                },
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {}
+            },
+            C: {
+                parent: 'A',
+                fields: {
+                    field1: { constraintIndexed: true },
+                    field2: { constraintIndexed: false }
+                },
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms
+        );
+
+        expect(result['C'].groups[0].fields[0].name).toEqual('field1');
+        expect(result['C'].groups[0].fields[0].constraintIndexed).toBe(true);
+        expect(result['C'].groups[0].fields[0].defaultConstraintIndexed).toBe(false);
+
+        expect(result['C'].groups[0].fields[1].name).toEqual('field2');
+        expect(result['C'].groups[0].fields[1].constraintIndexed).toBe(false);
+        expect(result['C'].groups[0].fields[1].defaultConstraintIndexed).toBe(true);
     });
 });

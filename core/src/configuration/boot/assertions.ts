@@ -40,7 +40,6 @@ export module Assertions {
 
         assertInputTypesAreSet(builtInCategories, commonFields);
         assertInputTypesAreSet(libraryCategories, commonFields);
-        if (customForms) assertInputTypesAreSet(customForms, commonFields);
     }
 
 

@@ -558,19 +558,23 @@ export class BuiltInConfiguration {
 
     public builtInFields: Map<BuiltInFieldDefinition> = {
         id: {
+            inputType: Field.InputType.NONE,
             editable: false,
             visible: false
         },
         category: {
+            inputType: Field.InputType.CATEGORY,
             visible: true,
             editable: false
         },
         shortDescription: {
+            inputType: Field.InputType.INPUT,
             visible: true,
             editable: true,
             fulltextIndexed: true
         },
         identifier: {
+            inputType: Field.InputType.INPUT,
             visible: false,
             editable: true,
             mandatory: true,

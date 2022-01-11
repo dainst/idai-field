@@ -12,8 +12,13 @@ describe('subsystem/datastore', () => {
     let trench0;
     
     beforeEach(async done => {
-        app = await createCoreApp();
-        helpers = await createHelpers(app);
+
+        try {
+            app = await createCoreApp();
+            helpers = await createHelpers(app);
+        } catch (err) {
+            console.error(err);
+        }
         done();
     });
 

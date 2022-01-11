@@ -68,10 +68,11 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         = buildFields(commonFieldDefinitions, languageConfigurations, valuelists, 'commons');
     applyLanguagesToRelations(languageConfigurations, relationDefinitions);
 
+    setDefaultConstraintIndexed(categories, builtInFields, commonFields);
+
     const [forms, relations] = flow(
         getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions),
         cond(isDefined(customForms), Assertions.assertNoDuplicationInSelection(customForms)),
-        setDefaultConstraintIndexed,
         cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relationDefinitions)),
         cond(isDefined(customForms), removeUnusedForms(Object.keys(customForms ?? {}))),
         insertValuelistIds,
@@ -180,13 +181,16 @@ function processForms(validateFields: any,
 }
 
 
-function setDefaultConstraintIndexed(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
+function setDefaultConstraintIndexed(categories:  Map<TransientCategoryDefinition>, builtInFields: Map<Field>,
+                                     commonFields: Map<Field>) {
 
-    iterateOverFields(forms, (categoryName, category, fieldName, field) => {
+    iterateOverFields(categories, (categoryName, category, fieldName, field) => {
         field.defaultConstraintIndexed = field.constraintIndexed === true;
     });
 
-    return forms;
+    Object.values(builtInFields).concat(Object.values(commonFields)).forEach(field => {
+        field.defaultConstraintIndexed = field.constraintIndexed === true;
+    });
 }
 
 

@@ -48,7 +48,7 @@ export class ExpressServer {
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
                     list = this.imagestore.getFileIds(req.params.project, [req.query.type]);
                 } else {
-                    res.status(400).send({reason: 'Invalid parameter for type: "' + req.query.type + '"'});
+                    res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
                 }
                 res.status(200).send(list);
             } catch (e) {
@@ -76,7 +76,7 @@ export class ExpressServer {
                         data
                     );
                 } else {
-                    res.status(400).send({reason: 'Invalid parameter for type: "' + req.query.type + '"'});
+                    res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
                 }
             } catch (e) {
                 if (e.code === 'ENOENT') {
@@ -128,18 +128,14 @@ export class ExpressServer {
         });
 
 
-        // prevent the creation of new databases when syncing
-        app.put('/:db', (_: any, res: any) =>
-            res.status(401).send({ status: 401 }));
-
-        app.use('/', expressPouchDB(PouchDB, {
+        app.use('/db/', expressPouchDB(PouchDB, {
             logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
             mode: 'fullCouchDB',
             overrideMode: {
-                include: ['routes/fauxton'],
                 exclude: [
                     'routes/authentication',
                     'routes/authorization',
+                    'routes/fauxton',
                     'routes/session'
                 ]
             },
@@ -147,6 +143,25 @@ export class ExpressServer {
 
         await app.listen(3000, () => {
             console.log('PouchDB Server is listening on port 3000');
+        });
+
+        const fauxtonApp = express();
+
+        fauxtonApp.use(expressPouchDB(PouchDB, {
+            mode: 'fullCouchDB',
+            overrideMode: {
+                exclude: [
+                    'replicator',
+                    'routes/authentication',
+                    'routes/authorization',
+                    'routes/security',
+                    'routes/session'
+                ]
+            }
+        }));
+
+        await fauxtonApp.listen(3001, () => {
+            console.log('Fauxton is listening on port 3001');
         });
     }
 }

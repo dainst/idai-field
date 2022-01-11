@@ -198,7 +198,7 @@ export class SyncService {
             : syncTarget.replace(/(https?):\/\//, '$1://' +
                 project + ':' + encodeURIComponent(password) + '@');
 
-        return url + '/' + project;
+        return url + '/db/' + project;
     }
 
 

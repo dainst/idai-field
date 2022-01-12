@@ -1,9 +1,5 @@
-import { Dating, Dimension, Labels, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
 import { flow, isArray, isObject, isString } from 'tsfun';
-
-const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
-    ? window.require('@electron/remote').getGlobal('config').languages
-    : ['de'];
+import { Dating, Dimension, Labels, Literature, OptionalRange, Resource } from 'idai-field-core';
 
 export type InnerHTML = string;
 
@@ -11,8 +7,7 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource,
-                              field: any,
+export function formatContent(resource: Resource, field: any,
                               getTranslation: (key: string) => string,
                               transform: (value: any) => string|null,
                               labels: Labels): InnerHTML {

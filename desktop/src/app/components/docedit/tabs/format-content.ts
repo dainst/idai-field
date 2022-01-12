@@ -81,7 +81,7 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
-                labels.getValueLabel(field.positionValues, element.measurementPosition));
+                labels.getValueLabel(field.valuelist, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation);
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {

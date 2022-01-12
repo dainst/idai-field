@@ -91,12 +91,6 @@ export module Assertions {
                     throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, formName, fieldName]];
                 }
             }
-
-            if (['dimension'].includes(field.inputType ? field.inputType : '')) {
-                if (!field.positionValuelistId && !(field as Field).positionValues) {
-                    throw [[ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, formName, fieldName]];
-                }
-            }
         });
 
         return definitions;

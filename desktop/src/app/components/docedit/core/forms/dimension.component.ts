@@ -60,13 +60,13 @@ export class DimensionComponent {
 
     public getPositionValues(): string[] {
 
-        return Object.keys(this.field['positionValues'].values);
+        return Object.keys(this.field['valuelist'].values);
     }
 
 
     public getPositionValueLabel(valueId: string): string {
 
-        return this.labels.getValueLabel(this.field['positionValues'], valueId);
+        return this.labels.getValueLabel(this.field['valuelist'], valueId);
     }
 
 

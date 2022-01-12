@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document, Datastore, Resource, Labels, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { Document, Datastore, Resource, Labels, CategoryForm, ProjectConfiguration, Field } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
@@ -172,8 +172,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
             Document.getLastModified(a) < Document.getLastModified(b)
                 ? -1
                 : Document.getLastModified(a) > Document.getLastModified(b)
-                ? 1
-                : 0);
+                    ? 1
+                    : 0);
     }
 
 
@@ -224,17 +224,15 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
             }
 
-            const fd = CategoryForm
-                .getFields(projectConfiguration.getCategory(document))
+            const field: Field = CategoryForm.getFields(projectConfiguration.getCategory(document))
                 .find(fd => fd.name === fieldName);
 
             differingFields.push({
                 name: fieldName,
-                inputType: fd?.inputType,
+                inputType: field?.inputType,
                 label: label,
                 type: type,
-                valuelist: fd?.valuelist,
-                positionValues: fd?.positionValues,
+                valuelist: field?.valuelist,
                 rightSideWinning: false
             });
         }

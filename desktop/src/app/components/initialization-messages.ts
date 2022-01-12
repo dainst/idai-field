@@ -11,7 +11,6 @@ const INITIALIZATION_MESSAGES = {
         'multipleConfigurationErrors': 'Fehler in der Projektkonfiguration:',
         'configuration/error/invalidJson': 'Die Konfigurationsdatei "[0]" enthält kein valides JSON.',
         'configuration/error/missingValuelist': 'Die Werteliste für das Feld "[0]" der Kategorie "[1]" konnte nicht gefunden werden.',
-        'configuration/error/missingPositionValuelist': 'Die Werteliste für das Unterfeld "Position" des Felds "[0]" der Kategorie "[1]" konnte nicht gefunden werden.',
         'configuration/error/missingFieldName': 'Ein in der Projektkonfiguration definiertes Feld hat keinen Namen.',
         'configuration/error/missingRelationCategory': 'Die in einer Relationsdefinition angegebene Kategorie "[0]" konnte nicht gefunden werden.',
         'configuration/fields/custom/parentNotDefined': 'Die Oberkategorie "[0]" konnte nicht gefunden werden.',
@@ -26,7 +25,6 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldInputType': 'Der als Eigenschaft "inputType" des Feldes "[1]" gesetzte Wert "[0]" ist ungültig.',
         'configuration/buildProjectCategories/illegalFieldProperty': 'Die Eigenschaft "[1]" ist ungültig.',
         'configuration/buildProjectCategories/noValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste angegeben.',
-        'configuration/buildProjectCategories/noPositionValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste für das Unterfeld "Position" angegeben.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Das in der Kategorie "[1]" definierte Feld "[0]" darf in der Subkategorie "[2]" nicht neu definiert werden.'
     },
     'en': {
@@ -41,7 +39,6 @@ const INITIALIZATION_MESSAGES = {
         'multipleConfigurationErrors': 'Errors in project configuration:',
         'configuration/error/invalidJson': 'The configuration file "[0]" does not contain valid JSON.',
         'configuration/error/missingValuelist': 'The value list for the field "[0]" of category "[1]" could not be found.',
-        'configuration/error/missingPositionValuelist': 'The value list for the subfield "position" of field "[0]" of category "[1]" could not be found.',
         'configuration/error/missingFieldName': 'A field defined in the project configuration has no name.',
         'configuration/error/missingRelationCategory': 'The category "[0]" specified in a relation definition could not be found.',
         'configuration/fields/custom/parentNotDefined': 'The supercategory "[0]" could not be found.',
@@ -56,7 +53,6 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldInputType': 'The value "[0]" set as property "inputType" of field "[1]" is invalid.',
         'configuration/buildProjectCategories/illegalFieldProperty': 'The property "[1]" is invalid.',
         'configuration/buildProjectCategories/noValuelistProvided': 'No value list has been specified for field "[1]" of category "[0]".',
-        'configuration/buildProjectCategories/noPositionValuelistProvided': 'For field "[1]" of category "[0]" no value list has been specified for the subfield "position".',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'The field "[0]" defined in category "[1]" must not be redefined in subcategory "[2]".'
     },
     'it': {
@@ -71,7 +67,6 @@ const INITIALIZATION_MESSAGES = {
         'multipleConfigurationErrors': 'Errori nella configurazione del progetto:',
         'configuration/error/invalidJson': 'Il file di configurazione "[0]" non contiene un formato JSON valido.',
         'configuration/error/missingValuelist': 'Impossibile trovare la lista di valori per il campo "[0]" della categoria "[1]".',
-        'configuration/error/missingPositionValuelist': 'Impossibile trovare la lista di valori per il sottocampo "Posizione" del campo "[0]" della categoria "[1]".',
         'configuration/error/missingFieldName': 'Un campo definito nella configurazione del progetto non ha nome.',
         'configuration/error/missingRelationCategory': 'Impossibile trovare la categoria "[0]" specificata in una definizione di relazione.',
         'configuration/fields/custom/parentNotDefined': 'Impossibile trovare la categoria superiore "[0]".',
@@ -86,7 +81,6 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldInputType': 'Il valore "[0]" indicato per la proprietà "inputType" del campo "[1]" non è valido.',
         'configuration/buildProjectCategories/illegalFieldProperty': 'La proprietà "[1]" non è valida.',
         'configuration/buildProjectCategories/noValuelistProvided': 'Per il campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
-        'configuration/buildProjectCategories/noPositionValuelistProvided': 'Per il sottocampo "Posizione" del campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Il campo "[0]" della categoria "[1]" non può essere ridefinito nella sottocategoria "[2]".'
     },
 };

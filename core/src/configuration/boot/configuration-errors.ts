@@ -6,7 +6,6 @@ export module ConfigurationErrors {
     export const INVALID_JSON = 'configuration/error/invalidJson';
 
     export const INVALID_CONFIG_MISSINGVALUELIST = 'configuration/error/missingValuelist';
-    export const INVALID_CONFIG_MISSINGPOSITIONVALUELIST = 'configuration/error/missingPositionValuelist';
     export const INVALID_CONFIG_MISSINGFIELDNAME = 'configuration/error/missingFieldName';
     export const INVALID_CONFIG_MISSINGRELATIONCATEGORY = 'configuration/error/missingRelationCategory';
     export const INVALID_CONFIG_PARENT_NOT_DEFINED = 'configuration/fields/custom/parentNotDefined';
@@ -27,7 +26,6 @@ export module ConfigurationErrors {
     export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/buildProjectCategories/illegalFieldInputType';
     export const ILLEGAL_FIELD_PROPERTY = 'configuration/buildProjectCategories/illegalFieldProperty';
     export const NO_VALUELIST_PROVIDED = 'configuration/buildProjectCategories/noValuelistProvided';
-    export const NO_POSITION_VALUELIST_PROVIDED = 'configuration/buildProjectCategories/noPositionValuelistProvided';
     export const NO_MINIMAL_FORM_PROVIDED = 'configuration/buildProjectCategories/noMinimalFormProvided';
     export const FIELD_NOT_FOUND = 'configuration/buildProjectCategories/fieldNotFound';
 }

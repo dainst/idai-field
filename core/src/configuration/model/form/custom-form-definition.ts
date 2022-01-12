@@ -4,7 +4,6 @@ import { assertFieldsAreValid } from '../field/assert-fields-are-valid';
 import { ConfigurationErrors } from '../../boot/configuration-errors';
 import { BaseFormDefinition } from './base-form-definition';
 import { CustomFieldDefinition, VALID_CUSTOM_FIELD_PROPERTIES } from '../field/custom-field-definition';
-import { Valuelists } from '../../../model/configuration/valuelist';
 
 
 /**
@@ -17,12 +16,11 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     hidden?: string[];
     parent?: string;
     color?: string;
-    positionValuelists?: Valuelists;
 }
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'positionValuelists', 'color', 'hidden', 'parent', 'fields', 'groups'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups'
 ];
 
 

@@ -275,9 +275,7 @@
         "coatTypeOutside": "Pottery-coat-Postumii",
         "coatTypeInside": "Pottery-coat-Postumii",
         "coatQuality": "Pottery-coatQuality-Postumii",
-        "period": "periods-Postumii-1"
-      },
-      "positionValuelists": {
+        "period": "periods-Postumii-1",
         "potteryDiameterExternal": "position-values-expansion-default",
         "potteryDiameterInternal": "position-values-expansion-default",
         "potteryThickness": "position-values-expansion-default",

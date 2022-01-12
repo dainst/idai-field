@@ -10,8 +10,7 @@ import { ConfigurationErrors } from './configuration-errors';
  */
 export module ConfigurationValidation {
 
-    const VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
-    const POSITION_VALUELIST_INPUT_TYPES = ['dimension'];
+    const VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes', 'dimension'];
 
 
     export function findMissingRelationType(relations: Array<Relation>,
@@ -65,14 +64,6 @@ export module ConfigurationValidation {
                     && !isValidValuelist(fieldDefinition.valuelist)) {
                     messages.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST,
-                        fieldName,
-                        form.name
-                    ]);
-                }
-                if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
-                    && !isValidValuelist((fieldDefinition as any).positionValues)) {
-                    messages.push([
-                        ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
                         fieldName,
                         form.name
                     ]);

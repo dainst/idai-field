@@ -16,7 +16,6 @@ export interface Field extends I18N.LabeledValue {
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
     valuelistFromProjectField?: string;
-    positionValues?: Valuelist;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
     fulltextIndexed?: boolean;
@@ -97,6 +96,6 @@ export module Field {
         export const NONE = 'none';
         export const DEFAULT = 'default';
 
-        export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO];
+        export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
     }
 }

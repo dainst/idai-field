@@ -212,9 +212,6 @@ function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientF
         if (form.valuelists && form.valuelists[fieldName]) {
             field.valuelistId = form.valuelists[fieldName];
         }
-        if (form.positionValuelists && form.positionValuelists[fieldName]) {
-            field.positionValuelistId = form.positionValuelists[fieldName];
-        }
     });
 
     return forms;
@@ -239,12 +236,10 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
 
 function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuelists: Map<Valuelist>) {
 
-    if (!field.valuelistId && !field.positionValuelistId) return;
+    if (!field.valuelistId) return;
 
     field.valuelist = valuelists[field.valuelistId!];
-    field.positionValues = valuelists[field.positionValuelistId!];
     delete field.valuelistId;
-    delete field.positionValuelistId;
 }
 
 

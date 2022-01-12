@@ -154,7 +154,6 @@ export class ExpressServer {
                     'replicator',
                     'routes/authentication',
                     'routes/authorization',
-                    'routes/security',
                     'routes/session'
                 ]
             }

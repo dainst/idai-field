@@ -23,6 +23,12 @@ defmodule FieldHubWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/files/:project", FieldHubWeb do
+    pipe_through :api
+
+    resources("/", Api.FileController, only: [:index, :create, :show, :delete])
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FieldHubWeb do
   #   pipe_through :api

@@ -3,6 +3,7 @@ defmodule IdaiFieldServerWeb.Router do
 
   import IdaiFieldServerWeb.UserAuth
 
+
   pipeline :browser do
     plug Plug.Parsers,
       parsers: [:urlencoded, :multipart, :json],

@@ -1,4 +1,4 @@
-import {flow, detach, isNumber, isObject, isString} from 'tsfun';
+import { flow, detach, isNumber, isObject, isString } from 'tsfun';
 
 
 /**

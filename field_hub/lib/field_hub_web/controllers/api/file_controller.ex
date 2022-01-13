@@ -1,22 +1,22 @@
 defmodule FieldHubWeb.Api.FileController do
   use FieldHubWeb, :controller
 
-  alias FieldHub.FileStore
+  alias FieldHub.ImageStore
   alias FieldHubWeb.ErrorView
 
   def index(conn, %{"project" => project, "type" => type}) do
     parsed_type = parse_type(type)
 
-    file_store_data =
+    image_store_data =
       case parsed_type do
         {:error, msg} ->
           conn
           |> render(ErrorView, "400.json", message: msg)
-        valid ->
-          FileStore.get_file_list(%{project: Zarex.sanitize(project), type: parsed_type})
+        _valid ->
+          ImageStore.get_file_list(%{project: Zarex.sanitize(project), type: parsed_type})
       end
 
-    case file_store_data do
+    case image_store_data do
       {:error, :enoent} ->
         conn
         |> render(ErrorView, "404.json")
@@ -34,16 +34,16 @@ defmodule FieldHubWeb.Api.FileController do
     parsed_type =
       parse_type(type)
 
-    file_store_data =
+    image_store_data =
       case parsed_type do
         {:error, msg} ->
           conn
           |> render(ErrorView, "400.json", message: msg)
-        valid ->
-          FileStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: parsed_type})
+        _valid ->
+          ImageStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: parsed_type})
       end
 
-    case file_store_data do
+    case image_store_data do
       {:error, :enoent} ->
         conn
         |> render(ErrorView, "404.json")
@@ -63,16 +63,16 @@ defmodule FieldHubWeb.Api.FileController do
 
     {:ok, data, conn} = read_body(conn)
 
-    file_store_data =
+    image_store_data =
       case parsed_type do
         {:error, msg} ->
           conn
           |> render(ErrorView, "400.json", message: msg)
-        valid ->
-          FileStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
+        _valid ->
+          ImageStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
       end
 
-    case file_store_data do
+    case image_store_data do
       :ok ->
         conn
         |> render(ErrorView, "201.json")

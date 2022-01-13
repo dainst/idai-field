@@ -1,4 +1,4 @@
-defmodule FieldHub.FileStore do
+defmodule FieldHub.ImageStore do
 
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstoneSuffix ".deleted"

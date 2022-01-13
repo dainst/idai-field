@@ -634,7 +634,17 @@ describe('ConfigLoader', () => {
     it('apply groups configuration', async done => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
-            Parent: {
+            Parent1: {
+                fields: {
+                    parent1Field: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: []
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            },
+            Parent2: {
                 fields: {},
                 minimalForm: {
                     groups: []
@@ -645,8 +655,20 @@ describe('ConfigLoader', () => {
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
+            Parent1: {
+                fields: {
+                    parent1Field: { inputType: 'input' }
+                },
+                description: {}
+            },
+            Parent2: {
+                fields: {
+                    parent2Field: { inputType: 'input' }
+                },
+                description: {}
+            },
             B: {
-                parent: 'Parent',
+                parent: 'Parent1',
                 fields: {
                     fieldB2: { inputType: 'input' },
                     fieldB3: { inputType: 'input' },
@@ -661,7 +683,7 @@ describe('ConfigLoader', () => {
                 description: {}
             },
             C: {
-                parent: 'Parent',
+                parent: 'Parent1',
                 fields: {
                     fieldC1: { inputType: 'input' },
                     fieldC2: { inputType: 'input' }
@@ -669,16 +691,41 @@ describe('ConfigLoader', () => {
                 description: {}
             },
             A: {
-                parent: 'Parent',
+                parent: 'Parent1',
                 fields: {
                     fieldA2: { inputType: 'input' },
                     fieldA1: { inputType: 'input' }
                 },
                 description: {}
+            },
+            D: {
+                parent: 'Parent2',
+                fields: {},
+                description: {}
             }
         };
 
         const libraryForms: Map<LibraryFormDefinition> = {
+            'Parent1:default': {
+                categoryName: 'Parent1',
+                groups: [
+                    { name: Groups.STEM, fields: ['parent1Field'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
+            'Parent2:default': {
+                categoryName: 'Parent2',
+                groups: [
+                    { name: Groups.STEM, fields: ['parent2Field'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
             'A:default': {
                 categoryName: 'A',
                 groups: [
@@ -706,7 +753,9 @@ describe('ConfigLoader', () => {
             'A:default': { fields: {} },
             B: { fields: {} },
             'C:default': { fields: {} },
-            Parent: { fields: {} }
+            D: { fields: {} },
+            Parent1: { fields: {} },
+            'Parent2:default': { fields: {} }
         };
 
         applyConfig(
@@ -747,6 +796,10 @@ describe('ConfigLoader', () => {
             expect(result['C'].groups[1].name).toBe(Groups.PARENT);
             expect(result['C'].groups[1].fields.length).toBe(1);
             expect(result['C'].groups[1].fields[0].name).toEqual('fieldC2');
+            expect(result['D'].name).toEqual('D');
+            expect(result['D'].groups[0].name).toBe(Groups.STEM);
+            expect(result['D'].groups[0].fields.length).toBe(1);
+            expect(result['D'].groups[0].fields[0].name).toEqual('parent2Field');
         } catch(err) {
             fail(err);
         }

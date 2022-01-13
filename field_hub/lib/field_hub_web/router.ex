@@ -2,6 +2,8 @@ defmodule FieldHubWeb.Router do
 
   use FieldHubWeb, :router
 
+  import FieldHubWeb.Plugs
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -13,6 +15,7 @@ defmodule FieldHubWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :api_auth
   end
 
   forward "/db", ReverseProxyPlug, upstream: Application.get_env(:field_hub, :couchdb_root)

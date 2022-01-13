@@ -92,12 +92,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "diary",
-            "beginningDate", "endDate"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["diary"]
         },
         {
           "name": "child",
@@ -105,11 +100,11 @@
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
+          "fields": ["dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "orientation"]
+          "fields": ["dimensionVerticalExtent", "orientation"]
         }
       ]
     },
@@ -120,37 +115,10 @@
       "description": { "de": "Glass; IT-Referat, 2019" },
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["formDescription", "color", "transparency", "decorationTechnique",
             "decorationDescription", "manufacturingMethod", "objectType", "vesselForm",
             "vesselFormSpecific", "provenance"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -161,35 +129,8 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["classification"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -200,37 +141,10 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["temper", "manufacturing", "manufacturingMethod", "brickForm", "brickUsage",
             "formDescription", "clayColorOutside", "decorationTechnique", "featureText", "coatColorOutside",
             "coatColorInside", "specificType", "provenance"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -259,32 +173,11 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
           "name": "child",
           "fields": ["conditionComment", "graveFeature", "amountIndividuals", "positioningIndividuals",
             "palaeopathologicalReport", "burialCharacteristic", "burialDocumentation", "burialRite",
             "bodyHeightAndRobustness", "positionArms", "positionLegs", "ageDetermination",
             "ageDeterminationBasis", "sexDetermination", "sexDeterminationBasis", "dietReconstruction"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
         }
       ]
     },
@@ -295,15 +188,6 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
-            "endDate"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "diaryAbstract"]
-        },
-        {
           "name": "child",
           "fields": ["material", "context", "condition", "conditionAmount", "conditionComment",
             "hasRestoration", "buildingType", "buildingTechnique", "buildingCategory",
@@ -311,11 +195,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation"]
+          "fields": ["dimensionLength", "dimensionWidth"]
         },
         {
           "name": "time",
@@ -330,38 +210,11 @@
       "createdBy": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["color", "typeOfWood", "objectType", "manufacturingMethod", "provenance",
             "colorOutside", "colorOutsideMunsell", "colorInside", "colorInsideMunsell", "colorBreak",
             "colorBreakMunsell", "surfaceCondition", "decorationTechnique", "paintColor",
             "paintColorMunsell", "paintCondition"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -372,15 +225,6 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
           "name": "child",
           "fields": ["condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight",
             "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm",
@@ -389,17 +233,8 @@
             "bibliography", "hasGrouting", "wallClassification", "wallType"]
         },
         {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
           "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "orientation",
-            "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
+          "fields": ["spatialLocation", "orientation"]
         }
       ]
     },
@@ -461,30 +296,12 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
           "name": "child",
           "fields": ["distinguishingCriteria", "layerClassification", "isNatural", "soilType", "consistency"]
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth", "dimensionThickness"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
-            "cuts", "isCutBy"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
+          "fields": ["dimensionThickness"]
         }
       ]
     },
@@ -525,31 +342,9 @@
       "description": {},
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
           "name": "child",
           "fields": ["condition", "conditionAmount", "conditionComment", "consistency", "distinguishingCriteria",
             "floorClassification", "layerClassification", "mortarBinder"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
-            "cuts", "isCutBy"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
         }
       ]
     },
@@ -601,20 +396,6 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["materialType", "specificType", "vesselForm", "vesselFormSpecific", "typeNumber",
             "manufacturing", "manufacturingMethod", "temper", "temperAmount", "temperParticles",
@@ -627,19 +408,6 @@
             "amountSherdsPedestal", "amountSherdsLid", "amountSherdsRim", "amountSherdsRimBase",
             "amountSherdsRimShoulder", "amountSherdsOther", "amountSherdsShoulder", "amountSherdsPercent",
             "hasCoat"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -650,39 +418,12 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["vesselForm", "manufacturingMethod", "temper", "temperAmount", "temperParticles",
             "clayColorOutside", "clayColorInside", "coatOutsideType", "decorationTechnique",
             "vesselpart", "Firing", "FormComparisonCompendia", "FormComparisonCompendiadetail",
             "DecorationComparisonCompendia", "DecorationComparisonCompendiadetail",
             "ApplicationComparisonCompendia", "ApplicationComparisonCompendiadetail", "Drawing"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -693,15 +434,6 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
           "name": "child",
           "fields": ["soilType", "condition", "conditionAmount", "conditionComment", "distinguishingCriteria",
             "graveType", "specificType", "tombBuilding", "findingPlace", "bibliography",
@@ -710,17 +442,8 @@
           ]
         },
         {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
           "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove",
-            "borders", "cuts", "isCutBy"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
+          "fields": ["spatialLocation"]
         }
       ]
     },
@@ -731,36 +454,9 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["boneType", "species", "boneClassification", "burningGrade", "objectType",
             "biologicalAge", "sex"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -799,38 +495,11 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["temper", "temperAmount", "temperParticles", "clayStructure", "coatColorInside",
             "coatColorOutside", "surfaceCondition", "manufacturingMethod", "decorationTechnique",
             "formDescription", "vesselForm", "vesselFormSpecific", "provenance", "clayColorBreak",
             "clayColorInside", "clayColorOutside"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -840,14 +509,6 @@
       "createdBy": "",
       "creationDate": "",
       "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "height", "width", "literature"]
-        },
         {
           "name": "child",
           "fields": ["drawingMaterial", "drawingTool", "drawingType", "scale"]
@@ -860,15 +521,6 @@
       "createdBy": "",
       "creationDate": "",
       "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign",
-            "beginningDate", "endDate"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "diaryAbstract"]
-        },
         {
           "name": "child",
           "fields": ["researchMethod"]
@@ -890,36 +542,9 @@
       "creationDate": "2019",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["material", "temperAmount", "treatment", "workmanship", "color", "formDescription",
             "objectType", "architectureElement", "purpose", "origin", "provenance"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -930,37 +555,10 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["metalMaterial", "manufacturingMethod", "preservedDiameter", "frontSideDescription",
             "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint",
             "mintingRuler"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -1006,35 +604,12 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["plasterComponents", "color", "composition", "hasDecoration"]
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
+          "fields": ["area"]
         }
       ]
     },
@@ -1043,16 +618,7 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Photo",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "height", "width", "literature"]
-        }
-      ]
+      "groups": []
     },
     "Metal:default": {
       "description": {},
@@ -1061,36 +627,9 @@
       "categoryName": "Metal",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
-        },
-        {
-          "name": "identification",
-          "fields": ["isInstanceOf"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
-            "storageInventoryNumber", "comparison", "bibliography"]
-        },
-        {
           "name": "child",
           "fields": ["metalMaterial", "formDescription", "manufacturingMethod", "decorationTechnique",
             "objectType", "vesselForm", "vesselFormSpecific", "provenance"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter",
-            "dimensionDiameter", "dimensionThickness", "dimensionOther"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
         }
       ]
     },
@@ -1139,24 +678,7 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "SurveyUnit",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "campaign"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
-        }
-      ]
+      "groups": []
     },
     "Excavation:default": {
       "description": {},
@@ -1165,24 +687,8 @@
       "categoryName": "Excavation",
       "groups": [
         {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "campaign"]
-        },
-        {
-          "name": "parent",
-          "fields": ["description"]
-        },
-        {
           "name": "child",
           "fields": ["isIllegal"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
         }
       ]
     },

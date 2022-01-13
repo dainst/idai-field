@@ -71,7 +71,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
     setDefaultConstraintIndexed(categories, builtInFields, commonFields);
 
     const [forms, relations] = flow(
-        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions),
+        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions,
+            selectedParentForms ?? Object.keys(customForms ?? {})),
         cond(isDefined(customForms), Assertions.assertNoDuplicationInSelection(customForms)),
         cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relationDefinitions)),
         cond(isDefined(customForms), removeUnusedForms(Object.keys(customForms ?? {}))),

@@ -93,7 +93,8 @@ describe('get available forms', () => {
         ];
 
         const result: Map<TransientFormDefinition> = getAvailableForms(
-            categories, libraryForms, builtInFields, commonFields, relations
+            categories, libraryForms, builtInFields, commonFields, relations,
+            ['Category1', 'Category2', 'Category3']
         );
 
         expect(Object.keys(result).length).toBe(4);
@@ -110,7 +111,7 @@ describe('get available forms', () => {
         expect(result['Category2'].categoryName).toBe('Category2');
         expect(result['Category2'].groups.length).toBe(1);
         expect(result['Category2'].groups[0].name).toBe('group1');
-        expect(result['Category2'].groups[0].fields).toEqual(['commonField']);
+        expect(result['Category2'].groups[0].fields).toEqual(['builtInField', 'isSameAs', 'commonField']);
         expect(Object.keys(result['Category2'].fields).length).toBe(2);
         expect(result['Category2'].fields['builtInField'].inputType).toBe('boolean');
         expect(result['Category2'].fields['commonField'].inputType).toBe('literature');
@@ -119,7 +120,7 @@ describe('get available forms', () => {
         expect(result['Category2:default'].categoryName).toBe('Category2');
         expect(result['Category2:default'].groups.length).toBe(2);
         expect(result['Category2:default'].groups[0].name).toBe('group1');
-        expect(result['Category2:default'].groups[0].fields).toEqual(['field1']);
+        expect(result['Category2:default'].groups[0].fields).toEqual(['builtInField', 'isSameAs', 'field1']);
         expect(result['Category2:default'].groups[1].name).toBe('group2');
         expect(result['Category2:default'].groups[1].fields).toEqual(['field2']);
         expect(Object.keys(result['Category2:default'].fields).length).toBe(4);
@@ -135,5 +136,73 @@ describe('get available forms', () => {
         expect(result['Category3'].groups[0].fields).toEqual(['builtInField', 'isSameAs']);
         expect(Object.keys(result['Category3'].fields).length).toBe(1);
         expect(result['Category1'].fields['builtInField'].inputType).toBe('boolean');
+    });
+
+
+    it('select correct form for parent category when merging groups', () => {
+
+        const categories: any = {
+            Category1: {
+                fields: {
+                    field1: { inputType: 'input' },
+                    field2: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [
+                        {
+                            name: 'group1',
+                            fields: ['field1']
+                        }
+                    ]
+                }
+            },
+            Category2: {
+                parent: 'Category1',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'Category1:default': {
+                categoryName: 'Category1',
+                description: {},
+                createdBy: 'Test user',
+                creationDate: '07-07-2021',
+                groups: [
+                    {
+                        name: 'group1',
+                        fields: ['field1', 'field2']
+                    }
+                ]
+            }
+        };
+
+        const result: Map<TransientFormDefinition> = getAvailableForms(
+            categories, libraryForms, {}, {}, [],
+            ['Category1:default', 'Category2']
+        );
+
+        expect(Object.keys(result).length).toBe(3);
+
+        expect(result['Category1'].name).toBe('Category1');
+        expect(result['Category1'].categoryName).toBe('Category1');
+        expect(result['Category1'].groups.length).toBe(1);
+        expect(result['Category1'].groups[0].name).toBe('group1');
+        expect(result['Category1'].groups[0].fields).toEqual(['field1']);
+
+        expect(result['Category1:default'].name).toBe('Category1:default');
+        expect(result['Category1:default'].categoryName).toBe('Category1');
+        expect(result['Category1:default'].groups.length).toBe(1);
+        expect(result['Category1:default'].groups[0].name).toBe('group1');
+        expect(result['Category1:default'].groups[0].fields).toEqual(['field1', 'field2']);
+
+        expect(result['Category2'].name).toBe('Category2');
+        expect(result['Category2'].categoryName).toBe('Category2');
+        expect(result['Category2'].groups.length).toBe(1);
+        expect(result['Category2'].groups[0].name).toBe('group1');
+        expect(result['Category2'].groups[0].fields).toEqual(['field1', 'field2']);
     });
 });

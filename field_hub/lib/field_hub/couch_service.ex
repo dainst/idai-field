@@ -12,10 +12,10 @@ defmodule FieldHub.CouchService do
     case response do
       {:ok, %{status_code: 200}} ->
         :ok
-      {:ok, _} ->
-        :error
-      {:error, _} ->
-        :error
+      {:ok, res} ->
+        {:error, res}
+      {:error, _} = error ->
+        error
     end
   end
 

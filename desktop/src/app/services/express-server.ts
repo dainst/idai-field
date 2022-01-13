@@ -91,7 +91,7 @@ export class ExpressServer {
         });
 
 
-        app.post('/files/:project/:uuid', this.binaryBodyParser, (req: any, res: any) => {
+        app.put('/files/:project/:uuid', this.binaryBodyParser, (req: any, res: any) => {
 
             try {
                 if (!req.query.type) {

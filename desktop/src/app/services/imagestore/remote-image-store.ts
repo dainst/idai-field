@@ -30,7 +30,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
             const params = (type) ? { type } : {};
             const response = await axios({
-                method: 'post',
+                method: 'put',
                 url: address + '/files/' + project + '/' + uuid,
                 params,
                 data,

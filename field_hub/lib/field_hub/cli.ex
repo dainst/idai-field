@@ -1,4 +1,4 @@
-defmodule FieldHub.CouchAdministration do
+defmodule FieldHub.CLI do
   @couch_url Application.get_env(:field_hub, :couchdb_root)
   @couch_admin_name Application.get_env(:field_hub, :couchdb_admin_name)
   @couch_admin_password Application.get_env(:field_hub, :couchdb_admin_password)

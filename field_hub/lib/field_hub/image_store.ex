@@ -2,6 +2,16 @@ defmodule FieldHub.ImageStore do
 
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstoneSuffix ".deleted"
+  @variant_types [:original_image, :thumbnail_image]
+
+  def create_directories(project) do
+    @variant_types
+    |> Enum.map(fn(type) ->
+      get_type_directory(project, type)
+      |> File.mkdir_p()
+    end)
+    |> Enum.zip(@variant_types)
+  end
 
   def get_file_list(%{project: project, type: type}) do
     file_system_response =
@@ -42,11 +52,15 @@ defmodule FieldHub.ImageStore do
     File.write(file_path, content)
   end
 
+  defp get_project_directory(project) do
+    "#{@file_directory_root}/#{project}"
+  end
+
   defp get_type_directory(project, :original_image) do
-    "#{@file_directory_root}/#{project}/original_images"
+    "#{get_project_directory(project)}/original_images"
   end
 
   defp get_type_directory(project, :thumbnail_image) do
-    "#{@file_directory_root}/#{project}/thumbnail_images"
+    "#{get_project_directory(project)}/thumbnail_images"
   end
 end

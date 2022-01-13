@@ -11,7 +11,8 @@ defmodule FieldHubWeb.Api.FileController do
       case parsed_type do
         {:error, msg} ->
           conn
-          |> render(ErrorView, "400.json", message: msg)
+          |> put_view(ErrorView)
+          |> render("400.json", message: msg)
         _valid ->
           ImageStore.get_file_list(%{project: Zarex.sanitize(project), type: parsed_type})
       end
@@ -19,7 +20,8 @@ defmodule FieldHubWeb.Api.FileController do
     case image_store_data do
       {:error, :enoent} ->
         conn
-        |> render(ErrorView, "404.json")
+        |> put_view(ErrorView)
+        |> render("404.json")
       {:ok, file_names} ->
         render(conn, "list.json", %{file_names: file_names})
     end
@@ -38,7 +40,8 @@ defmodule FieldHubWeb.Api.FileController do
       case parsed_type do
         {:error, msg} ->
           conn
-          |> render(ErrorView, "400.json", message: msg)
+          |> put_view(ErrorView)
+          |> render("400.json", message: msg)
         _valid ->
           ImageStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: parsed_type})
       end
@@ -46,7 +49,8 @@ defmodule FieldHubWeb.Api.FileController do
     case image_store_data do
       {:error, :enoent} ->
         conn
-        |> render(ErrorView, "404.json")
+        |> put_view(ErrorView)
+        |> render("404.json")
       {:ok, file_path} ->
         Plug.Conn.send_file(conn, 200, file_path)
     end
@@ -67,7 +71,8 @@ defmodule FieldHubWeb.Api.FileController do
       case parsed_type do
         {:error, msg} ->
           conn
-          |> render(ErrorView, "400.json", message: msg)
+          |> put_view(ErrorView)
+          |> render("400.json", message: msg)
         valid ->
           ImageStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
       end
@@ -75,10 +80,12 @@ defmodule FieldHubWeb.Api.FileController do
     case image_store_data do
       :ok ->
         conn
-        |> render(ErrorView, "201.json")
+        |> put_view(ErrorView)
+        |> render("201.json")
       {:error, _} ->
         conn
-        |> render(ErrorView, "500.json")
+        |> put_view(ErrorView)
+        |> render("500.json")
     end
   end
 

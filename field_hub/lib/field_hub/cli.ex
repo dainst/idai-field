@@ -13,6 +13,8 @@ defmodule FieldHub.CLI do
       "",
       get_request_headers()
     )
+
+    FieldHub.ImageStore.create_directories(project_name)
   end
 
   def create_user(user_name) do

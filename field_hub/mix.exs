@@ -59,8 +59,20 @@ defmodule FieldHub.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
+
+    dev_db_name = "dev_seed"
+    dev_db_admin_name = "dev_seed_admin"
+    dev_db_member_name = "dev_seed_member"
+
     [
-      setup: ["deps.get"],
+      setup: ["deps.get", "seed"],
+      seed: [
+        "run --eval 'FieldHub.CouchAdministration.create_project(\"#{dev_db_name}\")'",
+        "run --eval 'FieldHub.CouchAdministration.create_user(\"#{dev_db_admin_name}\")'",
+        "run --eval 'FieldHub.CouchAdministration.create_user(\"#{dev_db_member_name}\")'",
+        "run --eval 'FieldHub.CouchAdministration.add_user_as_project_admin(\"#{dev_db_admin_name}\", \"#{dev_db_name}\")'",
+        "run --eval 'FieldHub.CouchAdministration.add_user_as_project_member(\"#{dev_db_member_name}\", \"#{dev_db_name}\")'"
+      ],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end

@@ -4,8 +4,24 @@ defmodule FieldHub.FileStore do
   @tombstoneSuffix ".deleted"
 
   def get_file_list(%{project: project, type: type}) do
-    get_type_directory(project, type)
-    |> File.ls()
+    file_system_response =
+      get_type_directory(project, type)
+      |> File.ls()
+
+    case file_system_response do
+      {:error, _} = error ->
+        error
+      {:ok, files} ->
+        deleted =
+          files
+          |> Enum.filter(fn(filename) -> String.ends_with?(filename, @tombstoneSuffix) end)
+
+        {
+          :ok,
+          Enum.filter(files, fn(filename) -> "#{filename}#{@tombstoneSuffix}" not in deleted end)
+        }
+    end
+
   end
 
   def get_file_path(%{uuid: uuid, project: project, type: type}) do

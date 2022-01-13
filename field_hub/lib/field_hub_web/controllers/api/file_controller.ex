@@ -68,7 +68,7 @@ defmodule FieldHubWeb.Api.FileController do
         {:error, msg} ->
           conn
           |> render(ErrorView, "400.json", message: msg)
-        _valid ->
+        valid ->
           ImageStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
       end
 
@@ -83,9 +83,26 @@ defmodule FieldHubWeb.Api.FileController do
   end
 
   def delete(conn, %{"project" => project, "id" => uuid, "type" => type}) do
-    # does not do anything because we just want to keep everything in the hub?
-    conn
-    |> render(ErrorView, "200.json")
+    parsed_type =
+      parse_type(type)
+
+    image_store_data =
+      case parsed_type do
+        {:error, msg} ->
+          conn
+          |> render(ErrorView, "400.json", message: msg)
+        valid ->
+          ImageStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
+      end
+
+    case image_store_data do
+      :ok ->
+        conn
+        |> render(ErrorView, "200.json")
+      {:error, _} ->
+        conn
+        |> render(ErrorView, "500.json")
+    end
   end
 
   defp parse_type(type) do

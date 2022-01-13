@@ -52,6 +52,10 @@ defmodule FieldHub.ImageStore do
     File.write(file_path, content)
   end
 
+  def delete(%{uuid: uuid, project: project, type: type}) do
+    store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: type, content: []})
+  end
+
   defp get_project_directory(project) do
     "#{@file_directory_root}/#{project}"
   end

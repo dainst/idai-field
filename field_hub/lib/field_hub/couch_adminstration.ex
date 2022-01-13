@@ -24,12 +24,36 @@ defmodule FieldHub.CouchAdministration do
       |> Base.encode64()
       |> binary_part(0, password_length)
 
-    Logger.info("Creating user '#{user_name}' with password '#{password}'.")
+    %{status_code: status_code} =
+      HTTPoison.put!(
+        "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+        Jason.encode!(%{name: user_name, password: password, roles: [], type: "user"}),
+        get_request_headers()
+      )
+
+    if status_code == 409 do
+      Logger.info("User '#{user_name}' already exists.")
+    else
+      Logger.info("Created user '#{user_name}' with password '#{password}'.")
+    end
+  end
+
+  def set_password(user_name, user_password) do
+
+    default_headers = get_request_headers()
+
+    %{"_rev" => rev } =
+      HTTPoison.get!(
+        "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+        default_headers
+      )
+      |> Map.get(:body)
+      |> Jason.decode!()
 
     HTTPoison.put!(
       "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
-      Jason.encode!(%{name: user_name, password: password, roles: [], type: "user"}),
-      get_request_headers()
+      Jason.encode!(%{name: user_name, password: user_password, roles: [], type: "user"}),
+      default_headers ++ [{"If-Match", rev}]
     )
   end
 

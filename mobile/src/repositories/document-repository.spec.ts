@@ -77,7 +77,7 @@ describe('DocumentRepository', () => {
     });
     
 
-    fit('finds document by parent', async () => {
+    it('finds document by parent', async () => {
 
         const docs = Object.values(createDocuments([
             ['id1', 'Feature', ['id2']],

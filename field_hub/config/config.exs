@@ -26,9 +26,6 @@ config :field_hub, FieldHub.Mailer, adapter: Swoosh.Adapters.Local
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
 
-config :field_hub,
-  couchdb_root: "http://localhost:5984",
-  file_directory_root: "files"
 
 # Configure esbuild (the version is required)
 config :esbuild,

@@ -35,6 +35,13 @@ defmodule FieldHub.FileStore do
     end
   end
 
+  def store_file(%{uuid: uuid, project: project, type: type, content: content}) do
+    directory = get_type_directory(project, type)
+    File.mkdir_p!(directory)
+    file_path = "#{directory}/#{uuid}"
+    File.write(file_path, content)
+  end
+
   defp get_type_directory(project, :original_image) do
     "#{@file_directory_root}/#{project}/original_images"
   end

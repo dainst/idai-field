@@ -5,7 +5,9 @@ import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 interface SyncDifference {
     missingLocally: string[],
-    missingRemotely: string[]
+    missingRemotely: string[],
+    deleteLocally: string[],
+    deleteRemotely: string[]
 }
 
 
@@ -14,8 +16,8 @@ export class ImageSyncService {
     private active: ImageVariant[] = [];
 
     private differences: {[variant in ImageVariant]: SyncDifference} = {
-        original_image: {missingLocally: [], missingRemotely: []},
-        thumbnail_image: {missingLocally: [], missingRemotely: []}
+        original_image: {missingLocally: [], missingRemotely: [], deleteLocally: [], deleteRemotely: []},
+        thumbnail_image: {missingLocally: [], missingRemotely: [], deleteLocally: [], deleteRemotely: []}
     };
 
     constructor(
@@ -96,29 +98,28 @@ export class ImageSyncService {
 
         try {
             const activeProject = this.imageStore.getActiveProject();
-
-            await this.reevaluateDifference(activeProject, variant);
+            await this.evaluateDifference(activeProject, variant);
 
             for (const uuid of this.differences[variant].missingLocally) {
-                if (uuid.endsWith(tombstoneSuffix)) {
-                    this.imageStore.remove(uuid.replace(tombstoneSuffix, ''), activeProject)
+                const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
+                if (data !== null) {
+                    this.imageStore.store(uuid, data, activeProject, variant);
                 } else {
-                    const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-                    if (data !== null) {
-                        this.imageStore.store(uuid, data, activeProject, variant);
-                    } else {
-                        console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
-                    }
+                    console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
                 }
             }
 
+            for (const uuid of this.differences[variant].deleteLocally) {
+                this.imageStore.remove(uuid, activeProject)
+            }
+
             for (const uuid of this.differences[variant].missingRemotely) {
-                if (uuid.endsWith(tombstoneSuffix)) {
-                    this.remoteImagestore.remove(uuid.replace(tombstoneSuffix, ''), activeProject)
-                } else {
-                    const data = await this.imageStore.getData(uuid, variant, activeProject);
-                    this.remoteImagestore.store(uuid, data, activeProject, variant);
-                }
+                const data = await this.imageStore.getData(uuid, variant, activeProject);
+                this.remoteImagestore.store(uuid, data, activeProject, variant);
+            }
+
+            for (const uuid of this.differences[variant].deleteRemotely) {
+                this.remoteImagestore.remove(uuid, activeProject)
             }
         }
         catch (e){
@@ -127,32 +128,45 @@ export class ImageSyncService {
     }
 
 
-    private async reevaluateDifference(activeProject: string, variant: ImageVariant) {
+    private async evaluateDifference(activeProject: string, variant: ImageVariant) {
 
-        const localPaths = Object.keys(this.imageStore.getFileIds(activeProject, [variant]));
-        const remotePaths = Object.keys(await this.remoteImagestore.getFileIds(activeProject, variant));
+        const localData = this.imageStore.getFileIds(activeProject, [variant])
+        const remoteData = await this.remoteImagestore.getFileIds(activeProject, variant)
 
-        const missingLocally = remotePaths.filter(
-            (remotePath: string) => !localPaths.includes(remotePath)
+        const localUUIDs = Object.keys(localData);
+        const remoteUUIDs = Object.keys(remoteData);
+
+        const missingLocally = remoteUUIDs.filter(
+            (remoteUUID: string) => !localUUIDs.includes(remoteUUID)
         ).filter(
-            // Remote images that got deleted locally, are not to be considered missing locally. Otherwise we would re-download an image
-            // that was already deleted locally.
-            (remotePath: string) => !localPaths.includes(`${remotePath}${tombstoneSuffix}`)
+            // We do not want to download files marked as deleted remotely.
+            (remoteUUID: string) => !remoteData[remoteUUID].deleted
         );
 
-        const missingRemotely = localPaths.filter(
-            (localPath: string) => !remotePaths.includes(localPath)
+        const deleteLocally = localUUIDs.filter(
+            (localUUID: string) => remoteUUIDs.includes(localUUID)
         ).filter(
-            // Local images that got deleted remotely, are not to be considered missing remotely. Otherwise we would re-upload an image 
-            // that was already deleted remotely.
-            (localPath: string) => !remotePaths.includes(`${localPath}${tombstoneSuffix}`)
+            (localUUID: string) => !remoteData[localUUID].deleted && remoteData[localUUID].deleted
+        );
+
+        const missingRemotely = localUUIDs.filter(
+            (localUUID: string) => !remoteUUIDs.includes(localUUID)
+        ).filter(
+            // We do not want to upload files marked as deleted locally.
+            (localUUID: string) => !remoteData[localUUID].deleted
+        );
+
+        const deleteRemotely = localUUIDs.filter(
+            (localUUID: string) => remoteUUIDs.includes(localUUID)
+        ).filter(
+            (localUUID: string) => !remoteData[localUUID].deleted && remoteData[localUUID].deleted
         );
 
         this.differences[variant] = {
-            variant: variant,
             missingLocally: missingLocally,
-            missingRemotely: missingRemotely
+            missingRemotely: missingRemotely,
+            deleteLocally: deleteLocally,
+            deleteRemotely: deleteRemotely
         } as SyncDifference
     }
-
 }

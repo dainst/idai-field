@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ImageStore, ImageVariant } from 'idai-field-core';
+import { ImageStore, ImageVariant, FileInfo } from 'idai-field-core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -41,7 +41,7 @@ export class ExpressServer {
         app.get('/files/:project', (req: any, res: any) => {
 
             try {
-                let list: { [uuid: string]: string[] };
+                let list: { [uuid: string]: FileInfo };
 
                 if (!req.query.type) {
                     list = this.imagestore.getFileIds(req.params.project, []);

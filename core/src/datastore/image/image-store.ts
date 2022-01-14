@@ -6,6 +6,11 @@ export enum ImageVariant {
     THUMBNAIL = "thumbnail_image"
 }
 
+export interface FileInfo {
+    deleted: boolean;
+    types: ImageVariant[];
+}
+
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 
 export const thumbnailDirectory = 'thumbs/';
@@ -122,7 +127,7 @@ export class ImageStore {
      * are returned, otherwise only images with the requested variants are returned.
      * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
      */
-    public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: ImageVariant[]} {
+    public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: FileInfo} {
 
         let originalFileNames = [];
         let thumbnailFileNames = [];

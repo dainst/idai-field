@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ImageVariant, RemoteImageStoreInterface } from 'idai-field-core';
+import { ImageVariant, RemoteImageStoreInterface, FileInfo } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
@@ -87,7 +87,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
     public async getFileIds(
         project: string,
         type?: ImageVariant
-    ): Promise<{ [uuid: string]: ImageVariant[]}> {
+    ): Promise<{ [uuid: string]: FileInfo}> {
 
         const settings = this.settingsProvider.getSettings();
 

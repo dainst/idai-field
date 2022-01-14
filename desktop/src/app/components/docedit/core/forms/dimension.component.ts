@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Dimension, Labels, Field, Resource } from 'idai-field-core';
 import { clone } from 'tsfun';
+import { Dimension, Labels, Field, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 
 
@@ -28,6 +28,9 @@ export class DimensionComponent {
     constructor(private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
                 private labels: Labels) {}
+
+    
+    public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
 
 
     public createNewDimension() {
@@ -60,13 +63,13 @@ export class DimensionComponent {
 
     public getPositionValues(): string[] {
 
-        return Object.keys(this.field['positionValues'].values);
+        return Object.keys(this.field['valuelist'].values);
     }
 
 
     public getPositionValueLabel(valueId: string): string {
 
-        return this.labels.getValueLabel(this.field['positionValues'], valueId);
+        return this.labels.getValueLabel(this.field['valuelist'], valueId);
     }
 
 

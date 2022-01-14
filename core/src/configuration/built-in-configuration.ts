@@ -31,40 +31,40 @@ export class BuiltInConfiguration {
         },
         dimensionLength: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionWidth: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionHeight: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionDepth: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionDiameter: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionPerimeter: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionThickness: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         dimensionVerticalExtent: {
             inputType: Field.InputType.DIMENSION,
             inputTypeOptions: { validation: { permissive: true } },
-            positionValuelistId: 'position-values-edge-default'
+            valuelistId: 'position-values-edge-default'
         },
         dimensionOther: {
             inputType: Field.InputType.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
+            valuelistId: 'position-values-expansion-default'
         },
         beginningDate: {
             inputType: Field.InputType.DATE,
@@ -558,19 +558,23 @@ export class BuiltInConfiguration {
 
     public builtInFields: Map<BuiltInFieldDefinition> = {
         id: {
+            inputType: Field.InputType.NONE,
             editable: false,
             visible: false
         },
         category: {
+            inputType: Field.InputType.CATEGORY,
             visible: true,
             editable: false
         },
         shortDescription: {
+            inputType: Field.InputType.INPUT,
             visible: true,
             editable: true,
             fulltextIndexed: true
         },
         identifier: {
+            inputType: Field.InputType.INPUT,
             visible: false,
             editable: true,
             mandatory: true,

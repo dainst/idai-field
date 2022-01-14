@@ -30,100 +30,97 @@
 </ng-template>
 
 <ng-template #editDating let-dating="dating">
-    <form #datingForm="ngForm" (ngSubmit)="addNewDating()">
-
-        <div class="card">
-            <div class="card-header">
-                <div>
-                    <select class="form-control" [(ngModel)]="dating.type" name="type" (ngModelChange)="createNewDating()">
-                        <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
-                        <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
-                        <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
-                        <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
-                        <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="card-block">
-                <div *ngIf="dating.type === 'range'">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
-                            <span class="until-label" i18n="@@docedit.forms.dating.until">bis</span>
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
-                        </div>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="checkboxes"
-                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
-                </div>
-
-                <div *ngIf="dating.type === 'exact'">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
-                        </div>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="checkboxes"
-                                  [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
-                </div>
-
-                <div *ngIf="dating.type === 'before'">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
-                        </div>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="checkboxes"
-                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
-                </div>
-
-                <div *ngIf="dating.type === 'after'">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
-                        </div>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="checkboxes"
-                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
-                </div>
-
-                <div *ngIf="dating.type === 'scientific'">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
-                            <span class="margin-label">&plusmn;</span>
-                            <input type="number" name="margin" class="form-control margin-input"
-                                   [(ngModel)]="dating.margin">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label i18n="@@docedit.forms.dating.source">Grundlage:</label>
-                    <input type="text" [(ngModel)]="dating.source" name="source"
-                        class="form-control">
-                </div>
-
-            </div>
-            <div class="card-footer" align="right">
-                <button type="submit" class="btn btn-primary"
-                        [disabled]="!validate(dating)">
-                    <span i18n="@@buttons.ok">OK</span>
-                </button>
-                <button type="button" class="btn btn-secondary"
-                        (click)="newDating = null">
-                    <span i18n="@@buttons.cancel">Abbrechen</span>
-                </button>
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <select class="form-control" [(ngModel)]="dating.type" name="type" (ngModelChange)="createNewDating()">
+                    <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
+                    <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
+                    <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
+                    <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
+                    <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
+                </select>
             </div>
         </div>
-    </form>
+
+        <div class="card-block">
+            <div *ngIf="dating.type === 'range'">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
+                        <span class="until-label" i18n="@@docedit.forms.dating.until">bis</span>
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                    </div>
+                </div>
+                <ng-container [ngTemplateOutlet]="checkboxes"
+                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+            </div>
+
+            <div *ngIf="dating.type === 'exact'">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                    </div>
+                </div>
+                <ng-container [ngTemplateOutlet]="checkboxes"
+                                [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
+            </div>
+
+            <div *ngIf="dating.type === 'before'">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                    </div>
+                </div>
+                <ng-container [ngTemplateOutlet]="checkboxes"
+                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+            </div>
+
+            <div *ngIf="dating.type === 'after'">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
+                    </div>
+                </div>
+                <ng-container [ngTemplateOutlet]="checkboxes"
+                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+            </div>
+
+            <div *ngIf="dating.type === 'scientific'">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <ng-container [ngTemplateOutlet]="editDate"
+                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                        <span class="margin-label">&plusmn;</span>
+                        <input type="number" name="margin" class="form-control margin-input"
+                                [(ngModel)]="dating.margin">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label i18n="@@docedit.forms.dating.source">Grundlage:</label>
+                <input type="text" [(ngModel)]="dating.source" name="source"
+                    class="form-control">
+            </div>
+
+        </div>
+        <div class="card-footer" align="right">
+            <button class="btn btn-primary"
+                    i18n="@@buttons.ok"
+                    [disabled]="!validate(dating)"
+                    (click)="addNewDating()">OK</button>
+            <button type="button" class="btn btn-secondary"
+                    (click)="newDating = null">
+                <span i18n="@@buttons.cancel">Abbrechen</span>
+            </button>
+        </div>
+    </div>
 </ng-template>
 
 <div *ngFor="let dating of resource[field.name]; index as i"  class="checkbox">

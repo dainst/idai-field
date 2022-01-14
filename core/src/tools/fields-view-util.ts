@@ -32,7 +32,6 @@ export interface FieldsViewField {
     type: 'default'|'array'|'object'|'relation';
     value?: string|string[]; // TODO add object types
     valuelist?: Valuelist;
-    positionValues?: Valuelist;
     targets?: Array<Document>;
 }
 
@@ -109,7 +108,7 @@ export module FieldsViewUtil {
                 object,
                 formatDecimal,
                 getTranslation,
-                labels.getValueLabel(field.positionValues, object.measurementPosition)
+                labels.getValueLabel(field.valuelist, object.measurementPosition)
             );
         } else if (object.quotation) {
             return Literature.generateLabel(
@@ -174,8 +173,7 @@ function makeField(projectConfiguration: ProjectConfiguration,
                         fieldContent, field.name, projectConfiguration, labels, field.valuelist
                     ),
                 type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
-                valuelist: field.valuelist,
-                positionValues: field.positionValues
+                valuelist: field.valuelist
             };
     }
 }

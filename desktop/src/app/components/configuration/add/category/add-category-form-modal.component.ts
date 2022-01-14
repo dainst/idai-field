@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
@@ -22,7 +22,6 @@ import { SaveResult } from '../../configuration.component';
  */
 export class AddCategoryFormModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public parentCategory: CategoryForm|undefined;
     public categoryToReplace?: CategoryForm;
@@ -37,6 +36,7 @@ export class AddCategoryFormModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals) {}
 
 
@@ -78,8 +78,8 @@ export class AddCategoryFormModalComponent {
 
     public applyCategoryNameSearch() {
 
-        this.categoryForms = ConfigurationIndex
-            .findCategoryForms(this.configurationIndex, this.searchTerm, this.parentCategory?.name,
+        this.categoryForms = this.configurationIndex
+            .findCategoryForms(this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.forms).includes(

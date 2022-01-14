@@ -10,7 +10,6 @@ import { BaseFormDefinition, BaseGroupDefinition } from './base-form-definition'
  */
 export interface LibraryFormDefinition extends BaseFormDefinition {
 
-    positionValuelists?: Valuelists;
     categoryName: string;
     description: I18N.String,
     createdBy: string,

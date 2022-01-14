@@ -1,4 +1,4 @@
-import { Relation, Valuelist } from '../../model';
+import { Field, Relation, Valuelist } from '../../model';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
@@ -9,10 +9,6 @@ import { ConfigurationErrors } from './configuration-errors';
  * @author Thomas Kleinke
  */
 export module ConfigurationValidation {
-
-    const VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
-    const POSITION_VALUELIST_INPUT_TYPES = ['dimension'];
-
 
     export function findMissingRelationType(relations: Array<Relation>,
                                             categoryNames: string[]): Array<Array<string>> {
@@ -60,19 +56,11 @@ export module ConfigurationValidation {
             for (let fieldName of Object.keys(form.fields)) {
                 const fieldDefinition = form.fields[fieldName];
                 if (!fieldDefinition.hasOwnProperty('inputType')) fieldDefinition.inputType = 'input';
-                if (VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
+                if (Field.InputType.VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
                     && !fieldDefinition.valuelistFromProjectField
                     && !isValidValuelist(fieldDefinition.valuelist)) {
                     messages.push([
                         ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST,
-                        fieldName,
-                        form.name
-                    ]);
-                }
-                if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
-                    && !isValidValuelist((fieldDefinition as any).positionValues)) {
-                    messages.push([
-                        ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
                         fieldName,
                         form.name
                     ]);

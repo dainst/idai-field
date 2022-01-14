@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { I18N, Labels, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
-import { ValuelistUsage } from '../../index/valuelist-usage-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
+import { ValuelistUsage } from '../../../../services/configuration/index/valuelist-usage-index';
 
 
 @Component({
@@ -14,10 +14,10 @@ import { ValuelistUsage } from '../../index/valuelist-usage-index';
 export class ValuelistPreviewComponent {
 
     @Input() valuelist: Valuelist|undefined;
-    @Input() configurationIndex: ConfigurationIndex;
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private configurationIndex: ConfigurationIndex) {}
 
 
     public getLabel = (object: I18N.LabeledValue) => this.labels.get(object);
@@ -29,6 +29,6 @@ export class ValuelistPreviewComponent {
 
         if (!this.valuelist) return [];
 
-        return ConfigurationIndex.getValuelistUsage(this.configurationIndex, this.valuelist.id) ?? [];
+        return this.configurationIndex.getValuelistUsage(this.valuelist.id) ?? [];
     }
 }

@@ -10,7 +10,7 @@ import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { Modals } from '../../../services/modals';
 import { MenuContext } from '../../../services/menu-context';
-import { ConfigurationIndex } from '../index/configuration-index';
+import { ConfigurationIndex } from '../../../services/configuration/index/configuration-index';
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
 import { SaveResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
@@ -32,7 +32,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public configurationIndex: ConfigurationIndex;
 
     public clonedField: Field|undefined;
     public hideable: boolean;
@@ -47,6 +46,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modalService: NgbModal,
                 menuService: Menus,
                 messages: Messages,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private i18n: I18n) {
 
@@ -131,7 +131,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             'lg'
         );
 
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;

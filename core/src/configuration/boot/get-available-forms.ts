@@ -6,6 +6,7 @@ import { LibraryFormDefinition } from '../model/form/library-form-definition';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { addFieldsToForm } from './add-fields-to-form';
 import { ConfigurationErrors } from './configuration-errors';
+import { mergeGroupsConfigurations } from './merge-groups-configurations';
 
 
 /**
@@ -16,7 +17,8 @@ export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
                                   libraryForms: Map<LibraryFormDefinition>,
                                   builtInFields: Map<Field>,
                                   commonFields: Map<Field>,
-                                  relations: Array<Relation>): Map<TransientFormDefinition> {
+                                  relations: Array<Relation>,
+                                  selectedForms: string[]): Map<TransientFormDefinition> {
 
     const builtInForms: Map<TransientFormDefinition> = map(getMinimalForm(categories), categories);
     const forms: Map<TransientFormDefinition> = Object.keys(libraryForms).reduce((forms, formName) => {
@@ -30,7 +32,14 @@ export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
         return forms;
     }, builtInForms);
 
-    return map(form => addFieldsToForm(form, categories, builtInFields, commonFields, relations), forms);
+    return map(form => {
+        try {
+            setGroups(form, Object.values(forms), selectedForms);
+        } catch (err) {
+            console.error('Error while setting groups', err); // TODO Fix error handling
+        }
+        return addFieldsToForm(form, categories, builtInFields, commonFields, relations);
+    }, forms);
 }
 
 
@@ -46,7 +55,7 @@ function getMinimalForm(categories: Map<TransientCategoryDefinition>) {
         );
 
         if (!minimalForm) {
-            throw [[ConfigurationErrors.NO_MINIMAL_FORM_PROVIDED, category.name]]
+            throw [[ConfigurationErrors.NO_MINIMAL_FORM_PROVIDED, category.name]];
         }
 
         minimalForm.description = {};
@@ -80,4 +89,16 @@ function makeTransientForm(libraryForm: LibraryFormDefinition, formName: string,
 }
 
 
+function setGroups(form: TransientFormDefinition, forms: Array<TransientFormDefinition>,
+                   selectedForms: string[]) {
 
+    if (!form.parent) return;
+
+    const parentForm: TransientFormDefinition|undefined = forms.find(form2 => {
+        return form2.categoryName === form.parent && selectedForms.includes(form2.name);
+    });
+
+    if (!parentForm) throw [[ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, form.parent]];
+
+    form.groups = mergeGroupsConfigurations(parentForm.groups, form.groups);
+}

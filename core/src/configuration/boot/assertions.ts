@@ -40,7 +40,6 @@ export module Assertions {
 
         assertInputTypesAreSet(builtInCategories, commonFields);
         assertInputTypesAreSet(libraryCategories, commonFields);
-        if (customForms) assertInputTypesAreSet(customForms, commonFields);
     }
 
 
@@ -90,12 +89,6 @@ export module Assertions {
             if (Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType ? field.inputType : '')) {
                 if (!field.valuelistId && !field.valuelist && !field.valuelistFromProjectField) {
                     throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, formName, fieldName]];
-                }
-            }
-
-            if (['dimension'].includes(field.inputType ? field.inputType : '')) {
-                if (!field.positionValuelistId && !(field as Field).positionValues) {
-                    throw [[ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, formName, fieldName]];
                 }
             }
         });

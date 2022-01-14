@@ -120,7 +120,7 @@ describe('Assertions', () => {
     });
 
 
-    it('assert input types are set in custom form fields', () => {
+    it('allow missing input types in custom form fields', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             C: {
@@ -136,19 +136,15 @@ describe('Assertions', () => {
         const customForms: Map<CustomFormDefinition> = {
             C: {
                 fields: {
-                    field2: {}
+                    field1: { constraintIndexed: true }
                 }
             }
         };
 
         try {
             Assertions.performAssertions(builtInCategories, {}, {}, {}, {}, customForms);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([[
-                ConfigurationErrors.MISSING_FIELD_PROPERTY,
-                'inputType', 'C', 'field2'
-            ]]);
+        } catch (err) {
+            fail(err);
         }
     });
 

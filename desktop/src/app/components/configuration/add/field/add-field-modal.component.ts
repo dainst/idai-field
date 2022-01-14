@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, on, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
@@ -22,7 +22,6 @@ import { SaveResult } from '../../configuration.component';
 export class AddFieldModalComponent {
 
     public configurationDocument: ConfigurationDocument;
-    public configurationIndex: ConfigurationIndex;
     public category: CategoryForm;
     public groupName: string;
     public availableInputTypes: Array<InputType>;
@@ -37,6 +36,7 @@ export class AddFieldModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private labels: Labels) {}
 
@@ -79,12 +79,11 @@ export class AddFieldModalComponent {
 
     public applyFieldNameSearch() {
 
-        this.fields = ConfigurationIndex.findFields(
-            this.configurationIndex,
+        this.fields = this.configurationIndex.findFields(
             this.searchTerm,
             this.category.source === 'custom' ? this.category.parentCategory.name : this.category.name
         )
-            .concat(ConfigurationIndex.findFields(this.configurationIndex, this.searchTerm, 'commons'))
+            .concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
             .filter(field => (field.visible || field.editable)
                 && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
             .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
@@ -124,7 +123,6 @@ export class AddFieldModalComponent {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = this.category;
         componentInstance.field = {
             name: this.searchTerm,

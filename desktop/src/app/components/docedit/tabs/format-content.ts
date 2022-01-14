@@ -1,9 +1,5 @@
-import { Dating, Dimension, Labels, Literature, OptionalRange, Resource, ValuelistUtil } from 'idai-field-core';
 import { flow, isArray, isObject, isString } from 'tsfun';
-
-const ELECTRON_CONFIG_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
-    ? window.require('@electron/remote').getGlobal('config').languages
-    : ['de'];
+import { Dating, Dimension, Labels, Literature, OptionalRange, Resource } from 'idai-field-core';
 
 export type InnerHTML = string;
 
@@ -11,8 +7,7 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource,
-                              field: any,
+export function formatContent(resource: Resource, field: any,
                               getTranslation: (key: string) => string,
                               transform: (value: any) => string|null,
                               labels: Labels): InnerHTML {
@@ -81,7 +76,7 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
-                labels.getValueLabel(field.positionValues, element.measurementPosition));
+                labels.getValueLabel(field.valuelist, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation);
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {

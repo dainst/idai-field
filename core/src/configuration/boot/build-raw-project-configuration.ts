@@ -68,10 +68,12 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         = buildFields(commonFieldDefinitions, languageConfigurations, valuelists, 'commons');
     applyLanguagesToRelations(languageConfigurations, relationDefinitions);
 
+    setDefaultConstraintIndexed(categories, builtInFields, commonFields);
+
     const [forms, relations] = flow(
-        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions),
+        getAvailableForms(categories, libraryForms, builtInFields, commonFields, relationDefinitions,
+            selectedParentForms ?? Object.keys(customForms ?? {})),
         cond(isDefined(customForms), Assertions.assertNoDuplicationInSelection(customForms)),
-        setDefaultConstraintIndexed,
         cond(isDefined(customForms), mergeWithCustomForms(customForms, categories, builtInFields, commonFields, relationDefinitions)),
         cond(isDefined(customForms), removeUnusedForms(Object.keys(customForms ?? {}))),
         insertValuelistIds,
@@ -180,13 +182,16 @@ function processForms(validateFields: any,
 }
 
 
-function setDefaultConstraintIndexed(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
+function setDefaultConstraintIndexed(categories:  Map<TransientCategoryDefinition>, builtInFields: Map<Field>,
+                                     commonFields: Map<Field>) {
 
-    iterateOverFields(forms, (categoryName, category, fieldName, field) => {
+    iterateOverFields(categories, (categoryName, category, fieldName, field) => {
         field.defaultConstraintIndexed = field.constraintIndexed === true;
     });
 
-    return forms;
+    Object.values(builtInFields).concat(Object.values(commonFields)).forEach(field => {
+        field.defaultConstraintIndexed = field.constraintIndexed === true;
+    });
 }
 
 
@@ -207,9 +212,6 @@ function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientF
 
         if (form.valuelists && form.valuelists[fieldName]) {
             field.valuelistId = form.valuelists[fieldName];
-        }
-        if (form.positionValuelists && form.positionValuelists[fieldName]) {
-            field.positionValuelistId = form.positionValuelists[fieldName];
         }
     });
 
@@ -235,12 +237,10 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
 
 function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuelists: Map<Valuelist>) {
 
-    if (!field.valuelistId && !field.positionValuelistId) return;
+    if (!field.valuelistId) return;
 
     field.valuelist = valuelists[field.valuelistId!];
-    field.positionValues = valuelists[field.positionValuelistId!];
     delete field.valuelistId;
-    delete field.positionValuelistId;
 }
 
 

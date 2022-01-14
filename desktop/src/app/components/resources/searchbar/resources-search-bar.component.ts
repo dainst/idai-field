@@ -1,6 +1,5 @@
-import {Component, ElementRef, Input} from '@angular/core';
-import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {ProjectConfiguration} from 'idai-field-core';
+import { Component, ElementRef, Input } from '@angular/core';
+import { SearchBarComponent } from '../../widgets/search-bar.component';
 
 
 @Component({
@@ -20,9 +19,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public suggestionsVisible: boolean = false;
 
 
-    constructor(private elementRef: ElementRef, projectConfiguration: ProjectConfiguration) {
+    constructor(private elementRef: ElementRef) {
 
-        super(projectConfiguration);
+        super();
     }
 
 

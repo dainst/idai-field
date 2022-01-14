@@ -1,4 +1,4 @@
-import { tokenize } from '../../../../src/app/components/configuration/index/tokenize';
+import { tokenize } from '../../../../src/app/services/configuration/index/tokenize';
 
 
 describe('tokenize', () => {

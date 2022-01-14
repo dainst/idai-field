@@ -1,0 +1,38 @@
+valuelist-search-bar {
+  #valuelist-search-input {
+    width: calc(100% - 50px);
+    height: 39px;
+    border-right: none;
+  }
+
+  #valuelist-filter-button .btn {
+    width: 50px;
+  }
+
+  .arrow {
+    &::before,
+    &::after {
+      left: 16px;
+    }
+    &::after {
+      border-bottom-color: #eee !important;
+    }
+  }
+
+  #valuelist-filter-menu {
+    user-select: none;
+
+    .form-group {
+      margin-bottom: 0;
+
+      .form-check-inline {
+        padding-left: 10px;
+        padding-bottom: 10px;
+
+        &:first-child {
+          padding-top: 10px;
+        }
+      }
+    }
+  }
+}

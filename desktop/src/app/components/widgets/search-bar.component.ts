@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges } from '@angular/core';
-import { sameset} from 'tsfun';
-import { CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { sameset } from 'tsfun';
+import { CategoryForm } from 'idai-field-core';
 import { ComponentHelpers } from '../component-helpers';
 
 
@@ -34,9 +34,6 @@ export class SearchBarComponent implements OnChanges {
     public focused: boolean = false;
 
     private emitQueryTimeout: any = undefined;
-
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     ngOnChanges() {

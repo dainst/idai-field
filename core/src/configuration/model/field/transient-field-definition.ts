@@ -8,7 +8,6 @@ import { LibraryFieldDefinition } from './library-field-definition';
 export interface TransientFieldDefinition extends BuiltInFieldDefinition, LibraryFieldDefinition, Named {
 
     valuelist?: Valuelist;
-    positionValues?: Valuelist;
     valuelistId?: string,
     valuelistFromProjectField?: string;
     defaultConstraintIndexed?: boolean;
@@ -23,6 +22,4 @@ export module TransientFieldDefinition {
 
     export const VALUELIST = 'valuelist';
     export const VALUELISTID = 'valuelistId';
-    export const POSITION_VALUES = 'positionValues';    // TODO Check if both of these are necessary
-    export const POSITION_VALUELIST_ID = 'positionValuelistId';
 }

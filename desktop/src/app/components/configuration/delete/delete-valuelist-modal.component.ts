@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { flatMap, to } from 'tsfun';
 import { Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../index/configuration-index';
-import { ValuelistUsage } from '../index/valuelist-usage-index';
+import { ConfigurationIndex } from '../../../services/configuration/index/configuration-index';
+import { ValuelistUsage } from '../../../services/configuration/index/valuelist-usage-index';
 
 
 @Component({
@@ -18,12 +18,12 @@ import { ValuelistUsage } from '../index/valuelist-usage-index';
 export class DeleteValuelistModalComponent {
 
     public valuelist: Valuelist;
-    public configurationIndex: ConfigurationIndex;
 
     public confirmDeletionValuelistId: string;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex) {}
 
 
     public confirmDeletion = () => this.checkConfirmDeletionValuelistId() && this.activeModal.close();
@@ -39,9 +39,7 @@ export class DeleteValuelistModalComponent {
 
     public getNumberOfUsingFields(): number {
 
-        const usage: Array<ValuelistUsage>|undefined = ConfigurationIndex.getValuelistUsage(
-            this.configurationIndex, this.valuelist.id
-        );
+        const usage: Array<ValuelistUsage>|undefined = this.configurationIndex.getValuelistUsage(this.valuelist.id);
 
         return usage ? flatMap(usage, to('fields')).length : 0;
     }

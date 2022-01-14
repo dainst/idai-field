@@ -1,7 +1,7 @@
  import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
@@ -20,7 +20,6 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
  */
 export class AddValuelistModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
@@ -28,13 +27,15 @@ export class AddValuelistModalComponent {
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<SaveResult>;
 
-    public searchQuery: ValuelistSearchQuery = { queryString: '' };
+    public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
+    public filteredValuelists: Array<Valuelist> = [];
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals) {}
 
 
@@ -84,9 +85,13 @@ export class AddValuelistModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
+        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
             .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+
+        this.filteredValuelists = ValuelistSearchQuery.applyFilters(
+            this.searchQuery, this.valuelists, this.configurationIndex
+        );
 
         this.selectedValuelist = this.valuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();

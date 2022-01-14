@@ -73,6 +73,7 @@ import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../services/imagestore/remote-image-store';
+import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -160,7 +161,9 @@ registerLocaleData(localeIt, 'it');
                 DocumentCache,
                 ThumbnailGenerator,
                 ImageStore,
-                InitializationProgress
+                InitializationProgress,
+                ConfigReader,
+                ConfigLoader
             ],
             useFactory: appInitializerFactory,
         },
@@ -214,6 +217,11 @@ registerLocaleData(localeIt, 'it');
         {
             provide: IndexFacade,
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.indexFacade,
+            deps: [AppInitializerServiceLocator]
+        },
+        {
+            provide: ConfigurationIndex,
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.configurationIndex,
             deps: [AppInitializerServiceLocator]
         },
         {

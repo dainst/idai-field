@@ -1,6 +1,9 @@
 import { 
-    CategoryConverter, 
-    ConstraintIndex, 
+    CategoryConverter,
+    ConfigLoader,
+    ConfigReader,
+    ConfigurationDocument,
+    ConstraintIndex,
     DocumentCache, 
     FulltextIndex, 
     Indexer, 
@@ -18,16 +21,16 @@ import { SettingsSerializer } from '../services/settings/settings-serializer';
 import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
 import { ExpressServer } from '../services/express-server';
-
-
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 
 
 interface Services {
+
     projectConfiguration?: ProjectConfiguration;
     fulltextIndex?: FulltextIndex;
     constraintIndex?: ConstraintIndex;
     indexFacade?: IndexFacade;
+    configurationIndex?: ConfigurationIndex;
 }
 
 
@@ -43,38 +46,52 @@ export class AppInitializerServiceLocator {
 
 
     public get projectConfiguration(): ProjectConfiguration {
+
         if (!this.services.projectConfiguration) {
-            console.error('project configuration has not yet been provided');
-            throw 'project configuration has not yet been provided';
+            console.error('Project configuration has not yet been provided');
+            throw 'Project configuration has not yet been provided';
         }
         return this.services.projectConfiguration;
     }
 
 
     public get fulltextIndex(): FulltextIndex {
+
         if (!this.services.fulltextIndex) {
-            console.error('fulltext index has not yet been provided');
-            throw 'fulltext index has not yet been provided';
+            console.error('Fulltext index has not yet been provided');
+            throw 'Fulltext index has not yet been provided';
         }
         return this.services.fulltextIndex;
     }
 
 
     public get constraintIndex(): ConstraintIndex {
+
         if (!this.services.constraintIndex) {
-            console.error('constraint index has not yet been provided');
-            throw 'constraint index has not yet been provided';
+            console.error('Constraint index has not yet been provided');
+            throw 'Constraint index has not yet been provided';
         }
         return this.services.constraintIndex;
     }
 
 
     public get indexFacade(): IndexFacade {
+
         if (!this.services.indexFacade) {
-            console.error('index facade has not yet been provided');
-            throw 'index facade has not yet been provided';
+            console.error('Index facade has not yet been provided');
+            throw 'Index facade has not yet been provided';
         }
         return this.services.indexFacade;
+    }
+
+
+    public get configurationIndex(): ConfigurationIndex {
+
+        if (!this.services.configurationIndex) {
+            console.error('Configuration index has not yet been provided');
+            throw 'Configuration index has not yet been provided';
+        }
+        return this.services.configurationIndex;
     }
 }
 
@@ -87,7 +104,9 @@ export const appInitializerFactory = (
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
     imagestore: ImageStore,
-    progress: InitializationProgress
+    progress: InitializationProgress,
+    configReader: ConfigReader,
+    configLoader: ConfigLoader
 ) => async (): Promise<void> => {
 
     await pouchdbServer.setupServer();
@@ -98,7 +117,9 @@ export const appInitializerFactory = (
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
 
-    const services = await loadConfiguration(settingsService, progress);
+    const services = await loadConfiguration(
+        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb()
+    );
     serviceLocator.init(services);
 
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
@@ -138,7 +159,9 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnai
 }
 
 
-const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Services> => {
+const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
+                                 configReader: ConfigReader, configLoader: ConfigLoader,
+                                 db: PouchDB.Database): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -150,12 +173,17 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         return Promise.reject();
     }
 
-    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } = IndexerConfiguration.configureIndexers(configuration);
+    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
+        = IndexerConfiguration.configureIndexers(configuration);
+
+    const configurationIndex = await buildConfigurationIndex(configReader, configLoader, db, configuration);
+    
     return {
         projectConfiguration: configuration,
         constraintIndex: createdConstraintIndex,
         fulltextIndex: createdFulltextIndex,
-        indexFacade: createdIndexFacade
+        indexFacade: createdIndexFacade,
+        configurationIndex: configurationIndex
     };
 };
 
@@ -176,4 +204,16 @@ const loadDocuments = async (
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)
     );
+}
+
+
+const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
+                                       configuration: ProjectConfiguration): Promise<ConfigurationIndex> => {
+
+    const configurationIndex: ConfigurationIndex = new ConfigurationIndex(configReader, configLoader, configuration);
+
+    const configurationDocument: ConfigurationDocument = await db.get('configuration');
+    await configurationIndex.rebuild(configurationDocument);
+
+    return configurationIndex;
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
-import { ConfigurationIndex } from '../../index/configuration-index';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
@@ -30,19 +30,20 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
  */
 export class ManageValuelistsModalComponent {
 
-    public configurationIndex: ConfigurationIndex;
     public configurationDocument: ConfigurationDocument;
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
             reindexConfiguration?: boolean) => Promise<SaveResult>;
 
-    public searchQuery: ValuelistSearchQuery = { queryString: '' };
+    public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
     public emptyValuelist: Valuelist|undefined;
     public valuelists: Array<Valuelist> = [];
+    public filteredValuelists: Array<Valuelist> = [];
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
 
     constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
                 private messages: Messages) {}
@@ -96,8 +97,12 @@ export class ManageValuelistsModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = ConfigurationIndex.findValuelists(this.configurationIndex, this.searchQuery.queryString)
+        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+        
+        this.filteredValuelists = ValuelistSearchQuery.applyFilters(
+            this.searchQuery, this.valuelists, this.configurationIndex
+        );
 
         this.selectedValuelist = this.valuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();
@@ -174,7 +179,6 @@ export class ManageValuelistsModalComponent {
         );
 
         componentInstance.valuelist = valuelist;
-        componentInstance.configurationIndex = this.configurationIndex;
 
         this.modals.awaitResult(
             result,

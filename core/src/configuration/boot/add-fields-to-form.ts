@@ -71,7 +71,11 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         ?? categories[form.categoryName]?.fields[fieldName] as Field
         ?? (form.fields ? form.fields[fieldName] as Field : undefined);
 
-    if (!field && !relations.find(relation => relation.name === fieldName)) {
+    if (form.fields && form.fields[fieldName] && form.fields[fieldName].constraintIndexed !== undefined) {
+        field.constraintIndexed = form.fields[fieldName].constraintIndexed;
+    }
+
+    if ((!field || !field.inputType) && !relations.find(relation => relation.name === fieldName)) {
         throw [[ConfigurationErrors.FIELD_NOT_FOUND, form.categoryName, fieldName]];
     }
 

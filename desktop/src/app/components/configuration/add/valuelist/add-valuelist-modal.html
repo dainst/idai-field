@@ -7,17 +7,16 @@
     <div class="col-md-6">
         <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
+                           [filteredValuelists]="filteredValuelists"
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
-                           [configurationIndex]="configurationIndex"
                            [searchTerm]="searchQuery.queryString"
                            [currentValuelistId]="clonedField?.valuelist?.id"
                            (onValuelistSelected)="select($event)">
         </valuelist-listing>
     </div>
     <div class="col-md-6">
-        <valuelist-preview [valuelist]="selectedValuelist"
-                           [configurationIndex]="configurationIndex"></valuelist-preview>
+        <valuelist-preview [valuelist]="selectedValuelist"></valuelist-preview>
     </div>
 </div>
 

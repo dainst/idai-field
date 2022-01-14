@@ -268,9 +268,7 @@
         "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-Uruk",
         "TechnicalMarks": "KnappedCore-TechnicalMarks-Uruk",
         "TypicalCoreForms": "KnappedCore-TypicalCoreForms-Uruk",
-        "color": "KnappingWasteProduct-color-Uruk"
-      },
-      "positionValuelists": {
+        "color": "KnappingWasteProduct-color-Uruk",
         "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
         "dimensionWidthOfDebitageSurfaces": "position-values-expansion-default"
       }
@@ -309,9 +307,7 @@
         "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-Uruk",
         "ProductionMethod": "FragmentOfDrill-ProductionMethod-Uruk",
         "TracesOfUse": "FragmentOfDrill-TracesOfUse-Uruk",
-        "color": "KnappingWasteProduct-color-Uruk"
-      },
-      "positionValuelists": {
+        "color": "KnappingWasteProduct-color-Uruk",
         "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-Uruk",
         "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-Uruk"
       }

@@ -10,7 +10,6 @@ import { GroupEditorModalComponent } from './editor/group-editor-modal.component
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import { MenuContext } from '../../services/menu-context';
 import { Modals } from '../../services/modals';
-import { ConfigurationIndex } from './index/configuration-index';
 import { SaveResult } from './configuration.component';
 
 
@@ -26,7 +25,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     @Input() category: CategoryForm;
     @Input() configurationDocument: ConfigurationDocument;
-    @Input() configurationIndex: ConfigurationIndex;
     @Input() showHiddenFields: boolean = true;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -146,7 +144,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.configurationIndex = this.configurationIndex;
         componentInstance.category = this.category;
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;

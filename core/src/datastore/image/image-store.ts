@@ -140,13 +140,24 @@ export class ImageStore {
 
         const result = {};
         for(const fileName of originalFileNames){
-            if(fileName in result) result[fileName].push(ImageVariant.ORIGINAL)
-            else result[fileName] = [ImageVariant.ORIGINAL]
+            if(fileName in result) result[fileName].types.push(ImageVariant.ORIGINAL)
+            else result[fileName] = {types: [ImageVariant.ORIGINAL]}
         }
         
         for(const fileName of thumbnailFileNames){
-            if(fileName in result) result[fileName].push(ImageVariant.THUMBNAIL)
-            else result[fileName] = [ImageVariant.THUMBNAIL]
+            if(fileName in result) result[fileName].types.push(ImageVariant.THUMBNAIL)
+            else result[fileName] = {types: [ImageVariant.THUMBNAIL]}
+        }
+
+        for(const uuid in result) {
+            if(uuid.endsWith(tombstoneSuffix)) {
+                const uuidWithoutSuffix = uuid.replace(tombstoneSuffix, "");
+                result[uuidWithoutSuffix] = result[uuid];
+                result[uuidWithoutSuffix].deleted = true;
+                delete result[uuid];
+            } else {
+                result[uuid].deleted = false;
+            }
         }
 
         return result;

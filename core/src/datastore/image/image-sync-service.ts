@@ -153,7 +153,7 @@ export class ImageSyncService {
             (localUUID: string) => !remoteUUIDs.includes(localUUID)
         ).filter(
             // We do not want to upload files marked as deleted locally.
-            (localUUID: string) => !remoteData[localUUID].deleted
+            (localUUID: string) => !localData[localUUID].deleted
         );
 
         const deleteRemotely = localUUIDs.filter(

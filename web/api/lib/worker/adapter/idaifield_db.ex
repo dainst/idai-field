@@ -6,7 +6,7 @@ defmodule Api.Worker.Adapter.IdaiFieldDb do
   alias Api.Core.Config
   alias Api.Core.CorePropertiesAtomizing
 
-  @batch_size 5
+  @batch_size 30
 
   @doc """
   returns nil if document not available

@@ -1,5 +1,6 @@
 defmodule Api.Core.CorePropertiesAtomizing do
   import Api.Core.Utils
+  require Logger
 
   @core_properties [:groups, :relations, :shortDescription, :id, :type, :category, :identifier, :geometry, :gazId,
     :georeference, :parentId, :grandparentId, :featureVectors, :license, :shortName]
@@ -20,6 +21,7 @@ defmodule Api.Core.CorePropertiesAtomizing do
     |> atomize([:resource])
     |> atomize([:resource] ++ @core_properties, true)
     |> update_relations
+    
   end
 
   def format_changes(changes) do
@@ -42,6 +44,11 @@ defmodule Api.Core.CorePropertiesAtomizing do
        )
   end
   defp update_relations(document), do: document
+
+
+
+
+
 
   defp format_relation_target(target_document = %{ "resource" => _ }), do: format_document(target_document)
   defp format_relation_target(target_identifier), do: target_identifier

@@ -39,6 +39,10 @@ defmodule Api.Worker.Indexer do
     Logger.info "Finished #{step} #{project}"
     change
   end
+  defp log_inspect(change) do
+    Logger.info (change)
+    change
+  end
 
   defp filter_non_owned_document(_change = %{ doc: %{ project: _project } }), do: false
   defp filter_non_owned_document(_change), do: true

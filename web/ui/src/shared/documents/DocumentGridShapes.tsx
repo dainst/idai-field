@@ -4,6 +4,7 @@ import { Card, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ResultDocument } from '../../api/result';
 import DocumentThumbnail from '../document/DocumentThumbnail';
+import { Document } from '../../api/document';
 
 
 
@@ -14,32 +15,49 @@ const MAX_IMG_HEIGHT = 230;
 interface DocumentGridProps {
     documents: ResultDocument[];
     getLinkUrl: (document: ResultDocument) => string;
+    selecteddoc: Document;
+    myRef;
 }
 
 
-export default function DocumentGrid({ documents, getLinkUrl }: DocumentGridProps): ReactElement {
+export default function DocumentGrid({ documents, getLinkUrl, selecteddoc, myRef }: DocumentGridProps): ReactElement {
     
     const { t } = useTranslation();
     
-    return (documents?.length > 0) ? renderDocuments(documents, getLinkUrl) : renderEmptyResult(t);
+    return (documents?.length > 0) ? renderDocuments(documents, getLinkUrl,selecteddoc, myRef) : renderEmptyResult(t);
 
 }
 
 
-const renderDocuments = (documents: ResultDocument[], getLinkUrl: (document: ResultDocument) => string): ReactElement =>
+const renderDocuments = (documents: ResultDocument[], getLinkUrl: (document: ResultDocument) => string, selecteddoc: Document, myRef): ReactElement =>
     <div className="d-flex flex-wrap my-3">
-        { documents.map((document) => renderDocument(document, getLinkUrl)) }
+        { documents.map((document) => renderDocument(document, getLinkUrl, selecteddoc, myRef)) }
     </div>;
 
 
-const renderDocument = (document: ResultDocument, getLinkUrl: (document: ResultDocument) => string): ReactElement =>
-    <div key={ document.resource.id } style={ documentBoxStyle } className="p-1 mr-2 mb-2">
+const renderDocument = (document: ResultDocument, getLinkUrl: (document: ResultDocument) => string, selecteddoc: Document, myRef): ReactElement => {
+    if (document.resource.id == selecteddoc.resource.id) {
+    const grid =
+    (<div key={ document.resource.id } ref={myRef} style={ documentBoxStyle } className="p-1 mr-2 mb-2">
         <DocumentThumbnail
             document={ document }
             linkUrl={ getLinkUrl(document) }
             maxWidth={ MAX_IMG_WIDTH }
             maxHeight={ MAX_IMG_HEIGHT } />
-    </div>;
+    </div>);
+    return grid
+    } else {
+    const grid =
+    (<div key={ document.resource.id } style={ documentBoxStyle } className="p-1 mr-2 mb-2">
+        <DocumentThumbnail
+            document={ document }
+            linkUrl={ getLinkUrl(document) }
+            maxWidth={ MAX_IMG_WIDTH }
+            maxHeight={ MAX_IMG_HEIGHT } />
+    </div>);
+    return grid
+    }
+}
 
 
 const renderEmptyResult = (t: TFunction): ReactElement =>

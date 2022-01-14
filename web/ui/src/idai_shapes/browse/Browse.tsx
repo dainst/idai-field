@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useContext, useEffect, useState} from 'react';
+import React, { CSSProperties, ReactElement, useContext, useEffect, useLayoutEffect, useState, useRef} from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search, search_after } from '../../api/documents';
 import { parseFrontendGetParams, Query, NestedSortObject } from '../../api/query';
-import { Result, ResultDocument, MinMaxSort, ScrollState } from '../../api/result';
+import { Result, ResultDocument,ScrollState } from '../../api/result';
 import { BREADCRUMB_HEIGHT, NAVBAR_HEIGHT } from '../../constants';
 import DocumentBreadcrumb, { BreadcrumbItem } from '../../shared/documents/DocumentBreadcrumb';
 import DocumentGrid from '../../shared/documents/DocumentGrid';
@@ -25,7 +25,7 @@ const CHUNK_SIZE = 50;
 
 
 export default function Browse(): ReactElement {
-
+    const myRef = useRef<HTMLDivElement>(null);
     const { documentId } = useParams<{ documentId: string }>();
     const loginData = useContext(LoginContext);
     const searchParams = useSearchParams();
@@ -35,19 +35,19 @@ export default function Browse(): ReactElement {
     const [documents, setDocuments] = useState<ResultDocument[]>(null);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
-    const [minmax, setMinMaxSort] = useState<MinMaxSort>(null);
     const [scrollState, setScrollState] = useState<ScrollState>({ 
         'atBottom' : false,
         'atTop' : false
      });  
     type OnScroll = (e: React.UIEvent<Element, UIEvent>) => void;
+    const executeScroll = () => window.scrollTo(0, myRef.current.offsetTop);
     const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
         const el = e.currentTarget;
         //console.log('scrollHeight:',el.scrollHeight)
         //console.log('scrollTop:',el.scrollTop)
         //console.log('scrollclientHeight:',el.clientHeight)
         if ((el.scrollTop + el.clientHeight) >= el.scrollHeight) {
-            console.log('Scroll to the Bottom!', minmax)
+
             const scrollState:ScrollState = { 
                 'atBottom' : true,
                 'atTop' : false
@@ -56,12 +56,13 @@ export default function Browse(): ReactElement {
         
             }
         if ((el.scrollTop) <= 0) {
-            console.log('Scroll to the Top!', minmax)
             const scrollState:ScrollState = { 
                 'atBottom' : false,
                 'atTop' : true
             };
             setScrollState(scrollState)
+            el.scrollTo(0, 5)
+            console.log('this is the element', el)
         
             }
         
@@ -77,9 +78,13 @@ export default function Browse(): ReactElement {
             console.log('This is the DOC:', document);
             searchCatalogDocuments(loginData.token, documentId)
                 .then(results => setDocuments(results.documents));
-            const minmax = getMinMax(documents)
-            setMinMaxSort(minmax);
-            console.log('This is the documents in the Browse.', documents);
+            getPreviousDocuments(loginData.token, documents)
+                .then(results => console.log('This is the previous results:',results.documents.reverse()));
+                //.then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,(documents.length-6)))));
+            if (myRef.current) {
+                console.log('MyRef exists!', myRef.current)
+                executeScroll() 
+            } else { console.log('NO Ref!')}
             getPredecessors(documentId, loginData.token)
                 .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
         } else {
@@ -96,22 +101,25 @@ export default function Browse(): ReactElement {
         if (scrollState.atTop) {
             getPreviousDocuments(loginData.token, documents)
                 //.then(results => console.log('This is the previous results:',results.documents.reverse()));
-                .then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,documents.length-10))))
+                .then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,(documents.length-6)))))
+            
+            
             setScrollState({ 
                 'atBottom' : false,
                 'atTop' : false
              });
-             
+            
         }
         if (scrollState.atBottom) {
             getNextDocuments(loginData.token, documents)
                 //.then(results => console.log('This is the next results:',results));
-                .then(results => setDocuments(documents.slice(9).concat(results.documents)));
+                .then(results => setDocuments(documents.slice(6).concat(results.documents)));
             setScrollState({ 
                 'atBottom' : false,
                 'atTop' : false
              });
         }
+        //console.log('Number of Documents:', documents.length)
 
     }, [scrollState]);
 
@@ -127,7 +135,7 @@ export default function Browse(): ReactElement {
                                     <Col>
                                         <h1 className="my-5">{ }</h1>
                                         
-                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } />
+                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } selecteddoc = { document} myRef = { myRef } />
                                     </Col>
                                 </Row>
                             </Col>
@@ -176,7 +184,7 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
         };
 
     const query: Query = {
-        size: 50,
+        size: 100,
         from: 0,
         filters: [
             
@@ -194,12 +202,12 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
             {field:'resource.literature.figure', order:'asc', nested: nest },
             {field:'resource.id', order:'asc'}
         ]
-
     };
-    console.log('This is nest command Page:', )
 
-    return await search_after(query, token);
+    return search_after(query, token);
 };
+
+
 
 const getNextDocuments = async (token: string, olddocuments): Promise<Result> => { 
     const lastdoc : ResultDocument = olddocuments[olddocuments.length-1] 
@@ -208,7 +216,7 @@ const getNextDocuments = async (token: string, olddocuments): Promise<Result> =>
         max_children: 1
         };
     const query: Query = {
-        size: 10,
+        size: 6,
         from: 0,
         filters: [
             
@@ -228,13 +236,14 @@ const getNextDocuments = async (token: string, olddocuments): Promise<Result> =>
 };
 
 
-const getPreviousDocuments = async (token: string, olddocuments): Promise<Result> => {  
+const getPreviousDocuments = async (token: string, olddocuments): Promise<Result> => { 
+    console.log('This is the searchafter for previousDocuments:', olddocuments[0].sort) 
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
         };
     const query: Query = {
-        size: 10,
+        size: 6,
         from: 0,
         filters: [
             
@@ -253,17 +262,6 @@ const getPreviousDocuments = async (token: string, olddocuments): Promise<Result
     return search_after(query, token);
 };
 
-
-
-const getMinMax = (documents) => {
-    const resultBounds:MinMaxSort = { 
-        'min' : documents[0].resource.identifier,
-        'max' : documents[documents.length-1].resource.identifier
-     };
-     
-    return resultBounds
-
-};
 
 const getChildren = async (parentId: string, from: number, token: string) => {
 

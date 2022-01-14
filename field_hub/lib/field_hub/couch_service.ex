@@ -1,12 +1,15 @@
 defmodule FieldHub.CouchService do
+  defmodule Credentials do
+    defstruct name: "<user_name>", password: "<user_password>"
+  end
 
   @couch_url Application.get_env(:field_hub, :couchdb_root)
 
-  def authenticate(project, user_name, user_password) do
+  def authenticate(project, %Credentials{} = credentials) do
     response =
       HTTPoison.get(
         "#{@couch_url}/#{project}",
-        headers(user_name, user_password)
+        headers(credentials)
       )
 
     case response do
@@ -19,7 +22,132 @@ defmodule FieldHub.CouchService do
     end
   end
 
-  def headers(user_name, user_password) do
+  def create_project(project_name, %Credentials{} = credentials) do
+
+    HTTPoison.put!(
+      "#{@couch_url}/#{project_name}",
+      "",
+      headers(credentials)
+    )
+  end
+
+  def create_user(name, password, %Credentials{} = credentials) do
+    HTTPoison.put!(
+      "#{@couch_url}/_users/org.couchdb.user:#{name}",
+      Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
+      headers(credentials)
+    )
+  end
+
+  def set_password(user_name, new_password, %Credentials{} = credentials) do
+
+    %{"_rev" => rev } =
+      HTTPoison.get!(
+        "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+        headers(credentials)
+      )
+      |> Map.get(:body)
+      |> Jason.decode!()
+
+    HTTPoison.put!(
+      "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+      Jason.encode!(%{name: user_name, password: new_password, roles: [], type: "user"}),
+      headers(credentials) ++ [{"If-Match", rev}]
+    )
+  end
+
+  def add_project_admin(user_name, project_name, %Credentials{} = credentials) do
+
+    %{ body: body } =
+      HTTPoison.get!(
+        "#{@couch_url}/#{project_name}/_security",
+        headers(credentials)
+      )
+
+    %{ "admins" => existing_admins, "members" => existing_members } = Jason.decode!(body)
+
+    update_data =
+      %{
+        admins: %{
+          names:
+            Map.get(existing_admins, "names", []) ++ [user_name]
+            |> Enum.dedup(),
+          roles: existing_admins["roles"]
+        },
+        members: existing_members
+      }
+      |> Jason.encode!()
+
+    HTTPoison.put!(
+      "#{@couch_url}/#{project_name}/_security",
+      update_data,
+      headers(credentials)
+    )
+  end
+
+
+  def add_project_member(user_name, project_name, %Credentials{} = credentials) do
+    %{ body: body } =
+      HTTPoison.get!(
+        "#{@couch_url}/#{project_name}/_security",
+        headers(credentials)
+      )
+
+    %{ "admins" => existing_admins, "members" => existing_members } = Jason.decode!(body)
+
+    update_data =
+      %{
+        admins: existing_admins,
+        members: %{
+          names:
+            Map.get(existing_members, "names", []) ++ [user_name]
+            |> Enum.dedup(),
+          roles: existing_members["roles"]
+        }
+      }
+      |> Jason.encode!()
+
+    HTTPoison.put!(
+      "#{@couch_url}/#{project_name}/_security",
+      update_data,
+      headers(credentials)
+    )
+  end
+
+  def remove_user_from_project(user_name, project_name, %Credentials{} = credentials) do
+    %{ body: body } =
+      HTTPoison.get!(
+        "#{@couch_url}/#{project_name}/_security",
+        headers(credentials)
+      )
+
+    %{ "admins" => existing_admins, "members" => existing_members } = Jason.decode!(body)
+
+    update_data =
+      %{
+        admins: %{
+          names:
+            Map.get(existing_admins, "names", [])
+            |> List.delete(user_name),
+          roles: existing_admins["roles"]
+        },
+        members: %{
+          names:
+            Map.get(existing_members, "names", [])
+            |> List.delete(user_name),
+          roles: existing_members["roles"]
+        }
+      }
+      |> Jason.encode!()
+
+    HTTPoison.put!(
+      "#{@couch_url}/#{project_name}/_security",
+      update_data,
+      headers(credentials)
+    )
+  end
+
+  defp headers(%Credentials{name: user_name, password: user_password}) do
     credentials =
       "#{user_name}:#{user_password}"
       |> Base.encode64()

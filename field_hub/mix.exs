@@ -61,8 +61,8 @@ defmodule FieldHub.MixProject do
   defp aliases do
 
     dev_db_name = "development"
-    dev_db_admin_name = "development"
-    dev_db_member_name = "development_member"
+    dev_db_admin_name = "development_admin"
+    dev_db_member_name = "development"
 
     [
       setup: ["deps.get", "seed"],

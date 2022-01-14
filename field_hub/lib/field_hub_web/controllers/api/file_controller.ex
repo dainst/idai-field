@@ -1,7 +1,7 @@
 defmodule FieldHubWeb.Api.FileController do
   use FieldHubWeb, :controller
 
-  alias FieldHub.ImageStore
+  alias FieldHub.FileStore
   alias FieldHubWeb.ErrorView
 
   def index(conn, %{"project" => project, "type" => type}) do
@@ -19,7 +19,7 @@ defmodule FieldHubWeb.Api.FileController do
     image_store_data =
       project
       |> Zarex.sanitize()
-      |> ImageStore.get_file_list([parsed_type])
+      |> FileStore.get_file_list([parsed_type])
 
     render(conn, "list.json", %{files: image_store_data})
   end
@@ -30,7 +30,7 @@ defmodule FieldHubWeb.Api.FileController do
     image_store_data =
       project
       |> Zarex.sanitize()
-      |> ImageStore.get_file_list()
+      |> FileStore.get_file_list()
 
     render(conn, "list.json", %{files: image_store_data})
   end
@@ -46,7 +46,7 @@ defmodule FieldHubWeb.Api.FileController do
           |> put_view(ErrorView)
           |> render("400.json", message: msg)
         valid ->
-          ImageStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
+          FileStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
       end
 
     case image_store_data do
@@ -72,7 +72,7 @@ defmodule FieldHubWeb.Api.FileController do
           |> put_view(ErrorView)
           |> render("400.json", message: msg)
         valid ->
-          ImageStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
+          FileStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
       end
 
     case image_store_data do
@@ -97,7 +97,7 @@ defmodule FieldHubWeb.Api.FileController do
           conn
           |> render(ErrorView, "400.json", message: msg)
         valid ->
-          ImageStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
+          FileStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
       end
 
     case image_store_data do

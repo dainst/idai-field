@@ -5,31 +5,34 @@ defmodule FieldHubWeb.Api.FileController do
   alias FieldHubWeb.ErrorView
 
   def index(conn, %{"project" => project, "type" => type}) do
-    parsed_type = parse_type(type)
-
-    image_store_data =
-      case parsed_type do
+    parsed_type =
+      parse_type(type)
+      |> case do
         {:error, msg} ->
           conn
           |> put_view(ErrorView)
           |> render("400.json", message: msg)
-        _valid ->
-          ImageStore.get_file_list(%{project: Zarex.sanitize(project), type: parsed_type})
+        valid ->
+          valid
       end
 
-    case image_store_data do
-      {:error, :enoent} ->
-        conn
-        |> put_view(ErrorView)
-        |> render("404.json")
-      {:ok, file_names} ->
-        render(conn, "list.json", %{file_names: file_names})
-    end
+    image_store_data =
+      project
+      |> Zarex.sanitize()
+      |> ImageStore.get_file_list([parsed_type])
+
+    render(conn, "list.json", %{files: image_store_data})
   end
 
   # Default to type original_image if none provided.
   def index(conn, %{"project" => project}) do
-    index(conn, %{"project" => project, "type" => "original_image"})
+
+    image_store_data =
+      project
+      |> Zarex.sanitize()
+      |> ImageStore.get_file_list()
+
+    render(conn, "list.json", %{files: image_store_data})
   end
 
   def show(conn, %{"project" => project, "id" => uuid, "type" => type}) do
@@ -54,11 +57,6 @@ defmodule FieldHubWeb.Api.FileController do
       {:ok, file_path} ->
         Plug.Conn.send_file(conn, 200, file_path)
     end
-  end
-
-  # Default to type original_image if none provided.
-  def show(conn, %{"project" => project, "id" => uuid}) do
-    show(conn, %{"project" => project, "id" => uuid, "type" => "original_image"})
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) do

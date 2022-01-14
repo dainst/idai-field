@@ -4,6 +4,7 @@ defmodule FieldHub.CLI do
   @couch_admin_password Application.get_env(:field_hub, :couchdb_admin_password)
 
   require Logger
+
   def create_project(project_name) do
 
     Logger.info("Adding project #{project_name}.")
@@ -17,6 +18,22 @@ defmodule FieldHub.CLI do
     FieldHub.ImageStore.create_directories(project_name)
   end
 
+  def create_user(name, password) do
+
+    %{status_code: status_code} =
+      HTTPoison.put!(
+        "#{@couch_url}/_users/org.couchdb.user:#{name}",
+        Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
+        get_request_headers()
+      )
+
+    if status_code == 409 do
+      Logger.info("User '#{name}' already exists.")
+    else
+      Logger.info("Created user '#{name}' with password '#{password}'.")
+    end
+  end
+
   def create_user(user_name) do
 
     password_length = 32
@@ -26,18 +43,7 @@ defmodule FieldHub.CLI do
       |> Base.encode64()
       |> binary_part(0, password_length)
 
-    %{status_code: status_code} =
-      HTTPoison.put!(
-        "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
-        Jason.encode!(%{name: user_name, password: password, roles: [], type: "user"}),
-        get_request_headers()
-      )
-
-    if status_code == 409 do
-      Logger.info("User '#{user_name}' already exists.")
-    else
-      Logger.info("Created user '#{user_name}' with password '#{password}'.")
-    end
+    create_user(user_name, password)
   end
 
   def set_password(user_name, user_password) do

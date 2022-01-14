@@ -1,13 +1,13 @@
-defmodule IdaiFieldServer.MixProject do
+defmodule FieldHub.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :idai_field_server,
+      app: :field_hub,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -19,7 +19,7 @@ defmodule IdaiFieldServer.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {IdaiFieldServer.Application, []},
+      mod: {FieldHub.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -33,20 +33,22 @@ defmodule IdaiFieldServer.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.2"},
+      {:phoenix, "~> 1.6.6"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.17.4"},
-      {:reverse_proxy_plug, "~> 2.1"},
-      {:bcrypt_elixir, "~> 2.0"},
-      {:postgrex, ">= 0.0.0"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.4"},
+      {:phoenix_live_view, "~> 0.17.5"},
+      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_dashboard, "~> 0.6"},
+      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:swoosh, "~> 1.3"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
-      {:poison, "~> 3.0"},
+      {:reverse_proxy_plug, "~> 2.1"},
+      {:zarex, "~> 1.0.2"}
     ]
   end
 
@@ -57,11 +59,21 @@ defmodule IdaiFieldServer.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
+
+    dev_db_name = "development"
+    dev_db_admin_name = "development_admin"
+    dev_db_member_name = "development"
+
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      setup: ["deps.get", "seed"],
+      seed: [
+        "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\")'",
+        "run --eval 'FieldHub.CLI.create_user(\"#{dev_db_admin_name}\", \"pw\")'",
+        "run --eval 'FieldHub.CLI.create_user(\"#{dev_db_member_name}\", \"pw\")'",
+        "run --eval 'FieldHub.CLI.add_user_as_project_admin(\"#{dev_db_admin_name}\", \"#{dev_db_name}\")'",
+        "run --eval 'FieldHub.CLI.add_user_as_project_member(\"#{dev_db_member_name}\", \"#{dev_db_name}\")'"
+      ],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 end

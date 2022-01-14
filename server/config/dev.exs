@@ -1,33 +1,22 @@
-use Mix.Config
-
-# Configure your database
-config :idai_field_server, IdaiFieldServer.Repo,
-  password: "abcdef",
-  couchdb: "localhost:5984", # w\o beginning http:// or ending slash
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
-
-# config :reverse_proxy_plug, :http_client, ReverseProxyPlug.HTTPClient.Adapters.HTTPoison
+import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
-# with webpack to recompile .js and .css sources.
-config :idai_field_server, IdaiFieldServerWeb.Endpoint,
-  http: [port: 4000],
-  debug_errors: true,
-  code_reloader: true,
+# with esbuild to bundle .js and .css sources.
+config :field_hub, FieldHubWeb.Endpoint,
+  # Binding to loopback ipv4 address prevents access from other machines.
+  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  http: [ip:  {0, 0, 0, 0}, port: 4000],
   check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
+  secret_key_base: "4nv+pgdtRgnNdjQZ/PGypYTXt3aHjRL+9ElBZxYQ0FSbWPKuRizx1/KJIW1SYZ7B",
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support
@@ -55,15 +44,22 @@ config :idai_field_server, IdaiFieldServerWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :idai_field_server, IdaiFieldServerWeb.Endpoint,
+config :field_hub, FieldHubWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/idai_field_server_web/(live|views)/.*(ex)$",
-      ~r"lib/idai_field_server_web/templates/.*(eex)$"
+      ~r"lib/field_hub_web/(live|views)/.*(ex)$",
+      ~r"lib/field_hub_web/templates/.*(eex)$"
     ]
   ]
+
+
+config :field_hub,
+  couchdb_root: "http://localhost:5984",
+  couchdb_admin_name: "admin", # see .env_template
+  couchdb_admin_password: "password", # see .env_template
+  file_directory_root: "files"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

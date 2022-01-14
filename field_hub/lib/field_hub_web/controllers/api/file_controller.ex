@@ -45,8 +45,8 @@ defmodule FieldHubWeb.Api.FileController do
           conn
           |> put_view(ErrorView)
           |> render("400.json", message: msg)
-        _valid ->
-          ImageStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: parsed_type})
+        valid ->
+          ImageStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
       end
 
     case image_store_data do

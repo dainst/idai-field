@@ -5,6 +5,11 @@ defmodule FieldHubWeb.Router do
   import FieldHubWeb.Plugs
 
   pipeline :browser do
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json],
+      pass: ["*/*"],
+      json_decoder: Phoenix.json_library()
+
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -14,6 +19,11 @@ defmodule FieldHubWeb.Router do
   end
 
   pipeline :api do
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json],
+      pass: ["*/*"],
+      json_decoder: Phoenix.json_library()
+
     plug :accepts, ["json"]
     plug :api_auth
   end

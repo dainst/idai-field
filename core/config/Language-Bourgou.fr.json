@@ -3,45 +3,45 @@
     "Find": {
       "fields": {
         "sampleStatus": {
-          "label": "Status of samples"
+          "label": "Statut de l'échantillon"
         },
         "sampleComm": {
-          "label": "Comment on samples"
+          "label": "Commentaire sur les échantillons"
         },
         "amountDescription": {
-          "label": "Quantity (Unit)"
+          "label": "Quantité(Unité)"
         }
       }
     },
     "Pottery": {
       "fields": {
         "coatColorInside": {
-          "label": "Surface (inside): color and intensity"
+          "label": "Surface(intérieur): couleur et intensité"
         },
         "coatColorOutside": {
-          "label": "Surface (outside): color and intensity"
+          "label": "Surface (extérieur): couleur et intensité"
         },
         "coatInside": {
-          "label": "Surface (inside)"
+          "label": "Surface (intérieur)"
         },
         "coatInsideType": {
-          "label": "Treatment (inside)"
+          "label": "Traitement (intérieur)"
         },
         "coatOutside": {
-          "label": "Surface (outside)"
+          "label": "Surface (extérieur)"
         },
         "specificType": {
-          "label": "Basic shape"
+          "label": "Forme de base"
         },
         "materialType": {
           "label": "Classification"
         },
         "vesselpart": {
-          "label": "Part of Vessel",
-          "description": "WF = Body/Wall RF = Rim, BF = Base, H = Handle, COMP = complete profile, COMV = complete vessel"
+          "label": "Partie du récipient",
+          "description": "P = Panse, B = Bord, F = Fond, A = Anse, C = profil complet, E = recipient entier"
         },
         "rimTreatmentType": {
-          "label": "Treatment rim / base"
+          "label": "Traitement du bord / fond"
         },
         "potteryTypeSpecific": {
           "label": "Ware"

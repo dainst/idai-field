@@ -13,6 +13,9 @@ As an admin user, one gets the additional option to list the existing databases.
 
 * Docker
 * docker-compose
+* elixir
+* erlang-dev
+* inotify-tools 
 * Couchdb (optional, see below)
 
 Make sure you have a running couchdb instance before proceeding. If they do not run on the host machine, you can start them as containers via

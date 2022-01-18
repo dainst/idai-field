@@ -2,7 +2,7 @@ import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, 
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { Field } from './field';
-import { Group } from './group';
+import { Group, GroupDefinition, Groups } from './group';
 
 
 export interface CategoryForm {
@@ -136,6 +136,23 @@ export namespace CategoryForm {
     export function isMandatoryField(category: CategoryForm, fieldName: string): boolean {
 
         return hasProperty(category, fieldName, Field.MANDATORY);
+    }
+
+
+    export function getGroupsConfiguration(category: CategoryForm,
+                                           permanentlyHiddenFields: string[]): Array<GroupDefinition> {
+
+        return category.groups
+            .filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS)
+            .reduce((result, group) => {
+                result.push({
+                    name: group.name,
+                    fields: group.fields
+                        .filter(field => !permanentlyHiddenFields.includes(field.name))
+                        .map(field => field.name)
+                });
+                return result;
+            }, []);
     }
 
 

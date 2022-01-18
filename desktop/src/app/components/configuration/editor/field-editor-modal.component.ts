@@ -3,8 +3,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations } from 'idai-field-core';
-import { ConfigurationUtil, InputType } from '../../../components/configuration/configuration-util';
+    CustomLanguageConfigurations, CategoryForm} from 'idai-field-core';
+import { InputType } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -76,7 +76,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 inputType: 'input',
                 constraintIndexed: false
             };
-            const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+            const groups: Array<GroupDefinition> = CategoryForm.getGroupsConfiguration(
                 this.category, this.permanentlyHiddenFields
             );
             groups.find(group => group.name === this.groupName).fields.push(this.field.name);

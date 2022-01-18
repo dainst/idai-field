@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { ConfigurationDocument, I18N, CustomLanguageConfigurations } from 'idai-field-core';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
@@ -51,7 +51,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 color: this.category.color,
                 parent: this.category.parentCategory.name,
                 fields: {},
-                groups: ConfigurationUtil.createGroupsConfiguration(
+                groups: CategoryForm.getGroupsConfiguration(
                     this.category,
                     ConfigurationDocument.getPermanentlyHiddenFields(this.configurationDocument, this.category)
                 )

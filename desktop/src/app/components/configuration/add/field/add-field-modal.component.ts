@@ -95,17 +95,13 @@ export class AddFieldModalComponent {
 
     private addSelectedField() {
 
-        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
-        const form: CustomFormDefinition = clonedConfigurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
-
-        form.groups = ConfigurationUtil.createGroupsConfiguration(
-            this.category, this.permanentlyHiddenFields
+        const updatedConfigurationDocument = ConfigurationDocument.addField(
+            this.configurationDocument, this.category, this.permanentlyHiddenFields,
+            this.groupName, this.selectedField.name
         );
-        form.groups.find(on('name', this.groupName)).fields.push(this.selectedField.name);
 
         try {
-            this.saveAndReload(clonedConfigurationDocument, this.category.name);
+            this.saveAndReload(updatedConfigurationDocument, this.category.name);
             this.activeModal.close();
         } catch {
             // Stay in modal

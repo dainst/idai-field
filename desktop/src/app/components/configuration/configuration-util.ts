@@ -1,5 +1,5 @@
 import { clone, flatten, to } from 'tsfun';
-import { CategoryForm, Field, GroupDefinition, Group, Groups, Named } from 'idai-field-core';
+import { CategoryForm, Field, Group, Groups, Named } from 'idai-field-core';
 
 
 export type InputType = {
@@ -22,23 +22,6 @@ export module ConfigurationUtil {
         return flatten(category.parentCategory.groups.map(to('fields')))
             .map(Named.toName)
             .includes(field.name);
-    }
-
-
-    export function createGroupsConfiguration(category: CategoryForm,
-                                              permanentlyHiddenFields: string[]): Array<GroupDefinition> {
-
-        return category.groups
-            .filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS)
-            .reduce((result, group) => {
-                result.push({
-                    name: group.name,
-                    fields: group.fields
-                        .filter(field => !permanentlyHiddenFields.includes(field.name))
-                        .map(field => field.name)
-                });
-                return result;
-            }, []);
     }
 
 

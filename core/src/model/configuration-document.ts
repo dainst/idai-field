@@ -2,7 +2,7 @@ import { Document } from './document';
 import { ConfigurationResource } from './configuration-resource';
 import { CategoryForm } from './configuration/category-form';
 import { CustomFormDefinition } from '../configuration/model/form/custom-form-definition';
-import { flatten, isEmpty, to } from 'tsfun';
+import { flatten, isEmpty, on, to } from 'tsfun';
 import { CustomLanguageConfigurations } from './custom-language-configurations';
 import { Group, Groups } from './configuration/group';
 import { Field } from './configuration/field';
@@ -10,6 +10,7 @@ import { Named } from '../tools/named';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
 import { Valuelist } from './configuration/valuelist';
+import { BaseGroupDefinition } from '../configuration/model/form/base-form-definition';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -47,6 +48,22 @@ export namespace ConfigurationDocument {
             || CustomLanguageConfigurations.hasCustomTranslations(
                 configurationDocument.resource.languages, category
             );
+    }
+
+
+    export function getCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
+                                                category: CategoryForm): CustomFormDefinition|undefined {
+
+        return configurationDocument.resource.forms[category.libraryId ?? category.name];
+    }
+
+
+    export function getParentCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
+                                                      category: CategoryForm): CustomFormDefinition|undefined {
+
+        return category.parentCategory
+            ? configurationDocument.resource.forms[category.libraryId ?? category.parentCategory.name]
+            : undefined;
     }
 
 
@@ -143,18 +160,36 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function getCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                category: CategoryForm): CustomFormDefinition|undefined {
+    export function addField(configurationDocument: ConfigurationDocument, category: CategoryForm,
+                             permanentlyHiddenFields: string[], groupName: string,
+                             fieldName: string): ConfigurationDocument {
 
-        return configurationDocument.resource.forms[category.libraryId ?? category.name];
+        const clonedConfigurationDocument = Document.clone(configurationDocument);
+
+        addFieldToForm(clonedConfigurationDocument, category, permanentlyHiddenFields, groupName, fieldName);
+        category.children.filter(childCategory => {
+            return !CategoryForm.getFields(childCategory).map(to('name')).includes(fieldName);
+        })
+        .forEach(childCategory => {
+            addFieldToForm(clonedConfigurationDocument, childCategory, permanentlyHiddenFields, groupName, fieldName);
+        });
+        
+        return clonedConfigurationDocument;
     }
 
 
-    export function getParentCustomCategoryDefinition(configurationDocument: ConfigurationDocument,
-                                                      category: CategoryForm): CustomFormDefinition|undefined {
+    function addFieldToForm(configurationDocument: ConfigurationDocument, category: CategoryForm,
+                            permanentlyHiddenFields: string[], groupName: string, fieldName: string) {
+        
+        const form: CustomFormDefinition = configurationDocument.resource
+            .forms[category.libraryId ?? category.name];
 
-        return category.parentCategory
-            ? configurationDocument.resource.forms[category.libraryId ?? category.parentCategory.name]
-            : undefined;
+        form.groups = CategoryForm.getGroupsConfiguration(category, permanentlyHiddenFields);
+        let group: BaseGroupDefinition = form.groups.find(on('name', groupName));
+        if (!group) {
+            group = { name: groupName, fields: [] };
+            form.groups.push(group);
+        }
+        group.fields.push(fieldName);
     }
 }

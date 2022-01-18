@@ -166,20 +166,20 @@ export namespace ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(configurationDocument);
 
-        addFieldToForm(clonedConfigurationDocument, category, permanentlyHiddenFields, groupName, fieldName);
+        addFieldToGroup(clonedConfigurationDocument, category, permanentlyHiddenFields, groupName, fieldName);
         category.children.filter(childCategory => {
             return !CategoryForm.getFields(childCategory).map(to('name')).includes(fieldName);
         })
         .forEach(childCategory => {
-            addFieldToForm(clonedConfigurationDocument, childCategory, permanentlyHiddenFields, groupName, fieldName);
+            addFieldToGroup(clonedConfigurationDocument, childCategory, permanentlyHiddenFields, groupName, fieldName);
         });
         
         return clonedConfigurationDocument;
     }
 
 
-    function addFieldToForm(configurationDocument: ConfigurationDocument, category: CategoryForm,
-                            permanentlyHiddenFields: string[], groupName: string, fieldName: string) {
+    function addFieldToGroup(configurationDocument: ConfigurationDocument, category: CategoryForm,
+                             permanentlyHiddenFields: string[], groupName: string, fieldName: string) {
         
         const form: CustomFormDefinition = configurationDocument.resource
             .forms[category.libraryId ?? category.name];

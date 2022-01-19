@@ -99,7 +99,6 @@ export class AddCategoryFormModalComponent {
 
     private addSelectedCategory() {
 
-
         const clonedConfigurationDocument = this.categoryToReplace
             ? ConfigurationDocument.deleteCategory(this.configurationDocument, this.categoryToReplace, false)
             : Document.clone(this.configurationDocument);
@@ -109,9 +108,11 @@ export class AddCategoryFormModalComponent {
             hidden: []
         };
 
-        clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
-            clonedConfigurationDocument.resource.order, this.selectedForm.name, this.parentCategory?.name
-        );
+        if (!this.categoryToReplace) {
+            clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
+                clonedConfigurationDocument.resource.order, this.selectedForm.name, this.parentCategory?.name
+            );
+        }
 
         try {
             this.saveAndReload(clonedConfigurationDocument, this.selectedForm.name);

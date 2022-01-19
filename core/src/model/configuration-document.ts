@@ -35,12 +35,12 @@ export namespace ConfigurationDocument {
 
 
     export function isCustomizedCategory(configurationDocument: ConfigurationDocument,
-                                         category: CategoryForm): boolean {
+                                         category: CategoryForm, checkChildren: boolean = false): boolean {
 
         const customDefinition: CustomFormDefinition = configurationDocument.resource
         .forms[category.libraryId ?? category.name];
 
-        return customDefinition.color !== undefined
+        const result: boolean = customDefinition.color !== undefined
             || customDefinition.groups !== undefined
             || (customDefinition.valuelists !== undefined && !isEmpty(customDefinition.valuelists))
             || (customDefinition.fields !== undefined && !isEmpty(customDefinition.fields))
@@ -48,6 +48,14 @@ export namespace ConfigurationDocument {
             || CustomLanguageConfigurations.hasCustomTranslations(
                 configurationDocument.resource.languages, category
             );
+
+        if (checkChildren) {
+            if (category.children.find(childCategory => isCustomizedCategory(configurationDocument, childCategory))) {
+                return true;
+            }
+        }
+
+        return result;
     }
 
 

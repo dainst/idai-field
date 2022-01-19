@@ -322,7 +322,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.categoryToReplace = category;
+        componentInstance.categoryFormToReplace = category;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
 import { Modals } from '../../../../services/modals';
-import { ConfigurationUtil } from '../../configuration-util';
 import { SaveResult } from '../../configuration.component';
+import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class AddCategoryFormModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public parentCategory: CategoryForm|undefined;
-    public categoryToReplace?: CategoryForm;
+    public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<SaveResult>;
@@ -64,6 +64,9 @@ export class AddCategoryFormModalComponent {
 
         if (this.selectedForm === this.emptyForm) {
             this.createNewSubcategory();
+        } else if (ConfigurationDocument.isCustomizedCategory(this.configurationDocument,
+                this.categoryFormToReplace, true)) {
+            this.showSwapConfirmationModal();
         } else {
             this.addSelectedCategory();
         }
@@ -80,12 +83,12 @@ export class AddCategoryFormModalComponent {
 
         this.categoryForms = this.configurationIndex
             .findCategoryForms(this.searchTerm, this.parentCategory?.name,
-                !this.parentCategory && !this.categoryToReplace)
+                !this.parentCategory && !this.categoryFormToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.forms).includes(
                     category.libraryId ?? category.name
                 ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
-                && (!this.categoryToReplace || category.name === this.categoryToReplace.name)
+                && (!this.categoryFormToReplace || category.name === this.categoryFormToReplace.name)
             )
             .sort((categoryForm1, categoryForm2) => SortUtil.alnumCompare(
                 categoryForm1.libraryId ?? categoryForm1.name,
@@ -99,8 +102,8 @@ export class AddCategoryFormModalComponent {
 
     private addSelectedCategory() {
 
-        const clonedConfigurationDocument = this.categoryToReplace
-            ? ConfigurationDocument.swapCategoryForm(this.configurationDocument, this.categoryToReplace,
+        const clonedConfigurationDocument = this.categoryFormToReplace
+            ? ConfigurationDocument.swapCategoryForm(this.configurationDocument, this.categoryFormToReplace,
                 this.selectedForm)
             : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm);
 
@@ -127,6 +130,23 @@ export class AddCategoryFormModalComponent {
 
         this.modals.awaitResult(result,
             () => this.activeModal.close(),
+            () => AngularUtility.blurActiveElement()
+        );
+    }
+
+
+    private async showSwapConfirmationModal() {
+
+        const [result, componentInstance] = this.modals.make<SwapCategoryFormModalComponent>(
+            SwapCategoryFormModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.currentForm = this.categoryFormToReplace;
+        componentInstance.newForm = this.selectedForm;
+
+        this.modals.awaitResult(result,
+            () => this.addSelectedCategory(),
             () => AngularUtility.blurActiveElement()
         );
     }

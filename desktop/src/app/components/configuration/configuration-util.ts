@@ -1,4 +1,4 @@
-import { clone, flatten, to } from 'tsfun';
+import { flatten, to } from 'tsfun';
 import { CategoryForm, Field, Group, Groups, Named } from 'idai-field-core';
 
 
@@ -32,21 +32,6 @@ export module ConfigurationUtil {
             if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
             return order;
         }, []);
-    }
-
-
-    export function addToCategoriesOrder(categoriesOrder: string[], newCategoryName: string,
-                                         parentCategoryName?: string): string[] {
-
-        const newOrder: string[] = clone(categoriesOrder);
-
-        if (parentCategoryName) {
-            newOrder.splice(newOrder.indexOf(parentCategoryName) + 1, 0, newCategoryName);
-        } else {
-            newOrder.push(newCategoryName);
-        }
-
-        return newOrder;
     }
 
 

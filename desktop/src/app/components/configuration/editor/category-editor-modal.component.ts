@@ -73,8 +73,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         }
 
         if (this.new) {
-            this.clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
-                this.clonedConfigurationDocument.resource.order,
+            this.clonedConfigurationDocument = ConfigurationDocument.addToCategoriesOrder(
+                this.clonedConfigurationDocument,
                 this.category.name,
                 this.category.parentCategory?.name
             );

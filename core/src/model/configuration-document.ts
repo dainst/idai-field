@@ -162,6 +162,39 @@ export namespace ConfigurationDocument {
     }
 
 
+    export function swapCategoryForm(configurationDocument: ConfigurationDocument,
+                                     currentForm: CategoryForm, newForm: CategoryForm): ConfigurationDocument {
+
+        const clonedConfigurationDocument = ConfigurationDocument.deleteCategory(
+            configurationDocument, currentForm, false
+        );
+
+        [newForm].concat(currentForm.children).forEach(form => {
+            clonedConfigurationDocument.resource.forms[form.libraryId] = {
+                fields: {},
+                hidden: []
+            };
+        });
+        
+        return clonedConfigurationDocument;
+    }
+
+
+    export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm) {
+
+        const clonedConfigurationDocument = Document.clone(configurationDocument);
+
+        clonedConfigurationDocument.resource.forms[categoryForm.libraryId] = {
+            fields: {},
+            hidden: []
+        };
+
+        return addToCategoriesOrder(
+            clonedConfigurationDocument, categoryForm.name, categoryForm.parentCategory?.name
+        );
+    }
+
+
     export function addField(configurationDocument: ConfigurationDocument, category: CategoryForm,
                              permanentlyHiddenFields: string[], groupName: string,
                              fieldName: string): ConfigurationDocument {
@@ -176,6 +209,22 @@ export namespace ConfigurationDocument {
             addFieldToGroup(clonedConfigurationDocument, childCategory, permanentlyHiddenFields, groupName, fieldName);
         });
         
+        return clonedConfigurationDocument;
+    }
+
+
+    export function addToCategoriesOrder(configurationDocument: ConfigurationDocument, newCategoryName: string,
+                                         parentCategoryName?: string): ConfigurationDocument {
+
+        const clonedConfigurationDocument = Document.clone(configurationDocument);
+        const order: string[] = clonedConfigurationDocument.resource.order;
+
+        if (parentCategoryName) {
+            order.splice(order.indexOf(parentCategoryName) + 1, 0, newCategoryName);
+        } else {
+            order.push(newCategoryName);
+        }
+
         return clonedConfigurationDocument;
     }
 

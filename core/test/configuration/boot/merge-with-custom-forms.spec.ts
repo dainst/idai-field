@@ -79,15 +79,12 @@ describe('mergeWithCustomForms', () => {
     });
 
 
-    it('extend category directly - inherit custom fields', () => {
+    it('extend category directly - inherit custom fields using minimal forms', () => {
 
         const f1: Field = { name: 'f1', inputType: Field.InputType.TEXT };
         const f2: Field = { name: 'f2', inputType: Field.InputType.BOOLEAN }
         const f3: Field = { name: 'f3', inputType: Field.InputType.UNSIGNEDINT };
         const f4: Field = { name: 'f4', inputType: Field.InputType.UNSIGNEDFLOAT };
-        const f5: Field = { name: 'f5', inputType: Field.InputType.LITERATURE };
-        const f6: Field = { name: 'f6', inputType: Field.InputType.INPUT };
-        const f7: Field = { name: 'f7', inputType: Field.InputType.CATEGORY };
 
         const categories = {
             A: {
@@ -110,24 +107,7 @@ describe('mergeWithCustomForms', () => {
                         { name: 'group1', fields: ['f2'] }
                     ]
                 }
-            },
-            C: {
-                description: {},
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-            },
-            D: {
-                parent: 'C',
-                description: {},
-                fields: { f3 },
-                minimalForm: {
-                    groups: [
-                        { name: 'group1', fields: ['f3'] }
-                    ]
-                }
-            },
+            }
         };
 
         const forms: Map<TransientFormDefinition> = {
@@ -150,78 +130,24 @@ describe('mergeWithCustomForms', () => {
                 creationDate: '',
                 createdBy: '',
                 description: {},
-                fields: { f2 },
+                fields: { f1, f2 },
                 groups: [
-                    { name: 'group1', fields: ['f2'] }
-                ]
-            },
-            C: {
-                name: 'C',
-                categoryName: 'C',
-                valuelists: {},
-                creationDate: '',
-                createdBy: '',
-                description: {},
-                fields: {},
-                groups: []
-            },
-            'C:default': {
-                name: 'C:default',
-                categoryName: 'C',
-                valuelists: {},
-                creationDate: '',
-                createdBy: '',
-                description: {},
-                fields: {},
-                groups: []
-            },
-            D: {
-                name: 'D',
-                categoryName: 'D',
-                valuelists: {},
-                creationDate: '',
-                createdBy: '',
-                description: {},
-                fields: {},
-                groups: []
-            },
-            'D:default': {
-                name: 'D:default',
-                categoryName: 'D',
-                valuelists: {},
-                creationDate: '',
-                createdBy: '',
-                description: {},
-                fields: { f3 },
-                groups: [
-                    { name: 'group1', fields: ['f3'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             }
         };
 
         const customForms: Map<CustomFormDefinition> = {
             B: {
-                fields: { f6 },
+                fields: { f4 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2', 'f5', 'f6'] }
-                ]
-            },
-            'D:default': {
-                fields: { f7 },
-                groups: [
-                    { name: 'group1', fields: ['f3', 'f4', 'f7'] }
+                    { name: 'group1', fields: ['f1', 'f2', 'f3', 'f4'] }
                 ]
             },
             A: {
-                fields: { f5 },
+                fields: { f3 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f5'] }
-                ]
-            },
-            'C:default': {
-                fields: { f4 },
-                groups: [
-                    { name: 'group1', fields: ['f4'] }
+                    { name: 'group1', fields: ['f1', 'f3'] }
                 ]
             }
         };
@@ -231,30 +157,122 @@ describe('mergeWithCustomForms', () => {
 
         expect(Object.keys(result['A'].fields).length).toBe(2);
         expect(result['A'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
-        expect(result['A'].fields['f5'].inputType).toEqual(Field.InputType.LITERATURE);
-        expect(result['A'].customFields).toEqual(['f5']);
+        expect(result['A'].fields['f3'].inputType).toEqual(Field.InputType.UNSIGNEDINT);
+        expect(result['A'].customFields).toEqual(['f3']);
 
         expect(Object.keys(result['B'].fields).length).toBe(4);
         expect(result['B'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
         expect(result['B'].fields['f2'].inputType).toEqual(Field.InputType.BOOLEAN);
-        expect(result['B'].fields['f5'].inputType).toEqual(Field.InputType.LITERATURE);
-        expect(result['B'].fields['f6'].inputType).toEqual(Field.InputType.INPUT);
-        
-        // TODO Enable
-        // expect(result['B'].customFields).toEqual(['f5', 'f6']);
+        expect(result['B'].fields['f3'].inputType).toEqual(Field.InputType.UNSIGNEDINT);
+        expect(result['B'].fields['f4'].inputType).toEqual(Field.InputType.UNSIGNEDFLOAT);
+        expect(result['B'].customFields).toEqual(['f3', 'f4']);
+    });
 
-        expect(Object.keys(result['C'].fields).length).toBe(0);
-        expect(Object.keys(result['D'].fields).length).toBe(0);
 
-        expect(Object.keys(result['C:default'].fields).length).toBe(1);
-        expect(result['C:default'].fields['f4'].inputType).toEqual(Field.InputType.UNSIGNEDFLOAT);
-        expect(result['C:default'].customFields).toEqual(['f4']);
+    it('extend category directly - inherit custom fields using library forms', () => {
 
-        expect(Object.keys(result['D:default'].fields).length).toBe(3);
-        expect(result['D:default'].fields['f3'].inputType).toEqual(Field.InputType.UNSIGNEDINT);
-        expect(result['D:default'].fields['f4'].inputType).toEqual(Field.InputType.UNSIGNEDFLOAT);
-        expect(result['D:default'].fields['f7'].inputType).toEqual(Field.InputType.CATEGORY);
-        expect(result['D:default'].customFields).toEqual(['f4', 'f7']);
+        const f1: Field = { name: 'f1', inputType: Field.InputType.TEXT };
+        const f2: Field = { name: 'f2', inputType: Field.InputType.BOOLEAN }
+        const f3: Field = { name: 'f3', inputType: Field.InputType.UNSIGNEDINT };
+        const f4: Field = { name: 'f4', inputType: Field.InputType.UNSIGNEDFLOAT };
+
+        const categories = {
+            A: {
+                description: {},
+                fields: { f1 },
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B: {
+                parent: 'A',
+                description: {},
+                fields: { f2 },
+                minimalForm: {
+                    groups: []
+                }
+            },
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            A: {
+                name: 'A',
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: []
+            },
+            'A:default': {
+                name: 'A:default',
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: { f1 },
+                groups: [
+                    { name: 'group1', fields: ['f1'] }
+                ]
+            },
+            B: {
+                name: 'B',
+                categoryName: 'B',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: []
+            },
+            'B:default': {
+                name: 'B:default',
+                categoryName: 'B',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: { f1, f2 },
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'B:default': {
+                fields: { f4 },
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2', 'f3', 'f4'] }
+                ]
+            },
+            'A:default': {
+                fields: { f3 },
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f3'] }
+                ]
+            }
+        };
+
+        const result = mergeWithCustomForms(customForms, categories as any, {}, {}, [],
+            Object.keys(customForms))(forms);
+
+        expect(Object.keys(result['A'].fields).length).toBe(0);
+        expect(Object.keys(result['B'].fields).length).toBe(0);
+
+        expect(Object.keys(result['A:default'].fields).length).toBe(2);
+        expect(result['A:default'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
+        expect(result['A:default'].fields['f3'].inputType).toEqual(Field.InputType.UNSIGNEDINT);
+        expect(result['A:default'].customFields).toEqual(['f3']);
+
+        expect(Object.keys(result['B:default'].fields).length).toBe(4);
+        expect(result['B:default'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
+        expect(result['B:default'].fields['f2'].inputType).toEqual(Field.InputType.BOOLEAN);
+        expect(result['B:default'].fields['f3'].inputType).toEqual(Field.InputType.UNSIGNEDINT);
+        expect(result['B:default'].fields['f4'].inputType).toEqual(Field.InputType.UNSIGNEDFLOAT);
+        expect(result['B:default'].customFields).toEqual(['f3', 'f4']);
     });
 
 

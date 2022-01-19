@@ -106,7 +106,6 @@ function mergeFormProperties(target: TransientFormDefinition,
         const sourceFields: string[] = flatten(source.groups.map(to('fields')));
         const targetFields: string[] = target.groups ? flatten(target.groups.map(to('fields'))) : [];
         
-        // TODO Check for parent fields
         target.customFields = sourceFields.filter(fieldName => !targetFields.includes(fieldName));
         target.groups = source.groups;
     }

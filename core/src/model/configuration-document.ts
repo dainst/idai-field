@@ -178,10 +178,17 @@ export namespace ConfigurationDocument {
         );
 
         [newForm].concat(currentForm.children).forEach(form => {
-            clonedConfigurationDocument.resource.forms[form.libraryId] = {
+            const formDefinition: CustomFormDefinition = {
                 fields: {},
                 hidden: []
             };
+            if (form.source === 'custom' && form.parentCategory) {
+                formDefinition.parent = form.parentCategory.name;
+                formDefinition.groups = CategoryForm.getGroupsConfiguration(
+                    newForm, getPermanentlyHiddenFields(configurationDocument, newForm)
+                );
+            }
+            clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
         });
         
         return clonedConfigurationDocument;

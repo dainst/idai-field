@@ -208,7 +208,7 @@ export namespace ConfigurationDocument {
         groupDefinition.fields = groupDefinition.fields.filter(f => f !== fieldName);
 
         if (groupDefinition.fields.length === 0) {
-            delete formDefinition.groups[formDefinition.groups.indexOf(groupDefinition)];
+            formDefinition.groups.splice(formDefinition.groups.indexOf(groupDefinition), 1);
         }
     }
 }

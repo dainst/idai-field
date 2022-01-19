@@ -199,10 +199,16 @@ export namespace ConfigurationDocument {
     function removeFieldFromForm(configurationDocument: ConfigurationDocument, category: CategoryForm,
                                  fieldName: string) {
         
-        const groupDefinition = configurationDocument.resource
-            .forms[category.libraryId ?? category.name].groups
+        const formDefinition = configurationDocument.resource
+        .forms[category.libraryId ?? category.name];
+
+        const groupDefinition = formDefinition.groups
             .find(group => group.fields.includes(fieldName));
 
         groupDefinition.fields = groupDefinition.fields.filter(f => f !== fieldName);
+
+        if (groupDefinition.fields.length === 0) {
+            delete formDefinition.groups[formDefinition.groups.indexOf(groupDefinition)];
+        }
     }
 }

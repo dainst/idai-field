@@ -117,10 +117,12 @@ export namespace ConfigurationDocument {
             .forms[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
 
-        const groupDefinition = clonedCategoryConfiguration.groups.find(
-            group => group.fields.includes(field.name)
-        );
-        groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
+        removeFieldFromForm(clonedConfigurationDocument, category, field.name);
+
+        category.children.filter(childCategory => childCategory.customFields.includes(field.name))
+            .forEach(childCategory => {
+                removeFieldFromForm(clonedConfigurationDocument, childCategory, field.name);
+            });
 
         CustomLanguageConfigurations.update(
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
@@ -191,5 +193,16 @@ export namespace ConfigurationDocument {
             form.groups.push(group);
         }
         group.fields.push(fieldName);
+    }
+
+
+    function removeFieldFromForm(configurationDocument: ConfigurationDocument, category: CategoryForm,
+                                 fieldName: string) {
+        
+        const groupDefinition = configurationDocument.resource
+            .forms[category.libraryId ?? category.name].groups
+            .find(group => group.fields.includes(fieldName));
+
+        groupDefinition.fields = groupDefinition.fields.filter(f => f !== fieldName);
     }
 }

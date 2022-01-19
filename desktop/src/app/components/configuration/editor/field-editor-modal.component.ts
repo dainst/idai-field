@@ -14,6 +14,7 @@ import { ConfigurationIndex } from '../../../services/configuration/index/config
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
 import { SaveResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -92,17 +93,21 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        if (!Field.InputType.VALUELIST_INPUT_TYPES
-                .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType)
-                && this.getClonedFormDefinition().valuelists) {
+        const valuelistRequired: boolean = Field.InputType.VALUELIST_INPUT_TYPES
+            .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType);
+
+        if (valuelistRequired && (!this.getClonedFormDefinition().valuelists
+                || !this.getClonedFormDefinition().valuelists[this.field.name])) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
+        }
+
+        if (!valuelistRequired && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
         }
 
         if (isEmpty(this.getClonedFieldDefinition())) {
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
-
-        console.log(this.clonedConfigurationDocument);
 
         await super.save(this.isConstraintIndexedChanged(), this.isValuelistChanged());
     }

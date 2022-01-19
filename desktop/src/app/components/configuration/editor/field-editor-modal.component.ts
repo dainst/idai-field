@@ -76,11 +76,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 inputType: 'input',
                 constraintIndexed: false
             };
-            const groups: Array<GroupDefinition> = CategoryForm.getGroupsConfiguration(
-                this.category, this.permanentlyHiddenFields
+            this.clonedConfigurationDocument = ConfigurationDocument.addField(
+                this.clonedConfigurationDocument, this.category, this.permanentlyHiddenFields,
+                this.groupName, this.field.name
             );
-            groups.find(group => group.name === this.groupName).fields.push(this.field.name);
-            this.getClonedFormDefinition().groups = groups;
         } else if (!this.getClonedFieldDefinition()) {
             this.getClonedFormDefinition().fields[this.field.name] = {};
         }
@@ -102,6 +101,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (isEmpty(this.getClonedFieldDefinition())) {
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
+
+        console.log(this.clonedConfigurationDocument);
 
         await super.save(this.isConstraintIndexedChanged(), this.isValuelistChanged());
     }

@@ -8,6 +8,7 @@ import { CategoryEditorModalComponent } from '../../editor/category-editor-modal
 import { Modals } from '../../../../services/modals';
 import { SaveResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class AddCategoryFormModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
-                private modals: Modals) {}
+                private modals: Modals,
+                private menus: Menus) {}
 
 
     public initialize() {
@@ -48,7 +50,9 @@ export class AddCategoryFormModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

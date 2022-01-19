@@ -208,7 +208,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -228,7 +228,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -316,7 +316,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -436,7 +436,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
             ManageValuelistsModalComponent,
-            MenuContext.VALUELISTS_MANAGEMENT,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 

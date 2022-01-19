@@ -139,7 +139,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const [result, componentInstance] = this.modals.make<AddFieldModalComponent>(
             AddFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 

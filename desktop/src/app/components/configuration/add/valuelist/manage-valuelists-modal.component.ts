@@ -57,7 +57,7 @@ export class ManageValuelistsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.VALUELISTS_MANAGEMENT) {
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
             this.activeModal.dismiss('cancel');
         }
     }

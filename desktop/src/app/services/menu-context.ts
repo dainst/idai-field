@@ -1,5 +1,5 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
-    |'georeferenceEdit'|'configurationEdit'|'configurationModal'|'valuelistsManagement';
+    |'georeferenceEdit'|'configurationEdit'|'configurationModal'|'configurationManagement';
 
     
 /**
@@ -17,5 +17,5 @@ export module MenuContext {
     export const GEOREFERENCE_EDIT = 'georeferenceEdit';
     export const CONFIGURATION_EDIT = 'configurationEdit';
     export const CONFIGURATION_MODAL = 'configurationModal';
-    export const VALUELISTS_MANAGEMENT = 'valuelistsManagement';
+    export const CONFIGURATION_MANAGEMENT = 'configurationManagement';
 }

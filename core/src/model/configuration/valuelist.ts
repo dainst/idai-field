@@ -53,12 +53,11 @@ export module Valuelist {
     }
 
 
-    export function applyExtension(valuelist: Valuelist, valuelists: Map<Valuelist>): Valuelist {
+    export function applyExtension(valuelist: Valuelist, extendedValuelist: Valuelist): Valuelist {
 
         const clonedValuelist: Valuelist = clone(valuelist);
         if (!clonedValuelist.extendedValuelist) return clonedValuelist;
 
-        const extendedValuelist: Valuelist = valuelists[clonedValuelist.extendedValuelist];
         Object.assign(clonedValuelist.values, extendedValuelist.values);
 
         if (clonedValuelist.hidden) {

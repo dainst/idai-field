@@ -9,14 +9,12 @@ describe('Valuelist', () => {
 
     it('apply valuelist extension', () => {
 
-        const valuelists: Map<Valuelist> = {
-            list: {
-                id: 'list',
-                source: 'library',
-                values: {
-                    a: {},
-                    b: {}
-                }
+        const extendedValuelist: Valuelist = {
+            id: 'list',
+            source: 'library',
+            values: {
+                a: {},
+                b: {}
             }
         };
 
@@ -30,7 +28,7 @@ describe('Valuelist', () => {
             hidden: ['b']
         };
 
-        const result: Valuelist = Valuelist.applyExtension(extendingValuelist, valuelists);
+        const result: Valuelist = Valuelist.applyExtension(extendingValuelist, extendedValuelist);
 
         expect(result).toEqual({
             id: 'extending-list',

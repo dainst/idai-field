@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop } from 'tsfun';
-import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, CategoryForm} from 'idai-field-core';
+import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
+    CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
 import { InputType } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -290,6 +290,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         const valuelistId: string = this.clonedField.valuelist.id;
         this.clonedField.valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
         this.clonedField.valuelist.id = valuelistId;
+
+        if (this.clonedField.valuelist.extendedValuelist) {
+            this.clonedField.valuelist = Valuelist.applyExtension(
+                this.clonedField.valuelist,
+                this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist)
+            );
+        }
     }
 
 

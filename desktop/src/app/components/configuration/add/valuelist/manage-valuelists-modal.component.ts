@@ -156,6 +156,17 @@ export class ManageValuelistsModalComponent {
     }
 
 
+    public getPreviewValuelist(): Valuelist {
+
+        if (!this.selectedValuelist) return;
+
+        return this.selectedValuelist.extendedValuelist
+            ? Valuelist.applyExtension(this.selectedValuelist,
+                this.configurationIndex.getValuelist(this.selectedValuelist.extendedValuelist))
+            : this.selectedValuelist;
+    }
+
+
     private async openEditValuelistModal(valuelist: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(

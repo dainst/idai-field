@@ -68,8 +68,8 @@ export class AddCategoryFormModalComponent {
 
         if (this.selectedForm === this.emptyForm) {
             this.createNewSubcategory();
-        } else if (ConfigurationDocument.isCustomizedCategory(this.configurationDocument,
-                this.categoryFormToReplace, true)) {
+        } else if (this.categoryFormToReplace && ConfigurationDocument.isCustomizedCategory(
+                this.configurationDocument, this.categoryFormToReplace, true)) {
             this.showSwapConfirmationModal();
         } else {
             this.addSelectedCategory();

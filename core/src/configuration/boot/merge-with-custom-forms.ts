@@ -56,7 +56,10 @@ function handleDirectExtension(customForm: CustomFormDefinition,
                                relations: Array<Relation>,
                                parentForm?: CustomFormDefinition): TransientFormDefinition {
 
-    const clonedCustomForm: TransientFormDefinition = clone(customForm) as TransientFormDefinition;
+    const clonedCustomForm: TransientFormDefinition = parentForm
+        ? inheritValuelists(customForm, parentForm) as TransientFormDefinition
+        : clone(customForm) as TransientFormDefinition;
+    
     clonedCustomForm.categoryName = extendedForm.categoryName;
     
     const result = addFieldsToForm(
@@ -78,7 +81,9 @@ function handleChildExtension(customFormName: string,
 
     if (!customForm.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customFormName];
 
-    const clonedCustomForm = customForm as TransientFormDefinition;
+    const clonedCustomForm: TransientFormDefinition
+        = inheritValuelists(customForm, parentForm) as TransientFormDefinition;
+    
     clonedCustomForm.name = customFormName;
     clonedCustomForm.categoryName = customFormName;
     
@@ -91,11 +96,11 @@ function handleChildExtension(customFormName: string,
 function mergeFormProperties(target: TransientFormDefinition,
                              source: TransientFormDefinition): TransientFormDefinition {
 
-    if (source[CustomFormDefinition.VALUELISTS]) {
-        if (!target[CustomFormDefinition.VALUELISTS]) target[CustomFormDefinition.VALUELISTS] = {};
+    if (source.valuelists) {
+        if (!target.valuelists) target.valuelists = {};
 
-        keysValues(source[CustomFormDefinition.VALUELISTS]).forEach(([valuelistId, valuelist]) => {
-            target[CustomFormDefinition.VALUELISTS][valuelistId] = valuelist;
+        keysValues(source.valuelists).forEach(([valuelistId, valuelist]) => {
+            target.valuelists[valuelistId] = valuelist;
         });
     }
     
@@ -167,6 +172,22 @@ function getParentCategoryName(customForm: CustomFormDefinition, customFormName:
     }
 
     return parentCategory;
+}
+
+
+function inheritValuelists(childForm: CustomFormDefinition,
+                           parentForm: CustomFormDefinition): CustomFormDefinition {
+
+    if (!parentForm.valuelists) return childForm;
+
+    const clonedChildForm = clone(childForm);
+    if (!clonedChildForm.valuelists) clonedChildForm.valuelists = {};
+
+    Object.keys(parentForm.valuelists).forEach(fieldName => {
+        clonedChildForm.valuelists[fieldName] = parentForm.valuelists[fieldName];
+    });
+
+    return clonedChildForm;
 }
 
 

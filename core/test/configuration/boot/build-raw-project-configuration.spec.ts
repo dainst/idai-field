@@ -610,6 +610,97 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('inherit custom valuelist from parent form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    a1: {
+                        inputType: 'dropdown',
+                        valuelistId: 'a1-library'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['a1'] }
+                    ]
+                }
+            },
+            B: {
+                parent: 'A',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                valuelists: { a1: 'a1-custom' },
+                fields: {}
+            },
+            B: {
+                fields: {}
+            },
+            C: {
+                parent: 'A',
+                fields: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['a1'] }
+                ]
+            },
+            D: {
+                parent: 'A',
+                valuelists: { a1: 'a1-custom-2' },  // Ignore this (overwriting valuelists from parent is not allowed)
+                fields: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['a1'] }
+                ]
+            }
+        };
+
+        const libraryValuelists: Map<Valuelist> = {
+            'a1-library': {
+                values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const customValuelists: Map<Valuelist> = {
+            'a1-custom': {
+                values: { b: {} }, description: {}, createdBy: '', creationDate: ''
+            },
+            'a1-custom-2': {
+                values: { c: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            {},
+            libraryValuelists,
+            customValuelists
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+
+        expect(result['B'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['B'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+
+        expect(result['C'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['C'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+
+        expect(result['D'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['D'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+    });
+
+
     it('duplication in selection - two library forms of the same category', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

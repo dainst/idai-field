@@ -287,6 +287,8 @@ describe('mergeWithCustomForms', () => {
 
         const categories = {
             A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 description: {},
                 fields: {
                     f1: {
@@ -306,8 +308,26 @@ describe('mergeWithCustomForms', () => {
             }
         };
 
+        const forms: Map<TransientFormDefinition> = {
+            A: {
+                name: 'A',
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1'] }
+                ]
+            }
+        };
+
         const customForms: Map<CustomFormDefinition> = {
-            'NewCategory': {
+            A: {
+                fields: {}
+            },
+            NewCategory: {
                 parent: 'A',
                 fields: {
                     f3: {
@@ -321,7 +341,7 @@ describe('mergeWithCustomForms', () => {
         };
 
         const result = mergeWithCustomForms(customForms, categories as any, {}, commonFields, [],
-            Object.keys(customForms))({});
+            Object.keys(customForms))(forms);
 
         expect(Object.keys(result['NewCategory'].fields).length).toBe(4);
         expect(result['NewCategory'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
@@ -329,5 +349,67 @@ describe('mergeWithCustomForms', () => {
         expect(result['NewCategory'].fields['f3'].inputType).toEqual(Field.InputType.LITERATURE);
         expect(result['NewCategory'].fields['c1'].inputType).toEqual(Field.InputType.INPUT);
         expect(result['NewCategory'].customFields).toEqual(['c1', 'f2', 'f3']);
+    });
+
+
+    it('inherit valuelists', () => {
+
+        const categories = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                description: {},
+                fields: {
+                    f1: {
+                        name: 'f1',
+                        inputType: Field.InputType.RADIO,
+                        valuelistId: 'library-valuelist' 
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'group1', fields: ['f1'] }
+                    ]
+                }
+            }
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            A: {
+                name: 'A',
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                valuelists: { f1: 'custom-valuelist' },
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1'] }
+                ]
+            },
+            NewCategory: {
+                parent: 'A',
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1'] }
+                ]
+            }
+        };
+
+        const result = mergeWithCustomForms(customForms, categories as any, {}, {}, [],
+            Object.keys(customForms))(forms);
+
+        expect(result['A'].valuelists['f1']).toEqual('custom-valuelist');
+        expect(result['NewCategory'].valuelists['f1']).toEqual('custom-valuelist');
     });
 });

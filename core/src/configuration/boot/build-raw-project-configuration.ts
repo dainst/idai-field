@@ -30,6 +30,7 @@ import { Field } from '../../model/configuration/field';
 import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm, applyLanguagesToRelations } from './apply-languages-configurations';
 import { Category } from '../../model/configuration/category';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
+import { mergeValuelists } from './merge-valuelists';
 
 
 const CATEGORIES = 0;
@@ -144,26 +145,6 @@ function buildFields(fieldDefinitions: Map<BuiltInFieldDefinition>, languageConf
     applyLanguagesToFields(languageConfigurations, fields, section);
 
     return fields as Map<Field>;
-}
-
-
-function mergeValuelists(libraryValuelists: Map<Valuelist>, customValuelists: Map<Valuelist>): Map<Valuelist> {
-
-    const valuelists: Map<Valuelist> = Object.keys(libraryValuelists).reduce((result, valuelistId) => {
-        result[valuelistId] = clone(libraryValuelists[valuelistId]);
-        result[valuelistId].id = valuelistId;
-        result[valuelistId].source = 'library';
-        return result;
-    }, {});
-
-    return Object.keys(customValuelists).reduce((result, valuelistId) => {
-        if (!result[valuelistId]) {
-            result[valuelistId] = clone(customValuelists[valuelistId]);
-            result[valuelistId].id = valuelistId;
-            result[valuelistId].source = 'custom';
-        }
-        return result;
-    }, valuelists);
 }
 
 

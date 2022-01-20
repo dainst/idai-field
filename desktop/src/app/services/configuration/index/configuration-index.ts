@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { to } from 'tsfun';
+import { to, Map } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
     createContextIndependentCategories, Field, Name, ProjectConfiguration, RawProjectConfiguration,
     Tree, Valuelist } from 'idai-field-core';
@@ -19,6 +19,7 @@ export class ConfigurationIndex {
     private fieldIndex: FieldIndex;
     private valuelistIndex: ValuelistIndex;
     private valuelistUsageIndex: ValuelistUsageIndex;
+    private valuelists: Map<Valuelist>;
 
 
     constructor(private configReader: ConfigReader,
@@ -42,6 +43,12 @@ export class ConfigurationIndex {
     public findValuelists(searchTerm: string): Array<Valuelist> {
 
         return ValuelistIndex.find(this.valuelistIndex, searchTerm);
+    }
+
+
+    public getValuelist(valuelistId: string): Valuelist {
+
+        return this.valuelists[valuelistId];
     }
 
 
@@ -92,6 +99,8 @@ export class ConfigurationIndex {
             this.getTopLevelCategoriesLibraryIds(),
             languages
         );
+
+        this.valuelists = rawConfiguration.valuelists;
 
         this.createSubIndices(
             Tree.flatten(rawConfiguration.forms),

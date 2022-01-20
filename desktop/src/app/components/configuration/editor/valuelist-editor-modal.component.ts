@@ -66,6 +66,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public getValueIds = () => this.sortAlphanumerically ? this.getSortedValueIds() : this.order;
 
+    public isInherited = (valueId: string) => this.extendedValuelist?.values[valueId] !== undefined;
+
+    public isHidden = (valueId: string) => this.getClonedValuelistDefinition().hidden?.includes(valueId);
+
 
     public initialize() {
 
@@ -166,6 +170,20 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public toggleSort() {
 
         this.sortAlphanumerically = !this.sortAlphanumerically;
+    }
+
+    
+    public toggleHidden(valueId: string) {
+
+        const valuelistDefinition = this.getClonedValuelistDefinition();
+
+        if (valuelistDefinition.hidden?.includes(valueId)) {
+            valuelistDefinition.hidden.splice(valuelistDefinition.hidden.indexOf(valueId), 1);
+            if (valuelistDefinition.hidden.length === 0) delete valuelistDefinition.hidden;
+        } else {
+            if (!valuelistDefinition.hidden) valuelistDefinition.hidden = [];
+            valuelistDefinition.hidden.push(valueId);
+        }
     }
 
 

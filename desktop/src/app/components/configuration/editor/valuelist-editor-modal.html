@@ -60,8 +60,23 @@
                         {{getValueLabel(valueId)}}
                         <code>{{valueId}}</code>
                     </div>
-                    <button class="btn btn-danger" (click)="deleteValue(valueId)"><span class="mdi mdi-delete"></span></button>
-                    <button class="btn btn-info" (click)="editValue(valueId)"><span class="mdi mdi-pencil"></span></button>
+                    <button *ngIf="isInherited(valueId)"
+                            class="btn btn-primary"
+                            (click)="toggleHidden(valueId)">
+                        <span class="mdi"
+                              [class.mdi-eye]="isHidden(valueId)"
+                              [class.mdi-eye-off]="!isHidden(valueId)">
+                        </span>
+                    </button>
+                    <button *ngIf="!isInherited(valueId)"
+                            class="btn btn-danger"
+                            (click)="deleteValue(valueId)">
+                        <span class="mdi mdi-delete"></span>
+                    </button>
+                    <button class="btn btn-info"
+                            (click)="editValue(valueId)">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
                 </div>
                 <div *cdkDragPreview class="value-drag-preview value-item form-control">
                     {{getValueLabel(valueId)}}

@@ -123,7 +123,6 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-
         const libraryForms: Map<LibraryFormDefinition> = {
             'A:default': {
                 categoryName: 'A',
@@ -133,13 +132,14 @@ describe('buildRawProjectConfiguration', () => {
                 creationDate: '',
                 groups: []
             }
-        }
-
+        };
 
         const result = buildRawArray(
             builtInCategories,
             libraryCategories,
-            libraryForms
+            libraryForms,
+            undefined, {}, {}, {}, {}, [], undefined, [], undefined,
+            ['B']
         );
 
         expect(result.length).toBe(5);

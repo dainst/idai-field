@@ -4,7 +4,7 @@ import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
 
 
-export type ConfigurationContextMenuAction = 'edit'|'swap'|'delete';
+export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
 
 
 @Component({
@@ -40,7 +40,8 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
         return this.isDeleteOptionAvailable()
             || this.isEditOptionAvailable()
-            || this.isSwapOptionAvailable();
+            || this.isSwapOptionAvailable()
+            || this.isExtendOptionAvailable();
     }
 
 
@@ -50,6 +51,12 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
         return (!this.contextMenu.group
             || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group)));
+    }
+
+
+    public isExtendOptionAvailable(): boolean {
+
+        return this.contextMenu.valuelist && this.contextMenu.valuelist.source === 'library';
     }
 
 

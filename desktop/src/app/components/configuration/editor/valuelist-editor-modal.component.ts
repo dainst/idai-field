@@ -27,6 +27,7 @@ import { M } from '../../messages/m';
 export class ValuelistEditorModalComponent extends ConfigurationEditorModalComponent {
 
     public valuelist: Valuelist;
+    public extendedValuelist?: Valuelist;
 
     public newValueId: string = '';
     public order: string[];
@@ -78,6 +79,13 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 values: {},
                 createdBy: this.settingsProvider.getSettings().username,
                 creationDate: new Date().toISOString().split('T')[0]
+            }
+
+            if (this.extendedValuelist) {
+                this.getClonedValuelistDefinition().extendedValuelist = this.extendedValuelist.id;
+                if (this.extendedValuelist.order) {
+                    this.getClonedValuelistDefinition().order = this.extendedValuelist.order;
+                }
             }
         }
 
@@ -169,8 +177,11 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     private getSortedValueIds(): string[] {
 
-        return Object.keys(this.getClonedValuelistDefinition().values).sort((valueId1: string, valueId2: string) => {
-            return SortUtil.alnumCompare(this.getValueLabel(valueId1),this.getValueLabel(valueId2));
+        const valueIds: string[] = Object.keys(this.getClonedValuelistDefinition().values)
+            .concat(this.extendedValuelist ? Object.keys(this.extendedValuelist.values) : []);
+
+        return valueIds.sort((valueId1: string, valueId2: string) => {
+            return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
         });
     }
 

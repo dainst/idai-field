@@ -15,6 +15,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 import { Messages } from '../../../messages/messages';
 import { Menus } from '../../../../services/menus';
 import { ValuelistSearchQuery } from './valuelist-search-query';
+import { ExtendValuelistModalComponent } from './extend-valuelist-modal.component';
 
 
 @Component({
@@ -117,6 +118,9 @@ export class ManageValuelistsModalComponent {
             case 'edit':
                 this.openEditValuelistModal(this.contextMenu.valuelist);
                 break;
+            case 'extend':
+                this.openExtendValuelistModal(this.contextMenu.valuelist);
+                break;
             case 'delete':
                 this.openDeleteValuelistModal(this.contextMenu.valuelist);
                 break;
@@ -124,7 +128,8 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public async createNewValuelist() {
+    public async createNewValuelist(newValuelistId: string = this.searchQuery.queryString,
+                                    valuelistToExtend?: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -135,10 +140,11 @@ export class ManageValuelistsModalComponent {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = {
-            id: this.searchQuery.queryString,
+            id: newValuelistId,
             values: {},
             description: {}
         };
+        if (valuelistToExtend) componentInstance.extendedValuelist = valuelistToExtend;
         componentInstance.new = true;
         componentInstance.initialize();
 
@@ -150,7 +156,7 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public async openEditValuelistModal(valuelist: Valuelist) {
+    private async openEditValuelistModal(valuelist: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -171,7 +177,24 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public async openDeleteValuelistModal(valuelist: Valuelist) {
+    private async openExtendValuelistModal(valuelist: Valuelist) {
+
+        const [result, componentInstance] = this.modals.make<ExtendValuelistModalComponent>(
+            ExtendValuelistModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+        );
+
+        componentInstance.valuelistToExtend = valuelist;
+
+        await this.modals.awaitResult(
+            result,
+            (newValuelistId: string) => this.createNewValuelist(newValuelistId, valuelist),
+            nop
+        );
+    }
+
+
+    private async openDeleteValuelistModal(valuelist: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<DeleteValuelistModalComponent>(
             DeleteValuelistModalComponent,

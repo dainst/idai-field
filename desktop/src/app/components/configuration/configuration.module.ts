@@ -34,6 +34,7 @@ import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.
 import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.component';
 import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
 import { SwapCategoryFormModalComponent } from './add/category/swap-category-form-modal.component';
+import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-modal.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { SwapCategoryFormModalComponent } from './add/category/swap-category-for
         ValuelistSearchBarComponent,
         SwapCategoryFormModalComponent,
         SaveModalComponent,
-        ValuelistViewComponent
+        ValuelistViewComponent,
+        ExtendValuelistModalComponent
     ],
     exports: [
         ConfigurationComponent
@@ -95,6 +97,7 @@ import { SwapCategoryFormModalComponent } from './add/category/swap-category-for
         DeleteValuelistModalComponent,
         ValuelistSearchBarComponent,
         SwapCategoryFormModalComponent,
+        ExtendValuelistModalComponent,
         SaveModalComponent
     ]
 })

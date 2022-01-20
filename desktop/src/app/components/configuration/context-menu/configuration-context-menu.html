@@ -11,6 +11,11 @@
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
     </div>
+    <div *ngIf="isExtendOptionAvailable()"
+        id="context-menu-extend-button" class="dropdown-item" (click)="selectAction('extend')">
+        <span class="mdi mdi-playlist-plus"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.extend">Werteliste erweitern</span>
+    </div>
     <div *ngIf="isSwapOptionAvailable()"
          id="context-menu-swap-button" class="dropdown-item" (click)="selectAction('swap')">
         <span class="mdi mdi-swap-horizontal"></span>

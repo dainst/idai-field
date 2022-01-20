@@ -1,3 +1,4 @@
+import { clone, Map } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { ValuelistValue } from './valuelist-value';
 
@@ -9,6 +10,7 @@ export type Valuelists = { [fieldName: string]: ValuelistId }
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export interface Valuelist {
 
@@ -19,14 +21,14 @@ export interface Valuelist {
     createdBy?: string;
     creationDate?: string;
 
+    extendedValuelist?: string;
+    hidden?: string[];
+
     // Valuelists are shown in alphabetical order per default.
     // For cases in which another order is required, it can be specified in this property.
     order?: string[];
 
     source?: Valuelist.SourceTypes;
-
-    extends?: string; // to be implemented
-    constraints?: any; // to be implemented
 }
 
 
@@ -38,6 +40,34 @@ export module Valuelist {
     export function getValueLabel(valuelist: Valuelist, valueId: string): I18N.String|undefined {
 
         return valuelist.values[valueId]?.label;
+    }
+
+
+    export function assertIsValid(valuelistDefinition: Valuelist) {
+
+        if (valuelistDefinition.description === undefined) return ['missing', 'description'];
+        if (valuelistDefinition.createdBy === undefined) return ['missing', 'createdBy'];
+        if (valuelistDefinition.creationDate === undefined) return ['missing', 'creationDate'];
+        
+        return undefined;
+    }
+
+
+    export function applyExtension(valuelist: Valuelist, valuelists: Map<Valuelist>): Valuelist {
+
+        const clonedValuelist: Valuelist = clone(valuelist);
+        if (!clonedValuelist.extendedValuelist) return clonedValuelist;
+
+        const extendedValuelist: Valuelist = valuelists[clonedValuelist.extendedValuelist];
+        Object.assign(clonedValuelist.values, extendedValuelist.values);
+
+        if (clonedValuelist.hidden) {
+            for (let valueId of Object.keys(clonedValuelist.values)) {
+                if (clonedValuelist.hidden.includes(valueId)) delete clonedValuelist.values[valueId];
+            }
+        }
+
+        return clonedValuelist;
     }
 
 
@@ -57,13 +87,4 @@ export module Valuelist {
 
         return order.indexOf(valueA) - order.indexOf(valueB);
     };
-    
-
-    export function assertIsValid(valuelistDefinition: Valuelist) {
-
-        if (valuelistDefinition.description === undefined) return ['missing', 'description'];
-        if (valuelistDefinition.createdBy === undefined) return ['missing', 'createdBy'];
-        if (valuelistDefinition.creationDate === undefined) return ['missing', 'creationDate'];
-        return undefined;
-    }
 }

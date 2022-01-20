@@ -281,7 +281,7 @@ describe('buildRawProjectConfiguration', () => {
         const commonFields: Map<BuiltInFieldDefinition> = {
             aCommon: {
                 inputType: 'dropdown',
-                valuelistId: 'aField-valuelist-id-1'
+                valuelistId: 'aCommon-valuelist-id-1'
             }
         };
 
@@ -698,6 +698,67 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['D'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
         expect(result['D'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
+    });
+
+
+    it('extend valuelist', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                fields: {
+                    a1: {
+                        inputType: 'dropdown',
+                        valuelistId: 'a1-library'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['a1'] }
+                    ]
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                valuelists: { a1: 'a1-custom' },
+                fields: {}
+            }
+        };
+
+        const libraryValuelists: Map<Valuelist> = {
+            'a1-library': {
+                values: { a: {}, b: {} },
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const customValuelists: Map<Valuelist> = {
+            'a1-custom': {
+                extendedValuelist: 'a1-library',
+                values: { c: {} },
+                hidden: ['b'],
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            {},
+            libraryValuelists,
+            customValuelists
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {}, c: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['source']).toBe('custom');
     });
 
 

@@ -113,6 +113,8 @@ function mergeFormProperties(target: TransientFormDefinition,
         
         target.customFields = sourceFields.filter(fieldName => !targetFields.includes(fieldName));
         target.groups = source.groups;
+    } else {
+        target.customFields = [];
     }
 
     flow(

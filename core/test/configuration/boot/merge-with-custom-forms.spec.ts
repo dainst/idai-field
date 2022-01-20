@@ -343,6 +343,8 @@ describe('mergeWithCustomForms', () => {
         const result = mergeWithCustomForms(customForms, categories as any, {}, commonFields, [],
             Object.keys(customForms))(forms);
 
+        expect(result['A'].customFields).toEqual([]);
+
         expect(Object.keys(result['NewCategory'].fields).length).toBe(4);
         expect(result['NewCategory'].fields['f1'].inputType).toEqual(Field.InputType.TEXT);
         expect(result['NewCategory'].fields['f2'].inputType).toEqual(Field.InputType.BOOLEAN);

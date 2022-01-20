@@ -183,6 +183,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         } else {
             if (!valuelistDefinition.hidden) valuelistDefinition.hidden = [];
             valuelistDefinition.hidden.push(valueId);
+            valuelistDefinition.hidden.sort(SortUtil.alnumCompare);
         }
     }
 

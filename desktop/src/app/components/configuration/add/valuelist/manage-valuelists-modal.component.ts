@@ -178,7 +178,7 @@ export class ManageValuelistsModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = valuelist;
         if (valuelist.extendedValuelist) {
-            componentInstance.extendedValuelist = this.valuelists[valuelist.extendedValuelist];
+            componentInstance.extendedValuelist = this.configurationIndex.getValuelist(valuelist.extendedValuelist);
         }
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.initialize();

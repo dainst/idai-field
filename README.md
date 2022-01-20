@@ -15,9 +15,5 @@ When first checking out the code base, bootstrap the dependencies with:
 
     $ npm run bootstrap
 
-Build all packages with:
-
-    $ npm run build
-
 Refer to the sub-package READMEs for detailed instructions on how to set up individual
 development environments.

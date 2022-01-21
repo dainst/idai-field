@@ -33,3 +33,4 @@ export { ConnectedDocs as ConnectedDocsWriter } from '../services/utilities/conn
 export { updateRelations } from '../services/utilities/update-relations';
 export { RelationsManager } from '../services/relations-manager';
 export { Category } from './configuration/category';
+export { Template } from './configuration/template';

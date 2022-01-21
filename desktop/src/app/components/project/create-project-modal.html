@@ -1,4 +1,3 @@
-
 <div class="modal-header">
     <h5 class="modal-title" i18n="@@project.createModal.header">
         Neues Projekt erstellen
@@ -6,11 +5,7 @@
 </div>
 
 <div class="modal-body">
-    <div id="confirm-delete-info" >
-        <span i18n="@@project.createModal.info">
-            Bitte geben Sie den Namen des neuen Projekts ein.
-        </span>
-    </div>
+    <div i18n="@@project.createModal.projectName">Projektname:</div>
     <div class="input-group">
         <input id="create-project-input"
                type="text"
@@ -18,15 +13,24 @@
                [(ngModel)]="projectName"
                (keydown)="$event.key !== 'Enter' || createProject()" />
     </div>
+    <div i18n="@@project.createModal.configuration">Konfiguration:</div>
+    <select (change)="selectTemplate($event.target.value)"
+            class="form-control">
+        <option *ngFor="let templateName of getTemplateNames()"
+                value="{{templateName}}"
+                [selected]="selectedTemplate.name === templateName">
+            {{getTemplateLabel(templateName)}}
+        </option>
+    </select>
 </div>
 
 <div class="modal-footer">
-    <button id="delete-project-confirm" class="btn btn-success" type="button"
+    <button id="create-project-confirm" class="btn btn-success" type="button"
             [ngClass]="{ 'disabled': !projectName }"
             (click)="createProject()">
         <span i18n="@@buttons.create">Erstellen</span>
     </button>
-    <button type="button" id="delete-project-cancel" class="btn btn-secondary"
+    <button type="button" id="create-project-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </button>

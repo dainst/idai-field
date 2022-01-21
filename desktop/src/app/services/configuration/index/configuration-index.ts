@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { to, Map } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
     createContextIndependentCategories, Field, Name, ProjectConfiguration, RawProjectConfiguration,
-    Tree, Valuelist } from 'idai-field-core';
+    Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
@@ -20,11 +20,15 @@ export class ConfigurationIndex {
     private valuelistIndex: ValuelistIndex;
     private valuelistUsageIndex: ValuelistUsageIndex;
     private valuelists: Map<Valuelist>;
+    private templates: Map<Template>;
 
 
     constructor(private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
                 private projectConfiguration: ProjectConfiguration) {}
+
+    
+    public getTemplates = (): Map<Template> => this.templates;
 
 
     public findCategoryForms(searchTerm: string, parentCategory?: Name,
@@ -101,6 +105,7 @@ export class ConfigurationIndex {
         );
 
         this.valuelists = rawConfiguration.valuelists;
+        this.templates = await this.configLoader.readTemplates();
 
         this.createSubIndices(
             Tree.flatten(rawConfiguration.forms),

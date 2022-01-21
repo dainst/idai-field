@@ -68,6 +68,7 @@ import languageSudanHeritage_en from '../../../config/Language-SudanHeritage.en.
 import languageUruk_en from '../../../config/Language-Uruk.en.json';
 import libraryForms from '../../../config/Library/Forms.json';
 import libraryCategories from '../../../config/Library/Categories.json';
+import libraryTemplates from '../../../config/Library/Templates.json';
 import libraryLanguageDe from '../../../config/Library/Language.de.json';
 import libraryLanguageEn from '../../../config/Library/Language.en.json';
 import libraryLanguageEs from '../../../config/Library/Language.es.json';
@@ -85,6 +86,7 @@ const PATH_MAP: Record<string, any> = {
     '/Core/Language.fr.json': coreLanguageFr,
     '/Library/Categories.json': libraryCategories,
     '/Library/Forms.json': libraryForms,
+    '/Library/Templates.json': libraryTemplates,
     '/Library/Language.de.json': libraryLanguageDe,
     '/Library/Language.en.json': libraryLanguageEn,
     '/Library/Language.es.json': libraryLanguageEs,

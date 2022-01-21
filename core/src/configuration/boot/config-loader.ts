@@ -14,6 +14,7 @@ import { BuiltInCategoryDefinition } from '../model/category/built-in-category-d
 import { LibraryCategoryDefinition } from '../model/category/library-category-definition';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { Valuelist } from '../../model/configuration/valuelist';
+import { Template } from '../../model/configuration/template';
 
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
@@ -199,6 +200,15 @@ export class ConfigLoader {
             );
             return configurations;
         }, {});
+    }
+
+
+    public readTemplates(): Map<Template> {
+     
+        const templates = this.configReader.read('/Library/Templates.json');
+        Object.keys(templates).forEach(templateId => templates[templateId].name = templateId);
+
+        return templates;
     }
 
 

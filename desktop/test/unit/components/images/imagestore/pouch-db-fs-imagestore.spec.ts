@@ -41,7 +41,12 @@ describe('PouchDbFsImagestore', () => {
         const mockConstraintIndexer = ConstraintIndex.make(
             {}, [] as any);
 
-        await datastore.createDb('unittest', { _id: 'project', resource: { id: 'project' }}, false);
+        await datastore.createDb(
+            'unittest',
+            { _id: 'project', resource: { id: 'project' } } as any,
+            { _id: 'configuration', resource: { id: 'configuration '} } as any,
+            false
+        );
 
         await Indexer.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false),
                               datastore.getDb(), null, null);

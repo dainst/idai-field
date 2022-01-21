@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { ConfigurationDocument } from '../../model/configuration-document';
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/document';
 import { ObserverUtil } from '../../tools';
@@ -76,7 +77,8 @@ export class PouchdbDatastore {
      * a possible existing database with the specified name will get used
      * and not overwritten.
      */
-    public async createDb(name: string, doc: any, destroyBeforeCreate: boolean): Promise<PouchDB.Database> {
+    public async createDb(name: string, projectDocument: Document, configurationDocument: ConfigurationDocument,
+                          destroyBeforeCreate: boolean): Promise<PouchDB.Database> {
 
         let db = this.pouchDbFactory(name);
 
@@ -85,12 +87,21 @@ export class PouchdbDatastore {
             db = this.pouchDbFactory(name);
         }
 
+        // Create project & configuration documents only if they do not exist,
+        // which can happen if the db already existed
+
         try {
             await db.get('project');
         } catch {
-            // create project only if it does not exist,
-            // which can happen if the db already existed
-            await db.put(doc);
+            await db.put(projectDocument);
+        }
+
+        if (configurationDocument) {
+            try {
+                await db.get('configuration');
+            } catch {
+                await db.put(configurationDocument);
+            }
         }
 
         this.db = db;

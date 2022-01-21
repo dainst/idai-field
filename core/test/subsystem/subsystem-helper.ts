@@ -10,7 +10,7 @@ import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexFacade } from '../../src/index/index-facade';
 import { Tree } from '../../src/tools/forest';
 import { Lookup, makeLookup, Name } from '../../src/tools';
-import { RelationsManager } from '../../src/model';
+import { RelationsManager, Template } from '../../src/model';
 import { createDocuments, makeExpectDocuments, NiceDocs } from '../test-helpers';
 import { basicIndexConfiguration } from '../../src/base-config';
 
@@ -41,7 +41,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         (name: string) => new PouchDB(name),
         new IdGenerator());
 
-    const project = {
+    const projectDocument = {
         _id: 'project',
         resource: {
             category: 'Project',
@@ -54,16 +54,32 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         modified: [{ user: db, date: new Date() }]
     };
 
-    await pouchdbDatastore.createDb(db, project, true);
-
-    
-
-    const documentCache = new DocumentCache();
-    
     const configLoader = new ConfigLoader(
         new ConfigReader(), 
         pouchdbDatastore,
     );
+
+    const template: Template = (await configLoader.readTemplates())['default'];
+
+    const configurationDocument = {
+        _id: 'configuration',
+        resource: {
+            category: 'Configuration',
+            identifier: 'Configuration',
+            id: 'configuration',
+            forms: template.configuration.forms,
+            order: template.configuration.order,
+            valuelists: {},
+            languages: {},
+            relations: {}
+        },
+        created: { user: db, date: new Date() },
+        modified: [{ user: db, date: new Date() }]
+    };
+
+    await pouchdbDatastore.createDb(db, projectDocument, configurationDocument, true);
+
+    const documentCache = new DocumentCache();
 
     const appConfigurator = new AppConfigurator(configLoader);
 

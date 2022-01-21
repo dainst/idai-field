@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Labels, Template } from 'idai-field-core';
 import { ProjectNameValidation } from '../../model/project-name-validation';
+import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
@@ -22,20 +24,45 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class CreateProjectModalComponent {
+export class CreateProjectModalComponent implements OnInit {
 
     public projectName: string;
+    public selectedTemplate: Template;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages,
+                private configurationIndex: ConfigurationIndex,
+                private labels: Labels) {}
+
+    
+    public getTemplateNames = () => Object.keys(this.configurationIndex.getTemplates());
+
+    public getTemplate = (templateName: string) => this.configurationIndex.getTemplates()[templateName];
+
+    public getTemplateLabel = (templateName: string) => this.labels.get(this.getTemplate(templateName));
+
+    public getTemplateDescription = (templateName: string) =>
+        this.labels.getDescription(this.getTemplate(templateName));
+
+
+    ngOnInit() {
+
+        this.selectedTemplate = this.getTemplate(this.getTemplateNames()[0]);
+    }
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public selectTemplate(templateName: string) {
+
+        this.selectedTemplate = this.getTemplate(templateName);
     }
 
 
@@ -48,6 +75,7 @@ export class CreateProjectModalComponent {
 
         await this.settingsService.createProject(
             this.projectName,
+            this.selectedTemplate,
             remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
         );
 

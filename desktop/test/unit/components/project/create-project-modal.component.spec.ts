@@ -24,7 +24,9 @@ describe('CreateProjectModalComponent', () => {
             { close: () => {} } as NgbActiveModal,
             settingsService,
             settingsProvider,
-            messages
+            messages,
+            undefined,
+            undefined
         );
     });
 

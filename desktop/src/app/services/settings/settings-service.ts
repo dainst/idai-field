@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService } from 'idai-field-core';
+import { AppConfigurator, ConfigurationDocument, getConfigurationName, Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
@@ -46,6 +46,7 @@ export class SettingsService {
             await this.pouchdbDatastore.createDb(
                 selectedProject,
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
+                null,
                 destroyBeforeCreate
             );
             this.pouchdbDatastore.setupChangesEmitter();
@@ -165,7 +166,7 @@ export class SettingsService {
     }
 
 
-    public async createProject(project: Name, destroyBeforeCreate: boolean) {
+    public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
 
         this.synchronizationService.stopSync();
 
@@ -174,6 +175,7 @@ export class SettingsService {
         await this.pouchdbDatastore.createDb(
             project,
             SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
+            SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template),
             destroyBeforeCreate
         );
     }
@@ -188,6 +190,26 @@ export class SettingsService {
                 identifier: settings.selectedProject,
                 id: 'project',
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
+                relations: {}
+            },
+            created: { user: settings.username, date: new Date() },
+            modified: [{ user: settings.username, date: new Date() }]
+        };
+    }
+
+
+    public static createConfigurationDocument(settings: Settings, template: Template): ConfigurationDocument {
+
+        return {
+            _id: 'configuration',
+            resource: {
+                category: 'Configuration',
+                identifier: 'Configuration',
+                id: 'configuration',
+                forms: template.configuration.forms,
+                order: template.configuration.order,
+                valuelists: {},
+                languages: {},
                 relations: {}
             },
             created: { user: settings.username, date: new Date() },

@@ -1,6 +1,19 @@
 valuelist-preview {
   display: block;
 
+  #preview-header.extending-valuelist {
+    height: 64px;
+  }
+
+  #preview-body.extending-valuelist {
+    height: calc(100% - 69px);
+  }
+
+  #extension-info {
+    width: fit-content;
+    font-size: 14px;
+  }
+
   #valuelist-description {
     padding-bottom: 12px;
     font-size: 14px;

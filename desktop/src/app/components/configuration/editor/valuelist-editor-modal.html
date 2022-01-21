@@ -56,7 +56,7 @@
                  (cdkDragEnded)="dragging = false">
                 <div class="value-item-input-group input-group">
                     <span *ngIf="!sortAlphanumerically" class="mdi mdi-drag" cdkDragHandle></span>
-                    <div class="value-item form-control">
+                    <div class="value-item form-control" [class.hidden-value]="isHidden(valueId)">
                         {{getValueLabel(valueId)}}
                         <code>{{valueId}}</code>
                     </div>
@@ -91,7 +91,7 @@
                    type="text"
                    placeholder="{{inputPlaceholder}}"
                    class="form-control">
-            <button class="btn btn-success" type="button"
+            <button id="add-value-button" class="btn btn-success" type="button"
                     [disabled]="!isValidValue(newValueId)" 
                     (click)="addValue(newValueId)">
                 <span class="mdi mdi-plus"></span>

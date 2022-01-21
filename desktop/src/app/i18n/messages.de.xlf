@@ -1032,7 +1032,7 @@
           <context context-type="linenumber">59,65</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configiguration.replaceValuelist" datatype="html">
+      <trans-unit id="configuration.replaceValuelist" datatype="html">
         <source>Werteliste wechseln</source>
         <target state="final">Werteliste wechseln</target>
         <context-group purpose="location">
@@ -1040,7 +1040,7 @@
           <context context-type="linenumber">80,84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configiguration.editValuelist" datatype="html">
+      <trans-unit id="configuration.editValuelist" datatype="html">
         <source>Werteliste bearbeiten</source>
         <target state="final">Werteliste bearbeiten</target>
         <context-group purpose="location">
@@ -1048,7 +1048,7 @@
           <context context-type="linenumber">96,102</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configiguration.addValuelist" datatype="html">
+      <trans-unit id="configuration.addValuelist" datatype="html">
         <source>Werteliste hinzufügen</source>
         <target state="final">Werteliste hinzufügen</target>
         <context-group purpose="location">

@@ -435,22 +435,37 @@ describe('CSVExport', () => {
             { quotation: 'Quotation 1', zenonId: '1234567' },
             { quotation: 'Quotation 2' } ];
         resources[1].literature = [
-            { quotation: 'Quotation 3', zenonId: '7654321' }
+            { quotation: 'Quotation 3', zenonId: '7654321', doi: 'https://www.example.de', page: '12', figure: '1' }
         ];
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
         expect(result[0][1]).toBe('"literature.0.quotation"');
         expect(result[0][2]).toBe('"literature.0.zenonId"');
-        expect(result[0][3]).toBe('"literature.1.quotation"');
-        expect(result[0][4]).toBe('"literature.1.zenonId"');
+        expect(result[0][3]).toBe('"literature.0.doi"');
+        expect(result[0][4]).toBe('"literature.0.page"');
+        expect(result[0][5]).toBe('"literature.0.figure"');
+        expect(result[0][6]).toBe('"literature.1.quotation"');
+        expect(result[0][7]).toBe('"literature.1.zenonId"');
+        expect(result[0][8]).toBe('"literature.1.doi"');
+        expect(result[0][9]).toBe('"literature.1.page"');
+        expect(result[0][10]).toBe('"literature.1.figure"');
 
         expect(result[1][1]).toBe('"Quotation 1"');
         expect(result[1][2]).toBe('"1234567"');
-        expect(result[1][3]).toBe('"Quotation 2"');
+        expect(result[1][3]).toBe('""');
         expect(result[1][4]).toBe('""');
+        expect(result[1][5]).toBe('""');
+        expect(result[1][6]).toBe('"Quotation 2"');
+        expect(result[1][7]).toBe('""');
+        expect(result[1][8]).toBe('""');
+        expect(result[1][9]).toBe('""');
+        expect(result[1][10]).toBe('""');
 
         expect(result[2][1]).toBe('"Quotation 3"');
         expect(result[2][2]).toBe('"7654321"');
+        expect(result[2][3]).toBe('"https://www.example.de"');
+        expect(result[2][4]).toBe('"12"');
+        expect(result[2][5]).toBe('"1"');
     });
 });

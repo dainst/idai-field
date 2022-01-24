@@ -1,6 +1,6 @@
-import {compose, cond, flatMap, identity, isDefined, reduce} from 'tsfun';
-import {CsvExportUtils} from './csv-export-utils';
-import {HeadingsAndMatrix} from './csv-export-consts';
+import { compose, cond, flatMap, identity, isDefined, reduce } from 'tsfun';
+import { CsvExportUtils } from './csv-export-utils';
+import { HeadingsAndMatrix } from './csv-export-consts';
 
 const EMPTY = '';
 

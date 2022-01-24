@@ -33,7 +33,8 @@
          class="btn btn-success"
          [class.disabled]="!selectedForm"
          (click)="confirmSelection()">
-        <span i18n="@@configuration.selectForm">Formular auswählen</span>
+        <span *ngIf="categoryFormToReplace" i18n="@@configuration.selectForm">Formular auswählen</span>
+        <span *ngIf="!categoryFormToReplace" i18n="@@configuration.addCategory">Kategorie hinzufügen</span>
     </div>
     <div id="cancel-add-category-modal-button"
          class="btn btn-secondary"

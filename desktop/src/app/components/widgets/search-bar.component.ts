@@ -36,6 +36,9 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
+    public isFilterMenuAvailable = () => this.showFiltersMenu && this.filterOptions.length > 0;
+
+
     ngOnChanges() {
 
         if ((!this.categories || this.categories.length === 0) && this.filterOptions.length === 1) {

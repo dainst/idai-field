@@ -22,6 +22,10 @@ resources-search-bar {
       &.small-search-input {
         width: calc(100% - 101px) !important;
       }
+
+      &.big-search-input {
+        width: 100% !important;
+      }
     }
 
     #resources-search-bar-filter-button {

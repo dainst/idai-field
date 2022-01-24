@@ -1,8 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {is, remove, clone} from 'tsfun';
-import {Literature, Resource} from 'idai-field-core';
-import {Field} from 'idai-field-core';
-import {UtilTranslations} from '../../../../util/util-translations';
+import { Component, Input } from '@angular/core';
+import { is, remove, clone } from 'tsfun';
+import { Literature, Resource, Field } from 'idai-field-core';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 type LiteratureInEditing = { original: Literature, clone: Literature };
@@ -74,7 +73,11 @@ export class LiteratureComponent {
 
     public save(literature: Literature) {
 
-        if (!literature.zenonId || literature.zenonId.length === 0) delete literature.zenonId;
+        if (!literature.zenonId) delete literature.zenonId;
+        if (!literature.doi) delete literature.doi;
+        if (!literature.page) delete literature.page;
+        if (!literature.figure) delete literature.figure;
+
         if (this.newLiterature === literature) {
             this.add(literature);
         } else {

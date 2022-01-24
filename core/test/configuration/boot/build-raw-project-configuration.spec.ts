@@ -1,5 +1,4 @@
 import { Map, to } from 'tsfun';
-import { RawProjectConfiguration } from '../../..';
 import { BuiltInFieldDefinition, LanguageConfigurations } from '../../../src/configuration';
 import { buildRawProjectConfiguration } from '../../../src/configuration/boot/build-raw-project-configuration';
 import { ConfigurationErrors } from '../../../src/configuration/boot/configuration-errors';
@@ -12,6 +11,7 @@ import { Field } from '../../../src/model/configuration/field';
 import { Groups } from '../../../src/model/configuration/group';
 import { Relation } from '../../../src/model/configuration/relation';
 import { Valuelist } from '../../../src/model/configuration/valuelist';
+import { RawProjectConfiguration } from '../../../src/services/project-configuration';
 import { Tree } from '../../../src/tools/forest';
 import { Named } from '../../../src/tools/named';
 

@@ -26,12 +26,15 @@ export class ValueEditorModalComponent {
 
         this.clonedValue = clone(this.value);
         if (!this.clonedValue.label) this.clonedValue.label = {};
+        if (!this.clonedValue.description) this.clonedValue.description = {};
     }
 
 
     public closeModal() {
 
         if (isEmpty(this.clonedValue.label)) delete this.clonedValue.label;
+        if (isEmpty(this.clonedValue.description)) delete this.clonedValue.description;
+        
         this.activeModal.close(this.clonedValue);
     }
 }

@@ -100,7 +100,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public async save() {
 
-        if (isEmpty(this.getClonedValuelistDefinition().values)) {
+        if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
         }
 

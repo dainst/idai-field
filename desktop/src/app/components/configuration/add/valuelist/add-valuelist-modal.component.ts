@@ -98,13 +98,24 @@ export class AddValuelistModalComponent {
     }
 
 
+    public getFinalizedValuelist(): Valuelist {
+
+        if (!this.selectedValuelist) return;
+
+        return this.selectedValuelist.extendedValuelist
+            ? Valuelist.applyExtension(this.selectedValuelist,
+                this.configurationIndex.getValuelist(this.selectedValuelist.extendedValuelist))
+            : this.selectedValuelist;
+    }
+
+
     private addValuelist(valuelist: Valuelist) {
 
         const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name];
         if (!form.valuelists) form.valuelists = {};
         form.valuelists[this.clonedField.name] = valuelist.id;
-        this.clonedField.valuelist = valuelist;
+        this.clonedField.valuelist = this.getFinalizedValuelist();
     }
 
 

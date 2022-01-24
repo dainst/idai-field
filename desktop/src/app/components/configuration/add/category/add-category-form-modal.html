@@ -1,5 +1,7 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.selectForm">Formular auswählen</h5>
+    <h5 *ngIf="categoryFormToReplace" class="modal-title" i18n="@@configuration.swapForm">Formular wechseln</h5>
+    <h5 *ngIf="!categoryFormToReplace && !parentCategory" class="modal-title" i18n="@@configuration.addSupercategory">Oberkategorie hinzufügen</h5>
+    <h5 *ngIf="!categoryFormToReplace && parentCategory" class="modal-title" i18n="@@configuration.addSubcategory">Unterkategorie hinzufügen</h5>
 </div>
 
 <div class="modal-body row add-category-modal-body">

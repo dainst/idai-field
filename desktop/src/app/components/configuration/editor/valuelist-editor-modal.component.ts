@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop } from 'tsfun';
+import { equal, isEmpty, nop, set } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -196,8 +196,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     private getSortedValueIds(): string[] {
 
-        const valueIds: string[] = Object.keys(this.getClonedValuelistDefinition().values)
-            .concat(this.extendedValuelist ? Object.keys(this.extendedValuelist.values) : []);
+        const valueIds: string[] = set(
+            Object.keys(this.getClonedValuelistDefinition().values)
+                .concat(this.extendedValuelist ? Object.keys(this.extendedValuelist.values) : [])
+        );
 
         return valueIds.sort((valueId1: string, valueId2: string) => {
             return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));

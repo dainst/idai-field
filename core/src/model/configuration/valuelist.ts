@@ -58,7 +58,9 @@ export module Valuelist {
         const clonedValuelist: Valuelist = clone(valuelist);
         if (!clonedValuelist.extendedValuelist) return clonedValuelist;
 
-        Object.assign(clonedValuelist.values, extendedValuelist.values);
+        const newValues = clonedValuelist.values;
+        clonedValuelist.values = extendedValuelist.values;
+        Object.assign(clonedValuelist.values, newValues);
 
         if (clonedValuelist.hidden) {
             for (let valueId of Object.keys(clonedValuelist.values)) {

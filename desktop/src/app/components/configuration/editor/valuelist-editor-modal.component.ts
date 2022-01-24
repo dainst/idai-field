@@ -134,8 +134,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             MenuContext.CONFIGURATION_MODAL
         );
 
-        componentInstance.value = this.getClonedValuelistDefinition().values[valueId] ??
-            this.extendedValuelist ? this.extendedValuelist.values[valueId] : {};
+        componentInstance.value = this.getClonedValuelistDefinition().values[valueId]
+            ?? this.extendedValuelist?.values[valueId]
+            ?? {};
 
         componentInstance.valueId = valueId;
         componentInstance.new = isNewValue;

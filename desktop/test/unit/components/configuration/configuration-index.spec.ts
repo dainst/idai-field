@@ -35,6 +35,40 @@ describe('ConfigurationIndex', () => {
     });
 
 
+    it('get children of category form', () => {
+
+        const forms = [
+            {
+                name: 'A:default',
+                label: {},
+                defaultLabel: {},
+                parentCategory: {
+                    name: 'ParentA:default'
+                }
+            },
+            {
+                name: 'B:default',
+                label: {},
+                defaultLabel: {},
+                parentCategory: {
+                    name: 'ParentA:default'
+                }
+            },
+            {
+                name: 'C:default',
+                label: {},
+                defaultLabel: {},
+            }
+        ]
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices(forms as any, [], [], [], []);
+
+        const result = index.getCategoryFormChildren('ParentA:default');
+        expect(result[0].name).toEqual('A:default');
+        expect(result[1].name).toEqual('B:default');
+    });
+
+
     it('find fields', () => {
 
         const categories = [

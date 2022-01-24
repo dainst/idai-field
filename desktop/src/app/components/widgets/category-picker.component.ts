@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { is, Predicate } from 'tsfun';
+import { is, Predicate, to } from 'tsfun';
 import { CategoryForm, InPlace, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
+import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 
 
 @Component({
@@ -30,17 +31,27 @@ export class CategoryPickerComponent {
     @Output() onEditCategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private configurationIndex: ConfigurationIndex) {}
 
 
     public getCategoryLabel = (category: CategoryForm): string => this.labels.get(category);
 
     public hasCustomFields = (category: CategoryForm): boolean => CategoryForm.hasCustomFields(category);
 
-    public isCreateButtonVisible = (category: CategoryForm): boolean =>
-        this.showCreateButtons && category.userDefinedSubcategoriesAllowed;
-
     public openContextMenu = (event: MouseEvent, category: CategoryForm) => this.contextMenu?.open(event, category)
+
+
+    public isCreateButtonVisible(category: CategoryForm): boolean {
+        
+        if (!this.showCreateButtons) return false;
+        if (category.userDefinedSubcategoriesAllowed) return true;
+
+        const unselectedChildren: Array<CategoryForm> = this.configurationIndex.getCategoryFormChildren(category.name)
+            .filter(childCategory => !category.children.map(to('name')).includes(childCategory.name));
+
+        return unselectedChildren.length > 0;
+    }
 
 
     public pickCategory(category: CategoryForm) {

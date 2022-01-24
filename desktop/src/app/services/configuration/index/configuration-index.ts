@@ -7,6 +7,7 @@ import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
 import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
+import { CategoryFormChildrenIndex } from './category-form-children-index';
 
 
 /**
@@ -16,6 +17,7 @@ import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
 export class ConfigurationIndex {
 
     private categoryFormIndex: CategoryFormIndex;
+    private categoryFormChildrenIndex: CategoryFormChildrenIndex;
     private fieldIndex: FieldIndex;
     private valuelistIndex: ValuelistIndex;
     private valuelistUsageIndex: ValuelistUsageIndex;
@@ -62,6 +64,12 @@ export class ConfigurationIndex {
     }
 
 
+    public getCategoryFormChildren(parentName: string): Array<CategoryForm> {
+
+        return CategoryFormChildrenIndex.getChildren(this.categoryFormChildrenIndex, parentName);
+    }
+
+
     public async rebuild(configurationDocument: ConfigurationDocument) {
 
         try {
@@ -76,10 +84,11 @@ export class ConfigurationIndex {
                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
                             usedCategories: Array<CategoryForm>) {
 
-        this.categoryFormIndex = CategoryFormIndex.create(forms),
-        this.fieldIndex = FieldIndex.create(categories, commonFields),
-        this.valuelistIndex = ValuelistIndex.create(valuelists),
-        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories)
+        this.categoryFormIndex = CategoryFormIndex.create(forms);
+        this.categoryFormChildrenIndex = CategoryFormChildrenIndex.create(forms);
+        this.fieldIndex = FieldIndex.create(categories, commonFields);
+        this.valuelistIndex = ValuelistIndex.create(valuelists);
+        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories);
     }
 
 

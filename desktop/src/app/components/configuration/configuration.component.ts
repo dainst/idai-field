@@ -390,7 +390,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteCategory(
                 this.configurationDocument, category
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.configureAppSaveChangesAndReload(changedConfigurationDocument, undefined, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);

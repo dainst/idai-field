@@ -205,4 +205,32 @@ describe('get available forms', () => {
         expect(result['Category2'].groups[0].name).toBe('group1');
         expect(result['Category2'].groups[0].fields).toEqual(['field1', 'field2']);
     });
+
+
+    it('Remove subcategory forms without selected parent forms', () => {
+
+        const categories: any = {
+            Category1: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            Category2: {
+                parent: 'Category1',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const result: Map<TransientFormDefinition> = getAvailableForms(
+            categories, {}, {}, {}, [],
+            []
+        );
+
+        expect(Object.keys(result).length).toBe(1);
+        expect(result['Category1'].name).toBe('Category1');
+    });
 });

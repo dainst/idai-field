@@ -1,5 +1,6 @@
  import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { clone } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil,
     Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
@@ -63,7 +64,7 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
         this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
         this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
 
-        const valuelist: Valuelist = this.clonedConfigurationDocument.resource.valuelists[newValuelistId];
+        const valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[newValuelistId]);
         valuelist.id = newValuelistId;
         
         this.addValuelist(valuelist);

@@ -44,8 +44,8 @@ export class ManageValuelistsModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private configurationIndex: ConfigurationIndex,
-                private modals: Modals,
+                protected configurationIndex: ConfigurationIndex,
+                protected modals: Modals,
                 private menus: Menus,
                 private messages: Messages) {}
 
@@ -75,11 +75,11 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public select(valuelist: Valuelist) {
+    public async select(valuelist: Valuelist) {
 
         this.selectedValuelist = valuelist;
 
-        if (this.selectedValuelist === this.emptyValuelist) this.createNewValuelist();
+        if (this.selectedValuelist === this.emptyValuelist) await this.createNewValuelist();
     }
 
 
@@ -98,8 +98,7 @@ export class ManageValuelistsModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+        this.valuelists = this.submitQuery();
         
         this.filteredValuelists = ValuelistSearchQuery.applyFilters(
             this.searchQuery, this.valuelists, this.configurationIndex
@@ -128,8 +127,26 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public async createNewValuelist(newValuelistId: string = this.searchQuery.queryString,
-                                    valuelistToExtend?: Valuelist) {
+    public getCompleteValuelist(valuelist: Valuelist = this.selectedValuelist): Valuelist {
+
+        if (!valuelist) return;
+
+        return valuelist.extendedValuelist
+            ? Valuelist.applyExtension(valuelist,
+                this.configurationIndex.getValuelist(valuelist.extendedValuelist))
+            : valuelist;
+    }
+
+
+    protected submitQuery(): Array<Valuelist> {
+
+        return this.configurationIndex.findValuelists(this.searchQuery.queryString)
+            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+    }
+
+
+    private async createNewValuelist(newValuelistId: string = this.searchQuery.queryString,
+                                     valuelistToExtend?: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
@@ -150,20 +167,9 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult),
+            (saveResult: SaveResult) => this.applyNewValuelistSaveResult(saveResult, newValuelistId),
             nop
         );
-    }
-
-
-    public getPreviewValuelist(): Valuelist {
-
-        if (!this.selectedValuelist) return;
-
-        return this.selectedValuelist.extendedValuelist
-            ? Valuelist.applyExtension(this.selectedValuelist,
-                this.configurationIndex.getValuelist(this.selectedValuelist.extendedValuelist))
-            : this.selectedValuelist;
     }
 
 
@@ -239,6 +245,12 @@ export class ManageValuelistsModalComponent {
             console.error(errWithParams);
             this.messages.add(errWithParams);
         }
+    }
+
+
+    protected applyNewValuelistSaveResult(saveResult: SaveResult, _: string) {
+
+        this.applySaveResult(saveResult);
     }
 
 

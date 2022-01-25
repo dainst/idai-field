@@ -20,7 +20,6 @@ export class ValuelistListingComponent {
     @Input() emptyValuelist: Valuelist|undefined;
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
-    @Input() showCreateOptionAsButton: boolean;
     @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();

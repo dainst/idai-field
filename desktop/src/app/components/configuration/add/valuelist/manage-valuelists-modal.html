@@ -20,11 +20,10 @@
                            [emptyValuelist]="emptyValuelist"
                            [searchTerm]="searchQuery.queryString"
                            [contextMenu]="contextMenu"
-                           [showCreateOptionAsButton]="true"
                            (onValuelistSelected)="select($event)">
         </valuelist-listing>
     </div>
     <div class="col-md-6">
-        <valuelist-preview [valuelist]="getPreviewValuelist()"></valuelist-preview>
+        <valuelist-preview [valuelist]="getCompleteValuelist()"></valuelist-preview>
     </div>
 </div>

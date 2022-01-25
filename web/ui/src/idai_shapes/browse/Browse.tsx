@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search, search_after } from '../../api/documents';
 import { parseFrontendGetParams, Query, NestedSortObject } from '../../api/query';
-import { Result, ResultDocument,ScrollState } from '../../api/result';
+import { Result, ResultDocument,ScrollState, loadDocsState } from '../../api/result';
 import { BREADCRUMB_HEIGHT, NAVBAR_HEIGHT } from '../../constants';
 import DocumentBreadcrumb, { BreadcrumbItem } from '../../shared/documents/DocumentBreadcrumb';
 import DocumentGrid from '../../shared/documents/DocumentGrid';
@@ -26,6 +26,7 @@ const CHUNK_SIZE = 50;
 
 export default function Browse(): ReactElement {
     const myRef = useRef<HTMLDivElement>(null);
+    const ParentmyRef = useRef<HTMLDivElement>(null);
     const { documentId } = useParams<{ documentId: string }>();
     const loginData = useContext(LoginContext);
     const searchParams = useSearchParams();
@@ -38,9 +39,12 @@ export default function Browse(): ReactElement {
     const [scrollState, setScrollState] = useState<ScrollState>({ 
         'atBottom' : false,
         'atTop' : false
+     });
+     const [loadDocsState, setloadDocsState] = useState<loadDocsState>({ 
+        'readyToScroll' : false,
      });  
     type OnScroll = (e: React.UIEvent<Element, UIEvent>) => void;
-    const executeScroll = () => window.scrollTo(0, myRef.current.offsetTop);
+    const executeScroll = () => ParentmyRef.current.scrollTo({ top: myRef.current.offsetTop, left: 0, behavior: 'smooth'});
     const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
         const el = e.currentTarget;
         //console.log('scrollHeight:',el.scrollHeight)
@@ -83,18 +87,15 @@ export default function Browse(): ReactElement {
                 console.log('Reverse Documents', merge)
 
                 setDocuments(merge)
-                if (myRef.current) {
-                    console.log('MyRef exists!', myRef.current)
-                    executeScroll() 
-                } else { console.log('NO Ref!')}
-        
+                const loadDocsState:loadDocsState = { 
+                    'readyToScroll' : true
+                };
+                setloadDocsState(loadDocsState)
             }
+
             fetchData();
 
-            if (myRef.current) {
-                console.log('MyRef exists!', myRef.current)
-                executeScroll() 
-            } else { console.log('NO Ref!')}
+            
             //getPredecessors(documentId, loginData.token)
                 //.then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
         } else {
@@ -106,6 +107,14 @@ export default function Browse(): ReactElement {
         }
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams,]);
+
+    useEffect(() => {
+        if (myRef.current) {
+            console.log('MyRef exists!', myRef.current)
+            executeScroll()
+        } else { console.log('NO Ref!')}
+
+    }, [loadDocsState]);
 
     useEffect(() => {
         if (scrollState.atTop) {
@@ -140,12 +149,12 @@ export default function Browse(): ReactElement {
                 <Row>
                     { document
                         ? <>
-                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScroll}>
+                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScroll} ref={ParentmyRef}>
                                 <Row className="catalog">
                                     <Col>
                                         <h1 className="my-5">{ }</h1>
                                         
-                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } selecteddoc = { document} myRef = { myRef } />
+                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } selecteddoc = { document} myRef = { myRef }/>
                                     </Col>
                                 </Row>
                             </Col>

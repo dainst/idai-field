@@ -3,6 +3,11 @@ import { ImageGeoreference, Literature, Dating, Dimension } from 'idai-field-cor
 import { ChangeEvent, I18nString, LabeledValue } from './document';
 
 
+export interface loadDocsState {
+    readyToScroll: boolean;
+
+}
+
 export interface ScrollState {
     atBottom: boolean;
     atTop: boolean;

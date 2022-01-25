@@ -20,6 +20,9 @@ export class ValueEditorModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal) {}
+
+    
+    public cancel = () => this.activeModal.dismiss();
    
 
     public initialize() {

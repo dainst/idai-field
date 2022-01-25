@@ -4,6 +4,7 @@ import { ResultDocument } from '../../api/result';
 import Image from '../image/Image';
 import MultiImage from '../image/MultiImage';
 import { isImage } from './document-utils';
+import { Document } from '../../api/document';
 
 
 const LABEL_HEIGHT = 30;
@@ -14,14 +15,16 @@ interface DocumentThumbnailProps {
     linkUrl: string;
     maxWidth: number;
     maxHeight: number;
+    selecteddoc?: Document;
+    myRef?;
 }
 
 
-export default React.memo(function DocumentThumbnail({ document, linkUrl, maxWidth, maxHeight }: DocumentThumbnailProps)
-    : ReactElement {
+export default React.memo(function DocumentThumbnail({ document, linkUrl, maxWidth, maxHeight, selecteddoc, myRef }: DocumentThumbnailProps)
+    : ReactElement  {
 
     const imageId = getImageId(document);
-    
+
     return (
         <Link to={ { pathname: linkUrl } } target={ linkUrl.startsWith('http') ? '_blank' : '' }>
             <div style={ outerStyle }>
@@ -43,7 +46,14 @@ export default React.memo(function DocumentThumbnail({ document, linkUrl, maxWid
             </div>
         </Link>
     );
+
+
 });
+
+
+
+
+
 
 
 const getImageId = (document: ResultDocument): string => {

@@ -71,22 +71,32 @@ export default function Browse(): ReactElement {
 
     useEffect(() => {
         if (documentId) {
-            
-            get(documentId, loginData.token)
-                .then(doc => setDocument(doc))
-                .then(() => setTabKey('similarTypes'));  
-            console.log('This is the DOC:', document);
-            searchCatalogDocuments(loginData.token, documentId)
-                .then(results => setDocuments(results.documents));
-            getPreviousDocuments(loginData.token, documents)
-                .then(results => console.log('This is the previous results:',results.documents.reverse()));
-                //.then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,(documents.length-6)))));
+
+            const fetchData = async () => { 
+                const doc = await get(documentId, loginData.token)
+                setDocument(doc)
+                const beforedocs = await searchBeforeDoc(loginData.token, documentId)
+                const docs = await searchCatalogDocuments(loginData.token, documentId)
+                beforedocs.documents.reverse()
+                beforedocs.documents.push(doc)
+                const merge = beforedocs.documents.concat(docs.documents)
+                console.log('Reverse Documents', merge)
+
+                setDocuments(merge)
+                if (myRef.current) {
+                    console.log('MyRef exists!', myRef.current)
+                    executeScroll() 
+                } else { console.log('NO Ref!')}
+        
+            }
+            fetchData();
+
             if (myRef.current) {
                 console.log('MyRef exists!', myRef.current)
                 executeScroll() 
             } else { console.log('NO Ref!')}
-            getPredecessors(documentId, loginData.token)
-                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
+            //getPredecessors(documentId, loginData.token)
+                //.then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
         } else {
             setDocument(null);
             setBreadcrumb([]);
@@ -176,7 +186,7 @@ export default function Browse(): ReactElement {
 }
 
 
-const searchCatalogDocuments = async (token: string, documentId): Promise<Result> => {
+const searchCatalogDocuments = async (token: string, documentId: string): Promise<Result> => {
     const doc = await get(documentId, token);
     const nest: NestedSortObject = {
         path : 'resource.literature',
@@ -184,8 +194,8 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
         };
 
     const query: Query = {
-        size: 100,
-        from: 0,
+        size: 20,
+        from: -1,
         filters: [
             
             { field: 'project', value: SHAPES_PROJECT_ID },
@@ -207,9 +217,69 @@ const searchCatalogDocuments = async (token: string, documentId): Promise<Result
     return search_after(query, token);
 };
 
+const searchBeforeDoc = async (token: string, documentId: string): Promise<Result> => {
+    const doc = await get(documentId, token);
+    const nest: NestedSortObject = {
+        path : 'resource.literature',
+        max_children: 1
+        };
 
+    const query: Query = {
+        size: 20,
+        from: 0,
+        filters: [
+            
+            { field: 'project', value: SHAPES_PROJECT_ID },
+            { field: 'resource.category.name', value: 'Drawing' }
 
-const getNextDocuments = async (token: string, olddocuments): Promise<Result> => { 
+        ],
+        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
+                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
+                    doc.resource.id],
+        //search_after: [ doc.resource.identifier, doc.resource.id ],
+        sort: [
+            
+            {field:'resource.literature.page', order:'desc', nested: nest},
+            {field:'resource.literature.figure', order:'desc', nested: nest },
+            {field:'resource.id', order:'desc'}
+        ]
+    };
+
+    return search_after(query, token);
+};
+
+const searchDoc = async (token: string, documentId: string): Promise<Result> => {
+    const doc = await get(documentId, token);
+    const nest: NestedSortObject = {
+        path : 'resource.literature',
+        max_children: 1
+        };
+
+    const query: Query = {
+        size: 1,
+        from: 0,
+        filters: [
+            
+            { field: 'project', value: SHAPES_PROJECT_ID },
+            { field: 'resource.category.name', value: 'Drawing' }
+
+        ],
+        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
+                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
+                    doc.resource.id],
+        //search_after: [ doc.resource.identifier, doc.resource.id ],
+        sort: [
+            
+            {field:'resource.literature.page', order:'desc', nested: nest},
+            {field:'resource.literature.figure', order:'desc', nested: nest },
+            {field:'resource.id', order:'desc'}
+        ]
+    };
+
+    return search_after(query, token);
+};
+
+const getNextDocuments = async (token: string, olddocuments: ResultDocument[]): Promise<Result> => { 
     const lastdoc : ResultDocument = olddocuments[olddocuments.length-1] 
     const nest: NestedSortObject = {
         path : 'resource.literature',
@@ -236,7 +306,7 @@ const getNextDocuments = async (token: string, olddocuments): Promise<Result> =>
 };
 
 
-const getPreviousDocuments = async (token: string, olddocuments): Promise<Result> => { 
+const getPreviousDocuments = async (token: string, olddocuments: ResultDocument[] ): Promise<Result> => { 
     console.log('This is the searchafter for previousDocuments:', olddocuments[0].sort) 
     const nest: NestedSortObject = {
         path : 'resource.literature',

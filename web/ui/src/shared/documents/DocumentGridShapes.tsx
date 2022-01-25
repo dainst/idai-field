@@ -36,28 +36,19 @@ const renderDocuments = (documents: ResultDocument[], getLinkUrl: (document: Res
 
 
 const renderDocument = (document: ResultDocument, getLinkUrl: (document: ResultDocument) => string, selecteddoc: Document, myRef): ReactElement => {
-    if (document.resource.id == selecteddoc.resource.id) {
-    const grid =
-    (<div key={ document.resource.id } ref={myRef} style={ documentBoxStyle } className="p-1 mr-2 mb-2">
-        <DocumentThumbnail
-            document={ document }
-            linkUrl={ getLinkUrl(document) }
-            maxWidth={ MAX_IMG_WIDTH }
-            maxHeight={ MAX_IMG_HEIGHT } />
-    </div>);
-    return grid
-    } else {
     const grid =
     (<div key={ document.resource.id } style={ documentBoxStyle } className="p-1 mr-2 mb-2">
         <DocumentThumbnail
             document={ document }
             linkUrl={ getLinkUrl(document) }
             maxWidth={ MAX_IMG_WIDTH }
-            maxHeight={ MAX_IMG_HEIGHT } />
+            maxHeight={ MAX_IMG_HEIGHT }
+            selecteddoc={ selecteddoc}
+            myRef = { myRef } />
     </div>);
     return grid
     }
-}
+
 
 
 const renderEmptyResult = (t: TFunction): ReactElement =>

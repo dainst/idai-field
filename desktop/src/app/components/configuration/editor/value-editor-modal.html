@@ -20,6 +20,13 @@
         <multi-language-input [translations]="clonedValue.description"
                               [defaultTranslations]="{}"></multi-language-input>
     </div>
+
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="clonedValue.references"></references-input>
+    </div>
 </div>
 
 <div class="modal-footer value-editor-modal-footer">

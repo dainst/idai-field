@@ -35,6 +35,7 @@ import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.c
 import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
 import { SwapCategoryFormModalComponent } from './add/category/swap-category-form-modal.component';
 import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-modal.component';
+import { ReferencesInputComponent } from './editor/references-input.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-
         ConfigurationFieldComponent,
         ConfigurationCategoryComponent,
         MultiLanguageInputComponent,
+        ReferencesInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,

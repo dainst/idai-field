@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isEmpty, not } from 'tsfun';
 import { ValuelistValue } from 'idai-field-core';
+import { validateReferences } from '../validation/validate-references';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class ValueEditorModalComponent {
     public clonedValue: ValuelistValue;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private messages: Messages) {}
 
     
     public cancel = () => this.activeModal.dismiss();
@@ -34,9 +37,15 @@ export class ValueEditorModalComponent {
     }
 
 
-    public closeModal() {
+    public confirmChanges() {
 
         this.clonedValue.references = this.clonedValue.references.filter(not(isEmpty));
+
+        try {
+            validateReferences(this.clonedValue.references);
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
 
         if (isEmpty(this.clonedValue.label)) delete this.clonedValue.label;
         if (isEmpty(this.clonedValue.description)) delete this.clonedValue.description;

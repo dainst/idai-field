@@ -490,7 +490,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
-        this.setCategoriesFilter('project');
+        if (!this.selectedCategoriesFilter) this.setCategoriesFilter('project');
         
         if (this.selectedCategory && this.filteredTopLevelCategoriesArray.includes(this.selectedCategory)) {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));

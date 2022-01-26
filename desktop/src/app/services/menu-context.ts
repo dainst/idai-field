@@ -1,5 +1,5 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
-    |'georeferenceEdit'|'configurationEdit'|'configurationModal'|'configurationManagement';
+    |'georeferenceEdit'|'configurationEdit'|'configurationValuelistEdit'|'configurationModal'|'configurationManagement';
 
     
 /**
@@ -16,6 +16,7 @@ export module MenuContext {
     export const MAP_LAYERS_EDIT = 'mapLayersEdit';
     export const GEOREFERENCE_EDIT = 'georeferenceEdit';
     export const CONFIGURATION_EDIT = 'configurationEdit';
+    export const CONFIGURATION_VALUELIST_EDIT = 'configurationValuelistEdit';
     export const CONFIGURATION_MODAL = 'configurationModal';
     export const CONFIGURATION_MANAGEMENT = 'configurationManagement';
 }

@@ -144,7 +144,7 @@ export class ManageValuelistsModalComponent {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_EDIT,
+            MenuContext.CONFIGURATION_VALUELIST_EDIT,
             'lg'
         );
 

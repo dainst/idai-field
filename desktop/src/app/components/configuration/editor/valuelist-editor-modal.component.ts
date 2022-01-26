@@ -43,6 +43,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         id: 'configuration.valuelistChanged', value: 'Die Werteliste wurde geändert.'
     });
 
+    protected menuContext: MenuContext = MenuContext.CONFIGURATION_VALUELIST_EDIT;
+
 
     constructor(activeModal: NgbActiveModal,
                 modalService: NgbModal,

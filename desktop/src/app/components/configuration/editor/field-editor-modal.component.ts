@@ -133,7 +133,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
             AddValuelistModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -160,7 +160,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_VALUELIST_EDIT,
             'lg'
         );
 

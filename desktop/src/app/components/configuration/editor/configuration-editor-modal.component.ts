@@ -122,7 +122,7 @@ export abstract class ConfigurationEditorModalComponent {
     public abstract isChanged(): boolean;
 
 
-    protected async onEscapeKeyDown() {
+    private async onEscapeKeyDown() {
 
         if (this.menuService.getContext() === this.menuContext && !this.escapeKeyPressed) {
             if (event.srcElement) (event.srcElement as HTMLElement).blur();

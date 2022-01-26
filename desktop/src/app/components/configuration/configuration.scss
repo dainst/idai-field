@@ -41,7 +41,7 @@
     background-color: $sidebar-bg-color;
 
     #category-picker-container {
-      height: 100%;
+      height: calc(100% - 38px);
       overflow-y: auto;
       overflow-x: hidden;
 

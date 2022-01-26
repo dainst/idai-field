@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Subscription } from 'rxjs';
-import { nop } from 'tsfun';
+import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, Relation } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -36,6 +36,14 @@ export type SaveResult = {
 };
 
 
+export type CategoriesFilter = {
+
+    name: string,
+    label: string,
+    isRecordedInCategory?: string;
+};
+
+
 @Component({
     templateUrl: './configuration.html',
     host: {
@@ -51,10 +59,21 @@ export type SaveResult = {
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public topLevelCategoriesArray: Array<CategoryForm>;
+    public filteredTopLevelCategoriesArray: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
+    public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
     public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+
+    public categoriesFilterOptions: Array<CategoriesFilter> = [
+        { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
+        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Grabung' }) },
+        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauaufnahme' }) },
+        { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
+        { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
+        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
+    ];
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
@@ -149,6 +168,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
             this.contextMenu.close();
         }
+    }
+
+
+    public setCategoriesFilter(filterName: string) {
+
+        if (this.selectedCategoriesFilter?.name === filterName) return;
+
+        this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
+        this.filteredTopLevelCategoriesArray = this.generateFilteredTopLevelCategoriesArray();
+        this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
     }
 
 
@@ -461,10 +490,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
-        if (this.selectedCategory) {
+        this.setCategoriesFilter('project');
+        
+        if (this.selectedCategory && this.filteredTopLevelCategoriesArray.includes(this.selectedCategory)) {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
         } else {
-            this.selectCategory(this.topLevelCategoriesArray[0]);
+            this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
         }
     }
 
@@ -530,5 +561,28 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         )).documents
 
         await this.indexFacade.putMultiple(documents);
+    }
+
+
+    private generateFilteredTopLevelCategoriesArray(): Array<CategoryForm> {
+
+        return this.topLevelCategoriesArray.filter(category => {
+            if (this.selectedCategoriesFilter.name === 'images') {
+                return category.name === 'Image';
+            } else if (this.selectedCategoriesFilter.name === 'types') {
+                return ['Type', 'TypeCatalog'].includes(category.name);
+            } else {
+                return this.selectedCategoriesFilter.isRecordedInCategory
+                    ? Relation.isAllowedRelationDomainCategory(
+                        this.projectConfiguration.getRelations(),
+                        category.name,
+                        this.selectedCategoriesFilter.isRecordedInCategory,
+                        Relation.Hierarchy.RECORDEDIN
+                    )
+                    : !this.projectConfiguration.getRelationsForDomainCategory(category.name)
+                            .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
+                        && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+            }
+        });
     }
 }

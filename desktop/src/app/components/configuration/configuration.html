@@ -6,9 +6,16 @@
     <div class="col">
         <div id="project-configuration-content" class="row">
             <div class="col-2 sidebar">
+                <select (change)="setCategoriesFilter($event.target.value)" class="form-control">
+                    <option *ngFor="let categoriesFilter of categoriesFilterOptions"
+                            value="{{categoriesFilter.name}}"
+                            [selected]="selectedCategoriesFilter === categoriesFilter">
+                        {{categoriesFilter.label}}
+                    </option>
+                </select>
                 <div id="category-picker-container">
                     <category-picker *ngIf="topLevelCategoriesArray"
-                                    [topLevelCategoriesArray]="topLevelCategoriesArray"
+                                    [topLevelCategoriesArray]="filteredTopLevelCategoriesArray"
                                     [selectedCategories]="[selectedCategory.name]"
                                     [allowPickingAbstractCategories]="true"
                                     [highlightCustomCategories]="true"

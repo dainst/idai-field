@@ -1,13 +1,12 @@
 'use strict';
 
 const electron = require('electron');
-const remoteMain = require('@electron/remote/main');
 const fs = require('fs');
 const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
 
-remoteMain.initialize();
+require('@electron/remote/main').initialize();
 
 let menuContext = 'loading';
 
@@ -209,8 +208,6 @@ const createWindow = () => {
         },
         titleBarStyle: 'hiddenInset'
     });
-
-    remoteMain.enable(mainWindow.webContents);
 
     if (require('os').platform() === 'linux' && global.mode === 'production') {
         const path = require('path').join(

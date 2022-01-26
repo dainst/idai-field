@@ -17,7 +17,8 @@
                            [searchTerm]="searchQuery.queryString"
                            [contextMenu]="contextMenu"
                            [currentValuelistId]="clonedField?.valuelist?.id"
-                           (onValuelistSelected)="select($event)">
+                           (onValuelistSelected)="select($event)"
+                           (onOpenEditor)="openEditValuelistModal($event)">
         </valuelist-listing>
     </div>
     <div class="col-md-6">

@@ -137,6 +137,32 @@ export class ManageValuelistsModalComponent {
             : valuelist;
     }
 
+    
+    public async openEditValuelistModal(valuelist: Valuelist) {
+
+        if (valuelist.source !== 'custom') return;
+
+        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
+            ValuelistEditorModalComponent,
+            MenuContext.CONFIGURATION_EDIT,
+            'lg'
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.valuelist = valuelist;
+        if (valuelist.extendedValuelist) {
+            componentInstance.extendedValuelist = this.configurationIndex.getValuelist(valuelist.extendedValuelist);
+        }
+        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (saveResult: SaveResult) => this.applySaveResult(saveResult),
+            nop
+        );
+    }
+
 
     protected submitQuery(): Array<Valuelist> {
 
@@ -168,30 +194,6 @@ export class ManageValuelistsModalComponent {
         await this.modals.awaitResult(
             result,
             (saveResult: SaveResult) => this.applyNewValuelistSaveResult(saveResult, newValuelistId),
-            nop
-        );
-    }
-
-
-    private async openEditValuelistModal(valuelist: Valuelist) {
-
-        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
-            ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_EDIT,
-            'lg'
-        );
-
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.valuelist = valuelist;
-        if (valuelist.extendedValuelist) {
-            componentInstance.extendedValuelist = this.configurationIndex.getValuelist(valuelist.extendedValuelist);
-        }
-        componentInstance.saveAndReload = this.saveAndReload;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult),
             nop
         );
     }

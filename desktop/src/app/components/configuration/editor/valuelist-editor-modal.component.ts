@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop, set } from 'tsfun';
+import { equal, isEmpty, nop, not, set } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -12,6 +12,7 @@ import { Modals } from '../../../services/modals';
 import { MenuContext } from '../../../services/menu-context';
 import { ValueEditorModalComponent } from './value-editor-modal.component';
 import { M } from '../../messages/m';
+import { validateReferences } from '../validation/validate-references';
 
 
 @Component({
@@ -93,6 +94,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             }
         }
 
+        if (!this.getClonedValuelistDefinition().references) this.getClonedValuelistDefinition().references = [];
         this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
         this.order = this.getClonedValuelistDefinition().order ?? this.getSortedValueIds();
     }
@@ -102,6 +104,15 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
+        }
+
+        this.getClonedValuelistDefinition().references = this.getClonedValuelistDefinition()
+            .references.filter(not(isEmpty));
+
+        try {
+            validateReferences(this.getClonedValuelistDefinition().references);
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
         }
 
         this.getClonedValuelistDefinition().description = this.clonedDescription;

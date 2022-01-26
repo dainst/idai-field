@@ -20,6 +20,7 @@ export interface Valuelist {
     description?: { [language: string]: string }
     createdBy?: string;
     creationDate?: string;
+    references?: string[];
 
     extendedValuelist?: string;
     hidden?: string[];

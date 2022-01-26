@@ -7,7 +7,10 @@ import { Messages } from '../../messages/messages';
 
 
 @Component({
-    templateUrl: './value-editor-modal.html'
+    templateUrl: './value-editor-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -34,6 +37,12 @@ export class ValueEditorModalComponent {
         if (!this.clonedValue.label) this.clonedValue.label = {};
         if (!this.clonedValue.description) this.clonedValue.description = {};
         if (!this.clonedValue.references) this.clonedValue.references = [];
+    }
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss();
     }
 
 

@@ -14,7 +14,7 @@
                     </option>
                 </select>
                 <div id="category-picker-container">
-                    <category-picker *ngIf="topLevelCategoriesArray"
+                    <category-picker *ngIf="filteredTopLevelCategoriesArray"
                                     [topLevelCategoriesArray]="filteredTopLevelCategoriesArray"
                                     [selectedCategories]="[selectedCategory.name]"
                                     [allowPickingAbstractCategories]="true"
@@ -26,7 +26,7 @@
                                     (onCategoryPicked)="selectCategory($event)"
                                     (onEditCategory)="editCategory($event)"
                                     (onCreateSubcategory)="addSubcategory($event)"
-                                    (onOrderChanged)="saveNewCategoriesOrder()"></category-picker>
+                                    (onOrderChanged)="applyOrderChange($event)"></category-picker>
                     <div id="add-supercategory-button" class="circular-button green-button"
                         (click)="addSupercategory()"
                         ngbTooltip="Oberkategorie hinzufügen"

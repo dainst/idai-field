@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Subscription } from 'rxjs';
 import { nop, to } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, Relation } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, Relation, InPlace } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -27,6 +27,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { MenuNavigator } from '../menu-navigator';
 import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
+import { OrderChange } from '../widgets/category-picker.component';
 
 
 export type SaveResult = {
@@ -173,8 +174,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public setCategoriesFilter(filterName: string) {
 
-        if (this.selectedCategoriesFilter?.name === filterName) return;
-
         this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
         this.filteredTopLevelCategoriesArray = this.generateFilteredTopLevelCategoriesArray();
         this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
@@ -211,7 +210,30 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async saveNewCategoriesOrder() {
+    public async applyOrderChange(orderChange: OrderChange) {
+
+        if (orderChange.parentCategory) {
+            InPlace.moveInArray(
+                this.topLevelCategoriesArray
+                    .find(category => category.name === orderChange.parentCategory.name)
+                    .children,
+                    orderChange.previousIndex,
+                orderChange.currentIndex
+            );
+        } else {
+            const previousIndex: number = this.topLevelCategoriesArray.indexOf(
+                this.filteredTopLevelCategoriesArray[orderChange.previousIndex]
+            );
+            const currentIndex: number = (orderChange.currentIndex === 0)
+                ? this.topLevelCategoriesArray.indexOf(this.filteredTopLevelCategoriesArray[0])
+                : this.topLevelCategoriesArray.indexOf(this.filteredTopLevelCategoriesArray[orderChange.currentIndex - 1]) + 1;
+
+            InPlace.moveInArray(
+                this.topLevelCategoriesArray,
+                previousIndex,
+                currentIndex
+            );
+        }
 
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource.order = ConfigurationUtil.getCategoriesOrder(
@@ -490,7 +512,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
-        if (!this.selectedCategoriesFilter) this.setCategoriesFilter('project');
+        this.setCategoriesFilter(this.selectedCategoriesFilter?.name ?? 'project');
         
         if (this.selectedCategory && this.filteredTopLevelCategoriesArray.includes(this.selectedCategory)) {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));

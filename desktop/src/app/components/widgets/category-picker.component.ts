@@ -1,9 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { is, Predicate, to } from 'tsfun';
-import { CategoryForm, InPlace, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
+
+
+export type OrderChange = {
+
+    previousIndex: number;
+    currentIndex: number
+    parentCategory?: CategoryForm;
+}
 
 
 @Component({
@@ -27,7 +35,7 @@ export class CategoryPickerComponent {
 
     @Output() onCategoryPicked: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
     @Output() onCreateSubcategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
-    @Output() onOrderChanged: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onOrderChanged: EventEmitter<OrderChange> = new EventEmitter<OrderChange>();
     @Output() onEditCategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
 
@@ -64,23 +72,13 @@ export class CategoryPickerComponent {
 
     public onDrop(event: CdkDragDrop<any>, parentCategory?: CategoryForm) {
 
-        if (parentCategory) {
-            InPlace.moveInArray(
-                this.topLevelCategoriesArray
-                    .find(category => category.name === parentCategory.name)
-                    .children,
-                event.previousIndex,
-                event.currentIndex
-            );
-        } else {
-            InPlace.moveInArray(
-                this.topLevelCategoriesArray,
-                event.previousIndex,
-                event.currentIndex
-            );
-        }
+        if (event.previousIndex === event.currentIndex) return;
 
-        this.onOrderChanged.emit();
+        this.onOrderChanged.emit({
+            previousIndex: event.previousIndex,
+            currentIndex: event.currentIndex,
+            parentCategory
+        });
     }
 
 

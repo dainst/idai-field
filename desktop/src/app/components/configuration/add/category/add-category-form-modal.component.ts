@@ -102,11 +102,11 @@ export class AddCategoryFormModalComponent {
                 categoryForm2.libraryId ?? categoryForm2.name
             ));
 
-        this.categoryForms = this.parentCategory
-            ? categoryForms
-            : ConfigurationUtil.filterTopLevelCategories(
+        this.categoryForms = this.categoriesFilter
+            ? ConfigurationUtil.filterTopLevelCategories(
                 categoryForms, this.categoriesFilter, this.projectConfiguration
-            );
+            )
+            : categoryForms;
 
         this.selectedForm = this.categoryForms?.[0];
         this.emptyForm = this.getEmptyForm();

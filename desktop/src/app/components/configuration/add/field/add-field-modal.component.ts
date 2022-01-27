@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { nop, on, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
+import { nop, to } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { ConfigurationUtil, InputType } from '../../configuration-util';
+import { InputType } from '../../configuration-util';
 import { SaveResult } from '../../configuration.component';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class AddFieldModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
+                private menus: Menus,
                 private labels: Labels) {}
 
 
@@ -49,7 +51,9 @@ export class AddFieldModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

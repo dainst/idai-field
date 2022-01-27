@@ -135,7 +135,11 @@ export class AddFieldModalComponent {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        await this.modals.awaitResult(result, nop, () => this.activeModal.close());
+        await this.modals.awaitResult(
+            result,
+            () => this.activeModal.close(),
+            nop
+        );
     }
 
 

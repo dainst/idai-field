@@ -83,7 +83,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.description = this.getDescription();
 
         this.clonedLabel = clone(this.label);
-        if (this.description) this.clonedDescription = clone(this.description);
+        this.clonedDescription = this.description ? clone(this.description) : {};
 
         this.saving = false;
     }

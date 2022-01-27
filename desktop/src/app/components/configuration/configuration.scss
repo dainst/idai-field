@@ -40,6 +40,10 @@
     margin: 0;
     background-color: $sidebar-bg-color;
 
+    #categories-filter-select {
+      border: none;
+    }
+
     #category-picker-container {
       height: calc(100% - 38px);
       overflow-y: auto;

@@ -160,7 +160,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult),
+            (saveResult: SaveResult) => this.applySaveResult(saveResult, valuelist.id),
             nop
         );
     }
@@ -252,17 +252,19 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistSaveResult(saveResult: SaveResult, _: string) {
+    protected applyNewValuelistSaveResult(saveResult: SaveResult, newValuelistId: string) {
 
-        this.applySaveResult(saveResult);
+        this.applySaveResult(saveResult, newValuelistId);
     }
 
 
-    private applySaveResult(saveResult: SaveResult) {
+    private applySaveResult(saveResult: SaveResult, editedValuelistId?: string) {
 
         this.configurationDocument = saveResult.configurationDocument;
         this.configurationIndex = saveResult.configurationIndex;
+
         this.applyValuelistSearch();
+        if (editedValuelistId) this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
     }
 
 

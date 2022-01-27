@@ -56,6 +56,8 @@ export class AddFieldModalComponent {
     public select(field: Field) {
 
         this.selectedField = field;
+
+        if (this.selectedField === this.emptyField) this.createNewField();
     }
 
 
@@ -63,11 +65,7 @@ export class AddFieldModalComponent {
 
         if (!this.selectedField) return;
 
-        if (this.selectedField === this.emptyField) {
-            this.createNewField();
-        } else {
-            this.addSelectedField();
-        }
+        this.addSelectedField();
     }
 
 

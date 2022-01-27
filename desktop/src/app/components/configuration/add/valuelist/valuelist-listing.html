@@ -12,7 +12,7 @@
               class="search-result-label"> ({{getSearchResultLabel(valuelist)}})</span>
     </li>
     <li *ngIf="isNewValuelistOptionShown()"
-        class="new-valuelist-button btn btn-success"
+        class="new-entry-button btn btn-success"
         (click)="select(emptyValuelist)">
         <span class="mdi mdi-plus-circle"></span>
         <div i18n="@@configuration.newValuelist">Neue Werteliste <code>{{searchTerm}}</code> erstellen</div>        

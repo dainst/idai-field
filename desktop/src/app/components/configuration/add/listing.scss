@@ -18,32 +18,33 @@
       transition: background-color .25s ease;
     }
 
-    &.new-item-option {
-      padding: 3px 5px 5px 5px;
-      background-color: #d7ffd9;
-
-      &.selected,
-      &:not(.btn):hover {
-        background-color: darken(#d7ffd9, 10%);
-        transition: background-color .5s ease;
-      }
-
-      .mdi-plus-circle {
-        position: relative;
-        top: 1px;
-        left: 9px;
-        margin-right: 21px;
-        color: #28a745;
-      }
-      
-      .item-label {
-        font-style: italic;
-      }
-    }
-
     &.selected {
       background-color: darken($list-item-hover-color, 5%);
       transition: background-color .5s ease;
+    }
+
+    &.new-entry-button {
+      height: 41px;
+      width: 100%;
+      padding: 12px;
+
+      .mdi {
+        position: relative;
+        bottom: 3px;
+      }
+
+      div {
+        position: relative;
+        bottom: 3px;
+        left: 4px;
+        display: inline;
+
+        code {
+          bottom: 0;
+          margin-left: 0;
+          color: #ffc2de;
+        }
+      }
     }
 
     .item-label,

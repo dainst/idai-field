@@ -59,9 +59,10 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    public selectForm(category: CategoryForm) {
+    public async selectForm(category: CategoryForm) {
 
         this.selectedForm = category;
+        if (this.selectedForm === this.emptyForm) await this.createNewSubcategory();
     }
 
 
@@ -69,9 +70,7 @@ export class AddCategoryFormModalComponent {
 
         if (!this.selectedForm) return;
 
-        if (this.selectedForm === this.emptyForm) {
-            this.createNewSubcategory();
-        } else if (this.categoryFormToReplace && ConfigurationDocument.isCustomizedCategory(
+        if (this.categoryFormToReplace && ConfigurationDocument.isCustomizedCategory(
                 this.configurationDocument, this.categoryFormToReplace, true)) {
             this.showSwapConfirmationModal();
         } else {

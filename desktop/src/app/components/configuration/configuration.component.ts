@@ -68,6 +68,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
 
     public categoriesFilterOptions: Array<CategoriesFilter> = [
+        { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
         { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
         { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Grabung' }) },
         { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauaufnahme' }) },
@@ -589,21 +590,24 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private generateFilteredTopLevelCategoriesArray(): Array<CategoryForm> {
 
         return this.topLevelCategoriesArray.filter(category => {
-            if (this.selectedCategoriesFilter.name === 'images') {
-                return category.name === 'Image';
-            } else if (this.selectedCategoriesFilter.name === 'types') {
-                return ['Type', 'TypeCatalog'].includes(category.name);
-            } else {
-                return this.selectedCategoriesFilter.isRecordedInCategory
-                    ? Relation.isAllowedRelationDomainCategory(
-                        this.projectConfiguration.getRelations(),
-                        category.name,
-                        this.selectedCategoriesFilter.isRecordedInCategory,
-                        Relation.Hierarchy.RECORDEDIN
-                    )
-                    : !this.projectConfiguration.getRelationsForDomainCategory(category.name)
-                            .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                        && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+            switch (this.selectedCategoriesFilter.name) {
+                case 'all':
+                    return true;
+                case 'images':
+                    return category.name === 'Image';
+                case 'types':
+                    return ['Type', 'TypeCatalog'].includes(category.name);
+                default:
+                    return this.selectedCategoriesFilter.isRecordedInCategory
+                        ? Relation.isAllowedRelationDomainCategory(
+                            this.projectConfiguration.getRelations(),
+                            category.name,
+                            this.selectedCategoriesFilter.isRecordedInCategory,
+                            Relation.Hierarchy.RECORDEDIN
+                        )
+                        : !this.projectConfiguration.getRelationsForDomainCategory(category.name)
+                                .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
+                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
             }
         });
     }

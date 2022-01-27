@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
@@ -29,7 +29,7 @@ import { ExtendValuelistModalComponent } from './extend-valuelist-modal.componen
 /**
  * @author Thomas Kleinke
  */
-export class ManageValuelistsModalComponent {
+export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     public configurationDocument: ConfigurationDocument;
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
@@ -41,6 +41,7 @@ export class ManageValuelistsModalComponent {
     public valuelists: Array<Valuelist> = [];
     public filteredValuelists: Array<Valuelist> = [];
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    public scrollTarget?: string;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -48,6 +49,15 @@ export class ManageValuelistsModalComponent {
                 protected modals: Modals,
                 private menus: Menus,
                 private messages: Messages) {}
+
+
+    ngAfterViewChecked() {
+        
+        if (this.scrollTarget) {
+            this.scrollValuelistElementIntoView(this.scrollTarget);
+            delete this.scrollTarget;
+        }
+    }
 
 
     public initialize() {
@@ -264,7 +274,11 @@ export class ManageValuelistsModalComponent {
         this.configurationIndex = saveResult.configurationIndex;
 
         this.applyValuelistSearch();
-        if (editedValuelistId) this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
+
+        if (editedValuelistId) {
+            this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
+            this.scrollTarget = editedValuelistId;
+        }
     }
 
 
@@ -275,5 +289,12 @@ export class ManageValuelistsModalComponent {
         return {
             id: this.searchQuery.queryString
         } as Valuelist;
+    }
+
+
+    private scrollValuelistElementIntoView(valuelistId: string) {
+
+        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId);
+        if (element) element.scrollIntoView(true);
     }
 }

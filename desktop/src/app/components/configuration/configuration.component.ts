@@ -15,7 +15,7 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
-import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
+import { CategoriesFilter, ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
@@ -34,14 +34,6 @@ export type SaveResult = {
     
     configurationDocument: ConfigurationDocument,
     configurationIndex: ConfigurationIndex
-};
-
-
-export type CategoriesFilter = {
-
-    name: string,
-    label: string,
-    isRecordedInCategory?: string;
 };
 
 
@@ -176,7 +168,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public setCategoriesFilter(filterName: string) {
 
         this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
-        this.filteredTopLevelCategoriesArray = this.generateFilteredTopLevelCategoriesArray();
+        this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
+            this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.projectConfiguration
+        );
         this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
     }
 
@@ -267,6 +261,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.saveAndReload = this.saveAndReload;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
+        componentInstance.categoriesFilter = this.selectedCategoriesFilter;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
@@ -587,28 +582,5 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private generateFilteredTopLevelCategoriesArray(): Array<CategoryForm> {
-
-        return this.topLevelCategoriesArray.filter(category => {
-            switch (this.selectedCategoriesFilter.name) {
-                case 'all':
-                    return true;
-                case 'images':
-                    return category.name === 'Image';
-                case 'types':
-                    return ['Type', 'TypeCatalog'].includes(category.name);
-                default:
-                    return this.selectedCategoriesFilter.isRecordedInCategory
-                        ? Relation.isAllowedRelationDomainCategory(
-                            this.projectConfiguration.getRelations(),
-                            category.name,
-                            this.selectedCategoriesFilter.isRecordedInCategory,
-                            Relation.Hierarchy.RECORDEDIN
-                        )
-                        : !this.projectConfiguration.getRelationsForDomainCategory(category.name)
-                                .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
-            }
-        });
-    }
+    
 }

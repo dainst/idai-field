@@ -1,5 +1,5 @@
 import { flatten, to } from 'tsfun';
-import { CategoryForm, Field, Group, Groups, Named } from 'idai-field-core';
+import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 
 
 export type InputType = {
@@ -7,6 +7,13 @@ export type InputType = {
     label: string;
     searchable?: boolean;
     customFields?: boolean;
+};
+
+
+export type CategoriesFilter = {
+    name: string,
+    label: string,
+    isRecordedInCategory?: string;
 };
 
 
@@ -46,5 +53,33 @@ export module ConfigurationUtil {
         return availableInputTypes
             .find(inputType => inputType.name === inputTypeName)
             .label;
+    }
+
+
+    export function filterTopLevelCategories(topLevelCategories: Array<CategoryForm>,
+                                             filter: CategoriesFilter,
+                                             projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
+
+        return topLevelCategories.filter(category => {
+            switch (filter.name) {
+                case 'all':
+                    return true;
+                case 'images':
+                    return category.name === 'Image';
+                case 'types':
+                    return ['Type', 'TypeCatalog'].includes(category.name);
+                default:
+                    return filter.isRecordedInCategory
+                        ? Relation.isAllowedRelationDomainCategory(
+                            projectConfiguration.getRelations(),
+                            category.name,
+                            filter.isRecordedInCategory,
+                            Relation.Hierarchy.RECORDEDIN
+                        )
+                        : !projectConfiguration.getRelationsForDomainCategory(category.name)
+                                .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
+                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+            }
+        });
     }
 }

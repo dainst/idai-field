@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, ProjectConfiguration, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -9,6 +9,7 @@ import { Modals } from '../../../../services/modals';
 import { SaveResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
 import { Menus } from '../../../../services/menus';
+import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class AddCategoryFormModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public parentCategory: CategoryForm|undefined;
+    public categoriesFilter?: CategoriesFilter;
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
@@ -38,6 +40,7 @@ export class AddCategoryFormModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
+                private projectConfiguration: ProjectConfiguration,
                 private modals: Modals,
                 private menus: Menus) {}
 
@@ -85,7 +88,7 @@ export class AddCategoryFormModalComponent {
 
     public applyCategoryNameSearch() {
 
-        this.categoryForms = this.configurationIndex
+        const categoryForms: Array<CategoryForm> = this.configurationIndex
             .findCategoryForms(this.searchTerm, this.parentCategory?.name,
                 !this.parentCategory && !this.categoryFormToReplace)
             .filter(category =>
@@ -98,6 +101,12 @@ export class AddCategoryFormModalComponent {
                 categoryForm1.libraryId ?? categoryForm1.name,
                 categoryForm2.libraryId ?? categoryForm2.name
             ));
+
+        this.categoryForms = this.parentCategory
+            ? categoryForms
+            : ConfigurationUtil.filterTopLevelCategories(
+                categoryForms, this.categoriesFilter, this.projectConfiguration
+            );
 
         this.selectedForm = this.categoryForms?.[0];
         this.emptyForm = this.getEmptyForm();

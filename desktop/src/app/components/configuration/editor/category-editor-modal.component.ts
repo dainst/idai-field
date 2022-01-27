@@ -38,6 +38,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public isCustomCategory = () => this.category.source === 'custom';
+
+
     public initialize() {
 
         super.initialize();

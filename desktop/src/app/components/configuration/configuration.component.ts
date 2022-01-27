@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Subscription } from 'rxjs';
-import { nop, to } from 'tsfun';
+import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, Relation, InPlace } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -165,13 +165,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public setCategoriesFilter(filterName: string) {
+    public setCategoriesFilter(filterName: string, selectFirstCategory: boolean = true) {
 
         this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
         this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
             this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.projectConfiguration
         );
-        this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
+
+        if (selectFirstCategory) this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
     }
 
 
@@ -508,13 +509,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
-        this.setCategoriesFilter(this.selectedCategoriesFilter?.name ?? 'project');
-        
-        if (this.selectedCategory && this.filteredTopLevelCategoriesArray.includes(this.selectedCategory)) {
+        if (this.selectedCategory) {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-        } else {
-            this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
         }
+
+        this.setCategoriesFilter(
+            this.selectedCategoriesFilter?.name ?? 'project',
+            this.selectedCategory === undefined
+        );
     }
 
 
@@ -580,7 +582,4 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.indexFacade.putMultiple(documents);
     }
-
-
-    
 }

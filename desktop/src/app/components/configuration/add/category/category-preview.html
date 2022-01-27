@@ -1,7 +1,6 @@
 <div *ngIf="category" class="preview">
     <div id="preview-header">
         <category-icon *ngIf="category.label" [category]="category" size="30"></category-icon>
-        <span *ngIf="!category.label" class="mdi mdi-plus-circle mdi-24px"></span>
         <span class="preview-item-title">
             <b>{{label}}</b>
             <code>{{category.libraryId}}</code>

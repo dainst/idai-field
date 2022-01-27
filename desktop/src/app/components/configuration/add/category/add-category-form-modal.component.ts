@@ -61,8 +61,11 @@ export class AddCategoryFormModalComponent {
 
     public async selectForm(category: CategoryForm) {
 
-        this.selectedForm = category;
-        if (this.selectedForm === this.emptyForm) await this.createNewSubcategory();
+        if (category === this.emptyForm) {
+            await this.createNewSubcategory();
+        } else {
+            this.selectedForm = category;
+        }
     }
 
 

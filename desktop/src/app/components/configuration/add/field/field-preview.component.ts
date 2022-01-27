@@ -24,10 +24,9 @@ export class FieldPreviewComponent {
                 private i18n: I18n) {}
 
 
-    public getLabel = (value: any) => this.field.label
-        ? this.labels.get(value)
-        : this.i18n({ id: 'configuration.newField', value: 'Neues Feld' });
+    public getLabel = (value: any) => this.labels.get(value);
 
+    
     public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
         this.field.inputType, this.availableInputTypes
     );

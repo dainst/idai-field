@@ -32,13 +32,8 @@ export class CategoryPreviewComponent implements OnChanges {
 
         if (!this.category) return;
 
-        if (this.category.label) {
-            const { label, description } = this.labels.getLabelAndDescription(this.category);
-            this.label = label;
-            this.description = description;
-        } else {
-            this.label = this.i18n({ id: 'configuration.newCategory', value: 'Neue Kategorie' });
-            this.description = undefined;
-        }
+        const { label, description } = this.labels.getLabelAndDescription(this.category);
+        this.label = label;
+        this.description = description;
     }
 }

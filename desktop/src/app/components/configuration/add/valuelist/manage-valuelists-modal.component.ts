@@ -77,9 +77,11 @@ export class ManageValuelistsModalComponent {
 
     public async select(valuelist: Valuelist) {
 
-        this.selectedValuelist = valuelist;
-
-        if (this.selectedValuelist === this.emptyValuelist) await this.createNewValuelist();
+        if (valuelist === this.emptyValuelist) {
+            await this.createNewValuelist();
+        } else {
+            this.selectedValuelist = valuelist;
+        }
     }
 
 

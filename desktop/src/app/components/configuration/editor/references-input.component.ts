@@ -14,16 +14,13 @@ export class ReferencesInputComponent {
     @Input() references: string[];
 
 
+    public getTrackingIndex = (index, _) => index;
+
+
     public addReference() {
 
         if (this.references.length > 0 && isEmpty(this.references[this.references.length - 1])) return;
         this.references.push('');
-    }
-
-
-    public updateReference(index: number, event: any) {
-
-        this.references[index] = event.srcElement.value;
     }
 
 

@@ -1,10 +1,9 @@
-<div *ngFor="let reference of references; let i = index">
+<div *ngFor="let reference of references; let i = index; trackBy: getTrackingIndex">
     <div class="input-group mb-2">
         <div>
             <input type="text"
                    class="form-control"
-                   [ngModel]="references[i]"
-                   (change)="updateReference(i, $event)">
+                   [(ngModel)]="references[i]">
         </div>
         <button class="btn btn-danger"
                 type="button"

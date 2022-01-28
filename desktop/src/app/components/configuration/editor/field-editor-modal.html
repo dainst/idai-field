@@ -80,6 +80,12 @@
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="field.defaultDescription || {}" [disabled]="hidden"></multi-language-input>
     </div>
+    <div *ngIf="isCustomField()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="getClonedFieldDefinition().references"></references-input>
+    </div>
     <div *ngIf="isValuelistSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
             Werteliste

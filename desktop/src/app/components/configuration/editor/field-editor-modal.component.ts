@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop } from 'tsfun';
+import { clone, equal, isEmpty, nop, not } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
 import { InputType } from '../../../components/configuration/configuration-util';
@@ -15,6 +15,7 @@ import { ValuelistEditorModalComponent } from './valuelist-editor-modal.componen
 import { SaveResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../messages/m';
+import { validateReferences } from '../validation/validate-references';
 
 
 @Component({
@@ -67,6 +68,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isEditValuelistButtonVisible = () => this.clonedField.valuelist
         && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
 
+    public isCustomField = () => this.field.source === 'custom';
+
 
     public initialize() {
 
@@ -85,6 +88,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedFormDefinition().fields[this.field.name] = {};
         }
 
+        if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
+
         this.clonedField = clone(this.field);
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
@@ -99,6 +104,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (valuelistRequired && (!this.getClonedFormDefinition().valuelists
                 || !this.getClonedFormDefinition().valuelists[this.field.name])) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
+        }
+
+        this.getClonedFieldDefinition().references = this.getClonedFieldDefinition()
+            .references.filter(not(isEmpty));
+
+        try {
+            validateReferences(this.getClonedFieldDefinition().references);
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
         }
 
         if (!valuelistRequired && this.getClonedFormDefinition().valuelists) {

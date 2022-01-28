@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigurationComponent } from './configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
-import { MultiLanguageInputComponent } from './editor/multi-language-input.component';
+import { MultiLanguageInputComponent } from './editor/widgets/multi-language-input.component';
 import { ConfigurationCategoryComponent } from './configuration-category.component';
 import { AddFieldModalComponent } from './add/field/add-field-modal.component';
 import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
@@ -35,7 +35,7 @@ import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.c
 import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
 import { SwapCategoryFormModalComponent } from './add/category/swap-category-form-modal.component';
 import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-modal.component';
-import { ReferencesInputComponent } from './editor/references-input.component';
+import { ReferencesInputComponent } from './editor/widgets/references-input.component';
 
 
 @NgModule({

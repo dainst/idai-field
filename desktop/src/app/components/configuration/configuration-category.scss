@@ -21,6 +21,17 @@ configuration-category {
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    .category-name {
+      padding-top: 11px;
+    }
+
+    .mdi-script-text-outline {
+      position: relative;
+      top: 1px;
+      margin-right: 6px;
+      color: #414952;
+    }
   }
 
   .subheader {

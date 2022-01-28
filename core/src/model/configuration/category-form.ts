@@ -66,7 +66,6 @@ export namespace CategoryForm {
     }
 
 
-    // TODO Remove this (unused)
     export function build(name: Name, parentCategory?: CategoryForm): CategoryForm {
 
         const color: string = CategoryForm.generateColorForCategory(name);
@@ -78,7 +77,8 @@ export namespace CategoryForm {
             description: {},
             defaultDescription: {},
             color: color,
-            defaultColor: color
+            defaultColor: color,
+            source: Source.CUSTOM
         } as any /* TODO any */;
 
         if (parentCategory) {

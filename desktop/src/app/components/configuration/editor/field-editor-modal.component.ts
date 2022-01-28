@@ -106,8 +106,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
 
-        this.getClonedFieldDefinition().references = this.getClonedFieldDefinition()
-            .references.filter(not(isEmpty));
+        this.getClonedFieldDefinition().references = this.getClonedFieldDefinition().references.filter(not(isEmpty));
+        if (isEmpty(this.getClonedFieldDefinition().references)) delete this.getClonedFieldDefinition().references;
 
         try {
             validateReferences(this.getClonedFieldDefinition().references);

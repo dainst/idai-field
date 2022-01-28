@@ -8,7 +8,9 @@ const urlRegex =
 /**
  * @author Thomas Kleinke
  */
-export function validateReferences(references: string[]) {
+export function validateReferences(references?: string[]) {
+
+    if (!references) return;
 
     references.forEach(reference => {
         const result = reference.match(urlRegex);

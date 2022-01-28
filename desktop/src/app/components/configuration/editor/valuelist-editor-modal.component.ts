@@ -110,6 +110,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         this.getClonedValuelistDefinition().references = this.getClonedValuelistDefinition()
             .references.filter(not(isEmpty));
+        if (isEmpty(this.getClonedValuelistDefinition().references)) {
+            delete this.getClonedValuelistDefinition().references;
+        }
 
         try {
             validateReferences(this.getClonedValuelistDefinition().references);

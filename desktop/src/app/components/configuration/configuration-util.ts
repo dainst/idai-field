@@ -1,5 +1,6 @@
-import { flatten, to } from 'tsfun';
+import { flatten, isEmpty, not, to } from 'tsfun';
 import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
@@ -81,5 +82,17 @@ export module ConfigurationUtil {
                             && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
             }
         });
+    }
+
+
+    /**
+     * @throws M.CONFIGURATION_ERROR_INVALID_REFERENCE if validation fails
+     */
+    export function cleanUpAndValidateReferences(object: any) {
+
+        object.references = object.references.filter(not(isEmpty));
+        validateReferences(object.references);
+
+        if (isEmpty(object.references)) delete object.references;
     }
 }

@@ -4,7 +4,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, not } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
-import { InputType } from '../../../components/configuration/configuration-util';
+import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -15,7 +15,6 @@ import { ValuelistEditorModalComponent } from './valuelist-editor-modal.componen
 import { SaveResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../messages/m';
-import { validateReferences } from '../validation/validate-references';
 
 
 @Component({
@@ -106,11 +105,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
 
-        this.getClonedFieldDefinition().references = this.getClonedFieldDefinition().references.filter(not(isEmpty));
-        if (isEmpty(this.getClonedFieldDefinition().references)) delete this.getClonedFieldDefinition().references;
-
         try {
-            validateReferences(this.getClonedFieldDefinition().references);
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

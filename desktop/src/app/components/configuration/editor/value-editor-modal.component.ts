@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, isEmpty, not } from 'tsfun';
+import { clone, isEmpty } from 'tsfun';
 import { ValuelistValue } from 'idai-field-core';
-import { validateReferences } from '../validation/validate-references';
 import { Messages } from '../../messages/messages';
+import { ConfigurationUtil } from '../configuration-util';
 
 
 @Component({
@@ -48,17 +48,14 @@ export class ValueEditorModalComponent {
 
     public confirmChanges() {
 
-        this.clonedValue.references = this.clonedValue.references.filter(not(isEmpty));
-
         try {
-            validateReferences(this.clonedValue.references);
+            ConfigurationUtil.cleanUpAndValidateReferences(this.clonedValue);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
 
         if (isEmpty(this.clonedValue.label)) delete this.clonedValue.label;
         if (isEmpty(this.clonedValue.description)) delete this.clonedValue.description;
-        if (isEmpty(this.clonedValue.references)) delete this.clonedValue.references;
         
         this.activeModal.close(this.clonedValue);
     }

@@ -12,7 +12,7 @@ import { Modals } from '../../../services/modals';
 import { MenuContext } from '../../../services/menu-context';
 import { ValueEditorModalComponent } from './value-editor-modal.component';
 import { M } from '../../messages/m';
-import { validateReferences } from '../validation/validate-references';
+import { ConfigurationUtil } from '../configuration-util';
 
 
 @Component({
@@ -108,14 +108,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
         }
 
-        this.getClonedValuelistDefinition().references = this.getClonedValuelistDefinition()
-            .references.filter(not(isEmpty));
-        if (isEmpty(this.getClonedValuelistDefinition().references)) {
-            delete this.getClonedValuelistDefinition().references;
-        }
-
         try {
-            validateReferences(this.getClonedValuelistDefinition().references);
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedValuelistDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

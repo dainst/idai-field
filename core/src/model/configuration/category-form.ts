@@ -24,8 +24,6 @@ export interface CategoryForm {
 
     children: Array<CategoryForm>;
     parentCategory: CategoryForm|undefined; //  = undefined;
-
-    // Contents and Appearance
     
     groups: Array<Group>;
     
@@ -36,6 +34,7 @@ export interface CategoryForm {
     
     createdBy?: string,
     creationDate?: Date;
+    references?: string[];
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;

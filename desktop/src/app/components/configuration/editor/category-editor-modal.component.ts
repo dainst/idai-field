@@ -64,10 +64,18 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().color = this.currentColor;
             }
         }
+
+        if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
     }
 
 
     public async save() {
+
+        try {
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
 
         if (this.getClonedFormDefinition().color ===
                 CategoryEditorModalComponent.getHexColor(this.category.defaultColor)

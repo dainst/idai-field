@@ -159,6 +159,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         );
         category.createdBy = formDefinition.createdBy;
         category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
+        category.references = formDefinition.references;
         
         category.children = [];
         category[TEMP_FIELDS] = formDefinition.fields || {};

@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CategoryForm, Groups, Labels } from 'idai-field-core';
 
 
@@ -19,8 +18,7 @@ export class CategoryPreviewComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private labels: Labels,
-                private i18n: I18n) {}
+    constructor(private labels: Labels) {}
 
 
     public getLabel = (value: any) => this.labels.get(value);

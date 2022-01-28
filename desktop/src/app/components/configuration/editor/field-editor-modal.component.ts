@@ -62,7 +62,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
-    );
+    ) && !this.field.valuelistFromProjectField;
 
     public isEditValuelistButtonVisible = () => this.clonedField.valuelist
         && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
@@ -97,10 +97,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        const valuelistRequired: boolean = Field.InputType.VALUELIST_INPUT_TYPES
-            .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType);
-
-        if (valuelistRequired && (!this.getClonedFormDefinition().valuelists
+        if (this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
                 || !this.getClonedFormDefinition().valuelists[this.field.name])) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
@@ -111,7 +108,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!valuelistRequired && this.getClonedFormDefinition().valuelists) {
+        if (!this.isValuelistSectionVisible() && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
         }
 

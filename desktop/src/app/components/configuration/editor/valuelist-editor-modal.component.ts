@@ -134,6 +134,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
+        || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+                this.getClonedValuelistDefinition());
     }
 
 

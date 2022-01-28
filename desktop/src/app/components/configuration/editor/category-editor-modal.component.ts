@@ -100,7 +100,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
-            || this.getClonedFormDefinition().color !== this.currentColor;
+            || this.getClonedFormDefinition().color !== this.currentColor
+            || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
+                this.getClonedFormDefinition());
     }
 
 

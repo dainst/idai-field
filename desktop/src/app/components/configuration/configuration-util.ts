@@ -1,4 +1,4 @@
-import { flatten, isEmpty, not, to } from 'tsfun';
+import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
 import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 import { validateReferences } from './validation/validate-references';
 
@@ -94,5 +94,19 @@ export module ConfigurationUtil {
         validateReferences(object.references);
 
         if (isEmpty(object.references)) delete object.references;
+    }
+
+
+    export function isReferencesArrayChanged(object: any, editedObject: any): boolean {
+
+        const originalReferences: string[] = object.references
+            ? clone(object.references).filter(not(isEmpty))
+            : [];
+        
+        const editedReferences: string[] = editedObject.references
+            ? clone(editedObject.references).filter(not(isEmpty))
+            : [];
+
+        return !equal(originalReferences)(editedReferences);
     }
 }

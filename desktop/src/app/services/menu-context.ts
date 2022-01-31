@@ -10,7 +10,6 @@ export module MenuContext {
     export const DEFAULT = 'default';
     export const DOCEDIT = 'docedit';
     export const MODAL = 'modal';
-    export const PROJECTS = 'projects';
     export const CONFIGURATION = 'configuration';
     export const GEOMETRY_EDIT = 'geometryEdit';
     export const MAP_LAYERS_EDIT = 'mapLayersEdit';

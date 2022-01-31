@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
-import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
+import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace,
+    Labels} from 'idai-field-core';
+import { InputType } from '../../components/configuration/configuration-util';
 import { AddFieldModalComponent } from './add/field/add-field-modal.component';
 import { Messages } from '../messages/messages';
 import { AddGroupModalComponent } from './add/group/add-group-modal.component';
@@ -67,12 +68,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-
-    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
-
     public getGroupLabel = (group: Group) => this.labels.get(group);
 
-    public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -96,7 +94,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getFields(): Array<Field> {
 
-        return this.getGroups()
+        return this.category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .fields
             .filter(

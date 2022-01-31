@@ -55,7 +55,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
             />
             <View style={ styles.groupsContainer }>
                 <FlatList
-                    data={ category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS) }
+                    data={ category.groups }
                     keyExtractor={ group => group.name }
                     renderItem={ renderItem }
                     horizontal={ true }

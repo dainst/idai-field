@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { CategoryForm, Groups, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -22,8 +22,6 @@ export class CategoryPreviewComponent implements OnChanges {
 
 
     public getLabel = (value: any) => this.labels.get(value);
-
-    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
 
     ngOnChanges() {

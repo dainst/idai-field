@@ -37,7 +37,7 @@
         <ul class="flex-column groups-container"
             cdkDropList
             (cdkDropListDropped)="onGroupDrop($event)">
-            <li *ngFor="let group of getGroups()"
+            <li *ngFor="let group of category.groups"
                 class="flex-column group-element"
                 cdkDrag cdkDragBoundary=".groups-container" cdkDragLockAxis="y"
                 (cdkDragStarted)="onDragging.emit(true)"

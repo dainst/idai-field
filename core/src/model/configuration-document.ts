@@ -153,9 +153,7 @@ export namespace ConfigurationDocument {
     export function getPermanentlyHiddenFields(configurationDocument: ConfigurationDocument,
                                                category: CategoryForm): string[] {
 
-        const groups: Array<Group> = category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
-
-        const result: string[] = flatten(groups.map(to('fields')))
+        const result: string[] = flatten(category.groups.map(to('fields')))
             .filter(field => !field.visible
                 && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
                 && (category.source === 'custom' || !ConfigurationDocument.isHidden(
@@ -166,6 +164,7 @@ export namespace ConfigurationDocument {
             .map(Named.toName);
 
         if (category.name === 'Project') result.push(Resource.IDENTIFIER);
+
         return result;
     }
 

@@ -21,7 +21,6 @@ export module Groups {
     export const PARENT = 'parent';
     export const CHILD = 'child';
     export const OTHER = 'other';
-    export const HIDDEN_CORE_FIELDS = '_hiddenCoreFields';
 }
 
 

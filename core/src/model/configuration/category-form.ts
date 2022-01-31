@@ -142,7 +142,6 @@ export namespace CategoryForm {
                                            permanentlyHiddenFields: string[]): Array<GroupDefinition> {
 
         return category.groups
-            .filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS)
             .reduce((result, group) => {
                 result.push({
                     name: group.name,

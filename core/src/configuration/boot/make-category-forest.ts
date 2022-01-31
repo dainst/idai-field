@@ -68,7 +68,6 @@ const createGroups = (relationDefinitions: Array<Relation>) => (category: Catego
     });
 
     putUnassignedFieldsToOtherGroup(category);
-    putCoreFieldsToHiddenGroup(category);
 
     return category;
 }
@@ -91,19 +90,6 @@ function putUnassignedFieldsToOtherGroup(category: CategoryForm) {
     }
 
     otherGroup.fields = otherGroup.fields.concat(fieldsNotInGroups);
-}
-
-
-function putCoreFieldsToHiddenGroup(category: CategoryForm) {
-
-    if (!category[TEMP_FIELDS][Resource.ID]) return;
-
-    category.groups.push({
-        name: Groups.HIDDEN_CORE_FIELDS,
-        fields: [
-            category[TEMP_FIELDS][Resource.ID]
-        ]
-    });
 }
 
 

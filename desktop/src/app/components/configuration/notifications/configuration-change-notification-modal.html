@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.changeNotification.header">
+        Die Projektkonfiguration hat sich geändert.
+    </h5>
+</div>
+
+<div id="configuration-change-notification-modal-body" class="modal-body">
+    <div id="reload-project-button"
+         class="btn btn-primary"
+         (click)="reloadProject()">
+        <span i18n="@@configuration.changeNotification.applyChanges">Änderungen anwenden</span>
+    </div>
+</div>

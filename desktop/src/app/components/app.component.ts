@@ -7,9 +7,10 @@ import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
 import { Settings } from '../services/settings/settings';
 import { MenuNavigator } from './menu-navigator';
-import {UtilTranslations} from '../util/util-translations';
-import {AppController} from '../services/app-controller';
-import {Imagestore} from '../services/imagestore/imagestore';
+import { UtilTranslations } from '../util/util-translations';
+import { AppController } from '../services/app-controller';
+import { Imagestore } from '../services/imagestore/imagestore';
+import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -39,7 +40,8 @@ export class AppComponent {
                 menuService: Menus,
                 appController: AppController,
                 imagestore: Imagestore,
-                settingsService: SettingsService) {
+                settingsService: SettingsService,
+                configurationChangeNotifications: ConfigurationChangeNotifications) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -57,6 +59,7 @@ export class AppComponent {
         settingsService.setupSync();
         appController.setupServer();
         menuNavigator.initialize();
+        configurationChangeNotifications.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();

@@ -36,6 +36,8 @@ import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-ba
 import { SwapCategoryFormModalComponent } from './add/category/swap-category-form-modal.component';
 import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-modal.component';
 import { ReferencesInputComponent } from './editor/widgets/references-input.component';
+import { ConfigurationChangeNotifications } from './notifications/configuration-change-notifications';
+import { ConfigurationChangeNotificationModalComponent } from './notifications/configuration-change-notification-modal.component';
 
 
 @NgModule({
@@ -78,7 +80,11 @@ import { ReferencesInputComponent } from './editor/widgets/references-input.comp
         SwapCategoryFormModalComponent,
         SaveModalComponent,
         ValuelistViewComponent,
-        ExtendValuelistModalComponent
+        ExtendValuelistModalComponent,
+        ConfigurationChangeNotificationModalComponent
+    ],
+    providers: [
+        ConfigurationChangeNotifications
     ],
     exports: [
         ConfigurationComponent
@@ -100,7 +106,8 @@ import { ReferencesInputComponent } from './editor/widgets/references-input.comp
         ValuelistSearchBarComponent,
         SwapCategoryFormModalComponent,
         ExtendValuelistModalComponent,
-        SaveModalComponent
+        SaveModalComponent,
+        ConfigurationChangeNotificationModalComponent
     ]
 })
 

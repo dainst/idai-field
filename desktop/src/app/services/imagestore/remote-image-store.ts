@@ -4,11 +4,14 @@ import { SettingsProvider } from '../settings/settings-provider';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const fork = typeof window !== 'undefined' ? window.require('child_process').fork : require('child_process').fork;
+
+
 @Injectable()
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
     constructor(private settingsProvider: SettingsProvider) {}
-
 
     /**
      * Remotely store data with the provided id.
@@ -18,8 +21,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * @param type (optional) image's type. By convention, a missing `type` parameter will be
      * interpreted as {@link ImageVariant.ORIGINAL} by the syncing target.
      */
-    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
-
+    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant): Promise<any> {
         try {
             const settings = this.settingsProvider.getSettings();
             const syncSource = settings.syncTargets[project];
@@ -29,7 +31,8 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             const password = syncSource.password;
 
             const params = (type) ? { type } : {};
-            const response = await axios({
+
+            return this.workerRequest({
                 method: 'put',
                 url: address + '/files/' + project + '/' + uuid,
                 params,
@@ -39,7 +42,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                     Authorization: `Basic ${btoa(project + ':' + password)}`
                 }
             });
-
         } catch (error) {
             if (error.response) {
                 console.error(error.response.data);
@@ -50,6 +52,8 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
               } else {
                 console.error(error.message);
               }
+
+            Promise.reject(error);
         }
     }
 
@@ -58,8 +62,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * @param uuid the identifier for the image to be removed
      * @param project the project's name
      */
-    public async remove(uuid: string, project: string) {
-
+    public async remove(uuid: string, project: string): Promise<any> {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
@@ -68,7 +71,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const address = syncSource.address;
         const password = syncSource.password;
 
-        const response = await axios({
+        return this.workerRequest({
             method: 'delete',
             url: address + '/files/' + project + '/' + uuid,
             headers: {
@@ -99,7 +102,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const params = (type) ? { type } : {};
 
-        const response = await axios({
+        return this.workerRequest({
             method: 'get',
             url: address + '/files/' + project,
             params,
@@ -107,9 +110,12 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 'Content-Type': 'application/json',
                 Authorization: `Basic ${btoa(project + ':' + password)}`
             }
+        }).then((response) => {
+            return response.data;
+        }).catch((error) => {
+            console.error(error);
+            return {};
         });
-
-        return response.data;
     }
 
     /**
@@ -129,7 +135,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const params = (type) ? { type } : {};
 
-        const response = await axios({
+        return this.workerRequest({
             method: 'get',
             url: address + '/files/' + project + '/' + uuid,
             params,
@@ -139,7 +145,36 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 Authorization: `Basic ${btoa(project + ':' + password)}`
             }
         });
+    }
 
-        return Buffer.from(response.data);
+    private workerRequest(parameters): Promise<any>{
+
+        return new Promise(async (resolve, reject) => {
+            const worker = fork(
+                remote.app.getAppPath() + '/worker/http-request.js',
+                [],
+                {
+                    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+                }
+            );
+
+            // worker.stdout.on('data', (d) => {
+            //     console.log('[stdout-renderer-fork] ' + d.toString());
+            // });
+            worker.stderr.on('data', (d) => {
+                console.log('[http-request-worker] ' + d.toString());
+            });
+
+
+            worker.on('message', (res: any) => {
+                if ('error' in res) {
+                    reject(res);
+                } else {
+                    resolve(res);
+                }
+            });
+
+            worker.send(parameters);
+        });
     }
 }

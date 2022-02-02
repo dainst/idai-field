@@ -1,5 +1,5 @@
 import { SyncStatus } from '../sync-status';
-import { ImageVariant, ImageStore, tombstoneSuffix } from './image-store';
+import { ImageVariant, ImageStore } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 
@@ -89,8 +89,9 @@ export class ImageSyncService {
 
     private cycle() {
 
-        this.active.forEach((type) => this.sync(type));
-        this.scheduleNextSync();
+        const promises = this.active.map((type) => this.sync(type));
+        
+        //Promise.all(promises).finally(() => this.scheduleNextSync())
     }
 
 
@@ -100,27 +101,60 @@ export class ImageSyncService {
             const activeProject = this.imageStore.getActiveProject();
             await this.evaluateDifference(activeProject, variant);
 
-            for (const uuid of this.differences[variant].missingLocally) {
-                const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-                if (data !== null) {
-                    this.imageStore.store(uuid, data, activeProject, variant);
-                } else {
-                    console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
-                }
-            }
+            console.log(this.differences[variant].missingLocally);
+            console.log(this.differences[variant].missingRemotely);
 
-            for (const uuid of this.differences[variant].deleteLocally) {
-                this.imageStore.remove(uuid, activeProject)
-            }
+            // for (const uuid of this.differences[variant].missingLocally) {
+            //     const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
+            //     if (data !== null) {
+            //         this.imageStore.store(uuid, data, activeProject, variant);
+            //     } else {
+            //         console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
+            //     }
+            // }
 
-            for (const uuid of this.differences[variant].missingRemotely) {
+            // for (const uuid of this.differences[variant].deleteLocally) {
+            //     this.imageStore.remove(uuid, activeProject)
+            // }
+
+
+            // const doNextPromise = (d) => {
+            //     delay(delays[d]).then(x => {
+            //         console.log(`Waited: ${x / 1000} seconds\n`);
+            //         d++; 
+            //         if (d < delays.length)
+            //             doNextPromise(d)
+            //         else
+            //             console.log(`Total: ${(Date.now() - startTime) / 1000} seconds.`);
+            //     })
+            // }
+            
+            // doNextPromise(0);
+
+            console.log('Overall missing remotely: ' + this.differences[variant].missingRemotely.length)
+
+            const doNextUpload = async (index: number): Promise<number> => {
+                console.log('Index: ' + index);
+
+                const uuid = this.differences[variant].missingRemotely[index];
                 const data = await this.imageStore.getData(uuid, variant, activeProject);
-                this.remoteImagestore.store(uuid, data, activeProject, variant);
+                return this.remoteImagestore.store(uuid, data, activeProject, variant).then((result): Promise<any> => {
+                    index++;
+                    if (index < this.differences[variant].missingRemotely.length) {
+                        return doNextUpload(index);
+                    } else {
+                        return Promise.resolve(index);
+                    }
+                })
             }
 
-            for (const uuid of this.differences[variant].deleteRemotely) {
-                this.remoteImagestore.remove(uuid, activeProject)
-            }
+            const uploadPromise = doNextUpload(0);
+
+
+            return [uploadPromise]
+            // for (const uuid of this.differences[variant].deleteRemotely) {
+            //     this.remoteImagestore.remove(uuid, activeProject)
+            // }
         }
         catch (e){
             console.error(e);

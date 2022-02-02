@@ -63,7 +63,7 @@ defmodule FieldHubWeb.Api.FileController do
     parsed_type =
       parse_type(type)
 
-    {:ok, data, conn} = read_body(conn)
+    {:ok, data, conn} = read_body(conn, length: 100_000_000)
 
     image_store_data =
       case parsed_type do

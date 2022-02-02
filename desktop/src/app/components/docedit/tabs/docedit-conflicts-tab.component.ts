@@ -6,9 +6,8 @@ import { UtilTranslations } from '../../../util/util-translations';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
+import { WinningSide } from './revision-selector.component';
 import { formatContent } from './format-content';
-
-const moment = require('moment');
 
 
 /**
@@ -21,7 +20,7 @@ const moment = require('moment');
 export class DoceditConflictsTabComponent implements OnChanges {
 
     @Input() document: Document;
-    @Input() inspectedRevisions: Document[];
+    @Input() inspectedRevisions: Array<Document>;
 
     public conflictedRevisions: Array<Document> = [];
     public selectedRevision: Document|undefined;
@@ -126,14 +125,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public getWinningSide(): string {
+    public getWinningSide(): WinningSide {
 
         if (this.differingFields.length === 0) return 'left';
 
-        let winningSide = '';
+        let winningSide: WinningSide;
 
         for (let field of this.differingFields) {
-            if (winningSide === '') {
+            if (!winningSide) {
                 winningSide = field.rightSideWinning ? 'right' : 'left';
             } else if ((winningSide === 'left' && field.rightSideWinning)
                     || (winningSide === 'right' && !field.rightSideWinning)) {
@@ -145,24 +144,15 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public setWinningSide(rightSideWinning: boolean) {
+    public setWinningSide(winningSide: WinningSide) {
 
-        for (let field of this.differingFields) field.rightSideWinning = rightSideWinning;
+        for (let field of this.differingFields) field.rightSideWinning = winningSide === 'right';
     }
 
 
     public setWinningSideForField(field: any, rightSideWinning: boolean) {
 
         field.rightSideWinning = rightSideWinning;
-    }
-
-
-    public getRevisionLabel(revision: Document): string {
-
-        moment.locale('de');
-        return Document.getLastModified(revision).user
-            + ' - '
-            + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
 
 

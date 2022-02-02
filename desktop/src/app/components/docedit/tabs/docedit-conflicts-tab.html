@@ -1,44 +1,11 @@
 <div *ngIf="!isLoading()" id="conflict-resolver">
-    <div class="card">
-        <div class="card-header">
-            <h3 *ngIf="conflictedRevisions.length === 0 && inspectedRevisions.length > 0" class="card-title"
-                i18n="@@docedit.tabs.conflicts.header.allResolved">
-                Alle Konflikte wurden gelöst.
-            </h3>
-            <h3 *ngIf="conflictedRevisions.length === 1" class="card-title"
-                i18n="@@docedit.tabs.conflicts.header.oneConflict">
-                Es besteht <b>ein</b> Konflikt.
-            </h3>
-            <h3 *ngIf="conflictedRevisions.length > 1" class="card-title"
-                i18n="@@docedit.tabs.conflicts.header.multipleConflicts">
-                Es bestehen <b>{{conflictedRevisions.length}}</b> Konflikte.
-            </h3>
-        </div>
-        <div *ngIf="conflictedRevisions.length > 0">
-            <div class="row h-100">
-                <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(false)">
-                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() === 'left'" />
-                </div>
-                <div class="col-md-5 my-auto conflict-resolver-field" (click)="setWinningSide(false)">
-                    <div i18n="@@docedit.tabs.conflicts.currentVersion">Aktuelle Version:</div>
-                    <div>{{getRevisionLabel(document)}}</div>
-                </div>
-                <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(true)">
-                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() === 'right'" />
-                </div>
-                <div class="col-md-5 my-auto conflict-resolver-field">
-                    <div (click)="setWinningSide(true)"
-                         i18n="@@docedit.tabs.conflicts.competingVersion"> Konkurrierende Version:</div>
-                    <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
-                            class="form-control">
-                        <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
-                            {{getRevisionLabel(revision)}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
+    <revision-selector [document]="document"
+                       [conflictedRevisions]="conflictedRevisions"
+                       [inspectedRevisions]="inspectedRevisions"
+                       [selectedRevision]="selectedRevision"
+                       [winningSide]="getWinningSide()"
+                       (onSelectWinningSide)="setWinningSide($event)"
+                       (onSelectRevision)="setSelectedRevision($event)"></revision-selector>
     <div *ngFor="let field of differingFields" class="card">
         <div class="card-header">
             <h3 class="card-title">{{getLabel(field)}}</h3>

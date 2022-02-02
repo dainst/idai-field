@@ -1,12 +1,11 @@
+@import './revision-selector';
+
+
 docedit-conflicts-tab {
   #conflict-resolver {
     height: calc(100vh - 161px);
     overflow-x: hidden;
     overflow-y: auto;
-
-    h3 {
-      user-select: none;
-    }
 
     .conflict-resolver-field {
       padding: 10px 5px;

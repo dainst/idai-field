@@ -38,6 +38,7 @@ import { OutliersComponent } from './core/forms/widgets/outliers.component';
 import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { DoceditComponent } from './docedit.component';
+import { RevisionSelectorComponent } from './tabs/revision-selector.component';
 import { DoceditConflictsTabComponent } from './tabs/docedit-conflicts-tab.component';
 import { CategorySwitcherButtonComponent } from './widgets/category-switcher-button.component';
 import { ImagePickerComponent } from './widgets/image-picker.component';
@@ -79,6 +80,7 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         DeleteModalComponent,
         DoceditComponent,
         DoceditConflictsTabComponent,
+        RevisionSelectorComponent,
         CategorySwitcherButtonComponent,
         ImagePickerComponent,
         EditFormComponent,
@@ -106,7 +108,8 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         LiteratureComponent
     ],
     exports: [
-        DoceditComponent
+        DoceditComponent,
+        RevisionSelectorComponent
     ],
     entryComponents: [
         DoceditComponent,

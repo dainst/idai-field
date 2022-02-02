@@ -45,6 +45,12 @@
         background-color: darken($list-item-hover-color, 5%);
         transition: background-color .5s ease;
       }
+
+      #taskbar-conflict-Configuration {
+        padding-top: 21px;
+        padding-left: 14px;
+        font-size: 14px;
+      }
     }
   }
 }

@@ -38,6 +38,8 @@ import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-
 import { ReferencesInputComponent } from './editor/widgets/references-input.component';
 import { ConfigurationChangeNotifications } from './notifications/configuration-change-notifications';
 import { ConfigurationChangeNotificationModalComponent } from './notifications/configuration-change-notification-modal.component';
+import { DoceditModule } from '../docedit/docedit.module';
+import { ConfigurationConflictsModalComponent } from './conflicts/configuration-conflicts-modal.component';
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { ConfigurationChangeNotificationModalComponent } from './notifications/c
         FormsModule,
         NgbModule,
         WidgetsModule,
-        DragDropModule
+        DragDropModule,
+        DoceditModule
     ],
     declarations: [
         ConfigurationComponent,
@@ -81,7 +84,8 @@ import { ConfigurationChangeNotificationModalComponent } from './notifications/c
         SaveModalComponent,
         ValuelistViewComponent,
         ExtendValuelistModalComponent,
-        ConfigurationChangeNotificationModalComponent
+        ConfigurationChangeNotificationModalComponent,
+        ConfigurationConflictsModalComponent
     ],
     providers: [
         ConfigurationChangeNotifications
@@ -107,7 +111,8 @@ import { ConfigurationChangeNotificationModalComponent } from './notifications/c
         SwapCategoryFormModalComponent,
         ExtendValuelistModalComponent,
         SaveModalComponent,
-        ConfigurationChangeNotificationModalComponent
+        ConfigurationChangeNotificationModalComponent,
+        ConfigurationConflictsModalComponent
     ]
 })
 

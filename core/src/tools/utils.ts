@@ -68,3 +68,7 @@ export const intoObj = <T>(keyName: string, valName: string) =>
         isDefined(item[keyName])
             ? (object[((item[keyName]) as any).toString()] = item[valName], object)
             : object;
+
+
+export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+    f(val) ? acc.concat([val as string]) : acc;

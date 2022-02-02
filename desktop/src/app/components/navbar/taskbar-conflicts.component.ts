@@ -1,8 +1,12 @@
 import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
-import { Document, Datastore, IndexFacade } from 'idai-field-core';
-import {ComponentHelpers} from '../component-helpers';
+import { nop } from 'tsfun';
+import { Document, Datastore, IndexFacade, ConfigurationDocument } from 'idai-field-core';
+import { ComponentHelpers } from '../component-helpers';
 import { Routing } from '../../services/routing';
 import { MenuNavigator } from '../menu-navigator';
+import { Modals } from '../../services/modals';
+import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({
@@ -28,6 +32,7 @@ export class TaskbarConflictsComponent {
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private menuNavigator: MenuNavigator,
+                private modals: Modals,
                 private zone: NgZone) {
 
         this.fetchConflicts();
@@ -43,7 +48,9 @@ export class TaskbarConflictsComponent {
 
         if (this.popover.isOpen()) this.popover.close();
 
-        if (document.resource.category === 'Project') {
+        if (document.resource.category === 'Configuration') {
+            await this.openConfigurationConflictsModal(document);
+        } else if (document.resource.category === 'Project') {
             await this.menuNavigator.editProject('conflicts');
         } else {
             await this.routingService.jumpToConflictResolver(document);
@@ -66,6 +73,9 @@ export class TaskbarConflictsComponent {
 
         const result = await this.datastore.find({ constraints: { 'conflicts:exist': 'KNOWN' } });
         this.conflicts = result.documents;
+
+        const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
+        if (configurationDocument._conflicts) this.conflicts = [configurationDocument].concat(this.conflicts);
     }
 
 
@@ -74,6 +84,21 @@ export class TaskbarConflictsComponent {
         if (this.cancelClickListener) this.cancelClickListener();
         this.cancelClickListener = undefined as any;
         this.popover.close();
+    }
+
+
+    private async openConfigurationConflictsModal(configurationDocument: Document) {
+
+        const [result, componentInstance] = this.modals.make<ConfigurationConflictsModalComponent>(
+            ConfigurationConflictsModalComponent,
+            MenuContext.MODAL,
+            'lg'
+        );
+
+        componentInstance.configurationDocument = configurationDocument as ConfigurationDocument;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 

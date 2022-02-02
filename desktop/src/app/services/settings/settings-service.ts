@@ -133,10 +133,9 @@ export class SettingsService {
             syncTarget?.password
         );
 
-        this.imageSyncService.triggerImmediateSync(ImageVariant.ORIGINAL);
-        this.imageSyncService.triggerImmediateSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.activatePeriodicSync(ImageVariant.ORIGINAL);
         this.imageSyncService.activatePeriodicSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.activatePeriodicSync(ImageVariant.ORIGINAL);
+        this.imageSyncService.startSync();
 
         return this.synchronizationService.startSync();
     }

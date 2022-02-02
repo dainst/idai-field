@@ -23,10 +23,7 @@ export class ImageSyncService {
     constructor(
         private imageStore: ImageStore,
         private remoteImagestore: RemoteImageStoreInterface
-    ) {
-
-        this.scheduleNextSync();
-    }
+    ) {}
 
     public getStatus(variant: ImageVariant): SyncStatus {
         
@@ -74,9 +71,9 @@ export class ImageSyncService {
      * Trigger an instant sync cycle without waiting for the periodic syncing.
      * @param variant the {@link ImageVariant} to sync
      */
-    public triggerImmediateSync(variant: ImageVariant) {
+    public startSync() {
 
-        this.sync(variant);
+        this.cycle();
     }
 
 
@@ -88,10 +85,16 @@ export class ImageSyncService {
 
 
     private cycle() {
-
+        console.log(this.active);
         const promises = this.active.map((type) => this.sync(type));
-        
-        //Promise.all(promises).finally(() => this.scheduleNextSync())
+        console.log(`promises`);
+        console.log(promises);
+        Promise.all(promises).then((results) => {
+            console.log(`results`);
+            console.log(results)
+            console.log(`rescheduling`)
+            this.scheduleNextSync()
+        });
     }
 
 
@@ -133,8 +136,11 @@ export class ImageSyncService {
 
             console.log('Overall missing remotely: ' + this.differences[variant].missingRemotely.length)
 
+            if (this.differences[variant].missingRemotely.length === 0)
+                return []
+
             const doNextUpload = async (index: number): Promise<number> => {
-                console.log('Index: ' + index);
+                console.log(`upload ${index} for variant ${variant}.`);
 
                 const uuid = this.differences[variant].missingRemotely[index];
                 const data = await this.imageStore.getData(uuid, variant, activeProject);
@@ -150,14 +156,17 @@ export class ImageSyncService {
 
             const uploadPromise = doNextUpload(0);
 
-
-            return [uploadPromise]
             // for (const uuid of this.differences[variant].deleteRemotely) {
             //     this.remoteImagestore.remove(uuid, activeProject)
             // }
+
+            return Promise.all([uploadPromise]).then(() => {
+                Promise.resolve();
+            }); 
         }
         catch (e){
             console.error(e);
+            Promise.reject();
         }
     }
 
@@ -165,7 +174,10 @@ export class ImageSyncService {
     private async evaluateDifference(activeProject: string, variant: ImageVariant) {
 
         const localData = this.imageStore.getFileIds(activeProject, [variant])
+        console.log(`evaluating differences for ${variant}`)
         const remoteData = await this.remoteImagestore.getFileIds(activeProject, variant)
+
+        console.log(remoteData);
 
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);

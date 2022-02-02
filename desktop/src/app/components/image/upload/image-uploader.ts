@@ -90,9 +90,6 @@ export class ImageUploader {
             uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
         }
 
-        this.imageSyncService.triggerImmediateSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.triggerImmediateSync(ImageVariant.ORIGINAL);
-
         return uploadResult;
     }
 

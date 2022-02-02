@@ -149,7 +149,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
     private workerRequest(parameters): Promise<any>{
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const worker = fork(
                 remote.app.getAppPath() + '/worker/http-request.js',
                 [],
@@ -164,7 +164,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             worker.stderr.on('data', (d) => {
                 console.log('[http-request-worker] ' + d.toString());
             });
-
 
             worker.on('message', (res: any) => {
                 if ('error' in res) {

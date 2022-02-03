@@ -14,11 +14,8 @@ interface SyncDifference {
 export class ImageSyncService {
     private intervalDuration = 1000 * 30;
     private active: ImageVariant[] = [];
-
-    private differences: {[variant in ImageVariant]: SyncDifference} = {
-        original_image: {missingLocally: [], missingRemotely: [], deleteLocally: [], deleteRemotely: []},
-        thumbnail_image: {missingLocally: [], missingRemotely: [], deleteLocally: [], deleteRemotely: []}
-    };
+    private currentTimeout = null;
+    private forceStop = false;
 
     constructor(
         private imageStore: ImageStore,
@@ -27,11 +24,11 @@ export class ImageSyncService {
 
     public getStatus(variant: ImageVariant): SyncStatus {
         
-        if (!(variant in this.differences)) return SyncStatus.Error;
-        if (!(variant in this.active)) return SyncStatus.Offline;
+        // if (!(variant in this.differences)) return SyncStatus.Error;
+        // if (!(variant in this.active)) return SyncStatus.Offline;
 
-        if (this.differences[variant].missingLocally.length !== 0) return SyncStatus.Pulling;
-        if (this.differences[variant].missingRemotely.length !== 0) return SyncStatus.Pushing;
+        // if (this.differences[variant].missingLocally.length !== 0) return SyncStatus.Pulling;
+        // if (this.differences[variant].missingRemotely.length !== 0) return SyncStatus.Pushing;
         
         return SyncStatus.InSync;
     }
@@ -73,26 +70,24 @@ export class ImageSyncService {
      */
     public startSync() {
 
+        if(this.currentTimeout) {
+            clearTimeout(this.currentTimeout);
+        }
         this.cycle();
     }
 
 
-
     private scheduleNextSync() {
 
-        setTimeout(this.cycle.bind(this), this.intervalDuration);
+        this.currentTimeout = setTimeout(this.cycle.bind(this), this.intervalDuration);
     }
 
 
     private cycle() {
-        console.log(this.active);
+
         const promises = this.active.map((type) => this.sync(type));
-        console.log(`promises`);
-        console.log(promises);
-        Promise.all(promises).then((results) => {
-            console.log(`results`);
-            console.log(results)
-            console.log(`rescheduling`)
+        Promise.all(promises).then(() => {
+            console.log(`rescheduling image sync`)
             this.scheduleNextSync()
         });
     }
@@ -102,67 +97,31 @@ export class ImageSyncService {
 
         try {
             const activeProject = this.imageStore.getActiveProject();
-            await this.evaluateDifference(activeProject, variant);
+            const differences = await this.evaluateDifference(activeProject, variant);
 
-            console.log(this.differences[variant].missingLocally);
-            console.log(this.differences[variant].missingRemotely);
-
-            // for (const uuid of this.differences[variant].missingLocally) {
-            //     const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
-            //     if (data !== null) {
-            //         this.imageStore.store(uuid, data, activeProject, variant);
-            //     } else {
-            //         console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
-            //     }
-            // }
-
-            // for (const uuid of this.differences[variant].deleteLocally) {
-            //     this.imageStore.remove(uuid, activeProject)
-            // }
-
-
-            // const doNextPromise = (d) => {
-            //     delay(delays[d]).then(x => {
-            //         console.log(`Waited: ${x / 1000} seconds\n`);
-            //         d++; 
-            //         if (d < delays.length)
-            //             doNextPromise(d)
-            //         else
-            //             console.log(`Total: ${(Date.now() - startTime) / 1000} seconds.`);
-            //     })
-            // }
-            
-            // doNextPromise(0);
-
-            console.log('Overall missing remotely: ' + this.differences[variant].missingRemotely.length)
-
-            if (this.differences[variant].missingRemotely.length === 0)
-                return []
-
-            const doNextUpload = async (index: number): Promise<number> => {
-                console.log(`upload ${index} for variant ${variant}.`);
-
-                const uuid = this.differences[variant].missingRemotely[index];
-                const data = await this.imageStore.getData(uuid, variant, activeProject);
-                return this.remoteImagestore.store(uuid, data, activeProject, variant).then((result): Promise<any> => {
-                    index++;
-                    if (index < this.differences[variant].missingRemotely.length) {
-                        return doNextUpload(index);
-                    } else {
-                        return Promise.resolve(index);
-                    }
-                })
+            for (const uuid of differences.missingLocally) {
+                const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
+                if (data !== null) {
+                    await this.imageStore.store(uuid, data, activeProject, variant);
+                } else {
+                    console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
+                }
             }
 
-            const uploadPromise = doNextUpload(0);
+            for (const uuid of differences.deleteLocally) {
+                await this.imageStore.remove(uuid, activeProject)
+            }
 
-            // for (const uuid of this.differences[variant].deleteRemotely) {
-            //     this.remoteImagestore.remove(uuid, activeProject)
-            // }
+            for (const uuid of differences.missingRemotely) {
+                const data = await this.imageStore.getData(uuid, variant, activeProject);
+                await this.remoteImagestore.store(uuid, data, activeProject, variant);
+            }
 
-            return Promise.all([uploadPromise]).then(() => {
-                Promise.resolve();
-            }); 
+            for (const uuid of differences.deleteRemotely) {
+                await this.remoteImagestore.remove(uuid, activeProject)
+            }
+
+            return Promise.resolve();
         }
         catch (e){
             console.error(e);
@@ -171,13 +130,10 @@ export class ImageSyncService {
     }
 
 
-    private async evaluateDifference(activeProject: string, variant: ImageVariant) {
+    private async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
 
         const localData = this.imageStore.getFileIds(activeProject, [variant])
-        console.log(`evaluating differences for ${variant}`)
         const remoteData = await this.remoteImagestore.getFileIds(activeProject, variant)
-
-        console.log(remoteData);
 
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);
@@ -208,7 +164,7 @@ export class ImageSyncService {
             (localUUID: string) => !remoteData[localUUID].deleted && remoteData[localUUID].deleted
         );
 
-        this.differences[variant] = {
+        return {
             missingLocally: missingLocally,
             missingRemotely: missingRemotely,
             deleteLocally: deleteLocally,

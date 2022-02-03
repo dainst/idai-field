@@ -211,6 +211,14 @@ export async function getText(element) {
 }
 
 
+export async function getValue(element) {
+
+    if (isString(element)) element = await getElement(element);
+    await waitForExist(element);
+    return app.client.executeScript('return arguments[0].value', [element]);
+}
+
+
 export async function uploadInFileInput(element, filePath) {
 
     if (isString(element)) element = await getElement(element);

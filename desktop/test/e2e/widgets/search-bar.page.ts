@@ -1,4 +1,4 @@
-import { click, getElement, getElements, getText, typeIn, waitForExist } from '../app';
+import { click, getElement, getElements, getText, getValue, typeIn, waitForExist } from '../app';
 
 
 export type SearchBarContext = 'resources'|'images'|'modal';
@@ -13,7 +13,8 @@ export class SearchBarPage {
 
     public static async getSearchBarInputFieldValue() {
 
-        return (await SearchBarPage.getSearchBarInputField()).getAttribute('value');
+        const inputField = await SearchBarPage.getSearchBarInputField();
+        return getValue(inputField);
     }
 
 

@@ -123,6 +123,9 @@ export class SettingsService {
 
         this.synchronizationService.stopSync();
 
+        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
+
         const settings = this.settingsProvider.getSettings();
 
         const syncTarget: SyncTarget|undefined = settings.syncTargets[settings.selectedProject];
@@ -136,9 +139,8 @@ export class SettingsService {
             syncTarget?.password
         );
 
-        this.imageSyncService.activatePeriodicSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.activatePeriodicSync(ImageVariant.ORIGINAL);
-        this.imageSyncService.startSync();
+        this.imageSyncService.startSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.startSync(ImageVariant.ORIGINAL);
 
         return this.synchronizationService.startSync();
     }
@@ -160,12 +162,18 @@ export class SettingsService {
 
     public async selectProject(project: Name) {
 
+        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
+
         this.synchronizationService.stopSync();
         await this.settingsProvider.selectProjectAndSerialize(project);
     }
 
 
     public async deleteProject(project: Name) {
+
+        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
 
         this.synchronizationService.stopSync();
 
@@ -177,6 +185,9 @@ export class SettingsService {
 
 
     public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
+
+        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
+        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
 
         this.synchronizationService.stopSync();
 

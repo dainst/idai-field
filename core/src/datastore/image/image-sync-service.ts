@@ -13,9 +13,8 @@ interface SyncDifference {
 
 export class ImageSyncService {
     private intervalDuration = 1000 * 30;
-    private active: ImageVariant[] = [];
-    private currentTimeout = null;
-    private forceStop = false;
+
+    private active: {[variant in ImageVariant]?: ReturnType<typeof setTimeout>} = {}
 
     constructor(
         private imageStore: ImageStore,
@@ -38,19 +37,22 @@ export class ImageSyncService {
      * @returns list of {@link ImageVariant} that are currently beeing synced every {@link intervalDuration}.
      */
     public getActivePeriodicSync(): ImageVariant[] {
-
-        return this.active;
+        return Object.keys(ImageVariant).filter((variant) => {
+            (variant in this.active)
+        }) as ImageVariant[];
     }
 
 
     /**
-     * Add a {@link ImageVariant} to the periodic syncing.
-     * @param variant the {@link ImageVariant}
+     * Trigger an instant sync cycle without waiting for the periodic syncing.
+     * @param variant the {@link ImageVariant} to sync
      */
-    public activatePeriodicSync(variant: ImageVariant): void {
+     public startSync(variant: ImageVariant) {
 
-        if (this.active.includes(variant)) return;
-        this.active.push(variant);
+        if((variant in this.active)) {
+            clearTimeout(this.active[variant]);
+        }
+        this.sync(variant);
     }
 
 
@@ -58,39 +60,25 @@ export class ImageSyncService {
      * Remove a {@link ImageVariant} from the periodic syncing.
      * @param variant the {@link ImageVariant}
      */
-    public deactivatePeriodicSync(variant: ImageVariant) {
-
-        this.active = this.active.filter((val) => val !== variant);
-    }
-
-    
-    /**
-     * Trigger an instant sync cycle without waiting for the periodic syncing.
-     * @param variant the {@link ImageVariant} to sync
-     */
-    public startSync() {
-
-        if(this.currentTimeout) {
-            clearTimeout(this.currentTimeout);
+    public stopSync(variant: ImageVariant) {
+        if((variant in this.active)) {
+            clearTimeout(this.active[variant]);
         }
-        this.cycle();
+
+        delete this.active[variant];
     }
 
 
-    private scheduleNextSync() {
+    private scheduleNextSync(variant: ImageVariant) {
 
-        this.currentTimeout = setTimeout(this.cycle.bind(this), this.intervalDuration);
+        this.active[variant] = setTimeout(this.sync.bind(this), this.intervalDuration, variant);
     }
 
 
-    private cycle() {
+    // private async cycle(variant: ImageVariant) {
 
-        const promises = this.active.map((type) => this.sync(type));
-        Promise.all(promises).then(() => {
-            console.log(`rescheduling image sync`)
-            this.scheduleNextSync()
-        });
-    }
+    //     await this.sync(variant);
+    // }
 
 
     private async sync(variant: ImageVariant) {
@@ -121,12 +109,12 @@ export class ImageSyncService {
                 await this.remoteImagestore.remove(uuid, activeProject)
             }
 
-            return Promise.resolve();
         }
         catch (e){
             console.error(e);
-            Promise.reject();
         }
+
+        this.scheduleNextSync(variant);
     }
 
 

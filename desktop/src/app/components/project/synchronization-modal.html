@@ -33,7 +33,36 @@
                 (ngModelChange)="syncTarget.password = $event"
                 class="form-control">
     </div>
+
+    <div [hidden]="!syncTarget.isSyncActive" id="thumbs-synchronization-slider" class="row" >
+        <div class="col-auto mr-auto">
+            <span>Thumbnails</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch"  >
+                <input type="checkbox" [checked]="syncThumbnailImages"
+                    (change)="toggleThumbnailImageSync()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div [hidden]="!syncTarget.isSyncActive" id="thumbs-synchronization-slider" class="row" >
+        <div class="col-auto mr-auto">
+            <span>Originals</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch"  >
+                <input type="checkbox" [checked]="syncOriginalImages"
+                    (change)="toggleOriginalImageSync()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
 </div>
+
+
 
 <div class="modal-footer">
     <div type="button" class="btn btn-primary" (click)="apply()">

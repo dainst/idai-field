@@ -15,6 +15,8 @@ export interface Settings {
     isAutoUpdateActive: boolean;
     hostPassword: string;
     syncTargets: { [projectName: string]: SyncTarget };
+    syncThumbnailImages: boolean;
+    syncOriginalImages: boolean;
     username: string;
     dbs: Array<string>;
     selectedProject: string;

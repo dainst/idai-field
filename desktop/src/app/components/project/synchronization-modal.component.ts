@@ -20,11 +20,15 @@ export class SynchronizationModalComponent implements OnInit {
 
     public settings: Settings;
     public syncTarget: SyncTarget;
+    public syncThumbnailImages: boolean;
+    public syncOriginalImages: boolean;
 
 
-    constructor(public activeModal: NgbActiveModal,
-                private settingsProvider: SettingsProvider,
-                private settingsService: SettingsService) {}
+    constructor(
+        public activeModal: NgbActiveModal,
+        private settingsProvider: SettingsProvider,
+        private settingsService: SettingsService
+    ) {}
 
 
     async ngOnInit() {
@@ -37,6 +41,8 @@ export class SynchronizationModalComponent implements OnInit {
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
+        this.syncThumbnailImages = this.settings.syncThumbnailImages;
+        this.syncOriginalImages = this.settings.syncOriginalImages;
     }
 
 
@@ -51,10 +57,32 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleSync() {
 
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
+
+        if (this.syncTarget.isSyncActive) {
+            this.syncThumbnailImages = true;
+        } else {
+            this.syncThumbnailImages = false;
+            this.syncOriginalImages = false;
+        }
+    }
+
+
+    public async toggleThumbnailImageSync() {
+
+        this.syncThumbnailImages = !this.syncThumbnailImages;
+    }
+
+
+    public async toggleOriginalImageSync() {
+
+        this.syncOriginalImages = !this.syncOriginalImages;
     }
 
 
     public async apply() {
+
+        this.settings.syncThumbnailImages = this.syncThumbnailImages;
+        this.settings.syncOriginalImages = this.syncOriginalImages;
 
         try {
             this.settings = await this.settingsService.updateSettings(this.settings);

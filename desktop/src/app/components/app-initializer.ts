@@ -1,4 +1,5 @@
-import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbDatastore,
+import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex, DocumentCache,
+    FulltextIndex, getConfigurationName, Indexer, IndexFacade, PouchdbDatastore,
     ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ImageConverter } from '../services/imagestore/image-converter';
@@ -109,7 +110,8 @@ export const appInitializerFactory = (
     await loadSampleData(settings, pouchdbDatastore.getDb(), imageConverter, progress);
 
     const services = await loadConfiguration(
-        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb()
+        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
+        settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
 
@@ -152,7 +154,7 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, imageCon
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
                                  configReader: ConfigReader, configLoader: ConfigLoader,
-                                 db: PouchDB.Database): Promise<Services> => {
+                                 db: PouchDB.Database, projectName: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -167,7 +169,9 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
         = IndexerConfiguration.configureIndexers(configuration);
 
-    const configurationIndex = await buildConfigurationIndex(configReader, configLoader, db, configuration);
+    const configurationIndex = await buildConfigurationIndex(
+        configReader, configLoader, db, configuration, projectName, username
+    );
     
     return {
         projectConfiguration: configuration,
@@ -194,11 +198,14 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: P
 
 
 const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
-                                       configuration: ProjectConfiguration): Promise<ConfigurationIndex> => {
+                                       configuration: ProjectConfiguration, projectName: string,
+                                       username: string): Promise<ConfigurationIndex> => {
 
     const configurationIndex: ConfigurationIndex = new ConfigurationIndex(configReader, configLoader, configuration);
 
-    const configurationDocument: ConfigurationDocument = await db.get('configuration');
+    const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
+        (id: string) => db.get(id), configReader, getConfigurationName(projectName), username
+    );
     await configurationIndex.rebuild(configurationDocument);
 
     return configurationIndex;

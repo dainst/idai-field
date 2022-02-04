@@ -74,8 +74,12 @@ export class TaskbarConflictsComponent {
         const result = await this.datastore.find({ constraints: { 'conflicts:exist': 'KNOWN' } });
         this.conflicts = result.documents;
 
-        const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
-        if (configurationDocument._conflicts) this.conflicts = [configurationDocument].concat(this.conflicts);
+        try {
+            const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
+            if (configurationDocument._conflicts) this.conflicts = [configurationDocument].concat(this.conflicts);
+        } catch (_) {
+            // No configuration document in database
+        }
     }
 
 

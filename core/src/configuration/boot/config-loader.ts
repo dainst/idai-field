@@ -5,7 +5,6 @@ import { Relation } from '../../model/configuration/relation';
 import { LanguageConfiguration } from '../model/language/language-configuration';
 import { LanguageConfigurations } from '../model/language/language-configurations';
 import { LibraryFormDefinition } from '../model/form/library-form-definition';
-import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { ProjectConfiguration } from '../../services/project-configuration';
 import { buildRawProjectConfiguration } from './build-raw-project-configuration';
 import { ConfigReader } from './config-reader';
@@ -18,11 +17,6 @@ import { Template } from '../../model/configuration/template';
 
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
-
-type CustomConfiguration = {
-    forms: Map<CustomFormDefinition>,
-    order: string[]
-};
 
 
 /**
@@ -96,7 +90,7 @@ export class ConfigLoader {
                                     relations: Array<Relation>,
                                     builtInFields: Map<BuiltInFieldDefinition>,
                                     username: string,
-                                    customConfigurationName?: string|undefined,
+                                    customConfigurationName: string,
                                     customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         let customForms;
@@ -105,10 +99,13 @@ export class ConfigLoader {
         let customValuelists: Map<Valuelist>;
 
         try {
-            const configurationDocument = customConfigurationDocument ?? (await this.loadCustomConfiguration(
-                customConfigurationName ?? 'Default',
-                username
-            ));
+            const configurationDocument = customConfigurationDocument ??
+                await ConfigurationDocument.getConfigurationDocument(
+                    (id: string) => this.pouchdbDatastore.getDb().get(id),
+                    this.configReader,
+                    customConfigurationName,
+                    username
+                );
             customForms = configurationDocument.resource.forms;
             const defaultLanguageConfigurations = this.readDefaultLanguageConfigurations();
             languageConfigurations = {
@@ -146,44 +143,6 @@ export class ConfigLoader {
 
         } catch (msgWithParams) {
             throw msgWithParams;
-        }
-    }
-
-
-    private async loadCustomConfiguration(customConfigurationName: string, username: string): Promise<ConfigurationDocument> {
-
-        let customConfiguration: ConfigurationDocument;
-        try {
-            customConfiguration = await this.pouchdbDatastore.getDb().get('configuration') as ConfigurationDocument;
-        } catch (_) {
-            return await this.storeCustomConfigurationInDatabase(customConfigurationName, username);
-        }
-
-        if (!customConfiguration.resource.forms || !customConfiguration.resource.languages
-                || !customConfiguration.resource.order || !customConfiguration.resource.valuelists) {
-            return await this.storeCustomConfigurationInDatabase(
-                customConfigurationName, username, customConfiguration._rev
-            );
-        } else {
-            return customConfiguration;
-        }
-    }
-
-
-    private async storeCustomConfigurationInDatabase(customConfigurationName: string, username: string,
-                                                     rev?: string): Promise<ConfigurationDocument> {
-        
-        const customConfiguration = await this.configReader.read('/Config-' + customConfigurationName + '.json');
-        const languageConfigurations = this.configReader.getCustomLanguageConfigurations(customConfigurationName);
-        const configuration: ConfigurationDocument
-            = ConfigLoader.createConfigurationDocument(customConfiguration, languageConfigurations, username, rev);
-        try {
-            await this.pouchdbDatastore.getDb().put(configuration);
-            return configuration;
-        } catch (err) {
-            // TODO Throw msgWithParams
-            console.error('Failed to create configuration document!', err);
-            throw ['Failed to create configuration document!'];
         }
     }
 
@@ -228,34 +187,5 @@ export class ConfigLoader {
             result[language].unshift(customLanguageConfiguration[language]);
             return result;
         }, clone(defaultLanguageConfigurations));
-    }
-
-
-    private static createConfigurationDocument(customConfiguration: CustomConfiguration,
-                                               languageConfigurations: { [language: string]: LanguageConfiguration },
-                                               username: string, rev?: string): ConfigurationDocument {
-
-        const configurationDocument = {
-            _id: 'configuration',
-            created: {
-                user: username,
-                date: new Date()
-            },
-            modified: [],
-            resource: {
-                id: 'configuration',
-                identifier: 'Configuration',
-                category: 'Configuration',
-                relations: {},
-                forms: customConfiguration.forms,
-                order: customConfiguration.order,
-                languages: languageConfigurations,
-                valuelists: {}
-            }
-        };
-
-        if (rev) configurationDocument['_rev'] = rev;
-
-        return configurationDocument;
     }
 }

@@ -1,16 +1,17 @@
+import { flatten, isEmpty, on, to } from 'tsfun';
 import { Document } from './document';
 import { ConfigurationResource } from './configuration-resource';
 import { CategoryForm } from './configuration/category-form';
 import { CustomFormDefinition } from '../configuration/model/form/custom-form-definition';
-import { flatten, isEmpty, on, to } from 'tsfun';
 import { CustomLanguageConfigurations } from './custom-language-configurations';
-import { Group, Groups } from './configuration/group';
+import { Group } from './configuration/group';
 import { Field } from './configuration/field';
 import { Named } from '../tools/named';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
 import { Valuelist } from './configuration/valuelist';
 import { BaseGroupDefinition } from '../configuration/model/form/base-form-definition';
+import { ConfigReader } from '../configuration/boot/config-reader';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -23,6 +24,19 @@ export interface ConfigurationDocument extends Document {
 
 
 export namespace ConfigurationDocument {
+
+
+    export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
+                                                   configReader: ConfigReader,
+                                                   customConfigurationName: string,
+                                                   username: string): Promise<ConfigurationDocument> {
+
+        try {
+            return await getFunction('configuration') as ConfigurationDocument;
+        } catch (_) {
+            return await createConfigurationDocumentFromFile(configReader, customConfigurationName, username);
+        }
+    }
 
 
     export const isHidden = (customFormDefinition?: CustomFormDefinition,
@@ -240,6 +254,36 @@ export namespace ConfigurationDocument {
         }
 
         return clonedConfigurationDocument;
+    }
+
+
+    async function createConfigurationDocumentFromFile(configReader: ConfigReader,
+                                                       customConfigurationName: string,
+                                                       username: string): Promise<ConfigurationDocument> {
+
+        const customConfiguration = await configReader.read('/Config-' + customConfigurationName + '.json');
+        const languageConfigurations = configReader.getCustomLanguageConfigurations(customConfigurationName);
+        
+        const configurationDocument = {
+            _id: 'configuration',
+            created: {
+                user: username,
+                date: new Date()
+            },
+            modified: [],
+            resource: {
+                id: 'configuration',
+                identifier: 'Configuration',
+                category: 'Configuration',
+                relations: {},
+                forms: customConfiguration.forms,
+                order: customConfiguration.order,
+                languages: languageConfigurations,
+                valuelists: {}
+            }
+        };
+
+        return configurationDocument;
     }
 
 

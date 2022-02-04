@@ -3,7 +3,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
+    ConfigReader } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -106,6 +107,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private settingsProvider: SettingsProvider,
                 private appConfigurator: AppConfigurator,
                 private configurationIndex: ConfigurationIndex,
+                private configReader: ConfigReader,
                 private labels: Labels,
                 private indexFacade: IndexFacade,
                 private menus: Menus,
@@ -123,9 +125,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.loadCategories();
 
-        this.configurationDocument = await this.datastore.get(
-            'configuration',
-            { skipCache: true }
+        this.configurationDocument = await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => this.datastore.get(id, { skipCache: true }),
+            this.configReader,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            this.settingsProvider.getSettings().username
         ) as ConfigurationDocument;
 
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
@@ -543,9 +547,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         try {
             try {
-                this.configurationDocument = await this.datastore.update(
-                    configurationDocument
-                ) as ConfigurationDocument;
+                this.configurationDocument = configurationDocument._rev
+                    ? await this.datastore.update(configurationDocument) as ConfigurationDocument
+                    : await this.datastore.create(configurationDocument) as ConfigurationDocument;
             } catch (errWithParams) {
                 this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));
                 throw errWithParams;

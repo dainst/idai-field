@@ -20,12 +20,12 @@
         </div>
     </div>
     <div *ngIf="getNumberOfUsingFields() === 1" class="text-center alert alert-warning"
-         i18n="configuration.deleteValuelist.isInUse.single">
+         i18n="@@configuration.deleteValuelist.isInUse.single">
          Die Werteliste <code>{{valuelist.id}}</code> kann nicht gelöscht werden, solange sie einem
          Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu.
     </div>
     <div *ngIf="getNumberOfUsingFields() > 1" class="text-center alert alert-warning"
-         i18n="configuration.deleteValuelist.isInUse.multiple">
+         i18n="@@configuration.deleteValuelist.isInUse.multiple">
          Die Werteliste <code>{{valuelist.id}}</code> kann nicht gelöscht werden, solange sie
          Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu.
     </div>

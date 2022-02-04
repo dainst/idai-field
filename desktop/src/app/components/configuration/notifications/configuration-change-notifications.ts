@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { nop } from 'tsfun';
-import { ChangesStream, Document } from 'idai-field-core';
+import { ChangesStream } from 'idai-field-core';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Modals } from '../../../services/modals';
@@ -23,9 +23,7 @@ export class ConfigurationChangeNotifications {
 
     public initialize() {
 
-        this.changesStream.remoteChangesNotifications().subscribe(changedDocument => {
-            this.handleRemoteChange(changedDocument);
-        });
+        this.changesStream.remoteConfigurationChangesNotifications().subscribe(() => this.triggerNotification());
 
         this.menus.menuContextNotifications().subscribe(menuContext => {
             if (this.configurationChanged && !this.isBlockingMenuContext(menuContext)) {
@@ -35,9 +33,7 @@ export class ConfigurationChangeNotifications {
     }
 
 
-    private handleRemoteChange(changedDocument: Document) {
-
-        if (changedDocument.resource.category !== 'Configuration') return;
+    private triggerNotification() {
 
          if (this.isBlockingMenuContext(this.menus.getContext())) {
              this.configurationChanged = true;

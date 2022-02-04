@@ -413,7 +413,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
@@ -425,7 +425,7 @@
         <target state="final">Nach Kategorie filtern:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
@@ -437,15 +437,7 @@
         <target state="final">Alle Kategorien</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="widgets.categoryPicker.addSubcategory" datatype="html">
-        <source>Unterkategorie hinzufügen</source>
-        <target state="final">Unterkategorie hinzufügen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
@@ -669,7 +661,7 @@
         <target state="final">Daten werden exportiert...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export-modal.component.ts</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.startExport" datatype="html">
@@ -893,11 +885,15 @@
         <target state="final">Formular auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">43,61</context>
+          <context context-type="linenumber">155</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addCategory" datatype="html">
+        <source>Kategorie hinzufügen</source>
+        <target state="final">Kategorie hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">85,90</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
@@ -905,11 +901,11 @@
         <target state="final">Feld hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectField" datatype="html">
@@ -917,12 +913,12 @@
         <target state="final">Feld auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
-          <context context-type="linenumber">83,88</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newField" datatype="html">
-        <source>Neues Feld</source>
-        <target state="final">Neues Feld</target>
+        <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
+        <target state="final">Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
           <context context-type="linenumber">35</context>
@@ -937,7 +933,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createGroup" datatype="html">
@@ -953,19 +949,59 @@
         <target state="final">Werteliste auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
-          <context context-type="linenumber">42,60</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
-          <context context-type="linenumber">81,91</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.extendValuelist" datatype="html">
+        <source>Werteliste erweitern</source>
+        <target state="final">Werteliste erweitern</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.extendValuelistInfo" datatype="html">
+        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="final"> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createExtendingValuelist" datatype="html">
+        <source>Erweiterung erstellen</source>
+        <target state="final">Erweiterung erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.manageValuelists" datatype="html">
+        <source>Wertelisten verwalten</source>
+        <target state="final">Wertelisten verwalten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/manage-valuelists-modal.component.ts</context>
+          <context context-type="linenumber">47,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newValuelist" datatype="html">
-        <source>Neue Werteliste</source>
-        <target state="final">Neue Werteliste</target>
+        <source>Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
+        <target state="final">Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
-          <context context-type="linenumber">39,46</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
+        <source>Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</source>
+        <target state="final">Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.form.custom" datatype="html">
@@ -976,16 +1012,24 @@
           <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.seletedForm" datatype="html">
+        <source>Ausgewähltes Formular</source>
+        <target state="final">Ausgewähltes Formular</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
+          <context context-type="linenumber">75,81</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
         <source>Eingabetyp</source>
         <target state="final">Eingabetyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-preview.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
@@ -996,8 +1040,24 @@
         <source>Oberkategorie hinzufügen</source>
         <target state="final">Oberkategorie hinzufügen</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addSubcategory" datatype="html">
+        <source>Unterkategorie hinzufügen</source>
+        <target state="final">Unterkategorie hinzufügen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">126,135</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
+          <context context-type="linenumber">77,89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.fieldLabel" datatype="html">
@@ -1005,7 +1065,7 @@
         <target state="final"> Feldbezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
@@ -1013,7 +1073,7 @@
         <target state="final"> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.showField" datatype="html">
@@ -1029,7 +1089,7 @@
         <target state="final"> Werteliste </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">59,65</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.replaceValuelist" datatype="html">
@@ -1037,7 +1097,7 @@
         <target state="final">Werteliste wechseln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">80,84</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editValuelist" datatype="html">
@@ -1045,7 +1105,7 @@
         <target state="final">Werteliste bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">96,102</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addValuelist" datatype="html">
@@ -1053,7 +1113,7 @@
         <target state="final">Werteliste hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
-          <context context-type="linenumber">114,121</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.groupLabel" datatype="html">
@@ -1061,7 +1121,7 @@
         <target state="final"> Gruppenbezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificGroup" datatype="html">
@@ -1069,7 +1129,7 @@
         <target state="final"> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificGroup" datatype="html">
@@ -1253,7 +1313,7 @@
         <target state="final"> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
@@ -1264,12 +1324,32 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.references" datatype="html">
+        <source> Verweise </source>
+        <target state="final"> Verweise </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">42,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">59,65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
+          <context context-type="linenumber">94,101</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
         <source> Grundeinstellungen </source>
         <target state="final"> Grundeinstellungen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html">
@@ -1277,31 +1357,107 @@
         <target state="final">Feldspezifische Suche erlauben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
         <source>Sprache auswählen</source>
         <target state="final">Sprache auswählen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/multi-language-input.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/configuration/editor/widgets/multi-language-input.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.changeNotification.header" datatype="html">
+        <source> Die Projektkonfiguration hat sich geändert. </source>
+        <target state="final"> Die Projektkonfiguration hat sich geändert. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.changeNotification.applyChanges" datatype="html">
+        <source>Änderungen anwenden</source>
+        <target state="final">Änderungen anwenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
-        <source> Anzeigetext für Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></source>
-        <target state="final"> Anzeigetext für Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source> Anzeigetext </source>
+        <target state="final"> Anzeigetext </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valueDescription" datatype="html">
+        <source> Beschreibung </source>
+        <target state="final"> Beschreibung </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editValue" datatype="html">
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten</source>
+        <target state="final">Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createValue" datatype="html">
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
+        <target state="final">Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.html</context>
+          <context context-type="linenumber">20,3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.values" datatype="html">
-        <source> Werte </source>
-        <target state="final"> Werte </target>
+        <source>Werte</source>
+        <target state="final">Werte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.usedBy" datatype="html">
+        <source>Verwendet von:</source>
+        <target state="final">Verwendet von:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuation.filterResults" datatype="html">
+        <source>Suchergebnisse filtern:</source>
+        <target state="final">Suchergebnisse filtern:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">49,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.customFilter" datatype="html">
+        <source> Projektspezifische Wertelisten </source>
+        <target state="final"> Projektspezifische Wertelisten </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.inUseFilter" datatype="html">
+        <source> Verwendete Wertelisten </source>
+        <target state="final"> Verwendete Wertelisten </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saving" datatype="html">
@@ -1364,28 +1520,12 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.defaultFields.category" datatype="html">
-        <source>Kategorie</source>
-        <target state="final">Kategorie</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="config.libraryId" datatype="html">
-        <source>Formular</source>
-        <target state="final">Formular</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration-category.component.ts</context>
-          <context context-type="linenumber">155</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.categoryLabel" datatype="html">
         <source> Kategoriebezeichnung </source>
         <target state="final"> Kategoriebezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
@@ -1397,7 +1537,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.color" datatype="html">
@@ -1405,7 +1545,7 @@
         <target state="final"> Farbe </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
@@ -1421,7 +1561,15 @@
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
+        <source> Projektkonfiguration </source>
+        <target state="final"> Projektkonfiguration </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
+          <context context-type="linenumber">78,92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
@@ -1501,7 +1649,7 @@
         <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
@@ -1573,15 +1721,23 @@
         <target state="final"> Neues Projekt erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.createModal.info" datatype="html">
-        <source> Bitte geben Sie den Namen des neuen Projekts ein. </source>
-        <target state="final"> Bitte geben Sie den Namen des neuen Projekts ein. </target>
+      <trans-unit id="project.createModal.projectName" datatype="html">
+        <source>Projektname:</source>
+        <target state="final">Projektname:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">74,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.configuration" datatype="html">
+        <source>Konfiguration:</source>
+        <target state="final">Konfiguration:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.create" datatype="html">
@@ -1589,7 +1745,7 @@
         <target state="final">Erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
@@ -1677,7 +1833,7 @@
         <target state="final">Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
@@ -1741,15 +1897,19 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
@@ -1773,17 +1933,16 @@
         <target state="final"> An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6e4e85603e31ca678cdab0d1576a9dddc13ffcb3" datatype="html">
+      <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
         <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
         <target state="final"> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">44,26</context>
+          <context context-type="linenumber">43,26</context>
         </context-group>
-        <note priority="1" from="description">configuration.deleteCategory.hasChildren</note>
       </trans-unit>
       <trans-unit id="configuration.deleteField.header" datatype="html">
         <source>Feld löschen?</source>
@@ -1819,13 +1978,52 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d4286c7895048075c0bcfc84f6e470697b0049ef" datatype="html">
+      <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
         <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
         <target state="final"> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </target>
-        <note priority="1" from="description">configuration.deleteGroup.notAllowed</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">27,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.header" datatype="html">
+        <source>Werteliste löschen?</source>
+        <target state="final">Werteliste löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.body" datatype="html">
+        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.confirmInfo" datatype="html">
+        <source> Bitte geben Sie den Bezeichner der Werteliste ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="final"> Bitte geben Sie den Bezeichner der Werteliste ein, um den Löschvorgang zu bestätigen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
+          <context context-type="linenumber">23,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
+        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
+          <context context-type="linenumber">46,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
+        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
+          <context context-type="linenumber">46,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -2352,20 +2550,8 @@
         <source>Bearbeiten</source>
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.contextMenu.swapForm" datatype="html">
-        <source>Formular wechseln</source>
-        <target state="final">Formular wechseln</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
@@ -2379,10 +2565,6 @@
       <trans-unit id="resources.contextMenu.delete" datatype="html">
         <source>Löschen</source>
         <target state="final">Löschen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -2770,7 +2952,7 @@
         <target state="final">Kartenhintergründe bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -2778,7 +2960,7 @@
         <target state="final"> Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -2786,7 +2968,7 @@
         <target state="final">Kartenhintergrund ein-/ausblenden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -2794,7 +2976,7 @@
         <target state="final">Kartenhintergrund fokussieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -2802,7 +2984,7 @@
         <target state="final">Kartenhintergrund entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -2810,7 +2992,7 @@
         <target state="final">Kartenhintergrund hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
@@ -2865,7 +3047,7 @@
         <source> Alle Konflikte wurden gelöst. </source>
         <target state="final"> Alle Konflikte wurden gelöst. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
@@ -2873,15 +3055,15 @@
         <source> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt. </source>
         <target state="final"> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
         <source> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte. </source>
         <target state="final"> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
@@ -2889,7 +3071,7 @@
         <source>Aktuelle Version:</source>
         <target state="final">Aktuelle Version:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -2897,20 +3079,32 @@
         <source> Konkurrierende Version:</source>
         <target state="final"> Konkurrierende Version:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.notSet" datatype="html">
         <source>Nicht gesetzt</source>
         <target state="final">Nicht gesetzt</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -2918,35 +3112,23 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">117</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
         <source> Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </source>
         <target state="final"> Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.georeferenceData" datatype="html">
@@ -2954,19 +3136,47 @@
         <target state="final"> Georeferenzdaten </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.resolveConflict" datatype="html">
         <source>Konflikt lösen</source>
         <target state="final">Konflikt lösen</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.contextMenu.edit" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="final">Bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
+          <context context-type="linenumber">44,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.contextMenu.extend" datatype="html">
+        <source>Werteliste erweitern</source>
+        <target state="final">Werteliste erweitern</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
+          <context context-type="linenumber">77,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.contextMenu.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="final">Löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.categorySwitcherButton.changeCategory" datatype="html">
@@ -3031,7 +3241,7 @@
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
@@ -3039,7 +3249,7 @@
         <target state="final">Literaturzitat nach DAI-Richtlinien:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
@@ -3047,7 +3257,7 @@
         <target state="final">Zenon-ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
@@ -3055,7 +3265,7 @@
         <target state="final">DOI:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.page" datatype="html">
@@ -3063,7 +3273,7 @@
         <target state="final">Seite:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.figure" datatype="html">
@@ -3071,7 +3281,7 @@
         <target state="final">Abbildung:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
@@ -3209,7 +3419,7 @@
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
@@ -3217,7 +3427,7 @@
         <target state="final">Einzelwert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
@@ -3225,7 +3435,7 @@
         <target state="final">Bereich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
@@ -3233,7 +3443,7 @@
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -3241,7 +3451,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -3249,7 +3459,7 @@
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -3341,7 +3551,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.general" datatype="html">
@@ -3349,7 +3559,7 @@
         <target state="final">Allgemeine Einstellungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
@@ -3357,7 +3567,7 @@
         <target state="final"> Sprachen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -3365,7 +3575,7 @@
         <target state="final"> Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
@@ -3373,7 +3583,7 @@
         <target state="final"> Name des Bearbeiters/der Bearbeiterin </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -3381,7 +3591,7 @@
         <target state="final"> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -3453,7 +3663,7 @@
         <target state="final"> Pfad </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -3461,7 +3671,7 @@
         <target state="final"> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -3469,7 +3679,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -3477,7 +3687,7 @@
         <target state="final">Automatische Prüfung auf Updates aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">
@@ -3732,6 +3942,62 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.all" datatype="html">
+        <source>Alle</source>
+        <target state="final">Alle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.trench" datatype="html">
+        <source>Grabung</source>
+        <target state="final">Grabung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.building" datatype="html">
+        <source>Bauaufnahme</source>
+        <target state="final">Bauaufnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.survey" datatype="html">
+        <source>Survey</source>
+        <target state="final">Survey</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.images" datatype="html">
+        <source>Bilderverwaltung</source>
+        <target state="final">Bilderverwaltung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.types" datatype="html">
+        <source>Typenverwaltung</source>
+        <target state="final">Typenverwaltung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
         <target state="final">Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</target>
@@ -3786,6 +4052,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
+        <source> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> der Projekteinstellungen. </source>
+        <target state="final"> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> der Projekteinstellungen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration-field.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.header" datatype="html">
+        <source>Konflikte in der Projektkonfiguration</source>
+        <target state="final">Konflikte in der Projektkonfiguration</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">42,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.conflicts" datatype="html">
@@ -5228,6 +5510,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.configuration.error.noValuelist" datatype="html">
+        <source>Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.</source>
+        <target state="final">Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.invalidReference" datatype="html">
+        <source>"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</source>
+        <target state="final">"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.tabs.images" datatype="html">
         <source>Bilder</source>
         <target state="final">Bilder</target>
@@ -5397,11 +5695,15 @@
         <target state="final">Abbrechen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
@@ -5409,7 +5711,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -5417,11 +5723,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -5429,11 +5743,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">147</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
@@ -5457,7 +5771,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
@@ -5477,7 +5791,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -5492,32 +5806,80 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.swapForm" datatype="html">
+        <source>Formular wechseln</source>
+        <target state="final">Formular wechseln</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">76,87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">
-        <source>Neue Kategorie</source>
-        <target state="final">Neue Kategorie</target>
+        <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
+        <target state="final">Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{searchTerm}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
-          <context context-type="linenumber">50,56</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.header" datatype="html">
+        <source>Formular wechseln?</source>
+        <target state="final">Formular wechseln?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
+        <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </source>
+        <target state="final"> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.warning.changes" datatype="html">
+        <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
+        <target state="final"> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">27,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html">
+        <source> Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen. </source>
+        <target state="final"> Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.save" datatype="html">
         <source>Speichern</source>
         <target state="final">Speichern</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
@@ -5525,11 +5887,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.differingForms" datatype="html">
+        <source>Formulare</source>
+        <target state="final">Formulare</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">107,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
@@ -5648,8 +6018,12 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -5657,11 +6031,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">147</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">111</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
@@ -5677,7 +6051,7 @@
         <target state="final"> Beschreibung der Werteliste </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">75,84</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.sortValues" datatype="html">
@@ -5685,7 +6059,7 @@
         <target state="final">Automatische Sortierung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">122,132</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
@@ -5693,7 +6067,7 @@
         <target state="final"> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificValuelist" datatype="html">

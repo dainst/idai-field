@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { equal, to } from 'tsfun';
 import { ConfigurationDocument, ConfigurationResource, Datastore, Document, Labels,
@@ -8,6 +8,7 @@ import { Messages } from '../../messages/messages';
 import { MessagesConversion } from '../../docedit/messages-conversion';
 import { reload } from '../../../services/reload';
 import { M } from '../../messages/m';
+import { Loading } from '../../widgets/loading';
 
 
 @Component({
@@ -39,8 +40,15 @@ export class ConfigurationConflictsModalComponent {
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
                 private labels: Labels,
-                private messages: Messages) {}
+                private messages: Messages,
+                private loading: Loading,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
+
+    public isLoading = () => this.loading.isLoading('configuration-conflicts');
+
+    public isLoadingIconVisible = () => this.isLoading()
+        && this.loading.getLoadingTimeInMilliseconds('configuration-conflicts') > 250;
 
     public cancel = () => this.activeModal.dismiss();
 
@@ -53,11 +61,16 @@ export class ConfigurationConflictsModalComponent {
 
     public async initialize() {
 
+        this.loading.start('configuration-conflicts');
+        this.detectChangesWhileLoading();
+
         this.conflictedRevisions = await this.getConflictedRevisions() as Array<ConfigurationDocument>;
         if (this.conflictedRevisions.length === 0) return;
 
         ConflictResolving.sortRevisions(this.conflictedRevisions);
         this.setSelectedRevision(this.conflictedRevisions[0]);
+
+        this.loading.stop('configuration-conflicts');
     }
 
 
@@ -138,5 +151,13 @@ export class ConfigurationConflictsModalComponent {
             this.configurationDocument.resource, revision.resource
         );
         this.isDifferingOrder = !equal(this.configurationDocument.resource.order, revision.resource.order);
+    }
+
+
+    private detectChangesWhileLoading() {
+
+        this.changeDetectorRef.detectChanges();
+
+        if (this.isLoading()) setTimeout(() => this.detectChangesWhileLoading(), 100);
     }
 }

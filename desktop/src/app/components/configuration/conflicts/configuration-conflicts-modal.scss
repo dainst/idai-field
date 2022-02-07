@@ -1,0 +1,10 @@
+#configuration-conflicts-modal-body {
+  height: calc(100vh - 110px);
+
+  loading-icon {
+    position: absolute;
+    top: 100px;
+    left: -15px;
+    width: 100%;
+  }
+}

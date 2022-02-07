@@ -23,7 +23,7 @@
                         [winningSide]="winningSide"
                         (onSelectWinningSide)="winningSide = $event"
                         (onSelectRevision)="setSelectedRevision($event)"></revision-selector>
-        <div *ngIf="differingForms" class="card">
+        <div *ngIf="differingForms?.length" class="card">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@configuration.conflicts.differingForms">Formulare</h3>
             </div>
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div *ngIf="differingLanguages" class="card">
+        <div *ngIf="differingLanguages?.length" class="card">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@configuration.conflicts.differingLanguages">Texte / Übersetzungen</h3>
             </div>
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <div *ngIf="differingValuelists" class="card">
+        <div *ngIf="differingValuelists?.length" class="card">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@configuration.conflicts.differingValuelists">Wertelisten</h3>
             </div>

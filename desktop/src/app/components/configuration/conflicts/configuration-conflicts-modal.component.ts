@@ -102,6 +102,14 @@ export class ConfigurationConflictsModalComponent {
     }
 
 
+    public getCategoriesOrder(revision: ConfigurationDocument): string {
+
+        if (!revision.resource.order) return '';
+
+        return revision.resource.order.join(', ');
+    }
+
+
     public solveConflict() {
 
         if (this.winningSide === 'right') {

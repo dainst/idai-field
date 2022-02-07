@@ -1,7 +1,15 @@
-#configuration-conflicts-modal-body {
+.configuration-conflicts-modal-body {
   height: calc(100vh - 110px);
   overflow-x: hidden;
   overflow-y: auto;
+
+  .conflict-resolver-field div {
+    padding-left: 15px;
+
+    span {
+      font-style: italic;
+    }
+  }
 
   loading-icon {
     position: absolute;

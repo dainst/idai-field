@@ -9,6 +9,7 @@ import { MessagesConversion } from '../../docedit/messages-conversion';
 import { reload } from '../../../services/reload';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
+import { Language, Languages } from '../../../services/languages';
 
 
 @Component({
@@ -35,6 +36,8 @@ export class ConfigurationConflictsModalComponent {
     public differingValuelists: string[];
     public isDifferingOrder: boolean;
 
+    public languages: { [languageCode: string]: Language };
+
 
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
@@ -49,6 +52,8 @@ export class ConfigurationConflictsModalComponent {
 
     public isLoadingIconVisible = () => this.isLoading()
         && this.loading.getLoadingTimeInMilliseconds('configuration-conflicts') > 250;
+
+    public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
 
     public cancel = () => this.activeModal.dismiss();
 
@@ -70,6 +75,8 @@ export class ConfigurationConflictsModalComponent {
         ConflictResolving.sortRevisions(this.conflictedRevisions);
         this.setSelectedRevision(this.conflictedRevisions[0]);
 
+        this.languages = Languages.getAvailableLanguages();
+
         this.loading.stop('configuration-conflicts');
     }
 
@@ -83,11 +90,12 @@ export class ConfigurationConflictsModalComponent {
     }
 
 
-    public getDiffType(formName: string, revision: ConfigurationDocument,
-                       otherRevision: ConfigurationDocument): 'new'|'missing'|'edited' {
+    public getDiffType(name: string, revision: ConfigurationDocument,
+                       otherRevision: ConfigurationDocument,
+                       section: 'forms'|'languages'|'valuelists'): 'new'|'missing'|'edited' {
 
-        if (revision.resource.forms[formName]) {
-            return otherRevision.resource.forms[formName] ? 'edited' : 'new';
+        if (revision.resource[section][name]) {
+            return otherRevision.resource[section][name] ? 'edited' : 'new';
         } else {
             return 'missing';
         }

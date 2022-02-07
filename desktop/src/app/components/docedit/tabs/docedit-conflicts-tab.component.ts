@@ -51,8 +51,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         this.labels
     );
 
-    public getLabel = (field: any) => this.labels.get(field);
-
 
     async ngOnChanges() {
 

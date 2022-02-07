@@ -98,7 +98,7 @@ export class TaskbarConflictsComponent {
         this.modals.initialize(this.menus.getContext());
         const [result, componentInstance] = this.modals.make<ConfigurationConflictsModalComponent>(
             ConfigurationConflictsModalComponent,
-            MenuContext.MODAL,
+            MenuContext.DOCEDIT,
             'lg'
         );
 

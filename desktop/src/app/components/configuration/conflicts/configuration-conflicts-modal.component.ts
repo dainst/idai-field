@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { equal, to } from 'tsfun';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { equal, nop, to } from 'tsfun';
 import { ConfigurationDocument, ConfigurationResource, Datastore, Document, Labels,
     ProjectConfiguration } from 'idai-field-core';
 import { ConflictResolving } from '../../docedit/tabs/conflict-resolving';
@@ -10,12 +11,17 @@ import { reload } from '../../../services/reload';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
 import { Language, Languages } from '../../../services/languages';
+import { Modals } from '../../../services/modals';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
+import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 
 
 @Component({
     templateUrl: './configuration-conflicts-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
     }
 })
 /**
@@ -29,7 +35,9 @@ export class ConfigurationConflictsModalComponent {
     public inspectedRevisions: Array<ConfigurationDocument> = [];
     public selectedRevision: ConfigurationDocument|undefined;
     public winningSide: 'left'|'right';
+    
     public saving: boolean = false;
+    public escapeKeyPressed: boolean = false;
 
     public differingForms: string[];
     public differingLanguages: string[];
@@ -38,6 +46,10 @@ export class ConfigurationConflictsModalComponent {
 
     public languages: { [languageCode: string]: Language };
 
+    private changeMessage = this.i18n({
+        id: 'configuration.conflicts.changed', value: 'Es wurden bereits Konflikte gelöst.'
+    });
+
 
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
@@ -45,7 +57,10 @@ export class ConfigurationConflictsModalComponent {
                 private labels: Labels,
                 private messages: Messages,
                 private loading: Loading,
-                private changeDetectorRef: ChangeDetectorRef) {}
+                private changeDetectorRef: ChangeDetectorRef,
+                private modals: Modals,
+                private menus: Menus,
+                private i18n: I18n) {}
 
 
     public isLoading = () => this.loading.isLoading('configuration-conflicts');
@@ -55,12 +70,16 @@ export class ConfigurationConflictsModalComponent {
 
     public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
 
-    public cancel = () => this.activeModal.dismiss();
-
    
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape') this.onEscapeKeyDown();
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
 
@@ -78,6 +97,16 @@ export class ConfigurationConflictsModalComponent {
         this.languages = Languages.getAvailableLanguages();
 
         this.loading.stop('configuration-conflicts');
+    }
+
+
+    public cancel() {
+
+        if (this.inspectedRevisions.length > 0) {
+            this.openEditSaveDialogModal();
+        } else {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
@@ -148,6 +177,30 @@ export class ConfigurationConflictsModalComponent {
     }
 
 
+    private async openEditSaveDialogModal() {
+
+        const [result, componentInstance] = this.modals.make<EditSaveDialogComponent>(
+            EditSaveDialogComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.changeMessage = this.changeMessage;
+        componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+
+        await this.modals.awaitResult(
+            result,
+            async (decision: string) => {
+                if (decision === 'save') {
+                    await this.save();
+                } else if (decision === 'discard') {
+                    this.activeModal.dismiss('cancel');
+                }
+            },
+            nop
+        );
+    }
+
+
     private getConflictedRevisions(): Promise<Array<Document>> {
 
         try {
@@ -180,5 +233,16 @@ export class ConfigurationConflictsModalComponent {
         this.changeDetectorRef.detectChanges();
 
         if (this.isLoading()) setTimeout(() => this.detectChangesWhileLoading(), 100);
+    }
+
+
+    private async onEscapeKeyDown() {
+
+        if (this.menus.getContext() === MenuContext.DOCEDIT && !this.escapeKeyPressed) {
+            if (event.srcElement) (event.srcElement as HTMLElement).blur();
+            await this.cancel();
+        } else {
+            this.escapeKeyPressed = true;
+        }
     }
 }

@@ -83,9 +83,14 @@ export class ConfigurationConflictsModalComponent {
     }
 
 
-    public getDifferingForms(revision: ConfigurationDocument): string[] {
+    public getDiffType(formName: string, revision: ConfigurationDocument,
+                       otherRevision: ConfigurationDocument): 'new'|'missing'|'edited' {
 
-        return this.differingForms.filter(formName => Object.keys(revision.resource.forms).includes(formName));
+        if (revision.resource.forms[formName]) {
+            return otherRevision.resource.forms[formName] ? 'edited' : 'new';
+        } else {
+            return 'missing';
+        }
     }
 
 

@@ -7,6 +7,7 @@ import { MenuNavigator } from '../menu-navigator';
 import { Modals } from '../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
 import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class TaskbarConflictsComponent {
                 private indexFacade: IndexFacade,
                 private menuNavigator: MenuNavigator,
                 private modals: Modals,
+                private menus: Menus,
                 private zone: NgZone) {
 
         this.fetchConflicts();
@@ -93,6 +95,7 @@ export class TaskbarConflictsComponent {
 
     private async openConfigurationConflictsModal(configurationDocument: Document) {
 
+        this.modals.initialize(this.menus.getContext());
         const [result, componentInstance] = this.modals.make<ConfigurationConflictsModalComponent>(
             ConfigurationConflictsModalComponent,
             MenuContext.MODAL,

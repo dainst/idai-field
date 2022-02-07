@@ -41,7 +41,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
 
-    public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
+    public showLoadingIcon = () => this.isLoading()
+        && this.loading.getLoadingTimeInMilliseconds('docedit-conflicts-tab') > 250;
 
     public getFieldContent = (field: any, revision: Document) => formatContent(
         revision.resource,

@@ -83,6 +83,36 @@
             </div>
         </div>
 
+        <div *ngIf="differingValuelists" class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@configuration.conflicts.differingValuelists">Wertelisten</h3>
+            </div>
+            <div class="row h-100">
+                <div class="col-md-5 my-auto conflict-resolver-field">
+                    <div *ngFor="let valuelist of differingValuelists">
+                        {{valuelist}} 
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+                <div class="col-md-5 my-auto conflict-resolver-field">
+                    <div *ngFor="let valuelist of differingValuelists">
+                        {{valuelist}} 
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="selectedRevision" class="text-center">
             <button class="btn btn-primary" id="solve-conflict-button" (click)="solveConflict()">
                 <span i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>

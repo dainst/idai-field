@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
@@ -28,10 +29,9 @@ import { MenuContext } from '../../services/menu-context';
 import { MenuNavigator } from '../menu-navigator';
 import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
 import { OrderChange } from '../widgets/category-picker.component';
-import { SaveProcessModalComponent } from './save-process-modal.component';
-import { SaveModalComponent } from './save-modal.component';
+import { SaveProcessModalComponent } from './save/save-process-modal.component';
+import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
 export type SaveResult = {

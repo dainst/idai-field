@@ -21,7 +21,7 @@ import { ConfigurationContextMenuComponent } from './context-menu/configuration-
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
-import { SaveProcessModalComponent } from './save-process-modal.component';
+import { SaveProcessModalComponent } from './save/save-process-modal.component';
 import { FieldListingComponent } from './add/field/field-listing.component';
 import { FieldPreviewComponent } from './add/field/field-preview.component';
 import { ValuelistViewComponent } from './valuelist-view.component';
@@ -40,7 +40,7 @@ import { ConfigurationChangeNotifications } from './notifications/configuration-
 import { ConfigurationChangeNotificationModalComponent } from './notifications/configuration-change-notification-modal.component';
 import { DoceditModule } from '../docedit/docedit.module';
 import { ConfigurationConflictsModalComponent } from './conflicts/configuration-conflicts-modal.component';
-import { SaveModalComponent } from './save-modal.component';
+import { SaveModalComponent } from './save/save-modal.component';
 import { ConfigurationGuard } from './configuration-guard';
 
 

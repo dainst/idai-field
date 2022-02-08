@@ -148,7 +148,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;
         componentInstance.clonedField = this.clonedField;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -177,7 +177,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             componentInstance.extendedValuelist
                 = this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist);
         }
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(

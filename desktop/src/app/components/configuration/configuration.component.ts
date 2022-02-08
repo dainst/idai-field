@@ -21,7 +21,6 @@ import { DeleteGroupModalComponent } from './delete/delete-group-modal.component
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
-import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
 import { Menus } from '../../services/menus';
@@ -29,6 +28,8 @@ import { MenuContext } from '../../services/menu-context';
 import { MenuNavigator } from '../menu-navigator';
 import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
 import { OrderChange } from '../widgets/category-picker.component';
+import { SaveProcessModalComponent } from './save-process-modal.component';
+import { SaveModalComponent } from './save-modal.component';
 
 
 export type SaveResult = {
@@ -57,8 +58,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public selectedCategory: CategoryForm;
     public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
-    public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    public dragging: boolean = false;
+    public changed: boolean = false;
 
     public categoriesFilterOptions: Array<CategoriesFilter> = [
         { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
@@ -92,9 +94,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                            reindexConfiguration?: boolean): Promise<SaveResult> =>
-        this.configureAppSaveChangesAndReload(configurationDocument, reindexCategory, reindexConfiguration);
+    public applyChanges = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+                           reindexConfiguration?: boolean): Promise<SaveResult> =>
+        this.updateProjectConfiguration(configurationDocument, reindexCategory, reindexConfiguration);
 
     private menuSubscription: Subscription;
 
@@ -241,7 +243,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         );
 
         try {
-            await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);
+            await this.updateProjectConfiguration(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -263,7 +265,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.categoriesFilter = this.selectedCategoriesFilter;
@@ -284,7 +286,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
@@ -305,7 +307,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.initialize();
@@ -327,7 +329,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.group = group;
@@ -348,7 +350,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.field = field;
@@ -372,7 +374,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.categoryFormToReplace = category;
         componentInstance.initialize();
@@ -436,13 +438,27 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    public openSaveModal() {
+        
+        const [result] = this.modals.make<SaveModalComponent>(
+            SaveModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        this.modals.awaitResult(result,
+            () => this.save(),
+            () => AngularUtility.blurActiveElement()
+        );
+    }
+
+
     private async deleteCategory(category: CategoryForm) {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteCategory(
                 this.configurationDocument, category
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument, undefined, true);
+            await this.updateProjectConfiguration(changedConfigurationDocument, undefined, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -460,7 +476,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 group,
                 Tree.flatten(this.projectConfiguration.getCategories()).filter(c => c.name !== category.name),
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -475,7 +491,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteField(
                 this.configurationDocument, category, field
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -493,7 +509,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -524,14 +540,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
-                                                   reindexCategory?: string,
-                                                   reindexConfiguration?: boolean): Promise<SaveResult> {
-
-        const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
-            SaveModalComponent,
-            MenuContext.CONFIGURATION_MODAL
-        );
+    private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
+                                             reindexCategory?: string,
+                                             reindexConfiguration?: boolean): Promise<SaveResult> {
 
         let newProjectConfiguration;
         try {
@@ -541,20 +552,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 Document.clone(configurationDocument)
             );
         } catch (errWithParams) {
-            this.modals.closeModal(componentInstance);
             throw errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
         try {
-            try {
-                this.configurationDocument = configurationDocument._rev
-                    ? await this.datastore.update(configurationDocument) as ConfigurationDocument
-                    : await this.datastore.create(configurationDocument) as ConfigurationDocument;
-            } catch (errWithParams) {
-                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));
-                throw errWithParams;
-            }
             this.projectConfiguration.update(newProjectConfiguration);
+            this.configurationDocument = configurationDocument;
             if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
             if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
@@ -565,12 +568,35 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
 
-        this.modals.closeModal(componentInstance);
+        this.changed = true;
 
         return {
             configurationDocument: this.configurationDocument,
             configurationIndex: this.configurationIndex
         };
+    }
+
+
+    private async save() {
+
+        const [, componentInstance] = this.modals.make<SaveProcessModalComponent>(
+            SaveProcessModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        try {
+            this.configurationDocument = this.configurationDocument._rev
+                ? await this.datastore.update(this.configurationDocument) as ConfigurationDocument
+                : await this.datastore.create(this.configurationDocument) as ConfigurationDocument;
+        } catch (errWithParams) {
+            this.modals.closeModal(componentInstance);
+            this.messages.add(
+                MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels)
+            );
+        }
+
+        this.changed = false;
+        this.modals.closeModal(componentInstance);
     }
 
 

@@ -29,7 +29,7 @@ export class AddCategoryFormModalComponent {
     public categoriesFilter?: CategoriesFilter;
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
                            reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchTerm: string = '';
@@ -123,7 +123,7 @@ export class AddCategoryFormModalComponent {
             : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm);
 
         try {
-            this.saveAndReload(clonedConfigurationDocument, this.selectedForm.name, true);
+            this.applyChanges(clonedConfigurationDocument, this.selectedForm.name, true);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }
@@ -137,7 +137,7 @@ export class AddCategoryFormModalComponent {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = CategoryForm.build(this.searchTerm, this.parentCategory);
         componentInstance.new = true;

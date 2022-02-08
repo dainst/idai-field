@@ -30,7 +30,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() saveAndReload: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
@@ -146,7 +146,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
@@ -210,7 +210,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .groups = newGroups;
 
         try {
-            await this.saveAndReload(clonedConfigurationDocument);
+            await this.applyChanges(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -227,7 +227,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 'lg'
             );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.group = {

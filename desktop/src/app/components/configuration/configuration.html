@@ -4,8 +4,8 @@
 
 <div *ngIf="configurationDocument" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
-        <div id="project-configuration-content" class="row">
-            <div class="col-2 sidebar">
+        <div id="configuration-toolbar" class="row">
+            <div id="categories-filter-container" class="col-2">
                 <select id="categories-filter-select"
                         class="form-control"
                         (change)="setCategoriesFilter($event.target.value)">
@@ -15,6 +15,18 @@
                         {{categoriesFilter.label}}
                     </option>
                 </select>
+            </div>
+            <div class="col">
+                <button id="save-button" class="btn btn-success"
+                        [ngClass]="{ 'disabled': !changed }"
+                        (click)="!changed || openSaveModal()">
+                    <span class="mdi mdi-content-save"></span>
+                    <span class="button-label" i18n="@@buttons.save">Speichern</span>
+                </button>
+            </div>
+        </div>
+        <div id="project-configuration-content" class="row">
+            <div class="col-2 sidebar">
                 <div id="category-picker-container">
                     <category-picker *ngIf="filteredTopLevelCategoriesArray"
                                     [topLevelCategoriesArray]="filteredTopLevelCategoriesArray"
@@ -44,7 +56,7 @@
                                         [showHiddenFields]="isShowHiddenFields()"
                                         [availableInputTypes]="availableInputTypes"
                                         [contextMenu]="contextMenu"
-                                        [saveAndReload]="saveAndReload"
+                                        [applyChanges]="applyChanges"
                                         (onEditCategory)="editCategory(selectedCategory)"
                                         (onEditGroup)="editGroup(selectedCategory, $event)"
                                         (onEditField)="editField(selectedCategory, $event)"

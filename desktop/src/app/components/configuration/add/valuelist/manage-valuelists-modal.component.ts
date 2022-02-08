@@ -32,7 +32,7 @@ import { ExtendValuelistModalComponent } from './extend-valuelist-modal.componen
 export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     public configurationDocument: ConfigurationDocument;
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
             reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
@@ -165,7 +165,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
         if (valuelist.extendedValuelist) {
             componentInstance.extendedValuelist = this.configurationIndex.getValuelist(valuelist.extendedValuelist);
         }
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -192,7 +192,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = {
             id: newValuelistId,
@@ -252,7 +252,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 this.configurationDocument, valuelist
             );
             this.applySaveResult(
-                await this.saveAndReload(changedConfigurationDocument, undefined, true)
+                await this.applyChanges(changedConfigurationDocument, undefined, true)
             );
         } catch (errWithParams) {
             // TODO Show user-readable error messages

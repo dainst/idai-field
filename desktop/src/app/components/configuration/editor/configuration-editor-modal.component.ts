@@ -23,7 +23,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
                            reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public saving: boolean;
@@ -95,7 +95,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         try {
-            const result: SaveResult = await this.saveAndReload(
+            const result: SaveResult = await this.applyChanges(
                 this.clonedConfigurationDocument,
                 reindexCategory ? this.category.name : undefined,
                 reindexConfiguration

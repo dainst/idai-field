@@ -27,7 +27,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
+    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
         Promise<SaveResult>;
 
     public searchTerm: string = '';
@@ -105,7 +105,7 @@ export class AddFieldModalComponent {
         );
 
         try {
-            this.saveAndReload(updatedConfigurationDocument, this.category.name);
+            this.applyChanges(updatedConfigurationDocument, this.category.name);
             this.activeModal.close();
         } catch {
             // Stay in modal
@@ -121,7 +121,7 @@ export class AddFieldModalComponent {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {

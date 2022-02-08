@@ -3,17 +3,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    templateUrl: './save-modal.html'
+    templateUrl: './save-process-modal.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class SaveModalComponent {
-
+export class SaveProcessModalComponent {
+    
     constructor(public activeModal: NgbActiveModal) {}
-
-
-    public confirm = () => this.activeModal.close();
-
-    public cancel = () => this.activeModal.dismiss('cancel');
 }

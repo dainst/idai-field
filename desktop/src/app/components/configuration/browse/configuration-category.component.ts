@@ -3,15 +3,15 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace,
     Labels} from 'idai-field-core';
-import { InputType } from '../../components/configuration/configuration-util';
-import { AddFieldModalComponent } from './add/field/add-field-modal.component';
-import { Messages } from '../messages/messages';
-import { AddGroupModalComponent } from './add/group/add-group-modal.component';
-import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
-import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import { MenuContext } from '../../services/menu-context';
-import { Modals } from '../../services/modals';
-import { SaveResult } from './configuration.component';
+import { InputType } from '../configuration-util';
+import { AddFieldModalComponent } from '../add/field/add-field-modal.component';
+import { Messages } from '../../messages/messages';
+import { AddGroupModalComponent } from '../add/group/add-group-modal.component';
+import { GroupEditorModalComponent } from '../editor/group-editor-modal.component';
+import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
+import { MenuContext } from '../../../services/menu-context';
+import { Modals } from '../../../services/modals';
+import { SaveResult } from '../configuration.component';
 
 
 @Component({

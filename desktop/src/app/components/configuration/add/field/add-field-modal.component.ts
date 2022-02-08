@@ -27,8 +27,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedField: Field|undefined;
@@ -105,7 +104,7 @@ export class AddFieldModalComponent {
         );
 
         try {
-            this.applyChanges(updatedConfigurationDocument, this.category.name);
+            this.applyChanges(updatedConfigurationDocument);
             this.activeModal.close();
         } catch {
             // Stay in modal

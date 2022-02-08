@@ -29,8 +29,8 @@ export class AddCategoryFormModalComponent {
     public categoriesFilter?: CategoriesFilter;
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                           reindexConfiguration?: boolean) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;
@@ -123,7 +123,7 @@ export class AddCategoryFormModalComponent {
             : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm);
 
         try {
-            this.applyChanges(clonedConfigurationDocument, this.selectedForm.name, true);
+            this.applyChanges(clonedConfigurationDocument, true);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }

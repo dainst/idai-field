@@ -116,7 +116,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
-        await super.save(this.isConstraintIndexedChanged(), this.isValuelistChanged());
+        await super.save(this.isValuelistChanged());
     }
 
 

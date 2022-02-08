@@ -122,7 +122,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             this.getClonedValuelistDefinition().order = this.order;
         }
 
-        await super.save(undefined, true);
+        await super.save(true);
     }
 
 

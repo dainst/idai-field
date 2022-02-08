@@ -91,7 +91,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             );
         }
 
-        await super.save(this.new);
+        await super.save();
     }
 
 

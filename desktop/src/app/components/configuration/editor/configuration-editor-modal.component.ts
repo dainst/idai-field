@@ -23,8 +23,8 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                           reindexConfiguration?: boolean) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
@@ -89,7 +89,7 @@ export abstract class ConfigurationEditorModalComponent {
     }
 
 
-    public async save(reindexCategory?: boolean, reindexConfiguration?: boolean) {
+    public async save(reindexConfiguration?: boolean) {
 
         this.saving = true;
         this.updateCustomLanguageConfigurations();
@@ -97,7 +97,6 @@ export abstract class ConfigurationEditorModalComponent {
         try {
             const result: SaveResult = await this.applyChanges(
                 this.clonedConfigurationDocument,
-                reindexCategory ? this.category.name : undefined,
                 reindexConfiguration
             );
             this.activeModal.close(result);

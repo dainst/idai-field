@@ -32,8 +32,8 @@ import { ExtendValuelistModalComponent } from './extend-valuelist-modal.componen
 export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     public configurationDocument: ConfigurationDocument;
-    public applyChanges: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-            reindexConfiguration?: boolean) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -252,7 +252,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 this.configurationDocument, valuelist
             );
             this.applySaveResult(
-                await this.applyChanges(changedConfigurationDocument, undefined, true)
+                await this.applyChanges(changedConfigurationDocument, true)
             );
         } catch (errWithParams) {
             // TODO Show user-readable error messages

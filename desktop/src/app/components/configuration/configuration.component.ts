@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
-    ConfigReader } from 'idai-field-core';
+    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore} from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -99,9 +99,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public applyChanges = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
+    public applyChanges = (configurationDocument: ConfigurationDocument,
                            reindexConfiguration?: boolean): Promise<SaveResult> =>
-        this.updateProjectConfiguration(configurationDocument, reindexCategory, reindexConfiguration);
+        this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
 
@@ -120,6 +120,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menus: Menus,
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
+                private documentCache: DocumentCache,
+                private categoryConverter: CategoryConverter,
+                private pouchdbDatastore: PouchdbDatastore,
                 private i18n: I18n) {}
 
 
@@ -498,7 +501,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteCategory(
                 this.configurationDocument, category
             );
-            await this.updateProjectConfiguration(changedConfigurationDocument, undefined, true);
+            await this.updateProjectConfiguration(changedConfigurationDocument, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -581,7 +584,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
-                                             reindexCategory?: string,
                                              reindexConfiguration?: boolean): Promise<SaveResult> {
 
         let newProjectConfiguration;
@@ -598,7 +600,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         try {
             this.projectConfiguration.update(newProjectConfiguration);
             this.configurationDocument = configurationDocument;
-            if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
             if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
@@ -628,6 +629,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.configurationDocument = this.configurationDocument._rev
                 ? await this.datastore.update(this.configurationDocument) as ConfigurationDocument
                 : await this.datastore.create(this.configurationDocument) as ConfigurationDocument;
+            await this.reindex();
         } catch (errWithParams) {
             this.modals.closeModal(componentInstance);
             this.messages.add(
@@ -642,9 +644,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private async discardChanges() {
 
-        await this.updateProjectConfiguration(
-            await this.fetchConfigurationDocument(), undefined, true
-        );
+        await this.updateProjectConfiguration(await this.fetchConfigurationDocument(), true);
         this.changed = false;
     }
 
@@ -660,16 +660,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async reindex(category: CategoryForm) {
+    private async reindex() {
 
-        CategoryForm.getFields(category).forEach(field => {
-            this.indexFacade.addConstraintIndexDefinitionsForField(field)
-        });
-
-        const documents: Array<Document> = (await this.datastore.find(
-            { categories: [category.name] }
-        )).documents
-
-        await this.indexFacade.putMultiple(documents);
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            this.categoryConverter
+        );
     }
 }

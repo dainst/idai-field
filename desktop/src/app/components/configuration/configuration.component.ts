@@ -451,17 +451,23 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public openSaveModal() {
-        
-        const [result] = this.modals.make<SaveModalComponent>(
-            SaveModalComponent,
-            MenuContext.CONFIGURATION_MODAL
-        );
+    public async openSaveModal(): Promise<boolean> {
 
-        this.modals.awaitResult(result,
-            () => this.save(),
-            () => AngularUtility.blurActiveElement()
-        );
+        this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                SaveModalComponent, { keyboard: false }
+            );
+            
+            await modalRef.result;
+            await this.save();
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.CONFIGURATION);
+        }
     }
 
 
@@ -481,8 +487,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const result: string = await modalRef.result;
 
             if (result === 'save') {
-                await this.openSaveModal();
-                return false;
+                return await this.openSaveModal();
             } else if (result === 'discard') {
                 await this.discardChanges();
                 return true;

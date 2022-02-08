@@ -30,6 +30,8 @@ import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelist
 import { OrderChange } from '../widgets/category-picker.component';
 import { SaveProcessModalComponent } from './save-process-modal.component';
 import { SaveModalComponent } from './save-modal.component';
+import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
 export type SaveResult = {
@@ -43,6 +45,7 @@ export type SaveResult = {
     templateUrl: './configuration.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
     }
@@ -59,8 +62,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    
     public dragging: boolean = false;
     public changed: boolean = false;
+    public escapeKeyPressed: boolean = false;
 
     public categoriesFilterOptions: Array<CategoriesFilter> = [
         { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
@@ -114,6 +119,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private indexFacade: IndexFacade,
                 private menus: Menus,
                 private menuNavigator: MenuNavigator,
+                private modalService: NgbModal,
                 private i18n: I18n) {}
 
 
@@ -127,13 +133,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.loadCategories();
 
-        this.configurationDocument = await ConfigurationDocument.getConfigurationDocument(
-            (id: string) => this.datastore.get(id, { skipCache: true }),
-            this.configReader,
-            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-            this.settingsProvider.getSettings().username
-        ) as ConfigurationDocument;
-
+        this.configurationDocument = await this.fetchConfigurationDocument();
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
     }
@@ -148,9 +148,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION) {
+        if (event.key !== 'Escape') return;
+
+        if (!this.escapeKeyPressed && this.menus.getContext() === MenuContext.CONFIGURATION) {
             await this.tabManager.openActiveTab();
+        } else {
+            this.escapeKeyPressed = true;
         }
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
 
@@ -452,6 +462,36 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    public async openDiscardChangesModal(): Promise<boolean> {
+
+        this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                EditSaveDialogComponent, { keyboard: false }
+            );
+            modalRef.componentInstance.changeMessage = this.i18n({
+                id: 'configuration.changes', value: 'An der Konfiguration wurden Änderungen vorgenommen.'
+            });
+            modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+
+            const result: string = await modalRef.result;
+
+            if (result === 'save') {
+                await this.openSaveModal();
+                return false;
+            } else if (result === 'discard') {
+                await this.discardChanges();
+                return true;
+            }
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.CONFIGURATION);
+        }
+    }
+
+
     private async deleteCategory(category: CategoryForm) {
 
         try {
@@ -597,6 +637,26 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.changed = false;
         this.modals.closeModal(componentInstance);
+    }
+
+
+    private async discardChanges() {
+
+        await this.updateProjectConfiguration(
+            await this.fetchConfigurationDocument(), undefined, true
+        );
+        this.changed = false;
+    }
+
+
+    private async fetchConfigurationDocument(): Promise<ConfigurationDocument> {
+
+        return await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => this.datastore.get(id, { skipCache: true }),
+            this.configReader,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            this.settingsProvider.getSettings().username
+        ) as ConfigurationDocument;
     }
 
 

@@ -41,6 +41,7 @@ import { ConfigurationChangeNotificationModalComponent } from './notifications/c
 import { DoceditModule } from '../docedit/docedit.module';
 import { ConfigurationConflictsModalComponent } from './conflicts/configuration-conflicts-modal.component';
 import { SaveModalComponent } from './save-modal.component';
+import { ConfigurationGuard } from './configuration-guard';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import { SaveModalComponent } from './save-modal.component';
         ConfigurationConflictsModalComponent
     ],
     providers: [
-        ConfigurationChangeNotifications
+        ConfigurationChangeNotifications,
+        ConfigurationGuard
     ],
     exports: [
         ConfigurationComponent

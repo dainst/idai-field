@@ -194,6 +194,19 @@
       "localization": "localization-milet"
     }
   },
+  "Planum:default": {
+    "fields": {
+      "localization": {
+        "inputType": "radio"
+      },
+      "localizationDescription": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "localization": "localization-milet"
+    }
+  },
   "Building": {
     "hidden": [
       "buildingCategorySpecific", 

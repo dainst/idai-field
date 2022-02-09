@@ -233,7 +233,7 @@
         }
       }
     },
-    "TrenchSketch": {
+    "Planum": {
       "label": "Trench Sketch",
       "fields": {}
     },
@@ -258,6 +258,10 @@
         "YearOfFind": {
           "label": "Year (in case of Altfund)",
           "description": "Year in which the object has been found or first recorded, in case of Altfunde"
+        },
+        "comparisonLit": {
+          "label": "Comparison (Literature)",
+          "description": "Citation of comparable published finds."
         }
       }
     },

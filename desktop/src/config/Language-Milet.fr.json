@@ -233,7 +233,7 @@
                 }
             }
         },
-        "TrenchSketch": {
+        "Planum": {
             "label": "Croquis de la tranchée",
             "fields": {}
         },
@@ -258,6 +258,10 @@
                 "YearOfFind": {
                     "label": "Année (dans le cas d'une découverte ancienne)",
                     "description": "Année à laquelle la découverte a été faite ou inventoriée"
+                },
+                "comparisonLit": {
+                  "label": "Comparaison (Littérature)",
+                  "description": "Références bibliographiques de pièces comparables déjà publiées (ailleurs)."
                 }
             }
         },

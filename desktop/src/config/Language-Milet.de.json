@@ -234,7 +234,7 @@
         }
       }
     },
-    "TrenchSketch": {
+    "Planum": {
       "label": "Überblicksskizze",
       "fields": {}
     },
@@ -259,6 +259,10 @@
         "YearOfFind": {
           "label": "Fundjahr (wenn Altfund)",
           "description": "Im Falle der nachträglichen Inventarisierung eines Altfundes einfügen: Jahr des Fundes, bzw. Jahr in dem der Fund bekannt wurde, soweit nachvollziehbar."
+        },
+        "comparisonLit": {
+          "label": "Literaturvergleiche",
+          "description": "Literaturangaben von vergleichbaren, bereits (andernorts) publizierten Stücken."
         }
       }
     },

@@ -123,7 +123,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const [result, componentInstance] = this.modals.make<AddGroupModalComponent>(
             AddGroupModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MANAGEMENT
         );
 
         componentInstance.configurationDocument = this.configurationDocument;

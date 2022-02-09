@@ -14,6 +14,7 @@ export class EditSaveDialogComponent {
 
     public changeMessage: string;
     public escapeKeyPressed: boolean;
+    public applyMode: boolean;
 
 
     constructor(public activeModal: NgbActiveModal) {}

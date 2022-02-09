@@ -150,6 +150,7 @@ export abstract class ConfigurationEditorModalComponent {
             );
             modalRef.componentInstance.changeMessage = this.changeMessage;
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+            modalRef.componentInstance.applyMode = true;
 
             const result: string = await modalRef.result;
 

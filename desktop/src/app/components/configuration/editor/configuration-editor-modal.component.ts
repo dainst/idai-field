@@ -26,7 +26,7 @@ export abstract class ConfigurationEditorModalComponent {
     public applyChanges: (configurationDocument: ConfigurationDocument,
         reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
 
-    public saving: boolean;
+    public applyingChanges: boolean;
     public escapeKeyPressed: boolean = false;
 
     protected abstract changeMessage: string;
@@ -85,13 +85,13 @@ export abstract class ConfigurationEditorModalComponent {
         this.clonedLabel = clone(this.label);
         this.clonedDescription = this.description ? clone(this.description) : {};
 
-        this.saving = false;
+        this.applyingChanges = false;
     }
 
 
-    public async save(reindexConfiguration?: boolean) {
+    public async confirm(reindexConfiguration?: boolean) {
 
-        this.saving = true;
+        this.applyingChanges = true;
         this.updateCustomLanguageConfigurations();
 
         try {
@@ -103,7 +103,7 @@ export abstract class ConfigurationEditorModalComponent {
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
-            this.saving = false;
+            this.applyingChanges = false;
         }
     }
 
@@ -134,8 +134,8 @@ export abstract class ConfigurationEditorModalComponent {
 
     private async performQuickSave() {
 
-        if (this.isChanged() && !this.saving && this.menuService.getContext() === this.menuContext) {
-            await this.save();
+        if (this.isChanged() && !this.applyingChanges && this.menuService.getContext() === this.menuContext) {
+            await this.confirm();
         }
     }
 
@@ -154,7 +154,7 @@ export abstract class ConfigurationEditorModalComponent {
             const result: string = await modalRef.result;
 
             if (result === 'save') {
-                await this.save();
+                await this.confirm();
             } else if (result === 'discard') {
                 this.activeModal.dismiss('cancel');
             }

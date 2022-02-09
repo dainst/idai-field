@@ -56,9 +56,9 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
 
 
-    public async save() {
+    public async confirm() {
 
-        await super.save(true);
+        await super.confirm(true);
     }
 
 

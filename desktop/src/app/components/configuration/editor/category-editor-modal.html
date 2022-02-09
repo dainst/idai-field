@@ -7,15 +7,14 @@
         class="modal-title" i18n="@@configuration.addSpecificCategory">
         Kategorie <code>{{category.name}}</code> hinzufügen
     </h5>
-    <button id="save-button" class="btn btn-success"
-            [ngClass]="{ 'disabled': saving || !isChanged() }"
-            (click)="saving || !isChanged() || save()">
-        <span class="mdi mdi-content-save"></span>
-        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    <button id="confirm-button" class="btn btn-primary"
+            [ngClass]="{ 'disabled': applyingChanges || !isChanged() }"
+            (click)="applyingChanges || !isChanged() || confirm()">
+        <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
     <button class="btn btn-primary"
-            [class.disabled]="saving"
-            (click)="saving || cancel()">
+            [class.disabled]="applyingChanges"
+            (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>
     </button>
 </div>

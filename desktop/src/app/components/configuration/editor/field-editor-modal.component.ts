@@ -95,7 +95,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public async save() {
+    public async confirm() {
 
         if (this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
                 || !this.getClonedFormDefinition().valuelists[this.field.name])) {
@@ -116,7 +116,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
-        await super.save(this.isValuelistChanged());
+        await super.confirm(this.isValuelistChanged());
     }
 
 

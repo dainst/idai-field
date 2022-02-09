@@ -69,7 +69,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    public async save() {
+    public async confirm() {
 
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
@@ -91,7 +91,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             );
         }
 
-        await super.save();
+        await super.confirm();
     }
 
 

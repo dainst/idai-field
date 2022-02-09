@@ -10,9 +10,13 @@
     left: 9px;
   }
 
-  #save-button {
+  #confirm-button {
     position: absolute;
     right: 57px;
+    
+    .button-label {
+      margin-left: 0;
+    }
   }
 }
 

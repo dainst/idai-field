@@ -102,7 +102,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     }
 
 
-    public async save() {
+    public async confirm() {
 
         if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
@@ -122,7 +122,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             this.getClonedValuelistDefinition().order = this.order;
         }
 
-        await super.save(true);
+        await super.confirm(true);
     }
 
 

@@ -2,6 +2,7 @@ defmodule Api.Router do
   use Plug.Router
 
   plug :match
+  plug Corsica, origins: "*"
 
   plug(Plug.Parsers,
     parsers: [:json],

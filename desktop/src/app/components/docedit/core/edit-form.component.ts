@@ -64,7 +64,10 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         const relations = (this.groups.find((group: Group) => group.name === groupName) as any).relations;
 
         return groupName === Groups.STEM
-            ? relations.filter((relation: RelationDefinition) => relation.name === Relations.SAME_AS)
+            ? relations.filter((relation: RelationDefinition) =>
+                relation.name === Relations.SAME_AS
+                || relation.name === Relations.Position.IS_PRESENT_IN
+            )
             : relations.filter((relation: RelationDefinition) => relation.name !== Relations.Type.INSTANCEOF);
     }
 

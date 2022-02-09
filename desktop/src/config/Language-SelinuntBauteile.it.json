@@ -1,0 +1,81 @@
+{
+  "categories": {
+    "Area": {
+      "label": "Area"
+    },
+    "SurveyUnit": {
+      "label": "Quadrato"
+    },
+    "BuildingPart": {
+      "label": "Architettura",
+      "fields": {
+        "descriptionFindingPlace": {
+          "label": "Descrizione del punto di ritrovamento"
+        },
+        "storageLocation": {
+          "label": "Luogo di deposito"
+        },
+        "editingDates": {
+          "label": "Date di elaborazione",
+          "description": "RD = Data di registrazione, UD = Data di aggiornamento"
+        },
+        "denomination": {
+          "label": "Denominazione"
+        },
+        "dimensionHeight": {
+          "label": "Altezza"
+        },
+        "dimensionLength": {
+          "label": "Lunghezza",
+          "description": "OL = lunghezza superiore, UL = lunghezza inferiore"
+        },
+        "dimensionWidth": {
+          "label": "Profondità",
+          "description": "OT = profondità superiore, UT = profondità inferiore"
+        },
+        "dimensionDiameter": {
+          "label": "Diametro",
+          "description": "OD = diametro superiore , UD = diametro inferiore"
+        },
+        "dimensionOther": {
+          "label": "Dimensioni particolari",
+          "description": "TrB = larghezza del triglifo, MB = larghezza della metopa"
+        },
+        "material": {
+          "label": "Materiale"
+        },
+        "conservationStatus": {
+          "label": "Stato di conservazione"
+        },
+        "BuildingPart-dating": {
+          "label": "Datazione"
+        },
+        "assignment": {
+          "label": "Assegnazione"
+        },
+        "evaluationAssignment": {
+          "label": "Valutazione di assegnazione"
+        },
+        "positionAtBuilding": {
+          "label": "Posizione nell'edificio"
+        },
+        "referenceTypes": {
+          "label": "Riferimenti"
+        },
+        "belongingMap": {
+          "label": "Mappa associata"
+        },
+        "pencilDrawing": {
+          "label": "Scala del disegno a matita"
+        },
+        "inkDrawing": {
+          "label":"Scala del disegno a inchiostro"
+        },
+        "note": {
+          "label": "Nota",
+          "description": "Parte di..., prima..., adesso..."
+        }
+      }
+    }
+  }
+}

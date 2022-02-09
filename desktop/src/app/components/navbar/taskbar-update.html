@@ -1,4 +1,4 @@
-<div id="taskbar-update">
+<div id="taskbar-update" [class.with-sync-status]="isSyncStatusShown">
     <span *ngIf="progressPercent === 0 && !downloadComplete && !downloadInterrupted  && !downloadError"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"

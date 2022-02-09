@@ -475,14 +475,8 @@
         "colorBreak": {
           "label": "Color(s) core"
         },
-        "usedAsSpolia": {
-          "label": "Used as spolia"
-        },
         "constructionDetails": {
           "label": "Construction details"
-        },
-        "treatment": {
-          "label": "Traces of surface treatment"
         },
         "decorationTechnique": {
           "label": "Decoration"
@@ -587,23 +581,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Process unit",
-      "fields": {
-        "date": {
-          "label": "Date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
-        "operationClassification": {
-          "label": "Operation classification"
-        }
-      }
-    },
     "Planum": {
       "label": "Planum",
       "fields": {
@@ -630,6 +607,43 @@
         }
       }
     },
+    "Place": {
+      "fields": {
+        "findSpot": {
+          "label": "find spot (general classification)"
+        },
+        "surfaceContextsAndFinds": {
+          "label": "surface contexts and finds"
+        },
+        "researchHistory": {
+          "label": "research history / previous measures"
+        },
+        "descriptions": {
+          "label": "description"
+        },
+        "stateOfPreservation": {
+          "label": "state of preservation / risk assessment"
+        },
+        "gazId": {
+          "label": "iDAI.gazetteer-ID"
+        },
+        "iDAI-objects-ID": {
+          "label": "iDAI.objects-ID"
+        },
+        "iDAI-archives-ID": {
+          "label": "iDAI.archives-ID"
+        },
+        "bibliography": {
+          "label": "bibliography"
+        },
+        "recordedOnMaps": {
+          "label": "recorded on maps"
+        },
+        "buildingResearchHistory": {
+          "label": "building research history"
+        }
+      }
+    },
     "Sample": {
       "label": "Sample",
       "fields": {
@@ -642,16 +656,9 @@
       }
     },
     "Profile": {
-      "label": "Profile",
       "fields": {
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "orientation": {
-          "label": "Orientation"
+        "operationClassification": {
+          "label": "Operation classification"
         }
       }
     },

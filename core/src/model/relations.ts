@@ -41,8 +41,9 @@ export namespace Relations {
         export const BORDERS = 'borders';                 //
         export const CUTS = 'cuts';                       //
         export const CUTBY = 'isCutBy';               //
+        export const IS_PRESENT_IN = 'isPresentIn';
 
-        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW];
+        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW, IS_PRESENT_IN];
     }
 
 
@@ -72,7 +73,7 @@ export namespace Relations {
     // two resources, recorded in different operations, are the same
     export const SAME_AS = 'isSameAs';
 
-
+    
     // Used to connect finds with type resources
     export module Type {
 
@@ -92,7 +93,7 @@ export namespace Relations {
     }
 
 
-    export const UNIDIRECTIONAL = Hierarchy.ALL;
+    export const UNIDIRECTIONAL = Hierarchy.ALL.concat([Position.IS_PRESENT_IN]);
 
 
     export function getAllTargets(relations: Relations, allowedRelations?: string[]): Array<string> {

@@ -1,0 +1,77 @@
+{
+  "categories": {
+    "SurveyUnit": {
+      "label": "Planquadrat",
+      "fields": {}
+    },
+    "BuildingPart": {
+      "label": "Architektur",
+      "fields": {
+        "descriptionFindingPlace": {
+          "label": "Beschreibung des Fundortes"
+        },
+        "storageLocation": {
+          "label": "Ort der Aufbewahrung"
+        },
+        "editingDates": {
+          "label": "Bearbeitungsdaten",
+          "description": "RD = Aufnahmedatum, UD = Aktualisierungsdatum"
+        },
+        "denomination": {
+          "label": "Ansprache"
+        },
+        "dimensionHeight": {
+          "label": "Höhe"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "OL = obere Länge, UL = untere Länge"
+        },
+        "dimensionWidth": {
+          "label": "Tiefe",
+          "description": "OT = obere Tiefe, UT = untere Tiefe"
+        },
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "OD = oberer Durchmesser, UD = unterer Durchmesser"
+        },
+        "dimensionOther": {
+          "label": "Spezielle Maße",
+          "description": "TrB = Triglyphenbreite, MB = Metopenbreite"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "conservationStatus": {
+          "label": "Erhaltungszustand"
+        },
+        "assignment": {
+          "label": "Zuordnung"
+        },
+        "evaluationAssignment": {
+          "label": "Bewertung Zuordnung"
+        },
+        "positionAtBuilding": {
+          "label": "Position am Bauwerk"
+        },
+        "referenceTypes": {
+          "label": "Referenzen"
+        },
+        "belongingMap": {
+          "label": "Zugehörige Karte"
+        },
+        "pencilDrawing": {
+          "label": "Maßstab der Bleistiftzeichnung"
+        },
+        "inkDrawing": {
+          "label":"Maßstab der Tuschezeichnung"
+        },
+        "note": {
+          "label": "Anmerkung",
+          "description": "gehört zu..., vorher..., jetzt..."
+        }
+      }
+    }
+  }
+}
+

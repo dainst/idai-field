@@ -22,6 +22,10 @@
       "label": "Höhe",
       "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
     },
+    "dimensionDepth": {
+      "label": "Tiefe",
+      "description": "Angabe der Tiefe an der maximalen/minimalen Ausdehnung"
+    },
     "dimensionThickness": {
       "label": "Stärke",
       "description": "Dicke bzw. Stärke des Objekts"
@@ -172,16 +176,7 @@
     },
     "Planum": {
       "label": "Planum",
-      "fields": {
-        "horizontalLocation": {
-          "label": "Horizontallage",
-          "description": "Ausrichtung des Planums"
-        },
-        "planumForm": {
-          "label": "Form Planum",
-          "description": "Form des angelegten Planums"
-        }
-      }
+      "fields": {}
     },
     "Brick": {
       "label": "Ziegel",

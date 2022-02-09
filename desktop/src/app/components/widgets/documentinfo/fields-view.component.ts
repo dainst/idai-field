@@ -1,18 +1,13 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore } from 'idai-field-core';
-import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
-import {
-    aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
-    L, lookup, map, Mapping, on, pairWith,
-    R, to,
-    assoc
-} from 'tsfun';
+import { aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject, L, lookup, map,
+    Mapping, on, pairWith, R, to, assoc } from 'tsfun';
+import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore,
+    Dating, Dimension, Literature, OptionalRange, Resource, SortUtil } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { ValuelistUtil } from '../../../core/util/valuelist-util';
-import { RoutingService } from '../../routing-service';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 
 
@@ -45,7 +40,6 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations) {}
 
@@ -126,7 +120,7 @@ export class FieldsViewComponent implements OnChanges {
             assoc(Group.FIELDS,
                 compose(
                     map(pairWith(fieldContent)),
-                    filter(on(R, isDefined)),
+                    filter(on(R, value => isDefined(value) && value !== '')),
                     filter(on(L, FieldsViewUtil.isVisibleField)),
                     map(this.makeField.bind(this)),
                     flatten() as any /* TODO review typing*/
@@ -139,7 +133,7 @@ export class FieldsViewComponent implements OnChanges {
     private makeField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return {
-            label: field.label,
+            label: field.label ?? field.name,
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(
@@ -166,10 +160,29 @@ export class FieldsViewComponent implements OnChanges {
                 aMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,
-                        targets: await this.datastore.getMultiple(resource.relations[relation.name])
+                        targets: (await this.datastore.getMultiple(resource.relations[relation.name]))
                     }
                 })
             );
+
+            if (group.name === 'position') {
+                const presentDescendants = await this.datastore.find({ constraints: { 'isPresentIn:contain': resource.id }});
+                if (presentDescendants.totalCount > 0) {
+                    group.relations.push(
+                        {
+                            label: this.utilTranslations.getTranslation('hasPresentDescendants'),
+                            targets: presentDescendants.documents
+                        }
+                    );
+                }
+            }
+
+            group.relations.forEach(relation => {
+                relation.targets = relation.targets.sort((target1, target2) => SortUtil.alnumCompare(
+                    target1.resource.identifier, target2.resource.identifier
+                ));
+            });
+
             return group;
         }, $);
     }

@@ -1,0 +1,139 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Feature:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "BuildingPart": {
+    "color": "#707070",
+    "commons": [
+      "period",
+      "description",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionDepth",
+      "dimensionWidth",
+      "dimensionDiameter",
+      "dimensionOther"
+    ],
+    "hidden": ["borders"],
+    "valuelists": {
+      "denomination": "BuildingPart-denomination-Selinunt",
+      "period": "BuildingPart-dating-Selinunt",
+      "material": "BuildingPart-material-Selinunt",
+      "conservationStatus": "BuildingPart-conservationStatus-Selinunt",
+      "assignment": "BuildingPart-assignment-Selinunt",
+      "evaluationAssignment": "BuildingPart-evaluationAssignment-Selinunt",
+      "positionAtBuilding": "BuildingPart-positionAtBuilding-Selinunt",
+      "referenceTypes": "BuildingPart-references-Selinunt",
+      "belongingMap": "BuildingPart-map-Selinunt"
+    },
+    "fields": {
+      "descriptionFindingPlace": {
+        "inputType": "text"
+      },
+      "storageLocation": {
+        "inputType": "text"
+      },
+      "editingDates": {
+        "inputType": "multiInput"
+      },
+      "denomination": {
+        "inputType": "dropdown"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "conservationStatus": {
+        "inputType": "checkboxes"
+      },
+      "assignment": {
+        "inputType": "dropdown"
+      },
+      "evaluationAssignment": {
+        "inputType": "checkboxes"
+      },
+      "positionAtBuilding": {
+        "inputType": "checkboxes"
+      },
+      "referenceTypes": {
+        "inputType": "checkboxes"
+      },
+      "belongingMap": {
+        "inputType": "checkboxes"
+      },
+      "pencilDrawing": {
+        "inputType": "input"
+      },
+      "inkDrawing": {
+        "inputType": "input"
+      },
+      "note": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

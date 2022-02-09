@@ -1,0 +1,84 @@
+{
+  "categories": {
+    "Area": {
+      "label": "Area",
+      "fields": {}
+    },
+    "SurveyUnit": {
+      "label": "Grid square",
+      "fields": {}
+    },
+    "BuildingPart": {
+      "label": "Architecture",
+      "fields": {
+        "descriptionFindingPlace": {
+          "label": "Description of finding place"
+        },
+        "storageLocation": {
+          "label": "Location of storage"
+        },
+        "editingDates": {
+          "label": "Editing dates",
+          "description": "RD = Date of recording, UD = date of update"
+        },
+        "denomination": {
+          "label": "Denomination"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionLength": {
+          "label": "Length",
+          "description": "OL = upper length, UL = lower length"
+        },
+        "dimensionWidth": {
+          "label": "Depth",
+          "description": "OT = upper depth, UT = lower depth"
+        },
+        "dimensionDiameter": {
+          "label": "Diameter",
+          "description": "OD = upper diameter, UD = lower diameter"
+        },
+        "dimensionOther": {
+          "label": "Special dimensions",
+          "description": "TrB = width of triglyphes, MB = width of metopes"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "conservationStatus": {
+          "label": "Conservation status"
+        },
+        "BuildingPart-dating": {
+          "label": "Dating"
+        },
+        "assignment": {
+          "label": "Assignment"
+        },
+        "evaluationAssignment": {
+          "label": "Evaluation of assignment"
+        },
+        "positionAtBuilding": {
+          "label": "Position at building"
+        },
+        "referenceTypes": {
+          "label": "References"
+        },
+        "belongingMap": {
+          "label": "Related map"
+        },
+        "pencilDrawing": {
+          "label": "Scale of pencil drawing"
+        },
+        "inkDrawing": {
+          "label":"Scale of ink drawing"
+        },
+        "note": {
+          "label": "Note",
+          "description": "belongs to..., former..., now..."
+        }
+      }
+    }
+  }
+}
+

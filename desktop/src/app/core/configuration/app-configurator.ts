@@ -37,6 +37,11 @@ export const COMMON_FIELDS = {
         group: Groups.DIMENSION,
         positionValuelistId: 'position-values-expansion-default'
     },
+    dimensionDepth: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
     dimensionDiameter: {
         inputType: FieldDefinition.InputType.DIMENSION,
         group: Groups.DIMENSION,
@@ -204,6 +209,12 @@ export class AppConfigurator {
             userDefinedSubcategoriesAllowed: true,
             fields: {}
         },
+        Profile: {
+            fields: {}
+        },
+        Planum: {
+            fields: {}
+        },
         Feature: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
@@ -368,6 +379,13 @@ export class AppConfigurator {
             range: ['Find:inherit']
         },
         {
+            name: Relations.Position.IS_PRESENT_IN,
+            label: '',
+            domain: ['Feature:inherit'],
+            range: ['Profile', 'Planum'],
+            sameMainCategoryResource: true
+        },
+        {
             name: 'isContemporaryWith',
             inverse: 'isContemporaryWith',
             label: '',
@@ -422,6 +440,12 @@ export class AppConfigurator {
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit'],
             sameMainCategoryResource: true
+        },
+        {
+            name: 'isRecordedIn',
+            label: '',
+            domain: ['Profile', 'Planum'],
+            range: ['Trench']
         },
         {
             name: 'isRecordedIn',
@@ -493,7 +517,7 @@ export class AppConfigurator {
             name: 'liesWithin',
             label: '',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Room'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room', 'Sample'],
             sameMainCategoryResource: true
         },
         {
@@ -514,7 +538,7 @@ export class AppConfigurator {
             name: 'liesWithin',
             label: '',
             domain: ['Sample'],
-            range: ['Feature:inherit', 'Find:inherit'],
+            range: ['Sample', 'Feature:inherit', 'Find:inherit'],
             sameMainCategoryResource: true
         },
         {
@@ -619,18 +643,6 @@ export class AppConfigurator {
 
         if (customConfigurationName === 'Pergamon') {
 
-            (this.builtinCategories as any)['ProcessUnit'] = {
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true,
-                abstract: true,
-                color: '#08306b',
-                fields: {}
-            };
-            (this.builtinCategories as any)['Profile'] = {
-                color: '#c6dbef',
-                parent: 'ProcessUnit',
-                fields: {}
-            };
             (this.builtinCategories as any)['BuildingFloor'] = {
                 color: '#6600cc',
                 fields: {}
@@ -639,13 +651,6 @@ export class AppConfigurator {
                 color: '#45ff95',
                 fields: {}
             };
-
-            this.defaultRelations.push({
-                name: 'isRecordedIn',
-                label: '',
-                domain: ['ProcessUnit'],
-                range: ['Trench']
-            });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',

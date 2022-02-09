@@ -1,11 +1,11 @@
-import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
-import {Document} from 'idai-field-core';
-import {FieldDocument, Groups} from 'idai-field-core';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import { Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck } from '@angular/core';
+import { Document, FieldDocument, Groups } from 'idai-field-core';
+import { ProjectCategories } from '../../../core/configuration/project-categories';
+import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 
 
-@Component({   selector: 'document-info',
+@Component({
+    selector: 'document-info',
     templateUrl: './document-info.html'
 })
 /**

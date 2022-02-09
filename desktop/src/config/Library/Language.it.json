@@ -22,6 +22,10 @@
       "label": "Altezza",
       "description": "Altezza alla massima/minima estensione"
     },
+    "dimensionDepth": {
+      "label": "Profondità",
+      "description": "Profondità alla massima/minima estensione"
+    },
     "dimensionThickness": {
       "label": "Spessore",
       "description": "Spessore dell'oggetto"
@@ -172,16 +176,7 @@
     },
     "Planum": {
       "label": "Pianta",
-      "fields": {
-        "horizontalLocation": {
-          "label": "Posizione orizzontale",
-          "description": "Orientamento della pianta"
-        },
-        "planumForm": {
-          "label": "Forma della pianta",
-          "description": "Forma della pianta creata"
-        }
-      }
+      "fields": {}
     },
     "Brick": {
       "label": "Mattoni",
@@ -1321,7 +1316,7 @@
       }
     },
     "Profile": {
-      "label": "Profilo",
+      "label": "Sezione",
       "fields": {}
     },
     "Metal": {

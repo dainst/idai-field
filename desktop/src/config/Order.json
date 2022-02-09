@@ -31,7 +31,7 @@
     "Inscription": ["objectType", "condition", "conditionAmount", "conditionComment", "language", "content", "comparison"],
     "ProcessUnit": ["operationClassification"],
     "Profile": [],
-    "Planum": ["horizontalLocation", "planumForm"],
+    "Planum": [],
     "Drilling": ["drillingEquipment"],
     "Sample": ["sampleType", "labNumber", "weight"],
     "Image": [],

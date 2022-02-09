@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 const nativeImage = typeof window !== 'undefined'
-    ? window.require('electron').nativeImage
-    : require('electron').nativeImage;
+    ? window.require('electron').nativeImage : require('electron').nativeImage;
 const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
+const ExifImage = typeof window !== 'undefined' ? window.require('exif').ExifImage : require('exif').ExifImage;
 
 
 const TARGET_HEIGHT = 320;
@@ -26,8 +26,8 @@ export class ImageConverter {
 
         const buffer: Buffer = Buffer.from(data);
 
-        const image = this.convertWithElectron(buffer);
-        if (!image.isEmpty()) {
+        const image = await this.isRotatedJpeg(buffer) ? undefined : this.convertWithElectron(buffer);
+        if (image && !image.isEmpty()) {
             return image.toJPEG(TARGET_JPEG_QUALITY);
         } else {
             try {
@@ -37,6 +37,21 @@ export class ImageConverter {
                 return undefined;
             }
         }
+    }
+
+
+    private async isRotatedJpeg(buffer: Buffer): Promise<boolean> {
+
+        return new Promise(resolve => {
+            try {
+                new ExifImage({ image : buffer }, (error, exifData) => {
+                    if (error) return resolve(false);
+                    return resolve(exifData?.image?.Orientation > 1);
+                });
+            } catch (error) {
+                return resolve(false);
+            }
+        });
     }
 
 

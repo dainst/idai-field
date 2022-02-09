@@ -3,6 +3,14 @@
     "hidden": [],
     "fields": {}
   },
+  "Profile:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Planum:default": {
+    "hidden": [],
+    "fields": {}
+  },
   "Operation:default": {
     "hidden": [],
     "fields": {}

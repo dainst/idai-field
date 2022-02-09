@@ -12,6 +12,7 @@
                    (ngModelChange)="applyGroupNameSearch()">
         </div>
         <group-listing [groups]="groups"
+                       [category]="category"
                        [selectedGroup]="selectedGroup"
                        [emptyGroup]="emptyGroup"
                        [searchTerm]="searchTerm"

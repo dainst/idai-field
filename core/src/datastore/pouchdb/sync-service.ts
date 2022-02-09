@@ -152,39 +152,47 @@ export class SyncService {
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
         console.log('Start syncing', url);
 
-        // Use single-shot replicate in order to speed up initial sync
-        this.sync = this.pouchdbDatastore.getDb().replicate.from(url, { filter });
+        this.sync = this.pouchdbDatastore.getDb().sync(url, { live: true, retry: false, filter });
         this.handleStatus(this.sync);
 
         // Setup bidirectional sync when initial replicate has completed
-        if (live) this.sync.on('complete', () => this.startLiveSync(url, filter));
+        //if (live) this.sync.on('complete', () => this.startLiveSync(url, filter));
     }
 
 
-    private startLiveSync(url: string, filter?: (doc: any) => boolean) {
+    // private startLiveSync(url: string, filter?: (doc: any) => boolean) {
 
-        this.sync = this.pouchdbDatastore.getDb().sync(
-            url,
-            {
-                live: true,
-                retry: false,
-                batch_size: 50,
-                batches_limit: 1,
-                timeout: 600000,
-                filter
-            }
-        );
-        this.handleStatus(this.sync);
+    //     this.sync = this.pouchdbDatastore.getDb().sync(
+    //         url,
+    //         {
+    //             live: true,
+    //             retry: false,
+    //             batch_size: 50,
+    //             batches_limit: 1,
+    //             timeout: 600000,
+    //             filter
+    //         }
+    //     );
 
-        this.sync.on('complete', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
-        this.sync.on('error', () => this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000));
-    }
+    //     this.handleStatus(this.sync);
+
+    //     this.sync.on('complete', () => {
+    //         this.setStatus(SyncStatus.InSync);
+    //         this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000)
+    //     });
+
+    //     this.sync.on('error', (err) => {
+    //         this.setStatus(SyncService.getFromError(err));
+    //         console.error('SyncService received error from PouchDB', err, JSON.stringify(err));
+    //         this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000)
+    //     });
+    // }
 
 
     private handleStatus(sync: Sync): void {
         
         sync.on('change', info => this.setStatus(SyncService.getFromInfo(info)))
-            .on('complete', () => this.setStatus(SyncStatus.InSync))
+            .on('complete', () => this.setStatus(SyncStatus.Offline))
             .on('paused', () => this.setStatus(SyncStatus.InSync))
             .on('denied', err => console.error('Document denied in sync', err))
             .on('error', err => {

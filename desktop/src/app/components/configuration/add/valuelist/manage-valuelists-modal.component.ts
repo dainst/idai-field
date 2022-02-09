@@ -6,7 +6,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { SaveResult } from '../../configuration.component';
+import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from '../../context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../../../component-helpers';
@@ -33,7 +33,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<SaveResult>;
+        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -170,7 +170,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult, valuelist.id),
+            (applyChangesResult: ApplyChangesResult) => this.applyResult(applyChangesResult, valuelist.id),
             nop
         );
     }
@@ -205,7 +205,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.applyNewValuelistSaveResult(saveResult, newValuelistId),
+            (applyChangesResult: ApplyChangesResult) => this.applyNewValuelistResult(applyChangesResult, newValuelistId),
             nop
         );
     }
@@ -251,9 +251,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteValuelist(
                 this.configurationDocument, valuelist
             );
-            this.applySaveResult(
-                await this.applyChanges(changedConfigurationDocument, true)
-            );
+            this.applyResult(await this.applyChanges(changedConfigurationDocument, true));
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -262,16 +260,16 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     }
 
 
-    protected applyNewValuelistSaveResult(saveResult: SaveResult, newValuelistId: string) {
+    protected applyNewValuelistResult(applyChangesResult: ApplyChangesResult, newValuelistId: string) {
 
-        this.applySaveResult(saveResult, newValuelistId);
+        this.applyResult(applyChangesResult, newValuelistId);
     }
 
 
-    private applySaveResult(saveResult: SaveResult, editedValuelistId?: string) {
+    private applyResult(applyChangesResult: ApplyChangesResult, editedValuelistId?: string) {
 
-        this.configurationDocument = saveResult.configurationDocument;
-        this.configurationIndex = saveResult.configurationIndex;
+        this.configurationDocument = applyChangesResult.configurationDocument;
+        this.configurationIndex = applyChangesResult.configurationIndex;
 
         this.applyValuelistSearch();
 

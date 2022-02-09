@@ -34,7 +34,7 @@ import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 
 
-export type SaveResult = {
+export type ApplyChangesResult = {
     
     configurationDocument: ConfigurationDocument,
     configurationIndex: ConfigurationIndex
@@ -100,7 +100,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     ];
 
     public applyChanges = (configurationDocument: ConfigurationDocument,
-                           reindexConfiguration?: boolean): Promise<SaveResult> =>
+                           reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
@@ -562,10 +562,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.modals.awaitResult(
             result,
-            (saveResult?: SaveResult) => {
-                if (!saveResult) return;
-                this.configurationDocument = saveResult.configurationDocument;
-                this.configurationIndex = saveResult.configurationIndex;
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
             },
             nop
         );
@@ -589,7 +589,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
-                                             reindexConfiguration?: boolean): Promise<SaveResult> {
+                                             reindexConfiguration?: boolean): Promise<ApplyChangesResult> {
 
         let newProjectConfiguration;
         try {

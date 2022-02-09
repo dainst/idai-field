@@ -11,7 +11,7 @@ import { GroupEditorModalComponent } from '../editor/group-editor-modal.componen
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
-import { SaveResult } from '../configuration.component';
+import { ApplyChangesResult } from '../configuration.component';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ApplyChangesResult>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();

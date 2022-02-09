@@ -7,7 +7,7 @@ import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { InputType } from '../../configuration-util';
-import { SaveResult } from '../../configuration.component';
+import { ApplyChangesResult } from '../../configuration.component';
 import { Menus } from '../../../../services/menus';
 
 
@@ -27,7 +27,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ApplyChangesResult>;
 
     public searchTerm: string = '';
     public selectedField: Field|undefined;

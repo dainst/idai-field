@@ -12,7 +12,7 @@ import { Modals } from '../../../services/modals';
 import { MenuContext } from '../../../services/menu-context';
 import { ConfigurationIndex } from '../../../services/configuration/index/configuration-index';
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
-import { SaveResult } from '../configuration.component';
+import { ApplyChangesResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../messages/m';
 
@@ -153,10 +153,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         await this.modals.awaitResult(
             result,
-            (saveResult?: SaveResult) => {
-                if (!saveResult) return;
-                this.configurationDocument = saveResult.configurationDocument;
-                this.configurationIndex = saveResult.configurationIndex;
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
             },
             nop
         );
@@ -182,9 +182,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => {
-                this.configurationDocument = saveResult.configurationDocument;
-                this.configurationIndex = saveResult.configurationIndex;
+            (applyChangesResult: ApplyChangesResult) => {
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
                 this.updateEditedValuelist(this.configurationDocument);
             },
             nop

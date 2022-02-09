@@ -5,7 +5,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { SaveResult } from '../configuration.component';
+import { ApplyChangesResult } from '../configuration.component';
 
 
 /**
@@ -24,7 +24,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<SaveResult>;
+        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
@@ -95,7 +95,7 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         try {
-            const result: SaveResult = await this.applyChanges(
+            const result: ApplyChangesResult = await this.applyChanges(
                 this.clonedConfigurationDocument,
                 reindexConfiguration
             );

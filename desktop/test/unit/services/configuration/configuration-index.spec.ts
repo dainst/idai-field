@@ -136,6 +136,57 @@ describe('ConfigurationIndex', () => {
     });
 
 
+    it('find groups', () => {
+
+        const forms = [
+            {
+                name: 'A:default',
+                label: {},
+                defaultLabel: {},
+                groups: [
+                    {
+                        name: 'blueGroup',
+                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
+                    },
+                    {
+                        name: 'redGroup',
+                        label: { de: 'Rote Gruppe', en: 'Red group' }
+                    }
+                ]
+            },
+            {
+                name: 'B:default',
+                label: {},
+                defaultLabel: {},
+                groups: [
+                    {
+                        name: 'blueGroup',
+                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
+                    },
+                    {
+                        name: 'yellowGroup',
+                        label: { de: 'Gelbe Gruppe', en: 'Yellow group' }
+                    }
+                ]
+            }
+        ]
+        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        index.createSubIndices([], [], [], [], forms as any);
+
+        expect(index.findGroups('').length).toBe(3);
+        expect(index.findGroups('blueGroup').length).toBe(1);
+        expect(index.findGroups('blueGroup')[0].name).toBe('blueGroup');
+        expect(index.findGroups('blueGroup')[0].label.de).toBe('Blaue Gruppe');
+        expect(index.findGroups('blue').length).toBe(1);
+        expect(index.findGroups('blue')[0].name).toBe('blueGroup');
+        expect(index.findGroups('gruppe').length).toBe(3);
+        expect(index.findGroups('gruppe')[0].name).toBe('blueGroup');
+        expect(index.findGroups('gruppe')[1].name).toBe('redGroup');
+        expect(index.findGroups('gruppe')[2].name).toBe('yellowGroup');
+        expect(index.findGroups('abc').length).toBe(0);
+    });
+
+
     it('get valuelist usage', () => {
 
         const valuelists: Array<Valuelist> = [

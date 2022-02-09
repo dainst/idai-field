@@ -55,6 +55,13 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+
+    public async save() {
+
+        await super.save(true);
+    }
+
+
     public isChanged(): boolean {
 
         return this.new || !equal(this.label)(this.clonedLabel);

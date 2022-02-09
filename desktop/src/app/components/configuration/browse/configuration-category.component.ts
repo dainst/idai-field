@@ -121,13 +121,19 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async addGroup() {
 
-        const [result] = this.modals.make<AddGroupModalComponent>(
+        const [result, componentInstance] = this.modals.make<AddGroupModalComponent>(
             AddGroupModalComponent,
             MenuContext.CONFIGURATION_MODAL
         );
 
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.initialize();
+
         await this.modals.awaitResult(result,
-            async groupName => await this.createNewGroup(groupName),
+            nop,
             nop
         );
     }
@@ -215,33 +221,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
-    }
-
-
-    private async createNewGroup(groupName: string) {
-
-        const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(
-                GroupEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
-
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.category;
-        componentInstance.group = {
-            name: groupName,
-            label: {},
-            defaultLabel: {},
-            fields: [],
-            relations: []
-        } as any; // TODO review any; relations seems to be not defined in Group
-        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        componentInstance.new = true;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(result, nop, nop);
     }
 
 

@@ -8,6 +8,7 @@ import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
 import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
 import { CategoryFormChildrenIndex } from './category-form-children-index';
+import { GroupEntry, GroupIndex } from './group-index';
 
 
 /**
@@ -21,6 +22,7 @@ export class ConfigurationIndex {
     private fieldIndex: FieldIndex;
     private valuelistIndex: ValuelistIndex;
     private valuelistUsageIndex: ValuelistUsageIndex;
+    private groupIndex: GroupIndex;
     private valuelists: Map<Valuelist>;
     private templates: Map<Template>;
 
@@ -49,6 +51,12 @@ export class ConfigurationIndex {
     public findValuelists(searchTerm: string): Array<Valuelist> {
 
         return ValuelistIndex.find(this.valuelistIndex, searchTerm);
+    }
+    
+
+    public findGroups(searchTerm: string): Array<GroupEntry> {
+
+        return GroupIndex.find(this.groupIndex, searchTerm);
     }
 
 
@@ -82,13 +90,14 @@ export class ConfigurationIndex {
 
     public createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>,
                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
-                            usedCategories: Array<CategoryForm>) {
+                            usedCategoryForms: Array<CategoryForm>) {
 
         this.categoryFormIndex = CategoryFormIndex.create(forms);
         this.categoryFormChildrenIndex = CategoryFormChildrenIndex.create(forms);
         this.fieldIndex = FieldIndex.create(categories, commonFields);
         this.valuelistIndex = ValuelistIndex.create(valuelists);
-        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories);
+        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategoryForms);
+        this.groupIndex = GroupIndex.create(usedCategoryForms);
     }
 
 

@@ -285,8 +285,9 @@ const isDefaultContext = context => ['default', 'configuration'].includes(contex
 
 
 const isConfigurationContext = context => [
-        'configuration', 'configurationEdit', 'configurationModal', 'valuelistsManagement'
-    ].includes(context);
+    'configuration', 'configurationEdit', 'configurationValuelistEdit', 'configurationModal',
+    'configurationManagement'
+].includes(context);
 
 
 const getNamesOfUnopenedProjects = () => {

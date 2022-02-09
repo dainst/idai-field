@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop } from 'tsfun';
+import { equal, isEmpty, nop, not, set } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -12,6 +12,7 @@ import { Modals } from '../../../services/modals';
 import { MenuContext } from '../../../services/menu-context';
 import { ValueEditorModalComponent } from './value-editor-modal.component';
 import { M } from '../../messages/m';
+import { ConfigurationUtil } from '../configuration-util';
 
 
 @Component({
@@ -27,6 +28,7 @@ import { M } from '../../messages/m';
 export class ValuelistEditorModalComponent extends ConfigurationEditorModalComponent {
 
     public valuelist: Valuelist;
+    public extendedValuelist?: Valuelist;
 
     public newValueId: string = '';
     public order: string[];
@@ -40,6 +42,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     protected changeMessage = this.i18n({
         id: 'configuration.valuelistChanged', value: 'Die Werteliste wurde geändert.'
     });
+
+    protected menuContext: MenuContext = MenuContext.CONFIGURATION_VALUELIST_EDIT;
 
 
     constructor(activeModal: NgbActiveModal,
@@ -65,6 +69,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public getValueIds = () => this.sortAlphanumerically ? this.getSortedValueIds() : this.order;
 
+    public isInherited = (valueId: string) => this.extendedValuelist?.values[valueId] !== undefined;
+
+    public isHidden = (valueId: string) => this.getClonedValuelistDefinition().hidden?.includes(valueId);
+
 
     public initialize() {
 
@@ -79,8 +87,16 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 createdBy: this.settingsProvider.getSettings().username,
                 creationDate: new Date().toISOString().split('T')[0]
             }
+
+            if (this.extendedValuelist) {
+                this.getClonedValuelistDefinition().extendedValuelist = this.extendedValuelist.id;
+                if (this.extendedValuelist.order) {
+                    this.getClonedValuelistDefinition().order = this.extendedValuelist.order;
+                }
+            }
         }
 
+        if (!this.getClonedValuelistDefinition().references) this.getClonedValuelistDefinition().references = [];
         this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
         this.order = this.getClonedValuelistDefinition().order ?? this.getSortedValueIds();
     }
@@ -88,8 +104,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public async save() {
 
-        if (isEmpty(this.getClonedValuelistDefinition().values)) {
+        if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
+        }
+
+        try {
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedValuelistDefinition());
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
         }
 
         this.getClonedValuelistDefinition().description = this.clonedDescription;
@@ -100,18 +122,21 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             this.getClonedValuelistDefinition().order = this.order;
         }
 
-        await super.save(undefined, true);
+        await super.save(true);
     }
 
 
     public isChanged(): boolean {
         
         return this.new
-            || !equal(this.getCustomValuelistDefinition())(this.getClonedValuelistDefinition())
+            || !equal(this.getCustomValuelistDefinition().values)(this.getClonedValuelistDefinition().values)
+            || !equal(this.getCustomValuelistDefinition().hidden)(this.getClonedValuelistDefinition().hidden)
             || !equal(this.description)(this.clonedDescription)
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
+        || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+                this.getClonedValuelistDefinition());
     }
 
 
@@ -122,7 +147,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             MenuContext.CONFIGURATION_MODAL
         );
 
-        componentInstance.value = this.getClonedValuelistDefinition().values[valueId] ?? {};
+        componentInstance.value = this.getClonedValuelistDefinition().values[valueId]
+            ?? this.extendedValuelist?.values[valueId]
+            ?? {};
+
         componentInstance.valueId = valueId;
         componentInstance.new = isNewValue;
         componentInstance.initialize();
@@ -160,6 +188,21 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         this.sortAlphanumerically = !this.sortAlphanumerically;
     }
 
+    
+    public toggleHidden(valueId: string) {
+
+        const valuelistDefinition = this.getClonedValuelistDefinition();
+
+        if (valuelistDefinition.hidden?.includes(valueId)) {
+            valuelistDefinition.hidden.splice(valuelistDefinition.hidden.indexOf(valueId), 1);
+            if (valuelistDefinition.hidden.length === 0) delete valuelistDefinition.hidden;
+        } else {
+            if (!valuelistDefinition.hidden) valuelistDefinition.hidden = [];
+            valuelistDefinition.hidden.push(valueId);
+            valuelistDefinition.hidden.sort(SortUtil.alnumCompare);
+        }
+    }
+
 
     public onDrop(event: CdkDragDrop<any>) {
 
@@ -169,8 +212,13 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     private getSortedValueIds(): string[] {
 
-        return Object.keys(this.getClonedValuelistDefinition().values).sort((valueId1: string, valueId2: string) => {
-            return SortUtil.alnumCompare(this.getValueLabel(valueId1),this.getValueLabel(valueId2));
+        const valueIds: string[] = set(
+            Object.keys(this.getClonedValuelistDefinition().values)
+                .concat(this.extendedValuelist ? Object.keys(this.extendedValuelist.values) : [])
+        );
+
+        return valueIds.sort((valueId1: string, valueId2: string) => {
+            return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
         });
     }
 

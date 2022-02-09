@@ -1,4 +1,5 @@
-import { click, doubleClick, getElement, getElements, navigateTo, typeIn, uploadInFileInput, waitForExist } from '../app';
+import { click, doubleClick, getElement, getElements, getValue, navigateTo, typeIn, uploadInFileInput,
+    waitForExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -116,7 +117,8 @@ export module ImageOverviewPage {
 
     export async function getGridSizeSliderValue() {
 
-        return (await getElement('#grid-size-slider')).getAttribute('value');
+        const element = await getElement('#grid-size-slider');
+        return getValue(element);
     }
 
 

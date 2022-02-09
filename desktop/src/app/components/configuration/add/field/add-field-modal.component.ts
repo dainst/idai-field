@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { nop, on, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Document, CustomFormDefinition, SortUtil, Labels } from 'idai-field-core';
+import { nop, to } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { ConfigurationUtil, InputType } from '../../configuration-util';
+import { InputType } from '../../configuration-util';
 import { SaveResult } from '../../configuration.component';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -26,8 +27,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedField: Field|undefined;
@@ -38,6 +38,7 @@ export class AddFieldModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
+                private menus: Menus,
                 private labels: Labels) {}
 
 
@@ -49,13 +50,19 @@ export class AddFieldModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
     public select(field: Field) {
 
-        this.selectedField = field;
+        if (field === this.emptyField) {
+            this.createNewField();
+        } else {
+            this.selectedField = field;
+        }
     }
 
 
@@ -63,11 +70,7 @@ export class AddFieldModalComponent {
 
         if (!this.selectedField) return;
 
-        if (this.selectedField === this.emptyField) {
-            this.createNewField();
-        } else {
-            this.addSelectedField();
-        }
+        this.addSelectedField();
     }
 
 
@@ -95,17 +98,13 @@ export class AddFieldModalComponent {
 
     private addSelectedField() {
 
-        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
-        const form: CustomFormDefinition = clonedConfigurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
-
-        form.groups = ConfigurationUtil.createGroupsConfiguration(
-            this.category, this.permanentlyHiddenFields
+        const updatedConfigurationDocument = ConfigurationDocument.addField(
+            this.configurationDocument, this.category, this.permanentlyHiddenFields,
+            this.groupName, this.selectedField.name
         );
-        form.groups.find(on('name', this.groupName)).fields.push(this.selectedField.name);
 
         try {
-            this.saveAndReload(clonedConfigurationDocument, this.category.name);
+            this.applyChanges(updatedConfigurationDocument);
             this.activeModal.close();
         } catch {
             // Stay in modal
@@ -121,7 +120,7 @@ export class AddFieldModalComponent {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {
@@ -139,7 +138,11 @@ export class AddFieldModalComponent {
         componentInstance.new = true;
         componentInstance.initialize();
 
-        await this.modals.awaitResult(result, nop, () => this.activeModal.close());
+        await this.modals.awaitResult(
+            result,
+            () => this.activeModal.close(),
+            nop
+        );
     }
 
 

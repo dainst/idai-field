@@ -21,6 +21,17 @@ configuration-category {
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    .category-name {
+      padding-top: 11px;
+    }
+
+    .mdi-script-text-outline {
+      position: relative;
+      top: 1px;
+      margin-right: 6px;
+      color: #414952;
+    }
   }
 
   .subheader {
@@ -76,11 +87,11 @@ configuration-category {
   }
   
   .content {
-    height: calc(100vh - 107px);
+    height: calc(100vh - 156px);
     padding: 0;
 
     &.shortened {
-      height: calc(100vh - 163px);
+      height: calc(100vh - 212px);
     }
 
     .fields-container {
@@ -106,6 +117,7 @@ configuration-category {
 
   #add-field-button {
     transform: translate(-20px, -45px);
+    padding: 4px 0 0 2px;
   }
 
   #add-group-button {

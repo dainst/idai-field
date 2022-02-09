@@ -1,0 +1,15 @@
+#create-project-modal-body {
+  #create-project-input {
+    margin-bottom: 12px;
+  }
+
+  div {
+    user-select: none;
+  }
+
+  #template-description {
+    height: 200px;
+    margin-top: 15px;
+    overflow-y: auto;
+  }
+}

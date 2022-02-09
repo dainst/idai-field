@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
@@ -15,6 +15,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 import { Messages } from '../../../messages/messages';
 import { Menus } from '../../../../services/menus';
 import { ValuelistSearchQuery } from './valuelist-search-query';
+import { ExtendValuelistModalComponent } from './extend-valuelist-modal.component';
 
 
 @Component({
@@ -28,11 +29,11 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
 /**
  * @author Thomas Kleinke
  */
-export class ManageValuelistsModalComponent {
+export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     public configurationDocument: ConfigurationDocument;
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-            reindexConfiguration?: boolean) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -40,13 +41,23 @@ export class ManageValuelistsModalComponent {
     public valuelists: Array<Valuelist> = [];
     public filteredValuelists: Array<Valuelist> = [];
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    public scrollTarget?: string;
 
 
     constructor(public activeModal: NgbActiveModal,
-                private configurationIndex: ConfigurationIndex,
-                private modals: Modals,
+                protected configurationIndex: ConfigurationIndex,
+                protected modals: Modals,
                 private menus: Menus,
                 private messages: Messages) {}
+
+
+    ngAfterViewChecked() {
+        
+        if (this.scrollTarget) {
+            this.scrollValuelistElementIntoView(this.scrollTarget);
+            delete this.scrollTarget;
+        }
+    }
 
 
     public initialize() {
@@ -57,7 +68,7 @@ export class ManageValuelistsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.VALUELISTS_MANAGEMENT) {
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
             this.activeModal.dismiss('cancel');
         }
     }
@@ -74,11 +85,13 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public select(valuelist: Valuelist) {
+    public async select(valuelist: Valuelist) {
 
-        this.selectedValuelist = valuelist;
-
-        if (this.selectedValuelist === this.emptyValuelist) this.createNewValuelist();
+        if (valuelist === this.emptyValuelist) {
+            await this.createNewValuelist();
+        } else {
+            this.selectedValuelist = valuelist;
+        }
     }
 
 
@@ -97,8 +110,7 @@ export class ManageValuelistsModalComponent {
 
     public applyValuelistSearch() {
 
-        this.valuelists = this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+        this.valuelists = this.submitQuery();
         
         this.filteredValuelists = ValuelistSearchQuery.applyFilters(
             this.searchQuery, this.valuelists, this.configurationIndex
@@ -117,6 +129,9 @@ export class ManageValuelistsModalComponent {
             case 'edit':
                 this.openEditValuelistModal(this.contextMenu.valuelist);
                 break;
+            case 'extend':
+                this.openExtendValuelistModal(this.contextMenu.valuelist);
+                break;
             case 'delete':
                 this.openDeleteValuelistModal(this.contextMenu.valuelist);
                 break;
@@ -124,54 +139,96 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public async createNewValuelist() {
+    public getCompleteValuelist(valuelist: Valuelist = this.selectedValuelist): Valuelist {
 
-        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
-            ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_EDIT,
-            'lg'
-        );
+        if (!valuelist) return;
 
-        componentInstance.saveAndReload = this.saveAndReload;
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.valuelist = {
-            id: this.searchQuery.queryString,
-            values: {},
-            description: {}
-        };
-        componentInstance.new = true;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult),
-            nop
-        );
+        return valuelist.extendedValuelist
+            ? Valuelist.applyExtension(valuelist,
+                this.configurationIndex.getValuelist(valuelist.extendedValuelist))
+            : valuelist;
     }
 
-
+    
     public async openEditValuelistModal(valuelist: Valuelist) {
+
+        if (valuelist.source !== 'custom') return;
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_EDIT,
+            MenuContext.CONFIGURATION_VALUELIST_EDIT,
             'lg'
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = valuelist;
-        componentInstance.saveAndReload = this.saveAndReload;
+        if (valuelist.extendedValuelist) {
+            componentInstance.extendedValuelist = this.configurationIndex.getValuelist(valuelist.extendedValuelist);
+        }
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
-            (saveResult: SaveResult) => this.applySaveResult(saveResult),
+            (saveResult: SaveResult) => this.applySaveResult(saveResult, valuelist.id),
             nop
         );
     }
 
 
-    public async openDeleteValuelistModal(valuelist: Valuelist) {
+    protected submitQuery(): Array<Valuelist> {
+
+        return this.configurationIndex.findValuelists(this.searchQuery.queryString)
+            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+    }
+
+
+    private async createNewValuelist(newValuelistId: string = this.searchQuery.queryString,
+                                     valuelistToExtend?: Valuelist) {
+
+        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
+            ValuelistEditorModalComponent,
+            MenuContext.CONFIGURATION_VALUELIST_EDIT,
+            'lg'
+        );
+
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.valuelist = {
+            id: newValuelistId,
+            values: {},
+            description: {}
+        };
+        if (valuelistToExtend) componentInstance.extendedValuelist = valuelistToExtend;
+        componentInstance.new = true;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (saveResult: SaveResult) => this.applyNewValuelistSaveResult(saveResult, newValuelistId),
+            nop
+        );
+    }
+
+
+    private async openExtendValuelistModal(valuelist: Valuelist) {
+
+        const [result, componentInstance] = this.modals.make<ExtendValuelistModalComponent>(
+            ExtendValuelistModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+        );
+
+        componentInstance.valuelistToExtend = valuelist;
+
+        await this.modals.awaitResult(
+            result,
+            (newValuelistId: string) => this.createNewValuelist(newValuelistId, valuelist),
+            nop
+        );
+    }
+
+
+    private async openDeleteValuelistModal(valuelist: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<DeleteValuelistModalComponent>(
             DeleteValuelistModalComponent,
@@ -195,7 +252,7 @@ export class ManageValuelistsModalComponent {
                 this.configurationDocument, valuelist
             );
             this.applySaveResult(
-                await this.saveAndReload(changedConfigurationDocument, undefined, true)
+                await this.applyChanges(changedConfigurationDocument, true)
             );
         } catch (errWithParams) {
             // TODO Show user-readable error messages
@@ -205,11 +262,23 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    private applySaveResult(saveResult: SaveResult) {
+    protected applyNewValuelistSaveResult(saveResult: SaveResult, newValuelistId: string) {
+
+        this.applySaveResult(saveResult, newValuelistId);
+    }
+
+
+    private applySaveResult(saveResult: SaveResult, editedValuelistId?: string) {
 
         this.configurationDocument = saveResult.configurationDocument;
         this.configurationIndex = saveResult.configurationIndex;
+
         this.applyValuelistSearch();
+
+        if (editedValuelistId) {
+            this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
+            this.scrollTarget = editedValuelistId;
+        }
     }
 
 
@@ -220,5 +289,12 @@ export class ManageValuelistsModalComponent {
         return {
             id: this.searchQuery.queryString
         } as Valuelist;
+    }
+
+
+    private scrollValuelistElementIntoView(valuelistId: string) {
+
+        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId);
+        if (element) element.scrollIntoView(true);
     }
 }

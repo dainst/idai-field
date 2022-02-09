@@ -7,7 +7,7 @@ export interface BaseFieldDefinition {
     constraintIndexed?: boolean;
     fulltextIndexed?: boolean;
     source?: Field.SourceType;
-    // TODO Add default valuelist
+    references?: string[];
 }
 
 

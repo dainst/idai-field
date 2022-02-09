@@ -142,12 +142,14 @@ export class Datastore {
      * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
+     * @param options.conflicts: boolean
      * @param options to control implementation specific behaviour
      * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache: boolean }): Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean, conflicts?: boolean })
+            : Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
@@ -155,7 +157,7 @@ export class Datastore {
             return cachedDocument;
         }
 
-        let document = this.categoryConverter.convert(await this.datastore.fetch(id));
+        let document = this.categoryConverter.convert(await this.datastore.fetch(id, options?.conflicts));
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -344,7 +346,7 @@ export class Datastore {
 
 export namespace Datastore {
 
-    export type Get = (id: string, options?: { skipCache: boolean }) => Promise<Document>;
+    export type Get = (id: string, options?: { skipCache?: boolean, conflicts?: boolean }) => Promise<Document>;
 
     export type Find = (query: Query) => Promise<FindResult>;
 

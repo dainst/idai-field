@@ -2,7 +2,7 @@ import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, 
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { Field } from './field';
-import { Group } from './group';
+import { Group, GroupDefinition, Groups } from './group';
 
 
 export interface CategoryForm {
@@ -24,8 +24,6 @@ export interface CategoryForm {
 
     children: Array<CategoryForm>;
     parentCategory: CategoryForm|undefined; //  = undefined;
-
-    // Contents and Appearance
     
     groups: Array<Group>;
     
@@ -36,6 +34,7 @@ export interface CategoryForm {
     
     createdBy?: string,
     creationDate?: Date;
+    references?: string[];
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;
@@ -67,7 +66,6 @@ export namespace CategoryForm {
     }
 
 
-    // TODO Remove this (unused)
     export function build(name: Name, parentCategory?: CategoryForm): CategoryForm {
 
         const color: string = CategoryForm.generateColorForCategory(name);
@@ -79,7 +77,8 @@ export namespace CategoryForm {
             description: {},
             defaultDescription: {},
             color: color,
-            defaultColor: color
+            defaultColor: color,
+            source: Source.CUSTOM
         } as any /* TODO any */;
 
         if (parentCategory) {
@@ -136,6 +135,22 @@ export namespace CategoryForm {
     export function isMandatoryField(category: CategoryForm, fieldName: string): boolean {
 
         return hasProperty(category, fieldName, Field.MANDATORY);
+    }
+
+
+    export function getGroupsConfiguration(category: CategoryForm,
+                                           permanentlyHiddenFields: string[]): Array<GroupDefinition> {
+
+        return category.groups
+            .reduce((result, group) => {
+                result.push({
+                    name: group.name,
+                    fields: group.fields
+                        .filter(field => !permanentlyHiddenFields.includes(field.name))
+                        .map(field => field.name)
+                });
+                return result;
+            }, []);
     }
 
 

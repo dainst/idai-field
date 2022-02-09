@@ -1,10 +1,8 @@
-import {flow, includedIn, isDefined, isNot, isnt, map, cond,
-    dense, compose, remove} from 'tsfun';
-import {Resource} from 'idai-field-core';
-import {FieldResource, StringUtils, Relation, Field} from 'idai-field-core';
-import {CSVMatrixExpansion} from './csv-matrix-expansion';
-import {CsvExportUtils} from './csv-export-utils';
-import {CsvExportConsts, Heading, HeadingsAndMatrix} from './csv-export-consts';
+import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove } from 'tsfun';
+import { Resource, FieldResource, StringUtils, Relation, Field } from 'idai-field-core';
+import { CSVMatrixExpansion } from './csv-matrix-expansion';
+import { CsvExportUtils } from './csv-export-utils';
+import { CsvExportConsts, Heading, HeadingsAndMatrix } from './csv-export-consts';
 import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;

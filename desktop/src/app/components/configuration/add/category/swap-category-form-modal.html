@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.swapCategoryForm.header">Formular wechseln?</h5>
+</div>
+
+<div id="swap-category-form-modal-body" class="modal-body">
+    <span i18n="@@configuration.swapCategoryForm.body">
+        Möchten Sie das Formular <code>{{currentForm.libraryId}}</code>
+        wirklich durch das Formular <code>{{newForm.libraryId}}</code> ersetzen?
+    </span>
+    <div class="text-center alert alert-warning" i18n="@@configuration.swapCategoryForm.warning.changes">
+        Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen
+        vorgenommen haben, beim Wechseln des Formulars verloren gehen.
+    </div>
+    <div id="confirm-delete-info" i18n="@@configuration.swapCategoryForm.confirmInfo">
+        Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen.
+    </div>
+    <div class="input-group">
+        <input id="swap-category-form-input"
+                type="text"
+                class="form-control"
+                [(ngModel)]="confirmSwappingFormName"
+                (keydown)="$event.key !== 'Enter' || confirmSwapping()" />
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="btn btn-primary"
+         [ngClass]="{ 'disabled': !this.checkConfirmSwappingFormName() }"
+         (click)="confirmSwapping()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

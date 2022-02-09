@@ -1,8 +1,8 @@
-import {dense, drop, flow, indices, is, on, first,
-    take, prepend, clone, append, reduce, compose, cond, isEmpty, Mapping} from 'tsfun';
-import {Resource} from 'idai-field-core';
-import {FieldResource, Field} from 'idai-field-core';
-import {CsvExportConsts} from './csv-export-consts';
+import { dense, drop, flow, indices, is, on, first, take, prepend, clone, append, reduce, compose, cond,
+    isEmpty, Mapping } from 'tsfun';
+import { Resource } from 'idai-field-core';
+import { FieldResource, Field } from 'idai-field-core';
+import { CsvExportConsts } from './csv-export-consts';
 import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import RELATIONS_IS_RECORDED_IN = CsvExportConsts.RELATIONS_IS_RECORDED_IN;

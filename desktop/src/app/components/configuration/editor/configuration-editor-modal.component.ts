@@ -23,13 +23,14 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedDescription?: I18N.String;
     public clonedConfigurationDocument: ConfigurationDocument;
 
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                           reindexConfiguration?: boolean) => Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public saving: boolean;
     public escapeKeyPressed: boolean = false;
 
     protected abstract changeMessage: string;
+    protected menuContext: MenuContext = MenuContext.CONFIGURATION_EDIT;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -82,21 +83,20 @@ export abstract class ConfigurationEditorModalComponent {
         this.description = this.getDescription();
 
         this.clonedLabel = clone(this.label);
-        if (this.description) this.clonedDescription = clone(this.description);
+        this.clonedDescription = this.description ? clone(this.description) : {};
 
         this.saving = false;
     }
 
 
-    public async save(reindexCategory?: boolean, reindexConfiguration?: boolean) {
+    public async save(reindexConfiguration?: boolean) {
 
         this.saving = true;
         this.updateCustomLanguageConfigurations();
 
         try {
-            const result: SaveResult = await this.saveAndReload(
+            const result: SaveResult = await this.applyChanges(
                 this.clonedConfigurationDocument,
-                reindexCategory ? this.category.name : undefined,
                 reindexConfiguration
             );
             this.activeModal.close(result);
@@ -123,7 +123,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     private async onEscapeKeyDown() {
 
-        if (this.menuService.getContext() === MenuContext.CONFIGURATION_EDIT && !this.escapeKeyPressed) {
+        if (this.menuService.getContext() === this.menuContext && !this.escapeKeyPressed) {
             if (event.srcElement) (event.srcElement as HTMLElement).blur();
             await this.cancel();
         } else {
@@ -134,7 +134,7 @@ export abstract class ConfigurationEditorModalComponent {
 
     private async performQuickSave() {
 
-        if (this.isChanged() && !this.saving && this.menuService.getContext() === MenuContext.CONFIGURATION_EDIT) {
+        if (this.isChanged() && !this.saving && this.menuService.getContext() === this.menuContext) {
             await this.save();
         }
     }
@@ -161,7 +161,7 @@ export abstract class ConfigurationEditorModalComponent {
         } catch(err) {
             // EditSaveDialogModal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.CONFIGURATION_EDIT);
+            this.menuService.setContext(this.menuContext);
         }
     }
 

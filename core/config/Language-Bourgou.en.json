@@ -1,10 +1,50 @@
 {
   "categories": {
+    "Find": {
+      "fields": {
+        "sampleStatus": {
+          "label": "Status of samples"
+        },
+        "sampleComm": {
+          "label": "Comment on samples"
+        },
+        "amountDescription": {
+          "label": "Quantity (Unit)"
+        }
+      }
+    },
     "Pottery": {
       "fields": {
+        "coatColorInside": {
+          "label": "Surface (inside): color and intensity"
+        },
+        "coatColorOutside": {
+          "label": "Surface (outside): color and intensity"
+        },
+        "coatInside": {
+          "label": "Surface (inside)"
+        },
+        "coatInsideType": {
+          "label": "Treatment (inside)"
+        },
+        "coatOutside": {
+          "label": "Surface (outside)"
+        },
+        "specificType": {
+          "label": "Basic shape"
+        },
+        "materialType": {
+          "label": "Classification"
+        },
+        "vesselpart": {
+          "label": "Part of Vessel",
+          "description": "WF = Body/Wall RF = Rim, BF = Base, H = Handle, COMP = complete profile, COMV = complete vessel"
+        },
         "rimTreatmentType": {
-          "label": "Treatment rim/base",
-          "description": "Treatment description of rim and base"
+          "label": "Treatment rim / base"
+        },
+        "potteryTypeSpecific": {
+          "label": "Ware"
         }
       }
     }

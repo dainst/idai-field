@@ -557,11 +557,6 @@ export class BuiltInConfiguration {
 
 
     public builtInFields: Map<BuiltInFieldDefinition> = {
-        id: {
-            inputType: Field.InputType.NONE,
-            editable: false,
-            visible: false
-        },
         category: {
             inputType: Field.InputType.CATEGORY,
             visible: true,
@@ -605,7 +600,7 @@ export class BuiltInConfiguration {
         {
             name: 'hasMapLayer',
             inverse: 'isMapLayerOf',
-            domain: ['Operation:inherit'],
+            domain: ['Operation:inherit', 'Project'],
             range: ['Image:inherit'],
             editable: false,
             visible: false,
@@ -615,7 +610,7 @@ export class BuiltInConfiguration {
             name: 'isMapLayerOf',
             inverse: 'hasMapLayer',
             domain: ['Image:inherit'],
-            range: ['Operation:inherit'],
+            range: ['Operation:inherit', 'Project'],
             editable: false,
             visible: false,
             inputType: 'relation'

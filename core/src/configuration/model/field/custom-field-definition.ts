@@ -13,4 +13,4 @@ export module CustomFieldDefinition {
 }
 
 
-export const VALID_CUSTOM_FIELD_PROPERTIES = ['inputType', 'constraintIndexed'];
+export const VALID_CUSTOM_FIELD_PROPERTIES = ['inputType', 'constraintIndexed', 'references'];

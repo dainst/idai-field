@@ -1,4 +1,4 @@
-import { clone, map, Map } from 'tsfun';
+import { clone, filter, flow, isDefined, map, Map } from 'tsfun';
 import { Field } from '../../model/configuration/field';
 import { Relation } from '../../model/configuration/relation';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
@@ -32,14 +32,11 @@ export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
         return forms;
     }, builtInForms);
 
-    return map(form => {
-        try {
-            setGroups(form, Object.values(forms), selectedForms);
-        } catch (err) {
-            console.error('Error while setting groups', err); // TODO Fix error handling
-        }
-        return addFieldsToForm(form, categories, builtInFields, commonFields, relations);
-    }, forms);
+    return flow(forms,
+        map(form => setGroups(form, Object.values(forms), selectedForms)),
+        filter(isDefined),
+        map(form => addFieldsToForm(form, categories, builtInFields, commonFields, relations))
+    );
 }
 
 
@@ -89,16 +86,30 @@ function makeTransientForm(libraryForm: LibraryFormDefinition, formName: string,
 }
 
 
+/**
+ * @returns undefined if no parent form could be found for a subcategory form
+ */
 function setGroups(form: TransientFormDefinition, forms: Array<TransientFormDefinition>,
-                   selectedForms: string[]) {
+                   selectedForms: string[]): TransientFormDefinition|undefined {
+
+    const clonedForm: TransientFormDefinition = clone(form);
+    if (!clonedForm.parent) return clonedForm;
+        
+    const parentForm = getParentForm(clonedForm, forms, selectedForms);
+    if (!parentForm) return undefined;
+
+    clonedForm.groups = mergeGroupsConfigurations(parentForm.groups, clonedForm.groups);
+
+    return clonedForm;
+}
+
+
+function getParentForm(form: TransientFormDefinition, forms: Array<TransientFormDefinition>,
+                       selectedForms: string[]): TransientFormDefinition|undefined {
 
     if (!form.parent) return;
 
-    const parentForm: TransientFormDefinition|undefined = forms.find(form2 => {
+    return forms.find(form2 => {
         return form2.categoryName === form.parent && selectedForms.includes(form2.name);
     });
-
-    if (!parentForm) throw [[ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, form.parent]];
-
-    form.groups = mergeGroupsConfigurations(parentForm.groups, form.groups);
 }

@@ -10,6 +10,7 @@ import { MenuNavigator } from './menu-navigator';
 import {UtilTranslations} from '../util/util-translations';
 import {AppController} from '../services/app-controller';
 import {ImageUrlMaker} from '../services/imagestore/image-url-maker';
+import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -38,6 +39,7 @@ export class AppComponent {
                 private changeDetectorRef: ChangeDetectorRef,
                 menuService: Menus,
                 appController: AppController,
+                configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService) {
 
@@ -57,6 +59,7 @@ export class AppComponent {
         settingsService.setupSync();
         appController.setupServer();
         menuNavigator.initialize();
+        configurationChangeNotifications.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();

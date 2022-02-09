@@ -1,5 +1,5 @@
 import { click, getElement, getElements, rightClick, hover, waitForNotExist, doubleClick, getText,
-    typeIn, pressKeys } from '../app';
+    typeIn, pressKeys, getValue } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -173,7 +173,8 @@ export class ResourcesPage {
 
     public static async getListModeInputFieldValue(identifier, index) {
 
-        return (await ResourcesPage.getListModeInputField(identifier, index)).getAttribute('value');
+        const inputField = await ResourcesPage.getListModeInputField(identifier, index);
+        return getValue(inputField);
     }
 
 

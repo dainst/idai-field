@@ -9,19 +9,20 @@
                     class="mdi mdi-alert-circle-outline"
                     ngbTooltip="Projektspezifisches Formular"
                     i18n-ngbTooltip="@@config.form.custom"
+                    container="body"
                     placement="right">
                 </span>
                 {{label}}
             </h5>
+            <code class="category-name">{{category.name}}</code>
         </div>
         <div class="col header header-right text-right">
-            <span *ngIf="category.name">
-                <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
-                <code>{{category.name}}</code>
-            </span>
-            &nbsp;
-            <span *ngIf="category.source !== 'custom'">
-                <strong i18n="@@config.libraryId">Formular</strong>:
+            <span *ngIf="category.source !== 'custom'"
+                  ngbTooltip="Ausgewähltes Formular"
+                  i18n-ngbTooltip="@@configuration.seletedForm"
+                  container="body"
+                  placement="left">
+                <span class="mdi mdi-script-text-outline"></span>
                 <code>{{category.libraryId}}</code>
             </span>
         </div>
@@ -36,7 +37,7 @@
         <ul class="flex-column groups-container"
             cdkDropList
             (cdkDropListDropped)="onGroupDrop($event)">
-            <li *ngFor="let group of getGroups()"
+            <li *ngFor="let group of category.groups"
                 class="flex-column group-element"
                 cdkDrag cdkDragBoundary=".groups-container" cdkDragLockAxis="y"
                 (cdkDragStarted)="onDragging.emit(true)"
@@ -63,7 +64,8 @@
         <div id="add-group-button" class="circular-button green-button"
             (click)="addGroup()"
             ngbTooltip="Gruppe hinzufügen"
-            i18n-ngbTooltip="@@configuration.addGroup">
+            i18n-ngbTooltip="@@configuration.addGroup"
+            container="body">
             <span class="mdi mdi-plus"></span>
         </div>
     </div>

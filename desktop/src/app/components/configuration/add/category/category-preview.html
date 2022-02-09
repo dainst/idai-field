@@ -1,7 +1,6 @@
 <div *ngIf="category" class="preview">
     <div id="preview-header">
         <category-icon *ngIf="category.label" [category]="category" size="30"></category-icon>
-        <span *ngIf="!category.label" class="mdi mdi-plus-circle mdi-24px"></span>
         <span class="preview-item-title">
             <b>{{label}}</b>
             <code>{{category.libraryId}}</code>
@@ -11,7 +10,7 @@
     <div id="preview-body">
         <div *ngIf="description" id="category-description">{{description}}</div>
         <ul id="groups-list">
-            <li *ngFor="let group of getGroups()">
+            <li *ngFor="let group of category.groups">
                 <b>{{getLabel(group)}}</b>
                 <code>{{group.name}}</code>
                 <ul>

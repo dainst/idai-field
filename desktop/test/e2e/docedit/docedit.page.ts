@@ -1,4 +1,4 @@
-import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption } from '../app';
+import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -151,8 +151,7 @@ export class DoceditPage {
     public static async getInputFieldValue(index) {
 
         const element = (await getElements('dai-input input'))[index];
-        await waitForExist(element);
-        return element.getAttribute('value');
+        return getValue(element);
     };
 
 

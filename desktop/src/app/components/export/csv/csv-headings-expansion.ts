@@ -1,6 +1,6 @@
-import {flatMap, range} from 'tsfun';
-import {OptionalRange} from 'idai-field-core';
-import {CsvExportConsts} from './csv-export-consts';
+import { flatMap, range } from 'tsfun';
+import { OptionalRange } from 'idai-field-core';
+import { CsvExportConsts } from './csv-export-consts';
 
 
 /**
@@ -60,7 +60,11 @@ export module CSVHeadingsExpansion {
 
             return flatMap(i => [
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'quotation',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'zenonId']
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'zenonId',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'doi',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'page',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'figure'
+            ]
             )(range(n));
         }
     }

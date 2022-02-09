@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, CategoryForm, ConfigurationDocument, SortUtil } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, ProjectConfiguration, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
 import { Modals } from '../../../../services/modals';
-import { ConfigurationUtil } from '../../configuration-util';
 import { SaveResult } from '../../configuration.component';
+import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
+import { Menus } from '../../../../services/menus';
+import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({
@@ -24,10 +26,11 @@ export class AddCategoryFormModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public parentCategory: CategoryForm|undefined;
-    public categoryToReplace?: CategoryForm;
+    public categoriesFilter?: CategoriesFilter;
+    public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
-    public saveAndReload: (configurationDocument: ConfigurationDocument, reindexCategory?: string) =>
-        Promise<SaveResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument,
+        reindexConfiguration?: boolean) => Promise<SaveResult>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;
@@ -37,7 +40,9 @@ export class AddCategoryFormModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
-                private modals: Modals) {}
+                private projectConfiguration: ProjectConfiguration,
+                private modals: Modals,
+                private menus: Menus) {}
 
 
     public initialize() {
@@ -48,13 +53,19 @@ export class AddCategoryFormModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
-    public selectForm(category: CategoryForm) {
+    public async selectForm(category: CategoryForm) {
 
-        this.selectedForm = category;
+        if (category === this.emptyForm) {
+            await this.createNewSubcategory();
+        } else {
+            this.selectedForm = category;
+        }
     }
 
 
@@ -62,8 +73,9 @@ export class AddCategoryFormModalComponent {
 
         if (!this.selectedForm) return;
 
-        if (this.selectedForm === this.emptyForm) {
-            this.createNewSubcategory();
+        if (this.categoryFormToReplace && ConfigurationDocument.isCustomizedCategory(
+                this.configurationDocument, this.categoryFormToReplace, true)) {
+            this.showSwapConfirmationModal();
         } else {
             this.addSelectedCategory();
         }
@@ -78,19 +90,25 @@ export class AddCategoryFormModalComponent {
 
     public applyCategoryNameSearch() {
 
-        this.categoryForms = this.configurationIndex
+        const categoryForms: Array<CategoryForm> = this.configurationIndex
             .findCategoryForms(this.searchTerm, this.parentCategory?.name,
-                !this.parentCategory && !this.categoryToReplace)
+                !this.parentCategory && !this.categoryFormToReplace)
             .filter(category =>
                 !Object.keys(this.configurationDocument.resource.forms).includes(
                     category.libraryId ?? category.name
                 ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
-                && (!this.categoryToReplace || category.name === this.categoryToReplace.name)
+                && (!this.categoryFormToReplace || category.name === this.categoryFormToReplace.name)
             )
             .sort((categoryForm1, categoryForm2) => SortUtil.alnumCompare(
                 categoryForm1.libraryId ?? categoryForm1.name,
                 categoryForm2.libraryId ?? categoryForm2.name
             ));
+
+        this.categoryForms = this.categoriesFilter
+            ? ConfigurationUtil.filterTopLevelCategories(
+                categoryForms, this.categoriesFilter, this.projectConfiguration
+            )
+            : categoryForms;
 
         this.selectedForm = this.categoryForms?.[0];
         this.emptyForm = this.getEmptyForm();
@@ -99,22 +117,13 @@ export class AddCategoryFormModalComponent {
 
     private addSelectedCategory() {
 
-
-        const clonedConfigurationDocument = this.categoryToReplace
-            ? ConfigurationDocument.deleteCategory(this.configurationDocument, this.categoryToReplace, false)
-            : Document.clone(this.configurationDocument);
-
-        clonedConfigurationDocument.resource.forms[this.selectedForm.libraryId] = {
-            fields: {},
-            hidden: []
-        };
-
-        clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
-            clonedConfigurationDocument.resource.order, this.selectedForm.name, this.parentCategory?.name
-        );
+        const clonedConfigurationDocument = this.categoryFormToReplace
+            ? ConfigurationDocument.swapCategoryForm(this.configurationDocument, this.categoryFormToReplace,
+                this.selectedForm)
+            : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm);
 
         try {
-            this.saveAndReload(clonedConfigurationDocument, this.selectedForm.name);
+            this.applyChanges(clonedConfigurationDocument, true);
             this.activeModal.close();
         } catch { /* stay in modal */ }
     }
@@ -128,7 +137,7 @@ export class AddCategoryFormModalComponent {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = CategoryForm.build(this.searchTerm, this.parentCategory);
         componentInstance.new = true;
@@ -136,6 +145,23 @@ export class AddCategoryFormModalComponent {
 
         this.modals.awaitResult(result,
             () => this.activeModal.close(),
+            () => AngularUtility.blurActiveElement()
+        );
+    }
+
+
+    private async showSwapConfirmationModal() {
+
+        const [result, componentInstance] = this.modals.make<SwapCategoryFormModalComponent>(
+            SwapCategoryFormModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.currentForm = this.categoryFormToReplace;
+        componentInstance.newForm = this.selectedForm;
+
+        this.modals.awaitResult(result,
+            () => this.addSelectedCategory(),
             () => AngularUtility.blurActiveElement()
         );
     }

@@ -1,0 +1,52 @@
+{
+  "categories": {
+    "Find": {
+      "fields": {
+        "sampleStatus": {
+          "label": "Statut de l'échantillon"
+        },
+        "sampleComm": {
+          "label": "Commentaire sur les échantillons"
+        },
+        "amountDescription": {
+          "label": "Quantité(Unité)"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "coatColorInside": {
+          "label": "Surface(intérieur): couleur et intensité"
+        },
+        "coatColorOutside": {
+          "label": "Surface (extérieur): couleur et intensité"
+        },
+        "coatInside": {
+          "label": "Surface (intérieur)"
+        },
+        "coatInsideType": {
+          "label": "Traitement (intérieur)"
+        },
+        "coatOutside": {
+          "label": "Surface (extérieur)"
+        },
+        "specificType": {
+          "label": "Forme de base"
+        },
+        "materialType": {
+          "label": "Classification"
+        },
+        "vesselpart": {
+          "label": "Partie du récipient",
+          "description": "P = Panse, B = Bord, F = Fond, A = Anse, C = profil complet, E = recipient entier"
+        },
+        "rimTreatmentType": {
+          "label": "Traitement du bord / fond"
+        },
+        "potteryTypeSpecific": {
+          "label": "Ware"
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,51 @@
 {
   "categories": {
+    "Find": {
+      "fields": {
+        "sampleStatus": {
+          "label": "Probenstatus"
+        },
+        "sampleComm": {
+          "label": "Kommentar zur Probe"
+        },
+        "amountDescription": {
+          "label": "Anzahl (Einheit)"
+        }
+      }
+    },
     "Pottery": {
       "fields": {
+        "coatColorInside": {
+          "label": "Oberfläche (innen): Farbe und Intensität"
+        },
+        "coatColorOutside": {
+          "label": "Oberfläche (außen): Farbe und Intensität"
+        },
+        "coatInside": {
+          "label": "Oberfläche (innen)"
+        },
+        "coatInsideType": {
+          "label": "Bearbeitung (innen)"
+        },
+        "coatOutside": {
+          "label": "Oberfläche (außen)"
+        },
+        "specificType": {
+          "label": "Grundform"
+        },
+        "materialType": {
+          "label": "Klassifizierung"
+        },
+        "vesselpart": {
+          "label": "Gefäßteil",
+          "description": "WF = Wandfragment, RF = Randfragment, BF = Bodenfragment, H = Henkel"
+        },
         "rimTreatmentType": {
           "label": "Behandlung Rand/Boden",
           "description": "Beschreibt die Rand- und Bodenbeschaffenheit der Gefäße"
+        },
+        "potteryTypeSpecific": {
+          "label": "Ware"
         }
       }
     }

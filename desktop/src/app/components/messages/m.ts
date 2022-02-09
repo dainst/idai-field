@@ -215,6 +215,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Configuration Package
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
+    public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
+    public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -1706,6 +1708,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.noValuesInValuelist',
                 value: 'Bitte tragen Sie mindestens einen Wert ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_VALUELIST] = {
+            content: i18n({
+                id: 'messages.configuration.error.noValuelist',
+                value: 'Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_INVALID_REFERENCE] = {
+            content: i18n({
+                id: 'messages.configuration.error.invalidReference',
+                value: '"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.'
             }),
             level: 'danger',
             params: [],

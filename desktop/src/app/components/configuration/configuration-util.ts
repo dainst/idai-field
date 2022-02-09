@@ -1,5 +1,6 @@
-import { clone, flatten, to } from 'tsfun';
-import { CategoryForm, Field, GroupDefinition, Group, Groups, Named } from 'idai-field-core';
+import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
+import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
@@ -7,6 +8,13 @@ export type InputType = {
     label: string;
     searchable?: boolean;
     customFields?: boolean;
+};
+
+
+export type CategoriesFilter = {
+    name: string,
+    label: string,
+    isRecordedInCategory?: string;
 };
 
 
@@ -25,23 +33,6 @@ export module ConfigurationUtil {
     }
 
 
-    export function createGroupsConfiguration(category: CategoryForm,
-                                              permanentlyHiddenFields: string[]): Array<GroupDefinition> {
-
-        return category.groups
-            .filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS)
-            .reduce((result, group) => {
-                result.push({
-                    name: group.name,
-                    fields: group.fields
-                        .filter(field => !permanentlyHiddenFields.includes(field.name))
-                        .map(field => field.name)
-                });
-                return result;
-            }, []);
-    }
-
-
     export function getCategoriesOrder(topLevelCategoriesArray: Array<CategoryForm>): string[] {
 
         return topLevelCategoriesArray.reduce((order, category) => {
@@ -49,21 +40,6 @@ export module ConfigurationUtil {
             if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
             return order;
         }, []);
-    }
-
-
-    export function addToCategoriesOrder(categoriesOrder: string[], newCategoryName: string,
-                                         parentCategoryName?: string): string[] {
-
-        const newOrder: string[] = clone(categoriesOrder);
-
-        if (parentCategoryName) {
-            newOrder.splice(newOrder.indexOf(parentCategoryName) + 1, 0, newCategoryName);
-        } else {
-            newOrder.push(newCategoryName);
-        }
-
-        return newOrder;
     }
 
 
@@ -78,5 +54,59 @@ export module ConfigurationUtil {
         return availableInputTypes
             .find(inputType => inputType.name === inputTypeName)
             .label;
+    }
+
+
+    export function filterTopLevelCategories(topLevelCategories: Array<CategoryForm>,
+                                             filter: CategoriesFilter,
+                                             projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
+
+        return topLevelCategories.filter(category => {
+            switch (filter.name) {
+                case 'all':
+                    return true;
+                case 'images':
+                    return category.name === 'Image';
+                case 'types':
+                    return ['Type', 'TypeCatalog'].includes(category.name);
+                default:
+                    return filter.isRecordedInCategory
+                        ? Relation.isAllowedRelationDomainCategory(
+                            projectConfiguration.getRelations(),
+                            category.name,
+                            filter.isRecordedInCategory,
+                            Relation.Hierarchy.RECORDEDIN
+                        )
+                        : !projectConfiguration.getRelationsForDomainCategory(category.name)
+                                .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
+                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+            }
+        });
+    }
+
+
+    /**
+     * @throws M.CONFIGURATION_ERROR_INVALID_REFERENCE if validation fails
+     */
+    export function cleanUpAndValidateReferences(object: any) {
+
+        object.references = object.references.filter(not(isEmpty));
+        validateReferences(object.references);
+
+        if (isEmpty(object.references)) delete object.references;
+    }
+
+
+    export function isReferencesArrayChanged(object: any, editedObject: any): boolean {
+
+        const originalReferences: string[] = object.references
+            ? clone(object.references).filter(not(isEmpty))
+            : [];
+        
+        const editedReferences: string[] = editedObject.references
+            ? clone(editedObject.references).filter(not(isEmpty))
+            : [];
+
+        return !equal(originalReferences)(editedReferences);
     }
 }

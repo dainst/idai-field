@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { ConfigurationDocument, I18N, CustomLanguageConfigurations } from 'idai-field-core';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
@@ -38,6 +38,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public isCustomCategory = () => this.category.source === 'custom';
+
+
     public initialize() {
 
         super.initialize();
@@ -51,7 +54,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 color: this.category.color,
                 parent: this.category.parentCategory.name,
                 fields: {},
-                groups: ConfigurationUtil.createGroupsConfiguration(
+                groups: CategoryForm.getGroupsConfiguration(
                     this.category,
                     ConfigurationDocument.getPermanentlyHiddenFields(this.configurationDocument, this.category)
                 )
@@ -61,10 +64,18 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().color = this.currentColor;
             }
         }
+
+        if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
     }
 
 
     public async save() {
+
+        try {
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
 
         if (this.getClonedFormDefinition().color ===
                 CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
@@ -73,14 +84,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         }
 
         if (this.new) {
-            this.clonedConfigurationDocument.resource.order = ConfigurationUtil.addToCategoriesOrder(
-                this.clonedConfigurationDocument.resource.order,
+            this.clonedConfigurationDocument = ConfigurationDocument.addToCategoriesOrder(
+                this.clonedConfigurationDocument,
                 this.category.name,
                 this.category.parentCategory?.name
             );
         }
 
-        await super.save(this.new);
+        await super.save();
     }
 
 
@@ -89,7 +100,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
-            || this.getClonedFormDefinition().color !== this.currentColor;
+            || this.getClonedFormDefinition().color !== this.currentColor
+            || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
+                this.getClonedFormDefinition());
     }
 
 

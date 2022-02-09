@@ -10,16 +10,15 @@
                   class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
         </div>
         <div *ngIf="!item.isCategoryHeader">
+            <span class="mdi mdi-script-text-outline"></span>
             <code>{{item.form.libraryId}}</code>
             <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
         </div>
     </li>
     <li *ngIf="isNewCategoryOptionShown()"
-        class="category-header new-item-option"
-        [class.selected]="selectedForm === emptyForm"
+        class="new-entry-button btn btn-success"
         (click)="selectForm(emptyForm)">
-        <span class="mdi mdi-plus-circle mdi-24px"></span>
-        <span class="item-label" i18n="@@configuration.newCategory">Neue Kategorie</span>
-        <code>{{searchTerm}}</code>
+        <span class="mdi mdi-plus-circle"></span>
+        <div i18n="@@configuration.newCategory">Neue Kategorie <code>{{searchTerm}}</code> erstellen</div>        
     </li>
 </ul>

@@ -3,6 +3,7 @@ import { Server } from 'http';
 import PouchDB from 'pouchdb-node';
 import { IdGenerator, PouchdbDatastore, SyncService, SyncStatus } from '../../../src/datastore';
 import { doc } from '../../test-helpers';
+import { Document } from '../../../src/model/document';
 
 /**
  * @author Sebastian Cuy
@@ -26,7 +27,7 @@ import { doc } from '../../test-helpers';
         }
 
         const datastore = new PouchdbDatastore(name => new PouchDB(name), new IdGenerator());
-        const localDb = await datastore.createDb('test_local', { _id: 'project' }, true);
+        const localDb = await datastore.createDb('test_local', { _id: 'project' } as Document, null, true);
         const syncService = new SyncService(datastore);
 
         return { server, syncService, remoteDb, localDb };

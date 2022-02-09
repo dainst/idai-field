@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { to } from 'tsfun';
+import { to, Map } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
     createContextIndependentCategories, Field, Name, ProjectConfiguration, RawProjectConfiguration,
-    Tree, Valuelist } from 'idai-field-core';
+    Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
 import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
+import { CategoryFormChildrenIndex } from './category-form-children-index';
 
 
 /**
@@ -16,14 +17,20 @@ import { ValuelistUsage, ValuelistUsageIndex } from './valuelist-usage-index';
 export class ConfigurationIndex {
 
     private categoryFormIndex: CategoryFormIndex;
+    private categoryFormChildrenIndex: CategoryFormChildrenIndex;
     private fieldIndex: FieldIndex;
     private valuelistIndex: ValuelistIndex;
     private valuelistUsageIndex: ValuelistUsageIndex;
+    private valuelists: Map<Valuelist>;
+    private templates: Map<Template>;
 
 
     constructor(private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
                 private projectConfiguration: ProjectConfiguration) {}
+
+    
+    public getTemplates = (): Map<Template> => this.templates;
 
 
     public findCategoryForms(searchTerm: string, parentCategory?: Name,
@@ -45,9 +52,21 @@ export class ConfigurationIndex {
     }
 
 
+    public getValuelist(valuelistId: string): Valuelist {
+
+        return this.valuelists[valuelistId];
+    }
+
+
     public getValuelistUsage(valuelistId: string): Array<ValuelistUsage>|undefined {
 
         return ValuelistUsageIndex.get(this.valuelistUsageIndex, valuelistId);
+    }
+
+
+    public getCategoryFormChildren(parentName: string): Array<CategoryForm> {
+
+        return CategoryFormChildrenIndex.getChildren(this.categoryFormChildrenIndex, parentName);
     }
 
 
@@ -65,10 +84,11 @@ export class ConfigurationIndex {
                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
                             usedCategories: Array<CategoryForm>) {
 
-        this.categoryFormIndex = CategoryFormIndex.create(forms),
-        this.fieldIndex = FieldIndex.create(categories, commonFields),
-        this.valuelistIndex = ValuelistIndex.create(valuelists),
-        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories)
+        this.categoryFormIndex = CategoryFormIndex.create(forms);
+        this.categoryFormChildrenIndex = CategoryFormChildrenIndex.create(forms);
+        this.fieldIndex = FieldIndex.create(categories, commonFields);
+        this.valuelistIndex = ValuelistIndex.create(valuelists);
+        this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategories);
     }
 
 
@@ -92,6 +112,9 @@ export class ConfigurationIndex {
             this.getTopLevelCategoriesLibraryIds(),
             languages
         );
+
+        this.valuelists = rawConfiguration.valuelists;
+        this.templates = await this.configLoader.readTemplates();
 
         this.createSubIndices(
             Tree.flatten(rawConfiguration.forms),

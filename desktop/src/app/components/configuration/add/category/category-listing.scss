@@ -11,7 +11,7 @@ category-listing {
         padding: 5px;
       }
 
-      &:hover:not(.category-header) {
+      &:hover:not(.category-header):not(.new-entry-button) {
         background-color: darken($list-item-hover-color, 5%);
         transition: background-color .5s ease;
       }
@@ -21,6 +21,12 @@ category-listing {
         top: 2px;
         margin-left: 4px;
         margin-right: 10px;
+      }
+
+      .mdi-script-text-outline {
+        position: relative;
+        bottom: 1px;
+        color: #414952;
       }
 
       .badge {

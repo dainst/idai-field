@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree } from 'idai-field-core';
+    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
+    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore} from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -15,18 +17,21 @@ import { ConfigurationContextMenu } from './context-menu/configuration-context-m
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
-import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
+import { CategoriesFilter, ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { DeleteCategoryModalComponent } from './delete/delete-category-modal.component';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
-import { SaveModalComponent } from './save-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Modals } from '../../services/modals';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { MenuNavigator } from '../menu-navigator';
 import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
+import { OrderChange } from '../widgets/category-picker.component';
+import { SaveProcessModalComponent } from './save/save-process-modal.component';
+import { SaveModalComponent } from './save/save-modal.component';
+import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 
 
 export type SaveResult = {
@@ -40,6 +45,7 @@ export type SaveResult = {
     templateUrl: './configuration.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
     }
@@ -51,10 +57,25 @@ export type SaveResult = {
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public topLevelCategoriesArray: Array<CategoryForm>;
+    public filteredTopLevelCategoriesArray: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
+    public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
-    public dragging: boolean = false;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    
+    public dragging: boolean = false;
+    public changed: boolean = false;
+    public escapeKeyPressed: boolean = false;
+
+    public categoriesFilterOptions: Array<CategoriesFilter> = [
+        { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
+        { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
+        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Grabung' }) },
+        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauaufnahme' }) },
+        { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
+        { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
+        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
+    ];
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
@@ -78,9 +99,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) }
     ];
 
-    public saveAndReload = (configurationDocument: ConfigurationDocument, reindexCategory?: string,
-                            reindexConfiguration?: boolean): Promise<SaveResult> =>
-        this.configureAppSaveChangesAndReload(configurationDocument, reindexCategory, reindexConfiguration);
+    public applyChanges = (configurationDocument: ConfigurationDocument,
+                           reindexConfiguration?: boolean): Promise<SaveResult> =>
+        this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
 
@@ -93,10 +114,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private settingsProvider: SettingsProvider,
                 private appConfigurator: AppConfigurator,
                 private configurationIndex: ConfigurationIndex,
+                private configReader: ConfigReader,
                 private labels: Labels,
                 private indexFacade: IndexFacade,
                 private menus: Menus,
                 private menuNavigator: MenuNavigator,
+                private modalService: NgbModal,
+                private documentCache: DocumentCache,
+                private categoryConverter: CategoryConverter,
+                private pouchdbDatastore: PouchdbDatastore,
                 private i18n: I18n) {}
 
 
@@ -110,11 +136,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.loadCategories();
 
-        this.configurationDocument = await this.datastore.get(
-            'configuration',
-            { skipCache: true }
-        ) as ConfigurationDocument;
-
+        this.configurationDocument = await this.fetchConfigurationDocument();
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
     }
@@ -129,9 +151,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION) {
+        if (event.key !== 'Escape') return;
+
+        if (!this.escapeKeyPressed && this.menus.getContext() === MenuContext.CONFIGURATION) {
             await this.tabManager.openActiveTab();
+        } else {
+            this.escapeKeyPressed = true;
         }
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
 
@@ -149,6 +181,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
             this.contextMenu.close();
         }
+    }
+
+
+    public setCategoriesFilter(filterName: string, selectFirstCategory: boolean = true) {
+
+        this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
+        this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
+            this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.projectConfiguration
+        );
+
+        if (selectFirstCategory) this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
     }
 
 
@@ -182,7 +225,30 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public async saveNewCategoriesOrder() {
+    public async applyOrderChange(orderChange: OrderChange) {
+
+        if (orderChange.parentCategory) {
+            InPlace.moveInArray(
+                this.topLevelCategoriesArray
+                    .find(category => category.name === orderChange.parentCategory.name)
+                    .children,
+                    orderChange.previousIndex,
+                orderChange.currentIndex
+            );
+        } else {
+            const previousIndex: number = this.topLevelCategoriesArray.indexOf(
+                this.filteredTopLevelCategoriesArray[orderChange.previousIndex]
+            );
+            const currentIndex: number = (orderChange.currentIndex === 0)
+                ? this.topLevelCategoriesArray.indexOf(this.filteredTopLevelCategoriesArray[0])
+                : this.topLevelCategoriesArray.indexOf(this.filteredTopLevelCategoriesArray[orderChange.currentIndex - 1]) + 1;
+
+            InPlace.moveInArray(
+                this.topLevelCategoriesArray,
+                previousIndex,
+                currentIndex
+            );
+        }
 
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource.order = ConfigurationUtil.getCategoriesOrder(
@@ -190,7 +256,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         );
 
         try {
-            await this.configureAppSaveChangesAndReload(clonedConfigurationDocument);
+            await this.updateProjectConfiguration(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -208,13 +274,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
+        componentInstance.categoriesFilter = this.selectedCategoriesFilter;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
@@ -228,11 +295,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
@@ -253,7 +320,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.initialize();
@@ -275,7 +342,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.group = group;
@@ -296,7 +363,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = category;
         componentInstance.field = field;
@@ -316,13 +383,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<AddCategoryFormModalComponent>(
             AddCategoryFormModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.categoryToReplace = category;
+        componentInstance.categoryFormToReplace = category;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
@@ -384,13 +451,62 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    public async openSaveModal(): Promise<boolean> {
+
+        this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                SaveModalComponent, { keyboard: false }
+            );
+            
+            await modalRef.result;
+            await this.save();
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.CONFIGURATION);
+        }
+    }
+
+
+    public async openDiscardChangesModal(): Promise<boolean> {
+
+        this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                EditSaveDialogComponent, { keyboard: false }
+            );
+            modalRef.componentInstance.changeMessage = this.i18n({
+                id: 'configuration.changes', value: 'An der Konfiguration wurden Änderungen vorgenommen.'
+            });
+            modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+
+            const result: string = await modalRef.result;
+
+            if (result === 'save') {
+                return await this.openSaveModal();
+            } else if (result === 'discard') {
+                await this.discardChanges();
+                return true;
+            }
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.CONFIGURATION);
+        }
+    }
+
+
     private async deleteCategory(category: CategoryForm) {
 
         try {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteCategory(
                 this.configurationDocument, category
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -408,7 +524,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 group,
                 Tree.flatten(this.projectConfiguration.getCategories()).filter(c => c.name !== category.name),
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -423,7 +539,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteField(
                 this.configurationDocument, category, field
             );
-            await this.configureAppSaveChangesAndReload(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -436,12 +552,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
             ManageValuelistsModalComponent,
-            MenuContext.VALUELISTS_MANAGEMENT,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -463,20 +579,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         if (this.selectedCategory) {
             this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
-        } else {
-            this.selectCategory(this.topLevelCategoriesArray[0]);
         }
+
+        this.setCategoriesFilter(
+            this.selectedCategoriesFilter?.name ?? 'project',
+            this.selectedCategory === undefined
+        );
     }
 
 
-    private async configureAppSaveChangesAndReload(configurationDocument: ConfigurationDocument,
-                                                   reindexCategory?: string,
-                                                   reindexConfiguration?: boolean): Promise<SaveResult> {
-
-        const [, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
-            SaveModalComponent,
-            MenuContext.CONFIGURATION_MODAL
-        );
+    private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
+                                             reindexConfiguration?: boolean): Promise<SaveResult> {
 
         let newProjectConfiguration;
         try {
@@ -486,21 +599,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 Document.clone(configurationDocument)
             );
         } catch (errWithParams) {
-            this.modals.closeModal(componentInstance);
             throw errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
         }
 
         try {
-            try {
-                this.configurationDocument = await this.datastore.update(
-                    configurationDocument
-                ) as ConfigurationDocument;
-            } catch (errWithParams) {
-                this.messages.add(MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels));
-                throw errWithParams;
-            }
             this.projectConfiguration.update(newProjectConfiguration);
-            if (reindexCategory) await this.reindex(this.projectConfiguration.getCategory(reindexCategory));
+            this.configurationDocument = configurationDocument;
             if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
@@ -510,7 +614,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             console.error('error in configureAppSaveChangesAndReload', e);
         }
 
-        this.modals.closeModal(componentInstance);
+        this.changed = true;
 
         return {
             configurationDocument: this.configurationDocument,
@@ -519,16 +623,55 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private async reindex(category: CategoryForm) {
+    private async save() {
 
-        CategoryForm.getFields(category).forEach(field => {
-            this.indexFacade.addConstraintIndexDefinitionsForField(field)
-        });
+        const [, componentInstance] = this.modals.make<SaveProcessModalComponent>(
+            SaveProcessModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
 
-        const documents: Array<Document> = (await this.datastore.find(
-            { categories: [category.name] }
-        )).documents
+        try {
+            this.configurationDocument = this.configurationDocument._rev
+                ? await this.datastore.update(this.configurationDocument) as ConfigurationDocument
+                : await this.datastore.create(this.configurationDocument) as ConfigurationDocument;
+            await this.reindex();
+        } catch (errWithParams) {
+            this.modals.closeModal(componentInstance);
+            this.messages.add(
+                MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels)
+            );
+        }
 
-        await this.indexFacade.putMultiple(documents);
+        this.changed = false;
+        this.modals.closeModal(componentInstance);
+    }
+
+
+    private async discardChanges() {
+
+        await this.updateProjectConfiguration(await this.fetchConfigurationDocument(), true);
+        this.changed = false;
+    }
+
+
+    private async fetchConfigurationDocument(): Promise<ConfigurationDocument> {
+
+        return await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => this.datastore.get(id, { skipCache: true }),
+            this.configReader,
+            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            this.settingsProvider.getSettings().username
+        ) as ConfigurationDocument;
+    }
+
+
+    private async reindex() {
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            this.categoryConverter
+        );
     }
 }

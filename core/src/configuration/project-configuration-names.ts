@@ -30,11 +30,11 @@ export const PROJECT_MAPPING = {
 };
 
 
-export function getConfigurationName(projectName: Name): Name|undefined {
+export function getConfigurationName(projectName: Name): Name {
 
     for (let [name, project] of Object.entries(PROJECT_MAPPING)) {
         if (projectName === name || projectName.startsWith(name + '-')) return project.prefix;
     }
 
-    return undefined;
+    return 'Default';
 }

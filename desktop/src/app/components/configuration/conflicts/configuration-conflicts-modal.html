@@ -1,0 +1,156 @@
+<div class="modal-header configuration-editor-modal-header">
+    <h5 class="modal-title" i18n="@@configuration.conflicts.header">Konflikte in der Projektkonfiguration</h5>
+
+    <button id="save-button" class="btn btn-success"
+            [ngClass]="{ 'disabled': saving || inspectedRevisions.length === 0 }"
+            (click)="saving || inspectedRevisions.length === 0 || save()">
+        <span class="mdi mdi-content-save"></span>
+        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    </button>
+    <button class="btn btn-primary"
+            [class.disabled]="saving"
+            (click)="saving || cancel()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+
+<div id="conflict-resolver" class="modal-body configuration-conflicts-modal-body">
+    <div *ngIf="!isLoading()">
+        <revision-selector [document]="configurationDocument"
+                        [conflictedRevisions]="conflictedRevisions"
+                        [inspectedRevisions]="inspectedRevisions"
+                        [selectedRevision]="selectedRevision"
+                        [winningSide]="winningSide"
+                        (onSelectWinningSide)="winningSide = $event"
+                        (onSelectRevision)="setSelectedRevision($event)"></revision-selector>
+        <div *ngIf="differingForms?.length" class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@configuration.conflicts.differingForms">Formulare</h3>
+            </div>
+            <div class="row h-100">
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'left'"
+                     [class.losing-side]="winningSide === 'right'">
+                    <div *ngFor="let formName of differingForms">
+                        {{formName}} 
+                        <span *ngIf="getDiffType(formName, configurationDocument, selectedRevision, 'forms') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(formName, configurationDocument, selectedRevision, 'forms') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(formName, configurationDocument, selectedRevision, 'forms') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'right'"
+                     [class.losing-side]="winningSide === 'left'">
+                    <div *ngFor="let formName of differingForms">
+                        {{formName}} 
+                        <span *ngIf="getDiffType(formName, selectedRevision, configurationDocument, 'forms') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(formName, selectedRevision, configurationDocument, 'forms') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(formName, selectedRevision, configurationDocument, 'forms') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="differingLanguages?.length" class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@configuration.conflicts.differingLanguages">Texte / Übersetzungen</h3>
+            </div>
+            <div class="row h-100">
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'left'"
+                     [class.losing-side]="winningSide === 'right'">
+                    <div *ngFor="let code of differingLanguages">
+                        {{getLanguageLabel(code)}} 
+                        <span *ngIf="getDiffType(code, configurationDocument, selectedRevision, 'languages') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(code, configurationDocument, selectedRevision, 'languages') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(code, configurationDocument, selectedRevision, 'languages') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'right'"
+                     [class.losing-side]="winningSide === 'left'">
+                    <div *ngFor="let code of differingLanguages">
+                        {{getLanguageLabel(code)}} 
+                        <span *ngIf="getDiffType(code, selectedRevision, configurationDocument, 'languages') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(code, selectedRevision, configurationDocument, 'languages') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(code, selectedRevision, configurationDocument, 'languages') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="differingValuelists?.length" class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@configuration.conflicts.differingValuelists">Wertelisten</h3>
+            </div>
+            <div class="row h-100">
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'left'"
+                     [class.losing-side]="winningSide === 'right'">
+                    <div *ngFor="let valuelist of differingValuelists">
+                        {{valuelist}} 
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(valuelist, configurationDocument, selectedRevision, 'valuelists') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'right'"
+                     [class.losing-side]="winningSide === 'left'">
+                    <div *ngFor="let valuelist of differingValuelists">
+                        {{valuelist}} 
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'edited'"
+                              i18n="@@configuration.conflicts.edited">(editiert)</span>
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'new'"
+                              i18n="@@configuration.conflicts.new">(neu)</span>
+                        <span *ngIf="getDiffType(valuelist, selectedRevision, configurationDocument, 'valuelists') === 'missing'"
+                              i18n="@@configuration.conflicts.notSet">(nicht gesetzt)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isDifferingOrder" class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@configuration.conflicts.differingCategoriesOrder">Reihenfolge der Kategorien</h3>
+            </div>
+            <div class="row h-100">
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'left'"
+                     [class.losing-side]="winningSide === 'right'">
+                    <div>{{getCategoriesOrder(configurationDocument)}}</div>
+                </div>
+                <div class="col-md-6 my-auto conflict-resolver-field"
+                     [class.winning-side]="winningSide === 'right'"
+                     [class.losing-side]="winningSide === 'left'">
+                    <div>{{getCategoriesOrder(selectedRevision)}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedRevision" class="text-center">
+            <button class="btn btn-primary" id="solve-conflict-button" (click)="solveConflict()">
+                <span i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isLoadingIconVisible()">
+        <loading-icon [context]="'configuration-conflicts'"></loading-icon>
+    </div>
+</div>

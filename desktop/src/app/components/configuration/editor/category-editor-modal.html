@@ -28,12 +28,18 @@
         <multi-language-input [translations]="clonedLabel"
             [defaultTranslations]="category.defaultLabel"></multi-language-input>
     </div>
-    <div *ngIf="!category.libraryId" class="configuration-editor-section">
+    <div *ngIf="isCustomCategory()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
             [defaultTranslations]="category.defaultDescription"></multi-language-input>
+    </div>
+    <div *ngIf="isCustomCategory()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="getClonedFormDefinition().references"></references-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.color">

@@ -1,3 +1,7 @@
+<configuration-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
+
 <div class="modal-header">
     <h5 class="modal-title"
         i18n="@@configuration.selectValuelist">Werteliste auswählen</h5>
@@ -11,12 +15,14 @@
                            [selectedValuelist]="selectedValuelist"
                            [emptyValuelist]="emptyValuelist"
                            [searchTerm]="searchQuery.queryString"
+                           [contextMenu]="contextMenu"
                            [currentValuelistId]="clonedField?.valuelist?.id"
-                           (onValuelistSelected)="select($event)">
+                           (onValuelistSelected)="select($event)"
+                           (onOpenEditor)="openEditValuelistModal($event)">
         </valuelist-listing>
     </div>
     <div class="col-md-6">
-        <valuelist-preview [valuelist]="selectedValuelist"></valuelist-preview>
+        <valuelist-preview [valuelist]="getCompleteValuelist()"></valuelist-preview>
     </div>
 </div>
 

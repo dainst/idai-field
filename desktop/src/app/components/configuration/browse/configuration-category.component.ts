@@ -1,16 +1,17 @@
 import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { and, any, compose, includedIn, is, map, nop, not, on, or, Predicate, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace, Groups, Labels} from 'idai-field-core';
-import { ConfigurationUtil, InputType } from '../../components/configuration/configuration-util';
-import { AddFieldModalComponent } from './add/field/add-field-modal.component';
-import { Messages } from '../messages/messages';
-import { AddGroupModalComponent } from './add/group/add-group-modal.component';
-import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
-import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
-import { MenuContext } from '../../services/menu-context';
-import { Modals } from '../../services/modals';
-import { SaveResult } from './configuration.component';
+import { CategoryForm, ConfigurationDocument, Field, Group, Named, Document, GroupDefinition, InPlace,
+    Labels} from 'idai-field-core';
+import { InputType } from '../configuration-util';
+import { AddFieldModalComponent } from '../add/field/add-field-modal.component';
+import { Messages } from '../../messages/messages';
+import { AddGroupModalComponent } from '../add/group/add-group-modal.component';
+import { GroupEditorModalComponent } from '../editor/group-editor-modal.component';
+import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
+import { MenuContext } from '../../../services/menu-context';
+import { Modals } from '../../../services/modals';
+import { SaveResult } from '../configuration.component';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() saveAndReload: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
@@ -67,12 +68,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.updateLabelAndDescription();
     }
 
-
-    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
-
     public getGroupLabel = (group: Group) => this.labels.get(group);
 
-    public getGroupListIds = () => this.getGroups().map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -96,7 +94,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getFields(): Array<Field> {
 
-        return this.getGroups()
+        return this.category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .fields
             .filter(
@@ -139,7 +137,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         const [result, componentInstance] = this.modals.make<AddFieldModalComponent>(
             AddFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -148,7 +146,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
@@ -171,7 +169,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async onFieldDrop(event: CdkDragDrop<any>, targetGroup?: Group) {
 
-        const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+        const groups: Array<GroupDefinition> = CategoryForm.getGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
         const selectedGroupDefinition: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
@@ -194,7 +192,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public async onGroupDrop(event: CdkDragDrop<any>) {
 
-        const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
+        const groups: Array<GroupDefinition> = CategoryForm.getGroupsConfiguration(
             this.category, this.permanentlyHiddenFields
         );
         InPlace.moveInArray(groups, event.previousIndex, event.currentIndex);
@@ -212,7 +210,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
             .groups = newGroups;
 
         try {
-            await this.saveAndReload(clonedConfigurationDocument);
+            await this.applyChanges(clonedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
@@ -229,7 +227,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
                 'lg'
             );
 
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.group = {

@@ -4,7 +4,11 @@
             <li *ngFor="let document of conflicts" class="list-group-item"
                 [id]="'taskbar-conflict-' + document.resource.identifier"
                 (click)="openConflictResolver(document)">
-                <document-teaser [document]="document"></document-teaser>
+                <document-teaser *ngIf="document.resource.category !== 'Configuration'" [document]="document"></document-teaser>
+                <span *ngIf="document.resource.category === 'Configuration'"
+                      i18n="@@navbar.taskbar.conflicts.projectConfiguration">
+                    Projektkonfiguration
+                </span>
             </li>
         </ul>
     </ng-template>

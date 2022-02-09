@@ -1,10 +1,9 @@
-import {flow, left, reverse} from 'tsfun';
-import {Dating, Dimension, Literature, OptionalRange} from 'idai-field-core';
-import {CSVExpansion} from './csv-expansion';
-import {Field} from 'idai-field-core';
-import {H, HeadingsAndMatrix} from './csv-export-consts';
-import {CsvExportUtils} from './csv-export-utils';
-import {CSVHeadingsExpansion} from './csv-headings-expansion';
+import { flow, left, reverse } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange, Field } from 'idai-field-core';
+import { CSVExpansion } from './csv-expansion';
+import { H, HeadingsAndMatrix } from './csv-export-consts';
+import { CsvExportUtils } from './csv-export-utils';
+import { CSVHeadingsExpansion } from './csv-headings-expansion';
 
 
 /**
@@ -20,7 +19,7 @@ export module CSVMatrixExpansion {
 
     const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
-    const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 2);
+    const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 5);
 
 
     export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
@@ -93,10 +92,10 @@ export module CSVMatrixExpansion {
 
         const expandedDating = [
             type ? type : '',
-            begin && begin.inputType ? begin.inputType : '',
-            begin && begin.inputYear ? begin.inputYear.toString() : '',
-            end && end.inputType ? end.inputType : '',
-            end && end.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
+            begin?.inputType ?? '',
+            begin?.inputYear ? begin.inputYear.toString() : '',
+            end?.inputType ?? '',
+            end?.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
             margin ? margin.toString() : '',
             source ? source : ''
         ];
@@ -123,9 +122,9 @@ export module CSVMatrixExpansion {
         const expandedDimension = [
             (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
             (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
-            measurementPosition ? measurementPosition : '',
-            measurementComment ? measurementComment : '',
-            inputUnit ? inputUnit : ''
+            measurementPosition ?? '',
+            measurementComment ?? '',
+            inputUnit ?? ''
         ];
 
         if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
@@ -136,11 +135,14 @@ export module CSVMatrixExpansion {
 
     function rowsWithLiteratureElementsExpanded(literature: Literature): string[] {
 
-        const { quotation, zenonId } = literature;
+        const { quotation, zenonId, doi, page, figure } = literature;
 
         const expandedLiterature = [
-            quotation ? quotation : '',
-            zenonId ? zenonId : '',
+            quotation ?? '',
+            zenonId ?? '',
+            doi ?? '',
+            page ?? '',
+            figure ?? ''
         ];
 
         return expandedLiterature;

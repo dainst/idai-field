@@ -3,6 +3,7 @@ import { Field } from '../../model/configuration/field';
 import { Relation } from '../../model/configuration/relation';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { BuiltInFormDefinition } from '../model/form/built-in-form-definition';
+import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
 
@@ -12,9 +13,8 @@ import { ConfigurationErrors } from './configuration-errors';
  * @author Thomas Kleinke 
  */
 export function addFieldsToForm(form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                                builtInFields: Map<Field>,
-                                commonFields: Map<Field>,
-                                relations: Array<Relation>,
+                                builtInFields: Map<Field>, commonFields: Map<Field>,
+                                relations: Array<Relation>, parentForm?: CustomFormDefinition,
                                 extendedForm?: TransientFormDefinition): TransientFormDefinition {
 
     const fieldNames: string[] = getFieldNames(form, categories, extendedForm);
@@ -23,7 +23,7 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
     if (extendedForm) Object.assign(clonedForm.fields, extendedForm.fields);
 
     clonedForm.fields = fieldNames.reduce((fields, fieldName) => {
-        const field = getField(fieldName, form, categories, builtInFields, commonFields, relations);
+        const field = getField(fieldName, form, categories, builtInFields, commonFields, relations, parentForm);
         if (field) fields[fieldName] = field;
         return fields;
     }, clonedForm.fields ?? {});
@@ -57,7 +57,8 @@ function getFieldNames(form: TransientFormDefinition, categories: Map<TransientC
  * @returns the field definition or undefined if the field is a relation
  */
 function getField(fieldName: string, form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                  builtInFields: Map<Field>, commonFields: Map<Field>, relations: Array<Relation>): Field|undefined {
+                  builtInFields: Map<Field>, commonFields: Map<Field>, relations: Array<Relation>,
+                  parentForm?: CustomFormDefinition): Field|undefined {
     
     const parentName: string|undefined = form.parent ?? categories[form.categoryName]?.parent;
 
@@ -69,7 +70,8 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         ?? commonFields[fieldName]
         ?? parentCategoryFields[fieldName]
         ?? categories[form.categoryName]?.fields[fieldName] as Field
-        ?? (form.fields ? form.fields[fieldName] as Field : undefined);
+        ?? (parentForm?.fields ? parentForm.fields[fieldName] as Field : undefined)
+        ?? (form.fields ? form.fields[fieldName] as Field : undefined)
 
     if (form.fields && form.fields[fieldName] && form.fields[fieldName].constraintIndexed !== undefined) {
         field.constraintIndexed = form.fields[fieldName].constraintIndexed;

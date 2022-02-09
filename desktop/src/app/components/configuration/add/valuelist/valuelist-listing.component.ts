@@ -20,10 +20,10 @@ export class ValuelistListingComponent {
     @Input() emptyValuelist: Valuelist|undefined;
     @Input() searchTerm: string = '';
     @Input() currentValuelistId: string|undefined;
-    @Input() showCreateOptionAsButton: boolean;
     @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
+    @Output() onOpenEditor = new EventEmitter<Valuelist>();
 
 
     constructor(private labels: Labels,
@@ -31,6 +31,8 @@ export class ValuelistListingComponent {
 
 
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
+
+    public openEditor = (valuelist: Valuelist) => this.onOpenEditor.emit(valuelist);
 
     public getLabel = (value: any) => this.labels.get(value);
 

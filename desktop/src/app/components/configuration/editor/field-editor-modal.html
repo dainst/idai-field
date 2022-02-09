@@ -78,7 +78,13 @@
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
-            [defaultTranslations]="field.defaultDescription" [disabled]="hidden"></multi-language-input>
+            [defaultTranslations]="field.defaultDescription || {}" [disabled]="hidden"></multi-language-input>
+    </div>
+    <div *ngIf="isCustomField()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="getClonedFieldDefinition().references"></references-input>
     </div>
     <div *ngIf="isValuelistSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
@@ -93,7 +99,7 @@
                             type="button"
                             (click)="selectValuelist()"
                             ngbTooltip="Werteliste wechseln"
-                            i18n-ngbTooltip="@@configiguration.replaceValuelist"
+                            i18n-ngbTooltip="@@configuration.replaceValuelist"
                             container="body"
                             placement="right">
                         <span class="mdi mdi-swap-horizontal"></span>
@@ -104,7 +110,7 @@
                             type="button"
                             (click)="editValuelist()"
                             ngbTooltip="Werteliste bearbeiten"
-                            i18n-ngbTooltip="@@configiguration.editValuelist"
+                            i18n-ngbTooltip="@@configuration.editValuelist"
                             container="body"
                             placement="right">
                         <span class="mdi mdi-pencil"></span>
@@ -119,7 +125,7 @@
             <button id="add-valuelist-button" class="btn btn-success" type="button"
                     (click)="selectValuelist()"
                     ngbTooltip="Werteliste hinzufügen"
-                    i18n-ngbTooltip="@@configiguration.addValuelist"
+                    i18n-ngbTooltip="@@configuration.addValuelist"
                     container="body"
                     placement="right">
                 <span class="mdi mdi-plus"></span>

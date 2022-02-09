@@ -2176,60 +2176,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -4036,6 +4046,15 @@
           ],
           "relations": [
             {
+              "name": "isPresentIn",
+              "label": {
+                "de": "Ist enthalten in Profil/Planum",
+                "en": "Is present in profile/planum",
+                "it": "Fa parte della sezione/pianta"
+              },
+              "description": {}
+            },
+            {
               "name": "isAbove",
               "label": {
                 "de": "Liegt über",
@@ -4153,60 +4172,70 @@
                   "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                      "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                       "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                     }
                   },
-                  "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                  "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                      "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                       "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                     }
                   },
                   "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                      "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                       "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                     }
                   },
                   "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                      "en": "Phase 4 (4th - end of 2nd century BCE)",
                       "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                     }
                   },
                   "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                      "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                       "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                     }
                   },
                   "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                       "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 7 (Third quarter of the 1st century CE)",
                       "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                      "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                       "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                      "en": "Phase 9 (Mid 2nd century CE)",
                       "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                     }
                   },
                   "Phase 10 (Ende 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                      "en": "Phase 10 (End of 2nd century CE)",
                       "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                     }
                   }
@@ -5642,6 +5671,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -5759,60 +5797,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -7492,6 +7540,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -7609,60 +7666,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -9143,6 +9210,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -9260,60 +9336,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -11273,6 +11359,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -11390,60 +11485,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -12935,6 +13040,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -13052,60 +13166,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -14557,6 +14681,15 @@
               ],
               "relations": [
                 {
+                  "name": "isPresentIn",
+                  "label": {
+                    "de": "Ist enthalten in Profil/Planum",
+                    "en": "Is present in profile/planum",
+                    "it": "Fa parte della sezione/pianta"
+                  },
+                  "description": {}
+                },
+                {
                   "name": "isAbove",
                   "label": {
                     "de": "Liegt über",
@@ -14674,60 +14807,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -16008,60 +16151,70 @@
                   "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                      "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                       "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                     }
                   },
-                  "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                  "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                      "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                       "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                     }
                   },
                   "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                      "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                       "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                     }
                   },
                   "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                      "en": "Phase 4 (4th - end of 2nd century BCE)",
                       "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                     }
                   },
                   "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                      "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                       "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                     }
                   },
                   "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                       "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 7 (Third quarter of the 1st century CE)",
                       "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                      "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                       "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                      "en": "Phase 9 (Mid 2nd century CE)",
                       "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                     }
                   },
                   "Phase 10 (Ende 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                      "en": "Phase 10 (End of 2nd century CE)",
                       "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                     }
                   }
@@ -17807,60 +17960,70 @@
                   "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                      "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                       "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                     }
                   },
-                  "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                  "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                      "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                       "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                     }
                   },
                   "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                      "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                       "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                     }
                   },
                   "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                      "en": "Phase 4 (4th - end of 2nd century BCE)",
                       "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                     }
                   },
                   "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                      "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                       "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                     }
                   },
                   "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                       "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 7 (Third quarter of the 1st century CE)",
                       "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                      "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                       "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                      "en": "Phase 9 (Mid 2nd century CE)",
                       "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                     }
                   },
                   "Phase 10 (Ende 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                      "en": "Phase 10 (End of 2nd century CE)",
                       "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                     }
                   }
@@ -18184,6 +18347,57 @@
               }
             },
             {
+              "inputType": "radio",
+              "source": "custom",
+              "valuelist": {
+                "createdBy": "Heike Möller, Hanna Hamel",
+                "creationDate": "2021",
+                "description": {
+                  "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                  "en": "",
+                  "fr": ""
+                },
+                "values": {
+                  "Stück": {
+                    "labels": {
+                      "de": "Stück",
+                      "en": "piece",
+                      "fr": "pièce"
+                    }
+                  },
+                  "Eimer": {
+                    "labels": {
+                      "de": "Eimer",
+                      "en": "bucket",
+                      "fr": "seau"
+                    }
+                  },
+                  "Kiste": {
+                    "labels": {
+                      "de": "Kiste",
+                      "en": "box",
+                      "fr": "caisse"
+                    }
+                  },
+                  "Tüte": {
+                    "labels": {
+                      "de": "Tüte",
+                      "en": "bag",
+                      "fr": "sachet"
+                    }
+                  }
+                },
+                "id": "Find-amountDescription-bourgou"
+              },
+              "name": "amountDescription",
+              "label": {
+                "de": "Anzahl (Einheit)",
+                "en": "Quantity (Unit)",
+                "fr": "Quantité(Unité)"
+              },
+              "description": {}
+            },
+            {
               "inputType": "text",
               "source": "common",
               "name": "description",
@@ -18457,53 +18671,6 @@
               "source": "custom",
               "valuelist": {
                 "createdBy": "Heike Möller, Hanna Hamel",
-                "creationDate": "2021",
-                "description": {
-                  "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                  "en": "",
-                  "fr": ""
-                },
-                "values": {
-                  "Stück": {
-                    "labels": {
-                      "de": "Stück",
-                      "en": "piece",
-                      "fr": "pièce"
-                    }
-                  },
-                  "Eimer": {
-                    "labels": {
-                      "de": "Eimer",
-                      "en": "bucket",
-                      "fr": "seau"
-                    }
-                  },
-                  "Kiste": {
-                    "labels": {
-                      "de": "Kiste",
-                      "en": "box",
-                      "fr": "caisse"
-                    }
-                  },
-                  "Tüte": {
-                    "labels": {
-                      "de": "Tüte",
-                      "en": "bag",
-                      "fr": "sachet"
-                    }
-                  }
-                },
-                "id": "Find-amountDescription-bourgou"
-              },
-              "name": "amountDescription",
-              "label": {},
-              "description": {}
-            },
-            {
-              "inputType": "radio",
-              "source": "custom",
-              "valuelist": {
-                "createdBy": "Heike Möller, Hanna Hamel",
                 "creationDate": "17-08-2020",
                 "description": {
                   "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -18541,14 +18708,22 @@
                 "id": "Find-samplePl-bourgou"
               },
               "name": "sampleStatus",
-              "label": {},
+              "label": {
+                "de": "Probenstatus",
+                "en": "Status of samples",
+                "fr": "Statut de l'échantillon"
+              },
               "description": {}
             },
             {
               "inputType": "input",
               "source": "custom",
               "name": "sampleComm",
-              "label": {},
+              "label": {
+                "de": "Kommentar zur Probe",
+                "en": "Comment on samples",
+                "fr": "Commentaire sur les échantillons"
+              },
               "description": {}
             }
           ],
@@ -18959,60 +19134,70 @@
                   "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                      "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                       "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                     }
                   },
-                  "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                  "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                      "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                       "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                     }
                   },
                   "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                      "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                       "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                     }
                   },
                   "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                      "en": "Phase 4 (4th - end of 2nd century BCE)",
                       "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                     }
                   },
                   "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                      "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                       "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                     }
                   },
                   "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                       "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 7 (Third quarter of the 1st century CE)",
                       "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                      "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                       "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                      "en": "Phase 9 (Mid 2nd century CE)",
                       "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                     }
                   },
                   "Phase 10 (Ende 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                      "en": "Phase 10 (End of 2nd century CE)",
                       "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                     }
                   }
@@ -19335,6 +19520,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -19608,53 +19844,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -19692,14 +19881,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -19729,258 +19926,301 @@
                       "Afrikanische Sigillata (ARS)": {
                         "labels": {
                           "de": "Afrikanische Sigillata (ARS)",
+                          "en": "African Red Slip (ARS)",
                           "fr": "V AER"
                         }
                       },
                       "Afrik. Schwarzfirnis": {
                         "labels": {
                           "de": "Afrik. Schwarzfirnis",
+                          "en": "African Black Slip",
                           "fr": "V AEN"
                         }
                       },
                       "Afrik. Schwarzfirnis pun.": {
                         "labels": {
                           "de": "Afrik. Schwarzfirnis pun.",
+                          "en": "African Black Slip, pun.",
                           "fr": "V AEN PUN"
                         }
                       },
                       "Dünnwandkeramik": {
                         "labels": {
                           "de": "Dünnwandkeramik",
+                          "en": "Thin-walled",
                           "fr": "V PFI"
                         }
                       },
                       "Südgallische Sigillata": {
                         "labels": {
                           "de": "Südgallische Sigillata",
+                          "en": "South Gaulish Sigillata",
                           "fr": "V SSG"
                         }
                       },
                       "Italische Sigillata": {
                         "labels": {
                           "de": "Italische Sigillata",
+                          "en": "Italian Sigillata",
                           "fr": "V SIT"
                         }
                       },
                       "Eastern Sigillata A (ESA)": {
                         "labels": {
                           "de": "Eastern Sigillata A (ESA)",
+                          "en": "Eastern Sigillata A (ESA)",
                           "fr": "V SOR"
                         }
                       },
                       "Campana A": {
                         "labels": {
                           "de": "Campana A",
+                          "en": "Campana A",
                           "fr": "V CAM A"
                         }
                       },
                       "Campana B": {
                         "labels": {
                           "de": "Campana B",
+                          "en": "Campana B",
                           "fr": "V CAM B"
                         }
                       },
                       "Campana B-O": {
                         "labels": {
                           "de": "Campana B-O",
+                          "en": "Campana B-O",
                           "fr": "V CAM B-O"
                         }
                       },
                       "Campana C": {
                         "labels": {
                           "de": "Campana C",
+                          "en": "Campana C",
                           "fr": "V CAM C"
                         }
                       },
                       "Attische Feinkeramik": {
                         "labels": {
                           "de": "Attische Feinkeramik",
+                          "en": "Attic Fineware",
                           "fr": "V ATT"
                         }
                       },
                       "Freigeformte Ware": {
                         "labels": {
                           "de": "Freigeformte Ware div.",
+                          "en": "Handmade Pottery div.",
                           "fr": "V MOD"
                         }
                       },
                       "Calcitic Ware": {
                         "labels": {
                           "de": "Calcitic Ware",
+                          "en": "Calcitic Ware",
                           "fr": "V MOD C"
                         }
                       },
                       "Korbgeformte Ware": {
                         "labels": {
                           "de": "Korbgeformte Ware",
+                          "en": "Basket Ware",
                           "fr": "V MOD F"
                         }
                       },
                       "Freigeformte Ware ital.": {
                         "labels": {
                           "de": "Freigeformte Ware ital.",
+                          "en": "Handmade Pottery, ital.",
                           "fr": "V MOD ITA"
                         }
                       },
                       "Freigeformte Ware pantel.": {
                         "labels": {
                           "de": "Freigeformte Ware pantel.",
+                          "en": "Handmade Pottery, pantel.",
                           "fr": "V MOD P"
                         }
                       },
                       "Freigeformte Ware div.": {
                         "labels": {
                           "de": "Freigeformte Ware div.",
+                          "en": "Handmade Pottery, div.",
                           "fr": "V MOD IND"
                         }
                       },
                       "Afrikanische Schlichte Ware": {
                         "labels": {
                           "de": "Afrikanische Schlichte Ware",
+                          "en": "African Commonware",
                           "fr": "V CAA"
                         }
                       },
                       "Afrik. Schlichte Ware eisenztl.": {
                         "labels": {
                           "de": "Afrik. Schlichte Ware eisenztl.",
+                          "en": "African Commonware, iron-age",
                           "fr": "V CAA FER"
                         }
                       },
                       "Afrik. Schlichte Ware pun.": {
                         "labels": {
                           "de": "Afrik. Schlichte Ware pun.",
+                          "en": "African Commonware, pun.",
                           "fr": "V CAA PUN"
                         }
                       },
                       "Afrik. Schlichte Ware trip.": {
                         "labels": {
                           "de": "Afrik. Schlichte Ware trip.",
+                          "en": "African Commonware, trip.",
                           "fr": "V CAA T"
                         }
                       },
                       "Schlichte Ware ital.": {
                         "labels": {
                           "de": "Schlichte Ware ital.",
+                          "en": "African Commonware, ital.",
                           "fr": "V CITA"
                         }
                       },
                       "Schlichte Ware lev.": {
                         "labels": {
                           "de": "Schlichte Ware lev.",
+                          "en": "African Commonware, lev.",
                           "fr": "V CLEA"
                         }
                       },
                       "Schlichte Ware ion.": {
                         "labels": {
                           "de": "Schlichte Ware ion.",
+                          "en": "African Commonware, ion.",
                           "fr": "V CIOA"
                         }
                       },
                       "Schlichte Ware div.": {
                         "labels": {
                           "de": "Schlichte Ware div.",
+                          "en": "African Commonware, div.",
                           "fr": "V CINDA"
                         }
                       },
                       "Afrikanische Küchenware": {
                         "labels": {
                           "de": "Afrikanische Küchenware",
+                          "en": "African Kitchenware",
                           "fr": "V CAF"
                         }
                       },
                       "Afrik. Küchenware trip.": {
                         "labels": {
                           "de": "Afrik. Küchenware trip.",
+                          "en": "African Kitchenware, trip.",
                           "fr": "V CAF CT"
                         }
                       },
                       "Afrik. Küchenware pun.": {
                         "labels": {
                           "de": "Afrik. Küchenware pun.",
+                          "en": "African Kitchenware, pun.",
                           "fr": "V CAF PUN"
                         }
                       },
                       "Küchenware ital.": {
                         "labels": {
                           "de": "Küchenware ital.",
+                          "en": "Kitchenware, ital.",
                           "fr": "V CIT"
                         }
                       },
                       "Küchenware ion.": {
                         "labels": {
                           "de": "Küchenware ion.",
+                          "en": "Kitchenware, ion.",
                           "fr": "V COR"
                         }
                       },
                       "Küchenware div.": {
                         "labels": {
                           "de": "Küchenware div.",
+                          "en": "Kitchenware, trip.",
                           "fr": "V CIND"
                         }
                       },
                       "Amphora div.": {
                         "labels": {
                           "de": "Amphora div.",
+                          "en": "Amphora, div.",
                           "fr": "A IND"
                         }
                       },
                       "Afrikanische Amphora": {
                         "labels": {
                           "de": "Afrikanische Amphora",
+                          "en": "African Amphora",
                           "fr": "A AFR"
                         }
                       },
                       "Punische Amphora": {
                         "labels": {
                           "de": "Punische Amphora",
+                          "en": "Punic Amphora",
                           "fr": "A PUN"
                         }
                       },
                       "Neopunische Amphora": {
                         "labels": {
                           "de": "Neopunische Amphora",
+                          "en": "Neopunic Amphora",
                           "fr": "A NPU"
                         }
                       },
                       "Nuraghische Amphora": {
                         "labels": {
                           "de": "Nuraghische Amphora",
+                          "en": "Nuraghic Amphora",
                           "fr": "A NUR"
                         }
                       },
                       "Baetische Amphora": {
                         "labels": {
                           "de": "Baetische Amphora",
+                          "en": "Baetic Amphora",
                           "fr": "A Bet"
                         }
                       },
                       "Etruskische Amphora": {
                         "labels": {
                           "de": "Etruskische Amphora",
+                          "en": "Etruscan Amphora",
                           "fr": "A ETR"
                         }
                       },
                       "Italische Amphora": {
                         "labels": {
                           "de": "Italische Amphora",
+                          "en": "Italian Amphora",
                           "fr": "A ITA"
                         }
                       },
                       "Gallische Amphora": {
                         "labels": {
                           "de": "Gallische Amphora",
+                          "en": "Gaulish Amphora",
                           "fr": "A GAU"
                         }
                       },
                       "Westgriechische Amphora": {
                         "labels": {
                           "de": "Westgriechische Amphora",
+                          "en": "Western Greece Amphora",
                           "fr": "A MGR"
                         }
                       },
                       "Ostmediterrane Amphora": {
                         "labels": {
                           "de": "Ostmediterrane Amphora",
+                          "en": "Eastern Med. Amphora",
                           "fr": "A ORI"
                         }
                       }
@@ -20034,13 +20274,12 @@
                   },
                   "name": "materialType",
                   "label": {
-                    "de": "Materialklasse",
-                    "en": "Material type",
-                    "fr": "Type de matériau",
+                    "de": "Klassifizierung",
+                    "en": "Classification",
+                    "fr": "Classification",
                     "it": "Classe di materiale"
                   },
                   "description": {
-                    "de": "Welcher Machart ist das vorgefundene Objekt?",
                     "it": "Qual è lo stile dell'oggetto trovato?"
                   }
                 },
@@ -20058,102 +20297,119 @@
                       "Geschl. Gefäß": {
                         "labels": {
                           "de": "Geschl. Gefäß",
+                          "en": "Closed Vessel",
                           "fr": "FERM"
                         }
                       },
                       "Offenes Gefäß": {
                         "labels": {
                           "de": "Offenes Gefäß",
+                          "en": "Open Vessel",
                           "fr": "OUV"
                         }
                       },
                       "Boden": {
                         "labels": {
                           "de": "Boden",
+                          "en": "Base",
                           "fr": "F"
                         }
                       },
                       "Amphora": {
                         "labels": {
                           "de": "Amphora",
+                          "en": "Amphora",
                           "fr": "A"
                         }
                       },
                       "Schüssel": {
                         "labels": {
                           "de": "Schüssel",
+                          "en": "Basin",
                           "fr": "BAS"
                         }
                       },
                       "Schale": {
                         "labels": {
                           "de": "Schale",
+                          "en": "Bowl",
                           "fr": "BOL"
                         }
                       },
                       "Flasche": {
                         "labels": {
                           "de": "Flasche",
+                          "en": "Bottle",
                           "fr": "BOT"
                         }
                       },
                       "Kasserolle": {
                         "labels": {
                           "de": "Kasserolle",
+                          "en": "Casserole",
                           "fr": "CAS"
                         }
                       },
                       "Napf": {
                         "labels": {
                           "de": "Napf",
+                          "en": "Cup",
                           "fr": "COP"
                         }
                       },
                       "Deckel": {
                         "labels": {
                           "de": "Deckel",
+                          "en": "Lid",
                           "fr": "COU"
                         }
                       },
                       "Krug/Kanne": {
                         "labels": {
                           "de": "Krug/Kanne",
+                          "en": "Jug/Pitcher",
                           "fr": "CRU"
                         }
                       },
                       "Vorratsgefäß": {
                         "labels": {
                           "de": "Vorratsgefäß",
+                          "en": "Jar",
                           "fr": "JAR"
                         }
                       },
                       "Kohlebecken": {
                         "labels": {
                           "de": "Kohlebecken",
+                          "en": "Brazier",
                           "fr": "KAN"
                         }
                       },
                       "Topf": {
                         "labels": {
                           "de": "Topf",
+                          "en": "Pot",
                           "fr": "MAR"
                         }
                       },
                       "Mortaria": {
                         "labels": {
                           "de": "Reibschüssel",
+                          "en": "Mortar",
                           "fr": "MOR"
                         }
                       },
                       "Teller/Pfanne": {
                         "labels": {
                           "de": "Teller/Pfanne",
+                          "en": "Dish/Pan",
                           "fr": "PLA"
                         }
                       },
                       "Tajine": {
                         "labels": {
                           "de": "Tajine",
+                          "en": "Tajine",
                           "fr": "TAJ"
                         }
                       }
@@ -20180,10 +20436,10 @@
                   },
                   "name": "specificType",
                   "label": {
-                    "de": "Keramikart Ware",
-                    "en": "Pottery type, ware",
+                    "de": "Grundform",
+                    "en": "Basic shape",
                     "es": "Tipo de cerámica",
-                    "fr": "Type de céramique",
+                    "fr": "Forme de base",
                     "it": "Tipo di ceramica"
                   },
                   "description": {}
@@ -21799,9 +22055,9 @@
                   },
                   "name": "coatInside",
                   "label": {
-                    "de": "Überzug (innen)",
-                    "en": "Coat (inside)",
-                    "fr": "Enduit (intérieur)",
+                    "de": "Oberfläche (innen)",
+                    "en": "Surface (inside)",
+                    "fr": "Surface (intérieur)",
                     "it": "Ingobbio (interno)"
                   },
                   "description": {}
@@ -21969,9 +22225,9 @@
                   },
                   "name": "coatColorInside",
                   "label": {
-                    "de": "Überzug (innen): Farbe und Intensität",
-                    "en": "Coat (inside): Color and intensity",
-                    "fr": "Enduit (intérieur): couleur et intensité",
+                    "de": "Oberfläche (innen): Farbe und Intensität",
+                    "en": "Surface (inside): color and intensity",
+                    "fr": "Surface(intérieur): couleur et intensité",
                     "it": "Ingobbio (interno): Colore e intensità"
                   },
                   "description": {}
@@ -22142,9 +22398,9 @@
                   },
                   "name": "coatOutside",
                   "label": {
-                    "de": "Überzug (außen)",
-                    "en": "Coat (outside)",
-                    "fr": "Enduit (extérieur)",
+                    "de": "Oberfläche (außen)",
+                    "en": "Surface (outside)",
+                    "fr": "Surface (extérieur)",
                     "it": "Ingobbio (esterno)"
                   },
                   "description": {}
@@ -22312,9 +22568,9 @@
                   },
                   "name": "coatColorOutside",
                   "label": {
-                    "de": "Überzug (außen): Farbe und Intensität",
-                    "en": "Coat (outside): Color and intensity",
-                    "fr": "Enduit (extérieur): couleur et intensité",
+                    "de": "Oberfläche (außen): Farbe und Intensität",
+                    "en": "Surface (outside): color and intensity",
+                    "fr": "Surface (extérieur): couleur et intensité",
                     "it": "Ingobbio (esterno): Colore e intensità"
                   },
                   "description": {}
@@ -23430,7 +23686,7 @@
                       "ganzes Gefäß": {
                         "labels": {
                           "de": "ganzes Gefäß",
-                          "en": "VAR",
+                          "en": "COMV",
                           "fr": "E"
                         }
                       }
@@ -23446,8 +23702,16 @@
                     "id": "Pottery-vesselpart-bourgou"
                   },
                   "name": "vesselpart",
-                  "label": {},
-                  "description": {}
+                  "label": {
+                    "de": "Gefäßteil",
+                    "en": "Part of Vessel",
+                    "fr": "Partie du récipient"
+                  },
+                  "description": {
+                    "de": "WF = Wandfragment, RF = Randfragment, BF = Bodenfragment, H = Henkel",
+                    "en": "WF = Body/Wall RF = Rim, BF = Base, H = Handle, COMP = complete profile, COMV = complete vessel",
+                    "fr": "P = Panse, B = Bord, F = Fond, A = Anse, C = profil complet, E = recipient entier"
+                  }
                 },
                 {
                   "inputType": "dropdown",
@@ -23577,7 +23841,11 @@
                     "id": "Pottery-potteryTypeSpecific-bourgou"
                   },
                   "name": "potteryTypeSpecific",
-                  "label": {},
+                  "label": {
+                    "de": "Ware",
+                    "en": "Ware",
+                    "fr": "Ware"
+                  },
                   "description": {}
                 },
                 {
@@ -23639,11 +23907,11 @@
                   "name": "rimTreatmentType",
                   "label": {
                     "de": "Behandlung Rand/Boden",
-                    "en": "Treatment rim/base"
+                    "en": "Treatment rim / base",
+                    "fr": "Traitement du bord / fond"
                   },
                   "description": {
-                    "de": "Beschreibt die Rand- und Bodenbeschaffenheit der Gefäße",
-                    "en": "Treatment description of rim and base"
+                    "de": "Beschreibt die Rand- und Bodenbeschaffenheit der Gefäße"
                   }
                 }
               ],
@@ -24054,60 +24322,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -24431,6 +24709,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -24704,53 +25033,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -24788,14 +25070,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -27034,60 +27324,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -27411,6 +27711,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -27684,53 +28035,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -27768,14 +28072,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -29606,60 +29918,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -29983,6 +30305,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -30256,53 +30629,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -30340,14 +30666,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -31616,60 +31950,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -31995,6 +32339,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -32268,53 +32663,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -32352,14 +32700,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -34025,60 +34381,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -34402,6 +34768,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -34675,53 +35092,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -34759,14 +35129,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -36427,60 +36805,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -36804,6 +37192,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -37077,53 +37516,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -37161,14 +37553,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -38814,60 +39214,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -39191,6 +39601,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -39464,53 +39925,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -39548,14 +39962,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -40917,60 +41339,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -41294,6 +41726,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -41567,53 +42050,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -41651,14 +42087,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -44696,60 +45140,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -45073,6 +45527,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -45346,53 +45851,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -45430,14 +45888,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -46087,60 +46553,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -46464,6 +46940,57 @@
                   }
                 },
                 {
+                  "inputType": "radio",
+                  "source": "custom",
+                  "valuelist": {
+                    "createdBy": "Heike Möller, Hanna Hamel",
+                    "creationDate": "2021",
+                    "description": {
+                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
+                      "en": "",
+                      "fr": ""
+                    },
+                    "values": {
+                      "Stück": {
+                        "labels": {
+                          "de": "Stück",
+                          "en": "piece",
+                          "fr": "pièce"
+                        }
+                      },
+                      "Eimer": {
+                        "labels": {
+                          "de": "Eimer",
+                          "en": "bucket",
+                          "fr": "seau"
+                        }
+                      },
+                      "Kiste": {
+                        "labels": {
+                          "de": "Kiste",
+                          "en": "box",
+                          "fr": "caisse"
+                        }
+                      },
+                      "Tüte": {
+                        "labels": {
+                          "de": "Tüte",
+                          "en": "bag",
+                          "fr": "sachet"
+                        }
+                      }
+                    },
+                    "id": "Find-amountDescription-bourgou"
+                  },
+                  "name": "amountDescription",
+                  "label": {
+                    "de": "Anzahl (Einheit)",
+                    "en": "Quantity (Unit)",
+                    "fr": "Quantité(Unité)"
+                  },
+                  "description": {}
+                },
+                {
                   "inputType": "text",
                   "source": "common",
                   "name": "description",
@@ -46737,53 +47264,6 @@
                   "source": "custom",
                   "valuelist": {
                     "createdBy": "Heike Möller, Hanna Hamel",
-                    "creationDate": "2021",
-                    "description": {
-                      "de": "übernommen aus Werteliste Gadara und angepasst an Bourgou",
-                      "en": "",
-                      "fr": ""
-                    },
-                    "values": {
-                      "Stück": {
-                        "labels": {
-                          "de": "Stück",
-                          "en": "piece",
-                          "fr": "pièce"
-                        }
-                      },
-                      "Eimer": {
-                        "labels": {
-                          "de": "Eimer",
-                          "en": "bucket",
-                          "fr": "seau"
-                        }
-                      },
-                      "Kiste": {
-                        "labels": {
-                          "de": "Kiste",
-                          "en": "box",
-                          "fr": "caisse"
-                        }
-                      },
-                      "Tüte": {
-                        "labels": {
-                          "de": "Tüte",
-                          "en": "bag",
-                          "fr": "sachet"
-                        }
-                      }
-                    },
-                    "id": "Find-amountDescription-bourgou"
-                  },
-                  "name": "amountDescription",
-                  "label": {},
-                  "description": {}
-                },
-                {
-                  "inputType": "radio",
-                  "source": "custom",
-                  "valuelist": {
-                    "createdBy": "Heike Möller, Hanna Hamel",
                     "creationDate": "17-08-2020",
                     "description": {
                       "de": "übernommen aus Werteliste Gadara und angepasst",
@@ -46821,14 +47301,22 @@
                     "id": "Find-samplePl-bourgou"
                   },
                   "name": "sampleStatus",
-                  "label": {},
+                  "label": {
+                    "de": "Probenstatus",
+                    "en": "Status of samples",
+                    "fr": "Statut de l'échantillon"
+                  },
                   "description": {}
                 },
                 {
                   "inputType": "input",
                   "source": "custom",
                   "name": "sampleComm",
-                  "label": {},
+                  "label": {
+                    "de": "Kommentar zur Probe",
+                    "en": "Comment on samples",
+                    "fr": "Commentaire sur les échantillons"
+                  },
                   "description": {}
                 }
               ],
@@ -47297,60 +47785,70 @@
                       "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                          "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                         }
                       },
-                      "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                      "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                          "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                         }
                       },
                       "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                          "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                         }
                       },
                       "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                          "en": "Phase 4 (4th - end of 2nd century BCE)",
                           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                         }
                       },
                       "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                         "labels": {
                           "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                          "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                         }
                       },
                       "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                           "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                          "en": "Phase 7 (Third quarter of the 1st century CE)",
                           "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                          "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                           "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                         }
                       },
                       "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                          "en": "Phase 9 (Mid 2nd century CE)",
                           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                         }
                       },
                       "Phase 10 (Ende 2. Jh. n. Chr.)": {
                         "labels": {
                           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                          "en": "Phase 10 (End of 2nd century CE)",
                           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                         }
                       }
@@ -47983,60 +48481,70 @@
                   "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
+                      "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
                       "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
                     }
                   },
-                  "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)": {
+                  "Phase 2 (2.Viertel 7. Jh. v. Chr.–Mitte 6. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
+                      "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
                       "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
                     }
                   },
                   "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
+                      "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
                       "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
                     }
                   },
                   "Phase 4 (4.–Ende 2. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
+                      "en": "Phase 4 (4th - end of 2nd century BCE)",
                       "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
                     }
                   },
                   "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)": {
                     "labels": {
                       "de": "Phase 5 (Ende 2.–letztes Viertel 1. Jh. v. Chr.)",
+                      "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
                       "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
                     }
                   },
                   "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 6 (Last quarter of 1st century BCE.-Third quarter of 1st century CE)",
                       "fr": "Phase 6 (Dernier quart du 1er siècle avant-troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 7 (Drittes Viertel 1. Jh. n. Chr.)",
+                      "en": "Phase 7 (Third quarter of the 1st century CE)",
                       "fr": "Phase 7 (Troisième quart du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 8 (Letztes Viertel 1.–Ende 1. Jh. n. Chr.)",
+                      "en": "Phase 8 (Last quarter 1st - end of 1st century CE)",
                       "fr": "Phase 8 (Dernier quart du 1er siècle-fin du 1er siècle après J.-C.)"
                     }
                   },
                   "Phase 9 (Mitte 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
+                      "en": "Phase 9 (Mid 2nd century CE)",
                       "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
                     }
                   },
                   "Phase 10 (Ende 2. Jh. n. Chr.)": {
                     "labels": {
                       "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
+                      "en": "Phase 10 (End of 2nd century CE)",
                       "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
                     }
                   }

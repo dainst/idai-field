@@ -42,7 +42,7 @@ function assertFieldKeysAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomF
 
     function throwIllegalFieldProperty(keys: string) {
 
-        throw [ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, source, keys[0]]
+        throw [ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, source, keys[0]];
     }
 
     const throwIllegalFieldPropertyIfNotEmpty = cond(not(isEmpty), throwIllegalFieldProperty);

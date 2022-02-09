@@ -1,4 +1,5 @@
-import {left, Pair, right} from 'tsfun';
+import { left, Pair, right } from 'tsfun';
+
 
 export const H = left;
 export const M = right;

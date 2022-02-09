@@ -1,17 +1,18 @@
-@import './configuration-category';
-@import './configuration-field';
-@import './configuration-field-drag-element';
-@import './valuelist-view';
+@import './browse/configuration-category';
+@import './browse/configuration-field';
+@import './browse/configuration-field-drag-element';
 @import './editor/configuration-editor-modal';
 @import './editor/field-editor-modal';
 @import './editor/category-editor-modal';
 @import './editor/valuelist-editor-modal';
 @import './editor/value-editor-modal';
-@import './editor/multi-language-input';
+@import './editor/widgets/multi-language-input';
+@import './editor/widgets/references-input';
 @import './delete/delete-modal';
 @import './add/listing';
 @import './add/preview';
 @import './add/category/add-category-modal';
+@import './add/category/swap-category-form-modal';
 @import './add/category/category-listing';
 @import './add/category/category-preview';
 @import './add/field/add-field-modal';
@@ -22,6 +23,9 @@
 @import './add/valuelist/valuelist-listing';
 @import './add/valuelist/valuelist-preview';
 @import './add/valuelist/valuelist-search-bar';
+@import './widgets/valuelist-view';
+@import './notifications/configuration-change-notification-modal';
+@import './conflicts/configuration-conflicts-modal';
 
 
 .project-configuration {
@@ -33,14 +37,35 @@
     }
   }
 
+  #configuration-toolbar {
+    height: 49px;
+
+    #categories-filter-container {
+      padding: 0;
+      margin: 0;
+
+      #categories-filter-select {
+        height: 100%;
+        border: none;
+      }
+    }
+
+    #save-button {
+      position: relative;
+      top: 5px;
+      left: 9px;
+      float: right;
+    }
+  }
+
   .sidebar {
-    height: calc(100vh - 51px);
+    height: calc(100vh - 100px);
     padding: 0;
     margin: 0;
     background-color: $sidebar-bg-color;
 
     #category-picker-container {
-      height: 100%;
+      height: calc(100% - 38px);
       overflow-y: auto;
       overflow-x: hidden;
 

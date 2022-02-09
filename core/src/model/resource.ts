@@ -1,6 +1,7 @@
-import { set, same, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
+import { set, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
+import { notBothEqual, notCompareInBoth } from '../tools/compare';
 import { Name } from '../tools/named';
-import { ObjectUtils } from '../tools/object-utils';
+import { concatIf } from '../tools/utils';
 
 
 export interface NewResource {
@@ -106,29 +107,6 @@ export module Resource {
             remove(isUndefinedOrEmpty, r1.relations),
             remove(isUndefinedOrEmpty, r2.relations));
 
-
-    // TODO review; tests; maybe test getDifferingFields instead
-    function compare(value1: any, value2: any): boolean {
-
-        if (value1 === undefined && value2 === undefined) return true;
-        if ((value1 && !value2) || (!value1 && value2)) return false;
-
-        const type1: string = getType(value1);
-        const type2: string = getType(value2);
-
-        if (type1 !== type2) return false;
-
-        if (type1 === 'array' && type2 === 'array') {
-            return sameset(ObjectUtils.jsonEqual, value1, value2)
-        }
-
-        return ObjectUtils.jsonEqual(value1)(value2);
-    }
-
-
-    const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
-        f(val) ? acc.concat([val as string]) : acc;
-
     
     function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
 
@@ -139,20 +117,4 @@ export module Resource {
                 [] as string[]
             );
     }
-
-
-    const notCompareInBoth = (l: any, r: any) => (key: string) => !compare((l)[key], (r)[key]);
-
-
-    function getType(value: any): string {
-
-        return typeof value === 'object'
-            ? value instanceof Array
-                ? 'array'
-                : 'object'
-            : 'flat';
-    }
-
-    
-    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !same(l[key], r[key]);
 }

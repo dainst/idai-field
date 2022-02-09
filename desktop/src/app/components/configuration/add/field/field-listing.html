@@ -8,11 +8,9 @@
                 class="search-result-label"> ({{getSearchResultLabel(field)}})</span>
     </li>
     <li *ngIf="isNewFieldOptionShown()"
-        class="new-item-option"
-        [class.selected]="selectedField === emptyField"
+        class="new-entry-button btn btn-success"
         (click)="select(emptyField)">
-        <span class="mdi mdi-plus-circle mdi-24px"></span>
-        <span class="item-label" i18n="@@configuration.newField">Neues Feld</span>
-        <code>{{searchTerm}}</code>
+        <span class="mdi mdi-plus-circle"></span>
+        <div i18n="@@configuration.newField">Neues Feld <code>{{searchTerm}}</code> erstellen</div>        
     </li>
 </ul>

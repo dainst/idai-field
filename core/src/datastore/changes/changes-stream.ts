@@ -16,6 +16,7 @@ import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 export class ChangesStream {
 
     private remoteChangesObservers: Array<Observer<Document>> = [];
+    private remoteConfigurationChangesObservers: Array<Observer<void>> = [];
     private projectDocumentObservers: Array<Observer<Document>> = [];
 
 
@@ -37,11 +38,15 @@ export class ChangesStream {
                 ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
             }
 
-            if (ChangesStream.isRemoteChange( document, this.getUsername())
-                || !this.documentCache.get(document.resource.id)
-                || document._conflicts !== undefined) {
+            const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document,this.getUsername());
 
+            if (isRemoteChange || !this.documentCache.get(document.resource.id)
+                    || document._conflicts !== undefined) {
                 await this.welcomeDocument(document);
+            }
+
+            if (isRemoteChange && document.resource.category === 'Configuration') {
+                ObserverUtil.notify(this.remoteConfigurationChangesObservers, null);
             }
         });
     }
@@ -49,6 +54,9 @@ export class ChangesStream {
 
     public remoteChangesNotifications =
         (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
+
+    public remoteConfigurationChangesNotifications =
+        (): Observable<void> => ObserverUtil.register(this.remoteConfigurationChangesObservers);
 
     public projectDocumentNotifications =
         (): Observable<Document> => ObserverUtil.register(this.projectDocumentObservers);

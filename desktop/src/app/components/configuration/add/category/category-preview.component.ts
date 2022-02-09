@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CategoryForm, Groups, Labels } from 'idai-field-core';
+import { CategoryForm, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -19,26 +18,18 @@ export class CategoryPreviewComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private labels: Labels,
-                private i18n: I18n) {}
+    constructor(private labels: Labels) {}
 
 
     public getLabel = (value: any) => this.labels.get(value);
-
-    public getGroups = () => this.category.groups.filter(group => group.name !== Groups.HIDDEN_CORE_FIELDS);
 
 
     ngOnChanges() {
 
         if (!this.category) return;
 
-        if (this.category.label) {
-            const { label, description } = this.labels.getLabelAndDescription(this.category);
-            this.label = label;
-            this.description = description;
-        } else {
-            this.label = this.i18n({ id: 'configuration.newCategory', value: 'Neue Kategorie' });
-            this.description = undefined;
-        }
+        const { label, description } = this.labels.getLabelAndDescription(this.category);
+        this.label = label;
+        this.description = description;
     }
 }

@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {Datastore, FieldDocument} from 'idai-field-core';
-import {AngularUtility} from '../../../../angular/angular-utility';
-import {Loading} from '../../../widgets/loading';
-import {ViewFacade} from '../../../../components/resources/view/view-facade';
-import {ResourcesComponent} from '../../resources.component';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Datastore, FieldDocument, ProjectConfiguration } from 'idai-field-core';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Loading } from '../../../widgets/loading';
+import { ViewFacade } from '../../../../components/resources/view/view-facade';
+import { ResourcesComponent } from '../../resources.component';
 
 
 @Component({
@@ -25,7 +25,8 @@ export class ChildrenViewComponent implements OnChanges {
     constructor(private viewFacade: ViewFacade,
                 private loading: Loading,
                 private datastore: Datastore,
-                private resourcesComponent: ResourcesComponent) {}
+                private resourcesComponent: ResourcesComponent,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;
@@ -74,8 +75,10 @@ export class ChildrenViewComponent implements OnChanges {
 
         if (!document) return [];
 
-        return (await this.datastore.find({constraints: {
-                'isChildOf:contain' : document.resource.id
-            }})).documents as Array<FieldDocument>;
+        return (await this.datastore.find({
+            constraints: { 'isChildOf:contain': document.resource.id }
+        })).documents.filter(document => {
+            return this.projectConfiguration.getCategory(document.resource.category);
+        }) as Array<FieldDocument>;
     }
 }

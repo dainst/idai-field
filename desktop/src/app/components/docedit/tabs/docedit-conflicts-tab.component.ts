@@ -3,12 +3,11 @@ import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Document, Datastore, Resource, Labels, CategoryForm, ProjectConfiguration, Field } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
-import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
+import { WinningSide } from './revision-selector.component';
 import { formatContent } from './format-content';
-
-const moment = require('moment');
+import { ConflictResolving } from './conflict-resolving';
 
 
 /**
@@ -21,7 +20,7 @@ const moment = require('moment');
 export class DoceditConflictsTabComponent implements OnChanges {
 
     @Input() document: Document;
-    @Input() inspectedRevisions: Document[];
+    @Input() inspectedRevisions: Array<Document>;
 
     public conflictedRevisions: Array<Document> = [];
     public selectedRevision: Document|undefined;
@@ -42,7 +41,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
 
-    public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
+    public showLoadingIcon = () => this.isLoading()
+        && this.loading.getLoadingTimeInMilliseconds('docedit-conflicts-tab') > 250;
 
     public getFieldContent = (field: any, revision: Document) => formatContent(
         revision.resource,
@@ -51,8 +51,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         (value: string) => this.decimalPipe.transform(value),
         this.labels
     );
-
-    public getLabel = (field: any) => this.labels.get(field);
 
 
     async ngOnChanges() {
@@ -63,7 +61,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         this.conflictedRevisions = await this.getConflictedRevisions();
 
         if (this.conflictedRevisions.length > 0) {
-            this.sortRevisions(this.conflictedRevisions);
+            ConflictResolving.sortRevisions(this.conflictedRevisions);
             this.setSelectedRevision(this.conflictedRevisions[0]);
         } else {
             this.differingFields = [];
@@ -101,7 +99,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
 
-        this.markRevisionAsInspected(this.selectedRevision);
+        ConflictResolving.markRevisionAsInspected(
+            this.selectedRevision, this.conflictedRevisions, this.inspectedRevisions
+        );
+        
         if (this.conflictedRevisions.length > 0) {
             this.setSelectedRevision(this.conflictedRevisions[0]);
         } else {
@@ -126,14 +127,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public getWinningSide(): string {
+    public getWinningSide(): WinningSide {
 
         if (this.differingFields.length === 0) return 'left';
 
-        let winningSide = '';
+        let winningSide: WinningSide;
 
         for (let field of this.differingFields) {
-            if (winningSide === '') {
+            if (!winningSide) {
                 winningSide = field.rightSideWinning ? 'right' : 'left';
             } else if ((winningSide === 'left' && field.rightSideWinning)
                     || (winningSide === 'right' && !field.rightSideWinning)) {
@@ -145,9 +146,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public setWinningSide(rightSideWinning: boolean) {
+    public setWinningSide(winningSide: WinningSide) {
 
-        for (let field of this.differingFields) field.rightSideWinning = rightSideWinning;
+        for (let field of this.differingFields) field.rightSideWinning = winningSide === 'right';
     }
 
 
@@ -157,46 +158,13 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public getRevisionLabel(revision: Document): string {
+    private getConflictedRevisions(): Promise<Array<Document>> {
 
-        moment.locale('de');
-        return Document.getLastModified(revision).user
-            + ' - '
-            + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
-    }
-
-
-    private sortRevisions(revisions: Array<Document>) {
-
-        revisions.sort((a: Document, b: Document) =>
-            Document.getLastModified(a) < Document.getLastModified(b)
-                ? -1
-                : Document.getLastModified(a) > Document.getLastModified(b)
-                    ? 1
-                    : 0);
-    }
-
-
-    private async getConflictedRevisions(): Promise<Array<Document>> {
-
-        const conflictedRevisions: Array<Document> = [];
-
-        for (let revisionId of (this.document as any)._conflicts) {
-            if (this.inspectedRevisions.find((revision: any) => revision._rev === revisionId)) {
-                continue;
-            }
-
-            try {
-                conflictedRevisions.push(
-                    await this.datastore.getRevision(this.document.resource.id, revisionId)
-                );
-            } catch (err) {
-                console.error('Revision not found: ' + this.document.resource.id + ' ' + revisionId);
-                this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
-            }
+        try {
+            return ConflictResolving.getConflictedRevisions(this.document, this.inspectedRevisions, this.datastore);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
         }
-
-        return conflictedRevisions;
     }
 
 
@@ -247,14 +215,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         }
 
         return differingFields;
-    }
-
-
-    private markRevisionAsInspected(revision: Document) {
-
-        let index = this.conflictedRevisions.indexOf(revision);
-        this.conflictedRevisions.splice(index, 1);
-        this.inspectedRevisions.push(revision);
     }
 
 

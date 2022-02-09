@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop } from 'tsfun';
-import { ConfigurationDocument, CustomFormDefinition, Field, GroupDefinition, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations } from 'idai-field-core';
-import { ConfigurationUtil, InputType } from '../../../components/configuration/configuration-util';
+import { clone, equal, isEmpty, nop, not } from 'tsfun';
+import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
+    CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
+import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -14,6 +14,7 @@ import { ConfigurationIndex } from '../../../services/configuration/index/config
 import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
 import { SaveResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -61,10 +62,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
-    );
+    ) && !this.field.valuelistFromProjectField;
 
     public isEditValuelistButtonVisible = () => this.clonedField.valuelist
         && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
+
+    public isCustomField = () => this.field.source === 'custom';
 
 
     public initialize() {
@@ -76,14 +79,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 inputType: 'input',
                 constraintIndexed: false
             };
-            const groups: Array<GroupDefinition> = ConfigurationUtil.createGroupsConfiguration(
-                this.category, this.permanentlyHiddenFields
+            this.clonedConfigurationDocument = ConfigurationDocument.addField(
+                this.clonedConfigurationDocument, this.category, this.permanentlyHiddenFields,
+                this.groupName, this.field.name
             );
-            groups.find(group => group.name === this.groupName).fields.push(this.field.name);
-            this.getClonedFormDefinition().groups = groups;
         } else if (!this.getClonedFieldDefinition()) {
             this.getClonedFormDefinition().fields[this.field.name] = {};
         }
+
+        if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
 
         this.clonedField = clone(this.field);
         this.hideable = this.isHideable();
@@ -93,9 +97,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async save() {
 
-        if (!Field.InputType.VALUELIST_INPUT_TYPES
-                .includes(this.getClonedFieldDefinition().inputType ?? this.field.inputType)
-                && this.getClonedFormDefinition().valuelists) {
+        if (this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
+                || !this.getClonedFormDefinition().valuelists[this.field.name])) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
+        }
+
+        try {
+            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
+
+        if (!this.isValuelistSectionVisible() && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
         }
 
@@ -103,7 +116,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
-        await super.save(this.isConstraintIndexedChanged(), this.isValuelistChanged());
+        await super.save(this.isValuelistChanged());
     }
 
 
@@ -127,7 +140,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
             AddValuelistModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_MANAGEMENT,
             'lg'
         );
 
@@ -135,7 +148,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
         componentInstance.category = this.category;
         componentInstance.clonedField = this.clonedField;
-        componentInstance.saveAndReload = this.saveAndReload;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -154,13 +167,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
             ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_VALUELIST_EDIT,
             'lg'
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.valuelist = this.clonedField.valuelist;
-        componentInstance.saveAndReload = this.saveAndReload;
+        if (this.clonedField.valuelist.extendedValuelist) {
+            componentInstance.extendedValuelist
+                = this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist);
+        }
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -249,7 +266,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description)(this.clonedDescription);
+            || !equal(this.description ?? {})(this.clonedDescription)
+            || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
+                    this.getClonedFieldDefinition()));
     }
 
 
@@ -280,6 +299,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         const valuelistId: string = this.clonedField.valuelist.id;
         this.clonedField.valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
         this.clonedField.valuelist.id = valuelistId;
+
+        if (this.clonedField.valuelist.extendedValuelist) {
+            this.clonedField.valuelist = Valuelist.applyExtension(
+                this.clonedField.valuelist,
+                this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist)
+            );
+        }
     }
 
 

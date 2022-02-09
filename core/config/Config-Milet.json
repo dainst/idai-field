@@ -1,9 +1,7 @@
 {
   "forms": {
     "Project:default": {
-      "hidden": [
-        "diary"
-      ],
+      "hidden": ["diary"],
       "fields": {},
       "valuelists": {
         "coordinateReferenceSystem": "coordinate-reference-system-milet"
@@ -41,10 +39,7 @@
     },
     "SurveyUnit:default": {
       "hidden": [],
-      "commons": [
-        "processor",
-        "date"
-      ],
+      "commons": ["processor", "date"],
       "fields": {}
     },
     "Area:default": {
@@ -53,9 +48,7 @@
     },
     "Trench:default": {
       "color": "#121009",
-      "hidden": [
-        "trenchComment"
-      ],
+      "hidden": ["trenchComment"],
       "fields": {}
     },
     "Floor:default": {
@@ -79,11 +72,7 @@
         "dimensionVerticalExtent",
         "area"
       ],
-      "hidden": [
-        "color",
-        "featureBorders",
-        "description"
-      ],
+      "hidden": ["color", "featureBorders", "description"],
       "fields": {
         "comparison": {
           "inputType": "text"
@@ -166,7 +155,7 @@
           "inputType": "checkboxes"
         },
         "layerFindsComplete": {
-          "inputType": "boolean"
+          "inputType":  "boolean"
         },
         "layerFindsOther": {
           "inputType": "text"
@@ -206,9 +195,22 @@
         "localization": "localization-milet"
       }
     },
+    "Planum:default": {
+      "fields": {
+        "localization": {
+          "inputType": "radio"
+        },
+        "localizationDescription": {
+          "inputType": "text"
+        }
+      },
+      "valuelists": {
+        "localization": "localization-milet"
+      }
+    },
     "Building": {
       "hidden": [
-        "buildingCategorySpecific",
+        "buildingCategorySpecific", 
         "spatialLocation"
       ],
       "commons": [
@@ -265,14 +267,14 @@
         "buildingResearchHistory": {
           "inputType": "text"
         }
-      },
+      }, 
       "valuelists": {
         "buildingType": "Building-buildingType-milet",
         "buildingCategory": "Building-buildingCategory-milet",
         "architecturalOrder": "architecturalOrder-milet",
         "conditionAmount": "Building-conditionAmount-default",
         "condition": "Building-condition-default",
-        "material": "Building-material-default",
+        "material": "Building-material-milet",
         "context": "Building-context-milet",
         "buildingTechnique": "Building-buildingTechnique-default",
         "period": "periods-milet",
@@ -339,6 +341,9 @@
         "comparison": {
           "inputType": "text"
         },
+        "comparisonLit": {
+          "inputType": "literature"
+        },
         "MuseumInventoryNr": {
           "inputType": "input"
         },
@@ -364,11 +369,84 @@
         "period": "periods-milet"
       }
     },
+    "Loomweight": {
+      "parent": "Find",
+      "color": "#7c5286",
+      "fields": {
+        "loomweightCategory": {
+          "inputType": "dropdown"
+        },
+        "loomweightOther": {
+          "inputType": "input"
+        },
+        "loomweightDetail": {
+          "inputType": "dropdown"
+        },
+        "loomweightDetailOther": {
+          "inputType": "input"
+        },
+        "formDescription": {
+          "inputType": "text"
+        },
+        "amountSherdsTotal": {
+          "inputType": "unsignedInt"
+        },
+        "weightTotal": {
+          "inputType": "unsignedFloat"
+        },
+        "potteryCondition": {
+          "inputType": "checkboxes"
+        },
+        "fabricGroup": {
+          "inputType": "input"
+        },
+        "fabricColorInsideMunsell": {
+          "inputType": "input"
+        },
+        "fabricColorOutsideMunsell": {
+          "inputType": "input"
+        },
+        "fabricColorBreakMunsell": {
+          "inputType": "input"
+        },
+        "fabricHardness": {
+          "inputType": "dropdown"
+        },
+        "fabricStructure": {
+          "inputType": "text"
+        }, 
+        "temperType": {
+          "inputType": "checkboxes"
+        },
+        "temperTypeOther": {
+          "inputType": "input"
+        }, 
+        "temperAmount": {
+          "inputType": "dropdownRange"
+        }, 
+        "temperGrain": {
+          "inputType": "dropdownRange"
+        }, 
+        "surfaceTreatmentDescription": {
+          "inputType": "text"
+        }, 
+        "otherNotes": {
+          "inputType": "text"
+        }
+      },
+      "valuelists": {
+        "loomweightCategory": "Loomweight-loomweightCategory-milet",
+        "loomweightDetail": "Loomweight-loomweightDetail-milet",
+        "potteryCondition": "Pottery-potteryCondition-milet",
+        "fabricHardness": "Pottery-fabricHardness-milet",
+        "temperType": "Pottery-temperType-milet",
+        "temperAmount": "Pottery-temperAmount-milet",
+        "temperGrain": "Pottery-temperGrain-milet"
+      }
+    },  
     "Pottery": {
       "parent": "Find",
-      "commons": [
-        "provenance"
-      ],
+      "commons": ["provenance"],
       "fields": {
         "potteryGroup": {
           "inputType": "dropdown"
@@ -435,25 +513,25 @@
         },
         "fabricStructure": {
           "inputType": "text"
-        },
+        }, 
         "temperType": {
           "inputType": "checkboxes"
         },
         "temperTypeOther": {
           "inputType": "input"
-        },
+        }, 
         "temperAmount": {
           "inputType": "dropdownRange"
-        },
+        }, 
         "temperGrain": {
           "inputType": "dropdownRange"
-        },
+        }, 
         "surfaceTreatment": {
           "inputType": "checkboxes"
-        },
+        }, 
         "surfaceTreatmentDescription": {
           "inputType": "text"
-        },
+        }, 
         "otherNotes": {
           "inputType": "text"
         }
@@ -489,7 +567,36 @@
     },
     "Brick:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "temperTypeOther": {
+          "inputType": "input"
+        }, 
+        "temperAmount": {
+          "inputType": "dropdownRange"
+        }, 
+        "temperGrain": {
+          "inputType": "dropdownRange"
+        }, 
+        "fabricColorBreakMunsell": {
+          "inputType": "input"
+        },
+        "surfaceTreatment": {
+          "inputType": "checkboxes"
+        }, 
+        "surfaceTreatmentDescription": {
+          "inputType": "text"
+        }, 
+        "fabricHardness": {
+          "inputType": "dropdown"
+        }
+      },
+      "valuelists": {
+        "fabricHardness": "Pottery-fabricHardness-milet",
+        "temper": "Pottery-temperType-milet",
+        "temperAmount": "Pottery-temperAmount-milet",
+        "temperGrain": "Pottery-temperGrain-milet",
+        "surfaceTreatment": "Pottery-surfaceTreatment-milet"
+      }
     },
     "Burial:default": {
       "hidden": [],
@@ -517,7 +624,11 @@
     },
     "Terracotta:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "TKdescription": {
+          "inputType": "text"
+        }
+      }
     },
     "Stone:default": {
       "hidden": [],
@@ -621,7 +732,7 @@
     "PlasterFragment:default": {
       "hidden": [],
       "fields": {
-        "decorationDescription": {
+        "decorationDescription":  {
           "inputType": "text"
         }
       }
@@ -632,8 +743,7 @@
     },
     "Sample:default": {
       "hidden": [
-        "sampleType",
-        "spatialLocation"
+        "sampleType", "spatialLocation"
       ],
       "commons": [
         "date",
@@ -651,19 +761,19 @@
         },
         "volume": {
           "inputType": "unsignedFloat"
-        },
+        }, 
         "analysisMethod": {
           "inputType": "radio"
-        },
+        }, 
         "analysisMethodOther": {
           "inputType": "multiInput"
-        },
+        }, 
         "analysisAim": {
           "inputType": "input"
-        },
+        }, 
         "analysisActor": {
           "inputType": "multiInput"
-        },
+        }, 
         "analysisResult": {
           "inputType": "text"
         }
@@ -700,6 +810,9 @@
       }
     },
     "Photo:default": {
+      "commons": [
+        "date"
+      ],
       "fields": {
         "otherNotes": {
           "inputType": "text"
@@ -714,11 +827,13 @@
       "valuelists": {
         "viewDirection": "viewDirection-milet"
       }
-    },
+    }, 
     "Quantification": {
       "color": "#1E6161",
       "commons": [
-        "processor"
+        "processor",
+        "campaign", 
+        "date"
       ],
       "fields": {
         "quantificationType": {
@@ -744,61 +859,61 @@
       "fields": {
         "countArchitecturalCeramics": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightArchitecturalCeramics": {
           "inputType": "unsignedFloat"
         },
         "countTransportamphorae": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightTransportamphorae": {
           "inputType": "unsignedFloat"
         },
         "countHouseholdwares": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightHouseholdwares": {
           "inputType": "unsignedFloat"
         },
         "countCookingwares": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightCookingwares": {
           "inputType": "unsignedFloat"
         },
         "countStoragevessels": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightStoragevessels": {
           "inputType": "unsignedFloat"
         },
         "countTablewares": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightTablewares": {
           "inputType": "unsignedFloat"
         },
         "countFinepottery": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightFinepottery": {
           "inputType": "unsignedFloat"
         },
         "countOilcontainers": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightOilcontainers": {
           "inputType": "unsignedFloat"
         },
         "countTools": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightTools": {
           "inputType": "unsignedFloat"
         },
         "countUnspecified": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "weightUnspecified": {
           "inputType": "unsignedFloat"
         },
@@ -816,19 +931,22 @@
       "fields": {
         "countTransportamphoraeRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countTransportamphoraeBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
+        "countTransportamphoraeWall": {
+          "inputType": "unsignedInt"
+        }, 
         "countTransportamphoraeHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countHouseholdwaresRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countHouseholdwaresBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countHouseholdwaresHandle": {
           "inputType": "unsignedInt"
         },
@@ -837,64 +955,64 @@
         },
         "countCookingwaresWall": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countCookingwaresBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countCookingwaresHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countStoragevesselsRim": {
           "inputType": "unsignedInt"
-        },
+        },  
         "countStoragevesselsBase": {
           "inputType": "unsignedInt"
-        },
+        },  
         "countStoragevesselsHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countTablewaresRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countTablewaresWall": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countTablewaresBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countTablewaresHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countFinepotteryRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countFinepotteryWall": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countFinepotteryBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countFinepotteryHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countOilcontainersRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countOilcontainersBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countOilcontainersHandle": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countLampsRim": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countLampsWall": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countLampsBase": {
           "inputType": "unsignedInt"
-        },
+        }, 
         "countLampsHandle": {
           "inputType": "unsignedInt"
         },
@@ -910,7 +1028,8 @@
       "commons": [
         "processor",
         "date",
-        "period"
+        "period",
+        "campaign"
       ],
       "fields": {
         "infoFromField": {

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
 import { Group, GroupDefinition, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
+import { Modals } from '../../../services/modals';
 
 
 @Component({
@@ -29,12 +30,12 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
 
     constructor(activeModal: NgbActiveModal,
-                modalService: NgbModal,
+                modals: Modals,
                 menuService: Menus,
                 messages: Messages,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, menuService, messages);
+        super(activeModal, modals, menuService, messages);
     }
 
 

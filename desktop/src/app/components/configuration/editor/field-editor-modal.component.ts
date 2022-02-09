@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, not } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
@@ -44,14 +44,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
 
     constructor(activeModal: NgbActiveModal,
-                modalService: NgbModal,
+                modals: Modals,
                 menuService: Menus,
                 messages: Messages,
                 private configurationIndex: ConfigurationIndex,
-                private modals: Modals,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, menuService, messages);
+        super(activeModal, modals, menuService, messages);
     }
 
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];

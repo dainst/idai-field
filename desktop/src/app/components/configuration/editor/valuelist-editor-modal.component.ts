@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop, not, set } from 'tsfun';
+import { equal, isEmpty, nop, set } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -47,15 +47,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
 
     constructor(activeModal: NgbActiveModal,
-                modalService: NgbModal,
+                modals: Modals,
                 menuService: Menus,
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private modals: Modals,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, menuService, messages);
+        super(activeModal, modals, menuService, messages);
     }
 
 

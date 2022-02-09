@@ -7,6 +7,7 @@ import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
+import { Modals } from '../../../services/modals';
 
 
 @Component({
@@ -29,12 +30,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
 
     constructor(activeModal: NgbActiveModal,
-                modalService: NgbModal,
+                modals: Modals,
                 menuService: Menus,
                 messages: Messages,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, menuService, messages);
+        super(activeModal, modals, menuService, messages);
     }
 
 

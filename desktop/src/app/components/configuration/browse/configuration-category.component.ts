@@ -112,9 +112,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public selectGroup(group: Group) {
+    public selectGroup(groupName: string) {
 
-        this.selectedGroup = group.name;
+        this.selectedGroup = groupName;
         this.openedFieldName = undefined;
     }
 
@@ -133,7 +133,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result,
-            nop,
+            groupName => this.selectGroup(groupName),
             nop
         );
     }

@@ -100,7 +100,7 @@ export class AddGroupModalComponent {
 
         try {
             await this.applyChanges(clonedConfigurationDocument);
-            this.activeModal.close();
+            this.activeModal.close(this.selectedGroup.name);
         } catch {
             // Stay in modal
         }
@@ -130,7 +130,7 @@ export class AddGroupModalComponent {
 
         await this.modals.awaitResult(
             result,
-            () => this.activeModal.close(),
+            () => this.activeModal.close(this.searchTerm),
             nop
         );
     }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, not } from 'tsfun';
+import { clone, equal, isEmpty, nop } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
@@ -96,7 +96,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async confirm() {
 
-        if (this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
+        if (this.isCustomField() && this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
                 || !this.getClonedFormDefinition().valuelists[this.field.name])) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }

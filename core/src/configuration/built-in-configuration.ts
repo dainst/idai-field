@@ -75,13 +75,15 @@ export class BuiltInConfiguration {
         processor: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            constraintIndexed: true
+            constraintIndexed: true,
+            fixedInputType: true
         },
         campaign: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
-            constraintIndexed: true
+            constraintIndexed: true,
+            fixedInputType: true
         },
         description: {
             inputType: Field.InputType.TEXT
@@ -122,17 +124,21 @@ export class BuiltInConfiguration {
                     visible: false
                 },
                 shortName: {
-                    inputType: Field.InputType.INPUT
+                    inputType: Field.InputType.INPUT,
+                    fixedInputType: true
                 },
                 coordinateReferenceSystem: {
                     inputType: Field.InputType.DROPDOWN,
-                    valuelistId: 'coordinate-reference-system-default-1'
+                    valuelistId: 'coordinate-reference-system-default-1',
+                    fixedInputType: true
                 },
                 staff: {
-                    inputType: Field.InputType.MULTIINPUT
+                    inputType: Field.InputType.MULTIINPUT,
+                    fixedInputType: true
                 },
                 campaigns: {
-                    inputType: Field.InputType.MULTIINPUT
+                    inputType: Field.InputType.MULTIINPUT,
+                    fixedInputType: true
                 }
             },
             minimalForm: {
@@ -158,7 +164,8 @@ export class BuiltInConfiguration {
                 supervisor: {
                     inputType: Field.InputType.CHECKBOXES,
                     valuelistFromProjectField: 'staff',
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    fixedInputType: true
                 }
             },
             minimalForm: {
@@ -560,20 +567,23 @@ export class BuiltInConfiguration {
         category: {
             inputType: Field.InputType.CATEGORY,
             visible: true,
-            editable: false
+            editable: false,
+            fixedInputType: true
         },
         shortDescription: {
             inputType: Field.InputType.INPUT,
             visible: true,
             editable: true,
-            fulltextIndexed: true
+            fulltextIndexed: true,
+            fixedInputType: true
         },
         identifier: {
             inputType: Field.InputType.INPUT,
             visible: false,
             editable: true,
             mandatory: true,
-            fulltextIndexed: true
+            fulltextIndexed: true,
+            fixedInputType: true
         }
     };
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop } from 'tsfun';
+import { clone, equal, isEmpty, nop, not, isUndefined } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
@@ -56,8 +56,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
-
-    public getAvailableInputTypes = () => this.availableInputTypes.filter(inputType => inputType.customFields);
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
@@ -118,11 +116,24 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         await super.confirm(this.isValuelistChanged());
     }
 
+    public getAvailableInputTypes(): Array<InputType> {
 
-    public getInputType() {
+        if (this.field.fixedInputType) return [];
 
-        return this.getClonedFieldDefinition()?.inputType
-            ?? this.field.inputType;
+        const inputTypes: Array<InputType> = this.availableInputTypes.filter(inputType => inputType.customFields);
+
+        return this.isCustomField()
+            ? inputTypes
+            : Field.InputType.getInterchangeableInputTypes(this.getInputType())
+                .map(alternativeType => inputTypes.find(inputType => inputType.name === alternativeType))
+                .filter(not(isUndefined));
+    }
+
+
+    public getInputType(): Field.InputType {
+
+        return this.getClonedFieldDefinition()?.inputType as Field.InputType
+            ?? this.field.inputType as Field.InputType;
     }
 
 

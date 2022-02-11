@@ -971,13 +971,20 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('ignore attempts to overwrite fields in custom forms', () => {
+    it('allow overwriting inputType & constraintIndexed in custom forms', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {
-                    aField: { inputType: 'input' }
+                    aField: { inputType: 'input', constraintIndexed: true }
                 },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
+                }
+            },
+            B: {
+                parent: 'A',
+                fields: {},
                 minimalForm: {
                     groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
                 }
@@ -985,15 +992,18 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const commonFields: Map<BuiltInFieldDefinition> = {
-            aCommon: { inputType: 'text' }
+            aCommon: { inputType: 'text', constraintIndexed: false }
         };
 
         const customForms: Map<CustomFormDefinition> = {
             A: {
                 fields: {
-                    aField: { inputType: 'boolean' },
-                    aCommon: { inputType: 'boolean' }
+                    aField: { inputType: 'boolean', constraintIndexed: false },
+                    aCommon: { inputType: 'boolean', constraintIndexed: true }
                 }
+            },
+            B: {
+                fields: {}
             }
         };
 
@@ -1005,10 +1015,16 @@ describe('buildRawProjectConfiguration', () => {
             commonFields
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
-        expect(result['A'].groups[0].fields[1].inputType).toBe('text');
-    });
+        expect(result['A'].groups[0].fields[0].inputType).toBe('boolean');
+        expect(result['A'].groups[0].fields[0].constraintIndexed).toBe(false);
+        expect(result['A'].groups[0].fields[1].inputType).toBe('boolean');
+        expect(result['A'].groups[0].fields[1].constraintIndexed).toBe(true);
 
+        expect(result['B'].groups[0].fields[0].inputType).toBe('boolean');
+        expect(result['B'].groups[0].fields[0].constraintIndexed).toBe(false);
+        expect(result['B'].groups[0].fields[1].inputType).toBe('boolean');
+        expect(result['B'].groups[0].fields[1].constraintIndexed).toBe(true);
+    });
 
 
     it('throw error if field not found', () => {
@@ -1607,7 +1623,7 @@ describe('buildRawProjectConfiguration', () => {
         const customForms: Map<CustomFormDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: 'dropdown' }, // Ignore this field
+                    field1: { inputType: 'input' },
                     field2: { inputType: 'text' }
                 },
                 groups: [
@@ -1623,7 +1639,7 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
         expect(result['A'].groups[0].fields[1].inputType).toBe('text');
     });
 
@@ -1661,7 +1677,7 @@ describe('buildRawProjectConfiguration', () => {
         const customForms: Map<CustomFormDefinition> = {
             'A:default': {
                 fields: {
-                    field2: { inputType: 'dropdown' }, // Ignore this field
+                    field2: { inputType: 'input' },
                     field3: { inputType: 'text' }
                 },
                 groups: [
@@ -1680,7 +1696,7 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
-        expect(result['A'].groups[1].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[0].inputType).toBe('input');
         expect(result['A'].groups[1].fields[1].inputType).toBe('text');
         expect(result['A'].groups[1].name).toBe(Groups.PARENT);
     });

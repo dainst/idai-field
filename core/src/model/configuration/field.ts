@@ -4,6 +4,7 @@ import { Valuelist } from './valuelist';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export interface Field extends I18N.LabeledValue {
 
@@ -22,6 +23,7 @@ export interface Field extends I18N.LabeledValue {
     constraintIndexed?: boolean;
     defaultConstraintIndexed?: boolean;
     mandatory?: true;
+    fixedInputType?: true;
     allowOnlyValuesOfParent?: true;
     source?: Field.SourceType;
 }
@@ -97,5 +99,20 @@ export module Field {
         export const DEFAULT = 'default';
 
         export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
+
+        const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
+            [INPUT, TEXT, DROPDOWN, RADIO],
+            [MULTIINPUT, CHECKBOXES]
+        ];
+
+        
+        export function getInterchangeableInputTypes(inputType: InputType): Array<InputType> {
+
+            const alternativeTypes: Array<InputType>|undefined = INTERCHANGEABLE_INPUT_TYPES.find(types => {
+                return types.includes(inputType);
+            });
+
+            return alternativeTypes ?? [];
+        }
     }
 }

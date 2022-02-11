@@ -404,12 +404,6 @@ export class BuiltInConfiguration {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
             fields: {
-                // TODO Use common field?
-                period: {
-                    inputType: Field.InputType.DROPDOWNRANGE,
-                    constraintIndexed: true,
-                    valuelistId: 'periods-default-1'
-                },
                 dating: {
                     inputType: Field.InputType.DATING,
                 }

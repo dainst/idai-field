@@ -94,8 +94,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async confirm() {
 
-        if (this.isCustomField() && this.isValuelistSectionVisible() && (!this.getClonedFormDefinition().valuelists
-                || !this.getClonedFormDefinition().valuelists[this.field.name])) {
+        if (!this.field.valuelist && this.isValuelistSectionVisible()
+                && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
 

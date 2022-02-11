@@ -58,6 +58,16 @@ import { I18N } from '../../../src/tools/i18n';
         inputType: 'text'
     };
 
+    const relation: Field = {
+        name: 'testRelation',
+        label: fieldLabel,
+        defaultLabel: fieldLabel,
+        description: fieldDescription,
+        defaultDescription: fieldDescription,
+        inputType: 'relation'
+    };
+
+
     const group: Group = {
         name: 'testGroup',
         label: groupLabel,
@@ -110,6 +120,45 @@ import { I18N } from '../../../src/tools/i18n';
             .toBe('New label');
         expect(customLanguageConfigurations.en.categories.testCategory.fields.testField.description)
             .toBe('New description');
+    });
+
+
+    it('Add new translations to custom language configurations for relation', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                relations: {
+                    testRelation: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Neues Label',
+            en: 'New label'
+        };
+
+        const editedDescription: I18N.String = {
+            de: 'Neue Beschreibung',
+            en: 'New description'
+        };
+
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            relation
+        );
+
+        expect(customLanguageConfigurations.de.relations.testRelation.label).toBe('Neues Label');
+        expect(customLanguageConfigurations.de.relations.testRelation.description).toBe('Neue Beschreibung');
+        expect(customLanguageConfigurations.en.relations.testRelation.label).toBe('New label');
+        expect(customLanguageConfigurations.en.relations.testRelation.description).toBe('New description');
     });
 
 
@@ -230,6 +279,47 @@ import { I18N } from '../../../src/tools/i18n';
     });
 
 
+    it('Remove deleted translations from custom language configurations for relation', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                relations: {
+                    testRelation: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            },
+            en: {
+                relations: {
+                    testRelation: {
+                        label: 'Old label',
+                        description: 'Old description'
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Altes Label'
+        };
+
+        const editedDescription: I18N.String = {};
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            relation
+        );
+
+        expect(customLanguageConfigurations.de.relations.testRelation.label).toBe('Altes Label');
+        expect(customLanguageConfigurations.de.relations.testRelation.description).toBeUndefined();
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
     it('Remove deleted translations from custom language configurations for category', () => {
 
         const customLanguageConfigurations: CustomLanguageConfigurations = {
@@ -334,6 +424,39 @@ import { I18N } from '../../../src/tools/i18n';
             editedDescription,
             category,
             field
+        );
+
+        expect(customLanguageConfigurations.de).toBeUndefined();
+    });
+
+
+    it('Remove translations equal to default translation from custom language configurations for relation', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                relations: {
+                    testRelation: {
+                        label: 'Altes Label',
+                        description: 'Alte Beschreibung'
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Test-Feld'
+        };
+
+        const editedDescription: I18N.String = {
+            de: 'Beschreibungstext des Feldes'
+        };
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            relation
         );
 
         expect(customLanguageConfigurations.de).toBeUndefined();
@@ -446,6 +569,46 @@ import { I18N } from '../../../src/tools/i18n';
             .toBe('Label 2');
         expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.description)
             .toBe('Beschreibung 2');
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
+    it('Remove all translations from custom language configurations for relation', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                relations: {
+                    testRelation: {
+                        label: 'Label 1',
+                        description: 'Beschreibung 1'
+                    },
+                    testRelation2: {
+                        label: 'Label 2',
+                        description: 'Beschreibung 2'
+                    },
+                }
+            },
+            en: {
+                relations: {
+                    testRelation: {
+                        label: 'Label',
+                        description: 'Description'
+                    }
+                }
+            }
+        };
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            {},
+            {},
+            category,
+            relation
+        );
+
+        expect(customLanguageConfigurations.de.relations.testRelation).toBeUndefined();
+        expect(customLanguageConfigurations.de.relations.testRelation2.label).toBe('Label 2');
+        expect(customLanguageConfigurations.de.relations.testRelation2.description).toBe('Beschreibung 2');
         expect(customLanguageConfigurations.en).toBeUndefined();
     });
 

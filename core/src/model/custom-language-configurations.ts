@@ -63,7 +63,7 @@ export module CustomLanguageConfigurations {
             .filter(languageCode => !editedI18nString[languageCode])
             .forEach(languageCode => {
                 deleteFromSection(
-                    customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
+                    customLanguageConfigurations, section, languageCode, category?.name, field, group?.name
                 );
             });
     }
@@ -77,11 +77,11 @@ export module CustomLanguageConfigurations {
 
         if (newText === definition[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
             deleteFromSection(
-                customLanguageConfigurations, section, languageCode, category?.name, field?.name, group?.name
+                customLanguageConfigurations, section, languageCode, category?.name, field, group?.name
             );
         } else {
             addToSection(
-                customLanguageConfigurations, section, newText, languageCode, category?.name, field?.name, group?.name
+                customLanguageConfigurations, section, newText, languageCode, category?.name, field, group?.name
             );
         }
     }
@@ -89,14 +89,16 @@ export module CustomLanguageConfigurations {
 
     function deleteFromSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                section: 'label'|'description', languageCode: string, categoryName?: string,
-                               fieldName?: string, groupName?: string) {
+                               field?: Field, groupName?: string) {
 
         InPlace.removeFrom(
             customLanguageConfigurations,
             groupName
                 ? [languageCode, 'groups', groupName]
-                : fieldName
-                    ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+                : field
+                    ? field.inputType === Field.InputType.RELATION
+                        ? [languageCode, 'relations', field.name, section]
+                        : [languageCode, 'categories', categoryName, 'fields', field.name, section]
                     : [languageCode, 'categories', categoryName, section]
         );
     }
@@ -104,14 +106,16 @@ export module CustomLanguageConfigurations {
 
     function addToSection(customLanguageConfigurations: CustomLanguageConfigurations,
                           section: 'label'|'description', newText: string, languageCode: string,
-                          categoryName: string, fieldName?: string, groupName?: string) {
+                          categoryName: string, field?: Field, groupName?: string) {
 
         InPlace.setOn(
             customLanguageConfigurations,
             groupName
                 ? [languageCode, 'groups', groupName]
-                : fieldName
-                    ? [languageCode, 'categories', categoryName, 'fields', fieldName, section]
+                : field
+                    ? field.inputType === Field.InputType.RELATION
+                        ? [languageCode, 'relations', field.name, section]
+                        : [languageCode, 'categories', categoryName, 'fields', field.name, section]
                     : [languageCode, 'categories', categoryName, section]
         )(newText);
     }

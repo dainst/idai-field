@@ -21,10 +21,8 @@ Start a dockerized CouchDB:
 docker-compose up
 ```
 
-You may want to finalize the setup at http://localhost:5984/_utils/#/setup as "Single Node" using the credentials defined in your [.env](.env_template) file.
-
 ### Phoenix Server
-Install dependencies and seed an iDAI.field project and some users:
+Install dependencies, finish the CouchDB setup as single node and seed an iDAI.field project and some users:
 
 ```bash
 mix setup
@@ -38,7 +36,7 @@ mix phx.server
 
 You should now be able to add http://localhost:4000 (or your machines IP address) as a sync target in your desktop/mobile client.
 
-On how to create additional projects and users see [CLI.md](CLI.md).
+On how to create additional projects and users see [CLI.md](CLI.md), the same module is used for setup and seeding (see `aliases` function in [mix.exs](mix.exs)).
 
 ## Deployment
 

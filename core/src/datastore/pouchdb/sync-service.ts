@@ -15,7 +15,15 @@ export enum SyncStatus {
 }
 
 
-type Sync = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
+type ReplicationHandle = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
+
+
+interface SyncProcess {
+
+    url: string;
+    cancel(): void;
+    observer: Observable<SyncStatus>;
+}
 
 
 /**
@@ -30,11 +38,9 @@ export class SyncService {
     private password: string = '';
     private currentSyncTimeout: any;
 
-    private syncHandles = [];
-    private replicationHandle;
+    private sync: ReplicationHandle = null;
+    private replication: ReplicationHandle = null;
 
-    private sync: Sync = null;
-    private syncTimeout = null;
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
 
@@ -55,36 +61,24 @@ export class SyncService {
     public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
-    public stopSync() {
-
-        console.log('Stop syncing');
-        
-        if (this.syncTimeout) clearTimeout(this.syncTimeout);
-
-        if (this.sync) {
-            this.sync.cancel();
-            this.sync = null;
-        }
-
-        this.setStatus(SyncStatus.Offline);
-    }
-
-    
     /**
      * @throws error if db is not empty
      */
     public async startReplication(target: string, password: string, project: string, updateSequence: number,
                                   destroyExisting: boolean): Promise<Observable<any>> {
 
-        if (this.replicationHandle) return;
+        if (this.replication) {
+            console.warn('replication already running, will not start replication again');
+            return;
+        }
 
         this.stopSync();
 
-        const url = SyncService.generateUrl(target, project, password);
+        const url: string = SyncService.generateUrl(target, project, password);
 
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
-        this.replicationHandle = db.replicate.from(
+        this.replication = db.replicate.from(
             url,
             {
                 retry: true,
@@ -95,9 +89,9 @@ export class SyncService {
         );
 
         return Observable.create((obs: Observer<any>) => {
-            this.replicationHandle.on('change', (info: any) => { obs.next(info.last_seq); })
+            this.replication.on('change', (info: any) => { obs.next(info.last_seq); })
                 .on('complete', (info: any) => {
-                    this.replicationHandle = undefined;
+                    this.replication = undefined;
                     if (info.status === 'complete') {
                         obs.complete();
                     } else {
@@ -120,7 +114,7 @@ export class SyncService {
 
         // it's ok to remove db, because we know it was a new one
         this.pouchdbDatastore.destroyDb(project);
-        this.replicationHandle = undefined;
+        this.replication = undefined;
         this.startSync();
         observer.error(error);
     }
@@ -128,84 +122,91 @@ export class SyncService {
 
     public async stopReplication() {
 
-        if (!this.replicationHandle) return;
+        if (!this.replication) return;
 
-        this.replicationHandle.cancel();
-        this.replicationHandle = undefined;
+        this.replication.cancel();
+        this.replication = undefined;
     }
 
 
-    /**
-     * Setup peer-to-peer syncing between this datastore and target.
-     * Changes to sync state will be published via the onSync*-Methods.
-     * @param url target datastore
-     * @param project
-     */
-     public startSync(live: boolean = true, filter?: (doc: any) => boolean): void {
+    public async startSync(filter?: (doc: any) => boolean) {
 
         if (!this.syncTarget || !this.project) return;
+
         if (this.sync) {
-            console.warn('sync already running, will not \'startSync\' again');
+            console.warn('sync already running, will not start sync again');
             return;
         }
 
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
-        console.log('Start syncing', url);
-
-        this.sync = this.pouchdbDatastore.getDb().sync(url, { live: true, retry: false, filter });
-        this.handleStatus(this.sync);
-
-        // Setup bidirectional sync when initial replicate has completed
-        //if (live) this.sync.on('complete', () => this.startLiveSync(url, filter));
-    }
-
-
-    // private startLiveSync(url: string, filter?: (doc: any) => boolean) {
-
-    //     this.sync = this.pouchdbDatastore.getDb().sync(
-    //         url,
-    //         {
-    //             live: true,
-    //             retry: false,
-    //             batch_size: 50,
-    //             batches_limit: 1,
-    //             timeout: 600000,
-    //             filter
-    //         }
-    //     );
-
-    //     this.handleStatus(this.sync);
-
-    //     this.sync.on('complete', () => {
-    //         this.setStatus(SyncStatus.InSync);
-    //         this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000)
-    //     });
-
-    //     this.sync.on('error', (err) => {
-    //         this.setStatus(SyncService.getFromError(err));
-    //         console.error('SyncService received error from PouchDB', err, JSON.stringify(err));
-    //         this.syncTimeout = setTimeout(() => this.startLiveSync(url, filter), 1000)
-    //     });
-    // }
-
-
-    private handleStatus(sync: Sync): void {
         
-        sync.on('change', info => this.setStatus(SyncService.getFromInfo(info)))
-            .on('complete', () => this.setStatus(SyncStatus.Offline))
-            .on('paused', () => this.setStatus(SyncStatus.InSync))
-            .on('denied', err => console.error('Document denied in sync', err))
-            .on('error', err => {
-                this.setStatus(SyncService.getFromError(err));
-                console.error('SyncService received error from PouchDB', err, JSON.stringify(err));
-            });
+        const syncProcess: SyncProcess = await this.setupSync(url, filter);
+        syncProcess.observer.subscribe(
+            status => this.setStatus(status),
+            err => {
+                const syncStatus = SyncService.getStatusFromError(err);
+                if (syncStatus !== SyncStatus.AuthenticationError && syncStatus !== SyncStatus.AuthorizationError) {
+                        console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                }
+                this.setStatus(syncStatus);
+                syncProcess.cancel();
+                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
+            }
+        );
     }
 
 
-    private setStatus(status: SyncStatus) {
+    public stopSync() {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+        if (this.sync) this.sync.cancel();
+        this.sync = null;
+        this.setStatus(SyncStatus.Offline);
+    }
+
+
+    public setStatus(status: SyncStatus) {
 
         this.status = status;
         ObserverUtil.notify(this.statusObservers, this.status);
+    }
+
+
+    private async setupSync(url: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
+
+        console.log('Start syncing', url);
+
+        this.sync = this.pouchdbDatastore.getDb().sync(
+            url,
+            {
+                live: true,
+                retry: false,
+                batch_size: 50,
+                batches_limit: 1,
+                timeout: 600000,
+                filter
+            }
+        );
+
+        return {
+            url: url,
+            cancel: () => {
+                this.sync.cancel();
+                this.sync = null;
+            },
+            observer: Observable.create((obs: Observer<SyncStatus>) => {
+                this.sync.on('change', (info: any) => obs.next(SyncService.getStatusFromInfo(info)))
+                    .on('paused', () => obs.next(SyncStatus.InSync))
+                    .on('active', () => obs.next(SyncStatus.Pulling))
+                    .on('complete', (info: any) => {
+                        obs.next(SyncStatus.Offline);
+                        obs.complete();
+                    })
+                    .on('error', (err: any) => obs.error(err));
+            })
+        };
     }
 
 
@@ -222,11 +223,11 @@ export class SyncService {
     }
 
 
-    private static getFromInfo = (info: any) =>
+    private static getStatusFromInfo = (info: any): SyncStatus =>
         info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
 
 
-    private static getFromError = (err: any) =>
+    private static getStatusFromError = (err: any): SyncStatus =>
         err.status === 401
             ? err.reason === 'Name or password is incorrect.'
                 ? SyncStatus.AuthenticationError

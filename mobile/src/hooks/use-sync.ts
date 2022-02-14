@@ -6,7 +6,7 @@ const useSync = (
     project: string,
     projectSettings: ProjectSettings,
     pouchdbDatastore?: PouchdbDatastore,
-    live: boolean = true
+    live: boolean = true // TODO Either remove this or make it work again
 ): SyncStatus => {
     
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
@@ -40,7 +40,7 @@ const useSync = (
 
         if(!syncService || !project || !projectSettings?.connected) return;
 
-        syncService.startSync(live, isNotAnImage);
+        syncService.startSync(isNotAnImage);
         
         return () => syncService.stopSync();
     }, [live, syncService, project, projectSettings?.connected]);

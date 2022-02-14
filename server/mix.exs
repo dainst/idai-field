@@ -65,7 +65,11 @@ defmodule FieldHub.MixProject do
     dev_db_member_name = "development"
 
     [
-      setup: ["deps.get", "seed"],
+      setup: [
+        "deps.get",
+        "run --eval 'FieldHub.CLI.setup_couchdb_single_node()'",
+        "seed"
+      ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\")'",
         "run --eval 'FieldHub.CLI.create_user(\"#{dev_db_admin_name}\", \"pw\")'",

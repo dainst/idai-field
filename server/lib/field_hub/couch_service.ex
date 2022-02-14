@@ -5,6 +5,8 @@ defmodule FieldHub.CouchService do
 
   @couch_url Application.get_env(:field_hub, :couchdb_root)
 
+  require Logger
+
   def authenticate(project, %Credentials{} = credentials) do
     response =
       HTTPoison.get(
@@ -19,6 +21,35 @@ defmodule FieldHub.CouchService do
         {:error, res}
       {:error, _} = error ->
         error
+    end
+  end
+
+  def initial_setup(%Credentials{} = credentials) do
+    Logger.info("Setting up single node CouchDB")
+    # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
+
+    HTTPoison.put!(
+      "#{@couch_url}/_users",
+      "",
+      headers(credentials)
+    )
+    |> case do
+      %{status_code: 412} ->
+        Logger.warning("_users already exists. You probably ran a CouchDB setup on an existing instance.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created.")
+    end
+
+    HTTPoison.put!(
+      "#{@couch_url}/_replicator",
+      "",
+      headers(credentials)
+    )
+    |> case do
+      %{status_code: 412} ->
+        Logger.warning("_replicator already exists. You probably ran a CouchDB setup on an existing instance.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created.")
     end
   end
 

@@ -7,9 +7,20 @@ defmodule FieldHub.CLI do
 
   require Logger
 
+  def setup_couchdb_single_node() do
+    CouchService.initial_setup(get_admin_credentials())
+  end
+
   def create_project(project_name) do
     Logger.info("Adding project #{project_name}.")
     CouchService.create_project(project_name, get_admin_credentials())
+    |> case do
+      %{status_code: 412} ->
+        Logger.warning("Project #{project_name} already exists.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created.")
+    end
+
     FileStore.create_directories(project_name)
   end
 

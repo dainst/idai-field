@@ -154,6 +154,9 @@ export class ConfigurationConflictsModalComponent {
         } else {
             this.selectedRevision = undefined;
             this.differingForms = undefined;
+            this.differingLanguages = undefined;
+            this.differingValuelists = undefined;
+            this.isDifferingOrder = false;
         }
     }
 

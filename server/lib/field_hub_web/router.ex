@@ -28,7 +28,7 @@ defmodule FieldHubWeb.Router do
     plug :api_auth
   end
 
-  forward "/db", ReverseProxyPlug, upstream: Application.get_env(:field_hub, :couchdb_root)
+  forward "/db", ReverseProxyPlug, response_mode: :buffer, upstream: Application.get_env(:field_hub, :couchdb_root)
 
   scope "/", FieldHubWeb do
     pipe_through :browser

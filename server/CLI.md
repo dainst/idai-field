@@ -2,7 +2,7 @@
 
 The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functions.
 
-## Deployment
+## Development
 
 To call the CLI functions using `mix` use the pattern:
 

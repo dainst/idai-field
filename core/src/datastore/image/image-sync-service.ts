@@ -14,22 +14,21 @@ interface SyncDifference {
 export class ImageSyncService {
     private intervalDuration = 1000 * 30;
 
-    private active: {[variant in ImageVariant]?: ReturnType<typeof setTimeout>} = {}
+    private active: ImageVariant[] = [];
+    private schedules: {[variant in ImageVariant]?: ReturnType<typeof setTimeout>} = {}
+    private status: {[variant in ImageVariant]: SyncStatus} = {
+        "original_image": SyncStatus.Offline,
+        "thumbnail_image": SyncStatus.Offline
+    }
 
     constructor(
         private imageStore: ImageStore,
         private remoteImagestore: RemoteImageStoreInterface
     ) {}
 
-    public getStatus(variant: ImageVariant): SyncStatus {
-        
-        // if (!(variant in this.differences)) return SyncStatus.Error;
-        // if (!(variant in this.active)) return SyncStatus.Offline;
+    public getStatus(): {[variant in ImageVariant]: SyncStatus} {
 
-        // if (this.differences[variant].missingLocally.length !== 0) return SyncStatus.Pulling;
-        // if (this.differences[variant].missingRemotely.length !== 0) return SyncStatus.Pushing;
-        
-        return SyncStatus.InSync;
+        return this.status;
     }
 
 
@@ -37,9 +36,8 @@ export class ImageSyncService {
      * @returns list of {@link ImageVariant} that are currently beeing synced every {@link intervalDuration}.
      */
     public getActivePeriodicSync(): ImageVariant[] {
-        return Object.keys(ImageVariant).filter((variant) => {
-            (variant in this.active)
-        }) as ImageVariant[];
+
+        return this.active;
     }
 
 
@@ -48,10 +46,14 @@ export class ImageSyncService {
      * @param variant the {@link ImageVariant} to sync
      */
      public startSync(variant: ImageVariant) {
-
-        if((variant in this.active)) {
-            clearTimeout(this.active[variant]);
+        if(!(variant in this.active)) {
+            this.active.push(variant)
         }
+
+        if(variant in this.schedules) {
+            clearTimeout(this.schedules[variant]);
+        }
+
         this.sync(variant);
     }
 
@@ -61,24 +63,25 @@ export class ImageSyncService {
      * @param variant the {@link ImageVariant}
      */
     public stopSync(variant: ImageVariant) {
-        if((variant in this.active)) {
-            clearTimeout(this.active[variant]);
+
+        if(variant in this.active) {
+            this.active = this.active.filter((value) => value !== variant);
         }
 
-        delete this.active[variant];
+        if(variant in this.schedules) {
+            clearTimeout(this.schedules[variant]);
+        }
+
+        delete this.schedules[variant];
+        this.status[variant] = SyncStatus.Offline;
     }
 
 
     private scheduleNextSync(variant: ImageVariant) {
+        if (!this.active.includes(variant)) return;
 
-        this.active[variant] = setTimeout(this.sync.bind(this), this.intervalDuration, variant);
+        this.schedules[variant] = setTimeout(this.sync.bind(this), this.intervalDuration, variant);
     }
-
-
-    // private async cycle(variant: ImageVariant) {
-
-    //     await this.sync(variant);
-    // }
 
 
     private async sync(variant: ImageVariant) {
@@ -88,6 +91,10 @@ export class ImageSyncService {
             const differences = await this.evaluateDifference(activeProject, variant);
 
             for (const uuid of differences.missingLocally) {
+
+                if (!this.active.includes(variant)) break;
+                this.status[variant] = SyncStatus.Pulling;
+
                 const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
                 if (data !== null) {
                     await this.imageStore.store(uuid, data, activeProject, variant);
@@ -97,20 +104,33 @@ export class ImageSyncService {
             }
 
             for (const uuid of differences.deleteLocally) {
+
+                if (!this.active.includes(variant)) break;
+                this.status[variant] = SyncStatus.Pulling;
+
                 await this.imageStore.remove(uuid, activeProject)
             }
 
             for (const uuid of differences.missingRemotely) {
+                
+                if (!this.active.includes(variant)) break;
+                this.status[variant] = SyncStatus.Pushing;
+
                 const data = await this.imageStore.getData(uuid, variant, activeProject);
                 await this.remoteImagestore.store(uuid, data, activeProject, variant);
             }
 
             for (const uuid of differences.deleteRemotely) {
+
+                if (!this.active.includes(variant)) break;
+                this.status[variant] = SyncStatus.Pushing;
+
                 await this.remoteImagestore.remove(uuid, activeProject)
             }
-
+            this.status[variant] = SyncStatus.InSync;
         }
         catch (e){
+            this.status[variant] = SyncStatus.Error;
             console.error(e);
         }
 

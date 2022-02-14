@@ -27,17 +27,20 @@ export class TaskbarSyncStatusComponent {
 
     public getStatus = (): SyncStatus => {
 
-        let status: SyncStatus = this.pouchSyncService.getStatus();
+        const status: SyncStatus = this.pouchSyncService.getStatus();
 
         // If pouch DB is still syncing, do not evaluate image syncing status.
         if (status !== SyncStatus.InSync) return status;
 
-        // If thumbnails are still being synced, do not evaluate original image syncing status.
-        status = this.imageSyncService.getStatus(ImageVariant.THUMBNAIL);
-        if (status !== SyncStatus.InSync) return status;
+        const imageStatus = this.imageSyncService.getStatus();
 
-        status = this.imageSyncService.getStatus(ImageVariant.ORIGINAL);
-        return status;
+        for (const variant in imageStatus) {
+            if (imageStatus[variant] !== SyncStatus.InSync) {
+                return imageStatus[variant];
+            }
+        }
+
+        return SyncStatus.InSync;
     }
 
     public openSynchronizationModal = () => this.menuNavigator.openSynchronizationModal();

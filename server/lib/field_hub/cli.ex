@@ -8,17 +8,34 @@ defmodule FieldHub.CLI do
   require Logger
 
   def setup_couchdb_single_node() do
-    CouchService.initial_setup(get_admin_credentials())
+    Logger.info("Running initial CouchDB setup for single node...")
+    # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
+
+    {users, replicator } = CouchService.initial_setup(get_admin_credentials())
+
+    case users do
+      %{status_code: 412} ->
+        Logger.warning("System database '_users' already exists. You probably ran the CouchDB setup on an existing instance.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created system database `_users`.")
+    end
+
+    case replicator do
+      %{status_code: 412} ->
+        Logger.warning("System database '_replicator' already exists. You probably ran the CouchDB setup on an existing instance.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created system database `_replicator`.")
+    end
+    Logger.info("Single node setup done.")
   end
 
   def create_project(project_name) do
-    Logger.info("Adding project #{project_name}.")
     CouchService.create_project(project_name, get_admin_credentials())
     |> case do
       %{status_code: 412} ->
-        Logger.warning("Project #{project_name} already exists.")
+        Logger.warning("Project database '#{project_name}' already exists.")
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created.")
+        Logger.info("Created project database '#{project_name}'.")
     end
 
     FileStore.create_directories(project_name)
@@ -27,7 +44,7 @@ defmodule FieldHub.CLI do
   def create_user(name, password) do
     %{status_code: status_code} = CouchService.create_user(name, password, get_admin_credentials())
     if status_code == 409 do
-      Logger.info("User '#{name}' already exists.")
+      Logger.warning("User '#{name}' already exists.")
     else
       Logger.info("Created user '#{name}' with password '#{password}'.")
     end
@@ -48,17 +65,17 @@ defmodule FieldHub.CLI do
   end
 
   def add_user_as_project_admin(user_name, project) do
-    Logger.info("Adding #{user_name} as admin for project #{project}.")
+    Logger.info("Adding '#{user_name}' as admin for project '#{project}'.")
     CouchService.add_project_admin(user_name, project, get_admin_credentials())
   end
 
   def add_user_as_project_member(user_name, project) do
-    Logger.info("Adding #{user_name} as member for project #{project}.")
+    Logger.info("Adding '#{user_name}' as member for project '#{project}'.")
     CouchService.add_project_member(user_name, project, get_admin_credentials())
   end
 
   def remove_user_from_project(user_name, project) do
-    Logger.info("Removing #{user_name} from project #{project}.")
+    Logger.info("Removing '#{user_name}' from project '#{project}'.")
     CouchService.remove_user_from_project(user_name, project, get_admin_credentials())
   end
 

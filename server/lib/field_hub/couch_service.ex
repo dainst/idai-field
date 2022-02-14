@@ -25,32 +25,18 @@ defmodule FieldHub.CouchService do
   end
 
   def initial_setup(%Credentials{} = credentials) do
-    Logger.info("Setting up single node CouchDB")
-    # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
-
-    HTTPoison.put!(
-      "#{@couch_url}/_users",
-      "",
-      headers(credentials)
-    )
-    |> case do
-      %{status_code: 412} ->
-        Logger.warning("_users already exists. You probably ran a CouchDB setup on an existing instance.")
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created.")
-    end
-
-    HTTPoison.put!(
+    {
+      HTTPoison.put!(
+        "#{@couch_url}/_users",
+        "",
+        headers(credentials)
+      ),
+      HTTPoison.put!(
       "#{@couch_url}/_replicator",
       "",
       headers(credentials)
-    )
-    |> case do
-      %{status_code: 412} ->
-        Logger.warning("_replicator already exists. You probably ran a CouchDB setup on an existing instance.")
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created.")
-    end
+      )
+    }
   end
 
   def create_project(project_name, %Credentials{} = credentials) do

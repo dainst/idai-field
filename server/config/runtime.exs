@@ -25,8 +25,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  host = System.get_env("PHX_HOST")
+  port = String.to_integer(System.get_env("PHX_PORT") || "4000")
 
   config :field_hub, FieldHubWeb.Endpoint,
     url: [host: host, port: 443],
@@ -45,10 +45,16 @@ if config_env() == :prod do
   # If you are doing OTP releases, you need to instruct Phoenix
   # to start each relevant endpoint:
   #
-  #     config :field_hub, FieldHubWeb.Endpoint, server: true
+  config :field_hub, FieldHubWeb.Endpoint, server: true
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
+
+  config :field_hub,
+    couchdb_root: System.get_env("COUCHDB_ROOT"),
+    couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"), # see .env_template
+    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD"), # see .env_template
+    file_directory_root: "/files"
 
   # ## Configuring the mailer
   #

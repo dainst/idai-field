@@ -25,6 +25,7 @@ import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 export class AddCategoryFormModalComponent {
 
     public configurationDocument: ConfigurationDocument;
+    public clonedProjectConfiguration: ProjectConfiguration;
     public parentCategory: CategoryForm|undefined;
     public categoriesFilter?: CategoriesFilter;
     public categoryFormToReplace?: CategoryForm;
@@ -40,7 +41,6 @@ export class AddCategoryFormModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
-                private projectConfiguration: ProjectConfiguration,
                 private modals: Modals,
                 private menus: Menus) {}
 
@@ -106,7 +106,7 @@ export class AddCategoryFormModalComponent {
 
         this.categoryForms = this.categoriesFilter
             ? ConfigurationUtil.filterTopLevelCategories(
-                categoryForms, this.categoriesFilter, this.projectConfiguration
+                categoryForms, this.categoriesFilter, this.clonedProjectConfiguration
             )
             : categoryForms;
 

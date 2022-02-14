@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop, not, set } from 'tsfun';
+import { equal, isEmpty, nop, set } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -47,15 +47,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
 
     constructor(activeModal: NgbActiveModal,
-                modalService: NgbModal,
+                modals: Modals,
                 menuService: Menus,
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private modals: Modals,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, menuService, messages);
+        super(activeModal, modals, menuService, messages);
     }
 
 
@@ -102,7 +101,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     }
 
 
-    public async save() {
+    public async confirm() {
 
         if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
@@ -122,7 +121,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             this.getClonedValuelistDefinition().order = this.order;
         }
 
-        await super.save(true);
+        await super.confirm(true);
     }
 
 

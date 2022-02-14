@@ -1,0 +1,16 @@
+<ul class="bg-light listing">
+    <li *ngFor="let group of groups"
+        [class.selected]="selectedGroup === group"
+        (click)="select(group)">
+        <span class="item-label">{{getLabel(group)}}</span>
+        <code>{{group.name}}</code>
+        <span *ngIf="getSearchResultLabel(group)"
+                class="search-result-label"> ({{getSearchResultLabel(group)}})</span>
+    </li>
+    <li *ngIf="isNewGroupOptionShown()"
+        class="new-entry-button btn btn-success"
+        (click)="select(emptyGroup)">
+        <span class="mdi mdi-plus-circle"></span>
+        <div i18n="@@configuration.newGroup">Neue Gruppe <code>{{searchTerm}}</code> erstellen</div>        
+    </li>
+</ul>

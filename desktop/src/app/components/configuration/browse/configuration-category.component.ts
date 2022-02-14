@@ -11,7 +11,7 @@ import { GroupEditorModalComponent } from '../editor/group-editor-modal.componen
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
-import { SaveResult } from '../configuration.component';
+import { ApplyChangesResult } from '../configuration.component';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<SaveResult>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ApplyChangesResult>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();
@@ -112,22 +112,28 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public selectGroup(group: Group) {
+    public selectGroup(groupName: string) {
 
-        this.selectedGroup = group.name;
+        this.selectedGroup = groupName;
         this.openedFieldName = undefined;
     }
 
 
     public async addGroup() {
 
-        const [result] = this.modals.make<AddGroupModalComponent>(
+        const [result, componentInstance] = this.modals.make<AddGroupModalComponent>(
             AddGroupModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MANAGEMENT
         );
 
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.category = this.category;
+        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.initialize();
+
         await this.modals.awaitResult(result,
-            async groupName => await this.createNewGroup(groupName),
+            groupName => this.selectGroup(groupName),
             nop
         );
     }
@@ -215,33 +221,6 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
-    }
-
-
-    private async createNewGroup(groupName: string) {
-
-        const [result, componentInstance] =
-            this.modals.make<GroupEditorModalComponent>(
-                GroupEditorModalComponent,
-                MenuContext.CONFIGURATION_EDIT,
-                'lg'
-            );
-
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = this.category;
-        componentInstance.group = {
-            name: groupName,
-            label: {},
-            defaultLabel: {},
-            fields: [],
-            relations: []
-        } as any; // TODO review any; relations seems to be not defined in Group
-        componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
-        componentInstance.new = true;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(result, nop, nop);
     }
 
 

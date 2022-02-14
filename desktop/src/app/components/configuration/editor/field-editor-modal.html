@@ -5,21 +5,20 @@
     <h5 *ngIf="!new" class="modal-title" i18n="@@configuration.editSpecificField">
         Feld <code>{{field.name}}</code> bearbeiten
     </h5>
-    <button id="save-button" class="btn btn-success"
-            [ngClass]="{ 'disabled': saving || !isChanged() }"
-            (click)="saving || !isChanged() || save()">
-        <span class="mdi mdi-content-save"></span>
-        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    <button id="confirm-button" class="btn btn-primary"
+            [ngClass]="{ 'disabled': applyingChanges || !isChanged() }"
+            (click)="applyingChanges || !isChanged() || confirm()">
+        <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
     <button class="btn btn-primary"
-            [class.disabled]="saving"
-            (click)="saving || cancel()">
+            [class.disabled]="applyingChanges"
+            (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>
     </button>
 </div>
 
 <div class="modal-body configuration-editor-modal-body field-editor-modal-body">
-    <div *ngIf="field.source === 'custom'" class="configuration-editor-section">
+    <div *ngIf="getAvailableInputTypes().length > 0" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
             i18n="@@configuration.field.inputType">Eingabetyp</div>
         <select (change)="setInputType($event.target.value)" [disabled]="hidden"
@@ -97,6 +96,7 @@
                     <button id="swap-valuelist-button"
                             class="btn btn-primary"
                             type="button"
+                            [disabled]="hidden"
                             (click)="selectValuelist()"
                             ngbTooltip="Werteliste wechseln"
                             i18n-ngbTooltip="@@configuration.replaceValuelist"
@@ -108,6 +108,7 @@
                             id="edit-valuelist-button"
                             class="btn btn-primary"
                             type="button"
+                            [disabled]="hidden"
                             (click)="editValuelist()"
                             ngbTooltip="Werteliste bearbeiten"
                             i18n-ngbTooltip="@@configuration.editValuelist"

@@ -29,7 +29,8 @@ defmodule Api.MixProject do
       {:httpoison, "~> 1.8"},
       {:cowboy, "~> 2.9"},
       {:remix, "~> 0.0.2", only: :dev},
-      {:guardian, "~> 2.2"}
+      {:guardian, "~> 2.2"},
+      {:corsica, "~> 1.0"}
     ]
   end
 end

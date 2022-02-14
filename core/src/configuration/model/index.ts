@@ -11,6 +11,5 @@ export { BuiltInFormDefinition } from './form/built-in-form-definition';
 export { CustomFormDefinition } from './form/custom-form-definition';
 export { LibraryFormDefinition } from './form/library-form-definition';
 export { TransientFormDefinition } from './form/transient-form-definition';
-export { LanguageConfiguration, CategoryLanguageDefinition, FieldLanguageDefinition,
-    RelationLanguageDefinition } from './language/language-configuration';
+export { LanguageConfiguration, CategoryLanguageDefinition, FieldLanguageDefinition } from './language/language-configuration';
 export { LanguageConfigurations } from './language/language-configurations';

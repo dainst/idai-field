@@ -26,7 +26,7 @@ export class ConfigurationChangeNotifications {
         this.changesStream.remoteConfigurationChangesNotifications().subscribe(() => this.triggerNotification());
 
         this.menus.menuContextNotifications().subscribe(menuContext => {
-            if (this.configurationChanged && !this.isBlockingMenuContext(menuContext)) {
+            if (this.configurationChanged && this.menus.getContext() === MenuContext.DEFAULT) {
                 this.openNotificationModal();
             }
         });
@@ -35,10 +35,10 @@ export class ConfigurationChangeNotifications {
 
     private triggerNotification() {
 
-         if (this.isBlockingMenuContext(this.menus.getContext())) {
-             this.configurationChanged = true;
-         } else {
+         if (this.menus.getContext() === MenuContext.DEFAULT) {
             this.openNotificationModal();
+         } else {
+            this.configurationChanged = true;
          }
     }
 
@@ -51,13 +51,5 @@ export class ConfigurationChangeNotifications {
         );
 
         await this.modals.awaitResult(result, nop, nop);
-    }
-
-
-    private isBlockingMenuContext(menuContext: MenuContext): boolean {
-
-        return [MenuContext.DOCEDIT, MenuContext.MODAL, MenuContext.GEOMETRY_EDIT,
-                MenuContext.GEOREFERENCE_EDIT, MenuContext.MAP_LAYERS_EDIT]
-            .includes(menuContext);
     }
 }

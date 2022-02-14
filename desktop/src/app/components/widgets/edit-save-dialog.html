@@ -2,11 +2,18 @@
     <h5 class="modal-title" i18n="@@widgets.saveModal.header">Speichern?</h5>
 </div>
 <div id="edit-save-dialog-modal-body" class="modal-body">
-    {{changeMessage}} <span i18n="@@widgets.saveModal.question">Möchten Sie die Änderungen speichern?</span>
+    <div *ngIf="!applyMode">
+        {{changeMessage}} <span i18n="@@widgets.saveModal.question">Möchten Sie die Änderungen speichern?</span>
+    </div>
+    <div *ngIf="applyMode">
+        {{changeMessage}} <span i18n="@@widgets.saveModal.applyQuestion">Möchten Sie die Änderungen übernehmen?</span>
+    </div>
 </div>
 <div class="modal-footer">
-    <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
+    <button *ngIf="!applyMode"  id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
             (click)="activeModal.close('save')" i18n="@@buttons.save">Speichern</button>
+    <button *ngIf="applyMode"  id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
+            (click)="activeModal.close('save')" i18n="@@buttons.apply">Übernehmen</button>
     <button id="overview-save-confirmation-modal-discard-button" type="button" class="btn btn-secondary"
             (click)="activeModal.close('discard')" i18n="@@buttons.discardChanges">Änderungen verwerfen</button>
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"

@@ -42,6 +42,7 @@ import { DoceditModule } from '../docedit/docedit.module';
 import { ConfigurationConflictsModalComponent } from './conflicts/configuration-conflicts-modal.component';
 import { SaveModalComponent } from './save/save-modal.component';
 import { ConfigurationGuard } from './configuration-guard';
+import { GroupListingComponent } from './add/group/group-listing.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ConfigurationGuard } from './configuration-guard';
         ValuelistPreviewComponent,
         CategoryListingComponent,
         FieldListingComponent,
+        GroupListingComponent,
         ValuelistListingComponent,
         FieldEditorModalComponent,
         GroupEditorModalComponent,

@@ -34,7 +34,7 @@ import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 
 
-export type SaveResult = {
+export type ApplyChangesResult = {
     
     configurationDocument: ConfigurationDocument,
     configurationIndex: ConfigurationIndex
@@ -70,8 +70,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public categoriesFilterOptions: Array<CategoriesFilter> = [
         { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
         { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
-        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Grabung' }) },
-        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauaufnahme' }) },
+        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Schnitt' }) },
+        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
         { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
         { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
         { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
@@ -100,9 +100,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     ];
 
     public applyChanges = (configurationDocument: ConfigurationDocument,
-                           reindexConfiguration?: boolean): Promise<SaveResult> =>
+                           reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
+    private clonedProjectConfiguration: ProjectConfiguration;
     private menuSubscription: Subscription;
 
 
@@ -134,9 +135,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.menus.setContext(MenuContext.CONFIGURATION);
         this.modals.initialize(MenuContext.CONFIGURATION);
 
+        this.configurationDocument = await this.fetchConfigurationDocument();
+        this.clonedProjectConfiguration = await this.buildProjectConfiguration(this.configurationDocument);
+
         this.loadCategories();
 
-        this.configurationDocument = await this.fetchConfigurationDocument();
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
     }
@@ -188,7 +191,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
         this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
-            this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.projectConfiguration
+            this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.clonedProjectConfiguration
         );
 
         if (selectFirstCategory) this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
@@ -280,6 +283,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.categoriesFilter = this.selectedCategoriesFilter;
         componentInstance.initialize();
@@ -302,6 +306,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.parentCategory = parentCategory;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.projectCategoryNames = ConfigurationUtil.getCategoriesOrder(this.topLevelCategoriesArray);
         componentInstance.initialize();
 
@@ -389,6 +394,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.categoryFormToReplace = category;
         componentInstance.initialize();
 
@@ -522,7 +528,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 this.configurationDocument,
                 category,
                 group,
-                Tree.flatten(this.projectConfiguration.getCategories()).filter(c => c.name !== category.name),
+                Tree.flatten(this.clonedProjectConfiguration.getCategories()).filter(c => c.name !== category.name),
             );
             await this.updateProjectConfiguration(changedConfigurationDocument);
         } catch (errWithParams) {
@@ -562,10 +568,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.modals.awaitResult(
             result,
-            (saveResult?: SaveResult) => {
-                if (!saveResult) return;
-                this.configurationDocument = saveResult.configurationDocument;
-                this.configurationIndex = saveResult.configurationIndex;
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
             },
             nop
         );
@@ -574,11 +580,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private loadCategories() {
 
-        this.topLevelCategoriesArray = Tree.flatten(this.projectConfiguration.getCategories())
+        this.topLevelCategoriesArray = Tree.flatten(this.clonedProjectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
         if (this.selectedCategory) {
-            this.selectCategory(this.projectConfiguration.getCategory(this.selectedCategory.name));
+            this.selectCategory(this.clonedProjectConfiguration.getCategory(this.selectedCategory.name));
         }
 
         this.setCategoriesFilter(
@@ -589,21 +595,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
-                                             reindexConfiguration?: boolean): Promise<SaveResult> {
-
-        let newProjectConfiguration;
-        try {
-             newProjectConfiguration = await this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                Document.clone(configurationDocument)
-            );
-        } catch (errWithParams) {
-            throw errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
-        }
+                                             reindexConfiguration?: boolean): Promise<ApplyChangesResult> {
 
         try {
-            this.projectConfiguration.update(newProjectConfiguration);
+            this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
             this.configurationDocument = configurationDocument;
             if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
@@ -611,7 +606,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             }
             this.loadCategories();
         } catch (e) {
-            console.error('error in configureAppSaveChangesAndReload', e);
+            console.error('error in updateProjectConfiguration', e);
         }
 
         this.changed = true;
@@ -620,6 +615,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             configurationDocument: this.configurationDocument,
             configurationIndex: this.configurationIndex
         };
+    }
+
+
+    private buildProjectConfiguration(configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
+
+        try {
+            return this.appConfigurator.go(
+               this.settingsProvider.getSettings().username,
+               getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+               Document.clone(configurationDocument)
+           );
+       } catch (errWithParams) {
+           throw errWithParams; // TODO Review. 1. Convert to msgWithParams. 2. Then basically we have the options of either return and let the children display it, or we display it directly from here, via `messages`. With the second solution the children do not need access to `messages` themselves.
+       }
     }
 
 
@@ -634,11 +643,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.configurationDocument = this.configurationDocument._rev
                 ? await this.datastore.update(this.configurationDocument) as ConfigurationDocument
                 : await this.datastore.create(this.configurationDocument) as ConfigurationDocument;
+            this.projectConfiguration.update(this.clonedProjectConfiguration);
             await this.reindex();
         } catch (errWithParams) {
             this.modals.closeModal(componentInstance);
             this.messages.add(
-                MessagesConversion.convertMessage(errWithParams, this.projectConfiguration, this.labels)
+                MessagesConversion.convertMessage(errWithParams, this.clonedProjectConfiguration, this.labels)
             );
         }
 

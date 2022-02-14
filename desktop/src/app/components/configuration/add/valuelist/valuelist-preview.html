@@ -13,9 +13,17 @@
         </div>
     </div>
     <div id="preview-body" [class.extending-valuelist]="valuelist.extendedValuelist">
-        <div *ngIf="getValuelistDescription()" id="valuelist-description">{{getValuelistDescription()}}</div>
+        <div *ngIf="valuelist.createdBy" class="valuelist-preview-section">
+            <b i18n="@@configuration.createdBy">Erstellt von:</b>
+            <div>{{valuelist.createdBy}}</div>
+        </div>
 
-        <b i18n="@@configuration.values">Werte</b>
+        <div *ngIf="getValuelistDescription()" class="valuelist-preview-section">
+            <b i18n="@@configuration.description">Beschreibung:</b>
+            <div id="valuelist-description">{{getValuelistDescription()}}</div>
+        </div>
+
+        <b i18n="@@configuration.values">Werte:</b>
         <ul class="list-group list-group-flush">
             <li *ngIf="valuelist.values" class="list-group-item">
                 <valuelist-view [valuelist]="valuelist"

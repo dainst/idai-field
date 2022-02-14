@@ -59,6 +59,12 @@ export function applyLanguagesToRelations(languageConfigurations: LanguageConfig
         relation.defaultLabel = LanguageConfiguration.getI18nString(
             languageConfigurations.default, 'relations', relation.name, 'label'
         );
+        relation.description = LanguageConfiguration.getI18nString(
+            languageConfigurations.complete, 'relations', relation.name, 'description'
+        );
+        relation.defaultDescription = LanguageConfiguration.getI18nString(
+            languageConfigurations.default, 'relations', relation.name, 'description'
+        );
     }
 }
 

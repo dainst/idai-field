@@ -6,7 +6,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
 import { Modals } from '../../../../services/modals';
-import { SaveResult } from '../../configuration.component';
+import { ApplyChangesResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
 import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
@@ -25,12 +25,13 @@ import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 export class AddCategoryFormModalComponent {
 
     public configurationDocument: ConfigurationDocument;
+    public clonedProjectConfiguration: ProjectConfiguration;
     public parentCategory: CategoryForm|undefined;
     public categoriesFilter?: CategoriesFilter;
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<SaveResult>;
+        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;
@@ -40,7 +41,6 @@ export class AddCategoryFormModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
-                private projectConfiguration: ProjectConfiguration,
                 private modals: Modals,
                 private menus: Menus) {}
 
@@ -106,7 +106,7 @@ export class AddCategoryFormModalComponent {
 
         this.categoryForms = this.categoriesFilter
             ? ConfigurationUtil.filterTopLevelCategories(
-                categoryForms, this.categoriesFilter, this.projectConfiguration
+                categoryForms, this.categoriesFilter, this.clonedProjectConfiguration
             )
             : categoryForms;
 

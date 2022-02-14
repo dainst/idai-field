@@ -1,3 +1,10 @@
+#configuration-conflicts-modal-header {
+  #save-button {
+    position: absolute;
+    right: 57px;
+  }
+}
+
 .configuration-conflicts-modal-body {
   height: calc(100vh - 110px);
   overflow-x: hidden;

@@ -46576,6 +46576,44 @@
       "nicht aufgehoben": {}
     }
   },
+  "Loomweight-loomweightCategory-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "07-09-2021",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "order": [
+      "Pyramidal",
+      "Lentoid",
+      "Scheibenförmig",
+      "Menthos",
+      "Donut",
+      "andere"
+    ],
+    "values": {
+      "Pyramidal": {},
+      "Lentoid": {},
+      "Scheibenförmig": {},
+      "Menthos": {},
+      "Donut": {},
+      "andere": {}
+    }
+  },
+  "Loomweight-loomweightDetail-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "07-09-2021",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Stempel": {},
+      "Ritzung": {},
+      "Dipinto": {},
+      "Sonstige": {}
+    }
+  },
   "localization-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
     "creationDate": "25-04-2020",
@@ -47911,6 +47949,13 @@
           "fr": "Tombe/Sépulture"
         }
       },
+      "artificial_removal": {
+        "labels": {
+          "de": "Abhub (künstlich)",
+          "en": "artificial (removal of fixed height value)",
+          "fr": "artificial (removal of fixed height value) #todo"
+        }
+      },
       "other": {
         "label": {
           "de": "andere",
@@ -48315,6 +48360,8 @@
       "HS": {},
       "HU": {},
       "K": {},
+      "KT": {},
+      "KL": {},
       "KBA": {},
       "M": {},
       "M-AK": {},
@@ -48455,6 +48502,13 @@
           "en": "complete processing (Level 3)",
           "fr": "Traitement complet (niveau 3)"
         }
+      },
+      "04_no_processing": {
+        "labels": {
+          "de": "keinerlei Bearbeitung gewünscht",
+          "en": "no processing requested",
+          "fr": "aucun traitement demandé ?"
+        }
       }
     }
   },
@@ -48522,6 +48576,104 @@
       "intakt",
       "unbekannt"
     ]
+  },
+  "Building-material-milet": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Granit": {
+        "labels": {
+          "de": "Granit",
+          "en": "Granite",
+          "fr": "Granit"
+        }
+      },
+      "Kalk": {
+        "labels": {
+          "de": "Kalk",
+          "en": "Lime / chalk",
+          "fr": "Calcaire / chaux"
+        }
+      },
+      "Gneis": {
+        "labels": {
+          "de": "Gneis",
+          "en": "Gneiss",
+          "fr": "Gneiss"
+        }
+      },
+      "Poros": {
+        "labels": {
+          "de": "Poros",
+          "en": "Poros",
+          "fr": "Poros"
+        }
+      },
+      "Breccia": {
+        "labels": {
+          "de": "Brekzie",
+          "en": "Breccia",
+          "fr": "Brèche"
+        }
+      },
+      "Kalkmörtel": {
+        "labels": {
+          "de": "Kalkmörtel",
+          "en": "Lime mortar",
+          "fr": "Calcaire / Chaux mortier"
+        }
+      },
+      "Kalkstein": {
+        "labels": {
+          "de": "Kalkstein",
+          "en": "Limestone",
+          "fr": "(pièrre) meulière / calcaire"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "de": "Marmor",
+          "en": "Marble",
+          "fr": "Marbre"
+        }
+      },
+      "Pophyr": {
+        "labels": {
+          "de": "Pophyr",
+          "en": "Porphyry",
+          "fr": "Porphyre"
+        }
+      },
+      "Quarz": {
+        "labels": {
+          "de": "Quarz",
+          "en": "Quartz",
+          "fr": "Quartz"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "de": "Sandstein",
+          "en": "Sandstone",
+          "fr": "Grès"
+        }
+      },
+      "Tuffit": {
+        "labels": {
+          "de": "Tuffit",
+          "en": "Tuffite",
+          "fr": "Tuffit(e)"
+        }
+      },
+      "Ziegel": {
+        "labels": {
+          "de": "Ziegel",
+          "en": "Brick",
+          "fr": "Brique / Tuile"
+        }
+      }
+    }
   },
   "Building-context-milet": {
     "creationDate": "12-03-2021",
@@ -48602,6 +48754,7 @@
       "Weißgrundige Keramik",
       "Kleckerware",
       "Stapelware",
+      "Streifenkeramik",
       "Westabhang-Keramik",
       "Westabhang-Nachfolgestil",
       "Sigillata unbestimmt",
@@ -48696,6 +48849,13 @@
           "de": "Stapelware",
           "en": "Stapelware (kiln stacking technique)",
           "fr": "Matériel céramique empilé (dans un four) ?"
+        }
+      },
+      "Streifenkeramik": {
+        "labels": {
+          "de": "Streifenkeramik",
+          "en": "Banded Pottery",
+          "fr": "céramique bandes (???; banded ware)"
         }
       },
       "Westabhang-Keramik": {
@@ -50225,66 +50385,101 @@
     "description": {},
     "values": {
       "Pottery": {
-        "label": {
-          "de": "Keramik",
-          "en": "Pottery",
-          "fr": "Céramique"
+        "labels": {
+          "de": "001 Keramik",
+          "en": "001 Pottery",
+          "fr": "001 Céramique"
         }
       },
       "Bones": {
-        "label": {
-          "de": "Knochen",
-          "en": "Bones",
-          "fr": "Os"
+        "labels": {
+          "de": "002 Knochen",
+          "en": "002 Bones",
+          "fr": "002 Os"
         }
       },
       "Mollusks": {
-        "label": {
-          "de": "Mollusken",
-          "en": "Mollusks",
-          "fr": "Mollusques"
+        "labels": {
+          "de": "003 Mollusken",
+          "en": "003 Mollusks",
+          "fr": "003 Mollusques"
         }
       },
       "Glass": {
-        "label": {
-          "de": "Glas",
-          "en": "Glass",
-          "fr": "Verre"
+        "labels": {
+          "de": "004 Glas",
+          "en": "004 Glass",
+          "fr": "004 Verre"
         }
       },
       "Metal": {
-        "label": {
-          "de": "Metall",
-          "en": "Metal",
-          "fr": "Métal"
+        "labels": {
+          "de": "005 Metall",
+          "en": "005 Metal",
+          "fr": "005 Métal"
         }
       },
       "Stone": {
-        "label": {
-          "de": "Stein",
-          "en": "Stone",
-          "fr": "Pierre"
+        "labels": {
+          "de": "006 Stein",
+          "en": "006 Stone",
+          "fr": "006 Pierre"
         }
       },
       "Terracotta": {
-        "label": {
-          "de": "Terrakotta",
-          "en": "Terracotta",
-          "fr": "Terre cuite"
+        "labels": {
+          "de": "007 Terrakotta",
+          "en": "007 Terracotta",
+          "fr": "007 Terre cuite"
         }
       },
       "Coins": {
-        "label": {
-          "de": "Münzen",
-          "en": "Coins",
-          "fr": "Monnaies"
+        "labels": {
+          "de": "008 Münzen",
+          "en": "008 Coins",
+          "fr": "008 Monnaies"
         }
       },
       "Plaster": {
-        "label": {
-          "de": "Putz",
-          "en": "Plaster",
-          "fr": "Plâtre"
+        "labels": {
+          "de": "009 Putz",
+          "en": "009 Plaster",
+          "fr": "009 Plâtre"
+        }
+      },
+      "Sample": {
+        "labels": {
+          "de": "010 Proben",
+          "en": "010 Sample",
+          "fr": "010 Sample"
+        }
+      },
+      "Tesserae": {
+        "labels": {
+          "de": "011 Tesserae",
+          "en": "011 Tesserae",
+          "fr": "011 Tesserae"
+        }
+      },
+      "Inlays": {
+        "labels": {
+          "de": "012 Inkrustationen",
+          "en": "012 Inlays",
+          "fr": "012 Incrustations"
+        }
+      },
+      "Ziegel": {
+        "labels": {
+          "de": "013 Ziegel",
+          "en": "013 Bricks / Tiles",
+          "fr": "013 Briques"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "de": "014 Holz",
+          "en": "014 Wood",
+          "fr": "014 Bois"
         }
       }
     }

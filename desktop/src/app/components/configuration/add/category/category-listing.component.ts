@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { CategoryForm, I18N, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, I18N, Labels } from 'idai-field-core';
 import { getSearchResultLabel } from '../getSearchResultLabel';
 
 
@@ -20,6 +20,7 @@ type CategoryListingItem = {
 export class CategoryListingComponent implements OnChanges {
 
     @Input() categoryForms: Array<CategoryForm> = [];
+    @Input() configurationDocument: ConfigurationDocument;
     @Input() emptyForm: CategoryForm;
     @Input() selectedForm: CategoryForm;
     @Input() searchTerm: string = '';
@@ -45,7 +46,8 @@ export class CategoryListingComponent implements OnChanges {
     public getForms = (categoryName: string) => this.categoryForms.filter(form => form.name === categoryName);
 
     public isNewCategoryOptionShown = (): boolean => this.emptyForm
-        && !this.items.map(item => item.form.libraryId).includes(this.searchTerm);
+        && !this.items.map(item => item.form.libraryId).includes(this.searchTerm)
+        && !Object.keys(this.configurationDocument.resource.forms).includes(this.searchTerm);
 
     public getSearchResultLabel = (form: CategoryForm) => getSearchResultLabel(form, this.searchTerm, this.getLabel);
     

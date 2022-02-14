@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Field, Labels } from 'idai-field-core';
+import { to } from 'tsfun';
+import { CategoryForm, Field, Labels, Named } from 'idai-field-core';
 import { getSearchResultLabel } from '../getSearchResultLabel';
 
 
@@ -13,6 +14,7 @@ import { getSearchResultLabel } from '../getSearchResultLabel';
 export class FieldListingComponent {
 
     @Input() fields: Array<Field> = [];
+    @Input() category: CategoryForm;
     @Input() emptyField: Field|undefined;
     @Input() selectedField: Field;
     @Input() searchTerm: string = '';
@@ -28,7 +30,8 @@ export class FieldListingComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
     public isNewFieldOptionShown = (): boolean => this.emptyField !== undefined
-        && !this.fields.map(field => field.name).includes(this.searchTerm);
+        && !this.fields.map(field => field.name).includes(this.searchTerm)
+        && !CategoryForm.getFields(this.category).map(to(Named.NAME)).includes(this.searchTerm);
 
     public getSearchResultLabel = (field: Field) => getSearchResultLabel(field, this.searchTerm, this.getLabel);
 }

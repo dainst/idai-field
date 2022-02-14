@@ -2,17 +2,33 @@
     <h5 class="modal-title" i18n="@@configuration.addGroup">Gruppe hinzufügen</h5>
 </div>
 
-<div class="modal-body">
-    <input type="text" id="field-name" class="form-control" [(ngModel)]="groupName">
+<div class="modal-body row add-group-modal-body">
+    <div class="col">
+        <div class="input-group mb-2">
+            <input type="text"
+                   id="group-name"
+                   class="form-control"
+                   [(ngModel)]="searchTerm"
+                   (ngModelChange)="applyGroupNameSearch()">
+        </div>
+        <group-listing [groups]="groups"
+                       [category]="category"
+                       [selectedGroup]="selectedGroup"
+                       [emptyGroup]="emptyGroup"
+                       [searchTerm]="searchTerm"
+                       (onGroupSelected)="select($event)">
+        </group-listing>
+    </div>
 </div>
 
 <div class="modal-footer">
-    <div id="create-field-button"
+    <div id="add-group-button"
          class="btn btn-success"
-         (click)="createGroup()">
-        <span i18n="@@configuration.createGroup">Neue Gruppe erstellen</span>
+         [class.disabled]="!selectedGroup"
+         (click)="confirmSelection()">
+        <span i18n="@@configuration.selectGroup">Gruppe auswählen</span>
     </div>
-    <div id="cancel-add-field-modal-button"
+    <div id="cancel-add-group-modal-button"
          class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>

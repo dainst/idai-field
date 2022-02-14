@@ -1,6 +1,3 @@
-import {isAssociative, isPrimitive, map} from 'tsfun';
-
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira

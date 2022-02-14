@@ -47,7 +47,7 @@
                    [cdkDropListConnectedTo]="['fields-list']"
                    [class.active]="selectedGroup === group.name"
                    [class.drop-target]="draggingField"
-                   (click)="selectGroup(group)"
+                   (click)="selectGroup(group.name)"
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span class="mdi mdi-drag" cdkDragHandle></span>

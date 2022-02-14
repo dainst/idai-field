@@ -1,11 +1,12 @@
-import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { clone } from 'tsfun';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { clone, nop } from 'tsfun';
 import { ConfigurationDocument, I18N, Document, CategoryForm, CustomFormDefinition } from 'idai-field-core';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { SaveResult } from '../configuration.component';
+import { ApplyChangesResult } from '../configuration.component';
+import { Modals } from '../../../services/modals';
 
 
 /**
@@ -24,9 +25,9 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<SaveResult>;
+        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
 
-    public saving: boolean;
+    public applyingChanges: boolean;
     public escapeKeyPressed: boolean = false;
 
     protected abstract changeMessage: string;
@@ -34,7 +35,7 @@ export abstract class ConfigurationEditorModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private modalService: NgbModal,
+                protected modals: Modals,
                 private menuService: Menus,
                 protected messages: Messages) {}
 
@@ -85,17 +86,17 @@ export abstract class ConfigurationEditorModalComponent {
         this.clonedLabel = clone(this.label);
         this.clonedDescription = this.description ? clone(this.description) : {};
 
-        this.saving = false;
+        this.applyingChanges = false;
     }
 
 
-    public async save(reindexConfiguration?: boolean) {
+    public async confirm(reindexConfiguration?: boolean) {
 
-        this.saving = true;
+        this.applyingChanges = true;
         this.updateCustomLanguageConfigurations();
 
         try {
-            const result: SaveResult = await this.applyChanges(
+            const result: ApplyChangesResult = await this.applyChanges(
                 this.clonedConfigurationDocument,
                 reindexConfiguration
             );
@@ -103,7 +104,7 @@ export abstract class ConfigurationEditorModalComponent {
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
-            this.saving = false;
+            this.applyingChanges = false;
         }
     }
 
@@ -134,8 +135,8 @@ export abstract class ConfigurationEditorModalComponent {
 
     private async performQuickSave() {
 
-        if (this.isChanged() && !this.saving && this.menuService.getContext() === this.menuContext) {
-            await this.save();
+        if (this.isChanged() && !this.applyingChanges && this.menuService.getContext() === this.menuContext) {
+            await this.confirm();
         }
     }
 
@@ -144,25 +145,26 @@ export abstract class ConfigurationEditorModalComponent {
 
         this.menuService.setContext(MenuContext.CONFIGURATION_MODAL);
 
-        try {
-            const modalRef: NgbModalRef = this.modalService.open(
-                EditSaveDialogComponent, { keyboard: false }
-            );
-            modalRef.componentInstance.changeMessage = this.changeMessage;
-            modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+        const [result, componentInstance] = this.modals.make<EditSaveDialogComponent>(
+            EditSaveDialogComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
 
-            const result: string = await modalRef.result;
+        componentInstance.changeMessage = this.changeMessage;
+        componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+        componentInstance.applyMode = true;
 
-            if (result === 'save') {
-                await this.save();
-            } else if (result === 'discard') {
-                this.activeModal.dismiss('cancel');
-            }
-        } catch(err) {
-            // EditSaveDialogModal has been canceled
-        } finally {
-            this.menuService.setContext(this.menuContext);
-        }
+        await this.modals.awaitResult(
+            result,
+            async (resultMessage: string) => {
+                if (resultMessage === 'save') {
+                    await this.confirm();
+                } else if (resultMessage === 'discard') {
+                    this.activeModal.dismiss('cancel');
+                }
+            },
+            nop
+        );
     }
 
 

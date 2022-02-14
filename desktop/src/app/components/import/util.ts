@@ -1,4 +1,4 @@
-import {Associative, is, isArray, isEmpty, isObject} from 'tsfun';
+import { Associative, is, isArray, isEmpty, isObject } from 'tsfun';
 
 
 /**

@@ -429,12 +429,12 @@ describe('ConfigLoader', () => {
         const libraryCategories: Map<LibraryCategoryDefinition> = {
             A: {
                 parent: 'F',
-                fields: { fieldA1: { inputType: 'unsignedInt' } },
+                fields: { fieldA1: { inputType: 'input' } },
                 description: {}
             },
             B: {
                 parent: 'G',
-                fields: { fieldB1: { inputType: 'input' } },
+                fields: { fieldB1: { inputType: 'unsignedInt' } },
                 description: {}
             }
         };
@@ -442,7 +442,7 @@ describe('ConfigLoader', () => {
         const customForms: Map<CustomFormDefinition> = {
             A: {
                 fields: {
-                    fieldA1: { inputType: 'boolean' } // Ignore this field
+                    fieldA1: { inputType: 'text' }
                 },
                 groups: [{ name: Groups.STEM, fields: ['fieldA1'] }]
             },
@@ -479,9 +479,9 @@ describe('ConfigLoader', () => {
             );
 
             expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldA1')
-                .inputType).toEqual('unsignedInt');
+                .inputType).toEqual('text');
             expect(pconf.getCategory('B').groups[0].fields.find(field => field.name == 'fieldB1')
-                .inputType).toEqual('input');
+                .inputType).toEqual('unsignedInt');
             expect(pconf.getCategory('B').groups[0].fields.find(field => field.name == 'fieldB2')
                 .inputType).toEqual('boolean');
 

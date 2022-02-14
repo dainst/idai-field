@@ -34,8 +34,10 @@ export class TaskbarSyncStatusComponent {
 
         const imageStatus = this.imageSyncService.getStatus();
 
+        // If any image variant status is something else than offline or in sync, use that one as
+        // overall status.
         for (const variant in imageStatus) {
-            if (imageStatus[variant] !== SyncStatus.InSync) {
+            if (![SyncStatus.InSync, SyncStatus.Offline].includes(imageStatus[variant])) {
                 return imageStatus[variant];
             }
         }

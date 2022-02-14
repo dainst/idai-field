@@ -127,7 +127,8 @@ export class ImageSyncService {
 
                 await this.remoteImagestore.remove(uuid, activeProject)
             }
-            this.status[variant] = SyncStatus.InSync;
+
+            this.status[variant] = this.active.includes(variant) ? SyncStatus.InSync : SyncStatus.Offline;
         }
         catch (e){
             this.status[variant] = SyncStatus.Error;

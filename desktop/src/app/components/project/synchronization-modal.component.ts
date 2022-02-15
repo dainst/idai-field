@@ -66,7 +66,7 @@ export class SynchronizationModalComponent implements OnInit {
 
 
     public async toggleThumbnailImageSync() {
-        if (this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL)) {
+        if (!this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL)) {
             this.syncTarget.activeFileSync.push(ImageVariant.THUMBNAIL);
         } else {
             this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter((val: ImageVariant) => val !== ImageVariant.THUMBNAIL);
@@ -81,7 +81,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     public async toggleOriginalImageSync() {
 
-        if (this.syncTarget.activeFileSync.includes(ImageVariant.ORIGINAL)) {
+        if (!this.syncTarget.activeFileSync.includes(ImageVariant.ORIGINAL)) {
             this.syncTarget.activeFileSync.push(ImageVariant.ORIGINAL);
         } else {
             this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter((val: ImageVariant) => val !== ImageVariant.ORIGINAL);

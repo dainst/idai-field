@@ -101,7 +101,7 @@ export const appInitializerFactory = (
     serviceLocator: AppInitializerServiceLocator,
     settingsService: SettingsService,
     pouchdbDatastore: PouchdbDatastore,
-    pouchdbServer: ExpressServer,
+    expressServer: ExpressServer,
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
     imagestore: ImageStore,
@@ -110,7 +110,7 @@ export const appInitializerFactory = (
     configLoader: ConfigLoader
 ) => async (): Promise<void> => {
 
-    await pouchdbServer.setupServer();
+    await expressServer.setupServer();
 
     const settings = await loadSettings(settingsService, progress);
 

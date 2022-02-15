@@ -46,6 +46,7 @@ export class ImageSyncService {
      * @param variant the {@link ImageVariant} to sync
      */
      public startSync(variant: ImageVariant) {
+
         console.log(`Starting sync for ${variant}.`)
         if(!(variant in this.active)) {
             this.active.push(variant)
@@ -65,15 +66,14 @@ export class ImageSyncService {
      */
     public stopSync(variant: ImageVariant) {
 
-        if(variant in this.active) {
-            this.active = this.active.filter((value) => value !== variant);
-        }
+        console.log(`Stopping sync for ${variant}.`)
+
+        this.active = this.active.filter((value) => value !== variant);
 
         if(variant in this.schedules) {
             clearTimeout(this.schedules[variant]);
         }
 
-        delete this.schedules[variant];
         this.status[variant] = SyncStatus.Offline;
     }
 

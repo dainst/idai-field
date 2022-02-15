@@ -2,6 +2,6 @@
   "files.watcherExclude": {
     "**/node_modules/*/**": true
   },
-  "elixirLS.projectDir": "field_hub"
+  "elixirLS.projectDir": "server"
 }
 

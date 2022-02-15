@@ -33,8 +33,7 @@ export class ImageSyncService {
 
 
     /**
-     * Trigger an instant sync cycle without waiting for the periodic syncing.
-     * @param variant the {@link ImageVariant} to sync
+     * Start syncing images of the given {@link ImageVariant}.
      */
      public startSync(variant: ImageVariant) {
 
@@ -44,6 +43,8 @@ export class ImageSyncService {
         }
 
         if(variant in this.schedules) {
+            // If there is a sync schedule, stop schedule because we will
+            // sync immediately.
             clearTimeout(this.schedules[variant]);
         }
 
@@ -52,8 +53,7 @@ export class ImageSyncService {
 
 
     /**
-     * Remove a {@link ImageVariant} from the periodic syncing.
-     * @param variant the {@link ImageVariant}
+     * Stop syncing images of the given {@link ImageVariant}.
      */
     public stopSync(variant: ImageVariant) {
 
@@ -69,7 +69,7 @@ export class ImageSyncService {
     }
 
     /**
-     * Stop syncing for all image variants.
+     * Stop syncing for all {@link ImageVariant}.
      */
     public stopAllSyncing() {
 
@@ -93,7 +93,7 @@ export class ImageSyncService {
 
             for (const uuid of differences.missingLocally) {
 
-                if (!this.active.includes(variant)) break;
+                if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
                 this.status[variant] = SyncStatus.Pulling;
 
                 const data = await this.remoteImagestore.getData(uuid, variant, activeProject);
@@ -106,7 +106,7 @@ export class ImageSyncService {
 
             for (const uuid of differences.deleteLocally) {
 
-                if (!this.active.includes(variant)) break;
+                if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
                 this.status[variant] = SyncStatus.Pulling;
 
                 await this.imageStore.remove(uuid, activeProject)
@@ -114,7 +114,7 @@ export class ImageSyncService {
 
             for (const uuid of differences.missingRemotely) {
                 
-                if (!this.active.includes(variant)) break;
+                if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
                 this.status[variant] = SyncStatus.Pushing;
 
                 const data = await this.imageStore.getData(uuid, variant, activeProject);
@@ -123,12 +123,13 @@ export class ImageSyncService {
 
             for (const uuid of differences.deleteRemotely) {
 
-                if (!this.active.includes(variant)) break;
+                if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
                 this.status[variant] = SyncStatus.Pushing;
 
                 await this.remoteImagestore.remove(uuid, activeProject)
             }
 
+            // Set SyncStatus.Offline if sync was disabled while running sync, otherwise set SyncStatus.InSync
             this.status[variant] = this.active.includes(variant) ? SyncStatus.InSync : SyncStatus.Offline;
         }
         catch (e){

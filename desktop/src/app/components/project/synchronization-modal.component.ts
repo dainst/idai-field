@@ -38,7 +38,7 @@ export class SynchronizationModalComponent implements OnInit {
                 address: '',
                 password: '',
                 isSyncActive: false,
-                activeImageSync: []
+                activeFileSync: []
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
@@ -58,39 +58,39 @@ export class SynchronizationModalComponent implements OnInit {
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
 
         if (this.syncTarget.isSyncActive) {
-            this.syncTarget.activeImageSync = [ImageVariant.THUMBNAIL];
+            this.syncTarget.activeFileSync = [ImageVariant.THUMBNAIL];
         } else {
-            this.syncTarget.activeImageSync = [];
+            this.syncTarget.activeFileSync = [];
         }
     }
 
 
     public async toggleThumbnailImageSync() {
-        if (this.syncTarget.activeImageSync.includes(ImageVariant.THUMBNAIL)) {
-            this.syncTarget.activeImageSync.push(ImageVariant.THUMBNAIL);
+        if (this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL)) {
+            this.syncTarget.activeFileSync.push(ImageVariant.THUMBNAIL);
         } else {
-            this.syncTarget.activeImageSync = this.syncTarget.activeImageSync.filter((val: ImageVariant) => val !== ImageVariant.THUMBNAIL);
+            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter((val: ImageVariant) => val !== ImageVariant.THUMBNAIL);
         }
     }
 
 
-    public async isThumbnailImageSyncActive() {
-        this.syncTarget.activeImageSync.includes(ImageVariant.THUMBNAIL);
+    public isThumbnailImageSyncActive() {
+        return this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL);
     }
 
 
     public async toggleOriginalImageSync() {
 
-        if (this.syncTarget.activeImageSync.includes(ImageVariant.ORIGINAL)) {
-            this.syncTarget.activeImageSync.push(ImageVariant.ORIGINAL);
+        if (this.syncTarget.activeFileSync.includes(ImageVariant.ORIGINAL)) {
+            this.syncTarget.activeFileSync.push(ImageVariant.ORIGINAL);
         } else {
-            this.syncTarget.activeImageSync = this.syncTarget.activeImageSync.filter((val: ImageVariant) => val !== ImageVariant.ORIGINAL);
+            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter((val: ImageVariant) => val !== ImageVariant.ORIGINAL);
         }
     }
 
 
-    public async isOriginalImageSyncActive() {
-        this.syncTarget.activeImageSync.includes(ImageVariant.ORIGINAL);
+    public isOriginalImageSyncActive() {
+        return this.syncTarget.activeFileSync.includes(ImageVariant.ORIGINAL);
     }
 
 

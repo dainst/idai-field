@@ -103,7 +103,7 @@ export class NetworkProjectComponent {
                             isSyncActive: true,
                             address: this.url,
                             password: this.password,
-                            activeImageSync: [ImageVariant.THUMBNAIL]
+                            activeFileSync: [ImageVariant.THUMBNAIL]
                         }
                     ).then(() => {
                         this.closeModal(progressModalRef);

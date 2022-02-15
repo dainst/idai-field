@@ -139,7 +139,7 @@ export class SettingsService {
             syncTarget?.password
         );
 
-        for (const variant of syncTarget.activeImageSync) {
+        for (const variant of syncTarget.activeFileSync) {
             this.imageSyncService.startSync(variant);
         }
 

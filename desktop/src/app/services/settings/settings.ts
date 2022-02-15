@@ -8,7 +8,7 @@ export interface SyncTarget {
     address: string;
     password: string;
     isSyncActive: boolean;
-    activeImageSync: ImageVariant[];
+    activeFileSync: ImageVariant[];
 }
 
 

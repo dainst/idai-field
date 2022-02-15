@@ -62,6 +62,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    public clonedProjectConfiguration: ProjectConfiguration;
     
     public dragging: boolean = false;
     public changed: boolean = false;
@@ -103,7 +104,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                            reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
-    private clonedProjectConfiguration: ProjectConfiguration;
     private menuSubscription: Subscription;
 
 

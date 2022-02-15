@@ -22,8 +22,7 @@ export class ImageViewerComponent implements OnChanges {
 
 
     constructor(
-        private imageUrlMaker: ImageUrlMaker,
-        private messages: Messages
+        private imageUrlMaker: ImageUrlMaker
     ) {}
 
     async ngOnChanges() {

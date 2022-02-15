@@ -38,6 +38,7 @@ global.os = os.type();
 global.setConfigDefaults = config => {
 
     setSyncTargets(config);
+    setFileSync(config);
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
@@ -45,6 +46,15 @@ global.setConfigDefaults = config => {
     return config;
 };
 
+
+const setFileSync = config => {
+    // migration for version 3 image sync rework 
+    Object.values(config.syncTargets).map((target) => {
+        if (typeof target.activeFileSync === 'undefined') {
+            target.activeFileSync = ["thumbnail_image"]; // see ImageVariant enum
+        }
+    })
+}
 
 const setSyncTargets = config => {
 

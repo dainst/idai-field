@@ -1,4 +1,4 @@
-import { 
+import {
     CategoryConverter,
     ConfigLoader,
     ConfigReader,
@@ -50,7 +50,7 @@ export class AppInitializerServiceLocator {
 
         if (!this.services.projectConfiguration) {
             console.error('Project configuration has not yet been provided');
-            throw 'Project configuration has not yet been provided';
+            throw new Error('Project configuration has not yet been provided');
         }
         return this.services.projectConfiguration;
     }
@@ -60,7 +60,7 @@ export class AppInitializerServiceLocator {
 
         if (!this.services.fulltextIndex) {
             console.error('Fulltext index has not yet been provided');
-            throw 'Fulltext index has not yet been provided';
+            throw new Error('Fulltext index has not yet been provided');
         }
         return this.services.fulltextIndex;
     }
@@ -70,7 +70,7 @@ export class AppInitializerServiceLocator {
 
         if (!this.services.constraintIndex) {
             console.error('Constraint index has not yet been provided');
-            throw 'Constraint index has not yet been provided';
+            throw new Error('Constraint index has not yet been provided');
         }
         return this.services.constraintIndex;
     }
@@ -80,7 +80,7 @@ export class AppInitializerServiceLocator {
 
         if (!this.services.indexFacade) {
             console.error('Index facade has not yet been provided');
-            throw 'Index facade has not yet been provided';
+            throw new Error('Index facade has not yet been provided');
         }
         return this.services.indexFacade;
     }
@@ -90,7 +90,7 @@ export class AppInitializerServiceLocator {
 
         if (!this.services.configurationIndex) {
             console.error('Configuration index has not yet been provided');
-            throw 'Configuration index has not yet been provided';
+            throw new Error('Configuration index has not yet been provided');
         }
         return this.services.configurationIndex;
     }
@@ -133,11 +133,11 @@ export const appInitializerFactory = (
 const loadSettings = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Settings> => {
 
     await progress.setPhase('loadingSettings');
-    const settings = await settingsService.updateSettings(await (new SettingsSerializer).load());
+    const settings = await settingsService.updateSettings(await (new SettingsSerializer()).load());
     await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
 
     return settings;
-}
+};
 
 
 const setUpDatabase = async (settingsService: SettingsService, settings: Settings, progress: InitializationProgress) => {
@@ -148,17 +148,21 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
     } catch (msgWithParams) {
         await progress.setError('databaseError');
     }
-}
+};
 
 
-const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator, progress: InitializationProgress) => {
+const loadSampleData = async (
+    settings: Settings,
+    db: PouchDB.Database,
+    thumbnailGenerator: ThumbnailGenerator,
+    progress: InitializationProgress) => {
 
     if (settings.selectedProject === 'test') {
         await progress.setPhase('loadingSampleObjects');
         const loader = new SampleDataLoader(thumbnailGenerator, settings.imagestorePath, Settings.getLocale());
         return loader.go(db, settings.selectedProject);
     }
-}
+};
 
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
@@ -181,13 +185,13 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     const configurationIndex = await buildConfigurationIndex(
         configReader, configLoader, db, configuration, projectName, username
     );
-    
+
     return {
         projectConfiguration: configuration,
         constraintIndex: createdConstraintIndex,
         fulltextIndex: createdFulltextIndex,
         indexFacade: createdIndexFacade,
-        configurationIndex: configurationIndex
+        configurationIndex
     };
 };
 
@@ -208,7 +212,7 @@ const loadDocuments = async (
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)
     );
-}
+};
 
 
 const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
@@ -223,4 +227,4 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
     await configurationIndex.rebuild(configurationDocument);
 
     return configurationIndex;
-}
+};

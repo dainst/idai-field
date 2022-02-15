@@ -33,15 +33,6 @@ export class ImageSyncService {
 
 
     /**
-     * @returns list of {@link ImageVariant} that are currently beeing synced every {@link intervalDuration}.
-     */
-    public getActivePeriodicSync(): ImageVariant[] {
-
-        return this.active;
-    }
-
-
-    /**
      * Trigger an instant sync cycle without waiting for the periodic syncing.
      * @param variant the {@link ImageVariant} to sync
      */

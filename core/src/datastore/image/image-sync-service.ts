@@ -100,7 +100,7 @@ export class ImageSyncService {
                 if (data !== null) {
                     await this.imageStore.store(uuid, data, activeProject, variant);
                 } else {
-                    console.error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
+                    throw Error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
                 }
             }
 

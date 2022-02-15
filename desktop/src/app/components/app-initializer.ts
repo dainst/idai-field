@@ -10,8 +10,7 @@ import {
     Indexer,
     IndexFacade,
     PouchdbDatastore,
-    ProjectConfiguration,
-    ImageStore
+    ProjectConfiguration
 } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
@@ -104,7 +103,6 @@ export const appInitializerFactory = (
     expressServer: ExpressServer,
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
-    imagestore: ImageStore,
     progress: InitializationProgress,
     configReader: ConfigReader,
     configLoader: ConfigLoader

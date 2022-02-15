@@ -160,7 +160,6 @@ registerLocaleData(localeIt, 'it');
                 ExpressServer,
                 DocumentCache,
                 ThumbnailGenerator,
-                ImageStore,
                 InitializationProgress,
                 ConfigReader,
                 ConfigLoader

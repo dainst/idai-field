@@ -121,10 +121,8 @@ export class SettingsService {
 
     public async setupSync() {
 
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
-
-        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
 
         const settings = this.settingsProvider.getSettings();
 
@@ -163,9 +161,7 @@ export class SettingsService {
 
     public async selectProject(project: Name) {
 
-        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
-
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
         await this.settingsProvider.selectProjectAndSerialize(project);
     }
@@ -173,9 +169,7 @@ export class SettingsService {
 
     public async deleteProject(project: Name) {
 
-        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
-
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
         this.imagestore.deleteData(project);
@@ -187,9 +181,7 @@ export class SettingsService {
 
     public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
 
-        this.imageSyncService.stopSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.stopSync(ImageVariant.ORIGINAL);
-
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
         await this.selectProject(project);

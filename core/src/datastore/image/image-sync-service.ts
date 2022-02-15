@@ -77,6 +77,15 @@ export class ImageSyncService {
         this.status[variant] = SyncStatus.Offline;
     }
 
+    /**
+     * Stop syncing for all image variants.
+     */
+    public stopAllSyncing() {
+
+        this.stopSync(ImageVariant.THUMBNAIL);
+        this.stopSync(ImageVariant.ORIGINAL);
+    }
+
 
     private scheduleNextSync(variant: ImageVariant) {
         if (!this.active.includes(variant)) return;

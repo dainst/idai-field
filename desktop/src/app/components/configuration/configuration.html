@@ -10,10 +10,36 @@
                 <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
                 <div id="categories-filter-selection-menu" class="dropdown-menu" ngbDropdownMenu>
                     <div id="categories-filter-selection-buttons">
-                        <button *ngFor="let categoriesFilter of categoriesFilterOptions"
-                                class="dropdown-item categories-filter-selection-button"
-                                (click)="setCategoriesFilter(categoriesFilter)">
-                            {{categoriesFilter.label}}
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[0])">
+                            {{categoriesFilterOptions[0].label}}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[1])">
+                            {{categoriesFilterOptions[1].label}}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[2])">
+                            {{categoriesFilterOptions[2].label}}
+                        </button>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[3])">
+                            {{categoriesFilterOptions[3].label}}
+                        </button>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[4])">
+                            {{categoriesFilterOptions[4].label}}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[5])">
+                            {{categoriesFilterOptions[5].label}}
+                        </button>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[6])">
+                            {{categoriesFilterOptions[6].label}}
                         </button>
                     </div>
                 </div>

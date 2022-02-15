@@ -26,9 +26,11 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  */
 export class NetworkProjectComponent {
 
-    public url: string = '';
-    public projectName: string = '';
-    public password: string = '';
+    public url = '';
+    public projectName = '';
+    public password = '';
+    public syncThumbnailImages = true;
+    public syncOriginalImages = false;
 
 
     constructor(private messages: Messages,
@@ -103,7 +105,7 @@ export class NetworkProjectComponent {
                             isSyncActive: true,
                             address: this.url,
                             password: this.password,
-                            activeFileSync: [ImageVariant.THUMBNAIL]
+                            activeFileSync: this.getSelectedFileSync()
                         }
                     ).then(() => {
                         this.closeModal(progressModalRef);
@@ -120,6 +122,15 @@ export class NetworkProjectComponent {
             }
             this.closeModal(progressModalRef);
         }
+    }
+
+    private getSelectedFileSync(): ImageVariant[] {
+        const result = [];
+
+        if (this.syncThumbnailImages) result.push(ImageVariant.THUMBNAIL);
+        if (this.syncOriginalImages) result.push(ImageVariant.ORIGINAL);
+
+        return result;
     }
 
 

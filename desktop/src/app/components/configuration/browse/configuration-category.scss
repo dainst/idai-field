@@ -1,36 +1,50 @@
 configuration-category {
   user-select: none;
-  
-  .header {
-    border-bottom: 1px solid #ccc;
-    background-color: #e7e7e7;
 
-    &.header-left {
-      padding: 7px;
-    }
+  .category-header {
+    position: relative;
+    top: 1px;
+    height: 45px;
 
-    &.header-right {
-      padding-top: 16px;
-      padding-right: 8px;
-    }
+    .header {
+      border-bottom: 1px solid #ccc;
+      background-color: #e7e7e7;
 
-    h5 {
-      max-width: 450px;
-      margin: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+      &.header-left {
+        padding: 7px;
+      }
 
-    .category-name {
-      padding-top: 11px;
-    }
+      &.header-right {
+        padding-top: 10px;
+        padding-right: 8px;
+      }
 
-    .mdi-script-text-outline {
-      position: relative;
-      top: 1px;
-      margin-right: 6px;
-      color: #414952;
+      category-icon {
+        position: relative;
+        bottom: 2px;
+      }
+
+      h6 {
+        position: relative;
+        bottom: 3px;
+        max-width: 450px;
+        margin: 8px;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .category-name {
+        padding-top: 6px;
+      }
+
+      .mdi-script-text-outline {
+        position: relative;
+        top: 1px;
+        margin-right: 6px;
+        color: #414952;
+      }
     }
   }
 

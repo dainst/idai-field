@@ -187,9 +187,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public setCategoriesFilter(filterName: string, selectFirstCategory: boolean = true) {
+    public setCategoriesFilter(filter: CategoriesFilter, selectFirstCategory: boolean = true) {
 
-        this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
+        this.selectedCategoriesFilter = filter;
         this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
             this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.clonedProjectConfiguration
         );
@@ -588,7 +588,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         }
 
         this.setCategoriesFilter(
-            this.selectedCategoriesFilter?.name ?? 'project',
+            this.selectedCategoriesFilter ?? this.categoriesFilterOptions.find(filter => filter.name === 'project'),
             this.selectedCategory === undefined
         );
     }

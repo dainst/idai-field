@@ -5,16 +5,24 @@
 <div *ngIf="configurationDocument" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
         <div id="configuration-toolbar" class="row">
-            <div id="categories-filter-container" class="col-2">
-                <select id="categories-filter-select"
-                        class="form-control"
-                        (change)="setCategoriesFilter($event.target.value)">
-                    <option *ngFor="let categoriesFilter of categoriesFilterOptions"
-                            value="{{categoriesFilter.name}}"
-                            [selected]="selectedCategoriesFilter === categoriesFilter">
-                        {{categoriesFilter.label}}
-                    </option>
-                </select>
+            <div id="categories-filter" class="btn-group dropdown"
+                 ngbDropdown placement="bottom-left" role="group">
+                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div id="categories-filter-selection-menu" class="dropdown-menu" ngbDropdownMenu>
+                    <div id="categories-filter-selection-buttons">
+                        <button *ngFor="let categoriesFilter of categoriesFilterOptions"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilter)">
+                            {{categoriesFilter.label}}
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="selectedCategoriesFilter"
+                     id="selected-categories-filter-label"
+                     class="btn btn-outline-primary">
+                     {{selectedCategoriesFilter.label}}
+                </div>
             </div>
             <div class="col">
                 <button id="save-button" class="btn btn-success"

@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  couchdb:
+    image: couchdb:3.2.1
+    container_name: field-couch-db
+    environment:
+      - COUCHDB_ADMIN_USER
+      - COUCHDB_ADMIN_PASSWORD
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fieldhub.rule=Host(`${HOST}`)        
+      - traefik.http.services.fieldhub.loadbalancer.server.port=5432
+      - traefik.http.routers.fieldhub.tls=true
+      - traefik.http.routers.fieldhub.tls.certresolver=fieldresolver
+
+  field_hub:
+    image: "dainst/field_hub:${FIELD_HUB_VERSION}"
+    container_name: field-hub-app
+    restart: always
+    environment:
+      - HOST
+      - SECRET_KEY_BASE
+      - COUCHDB_ROOT=field_couch_db
+      - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_USER}
+      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
+    depends_on:
+      - "couchdb"
+    volumes:
+      - "./files:/files"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fieldhub.rule=Host(`${HOST}`)        
+      - traefik.http.services.fieldhub.loadbalancer.server.port=4000
+      - traefik.http.routers.fieldhub.tls=true
+      - traefik.http.routers.fieldhub.tls.certresolver=fieldresolver
+
+  traefik:
+    image: "traefik:v2.4"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/acme.json"
+      - "./traefik.toml:/etc/traefik/traefik.toml"

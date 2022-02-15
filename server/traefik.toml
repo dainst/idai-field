@@ -1,0 +1,18 @@
+[providers.docker]
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.http.redirections]
+      [entryPoints.web.http.redirections.entryPoint]
+        to = "websecure"
+  [entryPoints.websecure]
+    address = ":443"
+
+[certificatesResolvers.fieldresolver.acme]
+  email = "dev@dainst.org"
+  storage = "acme.json"
+  [certificatesResolvers.fieldresolver.acme.httpChallenge]
+    # used during the challenge
+    entryPoint = "web"
+  [certificatesResolvers.fieldresolver.acme.tlsChallenge]

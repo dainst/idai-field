@@ -9,6 +9,12 @@ valuelist-preview {
     height: calc(100% - 69px);
   }
 
+  #preview-body {
+    b {
+      font-weight: 500;
+    }
+  }
+
   #extension-info {
     width: fit-content;
     font-size: 14px;

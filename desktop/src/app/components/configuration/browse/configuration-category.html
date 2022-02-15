@@ -1,5 +1,6 @@
 <div [id]="'category-' + category.name"
      class="category-header"
+     [class.with-description]="description"
      (dblclick)="onEditCategory.emit()"
      (contextmenu)="contextMenu.open($event, category)">
     <div class="row" [class.custom-category]="category.source === 'custom'">

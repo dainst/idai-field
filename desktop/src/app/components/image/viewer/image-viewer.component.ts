@@ -14,7 +14,7 @@ import {Messages} from '../../messages/messages';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageViewerComponent implements /* OnInit,*/ OnChanges {
+export class ImageViewerComponent implements OnChanges {
 
     @Input() image: ImageDocument;
 
@@ -25,14 +25,6 @@ export class ImageViewerComponent implements /* OnInit,*/ OnChanges {
         private imageUrlMaker: ImageUrlMaker,
         private messages: Messages
     ) {}
-
-
-    // TODO: Was wird hier genau gecheckt? Ob die Ordner bereist angelegt wurden? Das sollte der ImageStore eigentlich selber machen.
-    // ngOnInit() {
-
-    //     if (!this.imageStore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
-    // }
-
 
     async ngOnChanges() {
 
@@ -48,7 +40,7 @@ export class ImageViewerComponent implements /* OnInit,*/ OnChanges {
 
     private async loadImage(document: ImageDocument): Promise<ImageContainer> {
 
-        const image: ImageContainer = { document: document };
+        const image: ImageContainer = { document };
 
         try {
             image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.ORIGINAL);

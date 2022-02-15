@@ -147,7 +147,7 @@ export class NetworkProjectComponent {
             }
         ).info();
 
-        if (info.status === 401) throw 'invalidCredentials';
+        if (info.status === 401) throw new Error('invalidCredentials');
 
         return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
     }
@@ -162,6 +162,6 @@ export class NetworkProjectComponent {
 
     private static parseSequenceNumber(updateSequence: number|string): number {
 
-        return Number.parseInt((updateSequence + '').split('-')[0]);
+        return Number.parseInt((updateSequence + '').split('-')[0], 10);
     }
 }

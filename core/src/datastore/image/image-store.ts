@@ -38,6 +38,7 @@ export class ImageStore {
     public getAbsoluteRootPath = (): string | undefined => this.absolutePath;
     public getActiveProject = (): string | undefined => this.activeProject;
 
+
     /**
      * Initializiation function.
      * @param fileSystemBasePath The base path for the project's image store. Will be used to construct absolute 
@@ -79,6 +80,7 @@ export class ImageStore {
         }
     }
 
+
     /**
      * Returns the raw Buffer data for the requested image.
      * @param uuid the identifier for the image
@@ -88,6 +90,7 @@ export class ImageStore {
     public async getData(uuid: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
         return await this.readFileSystem(uuid, type, project);
     }
+
 
     /**
      * Removes the image from the filesystem and creates an empty tombstone file with
@@ -123,9 +126,9 @@ export class ImageStore {
     /**
      * Returns all known images and lists their available variants in a project.
      * @param project the project's name
-     * @param types List of variants one wants returned. If an empty list is provided, all images no matter which variants
-     * are returned, otherwise only images with the requested variants are returned.
-     * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
+     * @param types (optional) List of {@link ImageVariant} one is interested in. If an empty list is provided (default), images are not filtered
+     * by their variants.
+     * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
     public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: FileInfo} {
 
@@ -168,6 +171,7 @@ export class ImageStore {
         return result;
     }
 
+
     private getFileNames(path: string) {
 
         return this.filesystem.listFiles(path)
@@ -192,12 +196,14 @@ export class ImageStore {
         return this.filesystem.readFile(path);
     }
 
+
     private async createThumbnail(imageId: string, data: Buffer, project: string) {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
         const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
         this.filesystem.writeFile(thumbnailPath, buffer);
     }
+
 
     private getDirectoryPath(project: string, type?: ImageVariant) {
         if (type === undefined || type === ImageVariant.ORIGINAL) {
@@ -206,6 +212,7 @@ export class ImageStore {
             return this.absolutePath + project + '/' + thumbnailDirectory;
         }
     }
+
 
     private getFilePath(project: string, type: ImageVariant, uuid: string) {
         return this.getDirectoryPath(project, type) + uuid;

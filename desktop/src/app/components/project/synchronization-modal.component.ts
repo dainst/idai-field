@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImageVariant } from 'idai-field-core';
 import {Settings, SyncTarget} from '../../services/settings/settings';
 import {SettingsProvider} from '../../services/settings/settings-provider';
 import {SettingsService} from '../../services/settings/settings-service';
@@ -20,9 +21,6 @@ export class SynchronizationModalComponent implements OnInit {
 
     public settings: Settings;
     public syncTarget: SyncTarget;
-    public syncThumbnailImages: boolean;
-    public syncOriginalImages: boolean;
-
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -37,12 +35,13 @@ export class SynchronizationModalComponent implements OnInit {
 
         if (!this.settings.syncTargets[this.settings.selectedProject]) {
             this.settings.syncTargets[this.settings.selectedProject] = {
-                address: '', password: '', isSyncActive: false
+                address: '',
+                password: '',
+                isSyncActive: false,
+                activeImageSync: []
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
-        this.syncThumbnailImages = this.settings.syncThumbnailImages;
-        this.syncOriginalImages = this.settings.syncOriginalImages;
     }
 
 
@@ -59,30 +58,43 @@ export class SynchronizationModalComponent implements OnInit {
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
 
         if (this.syncTarget.isSyncActive) {
-            this.syncThumbnailImages = true;
+            this.syncTarget.activeImageSync = [ImageVariant.THUMBNAIL];
         } else {
-            this.syncThumbnailImages = false;
-            this.syncOriginalImages = false;
+            this.syncTarget.activeImageSync = [];
         }
     }
 
 
     public async toggleThumbnailImageSync() {
+        if (this.syncTarget.activeImageSync.includes(ImageVariant.THUMBNAIL)) {
+            this.syncTarget.activeImageSync.push(ImageVariant.THUMBNAIL);
+        } else {
+            this.syncTarget.activeImageSync = this.syncTarget.activeImageSync.filter((val: ImageVariant) => val !== ImageVariant.THUMBNAIL);
+        }
+    }
 
-        this.syncThumbnailImages = !this.syncThumbnailImages;
+
+    public async isThumbnailImageSyncActive() {
+        this.syncTarget.activeImageSync.includes(ImageVariant.THUMBNAIL);
     }
 
 
     public async toggleOriginalImageSync() {
 
-        this.syncOriginalImages = !this.syncOriginalImages;
+        if (this.syncTarget.activeImageSync.includes(ImageVariant.ORIGINAL)) {
+            this.syncTarget.activeImageSync.push(ImageVariant.ORIGINAL);
+        } else {
+            this.syncTarget.activeImageSync = this.syncTarget.activeImageSync.filter((val: ImageVariant) => val !== ImageVariant.ORIGINAL);
+        }
+    }
+
+
+    public async isOriginalImageSyncActive() {
+        this.syncTarget.activeImageSync.includes(ImageVariant.ORIGINAL);
     }
 
 
     public async apply() {
-
-        this.settings.syncThumbnailImages = this.syncThumbnailImages;
-        this.settings.syncOriginalImages = this.syncOriginalImages;
 
         try {
             this.settings = await this.settingsService.updateSettings(this.settings);

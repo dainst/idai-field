@@ -1,3 +1,5 @@
+import { ImageVariant } from "idai-field-core";
+
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
@@ -6,6 +8,7 @@ export interface SyncTarget {
     address: string;
     password: string;
     isSyncActive: boolean;
+    activeImageSync: ImageVariant[];
 }
 
 
@@ -15,8 +18,6 @@ export interface Settings {
     isAutoUpdateActive: boolean;
     hostPassword: string;
     syncTargets: { [projectName: string]: SyncTarget };
-    syncThumbnailImages: boolean;
-    syncOriginalImages: boolean;
     username: string;
     dbs: Array<string>;
     selectedProject: string;

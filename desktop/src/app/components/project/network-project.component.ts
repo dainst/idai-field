@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { SyncService } from 'idai-field-core';
+import { ImageVariant, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
@@ -102,7 +102,8 @@ export class NetworkProjectComponent {
                         {
                             isSyncActive: true,
                             address: this.url,
-                            password: this.password
+                            password: this.password,
+                            activeImageSync: [ImageVariant.THUMBNAIL]
                         }
                     ).then(() => {
                         this.closeModal(progressModalRef);

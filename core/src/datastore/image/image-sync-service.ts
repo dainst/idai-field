@@ -46,6 +46,7 @@ export class ImageSyncService {
      * @param variant the {@link ImageVariant} to sync
      */
      public startSync(variant: ImageVariant) {
+        console.log(`Starting sync for ${variant}.`)
         if(!(variant in this.active)) {
             this.active.push(variant)
         }

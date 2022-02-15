@@ -139,8 +139,9 @@ export class SettingsService {
             syncTarget?.password
         );
 
-        this.imageSyncService.startSync(ImageVariant.THUMBNAIL);
-        this.imageSyncService.startSync(ImageVariant.ORIGINAL);
+        for (const variant of syncTarget.activeImageSync) {
+            this.imageSyncService.startSync(variant);
+        }
 
         return this.synchronizationService.startSync();
     }

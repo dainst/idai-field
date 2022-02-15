@@ -12,7 +12,7 @@ interface SyncDifference {
 
 
 export class ImageSyncService {
-    private intervalDuration = 1000 * 30;
+    private intervalDuration = 1000 * 60 * 5;
 
     private active: ImageVariant[] = [];
     private schedules: {[variant in ImageVariant]?: ReturnType<typeof setTimeout>} = {}

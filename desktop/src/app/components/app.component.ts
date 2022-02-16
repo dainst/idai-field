@@ -76,38 +76,6 @@ export class AppComponent {
     }
 
 
-    private enableMenuShortCutsForTests() {
-
-        this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
-            if (!event.ctrlKey || event.metaKey) return;
-
-            switch(event.key) {
-                case 's':
-                    if (event.ctrlKey && event.altKey) {
-                        this.menuNavigator.onMenuItemClicked('settings');
-                    }
-                    break;
-                case ',':
-                    if (event.metaKey) this.menuNavigator.onMenuItemClicked('settings');
-                    break;
-                case 'b':
-                    this.menuNavigator.onMenuItemClicked('images');
-                    break;
-                case 'i':
-                    this.menuNavigator.onMenuItemClicked('import');
-                    break;
-                case 't':
-                    this.menuNavigator.onMenuItemClicked('resources/types');
-                    break;
-                case 'y':
-                case 'z':
-                    this.menuNavigator.onMenuItemClicked('matrix');
-                    break;
-            }
-        });
-    }
-
-
     private initializeUtilTranslations() {
 
         this.utilTranslations.addTranslation(

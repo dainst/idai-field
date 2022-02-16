@@ -69,9 +69,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public shouldShow(groupName: string) {
 
-        return (groupName === 'images'
-                && !this.projectConfiguration.getImageCategories().map(Named.toName).includes(this.document.resource.category))
-            || (groupName === 'conflicts' && this.document._conflicts)
+        return (groupName === 'conflicts' && this.document._conflicts)
             || this.getFields(groupName).filter(field => field.editable).length > 0;
     }
 

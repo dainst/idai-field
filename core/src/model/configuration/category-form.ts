@@ -94,7 +94,8 @@ export namespace CategoryForm {
 
         return flatMap(
             values(category.groups),
-            Group.toFields);
+            Group.toFields
+        );
     }
 
 

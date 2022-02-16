@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Menus } from '../services/menus';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -37,7 +36,6 @@ export class AppComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                menuService: Menus,
                 appController: AppController,
                 imagestore: Imagestore,
                 settingsService: SettingsService,

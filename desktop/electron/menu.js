@@ -51,6 +51,10 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: isDefaultContext(context)
             }, {
+                label: messages.get('menu.project.projectImages'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectImages'),
+                enabled: isDefaultContext(context)
+            }, {
                 label: messages.get('menu.project.projectSynchronization'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: isDefaultContext(context)

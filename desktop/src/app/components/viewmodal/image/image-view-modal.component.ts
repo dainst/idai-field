@@ -1,20 +1,22 @@
-import {Component} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {on, is, first, isEmpty} from 'tsfun';
-import {Datastore, Document, FieldDocument, ImageDocument, Relation} from 'idai-field-core';
-import {ImagesState} from '../../../components/image/overview/view/images-state';
-import {ViewModalComponent} from '../view-modal.component';
-import {ImageRowItem} from '../../image/row/image-row';
-import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
-import {ImageRelationsManager} from '../../../services/image-relations-manager';
-import {Menus} from '../../../services/menus';
-import {Routing} from '../../../services/routing';
+import { Component } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { on, is, first, isEmpty } from 'tsfun';
+import { Datastore, Document, FieldDocument, ImageDocument, Relation } from 'idai-field-core';
+import { ImagesState } from '../../../components/image/overview/view/images-state';
+import { ViewModalComponent } from '../view-modal.component';
+import { ImageRowItem } from '../../image/row/image-row';
+import { ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
+import { ImageRelationsManager } from '../../../services/image-relations-manager';
+import { Menus } from '../../../services/menus';
+import { Routing } from '../../../services/routing';
+
 
 export namespace ImageViewModalComponent {
 
     export type Mode = 'view'|'edit';
 }
+
 
 @Component({
     templateUrl: './image-view-modal.html',
@@ -29,7 +31,6 @@ export namespace ImageViewModalComponent {
 export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedDocument: Document;
-
     public mode: ImageViewModalComponent.Mode = 'view';
 
     public selected: Array<ImageDocument> = [];
@@ -46,6 +47,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         super(activeModal, modalService, routingService, menuService);
     }
+
 
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
 

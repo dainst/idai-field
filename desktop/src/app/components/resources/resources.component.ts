@@ -17,8 +17,8 @@ import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
-import { ViewModalLauncher } from './service/view-modal-launcher';
-import {MsgWithParams} from '../messages/msg-with-params';
+import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
+import { MsgWithParams } from '../messages/msg-with-params';
 
 
 export type PopoverMenu = 'none'|'info'|'children';

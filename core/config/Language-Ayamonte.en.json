@@ -27,6 +27,9 @@
                 "projectProgression": {
                     "label": "Project Progression",
                     "description": "Information on the course of the project"
+                },
+                "excavationType": {
+                    "label": "Excavation type"
                 }
             }
         },

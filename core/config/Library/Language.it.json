@@ -119,10 +119,6 @@
         "trenchComment": {
           "label": "Commento sul saggio",
           "description": "Commento sul saggio per la valutazione della documentazione, rapporto per la direzione dello scavo"
-        },
-        "excavationType": {
-          "label": "Tipo di scavo",
-          "description": "Tipo di scavo effettuato"
         }
       }
     },

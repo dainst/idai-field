@@ -35,6 +35,9 @@
                 "projectProgression": {
                     "label": "Curso de la excavación",
                     "description": "Information on the course of the project"
+                },
+                "excavationType": {
+                    "label": "Tamaño de la excavación"
                 }
             }
         },

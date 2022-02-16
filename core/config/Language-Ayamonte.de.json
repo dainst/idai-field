@@ -27,6 +27,10 @@
                 "projectProgression": {
                     "label": "Projektverlauf",
                     "description": "Informationen zum Ablauf des Projekts"
+                },
+                "excavationType": {
+                    "label": "Ausgrabungsart",
+                    "description": "Art der durchgeführten Ausgrabung"
                 }
             }
         },

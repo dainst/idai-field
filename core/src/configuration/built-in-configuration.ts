@@ -708,6 +708,26 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'fills',
+            inverse: 'isFilledBy',
+            domain: ['Feature:inherit'],
+            range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isFilledBy',
+            inverse: 'fills',
+            domain: ['Feature:inherit'],
+            range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
             name: 'borders',
             inverse: 'borders',
             domain: ['Feature:inherit'],
@@ -1227,26 +1247,6 @@ export class BuiltInConfiguration {
                 domain: ['Quantification:inherit'],
                 range: ['Feature:inherit', 'Quantification:inherit'],
                 editable: false,
-                inputType: 'relation'
-            });
-         
-            this.builtInRelations.push({
-                name: 'fills',
-                inverse: 'isFilledBy',
-                domain: ['Feature:inherit'],
-                range: ['Feature:inherit'],
-                sameMainCategoryResource: true,
-                editable: true,
-                inputType: 'relation'
-            });
-
-            this.builtInRelations.push({
-                name: 'isFilledBy',
-                inverse: 'fills',
-                domain: ['Feature:inherit'],
-                range: ['Feature:inherit'],
-                sameMainCategoryResource: true,
-                editable: true,
                 inputType: 'relation'
             });
 

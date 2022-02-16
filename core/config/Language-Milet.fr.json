@@ -24,9 +24,6 @@
         "category": {
             "label": "Catégorie"
         },
-        "isEquivalentTo": {
-            "label": "Identique à / équivalente à"
-        },
         "identifier": {
             "label": "Nom / identifiant (unique)",
             "description": "Identifiant unique de la ressource. Si possible, Utiliser les conventions milésiennes; p.ex : Aire, année, tranchée...; e.g. pour les contextes: HU19.A.01 pour le contexte 1 de la tranchée A de l'année 2019 sur le Humeitepe (ne pas rensigner le no. de tranchée si N/A)"
@@ -85,15 +82,6 @@
         }
     },
     "relations": {
-        "isEquivalentTo": {
-            "label": "Identique à / équivalente à"
-        },
-        "isFilledBy": {
-            "label": "Remplie par"
-        },
-        "fills": {
-            "label": "Remplit"
-        },
         "wasFoundIn": {
             "label": "Découvert dans",
             "description": "Indiquer l'endroit d'où provient la découverte"

@@ -21,9 +21,6 @@
     "category": {
       "label": "Kategorie"
     },
-    "isEquivalentTo": {
-      "label": "identisch mit"
-    },
     "identifier": {
       "label": "Name / ID (eindeutig)",
       "description": "Eindeutiger Bezeichner dieser Ressource, muss sich nach dem milesischen System zur Bennenung richten; also: Areal, Jahr Schnitt ...; für Befunde bspw: HU19.A.01 für Befund 1 aus Schnitt A im Jahr 2019 auf dem Humeitepe."
@@ -82,15 +79,6 @@
     }
   },
   "relations": {
-    "isEquivalentTo": {
-      "label": "Identisch mit"
-    },
-    "isFilledBy": {
-      "label": "Verfüllt von"
-    },
-    "fills": {
-      "label": "Verfüllt"
-    },
     "wasFoundIn": {
       "label": "gefunden in",
       "description": "Gebäude, Ort oder Survey dem der Fund zugeordnet werden kann."

@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {isUndefinedOrEmpty, not, rest} from 'tsfun';
-import {AngularUtility} from '../angular/angular-utility';
-import {getMessage} from './initialization-messages';
-import {reload} from '../services/reload';
-import {SettingsService} from '../services/settings/settings-service';
+import { Injectable } from '@angular/core';
+import { isUndefinedOrEmpty, not, rest, isArray } from 'tsfun';
+import { AngularUtility } from '../angular/angular-utility';
+import { getMessage } from './initialization-messages';
+import { reload } from '../services/reload';
+import { SettingsService } from '../services/settings/settings-service';
 
 
 type InitializationPhase =
@@ -88,10 +88,12 @@ export class InitializationProgress {
 
     private getErrorMessages(msgsWithParams: any[]|undefined): string[] {
 
-        if (!msgsWithParams) return [];
+        if (!msgsWithParams || !isArray(msgsWithParams)) return [];
 
         return msgsWithParams.map((msgWithParams: string[]) => {
-            return getMessage(msgWithParams[0], this.locale, rest(msgWithParams));
+            return isArray(msgWithParams)
+                ? getMessage(msgWithParams[0], this.locale, rest(msgWithParams))
+                : undefined;
         }).filter(not(isUndefinedOrEmpty));
     }
 

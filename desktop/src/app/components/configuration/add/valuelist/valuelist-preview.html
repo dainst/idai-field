@@ -19,11 +19,11 @@
         </div>
 
         <div *ngIf="getValuelistDescription()" class="valuelist-preview-section">
-            <b i18n="@@configuration.description">Beschreibung:</b>
+            <b i18n="@@configuration.descriptionHeading">Beschreibung:</b>
             <div id="valuelist-description">{{getValuelistDescription()}}</div>
         </div>
 
-        <b i18n="@@configuration.values">Werte:</b>
+        <b i18n="@@configuration.valuesHeading">Werte:</b>
         <ul class="list-group list-group-flush">
             <li *ngIf="valuelist.values" class="list-group-item">
                 <valuelist-view [valuelist]="valuelist"

@@ -6,11 +6,11 @@ const camelCase = require('camelcase');
  */
 export module Naming {
 
-    export function getFieldName(searchTerm: string, projectName: string): string {
+    export function getFieldOrGroupName(searchTerm: string, projectName: string): string {
 
         return projectName + ':' + removeSpecialCharacters(camelCase(searchTerm));
     }
-
+    
 
     export function getCategoryName(searchTerm: string, projectName: string): string {
 

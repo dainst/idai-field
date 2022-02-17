@@ -154,7 +154,7 @@ export class AddFieldModalComponent {
         if (this.searchTerm.length === 0) return undefined;
 
         return {
-            name: Naming.getFieldName(this.searchTerm, this.settingsProvider.getSettings().selectedProject)
+            name: Naming.getFieldOrGroupName(this.searchTerm, this.settingsProvider.getSettings().selectedProject)
         } as Field;
     }
 }

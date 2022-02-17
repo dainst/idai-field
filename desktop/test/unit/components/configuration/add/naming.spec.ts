@@ -3,13 +3,13 @@ import { Naming } from '../../../../../src/app/components/configuration/add/nami
 
 describe('naming', () => {
 
-    it('generate field names', () => {
+    it('generate field/group names', () => {
       
-        expect(Naming.getFieldName('fieldName', 'project')).toEqual('project:fieldName');
-        expect(Naming.getFieldName('field-name', 'project')).toEqual('project:fieldName');
-        expect(Naming.getFieldName('field name', 'project')).toEqual('project:fieldName');
-        expect(Naming.getFieldName('Field_Name', 'project')).toEqual('project:fieldName');
-        expect(Naming.getFieldName('fieldName!\"§$%&/()=', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('fieldName', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('field-name', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('field name', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('Field_Name', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('fieldName!\"§$%&/()=', 'project')).toEqual('project:fieldName');
     });
 
 

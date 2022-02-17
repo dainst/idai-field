@@ -10,6 +10,7 @@ describe('naming', () => {
         expect(Naming.getFieldOrGroupName('field name', 'project')).toEqual('project:fieldName');
         expect(Naming.getFieldOrGroupName('Field_Name', 'project')).toEqual('project:fieldName');
         expect(Naming.getFieldOrGroupName('fieldName!\"§$%&/()=', 'project')).toEqual('project:fieldName');
+        expect(Naming.getFieldOrGroupName('project:fieldName', 'project')).toEqual('project:fieldName');
     });
 
 
@@ -20,6 +21,7 @@ describe('naming', () => {
         expect(Naming.getCategoryName('category name', 'project')).toEqual('Project:CategoryName');
         expect(Naming.getCategoryName('Category_Name', 'project')).toEqual('Project:CategoryName');
         expect(Naming.getCategoryName('categoryName!\"§$%&/()=', 'project')).toEqual('Project:CategoryName');
+        expect(Naming.getCategoryName('Project:CategoryName', 'project')).toEqual('Project:CategoryName');
     });
 
 
@@ -29,5 +31,6 @@ describe('naming', () => {
         expect(Naming.getValuelistId('value list-name', 'project')).toEqual('project:valuelist-name');
         expect(Naming.getValuelistId('Valuelist-name', 'project')).toEqual('project:Valuelist-name');
         expect(Naming.getValuelistId('valuelist-name!\"§$%&/()=', 'project')).toEqual('project:valuelist-name');
+        expect(Naming.getValuelistId('project:valuelist-name', 'project')).toEqual('project:valuelist-name');
     });
 });

@@ -8,20 +8,24 @@ export module Naming {
 
     export function getFieldOrGroupName(searchTerm: string, projectName: string): string {
 
+        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
         return projectName + ':' + removeSpecialCharacters(camelCase(searchTerm));
     }
 
 
     export function getCategoryName(searchTerm: string, projectName: string): string {
 
+        projectName = convertFirstCharacterToUpperCase(projectName);
+        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
         const name: string = removeSpecialCharacters(camelCase(searchTerm));
         
-        return convertFirstCharacterToUpperCase(projectName) + ':' + convertFirstCharacterToUpperCase(name);
+        return projectName + ':' + convertFirstCharacterToUpperCase(name);
     }
 
 
     export function getValuelistId(searchTerm: string, projectName: string): string {
 
+        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
         const id: string = searchTerm.split('-')
             .map(segment => removeSpecialCharacters(segment))
             .join('-');

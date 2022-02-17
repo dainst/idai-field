@@ -91,6 +91,12 @@ export class ImageSyncService {
             const activeProject = this.imageStore.getActiveProject();
             const differences = await this.evaluateDifference(activeProject, variant);
 
+            console.log(`Image syncing differences for ${variant}`)
+            console.log(`   missing locally: ${differences.missingLocally.length}`);
+            console.log(`   not yet deleted locally: ${differences.deleteLocally.length}`);
+            console.log(`   missing remotely: ${differences.missingRemotely.length}`);
+            console.log(`   not yet deleted remotely: ${differences.deleteRemotely.length}`);
+
             for (const uuid of differences.missingLocally) {
 
                 if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
@@ -143,7 +149,7 @@ export class ImageSyncService {
 
     private async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
 
-        const localData = this.imageStore.getFileIds(activeProject, [variant])
+        const localData = await this.imageStore.getFileIds(activeProject, [variant])
         const remoteData = await this.remoteImagestore.getFileIds(activeProject, variant)
 
         const localUUIDs = Object.keys(localData);

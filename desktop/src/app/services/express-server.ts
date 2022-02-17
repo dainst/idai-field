@@ -38,15 +38,15 @@ export class ExpressServer {
         }));
 
 
-        app.get('/files/:project', (req: any, res: any) => {
+        app.get('/files/:project', async(req: any, res: any) => {
 
             try {
                 let list: { [uuid: string]: FileInfo };
 
                 if (!req.query.type) {
-                    list = this.imagestore.getFileIds(req.params.project, []);
+                    list = await this.imagestore.getFileIds(req.params.project, []);
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
-                    list = this.imagestore.getFileIds(req.params.project, [req.query.type]);
+                    list = await this.imagestore.getFileIds(req.params.project, [req.query.type]);
                 } else {
                     res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
                 }

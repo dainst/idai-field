@@ -4,14 +4,14 @@ export interface FilesystemAdapterInterface {
      * Writes a file to the filesystem. Does nothing if file already exists.     *
      * @param path
      */
-    writeFile(path: string, contents: any): void;
+    writeFile(path: string, contents: any): Promise<void>;
 
 
     /**
      * Reads a file from the filesystem
      * @param path
      */
-    readFile(path: string): Buffer;
+    readFile(path: string): Promise<Buffer>;
 
 
     /**
@@ -25,14 +25,14 @@ export interface FilesystemAdapterInterface {
      *
      * @param path
      */
-     remove(path: string, recursive?: boolean): void;
+    remove(path: string, recursive?: boolean): Promise<void>;
 
     /**
      * Create a directory
      * @param path the new directory's path
      * @param recursive (optional) create missing parent directories, default: `false`
      */
-    mkdir(path: string, recursive?: boolean): void;
+    mkdir(path: string, recursive?: boolean): Promise<void>;
 
     /**
      * Returns `true` if the given path represents a file.

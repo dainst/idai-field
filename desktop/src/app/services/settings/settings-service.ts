@@ -172,7 +172,7 @@ export class SettingsService {
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
-        this.imagestore.deleteData(project);
+        await this.imagestore.deleteData(project);
 
         await this.pouchdbDatastore.destroyDb(project);
         await this.settingsProvider.deleteProjectAndSerialize(project);

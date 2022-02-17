@@ -18,30 +18,46 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public writeFile(path: string, contents: any) {
+    public async writeFile(path: string, contents: any): Promise<void> {
 
-        fs.writeFileSync(path, contents);
+        return new Promise((resolve, reject) => {
+            fs.writeFile(path, contents, (err: Error) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
     }
 
 
-    public readFile(path: string): Buffer {
+    public async readFile(path: string): Promise<Buffer> {
 
-        return fs.readFileSync(path);
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, (err: Error, data: Buffer) => {
+                if (err) reject(err);
+                resolve(data);
+            });
+        });
     }
 
 
-    public remove(path: string, recursive: boolean = false) {
-        try {
-            fs.rmSync(path, { recursive });
-        } catch (e) {
-            console.error(e);
-        }
+    public async remove(path: string, recursive: boolean = false): Promise<void> {
+
+        return new Promise((resolve, reject) => {
+            fs.rm(path, {recursive}, (err: Error) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
     }
 
 
-    public mkdir(path: string, recursive: boolean = false) {
-
-        fs.mkdirSync(path, { recursive });
+    public async mkdir(path: string, recursive: boolean = false): Promise<void> {
+        return new Promise((resolve, reject) => {
+            fs.mkdir(path, {recursive}, (err: Error) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
     }
 
 

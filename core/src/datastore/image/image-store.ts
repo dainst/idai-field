@@ -45,19 +45,19 @@ export class ImageStore {
      * paths for the injected {@link FilesystemAdapterInterface} implementation.
      * @param activeProject the application's active project, will be used as the default project parameter for other functions.
      */
-    public init(fileSystemBasePath: string, activeProject: string): void {
+    public async init(fileSystemBasePath: string, activeProject: string) {
         
         this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
         this.activeProject = activeProject;
 
         const originalsPath = this.getDirectoryPath(activeProject, ImageVariant.ORIGINAL)
         if (!this.filesystem.exists(originalsPath)) {
-            this.filesystem.mkdir(originalsPath, true);
+            await this.filesystem.mkdir(originalsPath, true);
         }
 
         const thumbnailsPath = this.getDirectoryPath(activeProject, ImageVariant.THUMBNAIL);
         if (!this.filesystem.exists(thumbnailsPath)) {
-            this.filesystem.mkdir(thumbnailsPath, true);
+            await this.filesystem.mkdir(thumbnailsPath, true);
         }
     }
 
@@ -73,7 +73,7 @@ export class ImageStore {
 
         const filePath = this.getFilePath(project, type, uuid);
 
-        this.filesystem.writeFile(filePath, data);
+        await this.filesystem.writeFile(filePath, data);
 
         if (type === ImageVariant.ORIGINAL) {
             await this.createThumbnail(uuid, data, project);
@@ -118,8 +118,8 @@ export class ImageStore {
      * Remove the image store data for the given project.
      * @param project the project's name
      */
-    public deleteData(project: string) {
-        this.filesystem.remove(this.getDirectoryPath(project), true);
+    public async deleteData(project: string): Promise<any> {
+        return this.filesystem.remove(this.getDirectoryPath(project), true);
     }
 
     
@@ -130,19 +130,19 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public getFileIds(project: string, types: ImageVariant[] = []): { [uuid: string]: FileInfo} {
+    public async getFileIds(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
 
         let originalFileNames = [];
         let thumbnailFileNames = [];
 
         if(types.length === 0){
-            originalFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
-            thumbnailFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
+            originalFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
+            thumbnailFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
         } else {
             if(types.includes(ImageVariant.ORIGINAL)){
-                originalFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
+                originalFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
             } else if(types.includes(ImageVariant.THUMBNAIL)) {
-                thumbnailFileNames = this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
+                thumbnailFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
             }
         }
 
@@ -172,12 +172,12 @@ export class ImageStore {
     }
 
 
-    private getFileNames(path: string) {
+    private async getFileNames(path: string) {
+        const listFiles = this.filesystem.listFiles(path)
 
-        return this.filesystem.listFiles(path)
-            .map((filePath) => {
-                return filePath.slice((path).length)
-            });
+        return listFiles.map((filePath) => {
+            return filePath.slice((path).length)
+        });
     }
 
 
@@ -189,7 +189,7 @@ export class ImageStore {
         {
             const originalFilePath = this.getFilePath(project, ImageVariant.ORIGINAL, imageId);
             if (this.filesystem.exists(originalFilePath)) {
-                await this.createThumbnail(imageId, this.filesystem.readFile(originalFilePath), project);
+                await this.createThumbnail(imageId, await this.filesystem.readFile(originalFilePath), project);
             }
         }
 

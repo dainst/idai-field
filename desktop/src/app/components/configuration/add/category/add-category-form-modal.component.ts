@@ -10,6 +10,8 @@ import { ApplyChangesResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
 import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { Naming } from '../naming';
 
 
 @Component({
@@ -42,7 +44,8 @@ export class AddCategoryFormModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
-                private menus: Menus) {}
+                private menus: Menus,
+                private settingsProvider: SettingsProvider) {}
 
 
     public initialize() {
@@ -139,7 +142,7 @@ export class AddCategoryFormModalComponent {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.category = CategoryForm.build(this.searchTerm, this.parentCategory);
+        componentInstance.category = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
         componentInstance.new = true;
         componentInstance.initialize();
 
@@ -172,7 +175,7 @@ export class AddCategoryFormModalComponent {
         if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
 
         return {
-            libraryId: this.searchTerm,
+            libraryId: Naming.getCategoryName(this.searchTerm, this.settingsProvider.getSettings().selectedProject),
             groups: this.parentCategory.groups
         } as CategoryForm;
     }

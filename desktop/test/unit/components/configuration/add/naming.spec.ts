@@ -21,4 +21,13 @@ describe('naming', () => {
         expect(Naming.getCategoryName('Category_Name', 'project')).toEqual('Project:CategoryName');
         expect(Naming.getCategoryName('categoryName!\"§$%&/()=', 'project')).toEqual('Project:CategoryName');
     });
+
+
+    it('generate valuelist ids', () => {
+      
+        expect(Naming.getValuelistId('valuelist-name', 'project')).toEqual('project:valuelist-name');
+        expect(Naming.getValuelistId('value list-name', 'project')).toEqual('project:valuelist-name');
+        expect(Naming.getValuelistId('Valuelist-name', 'project')).toEqual('project:Valuelist-name');
+        expect(Naming.getValuelistId('valuelist-name!\"§$%&/()=', 'project')).toEqual('project:valuelist-name');
+    });
 });

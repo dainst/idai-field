@@ -9,6 +9,7 @@ import { ApplyChangesResult } from '../../configuration.component';
 import { ManageValuelistsModalComponent } from './manage-valuelists-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
                 configurationIndex: ConfigurationIndex,
                 modals: Modals,
                 menus: Menus,
-                messages: Messages) {
+                messages: Messages,
+                settingsProvider: SettingsProvider) {
 
-        super(activeModal, configurationIndex, modals, menus, messages);
+        super(activeModal, configurationIndex, modals, menus, messages, settingsProvider);
     }
 
 

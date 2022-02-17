@@ -10,7 +10,7 @@ export module Naming {
 
         return projectName + ':' + removeSpecialCharacters(camelCase(searchTerm));
     }
-    
+
 
     export function getCategoryName(searchTerm: string, projectName: string): string {
 
@@ -20,9 +20,19 @@ export module Naming {
     }
 
 
+    export function getValuelistId(searchTerm: string, projectName: string): string {
+
+        const id: string = searchTerm.split('-')
+            .map(segment => removeSpecialCharacters(segment))
+            .join('-');
+
+        return projectName + ':' + id;
+    }
+
+
     function removeSpecialCharacters(name: string): string {
 
-        return name.replace(/[^a-zA-Z0-9 ]/g, '');
+        return name.replace(/[^a-zA-Z0-9]/g, '');
     }
 
 

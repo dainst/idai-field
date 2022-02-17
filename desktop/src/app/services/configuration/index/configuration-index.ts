@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { to, Map } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
-    createContextIndependentCategories, Field, Name, ProjectConfiguration, RawProjectConfiguration,
+    createContextIndependentCategories, Field, Forest, Name, ProjectConfiguration, RawProjectConfiguration,
     Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
@@ -78,10 +78,11 @@ export class ConfigurationIndex {
     }
 
 
-    public async rebuild(configurationDocument: ConfigurationDocument) {
+    public async rebuild(configurationDocument: ConfigurationDocument,
+                         customProjectConfiguration?: ProjectConfiguration) {
 
         try {
-            await this.buildConfigurationIndex(configurationDocument);
+            await this.buildConfigurationIndex(configurationDocument, customProjectConfiguration);
         } catch(err) {
             console.error('Error while trying to rebuild configuration index', err);
         }
@@ -101,13 +102,17 @@ export class ConfigurationIndex {
     }
 
 
-    private async buildConfigurationIndex(configurationDocument: ConfigurationDocument) {
+    private async buildConfigurationIndex(configurationDocument: ConfigurationDocument,
+                                          customProjectConfiguration?: ProjectConfiguration) {
 
         const builtInConfiguration = new BuiltInConfiguration('');
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
         const valuelists = await this.configReader.read('/Library/Valuelists.json');
         const languages = await this.configLoader.readDefaultLanguageConfigurations();
+        const usedCategoryForms = customProjectConfiguration
+            ? customProjectConfiguration.getCategories()
+            : this.projectConfiguration.getCategories();
 
         const rawConfiguration: RawProjectConfiguration = createContextIndependentCategories(
             builtInConfiguration.builtInCategories,
@@ -118,7 +123,7 @@ export class ConfigurationIndex {
             builtInConfiguration.builtInFields,
             valuelists,
             configurationDocument.resource.valuelists,
-            this.getTopLevelCategoriesLibraryIds(),
+            this.getTopLevelCategoriesLibraryIds(usedCategoryForms),
             languages
         );
 
@@ -130,14 +135,14 @@ export class ConfigurationIndex {
             Object.values(rawConfiguration.categories),
             Object.values(rawConfiguration.commonFields),
             Object.values(rawConfiguration.valuelists),
-            Tree.flatten(this.projectConfiguration.getCategories())
+            Tree.flatten(usedCategoryForms)
         );
     }
 
 
-    private getTopLevelCategoriesLibraryIds(): string[] {
+    private getTopLevelCategoriesLibraryIds(usedCategoryForms: Forest<CategoryForm>): string[] {
 
-        return Tree.flatten(this.projectConfiguration.getCategories())
+        return Tree.flatten(usedCategoryForms)
             .filter(category => !category.parentCategory)
             .map(to('libraryId'));
     }

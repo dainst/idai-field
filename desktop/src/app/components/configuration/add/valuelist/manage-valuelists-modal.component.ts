@@ -104,13 +104,6 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     }
 
 
-    public updateSearchQuery(newSearchQuery: ValuelistSearchQuery) {
-
-        this.searchQuery = newSearchQuery;
-        this.applyValuelistSearch();
-    }
-
-
     public applyValuelistSearch() {
 
         this.valuelists = this.submitQuery();
@@ -281,7 +274,14 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
         this.applyValuelistSearch();
 
         if (editedValuelistId) {
-            this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
+            let editedValuelist: Valuelist = this.filteredValuelists.find(valuelist => valuelist.id === editedValuelistId);
+            if (!editedValuelist) {
+                this.searchQuery.onlyInUse = false;
+                this.searchQuery.queryString = '';
+                this.applyValuelistSearch();
+                editedValuelist = this.filteredValuelists.find(valuelist => valuelist.id === editedValuelistId);
+            }
+            this.select(editedValuelist);
             this.scrollTarget = editedValuelistId;
         }
     }

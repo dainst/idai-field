@@ -1,4 +1,5 @@
-import { validateReferences } from "../../../../../src/app/components/configuration/validation/validate-references";
+import { validateReferences } from '../../../../../src/app/components/configuration/validation/validate-references';
+
 
 describe('validate references', () => {
 

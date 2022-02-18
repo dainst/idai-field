@@ -19,6 +19,7 @@ export module IndexerConfiguration {
             'isInstanceOf:exist': { path: 'resource.relations.isInstanceOf', pathArray: ['resource', 'relations', 'isInstanceOf'], type: 'exist' },
             'hasInstance:exist': { path: 'resource.relations.hasInstance', pathArray: ['resource', 'relations', 'hasInstance'], type: 'exist' },
             'isSameAs:exist': { path: 'resource.relations.isSameAs', pathArray: ['resource', 'relations', 'isSameAs'], type: 'exist' },
+            'isPresentIn:contain': { path: 'resource.relations.isPresentIn', pathArray: ['resource', 'relations', 'isPresentIn'], type: 'contain' },
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },

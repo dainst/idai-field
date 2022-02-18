@@ -1,5 +1,6 @@
 import React, { CSSProperties, ReactElement, useContext, useEffect, useLayoutEffect, useState, useRef} from 'react';
-import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Container, Row, Tab, Tabs, Button, Form } from 'react-bootstrap';
+import * as tf from '@tensorflow/tfjs';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -16,9 +17,11 @@ import { LoginContext } from '../../shared/login';
 import { SHAPES_PROJECT_ID } from '../constants';
 import './browse.css';
 import LinkedFinds from './LinkedFinds';
-import SimilarTypes from './SimilarTypes';
+import { getSimilar } from '../../api/documents';
 import CONFIGURATION from '../../configuration.json';
 import DocumentCard from '../../shared/document/DocumentCard';
+import CanvasDraw, { DrawCanvasObject } from '../drawcanvas/DrawCanvas';
+
 
 
 const CHUNK_SIZE = 50;
@@ -29,13 +32,19 @@ export default function Browse(): ReactElement {
     const ParentmyRef = useRef<HTMLDivElement>(null);
     const { documentId } = useParams<{ documentId: string }>();
     const loginData = useContext(LoginContext);
+    const [similarTypes, setSimilarTypes] = useState<ResultDocument[]>([]);
     const searchParams = useSearchParams();
     const { t } = useTranslation();
     const getDocumentLink = (document: ResultDocument): string => `/${document.resource.id}`;
     const [document, setDocument] = useState<Document>(null);
     const [documents, setDocuments] = useState<ResultDocument[]>(null);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
-    const [tabKey, setTabKey] = useState<string>('children');
+    const [tabKey, setTabKey] = useState<string>('similarTypes');
+    const [tabKeymiddle, setTabKeymiddle] = useState<string>('selected');
+    const [brushRadius, setBrushRadius] = useState<number>(10);
+    const [dataUrl, setDataUrl] = useState<string>(null);
+    const canvas = useRef<DrawCanvasObject>();
+    const image = useRef<HTMLImageElement>(null);
     const [scrollState, setScrollState] = useState<ScrollState>({ 
         'atBottom' : false,
         'atTop' : false
@@ -71,7 +80,25 @@ export default function Browse(): ReactElement {
             }
         
     };
+    const findHandler = () => {
+
+        setDataUrl(canvas.current.getCanvas().toDataURL());
+    };
     
+    const brushRadiusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+        setBrushRadius(parseInt(e.target.value));
+    };
+    
+    const clearHandler = () => {
+    
+        canvas.current && canvas.current.clear();
+    };
+    useEffect(() => {
+
+        searchSimilarDocuments(loginData.token, image.current, 'false' )
+            .then(result => setSimilarTypes(result.documents));
+    }, [dataUrl, loginData.token])
 
     useEffect(() => {
         if (documentId) {
@@ -79,6 +106,8 @@ export default function Browse(): ReactElement {
             const fetchData = async () => { 
                 const doc = await get(documentId, loginData.token)
                 setDocument(doc)
+                getSimilar(documentId, loginData.token)
+                    .then(result => setSimilarTypes(result.documents))
                 const beforedocs = await searchBeforeDoc(loginData.token, documentId)
                 const docs = await searchCatalogDocuments(loginData.token, documentId)
                 beforedocs.documents.reverse()
@@ -107,6 +136,7 @@ export default function Browse(): ReactElement {
         }
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams,]);
+
 
     useEffect(() => {
         if (myRef.current) {
@@ -160,18 +190,53 @@ export default function Browse(): ReactElement {
                             </Col>
                 
                             <Col lg={3} className="catalog">
-                                <DocumentCard document={ document }
-                                    baseUrl={ CONFIGURATION.shapesUrl }
-                                    cardStyle={ cardStyle }
-                                    headerStyle={ cardHeaderStyle }
-                                    bodyStyle={ cardBodyStyle } />
+                                <Tabs id="doc-tabs" activeKey={ tabKeymiddle } onSelect={ setTabKeymiddle }>
+                                { document && document.resource.category.name === 'Drawing' &&
+                                        <Tab eventKey="selected" title= 'Selected'>
+                                            <DocumentCard document={ document }
+                                                baseUrl={ CONFIGURATION.shapesUrl }
+                                                cardStyle={ cardStyle }
+                                                headerStyle={ cardHeaderStyle }
+                                                bodyStyle={ cardBodyStyle } />
+                                        </Tab>
+                                    }
+                                    { document && document.resource.category.name === 'Drawing' &&
+                                        <Tab eventKey="sketched" title={ 'Sketched'}>
+                                            <>
+                                            <CanvasDraw brushRadius={ brushRadius } ref={ canvas } />
+                                            <Button
+                                                variant="primary"
+                                                className="mx-1 mt-1"
+                                                style={ buttonStyle }
+                                                onClick={ findHandler } >
+                                            { t('shapes.draw.search') }
+                                            </Button>
+                                            <Button
+                                                variant="primary"
+                                                className="mt-1"
+                                                style={ buttonStyle }
+                                                onClick={ clearHandler } >
+                                                { t('shapes.draw.clear') }
+                                            </Button>
+                                            <Col>
+                                                <Form.Control type="range" min="5" max="30" custom
+                                                    className="mt-2 w-25" value={ brushRadius }
+                                                    onChange={ brushRadiusHandler } />
+                                                <p>{ t('shapes.draw.brushRadius') }</p>
+                                            </Col>
+                                        </>
+                                        </Tab>
+                                    }
+
+                                 </Tabs>
                                     
                             </Col>
                             <Col lg={4} style={ documentGridSimilarStyle } onScroll={ onScroll }>
                                 <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
                                     { document && document.resource.category.name === 'Drawing' &&
                                         <Tab eventKey="similarTypes" title={ t('shapes.browse.similarTypes') }>
-                                            <SimilarTypes type={ document } />
+                                                <DocumentGrid documents={ similarTypes }
+                                                    getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                                         </Tab>
                                     }
                                     { document && document.resource.category.name === 'Drawing' &&
@@ -193,6 +258,9 @@ export default function Browse(): ReactElement {
 
     );
 }
+
+
+
 
 
 const searchCatalogDocuments = async (token: string, documentId: string): Promise<Result> => {
@@ -358,6 +426,22 @@ const searchDocuments = async (searchParams: URLSearchParams, from: number, toke
     return search(query, token);
 };
 
+const searchSimilarDocuments = async (token: string, image:HTMLImageElement, isDrawing: string): Promise<Result> => {
+
+    const query: Query = {
+        size: 20,
+        image_query:  {
+            model: 'resnet',
+            segment_image: isDrawing === 'false',
+            image: tf.browser.fromPixels(image,3)
+
+        },
+        filters: [{ field: 'resource.category.name' ,value: 'Drawing' },]
+    };
+
+    return search(query, token);
+};
+
 
 const getQueryTemplate = (from: number): Query => ({
     size: CHUNK_SIZE,
@@ -402,4 +486,10 @@ const documentGridSimilarStyle: CSSProperties = {
 const documentGridBrowseStyle: CSSProperties = {
     height: 'calc(100vh - ' + (NAVBAR_HEIGHT + BREADCRUMB_HEIGHT) + 'px)',
     overflowY: 'auto'
+};
+
+const buttonStyle: CSSProperties = {
+    borderColor: 'white',
+    borderStyle: 'solid',
+    borderRadius: '5px'
 };

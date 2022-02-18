@@ -23,6 +23,7 @@ import { Messages } from '../messages/messages';
 export class DeleteProjectModalComponent {
 
     public confirmDeletionProjectName: string;
+    private deleting = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -56,9 +57,16 @@ export class DeleteProjectModalComponent {
     }
 
 
+    public isDeleting(): boolean {
+        return this.deleting;
+    }
+
+
     private async performDeletion() {
 
         if (!this.canDeleteProject()) return;
+
+        this.deleting = true;
 
         try {
             await this.stateSerializer.delete('resources-state');

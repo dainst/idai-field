@@ -1,7 +1,7 @@
-import { CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
-import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
-import * as tsfun from 'tsfun';
+import { clone, isString, set, subtract } from 'tsfun';
+import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource,
+    CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Loading } from '../../../components/widgets/loading';
 import { ResourcesStateManager } from './resources-state-manager';
@@ -105,7 +105,7 @@ export class DocumentsManager {
                           rebuildNavigationPath: boolean = false) {
 
         try {
-            if (tsfun.isString(document)) {
+            if (isString(document)) {
                 document = (await this.datastore.get(document)) as FieldDocument;
             } else if (document) {
                 await this.datastore.get(document.resource.id);
@@ -162,7 +162,7 @@ export class DocumentsManager {
 
         const documentToSelect = await this.datastore.get(resourceId) as FieldDocument;
         this.newDocumentsFromRemote
-            = tsfun.subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+            = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
         if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
             await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
@@ -302,7 +302,7 @@ export class DocumentsManager {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        this.newDocumentsFromRemote = tsfun.set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        this.newDocumentsFromRemote = set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(false);
     }
 
@@ -381,7 +381,7 @@ export class DocumentsManager {
                                     liesWithinId: string|undefined,
                                     isInExtendedSearchMode: boolean): Constraints {
 
-        const constraints = tsfun.clone(customConstraints);
+        const constraints = clone(customConstraints);
 
         if (!isInExtendedSearchMode) {
             if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;

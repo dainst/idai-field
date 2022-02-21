@@ -55,7 +55,6 @@ export class NavigationService {
 
         await this.routingService.jumpToResource(document);
         await this.viewFacade.setExtendedSearchMode(false);
-        await this.routingService.jumpToResource(document);
     }
 
 

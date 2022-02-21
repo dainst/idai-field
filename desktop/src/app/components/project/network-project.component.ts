@@ -114,7 +114,7 @@ export class NetworkProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'invalidCredentials') {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
-            } else if (e.response && e.response.status === 401) {
+            } else if (e && e.response && e.response.status === 401) {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
@@ -242,7 +242,8 @@ export class NetworkProjectComponent {
             }
         ).info();
 
-        if (info.error === 'unauthorized' || info.status === 401) throw info.error;
+        // tslint:disable-next-line: no-string-throw
+        if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';
 
         return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
     }

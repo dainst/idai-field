@@ -50,12 +50,16 @@ export class ImageStore {
         this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
         this.activeProject = activeProject;
 
-        const originalsPath = this.getDirectoryPath(activeProject, ImageVariant.ORIGINAL)
+        this.setupDirectories(activeProject);
+    }
+
+    private async setupDirectories(project: string) {
+        const originalsPath = this.getDirectoryPath(project, ImageVariant.ORIGINAL)
         if (!this.filesystem.exists(originalsPath)) {
             await this.filesystem.mkdir(originalsPath, true);
         }
 
-        const thumbnailsPath = this.getDirectoryPath(activeProject, ImageVariant.THUMBNAIL);
+        const thumbnailsPath = this.getDirectoryPath(project, ImageVariant.THUMBNAIL);
         if (!this.filesystem.exists(thumbnailsPath)) {
             await this.filesystem.mkdir(thumbnailsPath, true);
         }
@@ -72,6 +76,8 @@ export class ImageStore {
     public async store(uuid: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
 
         const filePath = this.getFilePath(project, type, uuid);
+
+        await this.setupDirectories(project);
 
         await this.filesystem.writeFile(filePath, data);
 
@@ -130,7 +136,7 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileIds(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
+    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
 
         let originalFileNames = [];
         let thumbnailFileNames = [];

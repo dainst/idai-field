@@ -1,4 +1,5 @@
-import { CategoryConverter, createCategory, Datastore, doc, DocumentCache, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, createCategory, Datastore, doc, DocumentCache,
+    ProjectConfiguration } from 'idai-field-core';
 
 
 /**
@@ -71,6 +72,7 @@ describe('Datastore', () => {
         mockdb.fetch.and.returnValues(Promise.resolve({
             resource: {
                 id: '1',
+                category: 'Find',
                 relations: {}
             }
         }));
@@ -89,11 +91,13 @@ describe('Datastore', () => {
             {
                 resource: {
                     id: '1',
+                    category: 'Find',
                     relations: {}
                 }
             }, {
                 resource: {
                     id: '2',
+                    category: 'Find',
                     relations: {}
                 }
             }
@@ -113,6 +117,7 @@ describe('Datastore', () => {
         mockdb.fetch.and.returnValues(Promise.resolve({
             resource: {
                 id: '2',
+                category: 'Find',
                 relations: {}
             }
         }));
@@ -121,11 +126,13 @@ describe('Datastore', () => {
             {
                 resource: {
                     id: '1',
+                    category: 'Find',
                     relations: {}
                 }
             }, {
                 resource: {
                     id: '3',
+                    category: 'Find',
                     relations: {}
                 }
             }
@@ -149,6 +156,7 @@ describe('Datastore', () => {
         mockdb.fetchRevision.and.returnValues(Promise.resolve({
             resource: {
                 id: '1',
+                category: 'Find',
                 relations: {}
             }
         }));
@@ -168,6 +176,7 @@ describe('Datastore', () => {
              {
                 resource: {
                     id: '1',
+                    category: 'Find',
                     relations: {}
                 }
             }
@@ -184,6 +193,7 @@ describe('Datastore', () => {
 
         await ds.create({ resource: { // trigger caching of document
             id: '1',
+            category: 'Find',
             relations: {}
         } } as any);
         mockIndexFacade.find.and.returnValues(['1']);
@@ -197,8 +207,8 @@ describe('Datastore', () => {
 
     it('should limit the number of documents returned on find', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {}} } as any);
-        await ds.create({ resource: { id: '2', relations: {}} } as any);
+        await ds.create({ resource: { id: '1', category: 'Find', relations: {}} } as any);
+        await ds.create({ resource: { id: '2', category: 'Find', relations: {}} } as any);
 
         mockIndexFacade.find.and.returnValues(['1', '2']);
 
@@ -212,9 +222,9 @@ describe('Datastore', () => {
 
     it('limit the number of documents and use an offset', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {} } } as any);
-        await ds.create({ resource: { id: '2', relations: {} } } as any);
-        await ds.create({ resource: { id: '3', relations: {} } } as any);
+        await ds.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
+        await ds.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
+        await ds.create({ resource: { id: '3', category: 'Find', relations: {} } } as any);
 
         mockIndexFacade.find.and.returnValues(['3','1','2']);
 
@@ -230,9 +240,9 @@ describe('Datastore', () => {
 
     it('offset excludes everything', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {} } } as any);
-        await ds.create({ resource: { id: '2', relations: {} } } as any);
-        await ds.create({ resource: { id: '3', relations: {} } } as any);
+        await ds.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
+        await ds.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
+        await ds.create({ resource: { id: '3', category: 'Find', relations: {} } } as any);
 
         mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
@@ -267,6 +277,7 @@ describe('Datastore', () => {
             {
                 resource: {
                     id: '1',
+                    category: 'Find',
                     relations: {}
                 }
             }
@@ -283,8 +294,8 @@ describe('Datastore', () => {
 
     it('should return only ids', async done => {
 
-        await ds.create({ resource: { id: '1', relations: {}} } as any);
-        await ds.create({ resource: { id: '2', relations: {}} } as any);
+        await ds.create({ resource: { id: '1', category: 'Find', relations: {}} } as any);
+        await ds.create({ resource: { id: '2', category: 'Find', relations: {}} } as any);
 
         mockIndexFacade.find.and.returnValues(['1', '2']);
 
@@ -303,6 +314,7 @@ describe('Datastore', () => {
 
         await ds.update({ resource: { // trigger caching of document
             id: '1',
+            category: 'Find',
             relations: {}
         } } as any);
         const document = await ds.get('1'); // fetch from cache
@@ -315,11 +327,13 @@ describe('Datastore', () => {
 
         await ds.update({ resource: { // trigger caching of document
             id: '1',
+            category: 'Find',
             val: 'a',
             relations: {}
         } } as any);
         await ds.update({ resource: { // trigger caching and reassigning of document
             id: '1',
+            category: 'Find',
             val: 'b',
             relations: {}
         } } as any);
@@ -336,6 +350,7 @@ describe('Datastore', () => {
 
         await ds.create({ resource: { // trigger caching of document
             id: '1',
+            category: 'Find',
             relations: {}
         } } as any);
 

@@ -1,3 +1,4 @@
+import { to } from 'tsfun';
 import { Relation } from '../model/configuration/relation';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
@@ -5,6 +6,7 @@ import { ProjectConfiguration } from '../services/project-configuration';
 import { Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
 import { Named } from '../tools/named';
+import { DatastoreErrors } from './datastore-errors';
 import { Migrator } from './migrator';
 
 
@@ -16,6 +18,12 @@ export class CategoryConverter {
     public convert(document: Document): Document {
 
         const convertedDocument = Migrator.migrate(document);
+
+        if (document.resource.category !== 'Configuration'
+                && !Tree.flatten(this.projectConfiguration.getCategories()).map(to(Named.NAME))
+                    .includes(document.resource.category)) {
+            throw [DatastoreErrors.UNKNOWN_CATEGORY];
+        }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
 

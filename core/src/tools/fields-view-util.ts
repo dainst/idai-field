@@ -148,6 +148,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 filter(on(R, value => isDefined(value) && value !== '')),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
                 map(makeField(projectConfiguration, relationTargets, labels)),
+                filter(field => !field.targets || field.targets.length > 0),
                 flatten() as any /* TODO review typing*/
             )
         )

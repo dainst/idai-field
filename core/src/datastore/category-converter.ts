@@ -22,7 +22,7 @@ export class CategoryConverter {
         if (document.resource.category !== 'Configuration'
                 && !Tree.flatten(this.projectConfiguration.getCategories()).map(to(Named.NAME))
                     .includes(document.resource.category)) {
-            throw [DatastoreErrors.UNKNOWN_CATEGORY];
+            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
         }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');

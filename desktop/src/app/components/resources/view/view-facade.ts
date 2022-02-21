@@ -1,4 +1,5 @@
-import { ChangesStream, Datastore, Document, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
+import { ChangesStream, Datastore, DatastoreErrors, Document, FieldDocument, IndexFacade,
+    SyncService, SyncStatus } from 'idai-field-core';
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
 import { Loading } from '../../../components/widgets/loading';
@@ -131,10 +132,14 @@ export class ViewFacade {
 
         try {
             await this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
-        } catch (err) {
+        } catch (errWithParams) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();
-            this.messages.add([this.getMissingResourceMessage()]);
+            if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
+                this.messages.add([M.RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY, errWithParams[1]]);
+            } else {
+                this.messages.add([this.getMissingResourceMessage()]);
+            }
         }
     }
 

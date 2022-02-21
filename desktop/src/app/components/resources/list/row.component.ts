@@ -55,7 +55,7 @@ export class RowComponent implements AfterViewInit {
 
     public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);
 
-    public jumpToResource = () => this.navigationService.jumpToResource(this.document);
+    public jumpToResourceInSameView =() => this.navigationService.jumpToResourceInSameView(this.document);
 
     public moveInto = () => this.navigationService.moveInto(this.document);
 
@@ -84,6 +84,12 @@ export class RowComponent implements AfterViewInit {
 
         await this.resourcesComponent.editDocument(this.document);
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    public async jumpToResourceFromOverviewToOperation() {
+
+        await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
     }
 
 

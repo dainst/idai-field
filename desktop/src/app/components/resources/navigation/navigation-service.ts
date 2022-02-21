@@ -44,8 +44,16 @@ export class NavigationService {
     }
 
 
-    public async jumpToResource(document: FieldDocument) { // arrow up
+    public async jumpToResourceInSameView(document: FieldDocument) { // arrow up
 
+        await this.viewFacade.setExtendedSearchMode(false);
+        await this.routingService.jumpToResource(document);
+    }
+
+
+    public async jumpToResourceFromOverviewToOperation(document: FieldDocument) { // arrow top right, when in search
+
+        await this.routingService.jumpToResource(document);
         await this.viewFacade.setExtendedSearchMode(false);
         await this.routingService.jumpToResource(document);
     }

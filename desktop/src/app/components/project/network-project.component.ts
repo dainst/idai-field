@@ -32,11 +32,11 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  */
 export class NetworkProjectComponent {
 
-    public url = 'http://localhost:4000';
-    public projectName = 'development';
-    public password = 'pw';
+    public url = '';
+    public projectName = '';
+    public password = '';
     public syncThumbnailImages = true;
-    public syncOriginalImages = true;
+    public syncOriginalImages = false;
 
 
     constructor(

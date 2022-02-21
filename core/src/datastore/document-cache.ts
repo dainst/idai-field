@@ -1,4 +1,4 @@
-import {Document} from '../model/document';
+import { Document } from '../model/document';
 
 
 /**
@@ -38,7 +38,7 @@ export class DocumentCache {
     }
 
 
-    public resetForE2E() {
+    public reset() {
 
         this._ = {};
     }

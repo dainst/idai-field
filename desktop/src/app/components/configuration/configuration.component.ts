@@ -679,6 +679,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private async reindex() {
 
+        this.documentCache.reset();
+
         await Indexer.reindex(
             this.indexFacade,
             this.pouchdbDatastore.getDb(),

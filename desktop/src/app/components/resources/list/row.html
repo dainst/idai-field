@@ -23,7 +23,7 @@
         </button>
 
         <div *ngIf="shouldShowArrowUpForSearchMode()" class="hierarchy-button jump-to-view-button btn float-right align-middle"
-             (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+             (click)="jumpToResource(); $event.stopPropagation();"
              placement="right"
              container="body"
              ngbTooltip="Im Kontext anzeigen"
@@ -32,7 +32,7 @@
         </div>
         <button *ngIf="shouldShowArrowTopRightForSearchMode()"
              class="hierarchy-button jump-to-view-button btn float-right align-middle"
-             (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+             (click)="jumpToResource(); $event.stopPropagation();"
              placement="right"
              container="body"
              ngbTooltip="Im Kontext der Maßnahme anzeigen"

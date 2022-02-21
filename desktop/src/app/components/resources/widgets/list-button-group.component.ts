@@ -31,7 +31,7 @@ export class ListButtonGroupComponent {
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
-    public jumpToResourceInSameView = () => this.navigationService.jumpToResourceInSameView(this.document);
+    public jumpToResourceInSameView = () => this.navigationService.jumpToResource(this.document);
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
@@ -43,6 +43,6 @@ export class ListButtonGroupComponent {
     public async jumpToResourceFromOverviewToOperation() {
 
         this.resourcesComponent.closePopover();
-        await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
+        await this.navigationService.jumpToResource(this.document);
     }
 }

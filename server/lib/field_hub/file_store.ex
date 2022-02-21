@@ -18,7 +18,7 @@ defmodule FieldHub.FileStore do
       |> Stream.map(&get_type_directory(project, &1))
       |> Stream.map(&File.ls!(&1))
       |> Stream.map(&filter_with_existing_tombstone(&1))
-      |> Stream.zip(@variant_types)
+      |> Stream.zip(variants)
       |> Stream.map(fn({file_list, variant_type}) ->
         file_list
         |> Enum.map(fn(uuid) ->

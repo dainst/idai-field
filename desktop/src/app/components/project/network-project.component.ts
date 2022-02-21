@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { ImageVariant, SyncService } from 'idai-field-core';
+import {
+    FileInfo,
+    ImageStore,
+    ImageVariant,
+    SyncService
+} from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
@@ -10,6 +15,7 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { MenuContext } from '../../services/menu-context';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
+import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -26,20 +32,24 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  */
 export class NetworkProjectComponent {
 
-    public url = '';
-    public projectName = '';
-    public password = '';
+    public url = 'http://localhost:4000';
+    public projectName = 'development';
+    public password = 'pw';
     public syncThumbnailImages = true;
-    public syncOriginalImages = false;
+    public syncOriginalImages = true;
 
 
-    constructor(private messages: Messages,
-                private syncService: SyncService,
-                private settingsService: SettingsService,
-                private settingsProvider: SettingsProvider,
-                private modalService: NgbModal,
-                private menuService: Menus,
-                private tabManager: TabManager) {}
+    constructor(
+        private messages: Messages,
+        private syncService: SyncService,
+        private settingsService: SettingsService,
+        private settingsProvider: SettingsProvider,
+        private modalService: NgbModal,
+        private menuService: Menus,
+        private tabManager: TabManager,
+        private imageStore: ImageStore,
+        private remoteImageStore: RemoteImageStore
+    ) { }
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -58,70 +68,78 @@ export class NetworkProjectComponent {
             { backdrop: 'static', keyboard: false }
         );
         progressModalRef.componentInstance.progressPercent = 0;
-        progressModalRef.result.catch(canceled => {
+        progressModalRef.result.catch(async (canceled) => {
             this.syncService.stopReplication();
+            await this.imageStore.deleteData(this.projectName);
             this.closeModal(progressModalRef);
         });
 
-        let updateSequence: number;
-        try {
-            updateSequence = await this.getUpdateSequence();
-        } catch (err) {
-            if (err === 'invalidCredentials') {
-                this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
-            } else {
-                this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-                console.error('Error while trying to fetch update sequence of network project:', err);
-            }
-            return this.closeModal(progressModalRef);
-        }
+        let databaseSteps: number;
 
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
         try {
-            (await this.syncService.startReplication(
-                this.url, this.password, this.projectName, updateSequence, destroyExisting
-            )).subscribe({
-                next: lastSequence => {
-                    const lastSequenceNumber: number = NetworkProjectComponent.parseSequenceNumber(lastSequence);
-                    progressModalRef.componentInstance.progressPercent = Math.min(
-                        (lastSequenceNumber / updateSequence * 100), 100
-                    );
-                },
-                error: err => {
-                    this.closeModal(progressModalRef);
-                    if (err === 'canceled') return;
-                    if (err.error === 'unauthorized') {
-                        this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
-                    } else {
-                        this.messages.add([M.INITIAL_SYNC_GENERIC_ERROR]);
-                        console.error('Error while replicating network project:', err);
-                    }
-                },
-                complete: () => {
-                    this.settingsService.addProject(
-                        this.projectName,
-                        {
-                            isSyncActive: true,
-                            address: this.url,
-                            password: this.password,
-                            activeFileSync: this.getSelectedFileSync()
-                        }
-                    ).then(() => {
-                        this.closeModal(progressModalRef);
-                        reloadAndSwitchToHomeRoute();
-                    });
-                }
-            });
+
+            databaseSteps = await this.getUpdateSequence();
+
+            let thumbnailImagesList: { [uuid: string]: FileInfo } = {};
+            if (this.syncThumbnailImages) {
+                thumbnailImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
+                    this.url, this.password, this.projectName, ImageVariant.THUMBNAIL
+                );
+            }
+
+            let originalImagesList: { [uuid: string]: FileInfo } = {};
+            if (this.syncOriginalImages) {
+                originalImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
+                    this.url, this.password, this.projectName, ImageVariant.ORIGINAL
+                );
+            }
+
+            const fileSteps = Object.keys(thumbnailImagesList).length + Object.keys(originalImagesList).length;
+            const overallSteps = databaseSteps + fileSteps;
+
+            const databasePercentile = databaseSteps / overallSteps;
+
+            await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
+            await this.syncFiles(progressModalRef, fileSteps, 1 - databasePercentile, [thumbnailImagesList, originalImagesList]);
+
+            //            console.log(`Final percentage ${progressModalRef.componentInstance.progressPercent}`);
+
         } catch (e) {
+
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
-            } else {
-                this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
-                console.error('error from sync service startOneTimeSync', e);
+            } else if (e === 'unauthorized') {
+                this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+            } else if (e === 'invalidCredentials') {
+                this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+            } else if (e.response && e.response.status === 401) {
+                this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+            } else if (e === 'canceled') {
+                console.log('Download cancelled.');
             }
+            else {
+                this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
+                console.error('Error while downloading project', e);
+            }
+
             this.closeModal(progressModalRef);
+            return;
         }
+
+        this.settingsService.addProject(
+            this.projectName,
+            {
+                isSyncActive: true,
+                address: this.url,
+                password: this.password,
+                activeFileSync: this.getSelectedFileSync()
+            }
+        ).then(() => {
+            this.closeModal(progressModalRef);
+            reloadAndSwitchToHomeRoute();
+        });
     }
 
     private getSelectedFileSync(): ImageVariant[] {
@@ -133,9 +151,86 @@ export class NetworkProjectComponent {
         return result;
     }
 
+    private async syncDatabase(
+        progressModalRef: NgbModalRef,
+        updateSequence: number,
+        overallPercentile: number,
+        destroyExisting: boolean
+    ): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                (await this.syncService.startReplication(
+                    this.url, this.password, this.projectName, updateSequence, destroyExisting
+                )).subscribe({
+                    next: lastSequence => {
+                        const lastSequenceNumber: number = NetworkProjectComponent.parseSequenceNumber(lastSequence);
+                        progressModalRef.componentInstance.progressPercent = Math.min(
+                            (lastSequenceNumber / updateSequence * 100 * overallPercentile), 100
+                        );
+                    },
+                    error: err => {
+                        reject(err);
+                    },
+                    complete: () => {
+                        resolve();
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    private async syncFiles(
+        progressModalRef: NgbModalRef,
+        fileCount: number,
+        targetPercentile: number,
+        files: { [uuid: string]: FileInfo }[]
+    ): Promise<void> {
+
+        let counter = 0;
+        const batchSize = 20;
+
+        const startValue = progressModalRef.componentInstance.progressPercent;
+
+        try {
+            for (const values of files) {
+                const uuids = Object.keys(values);
+
+                const batches = [];
+                for (let i = 0; i < uuids.length; i += batchSize) {
+                    const chunk = uuids.slice(i, i + batchSize);
+                    batches.push(chunk);
+                }
+
+                for (const batch of batches) {
+
+                    const promises = [];
+                    for (const uuid of batch) {
+
+                        for (const type of values[uuid].types) {
+
+                            const data = await this.remoteImageStore.getDataUsingCredentials(
+                                this.url, this.password, uuid, type, this.projectName
+                            );
+                            promises.push(this.imageStore.store(uuid, data, this.projectName, type));
+                        }
+                    }
+
+                    await Promise.all(promises);
+
+                    counter += batch.length;
+                    const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
+                    progressModalRef.componentInstance.progressPercent = progressValue;
+                }
+            }
+        } catch (e) {
+            throw (e);
+        }
+    }
+
 
     private async getUpdateSequence(): Promise<number> {
-
         const info = await new PouchDB(
             SyncService.generateUrl(this.url, this.projectName),
             {
@@ -147,7 +242,7 @@ export class NetworkProjectComponent {
             }
         ).info();
 
-        if (info.status === 401) throw new Error('invalidCredentials');
+        if (info.error === 'unauthorized' || info.status === 401) throw info.error;
 
         return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
     }
@@ -160,7 +255,7 @@ export class NetworkProjectComponent {
     }
 
 
-    private static parseSequenceNumber(updateSequence: number|string): number {
+    private static parseSequenceNumber(updateSequence: number | string): number {
 
         return Number.parseInt((updateSequence + '').split('-')[0], 10);
     }

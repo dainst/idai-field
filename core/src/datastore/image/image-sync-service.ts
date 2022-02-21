@@ -162,10 +162,8 @@ export class ImageSyncService {
             (remoteUUID: string) => !remoteData[remoteUUID].deleted
         );
 
-        const deleteLocally = localUUIDs.filter(
-            (localUUID: string) => remoteUUIDs.includes(localUUID)
-        ).filter(
-            (localUUID: string) => !remoteData[localUUID].deleted && remoteData[localUUID].deleted
+        const deleteLocally = remoteUUIDs.filter(
+            (remoteUUID: string) => remoteData[remoteUUID].deleted && localData[remoteUUID] && !localData[remoteUUID].deleted
         );
 
         const missingRemotely = localUUIDs.filter(
@@ -176,9 +174,7 @@ export class ImageSyncService {
         );
 
         const deleteRemotely = localUUIDs.filter(
-            (localUUID: string) => remoteUUIDs.includes(localUUID)
-        ).filter(
-            (localUUID: string) => !remoteData[localUUID].deleted && remoteData[localUUID].deleted
+            (localUUID: string) => localData[localUUID].deleted && remoteData[localUUID] && !remoteData[localUUID].deleted
         );
 
         return {

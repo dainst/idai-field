@@ -124,6 +124,11 @@ configuration-category {
     }
   }
 
+  .configuration-category {
+    position: relative;
+    top: 1px;
+  }
+
   .category-editor {
     background-color: #eee;
   }

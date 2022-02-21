@@ -7,7 +7,7 @@ const axios = typeof window !== 'undefined' ? window.require('axios') : require(
 @Injectable()
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
-    constructor(private settingsProvider: SettingsProvider) {}
+    constructor(private settingsProvider: SettingsProvider) { }
 
 
     /**
@@ -44,11 +44,11 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 console.error(error.response.data);
                 console.error(error.response.status);
                 console.error(error.response.headers);
-              } else if (error.request) {
+            } else if (error.request) {
                 console.error(error.request);
-              } else {
+            } else {
                 console.error(error.message);
-              }
+            }
         }
     }
 
@@ -75,6 +75,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         });
     }
 
+
     /**
      * Returns all known images and lists their available variants for the remote sync target.
      * @param project the project's name
@@ -82,23 +83,40 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * are returned, otherwise only images with the requested variants are returned.
      * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
      */
-    public async getFileIds(
+    public async getFileInfos(
         project: string,
         type?: ImageVariant
-    ): Promise<{ [uuid: string]: FileInfo}> {
+    ): Promise<{ [uuid: string]: FileInfo }> {
 
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
 
-        const address = syncSource.address;
+        const url = syncSource.address;
         const password = syncSource.password;
+
+        return this.runFileInfoQuery(url, password, project, type);
+    }
+
+
+    public async getFileInfosUsingCredentials(
+        url: string,
+        password: string,
+        project: string,
+        type?: ImageVariant
+    ): Promise<{ [uuid: string]: FileInfo }> {
+
+        return this.runFileInfoQuery(url, password, project, type);
+    }
+
+
+    private async runFileInfoQuery(url: string, password: string, project: string, type?: ImageVariant) {
 
         const params = (type) ? { type } : {};
 
         const response = await axios({
             method: 'get',
-            url: address + '/files/' + project,
+            url: url + '/files/' + project,
             params,
             headers: {
                 'Content-Type': 'application/json',
@@ -109,26 +127,41 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         return response.data;
     }
 
+
     /**
      * Returns the raw Buffer data for the requested image on the sync target.
      * @param uuid the identifier for the image
      * @param type variant type of the image
      * @param project the project's name
      */
-    public async getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer|null> {
+    public async getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer> {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
 
-        const address = syncSource.address;
+        const url = syncSource.address;
         const password = syncSource.password;
 
-        const params = (type) ? { type } : {};
+        return this.runDataQuery(url, password, project, uuid, type);
+    }
 
+
+    public async getDataUsingCredentials(
+        url: string,
+        password: string,
+        uuid: string,
+        type: ImageVariant,
+        project: string
+    ): Promise<Buffer | null> {
+
+        return this.runDataQuery(url, password, project, uuid, type);
+    }
+
+    private async runDataQuery(url: string, password: string, project: string, uuid: string, type: ImageVariant): Promise<Buffer> {
         const response = await axios({
             method: 'get',
-            url: address + '/files/' + project + '/' + uuid,
-            params,
+            url: url + '/files/' + project + '/' + uuid,
+            params: { type },
             responseType: 'arraybuffer',
             headers: {
                 'Content-Type': 'application/json',

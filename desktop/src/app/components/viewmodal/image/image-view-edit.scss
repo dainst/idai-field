@@ -1,72 +1,52 @@
-$image-view-edit-background-color: #f8f9fa;
-
-.modal-content {
-  background-color: $image-view-edit-background-color;
-
-  .no-images-message {
-    top: 50%;
-    padding: 20px;
-    background-color: white;
-    text-align: center;
+image-view-edit {
+  #image-grid-container {
     position: relative;
-  }
+    top: 10px;
+    margin-top: 0;
+    height: 100%;
+    background-color: $image-view-background-color;
+    padding-left: 20px;
+    padding-right: 6px;
+    overflow-y: auto;
 
-  #view-modal-body {
-    background-color: $image-view-edit-background-color;
+    .card-block {
+      padding-top: 0;
+    }
 
-    .image-edit-content {
-      height: calc(100% - 10px) !important;
+    #create-depicts-relations-btn,
+    #delete-images,
+    #deselect-images,
+    #set-main-image {
+      height: 40px;
+    }
 
-      #image-grid-container {
-        position: relative;
-        top: 10px;
-        margin-top: 0;
-        height: 100%;
-        background-color: $image-view-edit-background-color;
-        padding-left: 20px;
-        padding-right: 6px;
-        overflow-y: auto;
-  
-        .card-block {
-          padding-top: 0;
-        }
-  
-        #create-depicts-relations-btn,
-        #delete-images,
-        #deselect-images,
-        #set-main-image {
-          height: 40px;
-        }
-  
-        .btn-group .btn {
-          margin-left: 0.5rem;
-        }
-  
-        .image-grid {
-          margin-top: 0;
-        }
-  
-        #link-images-button,
-        #add-images-button {
-          border-style: none;
-          width: 100%;
-          background-color: white;
-          color: #5572a1;
-  
-          &:hover {
-            background: darken(white, 5%)
-          }
-        }
-  
-        .popover-body {
-          padding: 5px !important;
-        }
-  
-        #add-images-button {
-          border-bottom-style: solid;
-          border-bottom-color: lighten(#5572a1, 33%);
-        }
+    .btn-group .btn {
+      margin-left: 0.5rem;
+    }
+
+    .image-grid {
+      margin-top: 0;
+    }
+
+    #link-images-button,
+    #add-images-button {
+      border-style: none;
+      width: 100%;
+      background-color: white;
+      color: #5572a1;
+
+      &:hover {
+        background: darken(white, 5%)
       }
+    }
+
+    .popover-body {
+      padding: 5px !important;
+    }
+
+    #add-images-button {
+      border-bottom-style: solid;
+      border-bottom-color: lighten(#5572a1, 33%);
     }
   }
 }

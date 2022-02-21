@@ -210,10 +210,13 @@ export class NetworkProjectComponent {
 
                         for (const type of values[uuid].types) {
 
-                            const data = await this.remoteImageStore.getDataUsingCredentials(
-                                this.url, this.password, uuid, type, this.projectName
+                            promises.push(
+                                this.remoteImageStore.getDataUsingCredentials(
+                                    this.url, this.password, uuid, type, this.projectName
+                                ).then((data) => {
+                                    return this.imageStore.store(uuid, data, this.projectName, type);
+                                })
                             );
-                            promises.push(this.imageStore.store(uuid, data, this.projectName, type));
                         }
                     }
 

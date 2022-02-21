@@ -66,8 +66,23 @@ defmodule FieldHub.FileStore do
     File.write(file_path, content)
   end
 
-  def delete(%{uuid: uuid, project: project, type: type}) do
-    store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: type, content: []})
+  def delete(%{uuid: uuid, project: project}) do
+
+    @variant_types
+    |> Stream.filter(fn(variant) ->
+      directory = get_type_directory(project, variant)
+      File.exists?("#{directory}/#{uuid}")
+    end)
+    |> Stream.map(&store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: &1, content: []}))
+    |> Enum.filter(fn(val) ->
+      val != :ok
+    end)
+    |> case do
+      [] ->
+        :ok
+      errors ->
+        errors
+    end
   end
 
   def get_supported_variant_types() do

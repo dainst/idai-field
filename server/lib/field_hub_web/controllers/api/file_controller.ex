@@ -87,26 +87,19 @@ defmodule FieldHubWeb.Api.FileController do
     end
   end
 
-  def delete(conn, %{"project" => project, "id" => uuid, "type" => type}) do
-    parsed_type =
-      parse_type(type)
+  def delete(conn, %{"project" => project, "id" => uuid}) do
 
-    image_store_data =
-      case parsed_type do
-        {:error, msg} ->
-          conn
-          |> render(ErrorView, "400.json", message: msg)
-        valid ->
-          FileStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
-      end
+    image_store_data = FileStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project)})
 
     case image_store_data do
       :ok ->
         conn
-        |> render(ErrorView, "200.json")
-      {:error, _} ->
+        |> put_view(ErrorView)
+        |> render("200.json")
+      _errors ->
         conn
-        |> render(ErrorView, "500.json")
+        |> put_view(ErrorView)
+        |> render("500.json")
     end
   end
 

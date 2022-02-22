@@ -1,7 +1,6 @@
 export module ValidationErrors {
 
     export const NO_ISRECORDEDIN = 'validationerror/noisrecordedin';
-    export const NO_ISRECORDEDIN_TARGET = 'validationerror/noisrecordedintarget';
     export const IDENTIFIER_ALREADY_EXISTS = 'validationerror/identifierexists';
     export const MISSING_PROPERTY = 'validationerror/missingproperty';
     export const MISSING_GEOMETRY_TYPE = 'validationerror/missinggeometrytype';

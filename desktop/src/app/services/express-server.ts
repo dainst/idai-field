@@ -38,17 +38,28 @@ export class ExpressServer {
         }));
 
 
-        app.get('/files/:project', async(req: any, res: any) => {
+        app.get('/files/:project', async (req: any, res: any) => {
 
             try {
                 let list: { [uuid: string]: FileInfo };
 
-                if (!req.query.type) {
+                if (!req.query.types) {
                     list = await this.imagestore.getFileInfos(req.params.project, []);
-                } else if (Object.values(ImageVariant).includes(req.query.type)) {
-                    list = await this.imagestore.getFileInfos(req.params.project, [req.query.type]);
                 } else {
-                    res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
+
+                    const imageVariants = [];
+
+                    for (const type of req.query.types) {
+                        if (Object.values(ImageVariant).includes(type)) {
+                            imageVariants.push(type);
+                        }
+                    }
+
+                    if (imageVariants.length > 0) {
+                        list = await this.imagestore.getFileInfos(req.params.project, imageVariants);
+                    } else {
+                        res.status(400).send({ reason: 'Invalid types parameter: "' + req.query.types + '"' });
+                    }
                 }
                 res.status(200).send(list);
             } catch (e) {

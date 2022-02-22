@@ -93,27 +93,19 @@ export class NetworkProjectComponent {
 
             databaseSteps = await this.getUpdateSequence();
 
-            let thumbnailImagesList: { [uuid: string]: FileInfo } = {};
-            if (this.syncThumbnailImages) {
-                thumbnailImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                    this.url, this.password, this.projectName, ImageVariant.THUMBNAIL
-                );
-            }
+            const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
+                this.url,
+                this.password,
+                this.projectName,
+                this.getSelectedFileSync()
+            );
 
-            let originalImagesList: { [uuid: string]: FileInfo } = {};
-            if (this.syncOriginalImages) {
-                originalImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                    this.url, this.password, this.projectName, ImageVariant.ORIGINAL
-                );
-            }
-
-            const fileSteps = Object.keys(thumbnailImagesList).length + Object.keys(originalImagesList).length;
-            const overallSteps = databaseSteps + fileSteps;
+            const overallSteps = databaseSteps + Object.keys(fileList).length;
 
             const databasePercentile = databaseSteps / overallSteps;
 
             await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
-            await this.syncFiles(progressModalRef, fileSteps, 1 - databasePercentile, [thumbnailImagesList, originalImagesList]);
+            await this.syncFiles(progressModalRef, 1 - databasePercentile, fileList);
 
             this.settingsService.addProject(
                 this.projectName,
@@ -190,55 +182,53 @@ export class NetworkProjectComponent {
 
     private async syncFiles(
         progressModalRef: NgbModalRef,
-        fileCount: number,
         targetPercentile: number,
-        files: { [uuid: string]: FileInfo }[]
+        files: { [uuid: string]: FileInfo }
     ): Promise<void> {
 
         let counter = 0;
+        const fileCount = Object.keys(files).length;
         const batchSize = 20;
 
         const startValue = progressModalRef.componentInstance.progressPercent;
 
         try {
-            for (const values of files) {
-                const uuids = Object.keys(values);
+            const uuids = Object.keys(files);
 
-                const batches = [];
-                for (let i = 0; i < uuids.length; i += batchSize) {
-                    const chunk = uuids.slice(i, i + batchSize);
-                    batches.push(chunk);
-                }
+            const batches = [];
+            for (let i = 0; i < uuids.length; i += batchSize) {
+                const chunk = uuids.slice(i, i + batchSize);
+                batches.push(chunk);
+            }
 
-                for (const batch of batches) {
+            for (const batch of batches) {
 
-                    if (this.cancelling) throw 'canceled';
+                if (this.cancelling) throw 'canceled';
 
-                    this.fileDownloadPromises = [];
+                this.fileDownloadPromises = [];
 
-                    for (const uuid of batch) {
+                for (const uuid of batch) {
 
-                        for (const type of values[uuid].types) {
-                            if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
-                                this.fileDownloadPromises.push(
-                                    this.remoteImageStore.getDataUsingCredentials(
-                                        this.url, this.password, uuid, type, this.projectName
-                                    ).then((data) => {
-                                        return this.imageStore.store(uuid, data, this.projectName, type);
-                                    })
-                                );
-                            }
+                    for (const type of files[uuid].types) {
+                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
+                            this.fileDownloadPromises.push(
+                                this.remoteImageStore.getDataUsingCredentials(
+                                    this.url, this.password, uuid, type, this.projectName
+                                ).then((data) => {
+                                    return this.imageStore.store(uuid, data, this.projectName, type);
+                                })
+                            );
                         }
                     }
-
-                    await Promise.all(this.fileDownloadPromises);
-
-                    if (this.cancelling) throw 'canceled';
-
-                    counter += batch.length;
-                    const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
-                    progressModalRef.componentInstance.progressPercent = progressValue;
                 }
+
+                await Promise.all(this.fileDownloadPromises);
+
+                if (this.cancelling) throw 'canceled';
+
+                counter += batch.length;
+                const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
+                progressModalRef.componentInstance.progressPercent = progressValue;
             }
         } catch (e) {
             throw (e);

@@ -136,7 +136,7 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
+    public async getFileInfos(project: string, types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo}> {
 
         let originalFileNames = [];
         let thumbnailFileNames = [];
@@ -147,7 +147,8 @@ export class ImageStore {
         } else {
             if(types.includes(ImageVariant.ORIGINAL)){
                 originalFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
-            } else if(types.includes(ImageVariant.THUMBNAIL)) {
+            } 
+            if(types.includes(ImageVariant.THUMBNAIL)) {
                 thumbnailFileNames = await this.getFileNames(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
             }
         }

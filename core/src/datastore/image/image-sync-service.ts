@@ -150,7 +150,7 @@ export class ImageSyncService {
     private async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
 
         const localData = await this.imageStore.getFileInfos(activeProject, [variant])
-        const remoteData = await this.remoteImagestore.getFileInfos(activeProject, variant)
+        const remoteData = await this.remoteImagestore.getFileInfos(activeProject, [variant])
 
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);

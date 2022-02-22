@@ -17,6 +17,7 @@ export class DeleteCategoryModalComponent {
     public category: CategoryForm;
     public labels: Labels;
     public customized: boolean;
+    public resourceCount: number;
 
     public confirmDeletionCategoryName: string;
 
@@ -26,7 +27,9 @@ export class DeleteCategoryModalComponent {
 
     public hasChildCategories = (): boolean => this.category.children.length > 0;
 
-    public confirmDeletion = () => (!this.customized || this.checkConfirmDeletionCategoryName())
+    public isConfirmationDialogVisible = () => this.customized || this.resourceCount > 0;
+
+    public confirmDeletion = () => (!this.isConfirmationDialogVisible() || this.checkConfirmDeletionCategoryName())
         && this.activeModal.close();
     
     public cancel = () => this.activeModal.dismiss('cancel');

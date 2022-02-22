@@ -417,6 +417,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.customized = ConfigurationDocument.isCustomizedCategory(
             this.configurationDocument, category
         );
+        componentInstance.resourceCount = (await this.datastore.findIds({ categories: [category.name] })).ids.length;
 
         this.modals.awaitResult(result,
             () => this.deleteCategory(category),

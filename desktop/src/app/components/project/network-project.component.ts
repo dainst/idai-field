@@ -38,6 +38,8 @@ export class NetworkProjectComponent {
     public syncThumbnailImages = true;
     public syncOriginalImages = false;
 
+    private cancelling = false;
+    private fileDownloadPromises = [];
 
     constructor(
         private messages: Messages,
@@ -67,11 +69,20 @@ export class NetworkProjectComponent {
             NetworkProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false }
         );
+
         progressModalRef.componentInstance.progressPercent = 0;
         progressModalRef.result.catch(async (canceled) => {
-            this.syncService.stopReplication();
-            await this.imageStore.deleteData(this.projectName);
-            this.closeModal(progressModalRef);
+
+            try {
+                this.cancelling = true;
+                this.syncService.stopReplication();
+                await Promise.all(this.fileDownloadPromises);
+            } catch (err) {
+            } finally {
+                await this.imageStore.deleteData(this.projectName);
+                this.cancelling = false;
+                this.closeModal(progressModalRef);
+            }
         });
 
         let databaseSteps: number;
@@ -135,7 +146,6 @@ export class NetworkProjectComponent {
             }
 
             this.closeModal(progressModalRef);
-            return;
         }
     }
 
@@ -154,7 +164,7 @@ export class NetworkProjectComponent {
         overallPercentile: number,
         destroyExisting: boolean
     ): Promise<void> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (res, rej) => {
             try {
                 (await this.syncService.startReplication(
                     this.url, this.password, this.projectName, updateSequence, destroyExisting
@@ -166,14 +176,14 @@ export class NetworkProjectComponent {
                         );
                     },
                     error: err => {
-                        reject(err);
+                        rej(err);
                     },
                     complete: () => {
-                        resolve();
+                        res();
                     }
                 });
             } catch (e) {
-                reject(e);
+                rej(e);
             }
         });
     }
@@ -202,12 +212,15 @@ export class NetworkProjectComponent {
 
                 for (const batch of batches) {
 
-                    const promises = [];
+                    if (this.cancelling) throw 'canceled';
+
+                    this.fileDownloadPromises = [];
+
                     for (const uuid of batch) {
 
                         for (const type of values[uuid].types) {
                             if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
-                                promises.push(
+                                this.fileDownloadPromises.push(
                                     this.remoteImageStore.getDataUsingCredentials(
                                         this.url, this.password, uuid, type, this.projectName
                                     ).then((data) => {
@@ -218,7 +231,9 @@ export class NetworkProjectComponent {
                         }
                     }
 
-                    await Promise.all(promises);
+                    await Promise.all(this.fileDownloadPromises);
+
+                    if (this.cancelling) throw 'canceled';
 
                     counter += batch.length;
                     const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);

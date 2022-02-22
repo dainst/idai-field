@@ -209,14 +209,15 @@ export class NetworkProjectComponent {
                     for (const uuid of batch) {
 
                         for (const type of values[uuid].types) {
-
-                            promises.push(
-                                this.remoteImageStore.getDataUsingCredentials(
-                                    this.url, this.password, uuid, type, this.projectName
-                                ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.projectName, type);
-                                })
-                            );
+                            if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
+                                promises.push(
+                                    this.remoteImageStore.getDataUsingCredentials(
+                                        this.url, this.password, uuid, type, this.projectName
+                                    ).then((data) => {
+                                        return this.imageStore.store(uuid, data, this.projectName, type);
+                                    })
+                                );
+                            }
                         }
                     }
 

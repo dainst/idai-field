@@ -2,7 +2,7 @@ defmodule FieldHub.FileStore do
 
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstoneSuffix ".deleted"
-  @variant_types [:original_image, :thumbnail_image]
+  @variant_types Application.get_env(:field_hub, :file_variant_types)
 
   def create_directories(project) do
     @variant_types

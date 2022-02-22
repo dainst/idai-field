@@ -7,12 +7,17 @@
 # General application configuration
 import Config
 
+config :field_hub,
+  file_variant_types: [:thumbnail_image, :original_image]
+
+
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: FieldHubWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: FieldHub.PubSub,
   live_view: [signing_salt: "upiryQ4e"]
+
 
 # Configures the mailer
 #

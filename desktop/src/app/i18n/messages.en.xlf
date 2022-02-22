@@ -1706,7 +1706,15 @@
         <target state="final"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.deleteModal.deleteFiles" datatype="html">
+        <source>Bilder löschen</source>
+        <target state="final">Delete images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">18,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">

@@ -120,10 +120,14 @@ export class AddCategoryFormModalComponent {
 
     private addSelectedCategory() {
 
+        const parentForm: CategoryForm|undefined = this.selectedForm.parentCategory
+            ? this.clonedProjectConfiguration.getCategory(this.selectedForm.parentCategory.name)
+            : undefined;
+
         const clonedConfigurationDocument = this.categoryFormToReplace
             ? ConfigurationDocument.swapCategoryForm(this.configurationDocument, this.categoryFormToReplace,
                 this.selectedForm)
-            : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm);
+            : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm, parentForm);
 
         try {
             this.applyChanges(clonedConfigurationDocument, true);

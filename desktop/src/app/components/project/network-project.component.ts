@@ -104,8 +104,18 @@ export class NetworkProjectComponent {
             await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
             await this.syncFiles(progressModalRef, fileSteps, 1 - databasePercentile, [thumbnailImagesList, originalImagesList]);
 
-            //            console.log(`Final percentage ${progressModalRef.componentInstance.progressPercent}`);
-
+            this.settingsService.addProject(
+                this.projectName,
+                {
+                    isSyncActive: true,
+                    address: this.url,
+                    password: this.password,
+                    activeFileSync: this.getSelectedFileSync()
+                }
+            ).then(() => {
+                this.closeModal(progressModalRef);
+                reloadAndSwitchToHomeRoute();
+            });
         } catch (e) {
 
             if (e === 'DB not empty') {
@@ -127,19 +137,6 @@ export class NetworkProjectComponent {
             this.closeModal(progressModalRef);
             return;
         }
-
-        this.settingsService.addProject(
-            this.projectName,
-            {
-                isSyncActive: true,
-                address: this.url,
-                password: this.password,
-                activeFileSync: this.getSelectedFileSync()
-            }
-        ).then(() => {
-            this.closeModal(progressModalRef);
-            reloadAndSwitchToHomeRoute();
-        });
     }
 
     private getSelectedFileSync(): ImageVariant[] {

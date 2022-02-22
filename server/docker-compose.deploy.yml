@@ -15,7 +15,7 @@ services:
       - traefik.http.routers.fieldhub.tls.certresolver=fieldresolver
 
   field_hub:
-    image: "dainst/field_hub:${FIELD_HUB_VERSION}"
+    image: "ghcr.io/dainst/field_hub:${FIELD_HUB_VERSION}"
     container_name: field-hub-app
     restart: always
     environment:

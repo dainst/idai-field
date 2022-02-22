@@ -10,6 +10,7 @@ import { ImagePickerComponent} from '../../docedit/widgets/image-picker.componen
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 import { Menus } from '../../../services/menus';
 import { Routing } from '../../../services/routing';
+import { Messages } from '../../messages/messages';
 
 
 export namespace ImageViewModalComponent {
@@ -41,11 +42,12 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 modalService: NgbModal,
                 routingService: Routing,
                 menuService: Menus,
+                messages: Messages,
                 private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager,
                 private i18n: I18n) {
 
-        super(activeModal, modalService, routingService, menuService);
+        super(activeModal, modalService, routingService, menuService, messages);
     }
 
 

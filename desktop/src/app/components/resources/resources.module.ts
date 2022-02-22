@@ -105,11 +105,12 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,
                          routingService: Routing,
-                         viewFacade: ViewFacade) => {
+                         viewFacade: ViewFacade,
+                         messages: Messages) => {
 
-                return new NavigationService(projectConfiguration, routingService, viewFacade);
+                return new NavigationService(projectConfiguration, routingService, viewFacade, messages);
             },
-            deps: [ProjectConfiguration, Routing, ViewFacade]
+            deps: [ProjectConfiguration, Routing, ViewFacade, Messages]
         },
         {
             provide: ResourcesStateManager,

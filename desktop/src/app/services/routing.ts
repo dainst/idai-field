@@ -2,13 +2,13 @@ import { Observable, Observer } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Datastore, Document, Named, ProjectConfiguration } from 'idai-field-core';
-import { DatastoreErrors } from 'idai-field-core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, Document, Named, ProjectConfiguration, DatastoreErrors } from 'idai-field-core';
 import { ViewFacade } from '../components/resources/view/view-facade';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DoceditComponent } from '../components/docedit/docedit.component';
+import { M } from '../components/messages/m';
 
 
 @Injectable()
@@ -50,6 +50,9 @@ export class Routing {
     }
 
 
+    /**
+     * @throws M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY
+     */
     public async jumpToResource(documentToSelect: Document,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 
@@ -108,6 +111,18 @@ export class Routing {
                                               comingFromOutsideResourcesComponent: boolean = false) {
 
         const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
+
+        if (!['project', 'types'].includes(viewName)) {
+            try {
+                await this.datastore.get(viewName);
+            } catch (errWithParams) {
+                if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
+                    throw [M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY, errWithParams[1]];
+                } else {
+                    throw errWithParams;
+                }
+            }
+        }
 
         if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);

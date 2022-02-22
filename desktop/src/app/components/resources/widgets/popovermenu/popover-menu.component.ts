@@ -4,6 +4,7 @@ import { PopoverMenu, ResourcesComponent } from '../../resources.component';
 import { ViewFacade } from '../../../../components/resources/view/view-facade';
 import { Routing } from '../../../../services/routing';
 import { ViewModalLauncher } from '../../../viewmodal/view-modal-launcher';
+import { Messages } from '../../../messages/messages';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class PopoverMenuComponent {
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
                 private routingService: Routing,
-                private viewModalLauncher: ViewModalLauncher) {}
+                private viewModalLauncher: ViewModalLauncher,
+                private messages: Messages) {}
 
 
     public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
@@ -41,7 +43,11 @@ export class PopoverMenuComponent {
 
     public async jumpToResource(document: FieldDocument) {
 
-        await this.routingService.jumpToResource(document);
+        try {
+            await this.routingService.jumpToResource(document);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
     }
 
 

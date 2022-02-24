@@ -13,7 +13,8 @@ defmodule Api.Worker.Indexer do
   """
   def reindex(project) do
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
-
+    Logger.info('This is the projectname looking for config:')
+    Logger.info(project)
     perform_reindex ProjectConfigLoader.get(project), project, new_index
 
     IndexAdapter.add_alias_and_remove_old_index project, new_index, old_index
@@ -25,12 +26,14 @@ defmodule Api.Worker.Indexer do
   end
 
   defp perform_reindex configuration, project, index do
+    Logger.info(configuration)
     IdaiFieldDb.fetch_changes(project)
     |> Enum.filter(&filter_non_owned_document/1)
     |> Enum.map(Mapper.process)
     |> log_finished("mapping", project)
     |> Enricher.process(project, IdaiFieldDb.get_doc(project), configuration)
     |> log_finished("enriching", project)
+    |> IO.inspect(label: "after enriching")
     |> Enum.map(IndexAdapter.process(project, index))
     |> log_finished("indexing", project)
   end

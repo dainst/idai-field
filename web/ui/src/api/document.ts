@@ -2,7 +2,7 @@ import { Geometry } from 'geojson';
 import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
 import { isObject } from 'tsfun';
 import { getLabel } from '../shared/languages';
-import { ResultDocument } from './result';
+import { ResultDocument, Literature0 } from './result';
 import { isImage } from '../shared/document/document-utils';
 
 
@@ -28,6 +28,7 @@ export interface Resource {
     shortName?: string;
     groups: FieldGroup[];
     geometry: Geometry;
+    literature0: Literature0;
     literature: Literature;
     childrenCount: number;
     parentId: string;

@@ -32,7 +32,7 @@ export const getPredecessors = async (id: string, token: string): Promise<Predec
 
 
 export const getSimilar = async (id: string, token: string,
-    featureType: string = 'phaseFourier',size: number = 30): Promise<Result> => {
+    featureType: string = 'phaseFourier',size: number = 60): Promise<Result> => {
     
     const uri = `/api/documents/similar/${featureType}/${id}?size=${size}`;
     const response = await fetch(uri, { headers: getHeaders(token) });

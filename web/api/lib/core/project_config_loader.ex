@@ -25,10 +25,9 @@ defmodule Api.Core.ProjectConfigLoader do
   end)
 
   defp load(config_dir, project_name) do
-    
     file_name = config_dir <> "/" <> project_name <> ".json"
-    
-    Logger.info "Loading project configuration from #{file_name}"
+    #Logger.info "Loading #{config_dir}"
+    Logger.info "Loading project configuration from  #{file_name}"
     with {:ok, body} <- File.read(file_name),
          {:ok, json} <- Poison.decode(body)
     do

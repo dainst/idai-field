@@ -6,6 +6,7 @@ import { segmentImage } from './featurevectors/segmentation';
 export type Query = {
     q?: string,
     filters?: Filter[],
+    //filtersnested?: NestedFilterObject[],
     not?: Filter[],
     exists?: string[],
     parent?: string,
@@ -19,7 +20,7 @@ export type Query = {
 
 export type Filter = {
     field: string,
-    value: string
+    value: string,
 };
 
 
@@ -34,6 +35,7 @@ export type BackendParams = {
     q?: string,
     size?: number,
     from?: number,
+    bool?: filtersnestedBackend,
     filters?: string[],
     not?: string[],
     exists?: string[],
@@ -43,10 +45,20 @@ export type BackendParams = {
     vector_query?: VectorQuery
 };
 
+export type filtersnestedBackend = {
+    filter: string[]
+
+}
 
 export type VectorQuery = {
     model: string,
     query_vector: number[]
+};
+
+export type NestedFilterObject = {
+    path? : string,
+    field?: string,
+    value?: string,
 };
 
 export type NestedSortObject = {
@@ -70,6 +82,7 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
     const params: BackendParams = {
         q: query.q && query.q.length > 0 ? query.q : '*',
         filters: [],
+        //bool:{filter:[]},
         search_after: [],
         sort: [],
         not: [],
@@ -80,6 +93,19 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
     if (query.filters) {
         params.filters.push(...query.filters.map((filter: Filter) => `${filter.field}:${filter.value}`));
     }
+    //if (query.filtersnested) {
+        //params.bool.filter.push(...query.filtersnested.map((filternested: NestedFilterObject) => JSON.parse(JSON.stringify(
+            //{
+                //'nested': {
+                    //'path': filternested.path, 
+                    //"max_children":1,
+                   //'query': 
+                        //{'term': {[filternested.field] : filternested.value}}
+                       //}
+                //} 
+            
+            //))));
+    //}
     if (query.not) {
         params.not.push(...query.not.map((filter: Filter) => `${filter.field}:${filter.value}`));
     }

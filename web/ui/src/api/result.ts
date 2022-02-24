@@ -45,6 +45,7 @@ export interface ResultResource {
     childrenCount: number;
     parentId: string;
     grandparentId: string;
+    literature0: Literature0;
     literature: Literature;
     relations?: { [relationName: string]: ResultDocument[] };
     georeference?: ImageGeoreference;
@@ -54,6 +55,11 @@ export interface ResultResource {
     height?: number;
 }
 
+export interface Literature0 {
+    zenonId: string;
+    page: number;
+    figure: string
+}
 
 export interface ResultFilter {
     name: string;

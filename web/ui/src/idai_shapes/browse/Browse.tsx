@@ -41,10 +41,16 @@ export default function Browse(): ReactElement {
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('similarTypes');
     const [tabKeymiddle, setTabKeymiddle] = useState<string>('selected');
+    const [FindDrawingButton, setFindDrawingButton] = useState(false)
+
     const [brushRadius, setBrushRadius] = useState<number>(10);
     const [dataUrl, setDataUrl] = useState<string>(null);
     const canvas = useRef<DrawCanvasObject>();
     const image = useRef<HTMLImageElement>(null);
+    const buttonHandlerFindDrawing = () => {
+        setFindDrawingButton(current => !current)
+      };
+    const canavasImage = () => canvas.current.getCanvas().toDataURL();
     const [scrollState, setScrollState] = useState<ScrollState>({ 
         'atBottom' : false,
         'atTop' : false
@@ -54,7 +60,7 @@ export default function Browse(): ReactElement {
      });  
     type OnScroll = (e: React.UIEvent<Element, UIEvent>) => void;
     const executeScroll = () => ParentmyRef.current.scrollTo({ top: myRef.current.offsetTop, left: 0, behavior: 'smooth'});
-    const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
+    const onScrollBrowse = (e: React.UIEvent<Element, UIEvent>) => {
         const el = e.currentTarget;
         //console.log('scrollHeight:',el.scrollHeight)
         //console.log('scrollTop:',el.scrollTop)
@@ -80,10 +86,6 @@ export default function Browse(): ReactElement {
             }
         
     };
-    const findHandler = () => {
-
-        setDataUrl(canvas.current.getCanvas().toDataURL());
-    };
     
     const brushRadiusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     
@@ -94,11 +96,7 @@ export default function Browse(): ReactElement {
     
         canvas.current && canvas.current.clear();
     };
-    useEffect(() => {
 
-        searchSimilarDocuments(loginData.token, image.current, 'false' )
-            .then(result => setSimilarTypes(result.documents));
-    }, [dataUrl, loginData.token])
 
     useEffect(() => {
         if (documentId) {
@@ -109,6 +107,7 @@ export default function Browse(): ReactElement {
                 getSimilar(documentId, loginData.token)
                     .then(result => setSimilarTypes(result.documents))
                 const beforedocs = await searchBeforeDoc(loginData.token, documentId)
+                console.log('Check for the sort', beforedocs)
                 const docs = await searchCatalogDocuments(loginData.token, documentId)
                 beforedocs.documents.reverse()
                 beforedocs.documents.push(doc)
@@ -148,7 +147,7 @@ export default function Browse(): ReactElement {
 
     useEffect(() => {
         if (scrollState.atTop) {
-            getPreviousDocuments(loginData.token, documents)
+            getPreviousDocuments(loginData.token, documentId, documents)
                 //.then(results => console.log('This is the previous results:',results.documents.reverse()));
                 .then(results => setDocuments(results.documents.reverse().concat(documents.slice(0,(documents.length-6)))))
             
@@ -160,7 +159,7 @@ export default function Browse(): ReactElement {
             
         }
         if (scrollState.atBottom) {
-            getNextDocuments(loginData.token, documents)
+            getNextDocuments(loginData.token, documentId, documents)
                 //.then(results => console.log('This is the next results:',results));
                 .then(results => setDocuments(documents.slice(6).concat(results.documents)));
             setScrollState({ 
@@ -172,6 +171,19 @@ export default function Browse(): ReactElement {
 
     }, [scrollState]);
 
+    useEffect(() => {
+        if (FindDrawingButton) {
+
+            //console.log('This is canvas', canvas.current.getCanvas().toDataURL())
+            setDataUrl(canvas.current.getCanvas().toDataURL())
+            
+            searchSimilarDocuments(loginData.token, image.current , 'true' )
+                .then(result => setSimilarTypes(result.documents));
+            buttonHandlerFindDrawing()
+        }
+
+
+    }, [FindDrawingButton]);
     return (
 
             <Container fluid className="browse-select">
@@ -179,7 +191,7 @@ export default function Browse(): ReactElement {
                 <Row>
                     { document
                         ? <>
-                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScroll} ref={ParentmyRef}>
+                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScrollBrowse} ref={ParentmyRef}>
                                 <Row className="catalog">
                                     <Col>
                                         <h1 className="my-5">{ }</h1>
@@ -208,7 +220,7 @@ export default function Browse(): ReactElement {
                                                 variant="primary"
                                                 className="mx-1 mt-1"
                                                 style={ buttonStyle }
-                                                onClick={ findHandler } >
+                                                onClick={ buttonHandlerFindDrawing } >
                                             { t('shapes.draw.search') }
                                             </Button>
                                             <Button
@@ -224,6 +236,7 @@ export default function Browse(): ReactElement {
                                                     onChange={ brushRadiusHandler } />
                                                 <p>{ t('shapes.draw.brushRadius') }</p>
                                             </Col>
+                                            <img src={ dataUrl } ref={ image } alt="no dataUrl" className="mx-auto d-block" />
                                         </>
                                         </Tab>
                                     }
@@ -231,7 +244,7 @@ export default function Browse(): ReactElement {
                                  </Tabs>
                                     
                             </Col>
-                            <Col lg={4} style={ documentGridSimilarStyle } onScroll={ onScroll }>
+                            <Col lg={4} style={ documentGridSimilarStyle } >
                                 <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
                                     { document && document.resource.category.name === 'Drawing' &&
                                         <Tab eventKey="similarTypes" title={ t('shapes.browse.similarTypes') }>
@@ -265,6 +278,9 @@ export default function Browse(): ReactElement {
 
 const searchCatalogDocuments = async (token: string, documentId: string): Promise<Result> => {
     const doc = await get(documentId, token);
+    const docsliterature = doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]
+    console.log(docsliterature['zenonId'] )
+    
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
@@ -273,18 +289,23 @@ const searchCatalogDocuments = async (token: string, documentId: string): Promis
     const query: Query = {
         size: 20,
         from: -1,
+        //filtersnested:[
+            //{ path: 'resource.literature', field: 'literature.zenonId', value: docsliterature['zenonId'] }
+        //],
         filters: [
             
+            { field: 'resource.literature0.zenonId', value: docsliterature['zenonId'] },
             { field: 'project', value: SHAPES_PROJECT_ID },
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
+        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['zenonId'],
+                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
                     doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
                     doc.resource.id],
         //search_after: [ doc.resource.identifier, doc.resource.id ],
         sort: [
-            
+            {field:'resource.literature.zenonId', order:'desc', nested: nest},
             {field:'resource.literature.page', order:'asc', nested: nest},
             {field:'resource.literature.figure', order:'asc', nested: nest },
             {field:'resource.id', order:'asc'}
@@ -296,6 +317,8 @@ const searchCatalogDocuments = async (token: string, documentId: string): Promis
 
 const searchBeforeDoc = async (token: string, documentId: string): Promise<Result> => {
     const doc = await get(documentId, token);
+    const docsliterature = doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]
+
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
@@ -304,18 +327,22 @@ const searchBeforeDoc = async (token: string, documentId: string): Promise<Resul
     const query: Query = {
         size: 20,
         from: 0,
+        //filtersnested:[
+            //{ path: 'resource.literature', field: 'literature.zenonId', value: docsliterature['zenonId'] }
+        //],
         filters: [
-            
+            { field: 'resource.literature0.zenonId', value: docsliterature['zenonId'] },           
             { field: 'project', value: SHAPES_PROJECT_ID },
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
+        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['zenonId'], 
+                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
                     doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
                     doc.resource.id],
         //search_after: [ doc.resource.identifier, doc.resource.id ],
         sort: [
-            
+            {field:'resource.literature.zenonId', order:'desc', nested: nest},
             {field:'resource.literature.page', order:'desc', nested: nest},
             {field:'resource.literature.figure', order:'desc', nested: nest },
             {field:'resource.id', order:'desc'}
@@ -325,54 +352,28 @@ const searchBeforeDoc = async (token: string, documentId: string): Promise<Resul
     return search_after(query, token);
 };
 
-const searchDoc = async (token: string, documentId: string): Promise<Result> => {
+
+const getNextDocuments = async (token: string, documentId: string, olddocuments: ResultDocument[]): Promise<Result> => { 
     const doc = await get(documentId, token);
-    const nest: NestedSortObject = {
-        path : 'resource.literature',
-        max_children: 1
-        };
-
-    const query: Query = {
-        size: 1,
-        from: 0,
-        filters: [
-            
-            { field: 'project', value: SHAPES_PROJECT_ID },
-            { field: 'resource.category.name', value: 'Drawing' }
-
-        ],
-        search_after:[doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['page'], 
-                    doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]['figure'], 
-                    doc.resource.id],
-        //search_after: [ doc.resource.identifier, doc.resource.id ],
-        sort: [
-            
-            {field:'resource.literature.page', order:'desc', nested: nest},
-            {field:'resource.literature.figure', order:'desc', nested: nest },
-            {field:'resource.id', order:'desc'}
-        ]
-    };
-
-    return search_after(query, token);
-};
-
-const getNextDocuments = async (token: string, olddocuments: ResultDocument[]): Promise<Result> => { 
+    const docsliterature = doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]
     const lastdoc : ResultDocument = olddocuments[olddocuments.length-1] 
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
         };
+
     const query: Query = {
         size: 6,
         from: 0,
         filters: [
-            
+            { field: 'resource.literature0.zenonId', value: docsliterature['zenonId'] },
             { field: 'project', value: SHAPES_PROJECT_ID },
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after: [lastdoc.resource.literature[0]['page'], lastdoc.resource.literature[0]['figure'], lastdoc.resource.id ],
-        sort: [{field:'resource.literature.page', order:'asc', nested: nest },
+        search_after: [lastdoc.resource.literature[0]['zenonId'],lastdoc.resource.literature[0]['page'], lastdoc.resource.literature[0]['figure'], lastdoc.resource.id ],
+        sort: [{field:'resource.literature.zenonId', order:'desc', nested: nest},
+            {field:'resource.literature.page', order:'asc', nested: nest },
             {field:'resource.literature.figure', order:'asc', nested: nest },
             {field:'resource.id', order:'asc'}
         ]
@@ -383,8 +384,10 @@ const getNextDocuments = async (token: string, olddocuments: ResultDocument[]): 
 };
 
 
-const getPreviousDocuments = async (token: string, olddocuments: ResultDocument[] ): Promise<Result> => { 
+const getPreviousDocuments = async (token: string,  documentId: string, olddocuments: ResultDocument[] ): Promise<Result> => { 
     console.log('This is the searchafter for previousDocuments:', olddocuments[0].sort) 
+    const doc = await get(documentId, token);
+    const docsliterature = doc.resource.groups.find(group => group.name === 'parent').fields.find(fields => fields.name === 'literature').value[0]
     const nest: NestedSortObject = {
         path : 'resource.literature',
         max_children: 1
@@ -393,18 +396,20 @@ const getPreviousDocuments = async (token: string, olddocuments: ResultDocument[
         size: 6,
         from: 0,
         filters: [
-            
+            { field: 'resource.literature0.zenonId', value: docsliterature['zenonId'] },
             { field: 'project', value: SHAPES_PROJECT_ID },
             { field: 'resource.category.name', value: 'Drawing' }
 
         ],
-        search_after: [ olddocuments[0].resource.literature[0]['page'], olddocuments[0].resource.literature[0]['figure'], olddocuments[0].resource.id ],
-        sort: [{field:'resource.literature.page', order:'desc', nested: nest },
+        search_after: [olddocuments[0].resource.literature[0]['zenonId'], olddocuments[0].resource.literature[0]['page'], olddocuments[0].resource.literature[0]['figure'], olddocuments[0].resource.id ],
+        sort: [{field:'resource.literature.zenonId', order:'desc', nested: nest},
+            {field:'resource.literature.page', order:'desc', nested: nest },
             {field:'resource.literature.figure', order:'desc', nested: nest },
             {field:'resource.id', order:'desc'}
         ]
 
     };
+    console.log('Query API-Endpoint /api/documents/searchafter with: ', query );
 
     return search_after(query, token);
 };
@@ -429,7 +434,7 @@ const searchDocuments = async (searchParams: URLSearchParams, from: number, toke
 const searchSimilarDocuments = async (token: string, image:HTMLImageElement, isDrawing: string): Promise<Result> => {
 
     const query: Query = {
-        size: 20,
+        size: 60,
         image_query:  {
             model: 'resnet',
             segment_image: isDrawing === 'false',

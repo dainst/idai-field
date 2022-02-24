@@ -17,7 +17,7 @@ const CanvasDraw = forwardRef(({ brushRadius }: CanvasProps, ref: Ref<DrawCanvas
     const posX = useRef<number>();
     const posY = useRef<number>();
     const canv = useRef<HTMLCanvasElement>();
-    const width = 512;
+    const width = 450;
     const height = 300;
     useImperativeHandle(ref, () => ({ clear, getCanvas }));
 

@@ -45,15 +45,23 @@
                         "type": "integer",
                         "store": true
                     },
+                    "literature0": {
+                        "properties":{
+                            "zenonId": { "type": "keyword", "store": true},
+                            "quotation": {"type": "text", "store": true},
+                            "page": {"type": "integer", "store": true},
+                            "figure": {"type": "keyword", "store": true}
+                    },
                     "literature":{
                         "type": "nested",
                         "properties":{
-                            "zenonId": { "type": "keyword"},
-                            "quotation": {"type": "text"},
-                            "page": {"type": "integer"},
-                            "figure": {"type": "keyword"}
+                            "zenonId": { "type": "keyword", "store": true},
+                            "quotation": {"type": "text", "store": true},
+                            "page": {"type": "integer", "store": true},
+                            "figure": {"type": "keyword", "store": true}
 
-                        }
+                        },
+                        "store": true
                     },
                     "featureVectors":{
                         "properties":{

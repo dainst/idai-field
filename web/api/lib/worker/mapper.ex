@@ -1,4 +1,5 @@
 defmodule Api.Worker.Mapper do
+require Logger
 
   def process, do: fn change -> process(change) end
   def process(change = %{ doc: %{ resource: %{ type: "Project" }}}) do
@@ -7,11 +8,15 @@ defmodule Api.Worker.Mapper do
     change = put_in(change.doc.resource.id, id)
     put_in(change.id, id)
     |> rename_type_to_category
+    |> unnestLiterature
+
   end
   def process(change = %{ deleted: true }), do: change
   def process(change) do
     change
     |> rename_type_to_category
+    |> unnestLiterature
+    
     |> convert_period
   end
   defp rename_type_to_category(change = %{ doc: %{ resource: %{ type: _ } }}) do
@@ -20,13 +25,16 @@ defmodule Api.Worker.Mapper do
   end
   defp rename_type_to_category(change), do: change
 
-  defp unnestLiterature(change = %{ doc: %{ resource: %{ literature: literature } }}) do
-    if literature == nil do
+  defp unnestLiterature(change = %{ doc: %{ resource: resource }}) do
+    if resource["literature"] == nil do
       change
     else
-    {oldliterature, new_change} = pop_in(change[:doc][:resource][:literature])
-    lit0 = List.first(oldliterature)
-    put_in(new_change, [:doc, :resource, :literature0], lit0)
+      lit0 = List.first(resource["literature"])
+      Logger.info(lit0)
+      Logger.info('Unnest is Really triggered!!!!')
+      change = put_in(change, [:doc, :resource, :literature0], lit0)
+      Logger.info(change)
+      change
     end
   end
   defp  unnestLiterature(change), do: change

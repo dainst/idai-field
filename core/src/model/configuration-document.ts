@@ -183,8 +183,8 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function swapCategoryForm(configurationDocument: ConfigurationDocument,
-                                     currentForm: CategoryForm, newForm: CategoryForm): ConfigurationDocument {
+    export function swapCategoryForm(configurationDocument: ConfigurationDocument, currentForm: CategoryForm,
+                                     newForm: CategoryForm, parentForm?: CategoryForm): ConfigurationDocument {
 
         const clonedConfigurationDocument = ConfigurationDocument.deleteCategory(
             configurationDocument, currentForm, false
@@ -203,13 +203,15 @@ export namespace ConfigurationDocument {
             }
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
         });
+
+        if (parentForm) addCustomParentFields(newForm, parentForm, clonedConfigurationDocument);
         
         return clonedConfigurationDocument;
     }
 
 
     export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm,
-            parentForm?: CategoryForm) {
+                                    parentForm?: CategoryForm) {
 
         const clonedConfigurationDocument = Document.clone(configurationDocument);
 
@@ -218,13 +220,7 @@ export namespace ConfigurationDocument {
             hidden: []
         }
         
-        if (parentForm) {
-            parentForm.groups.forEach(group => {
-                group.fields.filter(field => parentForm.customFields?.includes(field.name))
-                    .forEach(field => addFieldToGroup(clonedConfigurationDocument, categoryForm,
-                        getPermanentlyHiddenFields(clonedConfigurationDocument, categoryForm), group.name, field.name));
-            });
-        }
+        if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
 
         return addToCategoriesOrder(
             clonedConfigurationDocument, categoryForm.name, categoryForm.parentCategory?.name
@@ -293,6 +289,17 @@ export namespace ConfigurationDocument {
         };
 
         return configurationDocument;
+    }
+
+
+    function addCustomParentFields(categoryForm: CategoryForm, parentForm: CategoryForm,
+                                   clonedConfigurationDocument: ConfigurationDocument) {
+
+        parentForm.groups.forEach(group => {
+            group.fields.filter(field => parentForm.customFields?.includes(field.name))
+                .forEach(field => addFieldToGroup(clonedConfigurationDocument, categoryForm,
+                    getPermanentlyHiddenFields(clonedConfigurationDocument, categoryForm), group.name, field.name));
+        });
     }
 
 

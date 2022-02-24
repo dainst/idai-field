@@ -126,7 +126,7 @@ export class AddCategoryFormModalComponent {
 
         const clonedConfigurationDocument = this.categoryFormToReplace
             ? ConfigurationDocument.swapCategoryForm(this.configurationDocument, this.categoryFormToReplace,
-                this.selectedForm)
+                this.selectedForm, parentForm)
             : ConfigurationDocument.addCategoryForm(this.configurationDocument, this.selectedForm, parentForm);
 
         try {

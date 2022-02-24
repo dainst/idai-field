@@ -5823,7 +5823,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
@@ -5959,7 +5959,7 @@
         <target state="final">Formular wechseln?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
@@ -5967,15 +5967,7 @@
         <target state="final"> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.warning.changes" datatype="html">
-        <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
-        <target state="final"> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
-          <context context-type="linenumber">27,37</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html">
@@ -5983,7 +5975,7 @@
         <target state="final"> Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.save" datatype="html">
@@ -6247,7 +6239,7 @@
         <target state="final">OK</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
@@ -6288,6 +6280,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">208</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html">
+        <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
+        <target state="final"> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html">
+        <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
+        <target state="final"> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valuelistDescription" datatype="html">

@@ -48,7 +48,8 @@ defmodule FieldHub.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
       {:reverse_proxy_plug, "~> 2.1"},
-      {:zarex, "~> 1.0.2"}
+      {:zarex, "~> 1.0.2"},
+      {:ex_json_schema, "~> 0.9.1"}
     ]
   end
 

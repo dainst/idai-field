@@ -1,47 +1,50 @@
-version: '3.1'
+version: '3.5'
 
 services:
   couchdb:
     image: couchdb:3.2.1
-    container_name: field-couch-db
+    container_name: idai-field-server_couchdb
     environment:
-      - COUCHDB_ADMIN_USER
-      - COUCHDB_ADMIN_PASSWORD
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.fieldhub.rule=Host(`${HOST}`)        
-      - traefik.http.services.fieldhub.loadbalancer.server.port=5432
-      - traefik.http.routers.fieldhub.tls=true
-      - traefik.http.routers.fieldhub.tls.certresolver=fieldresolver
+      - COUCHDB_USER
+      - COUCHDB_PASSWORD
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:${HOST}"
+      - "traefik.port=5984"
 
   field_hub:
-    image: "dainst/field_hub:${FIELD_HUB_VERSION}"
-    container_name: field-hub-app
-    restart: always
+    image: "ghcr.io/dainst/field_hub:${FIELD_HUB_VERSION}"
+    container_name: idai-field-server_fieldhub
     environment:
       - HOST
       - SECRET_KEY_BASE
-      - COUCHDB_ROOT=field_couch_db
-      - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_USER}
-      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
+      - COUCHDB_ADMIN_NAME=${COUCHDB_USER}
+      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_PASSWORD}
     depends_on:
       - "couchdb"
     volumes:
-      - "./files:/files"
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.fieldhub.rule=Host(`${HOST}`)        
-      - traefik.http.services.fieldhub.loadbalancer.server.port=4000
-      - traefik.http.routers.fieldhub.tls=true
-      - traefik.http.routers.fieldhub.tls.certresolver=fieldresolver
+      - file-data:/files
+    networks:
+      - web
+      - default
+    deploy:
+      labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:${HOST}"
+      - "traefik.port=4000"
 
-  traefik:
-    image: "traefik:v2.4"
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./acme.json:/acme.json"
-      - "./traefik.toml:/etc/traefik/traefik.toml"
+volumes:
+  file-data:
+    name: idai-field-server_files
+    external: true
+    
+
+networks:
+  web:
+    external: true

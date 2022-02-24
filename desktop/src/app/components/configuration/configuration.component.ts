@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
-    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore} from 'idai-field-core';
+    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -128,6 +128,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
+
+    public isCategoryConfigured = (categoryName: string) =>
+        this.clonedProjectConfiguration.getCategory(categoryName) !== undefined;
 
 
     async ngOnInit() {

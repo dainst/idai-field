@@ -20,19 +20,25 @@
                             {{categoriesFilterOptions[1].label}}
                         </button>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button *ngIf="isCategoryConfigured('Trench')"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[2])">
                             {{categoriesFilterOptions[2].label}}
                         </button>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button *ngIf="isCategoryConfigured('Building')"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[3])">
                             {{categoriesFilterOptions[3].label}}
                         </button>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button *ngIf="isCategoryConfigured('Survey')"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[4])">
                             {{categoriesFilterOptions[4].label}}
                         </button>
-                        <div class="dropdown-divider"></div>
+                        <div *ngIf="isCategoryConfigured('Trench') 
+                                    || isCategoryConfigured('Building')
+                                    || isCategoryConfigured('Survey')"
+                            class="dropdown-divider"></div>
                         <button class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[5])">
                             {{categoriesFilterOptions[5].label}}

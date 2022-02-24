@@ -24,7 +24,7 @@ if config_env() == :prod do
   host = System.get_env("HOST")
 
   config :field_hub, FieldHubWeb.Endpoint,
-    url: [host: host, port: 443],
+    url: [host: host],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -49,10 +49,9 @@ if config_env() == :prod do
   # See `mix help release` for more information.
 
   config :field_hub,
-    couchdb_root: System.get_env("COUCHDB_ROOT"),
-    couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"), # see .env_template
-    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD"), # see .env_template
-    file_directory_root: "/files"
+    couchdb_url: System.get_env("COUCHDB_URL"),
+    couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"),
+    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD")
 
   # ## Configuring the mailer
   #

@@ -1,6 +1,5 @@
 defmodule FieldHub.CLI do
-  @couch_admin_name Application.get_env(:field_hub, :couchdb_admin_name)
-  @couch_admin_password Application.get_env(:field_hub, :couchdb_admin_password)
+  @couchdb_url Application.get_env(:field_hub, :couchdb_url)
 
   alias FieldHub.CouchService
   alias FieldHub.FileStore
@@ -8,7 +7,9 @@ defmodule FieldHub.CLI do
   require Logger
 
   def setup_couchdb_single_node() do
-    Logger.info("Running initial CouchDB setup for single node...")
+    HTTPoison.start()
+
+    Logger.info("Running initial CouchDB setup for single node at #{@couchdb_url}...")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
     {users, replicator } = CouchService.initial_setup(get_admin_credentials())
@@ -30,6 +31,8 @@ defmodule FieldHub.CLI do
   end
 
   def create_project(project_name) do
+    HTTPoison.start()
+
     CouchService.create_project(project_name, get_admin_credentials())
     |> case do
       %{status_code: 412} ->
@@ -42,6 +45,8 @@ defmodule FieldHub.CLI do
   end
 
   def create_user(name, password) do
+    HTTPoison.start()
+
     %{status_code: status_code} = CouchService.create_user(name, password, get_admin_credentials())
     if status_code == 409 do
       Logger.warning("User '#{name}' already exists.")
@@ -51,6 +56,8 @@ defmodule FieldHub.CLI do
   end
 
   def create_user(user_name) do
+    HTTPoison.start()
+
     password_length = 32
     password =
       :crypto.strong_rand_bytes(password_length)
@@ -61,25 +68,35 @@ defmodule FieldHub.CLI do
   end
 
   def set_password(user_name, user_password) do
+    HTTPoison.start()
+
     CouchService.set_password(user_name, user_password, get_admin_credentials())
   end
 
   def add_user_as_project_admin(user_name, project) do
+    HTTPoison.start()
+
     Logger.info("Adding '#{user_name}' as admin for project '#{project}'.")
     CouchService.add_project_admin(user_name, project, get_admin_credentials())
   end
 
   def add_user_as_project_member(user_name, project) do
+    HTTPoison.start()
+
     Logger.info("Adding '#{user_name}' as member for project '#{project}'.")
     CouchService.add_project_member(user_name, project, get_admin_credentials())
   end
 
   def remove_user_from_project(user_name, project) do
+    HTTPoison.start()
+
     Logger.info("Removing '#{user_name}' from project '#{project}'.")
     CouchService.remove_user_from_project(user_name, project, get_admin_credentials())
   end
 
   defp get_admin_credentials() do
-    %CouchService.Credentials{name: @couch_admin_name, password: @couch_admin_password}
+    HTTPoison.start()
+
+    %CouchService.Credentials{name: Application.get_env(:field_hub, :couchdb_admin_name), password: Application.get_env(:field_hub, :couchdb_admin_password)}
   end
 end

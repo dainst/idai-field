@@ -2,6 +2,7 @@ defmodule FieldHubWeb.Router do
 
   use FieldHubWeb, :router
 
+  alias FieldHub.CouchService
   import FieldHubWeb.Plugs
 
   pipeline :browser do
@@ -28,7 +29,7 @@ defmodule FieldHubWeb.Router do
     plug :api_auth
   end
 
-  forward "/db", ReverseProxyPlug, upstream: Application.get_env(:field_hub, :couchdb_url)
+  forward "/db", ReverseProxyPlug, upstream: &CouchService.url/0
 
   scope "/", FieldHubWeb do
     pipe_through :browser

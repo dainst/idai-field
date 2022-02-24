@@ -19,7 +19,7 @@ config :field_hub, FieldHubWeb.Endpoint,
   live_view: [signing_salt: "upiryQ4e"]
 
 config :field_hub,
-  couchdb_root: "http://localhost:5984",
+  couchdb_url: "http://localhost:5984",
   couchdb_admin_name: "admin", # see .env_template
   couchdb_admin_password: "password" # see .env_template
 

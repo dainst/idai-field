@@ -173,7 +173,7 @@ defmodule FieldHub.CouchService do
     ]
   end
 
-  defp url() do
+  def url() do
     Application.get_env(:field_hub, :couchdb_url)
   end
 end

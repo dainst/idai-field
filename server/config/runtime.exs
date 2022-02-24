@@ -24,7 +24,7 @@ if config_env() == :prod do
   host = System.get_env("HOST")
 
   config :field_hub, FieldHubWeb.Endpoint,
-    url: [host: host],
+    url: [host: host, port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.

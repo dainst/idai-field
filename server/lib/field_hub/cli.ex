@@ -1,5 +1,4 @@
 defmodule FieldHub.CLI do
-  @couchdb_url Application.get_env(:field_hub, :couchdb_url)
 
   alias FieldHub.CouchService
   alias FieldHub.FileStore
@@ -9,7 +8,7 @@ defmodule FieldHub.CLI do
   def setup_couchdb_single_node() do
     HTTPoison.start()
 
-    Logger.info("Running initial CouchDB setup for single node at #{@couchdb_url}...")
+    Logger.info("Running initial CouchDB setup for single node at #{CouchService.url()}...")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
     {users, replicator } = CouchService.initial_setup(get_admin_credentials())

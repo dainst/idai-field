@@ -23,7 +23,6 @@ defmodule FieldHubWeb.Api.FileController do
           parsed_types
         errors ->
           errors
-          |> IO.inspect
           |> Enum.reduce({:error, "Unknown file types: "}, fn({:error, type}, {:error, acc}) ->
               {:error, "#{acc} '#{type}'"}
             end

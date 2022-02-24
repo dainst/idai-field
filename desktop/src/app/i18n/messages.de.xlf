@@ -885,7 +885,7 @@
         <target state="final">Formular auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addCategory" datatype="html">
@@ -893,7 +893,7 @@
         <target state="final">Kategorie hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
@@ -1965,7 +1965,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
@@ -1996,12 +1996,28 @@
           <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.deleteCategory.warning.resources.single" datatype="html">
+        <source> Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden. </source>
+        <target state="final"> Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteCategory.warning.resources.multiple" datatype="html">
+        <source> Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
+        <target state="final"> Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
+          <context context-type="linenumber">55,21</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.changes" datatype="html">
         <source> An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen. </source>
         <target state="final"> An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
@@ -2009,7 +2025,7 @@
         <target state="final"> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">43,26</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteField.header" datatype="html">
@@ -2659,7 +2675,7 @@
         <target state="final">Kategorie löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
@@ -2668,7 +2684,7 @@
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.confirmInfo" datatype="html">
@@ -2676,7 +2692,7 @@
         <target state="final"> Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.images" datatype="html">
@@ -2764,7 +2780,7 @@
         <target state="final">Alle Gruppen ausklappen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/popover-menu.component.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
@@ -2816,7 +2832,7 @@
         <target state="final">Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.subtypes" datatype="html">
@@ -2824,7 +2840,7 @@
         <target state="final">Untertypen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
@@ -2832,7 +2848,7 @@
         <target state="final"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> Zugeordnete Funde </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
@@ -2896,7 +2912,7 @@
         <target state="final">Zur Maßnahme wechseln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -2908,7 +2924,7 @@
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -2916,7 +2932,7 @@
         <target state="final">Verschieben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -2924,7 +2940,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
@@ -2980,7 +2996,7 @@
         <target state="final">Keine Ressourcen gefunden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.childrenView.oneResource" datatype="html">
@@ -3779,7 +3795,7 @@
         <target state="final">Ansicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal-edit" datatype="html">
@@ -3815,7 +3831,7 @@
         <target state="final"> Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">235</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
@@ -3823,7 +3839,7 @@
         <target state="final">Bearbeitungsmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -3831,7 +3847,7 @@
         <target state="final">Einzelauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -3839,7 +3855,7 @@
         <target state="final">Gruppenauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -3847,7 +3863,7 @@
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -3855,7 +3871,7 @@
         <target state="final">Matrix aus Auswahl erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -3863,7 +3879,7 @@
         <target state="final">Matrix neu laden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
@@ -5587,8 +5603,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.parentResourceUnknownCategory" datatype="html">
-        <source>Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um auf die Ressource zuzugreifen.</source>
-        <target state="final">Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um auf die Ressource zuzugreifen.</target>
+        <source>Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</source>
+        <target state="final">Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.parentOperationUnknownCategory" datatype="html">
+        <source>Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</source>
+        <target state="final">Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5819,7 +5843,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
@@ -6335,7 +6359,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
@@ -6343,7 +6367,7 @@
         <target state="final"> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resourceViewModal.noImages" datatype="html">
@@ -6351,7 +6375,7 @@
         <target state="final"> Mit dieser Ressource sind keine Bilder verknüpft. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">

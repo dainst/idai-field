@@ -14,6 +14,11 @@ config :field_hub, FieldHubWeb.Endpoint,
   pubsub_server: FieldHub.PubSub,
   live_view: [signing_salt: "upiryQ4e"]
 
+config :field_hub,
+  couchdb_root: "http://localhost:5984",
+  couchdb_admin_name: "admin", # see .env_template
+  couchdb_admin_password: "password" # see .env_template
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

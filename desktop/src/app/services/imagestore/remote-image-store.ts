@@ -85,7 +85,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      */
     public async getFileInfos(
         project: string,
-        type?: ImageVariant
+        types: ImageVariant[]
     ): Promise<{ [uuid: string]: FileInfo }> {
 
         const settings = this.settingsProvider.getSettings();
@@ -95,7 +95,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const url = syncSource.address;
         const password = syncSource.password;
 
-        return this.runFileInfoQuery(url, password, project, type);
+        return this.runFileInfoQuery(url, password, project, types);
     }
 
 
@@ -103,21 +103,19 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         url: string,
         password: string,
         project: string,
-        type?: ImageVariant
+        types: ImageVariant[]
     ): Promise<{ [uuid: string]: FileInfo }> {
 
-        return this.runFileInfoQuery(url, password, project, type);
+        return this.runFileInfoQuery(url, password, project, types);
     }
 
 
-    private async runFileInfoQuery(url: string, password: string, project: string, type?: ImageVariant) {
-
-        const params = (type) ? { type } : {};
+    private async runFileInfoQuery(url: string, password: string, project: string, types: ImageVariant[]) {
 
         const response = await axios({
             method: 'get',
             url: url + '/files/' + project,
-            params,
+            params: { types },
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Basic ${btoa(project + ':' + password)}`

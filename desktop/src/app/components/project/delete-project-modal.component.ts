@@ -23,6 +23,8 @@ import { Messages } from '../messages/messages';
 export class DeleteProjectModalComponent {
 
     public confirmDeletionProjectName: string;
+    public deleteFiles = false;
+
     private deleting = false;
 
 
@@ -76,7 +78,7 @@ export class DeleteProjectModalComponent {
             // Ignore state file deletion errors
         }
 
-        await this.settingsService.deleteProject(this.getProjectName());
+        await this.settingsService.deleteProject(this.getProjectName(), this.deleteFiles);
 
         reloadAndSwitchToHomeRoute();
     }

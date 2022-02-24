@@ -167,16 +167,18 @@ export class SettingsService {
     }
 
 
-    public async deleteProject(project: Name) {
+    public async deleteProject(project: Name, deleteFiles: boolean = false) {
 
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
-        try {
-            await this.imagestore.deleteData(project);
-        } catch (e) {
-            console.error('Error while trying to delete image data:');
-            console.error(e);
+        if (deleteFiles) {
+            try {
+                await this.imagestore.deleteData(project);
+            } catch (e) {
+                console.error('Error while trying to delete image data:');
+                console.error(e);
+            }
         }
 
         await this.pouchdbDatastore.destroyDb(project);

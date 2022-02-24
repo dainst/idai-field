@@ -11,14 +11,27 @@
 </div>
 <div *ngIf="!isDeleting()">
     <div class="modal-body">
+        <div class="row">
+            <div id="file-deletion-slider">
+                <div class="col-auto mr-auto">
+                    <span i18n="@@settings.deleteModal.deleteFiles">Bilder löschen</span>
+                </div>
+                <div class="col-auto">
+                    <label class="switch">
+                        <input type="checkbox" [checked]="deleteFiles" (change)="deleteFiles = !deleteFiles">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
         <div id="confirm-delete-info">
             <span i18n="@@project.deleteModal.confirmDeleteInfo">
                 Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen.
             </span>
         </div>
         <div class="input-group">
-            <input id="delete-project-input" type="text" class="form-control" [(ngModel)]="confirmDeletionProjectName"
-                (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+            <input id="delete-project-input" type="text" class="form-control"
+                [(ngModel)]="confirmDeletionProjectName" (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
         </div>
     </div>
 

@@ -3,14 +3,12 @@ defmodule FieldHub.CouchService do
     defstruct name: "<user_name>", password: "<user_password>"
   end
 
-  @couch_url Application.get_env(:field_hub, :couchdb_root)
-
   require Logger
 
   def authenticate(project, %Credentials{} = credentials) do
     response =
       HTTPoison.get(
-        "#{@couch_url}/#{project}",
+        "#{url()}/#{project}",
         headers(credentials)
       )
 
@@ -27,12 +25,12 @@ defmodule FieldHub.CouchService do
   def initial_setup(%Credentials{} = credentials) do
     {
       HTTPoison.put!(
-        "#{@couch_url}/_users",
+        "#{url()}/_users",
         "",
         headers(credentials)
       ),
       HTTPoison.put!(
-      "#{@couch_url}/_replicator",
+      "#{url()}/_replicator",
       "",
       headers(credentials)
       )
@@ -42,7 +40,7 @@ defmodule FieldHub.CouchService do
   def create_project(project_name, %Credentials{} = credentials) do
 
     HTTPoison.put!(
-      "#{@couch_url}/#{project_name}",
+      "#{url()}/#{project_name}",
       "",
       headers(credentials)
     )
@@ -50,7 +48,7 @@ defmodule FieldHub.CouchService do
 
   def create_user(name, password, %Credentials{} = credentials) do
     HTTPoison.put!(
-      "#{@couch_url}/_users/org.couchdb.user:#{name}",
+      "#{url()}/_users/org.couchdb.user:#{name}",
       Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
       headers(credentials)
     )
@@ -60,14 +58,14 @@ defmodule FieldHub.CouchService do
 
     %{"_rev" => rev } =
       HTTPoison.get!(
-        "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+        "#{url()}/_users/org.couchdb.user:#{user_name}",
         headers(credentials)
       )
       |> Map.get(:body)
       |> Jason.decode!()
 
     HTTPoison.put!(
-      "#{@couch_url}/_users/org.couchdb.user:#{user_name}",
+      "#{url()}/_users/org.couchdb.user:#{user_name}",
       Jason.encode!(%{name: user_name, password: new_password, roles: [], type: "user"}),
       headers(credentials) ++ [{"If-Match", rev}]
     )
@@ -77,7 +75,7 @@ defmodule FieldHub.CouchService do
 
     %{ body: body } =
       HTTPoison.get!(
-        "#{@couch_url}/#{project_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -96,7 +94,7 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{@couch_url}/#{project_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
@@ -106,7 +104,7 @@ defmodule FieldHub.CouchService do
   def add_project_member(user_name, project_name, %Credentials{} = credentials) do
     %{ body: body } =
       HTTPoison.get!(
-        "#{@couch_url}/#{project_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -125,7 +123,7 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{@couch_url}/#{project_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
@@ -134,7 +132,7 @@ defmodule FieldHub.CouchService do
   def remove_user_from_project(user_name, project_name, %Credentials{} = credentials) do
     %{ body: body } =
       HTTPoison.get!(
-        "#{@couch_url}/#{project_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -158,7 +156,7 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{@couch_url}/#{project_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
@@ -173,5 +171,9 @@ defmodule FieldHub.CouchService do
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{credentials}"}
     ]
+  end
+
+  defp url() do
+    Application.get_env(:field_hub, :couchdb_url)
   end
 end

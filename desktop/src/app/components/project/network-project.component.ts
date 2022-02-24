@@ -38,6 +38,8 @@ export class NetworkProjectComponent {
     public syncThumbnailImages = true;
     public syncOriginalImages = false;
 
+    private cancelling = false;
+    private fileDownloadPromises = [];
 
     constructor(
         private messages: Messages,
@@ -67,11 +69,20 @@ export class NetworkProjectComponent {
             NetworkProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false }
         );
+
         progressModalRef.componentInstance.progressPercent = 0;
         progressModalRef.result.catch(async (canceled) => {
-            this.syncService.stopReplication();
-            await this.imageStore.deleteData(this.projectName);
-            this.closeModal(progressModalRef);
+
+            try {
+                this.cancelling = true;
+                this.syncService.stopReplication();
+                await Promise.all(this.fileDownloadPromises);
+            } catch (err) {
+            } finally {
+                await this.imageStore.deleteData(this.projectName);
+                this.cancelling = false;
+                this.closeModal(progressModalRef);
+            }
         });
 
         let databaseSteps: number;
@@ -82,30 +93,32 @@ export class NetworkProjectComponent {
 
             databaseSteps = await this.getUpdateSequence();
 
-            let thumbnailImagesList: { [uuid: string]: FileInfo } = {};
-            if (this.syncThumbnailImages) {
-                thumbnailImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                    this.url, this.password, this.projectName, ImageVariant.THUMBNAIL
-                );
-            }
+            const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
+                this.url,
+                this.password,
+                this.projectName,
+                this.getSelectedFileSync()
+            );
 
-            let originalImagesList: { [uuid: string]: FileInfo } = {};
-            if (this.syncOriginalImages) {
-                originalImagesList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                    this.url, this.password, this.projectName, ImageVariant.ORIGINAL
-                );
-            }
-
-            const fileSteps = Object.keys(thumbnailImagesList).length + Object.keys(originalImagesList).length;
-            const overallSteps = databaseSteps + fileSteps;
+            const overallSteps = databaseSteps + Object.keys(fileList).length;
 
             const databasePercentile = databaseSteps / overallSteps;
 
             await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
-            await this.syncFiles(progressModalRef, fileSteps, 1 - databasePercentile, [thumbnailImagesList, originalImagesList]);
+            await this.syncFiles(progressModalRef, 1 - databasePercentile, fileList);
 
-            //            console.log(`Final percentage ${progressModalRef.componentInstance.progressPercent}`);
-
+            this.settingsService.addProject(
+                this.projectName,
+                {
+                    isSyncActive: true,
+                    address: this.url,
+                    password: this.password,
+                    activeFileSync: this.getSelectedFileSync()
+                }
+            ).then(() => {
+                this.closeModal(progressModalRef);
+                reloadAndSwitchToHomeRoute();
+            });
         } catch (e) {
 
             if (e === 'DB not empty') {
@@ -114,7 +127,7 @@ export class NetworkProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'invalidCredentials') {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
-            } else if (e.response && e.response.status === 401) {
+            } else if (e && e.response && e.response.status === 401) {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
@@ -125,21 +138,7 @@ export class NetworkProjectComponent {
             }
 
             this.closeModal(progressModalRef);
-            return;
         }
-
-        this.settingsService.addProject(
-            this.projectName,
-            {
-                isSyncActive: true,
-                address: this.url,
-                password: this.password,
-                activeFileSync: this.getSelectedFileSync()
-            }
-        ).then(() => {
-            this.closeModal(progressModalRef);
-            reloadAndSwitchToHomeRoute();
-        });
     }
 
     private getSelectedFileSync(): ImageVariant[] {
@@ -157,7 +156,7 @@ export class NetworkProjectComponent {
         overallPercentile: number,
         destroyExisting: boolean
     ): Promise<void> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (res, rej) => {
             try {
                 (await this.syncService.startReplication(
                     this.url, this.password, this.projectName, updateSequence, destroyExisting
@@ -169,60 +168,67 @@ export class NetworkProjectComponent {
                         );
                     },
                     error: err => {
-                        reject(err);
+                        rej(err);
                     },
                     complete: () => {
-                        resolve();
+                        res();
                     }
                 });
             } catch (e) {
-                reject(e);
+                rej(e);
             }
         });
     }
 
     private async syncFiles(
         progressModalRef: NgbModalRef,
-        fileCount: number,
         targetPercentile: number,
-        files: { [uuid: string]: FileInfo }[]
+        files: { [uuid: string]: FileInfo }
     ): Promise<void> {
 
         let counter = 0;
+        const fileCount = Object.keys(files).length;
         const batchSize = 20;
 
         const startValue = progressModalRef.componentInstance.progressPercent;
 
         try {
-            for (const values of files) {
-                const uuids = Object.keys(values);
+            const uuids = Object.keys(files);
 
-                const batches = [];
-                for (let i = 0; i < uuids.length; i += batchSize) {
-                    const chunk = uuids.slice(i, i + batchSize);
-                    batches.push(chunk);
-                }
+            const batches = [];
+            for (let i = 0; i < uuids.length; i += batchSize) {
+                const chunk = uuids.slice(i, i + batchSize);
+                batches.push(chunk);
+            }
 
-                for (const batch of batches) {
+            for (const batch of batches) {
 
-                    const promises = [];
-                    for (const uuid of batch) {
+                if (this.cancelling) throw 'canceled';
 
-                        for (const type of values[uuid].types) {
+                this.fileDownloadPromises = [];
 
-                            const data = await this.remoteImageStore.getDataUsingCredentials(
-                                this.url, this.password, uuid, type, this.projectName
+                for (const uuid of batch) {
+
+                    for (const type of files[uuid].types) {
+                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
+                            this.fileDownloadPromises.push(
+                                this.remoteImageStore.getDataUsingCredentials(
+                                    this.url, this.password, uuid, type, this.projectName
+                                ).then((data) => {
+                                    return this.imageStore.store(uuid, data, this.projectName, type);
+                                })
                             );
-                            promises.push(this.imageStore.store(uuid, data, this.projectName, type));
                         }
                     }
-
-                    await Promise.all(promises);
-
-                    counter += batch.length;
-                    const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
-                    progressModalRef.componentInstance.progressPercent = progressValue;
                 }
+
+                await Promise.all(this.fileDownloadPromises);
+
+                if (this.cancelling) throw 'canceled';
+
+                counter += batch.length;
+                const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
+                progressModalRef.componentInstance.progressPercent = progressValue;
             }
         } catch (e) {
             throw (e);
@@ -242,7 +248,8 @@ export class NetworkProjectComponent {
             }
         ).info();
 
-        if (info.error === 'unauthorized' || info.status === 401) throw info.error;
+        // tslint:disable-next-line: no-string-throw
+        if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';
 
         return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
     }

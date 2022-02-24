@@ -5,13 +5,13 @@ export interface RemoteImageStoreInterface {
     remove(uuid: string, project: string): Promise<any>;
     getFileInfos(
         project: string, 
-        type?: ImageVariant
+        types: ImageVariant[]
     ): Promise<{ [uuid: string]: FileInfo}>;
     getFileInfosUsingCredentials(
         url: string,
         password: string,
         project: string,
-        type?: ImageVariant
+        types: ImageVariant[]
     ): Promise<{ [uuid: string]: FileInfo}>;
     getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer|null>;
 }

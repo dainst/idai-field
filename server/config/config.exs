@@ -7,6 +7,10 @@
 # General application configuration
 import Config
 
+config :field_hub,
+  file_variant_types: [:thumbnail_image, :original_image]
+
+
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],

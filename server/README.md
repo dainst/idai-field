@@ -24,7 +24,7 @@ docker build . -t ghcr.io/dainst/field_hub:<MAJOR>.<MINOR>.<PATCH>
 
 Finally you have to push the new or updated image to the registry:
 ```
-docker push ghcr.io/dainst/field_hub:latest
+docker push ghcr.io/dainst/field_hub:<version>
 ```
 
 In order to push images, you have authenticate your local machine with the the registry, see: [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).

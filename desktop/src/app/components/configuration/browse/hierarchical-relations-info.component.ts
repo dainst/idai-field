@@ -8,7 +8,8 @@ import { ComponentHelpers } from '../../component-helpers';
     selector: 'hierarchical-relations-info',
     templateUrl: './hierarchical-relations-info.html',
     host: {
-        '(document:click)': 'handleClick($event)',
+        '(document:click)': 'handleClick($event, false)',
+        '(document:contextmenu)': 'handleClick($event, true)',
     }
 })
 /**
@@ -40,9 +41,11 @@ export class HierarchicalRelationsInfoComponent implements OnChanges {
     }
 
 
-    public handleClick(event: any) {
+    public handleClick(event: any, rightClick: boolean) {
 
         if (!this.popover) return;
+
+        if (rightClick) return this.popover.close();
 
         if (!ComponentHelpers.isInside(event.target, target => target.id
                 && (target.id.includes('hierarchical-relations-info-' + this.mode)

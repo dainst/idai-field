@@ -53,8 +53,12 @@ configuration-category {
 
       #form-info {
         position: relative;
-        bottom: 5px;
+        bottom: 6px;
         margin-left: 14px;
+
+        &.abstract-category {
+          bottom: 0;
+        }
       }
     }
 

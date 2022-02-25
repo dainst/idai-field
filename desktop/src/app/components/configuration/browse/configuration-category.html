@@ -19,16 +19,19 @@
             <code class="category-name">{{category.name}}</code>
         </div>
         <div class="col header header-right text-right">
-            <hierarchical-relations-info [category]="category"
+            <hierarchical-relations-info *ngIf="!category.isAbstract"
+                                         [category]="category"
                                          [mode]="'liesWithin'"
                                          [clonedProjectConfiguration]="clonedProjectConfiguration">
             </hierarchical-relations-info>
-            <hierarchical-relations-info [category]="category"
+            <hierarchical-relations-info *ngIf="!category.isAbstract"
+                                         [category]="category"
                                          [mode]="'includes'"
                                          [clonedProjectConfiguration]="clonedProjectConfiguration">
             </hierarchical-relations-info>
             <span *ngIf="category.source !== 'custom'"
                   id="form-info"
+                  [class.abstract-category]="category.isAbstract"
                   ngbTooltip="Ausgewähltes Formular"
                   i18n-ngbTooltip="@@configuration.seletedForm"
                   container="body"

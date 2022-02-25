@@ -2,7 +2,6 @@ hierarchical-relations-info {
   .btn {
     position: relative;
     bottom: 7px;
-    margin-right: 5px;
 
     &.no-categories {
       @extend .disabled;
@@ -18,6 +17,10 @@ hierarchical-relations-info {
   #hierarchical-relations-info-popover {
     .popover-custom-title {
       font-size: 14px;
+
+      &.no-categories {
+        background-color: white;
+      }
     }
 
     ul {

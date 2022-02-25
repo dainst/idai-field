@@ -12,7 +12,7 @@
 
 <ng-template #infoPopover>
     <div id="hierarchical-relations-info-popover">
-        <div class="popover-custom-title">
+        <div class="popover-custom-title" [class.no-categories]="categories.length === 0">
             <span *ngIf="categories.length > 0 && mode === 'liesWithin'"
                   i18n="@@configuation.hierarchicalRelationsInfo.liesWithin">
                 Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden:

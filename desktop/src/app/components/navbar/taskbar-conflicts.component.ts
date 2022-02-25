@@ -3,11 +3,11 @@ import { nop } from 'tsfun';
 import { Document, Datastore, IndexFacade, ConfigurationDocument } from 'idai-field-core';
 import { ComponentHelpers } from '../component-helpers';
 import { Routing } from '../../services/routing';
-import { MenuNavigator } from '../menu-navigator';
 import { Modals } from '../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
+import { ProjectModalLauncher } from '../../services/project-modal-launcher';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class TaskbarConflictsComponent {
                 private renderer: Renderer2,
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
-                private menuNavigator: MenuNavigator,
+                private projectModalLauncher: ProjectModalLauncher,
                 private modals: Modals,
                 private menus: Menus,
                 private zone: NgZone) {
@@ -53,7 +53,7 @@ export class TaskbarConflictsComponent {
         if (document.resource.category === 'Configuration') {
             await this.openConfigurationConflictsModal(document);
         } else if (document.resource.category === 'Project') {
-            await this.menuNavigator.editProject('conflicts');
+            await this.projectModalLauncher.editProject('conflicts');
         } else {
             await this.routingService.jumpToConflictResolver(document);
         }

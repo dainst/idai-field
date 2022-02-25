@@ -79,7 +79,7 @@ export class AppController {
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();
         this.tabManager.resetForE2E();
-        this.documentCache.resetForE2E();
+        this.documentCache.reset();
 
         await new SampleDataLoader(
             this.thumbnailGenerator,

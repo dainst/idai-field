@@ -16,6 +16,8 @@ import { Messages } from '../../../messages/messages';
 import { Menus } from '../../../../services/menus';
 import { ValuelistSearchQuery } from './valuelist-search-query';
 import { ExtendValuelistModalComponent } from './extend-valuelist-modal.component';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { Naming } from '../naming';
 
 
 @Component({
@@ -48,7 +50,8 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 protected configurationIndex: ConfigurationIndex,
                 protected modals: Modals,
                 private menus: Menus,
-                private messages: Messages) {}
+                private messages: Messages,
+                private settingsProvider: SettingsProvider) {}
 
 
     ngAfterViewChecked() {
@@ -98,13 +101,6 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     public cancel() {
 
         this.activeModal.dismiss('cancel');
-    }
-
-
-    public updateSearchQuery(newSearchQuery: ValuelistSearchQuery) {
-
-        this.searchQuery = newSearchQuery;
-        this.applyValuelistSearch();
     }
 
 
@@ -183,7 +179,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     }
 
 
-    private async createNewValuelist(newValuelistId: string = this.searchQuery.queryString,
+    private async createNewValuelist(newValuelistId: string = this.emptyValuelist.id,
                                      valuelistToExtend?: Valuelist) {
 
         const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
@@ -222,7 +218,11 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
         await this.modals.awaitResult(
             result,
-            (newValuelistId: string) => this.createNewValuelist(newValuelistId, valuelist),
+            (newValuelistId: string) => {
+                this.createNewValuelist(Naming.getValuelistId(
+                    newValuelistId, this.settingsProvider.getSettings().selectedProject
+                ), valuelist);
+            },
             nop
         );
     }
@@ -274,7 +274,14 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
         this.applyValuelistSearch();
 
         if (editedValuelistId) {
-            this.select(this.valuelists.find(valuelist => valuelist.id === editedValuelistId));
+            let editedValuelist: Valuelist = this.filteredValuelists.find(valuelist => valuelist.id === editedValuelistId);
+            if (!editedValuelist) {
+                this.searchQuery.onlyInUse = false;
+                this.searchQuery.queryString = '';
+                this.applyValuelistSearch();
+                editedValuelist = this.filteredValuelists.find(valuelist => valuelist.id === editedValuelistId);
+            }
+            this.select(editedValuelist);
             this.scrollTarget = editedValuelistId;
         }
     }
@@ -285,7 +292,10 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
         if (this.searchQuery.queryString.length === 0) return undefined;
 
         return {
-            id: this.searchQuery.queryString
+            id: Naming.getValuelistId(
+                this.searchQuery.queryString,
+                this.settingsProvider.getSettings().selectedProject
+            )
         } as Valuelist;
     }
 

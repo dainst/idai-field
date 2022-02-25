@@ -877,6 +877,19 @@ describe('ConfigLoader', () => {
                 minimalForm: {
                     groups: []
                 }
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            C: {
+                parent: 'A',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
             }
         };
 
@@ -890,7 +903,7 @@ describe('ConfigLoader', () => {
                 minimalForm: {
                     groups: [{
                         name: Groups.STEM,
-                        fields: ['fieldA1', 'fieldA2', 'fieldA3']
+                        fields: ['fieldA1', 'fieldA2', 'fieldA3', 'relation1']
                     }]
                 } as any,
                 description: {}
@@ -900,7 +913,14 @@ describe('ConfigLoader', () => {
         const customForms: Map<CustomFormDefinition> = {
             A: {
                 fields: {},
-                hidden: ['fieldA1', 'fieldA2']
+                hidden: ['fieldA1', 'fieldA2', 'relation1']
+            },
+            B: {
+                fields: {}
+            },
+            C: {
+                fields: {},
+                hidden: ['fieldA3']
             }
         };
 
@@ -914,20 +934,39 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go({}, builtInCategories, [], {},
-                undefined, 'User'
+            pconf = await configLoader.go(
+                {}, builtInCategories,
+                [{ name: 'relation1', domain: ['A:inherit'], range: ['B'], inputType: 'relation' }],
+                {}, undefined, 'User'
             );
-            const result = pconf.getCategory('A').groups[0];
+            
+            const resultA = pconf.getCategory('A').groups[0];
+            expect(resultA.fields[0].name).toEqual('fieldA1');
+            expect(resultA.fields[0].visible).toBe(false);
+            expect(resultA.fields[0].editable).toBe(false);
+            expect(resultA.fields[1].name).toEqual('fieldA2');
+            expect(resultA.fields[1].visible).toBe(false);
+            expect(resultA.fields[1].editable).toBe(false);
+            expect(resultA.fields[2].name).toEqual('fieldA3');
+            expect(resultA.fields[2].visible).toBe(true);
+            expect(resultA.fields[2].editable).toBe(true);
+            expect(resultA.fields[3].name).toEqual('relation1');
+            expect(resultA.fields[3].visible).toBe(false);
+            expect(resultA.fields[3].editable).toBe(false);
 
-            expect(result.fields[0].name).toEqual('fieldA1');
-            expect(result.fields[0].visible).toBe(false);
-            expect(result.fields[0].editable).toBe(false);
-            expect(result.fields[1].name).toEqual('fieldA2');
-            expect(result.fields[1].visible).toBe(false);
-            expect(result.fields[1].editable).toBe(false);
-            expect(result.fields[2].name).toEqual('fieldA3');
-            expect(result.fields[2].visible).toBe(true);
-            expect(result.fields[2].editable).toBe(true);
+            const resultC = pconf.getCategory('C').groups[0];
+            expect(resultC.fields[0].name).toEqual('fieldA1');
+            expect(resultC.fields[0].visible).toBe(false);
+            expect(resultC.fields[0].editable).toBe(false);
+            expect(resultC.fields[1].name).toEqual('fieldA2');
+            expect(resultC.fields[1].visible).toBe(false);
+            expect(resultC.fields[1].editable).toBe(false);
+            expect(resultC.fields[2].name).toEqual('fieldA3');
+            expect(resultC.fields[2].visible).toBe(false);
+            expect(resultC.fields[2].editable).toBe(false);
+            expect(resultC.fields[3].name).toEqual('relation1');
+            expect(resultC.fields[3].visible).toBe(false);
+            expect(resultC.fields[3].editable).toBe(false);
         } catch(err) {
             fail(err);
         }

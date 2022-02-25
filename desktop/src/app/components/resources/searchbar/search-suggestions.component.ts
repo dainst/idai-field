@@ -1,10 +1,10 @@
-import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {Datastore, FieldDocument, Named} from 'idai-field-core';
-import {Routing} from '../../../services/routing';
-import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {ViewFacade} from '../../../components/resources/view/view-facade';
-import {Query} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
+import { Component, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
+import { Datastore, FieldDocument, Named, Query, ProjectConfiguration } from 'idai-field-core';
+import { Routing } from '../../../services/routing';
+import { ResourcesSearchBarComponent } from './resources-search-bar.component';
+import { ViewFacade} from '../../../components/resources/view/view-facade';
+import { Messages } from '../../messages/messages';
+
 
 @Component({
     selector: 'search-suggestions',
@@ -31,7 +31,8 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private renderer: Renderer2,
-                private projectConfiguration: ProjectConfiguration) {
+                private projectConfiguration: ProjectConfiguration,
+                private messages: Messages) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -71,7 +72,12 @@ export class SearchSuggestionsComponent implements OnChanges {
     public async jumpToDocument(document: FieldDocument) {
 
         await this.viewFacade.setSearchString('', false);
-        await this.routingService.jumpToResource(document);
+
+        try {
+            await this.routingService.jumpToResource(document);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
     }
 
 

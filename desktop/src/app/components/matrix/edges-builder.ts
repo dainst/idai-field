@@ -1,6 +1,5 @@
-import { intoObj } from 'idai-field-core';
-import { Document, Resource } from 'idai-field-core';
 import { is, on, set, union } from 'tsfun';
+import { intoObj, Document, Resource } from 'idai-field-core';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };
@@ -15,7 +14,7 @@ export type GraphRelationsConfiguration = {
     above: string[];
     below: string[];
     sameRank: string[];
-}
+};
 
 
 export type Edges = {
@@ -23,7 +22,7 @@ export type Edges = {
     aboveIds: string[];
     belowIds: string[];
     sameRankIds: string[];
-}
+};
 
 
 /**

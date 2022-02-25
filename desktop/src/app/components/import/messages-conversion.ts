@@ -52,7 +52,6 @@ export module MessagesConversion {
         if (msg === ParserErrors.CSV_NOT_A_BOOLEAN) replacement = M.IMPORT_PARSER_NOT_A_BOOLEAN;
 
         if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
-        if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
         if (msg === ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE;

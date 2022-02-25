@@ -68,12 +68,14 @@ import { ResourcesModule } from './resources/resources.module';
 import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
-import {UtilTranslations} from '../util/util-translations';
+import { UtilTranslations } from '../util/util-translations';
 import { MenuNavigator } from './menu-navigator';
 import { ProjectModule } from './project/project.module';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
+import { ProjectModalLauncher } from '../services/project-modal-launcher';
+import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -276,7 +278,9 @@ registerLocaleData(localeIt, 'it');
         TabSpaceCalculator,
         Menus,
         MenuNavigator,
-        UtilTranslations
+        UtilTranslations,
+        ProjectModalLauncher,
+        ViewModalLauncher
     ],
     bootstrap: [AppComponent]
 })

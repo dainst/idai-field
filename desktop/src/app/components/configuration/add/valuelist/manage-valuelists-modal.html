@@ -13,7 +13,8 @@
 
 <div class="modal-body row manage-valuelists-modal-body">
     <div class="col-md-6">
-        <valuelist-search-bar (onQueryChanged)="updateSearchQuery($event)"></valuelist-search-bar>
+        <valuelist-search-bar [searchQuery]="searchQuery"
+                              (onQueryChanged)="applyValuelistSearch()"></valuelist-search-bar>
         <valuelist-listing [valuelists]="valuelists"
                            [filteredValuelists]="filteredValuelists"
                            [selectedValuelist]="selectedValuelist"

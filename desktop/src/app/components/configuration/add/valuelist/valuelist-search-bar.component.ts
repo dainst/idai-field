@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentHelpers } from '../../../component-helpers';
 import { ValuelistSearchQuery } from './valuelist-search-query';
@@ -16,36 +16,29 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
  */
 export class ValuelistSearchBarComponent {
 
-    @Output() onQueryChanged: EventEmitter<ValuelistSearchQuery> = new EventEmitter<ValuelistSearchQuery>();
+    @Input() searchQuery: ValuelistSearchQuery;
+    @Output() onQueryChanged: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('popover', { static: false }) private popover: NgbPopover;
-
-    public queryString: string = '';
-    public onlyCustom: boolean = false;
-    public onlyInUse: boolean = false;
 
 
     public toggleCustomFilter() {
 
-        this.onlyCustom = !this.onlyCustom;
+        this.searchQuery.onlyCustom = !this.searchQuery.onlyCustom;
         this.submitQuery();
     }
 
 
     public toggleInUseFilter() {
 
-        this.onlyInUse = !this.onlyInUse;
+        this.searchQuery.onlyInUse = !this.searchQuery.onlyInUse;
         this.submitQuery();
     }
 
 
     public submitQuery() {
 
-        this.onQueryChanged.emit({
-            queryString: this.queryString,
-            onlyCustom: this.onlyCustom,
-            onlyInUse: this.onlyInUse
-        });
+        this.onQueryChanged.emit();
     }
 
 

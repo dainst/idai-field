@@ -57,6 +57,12 @@
     "isCutBy": {
       "label": "Coupée par"
     },
+    "isFilledBy": {
+      "label": "Remplie par"
+    },
+    "fills": {
+      "label": "Remplit"
+    },
     "borders": {
       "label": "Borde"
     },

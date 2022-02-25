@@ -24,7 +24,9 @@
                 (dblclick)="onEditCategory.emit(parentCategory)"
                 (contextmenu)="openContextMenu($event, parentCategory)">
                 <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
-                <category-icon [category]="parentCategory.name" size="30"></category-icon>
+                <category-icon [category]="parentCategory.name"
+                               [customProjectConfiguration]="customProjectConfiguration"
+                               size="30"></category-icon>
                 <div class="category-label">
                     {{getCategoryLabel(parentCategory)}}
                     <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
@@ -41,7 +43,9 @@
             </button>
         </li>
         <div *cdkDragPreview class="category-drag-preview">
-            <category-icon [category]="parentCategory.name" size="30"></category-icon>
+            <category-icon [category]="parentCategory.name"
+                           [customProjectConfiguration]="customProjectConfiguration"
+                           size="30"></category-icon>
             <div class="category-label">
                 {{getCategoryLabel(parentCategory)}}
                 <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
@@ -68,14 +72,18 @@
                     (dblclick)="onEditCategory.emit(childCategory)"
                     (contextmenu)="openContextMenu($event, childCategory)">
                     <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
-                    <category-icon [category]="childCategory.name" size="30"></category-icon>
+                    <category-icon [category]="childCategory.name" 
+                                   [customProjectConfiguration]="customProjectConfiguration"
+                                   size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}
                         <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
                     </div>
                 </div>
                 <div *cdkDragPreview class="category-drag-preview">
-                    <category-icon [category]="childCategory.name" size="30"></category-icon>
+                    <category-icon [category]="childCategory.name"
+                                   [customProjectConfiguration]="customProjectConfiguration"
+                                   size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}
                         <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
-    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore} from 'idai-field-core';
+    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -62,6 +62,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public selectedCategoriesFilter: CategoriesFilter;
     public configurationDocument: ConfigurationDocument;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
+    public clonedProjectConfiguration: ProjectConfiguration;
     
     public dragging: boolean = false;
     public changed: boolean = false;
@@ -103,7 +104,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                            reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
-    private clonedProjectConfiguration: ProjectConfiguration;
     private menuSubscription: Subscription;
 
 
@@ -128,6 +128,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
+
+    public isCategoryConfigured = (categoryName: string) =>
+        this.clonedProjectConfiguration.getCategory(categoryName) !== undefined;
 
 
     async ngOnInit() {
@@ -187,9 +190,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public setCategoriesFilter(filterName: string, selectFirstCategory: boolean = true) {
+    public setCategoriesFilter(filter: CategoriesFilter, selectFirstCategory: boolean = true) {
 
-        this.selectedCategoriesFilter = this.categoriesFilterOptions.find(filter => filter.name === filterName);
+        this.selectedCategoriesFilter = filter;
         this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
             this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.clonedProjectConfiguration
         );
@@ -417,6 +420,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.customized = ConfigurationDocument.isCustomizedCategory(
             this.configurationDocument, category
         );
+        componentInstance.resourceCount = (await this.datastore.findIds({ categories: [category.name] })).ids.length;
 
         this.modals.awaitResult(result,
             () => this.deleteCategory(category),
@@ -588,7 +592,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         }
 
         this.setCategoriesFilter(
-            this.selectedCategoriesFilter?.name ?? 'project',
+            this.selectedCategoriesFilter ?? this.categoriesFilterOptions.find(filter => filter.name === 'project'),
             this.selectedCategory === undefined
         );
     }
@@ -600,7 +604,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         try {
             this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
             this.configurationDocument = configurationDocument;
-            if (reindexConfiguration) await this.configurationIndex.rebuild(this.configurationDocument);
+            if (reindexConfiguration) {
+                await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
+            }
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
@@ -676,6 +682,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async reindex() {
+
+        this.documentCache.reset();
 
         await Indexer.reindex(
             this.indexFacade,

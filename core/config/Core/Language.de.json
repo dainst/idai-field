@@ -63,6 +63,12 @@
     "isCutBy": {
       "label": "Wird geschnitten von"
     },
+    "fills": {
+      "label": "Verfüllt"
+    },
+    "isFilledBy": {
+      "label": "Verfüllt von"
+    },
     "borders": {
       "label": "Grenzt an"
     },

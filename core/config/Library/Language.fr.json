@@ -103,9 +103,6 @@
         },
         "trenchComment": {
           "label": "Commentaires sur la tranchée"
-        },
-        "excavationType": {
-          "label": "Type de fouille"
         }
       }
     },

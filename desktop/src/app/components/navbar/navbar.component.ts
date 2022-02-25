@@ -121,7 +121,7 @@ export class NavbarComponent implements DoCheck {
         } else if (this.activeRoute.startsWith('/settings')) {
             return this.i18n({ id: 'navbar.tabs.settings', value: 'Einstellungen' });
         } else if (this.activeRoute.startsWith('/configuration')) {
-            return this.i18n({ id: 'navbar.tabs.configuration', value: 'Formularkonfiguration' });
+            return this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' });
         } else {
             return '';
         }

@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty, on, is} from 'tsfun';
-import {Datastore, FeatureDocument, FieldDocument, Document, Named} from 'idai-field-core';
-import {DoceditComponent} from '../docedit/docedit.component';
-import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
-import {Loading} from '../widgets/loading';
-import {DotBuilder} from './dot-builder';
-import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
-import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
-import {ProjectConfiguration} from 'idai-field-core';
-import {Relation} from 'idai-field-core';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { isEmpty, on, is } from 'tsfun';
+import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
+    Relation } from 'idai-field-core';
+import { DoceditComponent } from '../docedit/docedit.component';
+import { MatrixClusterMode, MatrixRelationsMode, MatrixState } from './matrix-state';
+import { Loading } from '../widgets/loading';
+import { DotBuilder } from './dot-builder';
+import { MatrixSelection, MatrixSelectionMode } from './matrix-selection';
+import { Edges, EdgesBuilder, GraphRelationsConfiguration } from './edges-builder';
+import { TabManager } from '../../services/tabs/tab-manager';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import IS_BEFORE = Relation.Time.BEFORE;
 import IS_AFTER = Relation.Time.AFTER;
@@ -18,9 +20,6 @@ import IS_BELOW = Relation.Position.BELOW;
 import IS_CUT_BY = Relation.Position.CUTBY;
 import CUTS = Relation.Position.CUTS;
 import SAME_AS = Relation.SAME_AS;
-import {TabManager} from '../../services/tabs/tab-manager';
-import {MenuContext} from '../../services/menu-context';
-import {Menus} from '../../services/menus';
 
 const Viz = require('viz.js');
 

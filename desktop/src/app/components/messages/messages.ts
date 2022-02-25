@@ -1,7 +1,7 @@
-import {Message} from './message';
-import {MD} from './md';
-import {MDInternal} from './md-internal';
-import {MsgWithParams} from './msg-with-params';
+import { Message } from './message';
+import { MD } from './md';
+import { MDInternal } from './md-internal';
+import { MsgWithParams } from './msg-with-params';
 
 
 /**
@@ -16,7 +16,6 @@ import {MsgWithParams} from './msg-with-params';
 export class Messages {
 
     private internalMessagesDictionary = new MDInternal();
-
     private activeMessages: Message[] = [];
 
     // Messages of these types fade away after the given timeout.
@@ -24,8 +23,7 @@ export class Messages {
 
 
     constructor(private messagesDictionary: MD,
-                private timeout: number) {
-    }
+                private timeout: number) {}
 
 
     /**

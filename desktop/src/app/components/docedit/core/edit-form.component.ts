@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone } from 'tsfun';
-import { Document, ProjectConfiguration, Field, Group, Labels, Named } from 'idai-field-core';
+import { Document, Field, Group, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -33,7 +33,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private projectConfiguration: ProjectConfiguration,
                 private labels: Labels) {}
 
 
@@ -69,9 +68,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public shouldShow(groupName: string) {
 
-        return (groupName === 'images'
-                && !this.projectConfiguration.getImageCategories().map(Named.toName).includes(this.document.resource.category))
-            || (groupName === 'conflicts' && this.document._conflicts)
+        return (groupName === 'conflicts' && this.document._conflicts)
             || this.getFields(groupName).filter(field => field.editable).length > 0;
     }
 

@@ -30,8 +30,8 @@ export class FieldListingComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
     public isNewFieldOptionShown = (): boolean => this.emptyField !== undefined
-        && !this.fields.map(field => field.name).includes(this.searchTerm)
-        && !CategoryForm.getFields(this.category).map(to(Named.NAME)).includes(this.searchTerm);
+        && !this.fields.map(field => field.name).includes(this.emptyField.name)
+        && !CategoryForm.getFields(this.category).map(to(Named.NAME)).includes(this.emptyField.name);
 
     public getSearchResultLabel = (field: Field) => getSearchResultLabel(field, this.searchTerm, this.getLabel);
 }

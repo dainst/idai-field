@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Messages} from './messages';
-import {Message} from './message';
+import { Component, Input } from '@angular/core';
+import { Messages } from './messages';
+import { Message } from './message';
 
 /**
  * @author Jan G. Wieners

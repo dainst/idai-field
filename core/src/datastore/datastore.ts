@@ -266,7 +266,7 @@ export class Datastore {
             if (limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
         }
 
-        const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
+        const { documentsFromCache, notCachedIds } = await this.getDocumentsFromCache(idsToFetch);
         let documents = documentsFromCache;
 
         if (notCachedIds.length > 0) {
@@ -314,12 +314,16 @@ export class Datastore {
         const documents: Array<Document> = [];
 
         (await this.datastore.bulkFetch(ids)).forEach(document => {
-            const convertedDocument = this.categoryConverter.convert(document);
 
             try {
+                const convertedDocument = this.categoryConverter.convert(document);
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== DatastoreErrors.UNKNOWN_CATEGORY /* TODO review where this has impact*/) throw errWithParams;
+                if (errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
+                    return; // Ignore documents of categories that are currently not included in configuration
+                } else {
+                    throw errWithParams;
+                }
             }
         });
 

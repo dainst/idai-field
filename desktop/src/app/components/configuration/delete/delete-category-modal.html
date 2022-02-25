@@ -3,12 +3,24 @@
 </div>
 
 <div id="delete-category-modal-body configuration-delete-modal-body" class="modal-body">
-    <span *ngIf="!customized && !hasChildCategories()"
+    <span *ngIf="!isConfirmationDialogVisible() && !hasChildCategories()"
           i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
-    <div *ngIf="customized && !hasChildCategories()">
+    <div *ngIf="isConfirmationDialogVisible() && !hasChildCategories()">
         <div *ngIf="customized" class="text-center alert alert-warning"
              i18n="@@configuration.deleteCategory.warning.changes">
             An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen.
+        </div>
+        <div *ngIf="resourceCount === 1" class="text-center alert alert-warning"
+            i18n="@@configuration.deleteCategory.warning.resources.single">
+           Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen
+           nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut
+           hinzufügen, wird die Ressource wieder angezeigt werden.
+       </div>
+        <div *ngIf="resourceCount > 1" class="text-center alert alert-warning"
+             i18n="@@configuration.deleteCategory.warning.resources.multiple">
+            Im Projekt existieren {{resourceCount}} Ressourcen dieser Kategorie, die nach dem Löschen
+            nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut
+            hinzufügen, werden die Ressourcen wieder angezeigt werden.
         </div>
         <div id="confirm-delete-info" i18n="@@configuration.deleteCategory.confirmInfo">
             Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen.
@@ -31,7 +43,7 @@
 <div class="modal-footer">
     <div *ngIf="!hasChildCategories()"
          class="btn btn-danger"
-         [ngClass]="{ 'disabled': customized && !this.checkConfirmDeletionCategoryName() }"
+         [ngClass]="{ 'disabled': isConfirmationDialogVisible() && !this.checkConfirmDeletionCategoryName() }"
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </div>

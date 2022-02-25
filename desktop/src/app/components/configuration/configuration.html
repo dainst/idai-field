@@ -5,16 +5,56 @@
 <div *ngIf="configurationDocument" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
         <div id="configuration-toolbar" class="row">
-            <div id="categories-filter-container" class="col-2">
-                <select id="categories-filter-select"
-                        class="form-control"
-                        (change)="setCategoriesFilter($event.target.value)">
-                    <option *ngFor="let categoriesFilter of categoriesFilterOptions"
-                            value="{{categoriesFilter.name}}"
-                            [selected]="selectedCategoriesFilter === categoriesFilter">
-                        {{categoriesFilter.label}}
-                    </option>
-                </select>
+            <div id="categories-filter" class="btn-group dropdown"
+                 ngbDropdown placement="bottom-left" role="group">
+                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div id="categories-filter-selection-menu" class="dropdown-menu" ngbDropdownMenu>
+                    <div id="categories-filter-selection-buttons">
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[0])">
+                            {{categoriesFilterOptions[0].label}}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[1])">
+                            {{categoriesFilterOptions[1].label}}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button *ngIf="isCategoryConfigured('Trench')"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[2])">
+                            {{categoriesFilterOptions[2].label}}
+                        </button>
+                        <button *ngIf="isCategoryConfigured('Building')"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[3])">
+                            {{categoriesFilterOptions[3].label}}
+                        </button>
+                        <button *ngIf="isCategoryConfigured('Survey')"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[4])">
+                            {{categoriesFilterOptions[4].label}}
+                        </button>
+                        <div *ngIf="isCategoryConfigured('Trench') 
+                                    || isCategoryConfigured('Building')
+                                    || isCategoryConfigured('Survey')"
+                            class="dropdown-divider"></div>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[5])">
+                            {{categoriesFilterOptions[5].label}}
+                        </button>
+                        <button class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[6])">
+                            {{categoriesFilterOptions[6].label}}
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="selectedCategoriesFilter"
+                     id="selected-categories-filter-label"
+                     class="btn btn-outline-primary">
+                     {{selectedCategoriesFilter.label}}
+                </div>
             </div>
             <div class="col">
                 <button id="save-button" class="btn btn-success"
@@ -37,6 +77,7 @@
                                     [allowChangingOrder]="true"
                                     [contextMenu]="contextMenu"
                                     [dragging]="dragging"
+                                    [customProjectConfiguration]="clonedProjectConfiguration"
                                     (onCategoryPicked)="selectCategory($event)"
                                     (onEditCategory)="editCategory($event)"
                                     (onCreateSubcategory)="addSubcategory($event)"

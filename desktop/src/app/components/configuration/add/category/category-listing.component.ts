@@ -46,8 +46,8 @@ export class CategoryListingComponent implements OnChanges {
     public getForms = (categoryName: string) => this.categoryForms.filter(form => form.name === categoryName);
 
     public isNewCategoryOptionShown = (): boolean => this.emptyForm
-        && !this.items.map(item => item.form.libraryId).includes(this.searchTerm)
-        && !Object.keys(this.configurationDocument.resource.forms).includes(this.searchTerm);
+        && !this.items.map(item => item.form.libraryId).includes(this.emptyForm.libraryId)
+        && !Object.keys(this.configurationDocument.resource.forms).includes(this.emptyForm.libraryId);
 
     public getSearchResultLabel = (form: CategoryForm) => getSearchResultLabel(form, this.searchTerm, this.getLabel);
     

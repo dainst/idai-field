@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
-import {Menus} from '../../services/menus';
-import {MenuComponent} from '../widgets/menu.component';
-import {MatrixLineMode, MatrixRelationsMode, MatrixState} from './matrix-state';
+import { Component, EventEmitter, Output, Renderer2 } from '@angular/core';
+import { Menus } from '../../services/menus';
+import { MenuComponent } from '../widgets/menu.component';
+import { MatrixLineMode, MatrixRelationsMode, MatrixState } from './matrix-state';
 
 
 @Component({

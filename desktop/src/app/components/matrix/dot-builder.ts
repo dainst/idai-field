@@ -1,6 +1,6 @@
 import { isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not } from 'tsfun';
 import { Document, CategoryForm, ProjectConfiguration } from 'idai-field-core';
-import { Edges} from './edges-builder';
+import { Edges } from './edges-builder';
 
 
 /**

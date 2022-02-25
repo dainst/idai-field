@@ -1,4 +1,96 @@
 {
+    "commons": {
+        "dimensionLength": {
+            "label": "Longueur",
+            "description": "Longueur maximum; Pour la céramique: longueur max. du fragment (mesure standard)"
+        },
+        "dimensionWidth": {
+            "label": "Largeur",
+            "description": "largeur max. (du fragment)"
+        },
+        "dimensionHeight": {
+            "label": "Hauteur",
+            "description": "Hauteur max. du fragment, Pour la céramique: Only use for the oriented height of ring bases."
+        },
+        "dimensionThickness": {
+            "label": "Epaisseur / Epaisseur de la panse",
+            "description": "Epaisseur de l'objet, pour la céramique: Epaisseur de la panse"
+        },
+        "spatialLocation": {
+            "label": "DONT enter anything here, I have no idea why it is here"
+        }
+    },
+    "fields": {
+        "category": {
+            "label": "Catégorie"
+        },
+        "identifier": {
+            "label": "Nom / identifiant (unique)",
+            "description": "Identifiant unique de la ressource. Si possible, Utiliser les conventions milésiennes; p.ex : Aire, année, tranchée...; e.g. pour les contextes: HU19.A.01 pour le contexte 1 de la tranchée A de l'année 2019 sur le Humeitepe (ne pas rensigner le no. de tranchée si N/A)"
+        },
+        "dimensionHeadHeight": {
+            "label": "Hauteur de la tête",
+            "description": "Height of the Head from Crown to ??? "
+        },
+        "diameterPercentage": {
+            "label": "Pourcentage conservé du diamètre"
+        },
+        "shortDescription": {
+            "label": "Court titre"
+        },
+        "scale": {
+            "label": "Echelle"
+        },
+        "gazId": {
+            "label": "No. d'index/identifiant (Voir : https://gazetteer.dainst.org/)",
+            "description": "Entrez l'unique identifiant/no. d'index à la fin de l'URL: https://gazetteer.dainst.org/place/2091612 (soit: 2091612)."
+        },
+        "datingAddenda": {
+            "label": "Informations supplémentaires sur la datation"
+        },
+        "measuringPointID": {
+            "label": "Identification du point de mesure",
+            "description": "Identifiant de la donnée dans la station totale, laisser vide si N/A"
+        },
+        "localization": {
+            "label": "Collecte des données",
+            "description": "Comment les données spatiales ont-elles été acquises?"
+        },
+        "localizationDescription": {
+            "label": "Description de la localisation (si les données topographiques sont indisponibles)",
+            "description": "Offrir une description topographique ou géographique ou enregistrer les numéros de points ou les données topographiques dans le format approprié."
+        },
+        "FotoNr": {
+            "label": "No. des photographies",
+            "description": "Lister les photographies (ref./no.) selon ce qui est renseigné sur le formulaire papier. Y compris les photos qui ne se trouvent pas dans la base de données mais qui sont archivées avec la documentation"
+        },
+        "DrawingNr": {
+            "label": "Drawing-ID(s)",
+            "description": "Lister les dessins (ref./no.) selon ce qui est renseigné sur le formulaire papier. Y compris les dessins qui ne se trouvent pas dans la base de données mais qui sont archivées avec la documentation"
+        },
+        "notes": {
+            "label": "Notes",
+            "description": "..."
+        },
+        "otherNotes": {
+            "label": "Notes",
+            "description": "..."
+        },
+        "quantificationOther": {
+            "label": "Autres éléments (pas sur le formulaire)",
+            "description": "Enregistrez les autres fragments de céramique qui ne peuvent pas être saisis dans le formulaire ci-dessus - utilisez-le avec précaution et uniquement si cela est absolument nécessaire."
+        }
+    },
+    "relations": {
+        "wasFoundIn": {
+            "label": "Découvert dans",
+            "description": "Indiquer l'endroit d'où provient la découverte"
+        },
+        "hasFinds": {
+            "label": "Contient des objets/découvertes",
+            "description": "Objets trouvés dans ce bâtiment, ce secteur ou cette zone de prospection. Veuillez ne l'utiliser que pour l'inventaire des découvertes des fouilles anciennes présentes dans les dépôts "
+        }
+    },
     "categories": {
         "Trench": {
             "label": "Tranchée / Secteur"

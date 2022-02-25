@@ -103,6 +103,7 @@
     "address": "1.1.2",
     "archiver": "5.1.0",
     "bootstrap": "4.4.1",
+    "camelcase": "6.3.0",
     "cldr": "^5.7.0",
     "electron-log": "4.4.4",
     "electron-updater": "4.6.1",

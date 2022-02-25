@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {on, is} from 'tsfun';
-import {Datastore, Document} from 'idai-field-core';
-import {FieldDocument} from 'idai-field-core'
-import {ViewModalComponent} from '../view-modal.component';
-import {ImagesState} from '../../../components/image/overview/view/images-state';
-import {ImageRowItem} from '../../image/row/image-row';
-import {Routing} from '../../../services/routing';
-import {Menus} from '../../../services/menus';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { on, is } from 'tsfun';
+import { Datastore, Document, FieldDocument } from 'idai-field-core';
+import { ViewModalComponent } from '../view-modal.component';
+import { ImagesState } from '../../../components/image/overview/view/images-state';
+import { ImageRowItem } from '../../image/row/image-row';
+import { Routing } from '../../../services/routing';
+import { Menus } from '../../../services/menus';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -33,9 +33,10 @@ export class ResourceViewModalComponent extends ViewModalComponent {
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
                 routingService: Routing,
-                menuService: Menus) {
+                menuService: Menus,
+                messages: Messages) {
 
-        super(activeModal, modalService, routingService, menuService);
+        super(activeModal, modalService, routingService, menuService, messages);
     }
 
 

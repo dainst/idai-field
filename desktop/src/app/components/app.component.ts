@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Menus } from '../services/menus';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -37,7 +36,6 @@ export class AppComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                menuService: Menus,
                 appController: AppController,
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
@@ -74,38 +72,6 @@ export class AppComponent {
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
             this.changeDetectorRef.detectChanges();
-        });
-    }
-
-
-    private enableMenuShortCutsForTests() {
-
-        this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
-            if (!event.ctrlKey || event.metaKey) return;
-
-            switch(event.key) {
-                case 's':
-                    if (event.ctrlKey && event.altKey) {
-                        this.menuNavigator.onMenuItemClicked('settings');
-                    }
-                    break;
-                case ',':
-                    if (event.metaKey) this.menuNavigator.onMenuItemClicked('settings');
-                    break;
-                case 'b':
-                    this.menuNavigator.onMenuItemClicked('images');
-                    break;
-                case 'i':
-                    this.menuNavigator.onMenuItemClicked('import');
-                    break;
-                case 't':
-                    this.menuNavigator.onMenuItemClicked('resources/types');
-                    break;
-                case 'y':
-                case 'z':
-                    this.menuNavigator.onMenuItemClicked('matrix');
-                    break;
-            }
         });
     }
 
@@ -147,6 +113,10 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
+        );
+        this.utilTranslations.addTranslation(
+            'includesStratigraphicalUnits',
+            this.i18n({ id: 'util.includesStratigraphicalUnits', value: 'Umfasst stratigraphische Einheiten' })
         );
         this.utilTranslations.addTranslation(
             'true', this.i18n({ id: 'boolean.yes', value: 'Ja' })

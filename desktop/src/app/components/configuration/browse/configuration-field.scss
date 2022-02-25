@@ -55,6 +55,10 @@ configuration-field {
       }
     }
 
+    b {
+      font-weight: 500;
+    }
+
     &.custom {
       .card-header {
         background-color: #fff3cd !important;

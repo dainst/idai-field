@@ -106,6 +106,14 @@ function applyCustomChanges(clonedForm: TransientFormDefinition, form: Transient
 
 function applyCustomFieldChanges(field: TransientFieldDefinition, customFieldDefinition: CustomFieldDefinition) {
 
+    if (!field) {
+        return console.warn('Failed to apply custom field changes: missing field definition');
+    }
+
+    if (!customFieldDefinition) {
+        return console.warn('Failed to apply custom field changes: missing custom field definition');
+    }
+
     if (customFieldDefinition.inputType) {
         field.inputType = customFieldDefinition.inputType as Field.InputType;
     }

@@ -8,8 +8,8 @@ import { ConfigurationUtil } from '../configuration-util';
     templateUrl: './configuration-field-drag-element.html'
 })
 /**
-* @author Sebastian Cuy
-* @author Thomas Kleinke
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class ConfigurationFieldDragElement implements OnChanges {
 

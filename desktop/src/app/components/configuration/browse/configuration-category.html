@@ -19,7 +19,16 @@
             <code class="category-name">{{category.name}}</code>
         </div>
         <div class="col header header-right text-right">
+            <hierarchical-relations-info [category]="category"
+                                         [mode]="'liesWithin'"
+                                         [clonedProjectConfiguration]="clonedProjectConfiguration">
+            </hierarchical-relations-info>
+            <hierarchical-relations-info [category]="category"
+                                         [mode]="'includes'"
+                                         [clonedProjectConfiguration]="clonedProjectConfiguration">
+            </hierarchical-relations-info>
             <span *ngIf="category.source !== 'custom'"
+                  id="form-info"
                   ngbTooltip="Ausgewähltes Formular"
                   i18n-ngbTooltip="@@configuration.seletedForm"
                   container="body"

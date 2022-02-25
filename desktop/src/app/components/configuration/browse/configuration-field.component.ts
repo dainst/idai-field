@@ -10,8 +10,8 @@ import { ConfigurationContextMenu } from '../context-menu/configuration-context-
     templateUrl: './configuration-field.html'
 })
 /**
-* @author Sebastian Cuy
-* @author Thomas Kleinke
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class ConfigurationFieldComponent implements OnChanges {
 

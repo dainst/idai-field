@@ -48,7 +48,6 @@ export class ValuelistSearchBarComponent {
 
         if (!ComponentHelpers.isInside(event.target, target => target.id
                 && target.id.includes('valuelist-filter-button'))) {
-
             this.popover.close();
         }
     }

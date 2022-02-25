@@ -1,0 +1,40 @@
+<div [id]="'hierarchical-relations-info-' + mode"
+     class="btn btn-link"
+     [class.no-categories]="categories.length === 0"
+     #popover="ngbPopover"
+     [ngbPopover]="infoPopover"
+     [autoClose]="false"
+     placement="bottom">
+    <span class="mdi"
+          [class.mdi-arrow-up-thin]="mode === 'liesWithin'"
+          [class.mdi-arrow-down-thin]="mode === 'includes'"></span>
+</div>
+
+<ng-template #infoPopover>
+    <div id="hierarchical-relations-info-popover">
+        <div class="popover-custom-title">
+            <span *ngIf="categories.length > 0 && mode === 'liesWithin'"
+                  i18n="@@configuation.hierarchicalRelationsInfo.liesWithin">
+                Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden:
+            </span>
+            <span *ngIf="categories.length > 0 && mode === 'includes'"
+                  i18n="@@configuation.hierarchicalRelationsInfo.includes">
+                Unterhalb von Ressourcen dieser Kategorie können Ressourcen folgender Kategorien angelegt werden:
+            </span>
+            <span *ngIf="categories.length === 0 && mode === 'liesWithin'"
+                  i18n="@@configuration.hierarchicalRelationsInfo.noLiesWithin">
+                Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden.
+            </span>
+            <span *ngIf="categories.length === 0 && mode === 'includes'"
+                  i18n="@@configuration.hierarchicalRelationsInfo.noIncludes">
+                Unterhalb von Ressourcen dieser Kategorie können keine anderen Ressourcen angelegt werden.
+            </span>
+        </div>
+        <ul *ngIf="categories.length > 0" id="categories-list">
+            <li *ngFor="let category of categories">
+                <category-icon size="26" [category]="category"></category-icon>
+                <span class="hierarchical-relation-category-label">{{getLabel(category)}}</span>
+            </li>
+        </ul>
+    </div>
+</ng-template>

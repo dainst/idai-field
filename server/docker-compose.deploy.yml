@@ -6,6 +6,8 @@ services:
     environment:
       - COUCHDB_USER
       - COUCHDB_PASSWORD
+    volumes:
+      - db-data:/opt/couchdb/data
     networks:
       - web
       - default
@@ -40,7 +42,10 @@ services:
 
 volumes:
   file-data:
-    name: idai-field-server_files
+    name: idai_field_server_files
+    external: true
+  db-data:
+    name: idai_field_server_db
     external: true
 
 networks:

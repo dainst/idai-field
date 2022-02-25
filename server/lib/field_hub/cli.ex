@@ -96,6 +96,9 @@ defmodule FieldHub.CLI do
   defp get_admin_credentials() do
     HTTPoison.start()
 
-    %CouchService.Credentials{name: Application.get_env(:field_hub, :couchdb_admin_name), password: Application.get_env(:field_hub, :couchdb_admin_password)}
+    %CouchService.Credentials{
+      name: Application.get_env(:field_hub, :couchdb_admin_name),
+      password: Application.get_env(:field_hub, :couchdb_admin_password)
+    }
   end
 end

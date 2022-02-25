@@ -1509,7 +1509,7 @@
         <target state="final">Suchergebnisse filtern:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.customFilter" datatype="html">
@@ -1517,7 +1517,7 @@
         <target state="final"> Projektspezifische Wertelisten </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.inUseFilter" datatype="html">
@@ -1525,7 +1525,7 @@
         <target state="final"> Verwendete Wertelisten </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saving" datatype="html">
@@ -4168,6 +4168,38 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
           <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuation.hierarchicalRelationsInfo.liesWithin" datatype="html">
+        <source> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </source>
+        <target state="final"> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
+          <context context-type="linenumber">51,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuation.hierarchicalRelationsInfo.includes" datatype="html">
+        <source> Unterhalb von Ressourcen dieser Kategorie können Ressourcen folgender Kategorien angelegt werden: </source>
+        <target state="final"> Unterhalb von Ressourcen dieser Kategorie können Ressourcen folgender Kategorien angelegt werden: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.hierarchicalRelationsInfo.noLiesWithin" datatype="html">
+        <source> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </source>
+        <target state="final"> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.hierarchicalRelationsInfo.noIncludes" datatype="html">
+        <source> Unterhalb von Ressourcen dieser Kategorie können keine anderen Ressourcen angelegt werden. </source>
+        <target state="final"> Unterhalb von Ressourcen dieser Kategorie können keine anderen Ressourcen angelegt werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.conflicts.header" datatype="html">

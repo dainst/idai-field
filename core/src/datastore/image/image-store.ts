@@ -105,18 +105,20 @@ export class ImageStore {
      * @param project (optional) the project's name, will default to the application's current active project
      */
     public async remove(uuid: string, project: string = this.activeProject): Promise<any> {
-        this.filesystem.remove(
-            this.getFilePath(project, ImageVariant.ORIGINAL, uuid)
-        );
-        this.filesystem.writeFile(
-            this.getFilePath(project, ImageVariant.ORIGINAL, uuid) + tombstoneSuffix, Buffer.from([])
-        );
-        this.filesystem.remove(
-            this.getFilePath(project, ImageVariant.THUMBNAIL, uuid)
-        );
-        this.filesystem.writeFile(
-            this.getFilePath(project, ImageVariant.THUMBNAIL, uuid) + tombstoneSuffix, Buffer.from([])
-        );
+        await Promise.all([
+            this.filesystem.remove(
+                this.getFilePath(project, ImageVariant.ORIGINAL, uuid)
+            ),
+            this.filesystem.writeFile(
+                this.getFilePath(project, ImageVariant.ORIGINAL, uuid) + tombstoneSuffix, Buffer.from([])
+            ),
+            this.filesystem.remove(
+                this.getFilePath(project, ImageVariant.THUMBNAIL, uuid)
+            ),
+            this.filesystem.writeFile(
+                this.getFilePath(project, ImageVariant.THUMBNAIL, uuid) + tombstoneSuffix, Buffer.from([])
+            )
+        ])
     }
 
 

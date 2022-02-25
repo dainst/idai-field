@@ -102,14 +102,14 @@ export class ExpressServer {
         });
 
 
-        app.put('/files/:project/:uuid', this.binaryBodyParser, (req: any, res: any) => {
+        app.put('/files/:project/:uuid', this.binaryBodyParser, async (req: any, res: any) => {
 
             try {
                 if (!req.query.type) {
-                    this.imagestore.store(req.params.uuid, req.body, req.params.project);
+                    await this.imagestore.store(req.params.uuid, req.body, req.params.project);
                     res.status(200).send({});
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
-                    this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
+                    await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
                     res.status(200).send({});
                 }
             } catch (e) {
@@ -123,10 +123,10 @@ export class ExpressServer {
         });
 
 
-        app.delete('/files/:project/:uuid', (req: any, res: any) => {
+        app.delete('/files/:project/:uuid', async(req: any, res: any) => {
 
             try {
-                this.imagestore.remove(req.params.uuid, req.params.project);
+                await this.imagestore.remove(req.params.uuid, req.params.project);
                 res.status(200).send({});
             } catch (e) {
                 if (e.code === 'ENOENT') {

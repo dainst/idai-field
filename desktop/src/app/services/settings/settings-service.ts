@@ -88,7 +88,7 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
-        this.imagestore.init(settings.imagestorePath, settings.selectedProject);
+        await this.imagestore.init(settings.imagestorePath, settings.selectedProject);
 
         this.pouchdbServer.setPassword(settings.hostPassword);
 

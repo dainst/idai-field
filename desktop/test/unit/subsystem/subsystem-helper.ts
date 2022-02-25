@@ -119,7 +119,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
+    await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 
     const documentCache = new DocumentCache();
     const categoryConverter = new CategoryConverter(projectConfiguration);

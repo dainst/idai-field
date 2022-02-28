@@ -16,6 +16,7 @@ import { useSearchParams } from '../../shared/location';
 import { LoginContext } from '../../shared/login';
 import { SHAPES_PROJECT_ID } from '../constants';
 import './browse.css';
+import PublicationsOverview from './PublicationsOverview';
 import LinkedFinds from './LinkedFinds';
 import { getSimilar } from '../../api/documents';
 import CONFIGURATION from '../../configuration.json';
@@ -25,7 +26,7 @@ import CanvasDraw, { DrawCanvasObject } from '../drawcanvas/DrawCanvas';
 
 
 const CHUNK_SIZE = 50;
-
+export const TabContext = React.createContext(Browse);
 
 export default function Browse(): ReactElement {
     const myRef = useRef<HTMLDivElement>(null);
@@ -39,9 +40,11 @@ export default function Browse(): ReactElement {
     const [document, setDocument] = useState<Document>(null);
     const [documents, setDocuments] = useState<ResultDocument[]>(null);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
+    const [tabKeyleft, setTabKeyleft] = useState<string>('browse');
     const [tabKey, setTabKey] = useState<string>('similarTypes');
     const [tabKeymiddle, setTabKeymiddle] = useState<string>('selected');
-    const [FindDrawingButton, setFindDrawingButton] = useState(false)
+    const [FindDrawingButton, setFindDrawingButton] = useState(false);
+    const [availablePublications, setavailablePublications] = useState<Result>(null);
 
     const [brushRadius, setBrushRadius] = useState<number>(10);
     const [dataUrl, setDataUrl] = useState<string>(null);
@@ -100,11 +103,9 @@ export default function Browse(): ReactElement {
 
     useEffect(() => {
         if (documentId) {
-
+            
             const fetchData = async () => { 
                 const doc = await get(documentId, loginData.token)
-                getAggLiterature(loginData.token)
-                  .then(results => console.log('This is Agg Literature',results));
                 console.log('Agg should have been here')
                 setDocument(doc)
                 getSimilar(documentId, loginData.token)
@@ -187,6 +188,15 @@ export default function Browse(): ReactElement {
 
 
     }, [FindDrawingButton]);
+
+    
+    useEffect(() => {
+
+        getAggLiterature(loginData.token)
+            //.then(results => console.log('This is Aggresult:', results.filters[0].values))
+            .then(result => setavailablePublications(result));
+        }, [tabKeyleft]);
+    
     return (
 
             <Container fluid className="browse-select">
@@ -194,14 +204,27 @@ export default function Browse(): ReactElement {
                 <Row>
                     { document
                         ? <>
-                            <Col lg={5} style={ documentGridBrowseStyle } onScroll={onScrollBrowse} ref={ParentmyRef}>
-                                <Row className="catalog">
-                                    <Col>
-                                        <h1 className="my-5">{ }</h1>
-                                        
-                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } selecteddoc = { document} myRef = { myRef }/>
-                                    </Col>
-                                </Row>
+                            <Col lg={5} >
+                                <Tabs id="doc-tabs" activeKey={ tabKeyleft } onSelect={ setTabKeyleft }>
+                                    { document && document.resource.category.name === 'Drawing' &&
+                                        <Tab eventKey="browse" title= "Browse">
+                                            <Col style={ documentGridBrowseStyle } onScroll={onScrollBrowse} ref={ParentmyRef}>
+                                                <Row className="catalog">
+                                                    <Col>
+                                                        <h1 className="my-5">{ }</h1>
+                                                        
+                                                        <DocumentGridShapes documents={ documents } getLinkUrl={ getDocumentLink } selecteddoc = { document} myRef = { myRef }/>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                        </Tab>
+                                    }
+                                    { document && document.resource.category.name === 'Drawing' &&
+                                        <Tab eventKey="publications" title="Publications">
+                                            <PublicationsOverview pubs={ availablePublications } />
+                                        </Tab>
+                                    }
+                                </Tabs>
                             </Col>
                 
                             <Col lg={3} className="catalog">
@@ -274,6 +297,7 @@ export default function Browse(): ReactElement {
 
     );
 }
+
 
 
 
@@ -418,22 +442,6 @@ const getPreviousDocuments = async (token: string,  documentId: string, olddocum
 };
 
 
-const getAggLiterature = async (token: string): Promise<Result> => { 
-    const query: Query = {
-        size: 100,
-        from: 0
-    };
-
-    return searchAggLiterature(query, token);
-};
-
-const getChildren = async (parentId: string, from: number, token: string) => {
-
-    const query: Query = getQueryTemplate(from);
-    query.parent = parentId;
-    return search(query, token);
-};
-
 
 const searchDocuments = async (searchParams: URLSearchParams, from: number, token: string): Promise<Result> => {
     
@@ -477,6 +485,15 @@ const predecessorsToBreadcrumbItems = (predecessors: ResultDocument[]): Breadcru
     };
 });
 
+
+const getAggLiterature = async (token: string): Promise<Result> => { 
+    const query: Query = {
+        size: 100,
+        from: 0
+    };
+
+    return searchAggLiterature(query, token);
+};
 
 const cardStyle: CSSProperties = {
     overflow: 'hidden',

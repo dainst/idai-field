@@ -3267,12 +3267,16 @@
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="image-view-modal.no-images" datatype="html">
-        <source>Keine Bilder verknüpft</source>
-        <target state="new"> Keine Bilder verknüpft </target>
+      <trans-unit id="viewModal.noImages" datatype="html">
+        <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
+        <target state="new"> Mit dieser Ressource sind keine Bilder verknüpft. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">58,67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
+          <context context-type="linenumber">45,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images" datatype="html">
@@ -6640,16 +6644,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">150</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resourceViewModal.noImages" datatype="html">
-        <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
-        <target state="final">
-                Nessuna immagine è collegata a questa risorsa.
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">

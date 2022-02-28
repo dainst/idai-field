@@ -63,5 +63,14 @@ ngb-modal-window {
         height: 169px;
       }
     }
+
+    #no-images-placeholder {
+      height: calc(100% + 169px);
+      background-color: #252525;
+  
+      .alert {
+        user-select: none;
+      }
+    }
   }
 }

@@ -2599,16 +2599,6 @@
           <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resourceViewModal.noImages" datatype="html">
-        <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
-        <target state="final">
-                No images are linked to this resource.
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
         <source>Zu verknüpfende Ressource wählen:</source>
         <target state="final">Select the resource to link:</target>
@@ -3716,12 +3706,16 @@
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="image-view-modal.no-images" datatype="html">
-        <source>Keine Bilder verknüpft</source>
-        <target state="final">No images linked</target>
+      <trans-unit id="viewModal.noImages" datatype="html">
+        <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
+        <target state="final"> No images are linked to this resource. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">58,67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/resource/resource-view-modal.component.ts</context>
+          <context context-type="linenumber">45,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images" datatype="html">

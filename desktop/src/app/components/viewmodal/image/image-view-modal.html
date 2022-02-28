@@ -52,10 +52,13 @@
 
 <div *ngIf="mode === 'view'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0">
-
         <div *ngIf="!images || images.length === 0"
-            i18n="@@image-view-modal.no-images"
-            class="no-images-message">Keine Bilder verknüpft</div>
+             id="no-images-placeholder"
+             class="d-flex align-items-center justify-content-center">
+            <div class="alert alert-info" i18n="@@viewModal.noImages">
+                Mit dieser Ressource sind keine Bilder verknüpft.
+            </div>
+        </div>
 
         <document-info [document]="selectedImage?.document"
                        [getExpandAllGroups]="getExpandAllGroups"

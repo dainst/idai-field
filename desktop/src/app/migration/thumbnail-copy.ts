@@ -12,7 +12,7 @@ const isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.s
  * This is a migration function for upgrading the client version 2 to 3, which moved thumbnail data from couch/pouchdb to
  * the file system.
  */
-export const checkForDBThumbnails = async (
+export const copyThumbnailsFromDatabase = async (
     project: string,
     pouchDatastore: PouchdbDatastore,
     imageStore: ImageStore

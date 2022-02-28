@@ -23,7 +23,7 @@ import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
 import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
-import { checkForDBThumbnails } from '../migration/thumbnail-copy';
+import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 
 interface Services {
 
@@ -117,7 +117,7 @@ export const appInitializerFactory = (
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
 
-    await checkForDBThumbnails(settings.selectedProject, pouchdbDatastore, imageStore);
+    await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),

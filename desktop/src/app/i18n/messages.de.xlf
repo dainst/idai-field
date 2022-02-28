@@ -2319,11 +2319,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
-        <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</source>
-        <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</target>
+        <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü.</source>
+        <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
           <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -3119,20 +3123,12 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="image-view-modal.dropArea.add-images-tooltip" datatype="html">
-        <source>Bilder hinzufügen per Drag&amp;Drop. Klicken Sie den Plus-Button für weitere Optionen</source>
-        <target state="final">Bilder hinzufügen per Drag&amp;Drop. Klicken Sie den Plus-Button für weitere Optionen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images" datatype="html">
         <source>Neue Bilder hinzufügen</source>
         <target state="final">Neue Bilder hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.link-images" datatype="html">
@@ -3140,7 +3136,7 @@
         <target state="final">Existierende Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
@@ -4175,7 +4171,7 @@
         <target state="final"> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
-          <context context-type="linenumber">51,70</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.includes" datatype="html">
@@ -4183,7 +4179,7 @@
         <target state="final"> Unterhalb von Ressourcen dieser Kategorie können Ressourcen folgender Kategorien angelegt werden: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.hierarchicalRelationsInfo.noLiesWithin" datatype="html">
@@ -4191,7 +4187,7 @@
         <target state="final"> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.hierarchicalRelationsInfo.noIncludes" datatype="html">
@@ -4199,7 +4195,7 @@
         <target state="final"> Unterhalb von Ressourcen dieser Kategorie können keine anderen Ressourcen angelegt werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.conflicts.header" datatype="html">

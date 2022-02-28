@@ -159,6 +159,7 @@ registerLocaleData(localeIt, 'it');
                 AppInitializerServiceLocator,
                 SettingsService,
                 PouchdbDatastore,
+                ImageStore,
                 ExpressServer,
                 DocumentCache,
                 ThumbnailGenerator,

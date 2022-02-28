@@ -7,6 +7,8 @@ import {
     DocumentCache,
     FulltextIndex,
     getConfigurationName,
+    ImageStore,
+    ImageVariant,
     Indexer,
     IndexFacade,
     PouchdbDatastore,
@@ -22,6 +24,7 @@ import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
 import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
+import { to } from 'tsfun';
 
 
 interface Services {
@@ -100,6 +103,7 @@ export const appInitializerFactory = (
     serviceLocator: AppInitializerServiceLocator,
     settingsService: SettingsService,
     pouchdbDatastore: PouchdbDatastore,
+    imageStore: ImageStore,
     expressServer: ExpressServer,
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
@@ -111,10 +115,11 @@ export const appInitializerFactory = (
     await expressServer.setupServer();
 
     const settings = await loadSettings(settingsService, progress);
-
     await setUpDatabase(settingsService, settings, progress);
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
+
+    await checkForDBThumbnails(settings.selectedProject, pouchdbDatastore, imageStore);
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
@@ -135,6 +140,49 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
     await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
 
     return settings;
+};
+
+
+const isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.size === 0 || data.size === 2;
+
+/**
+ * This is a migration function for upgrading the client version 2 to 3, which moved thumbnail data from couch/pouchdb to
+ * the file system.
+ */
+const checkForDBThumbnails = async (
+    project: string,
+    pouchDatastore: PouchdbDatastore,
+    imageStore: ImageStore
+): Promise<void> => {
+
+    const thumbnailCount = Object.keys(await imageStore.getFileInfos(project, [ImageVariant.THUMBNAIL])).length;
+    if (thumbnailCount !== 0) {
+        console.log('Found thumbnails in image store directory, not copying from database.');
+        return;
+    } else {
+        console.log('Copying thumbnails from database to filesystem.');
+    }
+
+    const options = {
+        include_docs: true,
+        attachments: true,
+        binary: true
+    };
+
+    const db = pouchDatastore.getDb();
+
+    const imageDocuments = (await db.allDocs(options)).rows.map(to('doc'));
+
+    for (const imageDocument of imageDocuments) {
+        if (imageDocument._attachments?.thumb && !isThumbBroken(imageDocument._attachments.thumb.data)) {
+            try {
+                const data = Buffer.from(await imageDocument._attachments.thumb.data.arrayBuffer());
+                await imageStore.store(imageDocument.resource.id, data, project, ImageVariant.THUMBNAIL);
+            } catch (err) {
+                console.error('Failed to save thumbnail for image: ' + imageDocument.resource.id, err);
+            }
+        }
+    }
 };
 
 

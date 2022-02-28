@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Document } from '../../api/document';
-import { get, getPredecessors, search, search_after } from '../../api/documents';
+import { get, getPredecessors, search, search_after, searchAggLiterature } from '../../api/documents';
 import { parseFrontendGetParams, Query, NestedSortObject } from '../../api/query';
 import { Result, ResultDocument,ScrollState, loadDocsState } from '../../api/result';
 import { BREADCRUMB_HEIGHT, NAVBAR_HEIGHT } from '../../constants';
@@ -103,6 +103,9 @@ export default function Browse(): ReactElement {
 
             const fetchData = async () => { 
                 const doc = await get(documentId, loginData.token)
+                getAggLiterature(loginData.token)
+                  .then(results => console.log('This is Agg Literature',results));
+                console.log('Agg should have been here')
                 setDocument(doc)
                 getSimilar(documentId, loginData.token)
                     .then(result => setSimilarTypes(result.documents))
@@ -414,6 +417,15 @@ const getPreviousDocuments = async (token: string,  documentId: string, olddocum
     return search_after(query, token);
 };
 
+
+const getAggLiterature = async (token: string): Promise<Result> => { 
+    const query: Query = {
+        size: 100,
+        from: 0
+    };
+
+    return searchAggLiterature(query, token);
+};
 
 const getChildren = async (parentId: string, from: number, token: string) => {
 

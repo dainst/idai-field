@@ -22,4 +22,22 @@ defmodule Api.Core.Filters do
       filter.field
     end
   end
+
+
+  def get_literature(), do: [
+    %{
+      field: "resource.literature0.zenonId.keyword",
+      label: %{ de: "Literatur", en: "Literature" },
+      labeled_value: false,
+      size: 100
+    }
+  ]
+
+  def get_literature_name(literature) do
+    if literature.labeled_value do
+      "#{literature.field}"
+    else
+      literature.field
+    end
+  end
 end

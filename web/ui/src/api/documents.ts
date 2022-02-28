@@ -17,6 +17,9 @@ export const search = async (query: Query, token: string): Promise<Result> =>
 export const search_after = async (query: Query, token: string): Promise<Result> =>
     fetchPost('/api/documents/searchafter', query, token);
 
+export const searchAggLiterature = async (query: Query, token: string): Promise<Result> =>
+    fetchPost('/api/documents/aggliterature', query, token);
+
 
 export const searchMap = async (query: Query, token: string): Promise<Result> =>
     fetchPost('/api/documents/map', query, token);

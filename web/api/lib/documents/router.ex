@@ -42,6 +42,20 @@ defmodule Api.Documents.Router do
       conn.private[:readable_projects]
     ))
   end
+
+  match "/aggliterature" do
+    send_json(conn, Index.search_aggregation(
+      conn.params["q"] || "*",
+      conn.params["size"] || 100,
+      conn.params["from"] || 0,
+      conn.params["filters"],
+      conn.params["not"],
+      conn.params["exists"],
+      conn.params["not_exists"],
+      conn.private[:readable_projects]
+    ))
+  end
+
   match "/map" do
     send_json(conn, Index.search_geometries(
       conn.params["q"] || "*",

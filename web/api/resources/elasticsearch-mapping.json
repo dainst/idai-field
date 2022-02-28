@@ -47,10 +47,18 @@
                     },
                     "literature0": {
                         "properties":{
-                            "zenonId": { "type": "keyword", "store": true},
-                            "quotation": {"type": "text", "store": true},
-                            "page": {"type": "integer", "store": true},
-                            "figure": {"type": "keyword", "store": true}
+                            "zenonId": { 
+                                "type": "keyword"
+                            },
+                            "quotation": {
+                                "type": "text"
+                            },
+                            "page": {
+                                "type": "integer"
+                            },
+                            "figure": {
+                                "type": "keyword"
+                            }
                     },
                     "literature":{
                         "type": "nested",

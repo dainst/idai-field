@@ -2,6 +2,7 @@ defmodule Api.Documents.Mapping do
   alias Api.Core.Filters
   alias Api.Core.Tree
   alias Api.Core.Resource
+  require Logger
 
   def map_single elasticsearch_result do
     elasticsearch_result
@@ -17,6 +18,16 @@ defmodule Api.Documents.Mapping do
                  |> Enum.map(&map_document/1)
     }
     |> map_aggregations(elasticsearch_result, default_config, filters)
+  end
+  def mapagg(elasticsearch_result, default_config), do: mapagg(elasticsearch_result, default_config, Filters.get_literature())
+  def mapagg(elasticsearch_result, default_config, filters) do
+    Logger.info("elasticsearch_result!!!")
+    Logger.info(elasticsearch_result)
+    %{
+      size: elasticsearch_result.hits.total.value
+
+    }
+    |> mapagg_aggregations(elasticsearch_result, default_config, filters)
   end
 
   defp map_aggregations(result, %{ aggregations: aggregations }, default_config, filters) do
@@ -42,7 +53,30 @@ defmodule Api.Documents.Mapping do
     end
   end
 
-  defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
+  defp mapagg_aggregations(result, %{ aggregations: aggregations }, default_config, filters) do
+    filters = Enum.map(filters, mapagg_aggregation(aggregations, default_config))
+              |> Enum.reject(&is_nil/1)
+    put_in(result, [:filters], filters)
+  end
+  defp mapagg_aggregations(result, _, _, _), do: result
+
+  defp mapagg_aggregation(aggregations, default_config) do
+    fn filter ->
+      with buckets when not is_nil(buckets) <- get_in(
+        aggregations,
+        [String.to_atom(filter.field), :buckets]
+      )
+        do
+          %{
+            name: Filters.get_literature_name(filter),
+            label: filter.label,
+            values: build_values(buckets, filter, default_config)
+          }
+        end
+    end
+  end
+
+  defp build_values(buckets, filter = %{ field: "resource.literature0.zenonId" }, default_config) do
     buckets = map_buckets(buckets, filter)
     Tree.map_tree_list(default_config,
       fn %{ name: name, label: label } ->

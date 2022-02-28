@@ -1,3 +1,5 @@
+import { NavbarPage } from '../navbar.page';
+import { ResourcesPage } from '../resources/resources.page';
 import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 
@@ -55,6 +57,22 @@ describe('configuration --', () => {
         await waitForNotExist(await ConfigurationPage.getCategory('Image'));
         await waitForExist(await ConfigurationPage.getCategory('TypeCatalog'));
         await waitForExist(await ConfigurationPage.getCategory('Type'));
+
+        done();
+    });
+
+
+    it('delete category', async done => {
+
+        await ConfigurationPage.deleteCategory('Floor', 'Feature');
+        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await ConfigurationPage.save();
+        
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ConfigurationPage.getCategory('Feature'));
+        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
 
         done();
     });

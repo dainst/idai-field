@@ -42,6 +42,7 @@
 
 <div class="modal-footer">
     <div *ngIf="!hasChildCategories()"
+         id="delete-category-button"
          class="btn btn-danger"
          [ngClass]="{ 'disabled': isConfirmationDialogVisible() && !this.checkConfirmDeletionCategoryName() }"
          (click)="confirmDeletion()">

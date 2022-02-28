@@ -1,4 +1,4 @@
-import { click, getElements, getElement } from '../app';
+import { click, getElements, getElement, rightClick } from '../app';
 
 
 /**
@@ -23,10 +23,27 @@ export class ConfigurationPage {
     }
 
 
-    public static getCategory(categoryName: string, supercategory?: string) {
+    public static getCategory(categoryName: string, supercategoryName?: string) {
 
         return getElement('#choose-category-option-'
-            + (supercategory ? supercategory.toLowerCase() + '-' : '')
+            + (supercategoryName ? supercategoryName.toLowerCase() + '-' : '')
             + categoryName.toLowerCase());
+    }
+
+
+    // sequence
+
+    public static async deleteCategory(categoryName: string, supercategoryName?: string) {
+
+        await rightClick(await this.getCategory(categoryName, supercategoryName));
+        await click('#context-menu-delete-button');
+        return click('#delete-category-button');
+    };
+
+
+    public static async save() {
+
+        await click('#save-button');
+        return click('#confirm-button');
     }
 }

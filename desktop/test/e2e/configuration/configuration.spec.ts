@@ -2,6 +2,7 @@ import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
 import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
+import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 
 
 /**
@@ -119,6 +120,47 @@ describe('configuration --', () => {
         await ResourcesPage.clickHierarchyButton('SE0');
         await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht '
             + 'konfigurierten Kategorie "Trench" angehört.', false);
+
+        done();
+    });
+
+
+    it('add category from library', async done => {
+
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await waitForNotExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
+        await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Floor'));
+        await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Floor:default'));
+        await AddCategoryFormModalPage.clickCancel();
+
+        await ConfigurationPage.deleteCategory('Floor', 'Feature');
+        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await waitForExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor:default'));
+
+        await AddCategoryFormModalPage.typeInSearchFilterInput('Floor:default');
+        await waitForExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
+        await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Floor'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor:default'));
+
+        await AddCategoryFormModalPage.typeInSearchFilterInput('Floor');
+        await waitForExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor:default'));
+
+        await AddCategoryFormModalPage.clickSelectForm('Floor:default');
+        await AddCategoryFormModalPage.clickAddCategory();
+        await waitForExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ConfigurationPage.getCategory('Feature'));
+        await waitForExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
 
         done();
     });

@@ -15,13 +15,6 @@ export class ConfigurationPage {
     };
 
 
-    public static async save() {
-
-        await click('#save-button');
-        return click('#confirm-button');
-    }
-
-
     public static async clickOpenContextMenuForCategory(categoryName: string, supercategoryName?: string) {
 
         await rightClick(await this.getCategory(categoryName, supercategoryName));
@@ -37,6 +30,12 @@ export class ConfigurationPage {
     public static clickConfirmDeletionButton() {
 
         return click('#delete-category-button');
+    }
+
+    
+    public static clickCreateSubcategory(parentCategoryName: string) {
+
+        return click('#create-subcategory-' + parentCategoryName);
     }
 
     
@@ -65,6 +64,14 @@ export class ConfigurationPage {
 
 
     // sequence
+
+
+    public static async save() {
+
+        await click('#save-button');
+        return click('#confirm-button');
+    }
+
 
     public static async deleteCategory(categoryName: string, supercategoryName?: string,
                                        hasConfirmationInput: boolean = false) {

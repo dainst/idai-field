@@ -33,6 +33,7 @@
                 </div>
             </div>
             <button *ngIf="isCreateButtonVisible(parentCategory)"
+                    [id]="'create-subcategory-' + parentCategory.name"
                     class="btn-link add-subcategory-button"
                     container="body"
                     ngbTooltip="Unterkategorie hinzufügen"

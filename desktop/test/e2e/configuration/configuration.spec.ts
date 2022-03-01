@@ -6,6 +6,7 @@ import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { DoceditPage } from '../docedit/docedit.page';
+import { AddFieldModalPage } from './add-field-modal.page';
 
 
 /**
@@ -155,7 +156,7 @@ describe('configuration --', () => {
         await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Floor:default'));
 
         await AddCategoryFormModalPage.clickSelectForm('Floor:default');
-        await AddCategoryFormModalPage.clickAddCategory();
+        await AddCategoryFormModalPage.clickConfirmSelection();
         await waitForExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
         await ConfigurationPage.save();
 
@@ -208,7 +209,7 @@ describe('configuration --', () => {
         await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Place'));
         await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Place:default'));
         await AddCategoryFormModalPage.clickSelectForm('Place');
-        await AddCategoryFormModalPage.clickAddCategory();
+        await AddCategoryFormModalPage.clickConfirmSelection();
         await ConfigurationPage.clickSelectGroup('parent');
         await waitForExist(await ConfigurationPage.getField('gazId'));
         await waitForNotExist(await ConfigurationPage.getField('description'));
@@ -222,6 +223,33 @@ describe('configuration --', () => {
         await DoceditPage.clickGotoParentTab();
         await waitForExist(await DoceditPage.getField('gazId'));
         await waitForNotExist(await DoceditPage.getField('description'));
+        await DoceditPage.clickCloseEdit();
+
+        done();
+    });
+
+
+    it('add field from library', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await waitForExist(AddFieldModalPage.getSelectFieldButton('processor'));
+        await waitForExist(AddFieldModalPage.getSelectFieldButton('area'));
+        
+        await AddFieldModalPage.typeInSearchFilterInput('area');
+        await waitForNotExist(AddFieldModalPage.getSelectFieldButton('processor'));
+        await waitForExist(AddFieldModalPage.getSelectFieldButton('area'));
+        
+        await AddFieldModalPage.clickSelectField('area');
+        await AddFieldModalPage.clickConfirmSelection();
+        await waitForExist(ConfigurationPage.getField('area'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        await waitForExist(await DoceditPage.getField('area'));
         await DoceditPage.clickCloseEdit();
 
         done();

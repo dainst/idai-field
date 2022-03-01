@@ -46,6 +46,12 @@ export class ConfigurationPage {
         return click(await this.getGroup(groupName));
     }
 
+
+    public static clickAddFieldButton() {
+
+        return click('#add-field-button');
+    }
+
     
     // get
 

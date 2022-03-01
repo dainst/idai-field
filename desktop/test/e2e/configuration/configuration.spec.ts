@@ -64,9 +64,7 @@ describe('configuration --', () => {
 
     it('delete category', async done => {
 
-        await ConfigurationPage.clickOpenContextMenuForCategory('Floor', 'Feature');
-        await ConfigurationPage.clickContextMenuDeleteOption();
-        await ConfigurationPage.clickConfirmDeletionButton();
+        await ConfigurationPage.deleteCategory('Floor', 'Feature');
         await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
         await ConfigurationPage.save();
         
@@ -88,10 +86,7 @@ describe('configuration --', () => {
         
         await navigateTo('configuration');
         await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.clickOpenContextMenuForCategory('Grave', 'Feature');
-        await ConfigurationPage.clickContextMenuDeleteOption();
-        await ConfigurationPage.typeInConfirmDeletionInput('Grave');
-        await ConfigurationPage.clickConfirmDeletionButton();
+        await ConfigurationPage.deleteCategory('Grave', 'Feature', true);
         await waitForNotExist(await ConfigurationPage.getCategory('Grave', 'Feature'));
         await ConfigurationPage.save();
         
@@ -114,10 +109,7 @@ describe('configuration --', () => {
         
         await navigateTo('configuration');
         await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.clickOpenContextMenuForCategory('Trench', 'Operation');
-        await ConfigurationPage.clickContextMenuDeleteOption();
-        await ConfigurationPage.typeInConfirmDeletionInput('Trench');
-        await ConfigurationPage.clickConfirmDeletionButton();
+        await ConfigurationPage.deleteCategory('Trench', 'Operation', true);
         await waitForNotExist(await ConfigurationPage.getCategory('Trench', 'Operation'));
         await ConfigurationPage.save();
         

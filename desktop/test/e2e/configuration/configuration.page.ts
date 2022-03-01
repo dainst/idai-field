@@ -62,4 +62,16 @@ export class ConfigurationPage {
 
         return typeIn('#delete-category-input', text);
     }
+
+
+    // sequence
+
+    public static async deleteCategory(categoryName: string, supercategoryName?: string,
+                                       hasConfirmationInput: boolean = false) {
+
+        await ConfigurationPage.clickOpenContextMenuForCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        if (hasConfirmationInput) await ConfigurationPage.typeInConfirmDeletionInput(categoryName);
+        await ConfigurationPage.clickConfirmDeletionButton();
+    }
 }

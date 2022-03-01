@@ -104,4 +104,30 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('delete operation category with existing resources & show warning for isRecordedIn resources', async done => {
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await ConfigurationPage.clickOpenContextMenuForCategory('Trench', 'Operation');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.typeInConfirmDeletionInput('Trench');
+        await ConfigurationPage.clickConfirmDeletionButton();
+        await waitForNotExist(await ConfigurationPage.getCategory('Trench', 'Operation'));
+        await ConfigurationPage.save();
+        
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForExist(await ResourcesPage.getListItemEl('A1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('S1'));
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht '
+            + 'konfigurierten Kategorie "Trench" angehört.', false);
+
+        done();
+    });
 });

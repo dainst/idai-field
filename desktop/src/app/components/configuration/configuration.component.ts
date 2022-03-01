@@ -272,7 +272,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public selectCategory(category: CategoryForm) {
 
-        this.selectedCategory = category;
+        this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
     }
 
 
@@ -292,7 +292,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
-            nop,
+            (newCategory) => this.selectCategory(newCategory),
             () => AngularUtility.blurActiveElement()
         );
     }
@@ -314,7 +314,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
-            nop,
+            (newCategory) => this.selectCategory(newCategory),
             () => AngularUtility.blurActiveElement()
         );
     }
@@ -334,7 +334,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
-            nop,
+            () => this.selectCategory(category),
             () => AngularUtility.blurActiveElement()
         );
     }

@@ -1,4 +1,5 @@
-import { click, getElements, getElement, rightClick, typeIn, getText } from '../app';
+import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { click, typeIn } from '../app';
 
 
 /**
@@ -13,12 +14,6 @@ export class ConfigurationPage {
         await click('#categories-filter .dropdown-toggle');
         return click('#categories-filter-selection-button-' + filterOption);
     };
-
-
-    public static async clickOpenContextMenuForCategory(categoryName: string, supercategoryName?: string) {
-
-        await rightClick(await this.getCategory(categoryName, supercategoryName));
-    }
 
 
     public static clickContextMenuDeleteOption() {
@@ -36,32 +31,6 @@ export class ConfigurationPage {
     public static clickCreateSubcategory(parentCategoryName: string) {
 
         return click('#create-subcategory-' + parentCategoryName);
-    }
-
-    
-     // get
-
-     public static getCategories() {
-
-        return getElements('.category-item');
-    }
-
-
-    public static getCategory(categoryName: string, supercategoryName?: string) {
-
-        return getElement('#choose-category-option-'
-            + (supercategoryName ? supercategoryName.replace(':', '-').toLowerCase() + '-' : '')
-            + categoryName.replace(':', '-').toLowerCase());
-    }
-
-
-    // text
-
-
-    public static async getCategoryLabel(categoryName: string, supercategoryName?: string) {
-
-        const element = await (await this.getCategory(categoryName, supercategoryName)).$('.category-label');
-        return getText(element);
     }
 
 
@@ -86,7 +55,7 @@ export class ConfigurationPage {
     public static async deleteCategory(categoryName: string, supercategoryName?: string,
                                        hasConfirmationInput: boolean = false) {
 
-        await ConfigurationPage.clickOpenContextMenuForCategory(categoryName, supercategoryName);
+        await CategoryPickerPage.clickOpenContextMenu(categoryName, supercategoryName);
         await ConfigurationPage.clickContextMenuDeleteOption();
         if (hasConfirmationInput) await ConfigurationPage.typeInConfirmDeletionInput(categoryName);
         await ConfigurationPage.clickConfirmDeletionButton();

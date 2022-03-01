@@ -4,6 +4,7 @@ import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
+import { CategoryPickerPage } from '../widgets/category-picker.page';
 
 
 /**
@@ -38,27 +39,27 @@ describe('configuration --', () => {
     it('apply categories filter', async done => {
 
         await ConfigurationPage.clickSelectCategoriesFilter('project');
-        expect((await ConfigurationPage.getCategories()).length).toBe(6);
-        await waitForExist(await ConfigurationPage.getCategory('Project'));
-        await waitForExist(await ConfigurationPage.getCategory('Operation'));
-        await waitForExist(await ConfigurationPage.getCategory('Trench', 'Operation'));
-        await waitForExist(await ConfigurationPage.getCategory('Building', 'Operation'));
-        await waitForExist(await ConfigurationPage.getCategory('Survey', 'Operation'));
-        await waitForExist(await ConfigurationPage.getCategory('Place'));
+        expect((await CategoryPickerPage.getCategories()).length).toBe(6);
+        await waitForExist(await CategoryPickerPage.getCategory('Project'));
+        await waitForExist(await CategoryPickerPage.getCategory('Operation'));
+        await waitForExist(await CategoryPickerPage.getCategory('Trench', 'Operation'));
+        await waitForExist(await CategoryPickerPage.getCategory('Building', 'Operation'));
+        await waitForExist(await CategoryPickerPage.getCategory('Survey', 'Operation'));
+        await waitForExist(await CategoryPickerPage.getCategory('Place'));
 
         await ConfigurationPage.clickSelectCategoriesFilter('trench');
-        await waitForNotExist(await ConfigurationPage.getCategory('Project'));
-        await waitForExist(await ConfigurationPage.getCategory('Feature'));
-        await waitForExist(await ConfigurationPage.getCategory('Find'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Project'));
+        await waitForExist(await CategoryPickerPage.getCategory('Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Find'));
 
         await ConfigurationPage.clickSelectCategoriesFilter('images');
-        await waitForNotExist(await ConfigurationPage.getCategory('Feature'));
-        await waitForExist(await ConfigurationPage.getCategory('Image'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Image'));
 
         await ConfigurationPage.clickSelectCategoriesFilter('types');
-        await waitForNotExist(await ConfigurationPage.getCategory('Image'));
-        await waitForExist(await ConfigurationPage.getCategory('TypeCatalog'));
-        await waitForExist(await ConfigurationPage.getCategory('Type'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Image'));
+        await waitForExist(await CategoryPickerPage.getCategory('TypeCatalog'));
+        await waitForExist(await CategoryPickerPage.getCategory('Type'));
 
         done();
     });
@@ -67,14 +68,14 @@ describe('configuration --', () => {
     it('delete category', async done => {
 
         await ConfigurationPage.deleteCategory('Floor', 'Feature');
-        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
         await ConfigurationPage.save();
         
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickCreateResource();
-        await waitForExist(await ConfigurationPage.getCategory('Feature'));
-        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Feature'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
 
         done();
     });
@@ -89,7 +90,7 @@ describe('configuration --', () => {
         await navigateTo('configuration');
         await ConfigurationPage.clickSelectCategoriesFilter('all');
         await ConfigurationPage.deleteCategory('Grave', 'Feature', true);
-        await waitForNotExist(await ConfigurationPage.getCategory('Grave', 'Feature'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Grave', 'Feature'));
         await ConfigurationPage.save();
         
         await NavbarPage.clickCloseNonResourcesTab();
@@ -112,7 +113,7 @@ describe('configuration --', () => {
         await navigateTo('configuration');
         await ConfigurationPage.clickSelectCategoriesFilter('all');
         await ConfigurationPage.deleteCategory('Trench', 'Operation', true);
-        await waitForNotExist(await ConfigurationPage.getCategory('Trench', 'Operation'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Trench', 'Operation'));
         await ConfigurationPage.save();
         
         await NavbarPage.clickCloseNonResourcesTab();
@@ -135,7 +136,7 @@ describe('configuration --', () => {
         await AddCategoryFormModalPage.clickCancel();
 
         await ConfigurationPage.deleteCategory('Floor', 'Feature');
-        await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
         
         await ConfigurationPage.clickCreateSubcategory('Feature');
         await waitForExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
@@ -154,14 +155,14 @@ describe('configuration --', () => {
 
         await AddCategoryFormModalPage.clickSelectForm('Floor:default');
         await AddCategoryFormModalPage.clickAddCategory();
-        await waitForExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickCreateResource();
-        await waitForExist(await ConfigurationPage.getCategory('Feature'));
-        await waitForExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
 
         done();
     });
@@ -178,15 +179,15 @@ describe('configuration --', () => {
         await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie');
         await EditConfigurationPage.clickConfirm();
 
-        await waitForExist(await ConfigurationPage.getCategory('Test:NewCategory', 'Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickCreateResource();
-        await waitForExist(await ConfigurationPage.getCategory('Feature'));
-        await waitForExist(await ConfigurationPage.getCategory('Test:NewCategory', 'Feature'));
-        expect((await ConfigurationPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
+        await waitForExist(await CategoryPickerPage.getCategory('Feature'));
+        await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
+        expect((await CategoryPickerPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
 
         done();
     });

@@ -109,6 +109,7 @@ defmodule FieldHubWeb.Api.FileController do
     case image_store_data do
       :ok ->
         conn
+        |> put_status(:created)
         |> put_view(ErrorView)
         |> render("201.json")
       {:error, _} ->

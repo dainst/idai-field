@@ -1,5 +1,5 @@
 import { CategoryPickerPage } from '../widgets/category-picker.page';
-import { click, typeIn } from '../app';
+import { click, getElement, getElements, typeIn } from '../app';
 
 
 /**
@@ -14,6 +14,13 @@ export class ConfigurationPage {
         await click('#categories-filter .dropdown-toggle');
         return click('#categories-filter-selection-button-' + filterOption);
     };
+
+
+    public static clickContextMenuSwapOption() {
+
+        return click('#context-menu-swap-button');
+    };
+
 
 
     public static clickContextMenuDeleteOption() {
@@ -31,6 +38,32 @@ export class ConfigurationPage {
     public static clickCreateSubcategory(parentCategoryName: string) {
 
         return click('#create-subcategory-' + parentCategoryName);
+    }
+
+
+    public static async clickSelectGroup(groupName: string) {
+
+        return click(await this.getGroup(groupName));
+    }
+
+    
+    // get
+
+    public static getGroup(groupName: string) {
+
+        return getElement('#group-' + groupName);
+    }
+
+
+    public static getFields() {
+
+        return getElements('configuration-field');
+    }
+
+    
+    public static getField(fieldName: string) {
+
+        return getElement('#field-' + fieldName);
     }
 
 

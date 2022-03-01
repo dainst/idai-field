@@ -1,4 +1,4 @@
-import { getElement, getElements, getText, rightClick } from '../app';
+import { click, getElement, getElements, getText, rightClick } from '../app';
 
 
 /**
@@ -7,6 +7,12 @@ import { getElement, getElements, getText, rightClick } from '../app';
 export class CategoryPickerPage {
 
     // click
+
+    public static async clickSelectCategory(categoryName: string, supercategoryName?: string) {
+
+        await click(await this.getCategory(categoryName, supercategoryName));
+    }
+
 
     public static async clickOpenContextMenu(categoryName: string, supercategoryName?: string) {
 

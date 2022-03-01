@@ -5,6 +5,7 @@ import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { DoceditPage } from '../docedit/docedit.page';
 
 
 /**
@@ -188,6 +189,40 @@ describe('configuration --', () => {
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
         expect((await CategoryPickerPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
+
+        done();
+    });
+
+
+    it('swap category form', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('parent');
+        await waitForExist(await ConfigurationPage.getField('gazId'));
+        await waitForExist(await ConfigurationPage.getField('description'));
+        expect((await ConfigurationPage.getFields()).length).toBeGreaterThan(1);
+
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuSwapOption();
+        await waitForExist(await AddCategoryFormModalPage.getCategoryHeader('Place'));
+        await waitForExist(await AddCategoryFormModalPage.getSelectFormButton('Place'));
+        await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Place:default'));
+        await AddCategoryFormModalPage.clickSelectForm('Place');
+        await AddCategoryFormModalPage.clickAddCategory();
+        await ConfigurationPage.clickSelectGroup('parent');
+        await waitForExist(await ConfigurationPage.getField('gazId'));
+        await waitForNotExist(await ConfigurationPage.getField('description'));
+        expect((await ConfigurationPage.getFields()).length).toBe(1);
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.clickGotoParentTab();
+        await waitForExist(await DoceditPage.getField('gazId'));
+        await waitForNotExist(await DoceditPage.getField('description'));
+        await DoceditPage.clickCloseEdit();
 
         done();
     });

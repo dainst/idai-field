@@ -175,6 +175,12 @@ export class DoceditPage {
     }
 
 
+    public static getField(fieldName: string) {
+
+        return getElement('#edit-form-element-' + fieldName);
+    }
+
+
     // type in
 
     public static typeInInputField(fieldName: string, text: string) {

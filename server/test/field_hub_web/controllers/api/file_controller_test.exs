@@ -17,17 +17,17 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
   setup_all do
     on_exit(fn ->
-      # Ran after all tests
+      # Run after all tests
       File.rm_rf!(@file_directory_root)
     end)
   end
 
   setup do
-    # Ran before each test
+    # Run before each test
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
 
     on_exit(fn ->
-      # Ran after each test
+      # Run after each test
       TestHelper.remove_test_db_and_user(@project, @user_name)
     end)
     :ok

@@ -21,7 +21,7 @@ describe('configuration --', () => {
         await navigateTo('settings');
         await resetApp();
         await navigateTo('configuration');
-        await ConfigurationPage.selectCategoriesFilter('all');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
         done();
     });
 
@@ -35,7 +35,7 @@ describe('configuration --', () => {
 
     it('apply categories filter', async done => {
 
-        await ConfigurationPage.selectCategoriesFilter('project');
+        await ConfigurationPage.clickSelectCategoriesFilter('project');
         expect((await ConfigurationPage.getCategories()).length).toBe(6);
         await waitForExist(await ConfigurationPage.getCategory('Project'));
         await waitForExist(await ConfigurationPage.getCategory('Operation'));
@@ -44,16 +44,16 @@ describe('configuration --', () => {
         await waitForExist(await ConfigurationPage.getCategory('Survey', 'Operation'));
         await waitForExist(await ConfigurationPage.getCategory('Place'));
 
-        await ConfigurationPage.selectCategoriesFilter('trench');
+        await ConfigurationPage.clickSelectCategoriesFilter('trench');
         await waitForNotExist(await ConfigurationPage.getCategory('Project'));
         await waitForExist(await ConfigurationPage.getCategory('Feature'));
         await waitForExist(await ConfigurationPage.getCategory('Find'));
 
-        await ConfigurationPage.selectCategoriesFilter('images');
+        await ConfigurationPage.clickSelectCategoriesFilter('images');
         await waitForNotExist(await ConfigurationPage.getCategory('Feature'));
         await waitForExist(await ConfigurationPage.getCategory('Image'));
 
-        await ConfigurationPage.selectCategoriesFilter('types');
+        await ConfigurationPage.clickSelectCategoriesFilter('types');
         await waitForNotExist(await ConfigurationPage.getCategory('Image'));
         await waitForExist(await ConfigurationPage.getCategory('TypeCatalog'));
         await waitForExist(await ConfigurationPage.getCategory('Type'));
@@ -64,7 +64,9 @@ describe('configuration --', () => {
 
     it('delete category', async done => {
 
-        await ConfigurationPage.deleteCategory('Floor', 'Feature');
+        await ConfigurationPage.clickOpenContextMenuForCategory('Floor', 'Feature');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.clickConfirmDeletionButton();
         await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
         await ConfigurationPage.save();
         
@@ -73,6 +75,32 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await waitForExist(await ConfigurationPage.getCategory('Feature'));
         await waitForNotExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+
+        done();
+    });
+
+
+    it('delete category with existing resources & show warning for liesWithin resources', async done => {
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await waitForExist(await ResourcesPage.getListItemEl('SE4'));
+        
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await ConfigurationPage.clickOpenContextMenuForCategory('Grave', 'Feature');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.typeInConfirmDeletionInput('Grave');
+        await ConfigurationPage.clickConfirmDeletionButton();
+        await waitForNotExist(await ConfigurationPage.getCategory('Grave', 'Feature'));
+        await ConfigurationPage.save();
+        
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForExist(await ResourcesPage.getListItemEl('SE3'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE4'));
+        await ResourcesPage.clickHierarchyButton('SE4-F1');
+        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht '
+            + 'konfigurierten Kategorie "Grave" untergeordnet ist.', false);
 
         done();
     });

@@ -1,4 +1,4 @@
-import { click, getElements, getElement, rightClick } from '../app';
+import { click, getElements, getElement, rightClick, typeIn } from '../app';
 
 
 /**
@@ -8,11 +8,36 @@ export class ConfigurationPage {
 
     // click
 
-    public static async selectCategoriesFilter(filterOption: string) {
+    public static async clickSelectCategoriesFilter(filterOption: string) {
 
         await click('#categories-filter .dropdown-toggle');
         return click('#categories-filter-selection-button-' + filterOption);
     };
+
+
+    public static async save() {
+
+        await click('#save-button');
+        return click('#confirm-button');
+    }
+
+
+    public static async clickOpenContextMenuForCategory(categoryName: string, supercategoryName?: string) {
+
+        await rightClick(await this.getCategory(categoryName, supercategoryName));
+    }
+
+
+    public static clickContextMenuDeleteOption() {
+
+        return click('#context-menu-delete-button');
+    };
+
+
+    public static clickConfirmDeletionButton() {
+
+        return click('#delete-category-button');
+    }
 
     
      // get
@@ -31,19 +56,10 @@ export class ConfigurationPage {
     }
 
 
-    // sequence
+    // type in
 
-    public static async deleteCategory(categoryName: string, supercategoryName?: string) {
+    public static typeInConfirmDeletionInput(text: string) {
 
-        await rightClick(await this.getCategory(categoryName, supercategoryName));
-        await click('#context-menu-delete-button');
-        return click('#delete-category-button');
-    };
-
-
-    public static async save() {
-
-        await click('#save-button');
-        return click('#confirm-button');
+        return typeIn('#delete-category-input', text);
     }
 }

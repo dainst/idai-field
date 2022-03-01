@@ -254,4 +254,30 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('add custom field', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('newField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickSelectLanguage(0, 'de');
+        await EditConfigurationPage.clickAddLanguage(0);
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld');
+        await EditConfigurationPage.clickConfirm();
+        await waitForExist(ConfigurationPage.getField('test:newField'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        await waitForExist(await DoceditPage.getField('test:newField'));
+        expect(await DoceditPage.getFieldLabel('test:newField')).toEqual('Neues Feld');
+        await DoceditPage.clickCloseEdit();
+
+        done();
+    });
 });

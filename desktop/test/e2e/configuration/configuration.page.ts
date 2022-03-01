@@ -69,7 +69,7 @@ export class ConfigurationPage {
     
     public static getField(fieldName: string) {
 
-        return getElement('#field-' + fieldName);
+        return getElement('#field-' + fieldName.replace(':', '-'));
     }
 
 

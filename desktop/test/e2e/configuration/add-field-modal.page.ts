@@ -20,6 +20,12 @@ export class AddFieldModalPage {
     }
 
 
+    public static clickCreateNewField() {
+
+        return click('.new-entry-button');
+    }
+
+
     // get
 
     public static getSelectFieldButton(fieldName: string) {

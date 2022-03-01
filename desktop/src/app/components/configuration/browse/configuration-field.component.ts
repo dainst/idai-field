@@ -37,6 +37,9 @@ export class ConfigurationFieldComponent implements OnChanges {
     constructor(private labels: Labels) {}
 
 
+    public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
+
+
     ngOnChanges() {
 
         if (!this.category || !this.field) return;

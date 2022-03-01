@@ -1,4 +1,5 @@
-import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue } from '../app';
+import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue,
+    getText } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -155,6 +156,13 @@ export class DoceditPage {
     };
 
 
+    public static async getFieldLabel(fieldName: string) {
+
+        const fieldElement = await this.getField(fieldName);
+        return getText(await fieldElement.$('.card-title'));
+    }
+
+
     // elements
 
     public static getNumberOfDuplicatesInputField() {
@@ -177,7 +185,7 @@ export class DoceditPage {
 
     public static getField(fieldName: string) {
 
-        return getElement('#edit-form-element-' + fieldName);
+        return getElement('#edit-form-element-' + fieldName.replace(':', '-'));
     }
 
 

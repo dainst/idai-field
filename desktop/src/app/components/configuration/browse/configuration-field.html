@@ -1,5 +1,5 @@
 <div *ngIf="field && category"
-     [id]="'field-' + field.name"
+     [id]="getFieldId(field)"
      class="card"
      [class.custom]="isCustomField()"
      [class.hidden-element]="hidden"

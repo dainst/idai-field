@@ -402,7 +402,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
-            nop,
+            () => this.selectCategory(category),
             () => AngularUtility.blurActiveElement()
         );
     }

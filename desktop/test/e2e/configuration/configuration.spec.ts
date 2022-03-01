@@ -3,6 +3,7 @@ import { ResourcesPage } from '../resources/resources.page';
 import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
+import { EditConfigurationPage } from './edit-configuration.page';
 
 
 /**
@@ -161,6 +162,31 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await waitForExist(await ConfigurationPage.getCategory('Feature'));
         await waitForExist(await ConfigurationPage.getCategory('Floor', 'Feature'));
+
+        done();
+    });
+
+
+    it('add custom category', async done => {
+
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
+        await AddCategoryFormModalPage.clickCreateNewCategory();
+
+        await EditConfigurationPage.clickSelectLanguage(0, 'de');
+        await EditConfigurationPage.clickAddLanguage(0);
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForExist(await ConfigurationPage.getCategory('Test:NewCategory', 'Feature'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ConfigurationPage.getCategory('Feature'));
+        await waitForExist(await ConfigurationPage.getCategory('Test:NewCategory', 'Feature'));
+        expect((await ConfigurationPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
 
         done();
     });

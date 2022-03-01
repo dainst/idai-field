@@ -20,6 +20,12 @@ export class AddCategoryFormModalPage {
     }
 
 
+    public static clickCreateNewCategory() {
+
+        return click('.new-entry-button');
+    }
+
+
     public static clickCancel() {
 
         return click('#cancel-add-category-modal-button');

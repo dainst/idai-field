@@ -1,4 +1,4 @@
-import { click, getElements, getElement, rightClick, typeIn } from '../app';
+import { click, getElements, getElement, rightClick, typeIn, getText } from '../app';
 
 
 /**
@@ -50,8 +50,18 @@ export class ConfigurationPage {
     public static getCategory(categoryName: string, supercategoryName?: string) {
 
         return getElement('#choose-category-option-'
-            + (supercategoryName ? supercategoryName.toLowerCase() + '-' : '')
-            + categoryName.toLowerCase());
+            + (supercategoryName ? supercategoryName.replace(':', '-').toLowerCase() + '-' : '')
+            + categoryName.replace(':', '-').toLowerCase());
+    }
+
+
+    // text
+
+
+    public static async getCategoryLabel(categoryName: string, supercategoryName?: string) {
+
+        const element = await (await this.getCategory(categoryName, supercategoryName)).$('.category-label');
+        return getText(element);
     }
 
 

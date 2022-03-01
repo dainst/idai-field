@@ -17,7 +17,7 @@ defmodule FieldHub.CouchService do
         :ok
       {:ok, res} ->
         {:error, res}
-      {:error, _} = error ->
+      error ->
         error
     end
   end
@@ -46,11 +46,34 @@ defmodule FieldHub.CouchService do
     )
   end
 
+  def delete_project(project_name, %Credentials{} = credentials) do
+    HTTPoison.delete!(
+      "#{url()}/#{project_name}",
+      headers(credentials)
+    )
+  end
+
   def create_user(name, password, %Credentials{} = credentials) do
     HTTPoison.put!(
       "#{url()}/_users/org.couchdb.user:#{name}",
       Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
       headers(credentials)
+    )
+  end
+
+  def delete_user(name, %Credentials{} = credentials) do
+
+    %{"_rev" => rev } =
+      HTTPoison.get!(
+        "#{url()}/_users/org.couchdb.user:#{name}",
+        headers(credentials)
+      )
+      |> Map.get(:body)
+      |> Jason.decode!()
+
+    HTTPoison.delete!(
+      "#{url()}/_users/org.couchdb.user:#{name}",
+      headers(credentials) ++ [{"If-Match", rev}]
     )
   end
 

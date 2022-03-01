@@ -1,4 +1,4 @@
-<div [id]="'category-' + category.name"
+<div [id]="getCategoryId()"
      class="category-header"
      [class.with-description]="description"
      (contextmenu)="contextMenu.open($event, category)">

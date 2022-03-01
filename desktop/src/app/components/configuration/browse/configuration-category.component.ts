@@ -85,6 +85,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
         this.configurationDocument, this.category
     );
 
+    public getCategoryId = () => 'category-' + this.category.name.replace(':', '-');
+
     public hasCustomFields: Predicate<Group> = compose(
         to<Array<Field>>(Group.FIELDS),
         map(_ => _.source),

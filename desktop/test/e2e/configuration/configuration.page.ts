@@ -73,6 +73,12 @@ export class ConfigurationPage {
     }
 
 
+    public static getCategory(categoryName: string) {
+
+        return getElement('#category-' + categoryName.replace(':', '-'));
+    }
+
+
     // type in
 
     public static typeInConfirmDeletionInput(text: string) {
@@ -82,7 +88,6 @@ export class ConfigurationPage {
 
 
     // sequence
-
 
     public static async save() {
 

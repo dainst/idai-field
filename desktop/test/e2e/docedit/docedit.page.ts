@@ -76,6 +76,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoDimensionTab() {
+
+        return click('#edit-form-goto-dimension');
+    }
+
+
     public static async clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
         await waitForExist('#document-edit-button-save-document');

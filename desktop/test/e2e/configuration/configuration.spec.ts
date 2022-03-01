@@ -229,7 +229,7 @@ describe('configuration --', () => {
     });
 
 
-    it('add field from library', async done => {
+    it('add library field as custom field', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
@@ -256,7 +256,7 @@ describe('configuration --', () => {
     });
 
 
-    it('add custom field', async done => {
+    it('add newly created field as custom field', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
@@ -276,6 +276,51 @@ describe('configuration --', () => {
         await ResourcesPage.clickSelectGeometryType();
         await waitForExist(await DoceditPage.getField('test:newField'));
         expect(await DoceditPage.getFieldLabel('test:newField')).toEqual('Neues Feld');
+        await DoceditPage.clickCloseEdit();
+
+        done();
+    });
+
+
+    it('inherit custom field from parent form', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await ConfigurationPage.clickAddFieldButton();        
+        await AddFieldModalPage.clickSelectField('dimensionDiameter');
+        await AddFieldModalPage.clickConfirmSelection();
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
+        await AddCategoryFormModalPage.clickCreateNewCategory();
+        await EditConfigurationPage.clickConfirm();
+        await waitForExist(await ConfigurationPage.getCategory('Test:NewCategory'));
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await CategoryPickerPage.clickOpenContextMenu('Layer', 'Feature');
+        await ConfigurationPage.clickContextMenuSwapOption();
+        await AddCategoryFormModalPage.clickSelectForm('Layer');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await AddCategoryFormModalPage.typeInConfirmSwappingCategoryFormInput('Layer');
+        await AddCategoryFormModalPage.clickConfirmSwappingCategoryForm();
+        await waitForExist(await ConfigurationPage.getCategory('Layer'));
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.clickGotoDimensionTab();
+        await waitForExist(await DoceditPage.getField('dimensionDiameter'));
         await DoceditPage.clickCloseEdit();
 
         done();

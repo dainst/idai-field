@@ -32,6 +32,12 @@ export class AddCategoryFormModalPage {
     }
 
 
+    public static clickConfirmSwappingCategoryForm() {
+
+        return click('#confirm-swapping-button');
+    }
+
+
     // get
 
     public static getCategoryHeader(categoryName: string) {
@@ -51,5 +57,11 @@ export class AddCategoryFormModalPage {
     public static typeInSearchFilterInput(text: string) {
 
         return typeIn('#category-name', text);
+    }
+
+
+    public static typeInConfirmSwappingCategoryFormInput(text: string) {
+
+        return typeIn('#swap-category-form-input', text);
     }
 }

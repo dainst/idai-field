@@ -63,15 +63,14 @@ defmodule FieldHub.CLI do
     end
 
     FileStore.remove_directories(project_name)
-    |> Enum.each(fn(result) ->
-      case result do
-        {{:ok, deleted}, file_variant} ->
-          Logger.info("Deleted files for #{file_variant}")
-          Logger.info(deleted)
-        {{:error, reason, file}, file_variant} ->
-          Logger.error("Got posix error #{reason} while trying to delete #{file} for #{file_variant}.")
-      end
-    end)
+    |> case do
+      {:ok, deleted} ->
+        Logger.info("Deleted files for #{project_name}")
+        Logger.info(deleted)
+
+      {:error, reason, file} ->
+        Logger.error("Got posix error #{reason} while trying to delete #{file}.")
+    end
   end
 
   def create_user(name, password) do

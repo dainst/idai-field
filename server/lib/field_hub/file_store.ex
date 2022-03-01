@@ -14,12 +14,9 @@ defmodule FieldHub.FileStore do
   end
 
   def remove_directories(project) do
-    @variant_types
-    |> Enum.map(fn (type) ->
-      get_type_directory(project, type)
-      |> File.rm_rf()
-    end)
-    |> Enum.zip(@variant_types)
+    project
+    |> get_project_directory()
+    |> File.rm_rf()
   end
 
   def get_file_list(project, variants \\ @variant_types) do

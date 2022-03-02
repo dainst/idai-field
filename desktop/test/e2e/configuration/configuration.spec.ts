@@ -353,4 +353,35 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('reset custom changes when swapping category form', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();        
+        await AddFieldModalPage.clickSelectField('dimensionDiameter');
+        await AddFieldModalPage.clickConfirmSelection();
+        await waitForExist(ConfigurationPage.getField('identifier'));
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await waitForExist(await ConfigurationPage.getCategory('Layer'));
+        await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await CategoryPickerPage.clickOpenContextMenu('Feature');
+        await ConfigurationPage.clickContextMenuSwapOption();
+        await AddCategoryFormModalPage.clickSelectForm('Feature');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await AddCategoryFormModalPage.typeInConfirmSwappingCategoryFormInput('Feature');
+        await AddCategoryFormModalPage.clickConfirmSwappingCategoryForm();
+        await waitForExist(await ConfigurationPage.getCategory('Feature'));
+        await waitForExist(ConfigurationPage.getField('identifier'));
+        await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await waitForExist(await ConfigurationPage.getCategory('Layer'));
+        await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        done();
+    });
 });

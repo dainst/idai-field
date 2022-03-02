@@ -133,7 +133,7 @@ export class AddGroupModalComponent {
 
         await this.modals.awaitResult(
             result,
-            () => this.activeModal.close(this.searchTerm),
+            () => this.activeModal.close(this.emptyGroup.name),
             nop
         );
     }

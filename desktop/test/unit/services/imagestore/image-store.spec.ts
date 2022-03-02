@@ -1,8 +1,8 @@
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 import { ImageStore, ImageVariant } from 'idai-field-core';
-import { FsAdapter } from '../../../../../src/app/services/imagestore/fs-adapter';
-import { ThumbnailGenerator } from '../../../../../src/app/services/imagestore/thumbnail-generator';
+import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
+import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
 
 
 

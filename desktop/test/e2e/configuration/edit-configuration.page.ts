@@ -34,6 +34,24 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickConfirmValuelist() {
+
+        return click('#confirm-valuelist-button');
+    }
+
+
+    public static clickConfirmValue() {
+
+        return click('#confirm-value-button');
+    }
+
+
+    public static clickAddValue() {
+
+        return click('#add-value-button');
+    }
+
+
     // get text
 
     public static getSelectedValuelist() {
@@ -56,5 +74,11 @@ export class EditConfigurationPage {
         const inputElement = (await getElements('multi-language-input'))[inputIndex];
         const translationElement = (await inputElement.$$('.language-input input'))[translationIndex];
         return typeIn(translationElement, text);
+    }
+
+
+    public static typeInNewValue(valueId: string) {
+
+        return typeIn('#new-value-input', valueId);
     }
 }

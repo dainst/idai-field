@@ -452,4 +452,31 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('create new valuelist via field editor', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('time');
+        await ConfigurationPage.clickSelectField('period');
+        await ConfigurationPage.clickOpenContextMenuForField('period');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('new-valuelist');
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue('newValue');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+
+        expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('test:new-valuelist');
+        expect(await EditConfigurationPage.getValue(0)).toEqual('newValue');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.clickSelectField('period');
+        expect(await ConfigurationPage.getValue(0)).toEqual('newValue');
+        await ConfigurationPage.save();
+
+        done();
+    });
 });

@@ -20,6 +20,12 @@ export class ManageValuelistsModalPage {
     }
 
 
+    public static clickCreateNewValuelist() {
+
+        return click('.new-entry-button');
+    }
+
+
     // get
 
     public static getSelectValuelistButton(valuelistName: string) {

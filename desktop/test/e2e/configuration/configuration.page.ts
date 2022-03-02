@@ -1,5 +1,5 @@
 import { CategoryPickerPage } from '../widgets/category-picker.page';
-import { click, getElement, getElements, rightClick, typeIn } from '../app';
+import { click, getElement, getElements, rightClick, typeIn, waitForNotExist } from '../app';
 
 
 /**
@@ -109,7 +109,8 @@ export class ConfigurationPage {
     public static async save() {
 
         await click('#save-button');
-        return click('#confirm-button');
+        await click('#confirm-button');
+        await waitForNotExist('ngb-modal-backdrop');
     }
 
 

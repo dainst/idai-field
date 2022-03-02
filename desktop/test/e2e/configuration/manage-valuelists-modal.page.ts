@@ -26,11 +26,17 @@ export class ManageValuelistsModalPage {
     }
 
 
+    public static clickCancel() {
+
+        return click('#cancel-manage-valuelists-modal-button');
+    }
+
+
     // get
 
-    public static getSelectValuelistButton(valuelistName: string) {
+    public static getSelectValuelistButton(valuelistId: string) {
 
-        return getElement('#valuelist-' + valuelistName);
+        return getElement('#valuelist-' + valuelistId.replace(':', '-'));
     }
 
 

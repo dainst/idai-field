@@ -1,6 +1,6 @@
 <ul class="bg-light listing">
     <li *ngFor="let valuelist of filteredValuelists"
-        [id]="'valuelist-' + valuelist.id"
+        [id]="getValuelistId(valuelist)"
         [class.selected]="selectedValuelist === valuelist"
         [class.in-use]="isInUse(valuelist)"
         [class.custom]="isCustomValuelist(valuelist)"

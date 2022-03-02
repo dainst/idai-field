@@ -34,6 +34,8 @@ export class ValuelistListingComponent {
 
     public openEditor = (valuelist: Valuelist) => this.onOpenEditor.emit(valuelist);
 
+    public getValuelistId = (valuelist: Valuelist) => 'valuelist-' + valuelist.id.replace(':', '-');
+
     public getLabel = (value: any) => this.labels.get(value);
 
     public isCustomValuelist = (valuelist: Valuelist) => valuelist.source === 'custom';

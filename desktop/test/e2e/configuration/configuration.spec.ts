@@ -427,7 +427,7 @@ describe('configuration --', () => {
     });
 
 
-    it('swap valuelist via field editor', async done => {
+    it('swap valuelist', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickSelectGroup('time');
@@ -458,7 +458,6 @@ describe('configuration --', () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickSelectGroup('time');
-        await ConfigurationPage.clickSelectField('period');
         await ConfigurationPage.clickOpenContextMenuForField('period');
         await ConfigurationPage.clickContextMenuEditOption();
 
@@ -469,6 +468,38 @@ describe('configuration --', () => {
         await EditConfigurationPage.clickAddValue();
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.clickConfirmValuelist();
+
+        expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('test:new-valuelist');
+        expect(await EditConfigurationPage.getValue(0)).toEqual('newValue');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.clickSelectField('period');
+        expect(await ConfigurationPage.getValue(0)).toEqual('newValue');
+        await ConfigurationPage.save();
+
+        done();
+    });
+
+
+    it('create new valuelist via valuelist management & select it in field editor', async done => {
+
+        await navigateTo('valuelists');
+        await ManageValuelistsModalPage.typeInSearchFilterInput('new-valuelist');
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue('newValue');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:new-valuelist'));
+        await ManageValuelistsModalPage.clickCancel();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('time');
+        await ConfigurationPage.clickOpenContextMenuForField('period');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.clickSelectValuelist('test:new-valuelist');
+        await ManageValuelistsModalPage.clickConfirmSelection();
 
         expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('test:new-valuelist');
         expect(await EditConfigurationPage.getValue(0)).toEqual('newValue');

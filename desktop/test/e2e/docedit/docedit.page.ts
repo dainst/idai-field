@@ -82,6 +82,12 @@ export class DoceditPage {
     }
 
 
+    public static async clickSelectGroup(groupName: string) {
+
+        return click(await this.getGroup(groupName));
+    }
+
+
     public static async clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
         await waitForExist('#document-edit-button-save-document');
@@ -169,6 +175,12 @@ export class DoceditPage {
     }
 
 
+    public static async getGroupLabel(groupName: string) {
+
+        return getText(await this.getGroup(groupName));
+    }
+
+
     // elements
 
     public static getNumberOfDuplicatesInputField() {
@@ -192,6 +204,12 @@ export class DoceditPage {
     public static getField(fieldName: string) {
 
         return getElement('#edit-form-element-' + fieldName.replace(':', '-'));
+    }
+
+
+    public static getGroup(groupName: string) {
+
+        return getElement('#edit-form-goto-' + groupName.replace(':', '-'));
     }
 
 

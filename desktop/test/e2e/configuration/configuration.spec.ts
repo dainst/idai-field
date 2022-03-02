@@ -7,6 +7,7 @@ import { EditConfigurationPage } from './edit-configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { AddFieldModalPage } from './add-field-modal.page';
+import { AddGroupModalPage } from './add-group-modal.page';
 
 
 /**
@@ -381,6 +382,44 @@ describe('configuration --', () => {
         await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
         await waitForExist(await ConfigurationPage.getCategory('Layer'));
         await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        done();
+    });
+
+
+    it('add custom group', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddGroupButton();
+        await AddGroupModalPage.typeInSearchFilterInput('newGroup');
+        await AddGroupModalPage.clickCreateNewGroup();
+
+        await EditConfigurationPage.clickSelectLanguage(0, 'de');
+        await EditConfigurationPage.clickAddLanguage(0);
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe');
+        await EditConfigurationPage.clickConfirm();
+        await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
+        
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddGroupButton();
+        await AddGroupModalPage.typeInSearchFilterInput('newGroup');
+        await AddGroupModalPage.clickSelectGroup('test:newGroup');
+        await AddGroupModalPage.clickConfirmSelection();
+        await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.clickSelectField('dimensionDiameter');
+        await AddFieldModalPage.clickConfirmSelection();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        expect(await DoceditPage.getGroupLabel('test:newGroup')).toEqual('Neue Gruppe');
+        await DoceditPage.clickSelectGroup('test:newGroup');
+        await waitForExist(await DoceditPage.getField('dimensionDiameter'));
+        await DoceditPage.clickCloseEdit();
 
         done();
     });

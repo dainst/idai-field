@@ -28,6 +28,8 @@ export class GroupListingComponent {
 
     public select = (group: GroupEntry) => this.onGroupSelected.emit(group);
 
+    public getGroupId = (group: GroupEntry) => 'select-group-' + group.name.replace(':', '-');
+
     public getLabel = (value: any) => this.labels.get(value);
 
     public isNewGroupOptionShown = (): boolean => this.emptyGroup !== undefined

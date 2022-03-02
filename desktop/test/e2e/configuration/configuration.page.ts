@@ -52,6 +52,12 @@ export class ConfigurationPage {
     }
 
 
+    public static clickAddGroupButton() {
+
+        return click('#add-group-button');
+    }
+
+
     public static clickAddFieldButton() {
 
         return click('#add-field-button');
@@ -68,7 +74,7 @@ export class ConfigurationPage {
 
     public static getGroup(groupName: string) {
 
-        return getElement('#group-' + groupName);
+        return getElement('#group-' + groupName.replace(':', '-'));
     }
 
 

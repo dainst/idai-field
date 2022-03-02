@@ -4,7 +4,7 @@
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group.name)">
                 <a *ngIf="shouldShow(group.name)"
-                        class="nav-link" id="edit-form-goto-{{group.name}}"
+                        class="nav-link" [id]="getGroupId(group)"
                         [class.active]="group.name === activeGroup"
                         [class.conflicted]="group.name === 'conflicts' && document._conflicts"
                         href="javascript: void(0);">

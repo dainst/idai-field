@@ -1,5 +1,6 @@
 <ul class="bg-light listing">
     <li *ngFor="let group of groups"
+        [id]="getGroupId(group)"
         [class.selected]="selectedGroup === group"
         (click)="select(group)">
         <span class="item-label">{{getLabel(group)}}</span>

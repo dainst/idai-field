@@ -8,9 +8,9 @@ export class AddFieldModalPage {
 
     // click
 
-    public static clickSelectField(fieldName: string) {
+    public static async clickSelectField(fieldName: string) {
 
-        return click(this.getSelectFieldButton(fieldName));
+        return click(await this.getSelectFieldButton(fieldName));
     }
 
 

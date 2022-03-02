@@ -1,5 +1,5 @@
 import { CategoryPickerPage } from '../widgets/category-picker.page';
-import { click, getElement, getElements, typeIn } from '../app';
+import { click, getElement, getElements, rightClick, typeIn } from '../app';
 
 
 /**
@@ -16,11 +16,16 @@ export class ConfigurationPage {
     };
 
 
+    public static async clickOpenContextMenuForField(fieldName: string) {
+
+        return rightClick(await this.getField(fieldName));
+    }
+
+
     public static clickContextMenuSwapOption() {
 
         return click('#context-menu-swap-button');
     };
-
 
 
     public static clickContextMenuDeleteOption() {
@@ -50,6 +55,12 @@ export class ConfigurationPage {
     public static clickAddFieldButton() {
 
         return click('#add-field-button');
+    }
+
+
+    public static clickConfirmFieldDeletionButton() {
+
+        return click('#delete-field-button');
     }
 
     

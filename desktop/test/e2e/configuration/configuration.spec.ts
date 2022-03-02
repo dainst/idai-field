@@ -284,6 +284,7 @@ describe('configuration --', () => {
 
     it('inherit custom field from parent form', async done => {
 
+        // Create custom field
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickSelectGroup('dimension');
         await ConfigurationPage.clickAddFieldButton();        
@@ -291,10 +292,12 @@ describe('configuration --', () => {
         await AddFieldModalPage.clickConfirmSelection();
         await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
 
+        // Inherit custom field in existing subcategory
         await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
         await ConfigurationPage.clickSelectGroup('dimension');
         await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
 
+        // Inherit custom field in newly created subcategory
         await ConfigurationPage.clickCreateSubcategory('Feature');
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
         await AddCategoryFormModalPage.clickCreateNewCategory();
@@ -303,6 +306,7 @@ describe('configuration --', () => {
         await ConfigurationPage.clickSelectGroup('dimension');
         await waitForExist(ConfigurationPage.getField('dimensionDiameter'));
 
+        // Still inherit custom field after swapping category form
         await CategoryPickerPage.clickOpenContextMenu('Layer', 'Feature');
         await ConfigurationPage.clickContextMenuSwapOption();
         await AddCategoryFormModalPage.clickSelectForm('Layer');
@@ -321,6 +325,30 @@ describe('configuration --', () => {
         await ResourcesPage.clickSelectGeometryType();
         await DoceditPage.clickGotoDimensionTab();
         await waitForExist(await DoceditPage.getField('dimensionDiameter'));
+        await DoceditPage.clickCloseEdit();
+
+        // Remove custom field
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await ConfigurationPage.clickOpenContextMenuForField('dimensionDiameter');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.clickConfirmFieldDeletionButton();
+        await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+
+        // Do not inherit removed custom field in subcategory
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickSelectGroup('dimension');
+        await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.clickGotoDimensionTab();
+        await waitForNotExist(await DoceditPage.getField('dimensionDiameter'));
         await DoceditPage.clickCloseEdit();
 
         done();

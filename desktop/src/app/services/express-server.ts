@@ -123,7 +123,7 @@ export class ExpressServer {
         });
 
 
-        app.delete('/files/:project/:uuid', async(req: any, res: any) => {
+        app.delete('/files/:project/:uuid', async (req: any, res: any) => {
 
             try {
                 await this.imagestore.remove(req.params.uuid, req.params.project);
@@ -138,18 +138,24 @@ export class ExpressServer {
             }
         });
 
+        let logParameter = {};
+        if (remote) {
+            logParameter = { logPath: remote.getGlobal('appDataPath') };
+        }
 
         app.use('/db/', expressPouchDB(PouchDB, {
-            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
-            mode: 'fullCouchDB',
-            overrideMode: {
-                exclude: [
-                    'routes/authentication',
-                    'routes/authorization',
-                    'routes/fauxton',
-                    'routes/session'
-                ]
-            },
+            ...logParameter,
+            ...{
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    exclude: [
+                        'routes/authentication',
+                        'routes/authorization',
+                        'routes/fauxton',
+                        'routes/session'
+                    ]
+                }
+            }
         }));
 
         await app.listen(3000, () => {
@@ -174,5 +180,7 @@ export class ExpressServer {
         await fauxtonApp.listen(3001, () => {
             console.log('Fauxton is listening on port 3001');
         });
+
+        return app;
     }
 }

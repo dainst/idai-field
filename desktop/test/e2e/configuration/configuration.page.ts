@@ -1,5 +1,5 @@
 import { CategoryPickerPage } from '../widgets/category-picker.page';
-import { click, getElement, getElements, rightClick, typeIn, waitForNotExist } from '../app';
+import { click, getElement, getElements, getText, rightClick, typeIn, waitForNotExist } from '../app';
 
 
 /**
@@ -19,6 +19,12 @@ export class ConfigurationPage {
     public static async clickOpenContextMenuForField(fieldName: string) {
 
         return rightClick(await this.getField(fieldName));
+    }
+
+
+    public static clickContextMenuEditOption() {
+
+        return click('#context-menu-edit-button');
     }
 
 
@@ -49,6 +55,12 @@ export class ConfigurationPage {
     public static async clickSelectGroup(groupName: string) {
 
         return click(await this.getGroup(groupName));
+    }
+
+
+    public static async clickSelectField(fieldName: string) {
+
+        return click(await this.getField(fieldName));
     }
 
 
@@ -93,6 +105,15 @@ export class ConfigurationPage {
     public static getCategory(categoryName: string) {
 
         return getElement('#category-' + categoryName.replace(':', '-'));
+    }
+
+
+    // get text
+
+    public static async getValue(index: number) {
+
+        const elements = await getElements('configuration-field valuelist-view code');
+        return getText(elements[index]);
     }
 
 

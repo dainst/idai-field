@@ -85,7 +85,9 @@
         </div>
         <references-input [references]="getClonedFieldDefinition().references"></references-input>
     </div>
-    <div *ngIf="isValuelistSectionVisible()" class="configuration-editor-section">
+    <div *ngIf="isValuelistSectionVisible()"
+         id="field-editor-valuelist-section"
+         class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
             Werteliste
         </div>

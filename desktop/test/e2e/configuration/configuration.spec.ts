@@ -8,6 +8,7 @@ import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
+import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 
 
 /**
@@ -421,6 +422,33 @@ describe('configuration --', () => {
         await DoceditPage.clickSelectGroup('test:newGroup');
         await waitForExist(await DoceditPage.getField('dimensionDiameter'));
         await DoceditPage.clickCloseEdit();
+
+        done();
+    });
+
+
+    it('swap valuelist via field editor', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('time');
+        await ConfigurationPage.clickSelectField('period');
+        expect(await ConfigurationPage.getValue(0)).toEqual('Archaisch');
+
+        await ConfigurationPage.clickOpenContextMenuForField('period');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('periods-default-1');
+        expect(await EditConfigurationPage.getValue(0)).toEqual('Archaisch');
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.clickSelectValuelist('colors-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+
+        expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('colors-default-1');
+        expect(await EditConfigurationPage.getValue(0)).toEqual('beige');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.clickSelectField('period');
+        expect(await ConfigurationPage.getValue(0)).toEqual('beige');
+        await ConfigurationPage.save();
 
         done();
     });

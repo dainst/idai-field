@@ -1,4 +1,4 @@
-import { click, getElements, selectOption, typeIn } from '../app';
+import { click, getElements, getText, selectOption, typeIn } from '../app';
 
 
 /**
@@ -21,10 +21,31 @@ export class EditConfigurationPage {
         return click(element);
     }
 
+
+    public static clickSwapValuelist() {
+
+        return click('#swap-valuelist-button');
+    }
+
     
     public static clickConfirm() {
 
         return click('#confirm-button');
+    }
+
+
+    // get text
+
+    public static getSelectedValuelist() {
+
+        return getText('#valuelist-header code');
+    }
+
+
+    public static async getValue(index: number) {
+
+        const elements = await getElements('#field-editor-valuelist-section valuelist-view code');
+        return getText(elements[index]);
     }
 
 

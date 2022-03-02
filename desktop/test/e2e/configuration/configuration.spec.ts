@@ -382,6 +382,7 @@ describe('configuration --', () => {
         await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
         await waitForExist(await ConfigurationPage.getCategory('Layer'));
         await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
+        await ConfigurationPage.save();
 
         done();
     });

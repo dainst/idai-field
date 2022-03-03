@@ -7,7 +7,7 @@ const fs = require('fs');
 const WAIT_FOR_ELEMENT_TIMEOUT = 30000;
 
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
 
 
 const app = new Application({

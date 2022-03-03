@@ -137,7 +137,7 @@ describe('ExpressServer', () => {
         }
     });
 
-    it('/files/:project returns an images marked as deleted', async done => {
+    it('/files/:project returns previously deleted images marked as deleted', async (done) => {
 
         try {
             const uuids = ['1', '2', '3'];

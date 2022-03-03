@@ -1,4 +1,4 @@
-import { click, getElement, typeIn } from '../app';
+import { click, getElement, rightClick, typeIn } from '../app';
 
 
 /**
@@ -8,9 +8,21 @@ export class ManageValuelistsModalPage {
 
     // click
 
-    public static async clickSelectValuelist(fieldName: string) {
+    public static async clickSelectValuelist(valuelistName: string) {
 
-        return click(await this.getSelectValuelistButton(fieldName));
+        return click(await this.getSelectValuelistButton(valuelistName));
+    }
+
+
+    public static async clickOpenContextMenu(valuelistName: string) {
+
+        return rightClick(await this.getSelectValuelistButton(valuelistName));
+    }
+
+
+    public static clickContextMenuExtendOption() {
+
+        return click('#context-menu-extend-button');
     }
 
 
@@ -43,6 +55,12 @@ export class ManageValuelistsModalPage {
         return click('#in-use-filter');
     }
 
+    
+    public static clickConfirmValuelistExtension() {
+
+        return click('#confirm-valuelist-extension-button');
+    }
+
 
     public static clickCancel() {
 
@@ -63,5 +81,11 @@ export class ManageValuelistsModalPage {
     public static typeInSearchFilterInput(text: string) {
 
         return typeIn('#valuelist-search-input', text);
+    }
+
+
+    public static typeInValuelistExtensionName(text: string) {
+
+        return typeIn('#valuelist-extension-name', text);
     }
 }

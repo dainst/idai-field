@@ -552,4 +552,41 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('extend an existing valuelist', async done => {
+
+        await navigateTo('valuelists');
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickOpenContextMenu('periods-default-1');
+        await ManageValuelistsModalPage.clickContextMenuExtendOption();
+        await ManageValuelistsModalPage.typeInValuelistExtensionName('periods-custom');
+        await ManageValuelistsModalPage.clickConfirmValuelistExtension();
+        await EditConfigurationPage.typeInNewValue('A-1');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await ManageValuelistsModalPage.clickCancel();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('time');
+        await ConfigurationPage.clickOpenContextMenuForField('period');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('test:periods-custom');
+        await ManageValuelistsModalPage.clickSelectValuelist('test:periods-custom');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('test:periods-custom');
+        expect(await EditConfigurationPage.getValue(0)).toEqual('A-1');
+        expect(await EditConfigurationPage.getValue(1)).toEqual('Archaisch');
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.clickSelectField('period');
+        expect(await ConfigurationPage.getValue(0)).toEqual('A-1');
+        expect(await ConfigurationPage.getValue(1)).toEqual('Archaisch');
+        await ConfigurationPage.save();
+
+        done();
+    });
 });

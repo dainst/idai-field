@@ -13,7 +13,7 @@ import Ajv from 'ajv';
 import schema from '../../../../core/api-schemas/files-list.json';
 
 
-fdescribe('ExpressServer', () => {
+describe('ExpressServer', () => {
     const testFilePath = process.cwd() + '/test/test-temp/';
     const testProjectName = 'test_tmp_project';
     const password = 'pw';

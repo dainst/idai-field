@@ -207,6 +207,12 @@ export class DoceditPage {
     }
 
 
+    public static async getFieldFormGroup(fieldName: string) {
+
+        return (await this.getField(fieldName)).$('.form-group');
+    }
+
+
     public static getGroup(groupName: string) {
 
         return getElement('#edit-form-goto-' + groupName.replace(':', '-'));

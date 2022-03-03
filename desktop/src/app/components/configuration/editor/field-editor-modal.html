@@ -39,8 +39,9 @@
                 <span i18n="@@configuration.showField">Feld anzeigen</span>
             </div>
             <div>
-                <label class="switch">
-                    <input type="checkbox"
+                <label id="toggle-hidden-slider" class="switch">
+                    <input
+                        type="checkbox"
                         [checked]="!hidden"
                         (change)="toggleHidden()">
                     <span class="slider round"></span>

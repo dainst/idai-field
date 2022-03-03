@@ -30,6 +30,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleHiddenSlider() {
+
+        return click('#toggle-hidden-slider');
+    }
+
+
     public static clickSwapValuelist() {
 
         return click('#swap-valuelist-button');

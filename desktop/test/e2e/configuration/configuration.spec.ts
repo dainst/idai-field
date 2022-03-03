@@ -457,6 +457,30 @@ describe('configuration --', () => {
     });
 
 
+    it('hide field', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickOpenContextMenuForField('description');
+        await ConfigurationPage.clickContextMenuEditOption();    
+        await EditConfigurationPage.clickToggleHiddenSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.clickSelectGroup('parent');
+        await waitForExist(await DoceditPage.getField('description'));
+        await waitForNotExist(await DoceditPage.getFieldFormGroup('description'));
+        
+        await DoceditPage.clickCloseEdit();
+
+        done();
+    });
+
+
     it('swap valuelist', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');

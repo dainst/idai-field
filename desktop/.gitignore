@@ -15,7 +15,7 @@ test/e2e/**/*.js
 test/e2e/**/*.js.map
 test/dist
 testdb
-test/test-temp/pouchdb-server.log
+test/test-temp/
 
 # compiled output
 /dist

@@ -3,10 +3,11 @@ import { ImageStore, ImageVariant, FileInfo } from 'idai-field-core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
 const bodyParser = typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
+
+let PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 @Injectable()
 export class ExpressServer {
@@ -19,7 +20,13 @@ export class ExpressServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private imagestore: ImageStore) { }
+    constructor(private imagestore: ImageStore, pouchDirectory?: string) {
+        if (pouchDirectory) {
+            PouchDB = PouchDB.defaults({ prefix: pouchDirectory });
+        }
+    }
+
+    public getPouchDB = () => PouchDB;
 
 
     /**
@@ -138,13 +145,13 @@ export class ExpressServer {
             }
         });
 
-        let logParameter = {};
+        let conditionalParameters = {};
         if (remote) {
-            logParameter = { logPath: remote.getGlobal('appDataPath') };
+            conditionalParameters = Object.assign(conditionalParameters, { logPath: remote.getGlobal('appDataPath') });
         }
 
         app.use('/db/', expressPouchDB(PouchDB, {
-            ...logParameter,
+            ...conditionalParameters,
             ...{
                 mode: 'fullCouchDB',
                 overrideMode: {
@@ -158,29 +165,40 @@ export class ExpressServer {
             }
         }));
 
-        await app.listen(3000, () => {
-            console.log('PouchDB Server is listening on port 3000');
+        let mainAppHandle: any;
+        await new Promise<void>((resolve) => {
+            mainAppHandle = app.listen(3000, () => {
+                console.log('PouchDB Server is listening on port 3000');
+                resolve();
+            });
         });
 
         const fauxtonApp = express();
 
         fauxtonApp.use(expressPouchDB(PouchDB, {
-            mode: 'fullCouchDB',
-            overrideMode: {
-                exclude: [
-                    'replicator',
-                    'routes/authentication',
-                    'routes/authorization',
-                    'routes/security',
-                    'routes/session'
-                ]
+            ...conditionalParameters,
+            ...{
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    exclude: [
+                        'replicator',
+                        'routes/authentication',
+                        'routes/authorization',
+                        'routes/security',
+                        'routes/session'
+                    ]
+                }
             }
         }));
 
-        await fauxtonApp.listen(3001, () => {
-            console.log('Fauxton is listening on port 3001');
+        let fauxtonAppHandle: any;
+        await new Promise<void>((resolve) => {
+            fauxtonAppHandle = fauxtonApp.listen(3001, () => {
+                console.log('Fauxton is listening on port 3001');
+                resolve();
+            });
         });
 
-        return app;
+        return [mainAppHandle, fauxtonAppHandle];
     }
 }

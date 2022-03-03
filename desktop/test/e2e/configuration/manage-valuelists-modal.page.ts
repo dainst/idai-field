@@ -26,6 +26,24 @@ export class ManageValuelistsModalPage {
     }
 
 
+    public static clickFilterButton() {
+
+        return click('#valuelist-filter-button');
+    }
+
+
+    public static clickToggleCustomFilter() {
+
+        return click('#custom-filter');
+    }
+
+
+    public static clickToggleInUseFilter() {
+
+        return click('#in-use-filter');
+    }
+
+
     public static clickCancel() {
 
         return click('#cancel-manage-valuelists-modal-button');

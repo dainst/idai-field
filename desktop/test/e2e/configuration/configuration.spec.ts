@@ -510,4 +510,46 @@ describe('configuration --', () => {
 
         done();
     });
+
+
+    it('filter valuelists in valuelists management', async done => {
+
+        await navigateTo('valuelists');
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('periods-default-1'));
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color-custom');
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue('newValue');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color');
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+        await waitForNotExist(await ManageValuelistsModalPage.getSelectValuelistButton('periods-default-1'));
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:Wood-color-custom'));
+        
+        await ManageValuelistsModalPage.clickFilterButton();
+        await ManageValuelistsModalPage.clickToggleInUseFilter();
+        await waitForNotExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:Wood-color-custom'));
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+        
+        await ManageValuelistsModalPage.clickToggleCustomFilter();
+        await waitForNotExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+        await waitForNotExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:Wood-color-custom'));
+        
+        await ManageValuelistsModalPage.clickToggleInUseFilter();
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:Wood-color-custom'));
+        await waitForNotExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+
+        await ManageValuelistsModalPage.clickToggleCustomFilter();
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('test:Wood-color-custom'));
+        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
+
+        await ManageValuelistsModalPage.clickCancel();
+        await ConfigurationPage.save();
+
+        done();
+    });
 });

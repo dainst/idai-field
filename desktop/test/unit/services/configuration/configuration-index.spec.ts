@@ -117,6 +117,18 @@ describe('ConfigurationIndex', () => {
                     },
                     'no-label-value': {}
                 }
+            },
+            {
+                id: 'valuelist-abc-def',
+                values: {
+                    'x': {}
+                }
+            },
+            {
+                id: 'valuelist-abc-ghi',
+                values: {
+                    'y': {}
+                }
             }
         ];
         const index = new ConfigurationIndex(undefined, undefined, undefined);
@@ -131,8 +143,13 @@ describe('ConfigurationIndex', () => {
         expect(index.findValuelists('Value')[0].id).toEqual('valuelist-1');
         expect(index.findValuelists('Value 1')[0].id).toEqual('valuelist-1');
         expect(index.findValuelists('no-label-value')[0].id).toEqual('valuelist-1');
+        expect(index.findValuelists('label-value')[0].id).toEqual('valuelist-1');
         expect(index.findValuelists('label')[0].id).toEqual('valuelist-1');
-        expect(index.findValuelists('Abc').length).toBe(0);
+        expect(index.findValuelists('abc')[0].id).toEqual('valuelist-abc-def');
+        expect(index.findValuelists('abc')[1].id).toEqual('valuelist-abc-ghi');
+        expect(index.findValuelists('abc-def').length).toBe(1);
+        expect(index.findValuelists('abc-def')[0].id).toEqual('valuelist-abc-def');
+        expect(index.findValuelists('xyz').length).toBe(0);
     });
 
 

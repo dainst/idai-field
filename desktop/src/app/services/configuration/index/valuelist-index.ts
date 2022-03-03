@@ -1,4 +1,4 @@
-import { flatten, keysValues, right, set } from 'tsfun';
+import { flatten, intersection, keysValues, right, set } from 'tsfun';
 import { Valuelist } from 'idai-field-core';
 import { tokenize } from './tokenize';
 
@@ -30,10 +30,18 @@ export namespace ValuelistIndex {
 
     export function find(index: ValuelistIndex, searchTerm: string): Array<Valuelist> {
 
-        return set(flatten(keysValues(index)
-            .filter(([term, _]) => term.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
-            .map(right)
-        ));
+        const searchTokens: string[] = tokenize([searchTerm], false);
+
+        return intersection(
+            searchTokens.map(searchToken => {
+                return set(flatten(keysValues(index)
+                    .filter(([term, _]) => {
+                        return term.toLocaleLowerCase().startsWith(searchToken.toLocaleLowerCase());
+                    })
+                    .map(right)
+                ));
+            })
+        );
     }
 
 

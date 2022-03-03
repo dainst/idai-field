@@ -1,8 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { all } from 'tsfun';
 import { Labels, Valuelist } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { containsSearchTerm } from '../getSearchResultLabel';
+import { tokenize } from '../../../../services/configuration/index/tokenize';
 
 
 @Component({
@@ -47,18 +49,23 @@ export class ValuelistListingComponent {
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {
 
-        if (this.searchTerm === '' || containsSearchTerm(valuelist.id, this.searchTerm)) {
+        const searchTokens: string[] = tokenize([this.searchTerm], false);
+
+        if (this.searchTerm === ''
+            || all((searchToken: string) => containsSearchTerm(valuelist.id, searchToken, false))(searchTokens)) {
             return undefined;
         }
     
-        for (let valueId of Object.keys(valuelist.values)) {
-            if (containsSearchTerm(valueId, this.searchTerm)) {
-                return valueId;
-            } else if (valuelist.values[valueId].label) {
-                const label: string|undefined = Object.values(valuelist.values[valueId].label).find(translation => {
-                    return containsSearchTerm(translation, this.searchTerm);
-                });
-                if (label) return label;
+        for (let searchToken of searchTokens) {
+            for (let valueId of Object.keys(valuelist.values)) {
+                if (containsSearchTerm(valueId, searchToken)) {
+                    return valueId;
+                } else if (valuelist.values[valueId].label) {
+                    const label: string|undefined = Object.values(valuelist.values[valueId].label).find(translation => {
+                        return containsSearchTerm(translation, searchToken);
+                    });
+                    if (label) return label;
+                }
             }
         }
     

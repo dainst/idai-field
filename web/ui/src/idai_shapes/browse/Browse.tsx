@@ -221,7 +221,9 @@ export default function Browse(): ReactElement {
                                     }
                                     { document && document.resource.category.name === 'Drawing' &&
                                         <Tab eventKey="publications" title="Publications">
-                                            <PublicationsOverview pubs={ availablePublications } />
+                                            <PublicationsOverview 
+                                                pubs={ availablePublications } 
+                                                tabKeyleft= {tabKeyleft} />
                                         </Tab>
                                     }
                                 </Tabs>

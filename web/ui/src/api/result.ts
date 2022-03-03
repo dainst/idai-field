@@ -25,6 +25,28 @@ export interface Result {
     filters: ResultFilter[];
 }
 
+export interface ZenonResult {
+    records: ZenonRecord[];
+    resultCount: number;
+    status: string;
+}
+
+export interface ZenonRecord {
+    id: string;
+    DAILinks: DAILinks ;
+    primaryAuthorsNames: string[];
+    secondaryAuthorsNames: string[];
+    publicationDates: string[];
+    shortTitle: string;
+    title: string;
+
+
+}
+
+export interface DAILinks {
+    gazetteer: string[];
+    thesauri: string[];
+}
 
 export interface ResultDocument {
     sort?: string;

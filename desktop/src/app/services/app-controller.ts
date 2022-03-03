@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, getConfigurationName, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './imagestore/image-converter';
@@ -9,7 +9,7 @@ import { ResourcesStateManager } from '../components/resources/view/resources-st
 import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
-import {Menus} from './menus';
+import { ConfigurationIndex } from './configuration/index/configuration-index';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
@@ -31,8 +31,9 @@ export class AppController {
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: Menus,
-                private menuNavigator: MenuNavigator) {}
+                private menuNavigator: MenuNavigator,
+                private configurationIndex: ConfigurationIndex,
+                private configReader: ConfigReader) {}
 
 
     public setupServer(): Promise<any> {
@@ -87,5 +88,11 @@ export class AppController {
             this.documentCache,
             new CategoryConverter(this.projectConfiguration)
         );
+
+        const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => db.get(id), this.configReader, getConfigurationName('test'), 'test-user'
+        );
+
+        await this.configurationIndex.rebuild(configurationDocument);
     }
 }

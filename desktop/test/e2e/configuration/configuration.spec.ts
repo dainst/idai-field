@@ -231,6 +231,36 @@ describe('configuration --', () => {
     });
 
 
+    it('edit category label', async done => {
+
+        expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Editierte Kategorie');
+        await EditConfigurationPage.clickConfirm();
+        expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Editierte Kategorie');
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Editierte Kategorie');
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickResetTranslation(0, 0);
+        await EditConfigurationPage.clickConfirm();
+        expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
+
+        done();
+    });
+
+
     it('add library field as custom field', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

@@ -22,6 +22,14 @@ export class EditConfigurationPage {
     }
 
 
+    public static async clickResetTranslation(inputIndex: number, translationIndex: number) {
+
+        const inputElement = (await getElements('multi-language-input'))[inputIndex];
+        const translationElement = (await inputElement.$$('.restore-button'))[translationIndex];
+        return click(translationElement);
+    }
+
+
     public static clickSwapValuelist() {
 
         return click('#swap-valuelist-button');

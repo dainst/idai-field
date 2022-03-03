@@ -1,5 +1,5 @@
 import { ImageDocument, SampleDataLoaderBase } from 'idai-field-core';
-import {ImageConverter} from '../../../imagestore/image-converter';
+import { ImageConverter } from '../../../imagestore/image-converter';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -16,8 +16,9 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
                 locale: string) {
-                    super(locale)
-                }
+
+        super(locale);
+    }
 
 
     public async go(db: PouchDB.Database, project: string) {
@@ -84,24 +85,4 @@ export class SampleDataLoader extends SampleDataLoaderBase {
             fs.createWriteStream(destFolderPath + '/' + fileName)
         );
     }
-
-
-    // private static async createDocument(document: Document, db: PouchDB.Database) {
-
-    //     document.created = { user: 'sample_data', date: new Date() };
-    //     document.modified = [{ user: 'sample_data', date: new Date() }];
-    //     document._id = document.resource.id;
-    //     document.resource.type = document.resource.category;
-    //     delete document.resource.category;
-
-    //     if (document.resource.id === 'project') {
-    //         try {
-    //             const project = await db.get('project');
-    //             await db.remove('project', project._rev);
-    //         } catch {
-    //             // Ignore errors
-    //         }
-    //     }
-    //     await db.put(document);
-    // }
 }

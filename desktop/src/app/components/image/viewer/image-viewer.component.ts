@@ -1,9 +1,10 @@
-import {Component, OnChanges, Input, OnInit} from '@angular/core';
-import {ImageDocument, ImageVariant} from 'idai-field-core';
-import {ImageContainer} from '../../../services/imagestore/image-container';
-import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
-import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
-import {Messages} from '../../messages/messages';
+import { Component, OnChanges, Input } from '@angular/core';
+import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
+import { ImageContainer } from '../../../services/imagestore/image-container';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole } from '../log-messages';
+import { Messages } from '../../messages/messages';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -21,12 +22,16 @@ export class ImageViewerComponent implements OnChanges {
     public imageContainer: ImageContainer;
 
 
-    constructor(
-        private imageUrlMaker: ImageUrlMaker
-    ) {}
+    constructor(private imageUrlMaker: ImageUrlMaker,
+                private imagestore: ImageStore,
+                private messages: Messages) {}
 
     async ngOnChanges() {
 
+        if (!this.imagestore.getAbsoluteRootPath()) {
+            this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+        }
+        
         if (this.image) this.imageContainer = await this.loadImage(this.image);
     }
 

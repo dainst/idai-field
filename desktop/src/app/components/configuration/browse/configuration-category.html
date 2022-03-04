@@ -1,10 +1,10 @@
-<div [id]="'category-' + category.name"
+<div [id]="getCategoryId()"
      class="category-header"
      [class.with-description]="description"
-     (dblclick)="onEditCategory.emit()"
      (contextmenu)="contextMenu.open($event, category)">
     <div class="row" [class.custom-category]="category.source === 'custom'">
-        <div class="col header header-left d-flex">
+        <div class="col header header-left d-flex"
+             (dblclick)="onEditCategory.emit()">
             <category-icon size="35" [category]="category"></category-icon>
             <h6>
                 <span *ngIf="category.source === 'custom'"
@@ -19,7 +19,19 @@
             <code class="category-name">{{category.name}}</code>
         </div>
         <div class="col header header-right text-right">
+            <hierarchical-relations-info *ngIf="!category.isAbstract"
+                                         [category]="category"
+                                         [mode]="'liesWithin'"
+                                         [clonedProjectConfiguration]="clonedProjectConfiguration">
+            </hierarchical-relations-info>
+            <hierarchical-relations-info *ngIf="!category.isAbstract"
+                                         [category]="category"
+                                         [mode]="'includes'"
+                                         [clonedProjectConfiguration]="clonedProjectConfiguration">
+            </hierarchical-relations-info>
             <span *ngIf="category.source !== 'custom'"
+                  id="form-info"
+                  [class.abstract-category]="category.isAbstract"
                   ngbTooltip="Ausgewähltes Formular"
                   i18n-ngbTooltip="@@configuration.seletedForm"
                   container="body"
@@ -44,7 +56,7 @@
                 cdkDrag cdkDragBoundary=".groups-container" cdkDragLockAxis="y"
                 (cdkDragStarted)="onDragging.emit(true)"
                 (cdkDragEnded)="onDragging.emit(false)">
-                <a [id]="'group-' + group.name" class="list-group-item group-button"
+                <a [id]="getGroupId(group)" class="list-group-item group-button"
                    cdkDropList (cdkDropListDropped)="onFieldDrop($event, group)"
                    [cdkDropListConnectedTo]="['fields-list']"
                    [class.active]="selectedGroup === group.name"

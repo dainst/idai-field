@@ -10,8 +10,8 @@ import { ConfigurationContextMenu } from '../context-menu/configuration-context-
     templateUrl: './configuration-field.html'
 })
 /**
-* @author Sebastian Cuy
-* @author Thomas Kleinke
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class ConfigurationFieldComponent implements OnChanges {
 
@@ -35,6 +35,9 @@ export class ConfigurationFieldComponent implements OnChanges {
 
 
     constructor(private labels: Labels) {}
+
+
+    public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
 
 
     ngOnChanges() {

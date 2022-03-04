@@ -50,6 +50,16 @@ configuration-category {
         margin-right: 6px;
         color: #414952;
       }
+
+      #form-info {
+        position: relative;
+        bottom: 6px;
+        margin-left: 14px;
+
+        &.abstract-category {
+          bottom: 0;
+        }
+      }
     }
 
     .subheader {

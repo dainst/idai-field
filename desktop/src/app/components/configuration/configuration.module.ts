@@ -43,6 +43,7 @@ import { ConfigurationConflictsModalComponent } from './conflicts/configuration-
 import { SaveModalComponent } from './save/save-modal.component';
 import { ConfigurationGuard } from './configuration-guard';
 import { GroupListingComponent } from './add/group/group-listing.component';
+import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relations-info.component';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import { GroupListingComponent } from './add/group/group-listing.component';
         ValuelistViewComponent,
         ExtendValuelistModalComponent,
         ConfigurationChangeNotificationModalComponent,
-        ConfigurationConflictsModalComponent
+        ConfigurationConflictsModalComponent,
+        HierarchicalRelationsInfoComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

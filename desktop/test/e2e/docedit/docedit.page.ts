@@ -1,4 +1,5 @@
-import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue } from '../app';
+import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue,
+    getText } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -72,6 +73,18 @@ export class DoceditPage {
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');
+    }
+
+
+    public static clickGotoDimensionTab() {
+
+        return click('#edit-form-goto-dimension');
+    }
+
+
+    public static async clickSelectGroup(groupName: string) {
+
+        return click(await this.getGroup(groupName));
     }
 
 
@@ -155,6 +168,19 @@ export class DoceditPage {
     };
 
 
+    public static async getFieldLabel(fieldName: string) {
+
+        const fieldElement = await this.getField(fieldName);
+        return getText(await fieldElement.$('.card-title'));
+    }
+
+
+    public static async getGroupLabel(groupName: string) {
+
+        return getText(await this.getGroup(groupName));
+    }
+
+
     // elements
 
     public static getNumberOfDuplicatesInputField() {
@@ -172,6 +198,24 @@ export class DoceditPage {
     public static getGeometryEditWidget() {
 
         return getElement('dai-geometry');
+    }
+
+
+    public static getField(fieldName: string) {
+
+        return getElement('#edit-form-element-' + fieldName.replace(':', '-'));
+    }
+
+
+    public static async getFieldFormGroup(fieldName: string) {
+
+        return (await this.getField(fieldName)).$('.form-group');
+    }
+
+
+    public static getGroup(groupName: string) {
+
+        return getElement('#edit-form-goto-' + groupName.replace(':', '-'));
     }
 
 

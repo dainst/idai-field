@@ -51,7 +51,11 @@ export class CategoryListingComponent implements OnChanges {
 
     public getSearchResultLabel = (form: CategoryForm) => getSearchResultLabel(form, this.searchTerm, this.getLabel);
     
-    
+    public getItemId = (item: CategoryListingItem) => item.isCategoryHeader
+        ? 'category-header-' + item.form.name
+        : 'select-category-form-' + item.form.libraryId.replace(':', '-');
+
+
     private createItems(): Array<CategoryListingItem> {
 
         return this.categoryForms.reduce((result, form) => {

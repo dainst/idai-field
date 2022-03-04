@@ -8,12 +8,16 @@
                    type="text" class="form-control"
                    [disabled]="disabled">
         </div>
-        <button *ngIf="isDeleteButtonVisible(languageCode)" class="btn btn-danger" type="button"
+        <button *ngIf="isDeleteButtonVisible(languageCode)"
+                class="btn btn-danger"
+                type="button"
                 [disabled]="disabled"
                 (click)="deleteTranslation(languageCode)">
             <span class="mdi mdi-delete"></span>
         </button>
-        <button *ngIf="isRestoreButtonVisible(languageCode)" class="btn btn-primary" type="button"
+        <button *ngIf="isRestoreButtonVisible(languageCode)"
+                class="btn btn-primary restore-button"
+                type="button"
                 [disabled]="disabled"
                 (click)="restoreDefaultTranslation(languageCode)">
             <span class="mdi mdi-restore"></span>

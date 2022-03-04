@@ -38,6 +38,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public activateGroup = (name: string) => this.activeGroup = name;
 
+    public getGroupId = (group: Group) => 'edit-form-goto-' + group.name.replace(':', '-');
+
 
     ngAfterViewInit() {
 

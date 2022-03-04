@@ -131,7 +131,7 @@ export class AddCategoryFormModalComponent {
 
         try {
             this.applyChanges(clonedConfigurationDocument, true);
-            this.activeModal.close();
+            this.activeModal.close(this.selectedForm);
         } catch { /* stay in modal */ }
     }
 
@@ -151,7 +151,7 @@ export class AddCategoryFormModalComponent {
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
-            () => this.activeModal.close(),
+            () => this.activeModal.close(this.emptyForm),
             () => AngularUtility.blurActiveElement()
         );
     }
@@ -178,8 +178,11 @@ export class AddCategoryFormModalComponent {
 
         if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
 
+        const name: string = Naming.getCategoryName(this.searchTerm, this.settingsProvider.getSettings().selectedProject);
+
         return {
-            libraryId: Naming.getCategoryName(this.searchTerm, this.settingsProvider.getSettings().selectedProject),
+            name: name,
+            libraryId: name,
             groups: this.parentCategory.groups
         } as CategoryForm;
     }

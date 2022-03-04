@@ -1,5 +1,6 @@
 <ul class="bg-light listing">
     <li *ngFor="let item of items"
+        [id]="getItemId(item)"
         [class.category-header]="item.isCategoryHeader"
         [class.selected]="!item.isCategoryHeader && selectedForm === item.form"
         (click)="!item.isCategoryHeader && selectForm(item.form)">

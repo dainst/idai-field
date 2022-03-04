@@ -87,9 +87,9 @@ export class CategoryPickerComponent {
 
         return (
             category.parentCategory
-                ? (category.parentCategory as CategoryForm).name.toLowerCase() + '-'
+                ? (category.parentCategory as CategoryForm).name.replace(':', '-').toLowerCase() + '-'
                 : ''
-        ) + category.name.toLowerCase();
+        ) + category.name.replace(':', '-').toLowerCase();
     }
 
 

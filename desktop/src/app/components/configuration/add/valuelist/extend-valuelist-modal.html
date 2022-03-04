@@ -6,17 +6,17 @@
     <span i18n="@@configuration.extendValuelistInfo">
         Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <code>{{valuelistToExtend.id}}</code>.
     </span>
-    <input type="text" id="field-name" class="form-control" [(ngModel)]="newValuelistId">
+    <input type="text" id="valuelist-extension-name" class="form-control" [(ngModel)]="newValuelistId">
 </div>
 
 <div class="modal-footer">
-    <button id="create-valuelist-button"
+    <button id="confirm-valuelist-extension-button"
          class="btn btn-success"
          [disabled]="!newValuelistId"
          (click)="confirm()">
         <span i18n="@@configuration.createExtendingValuelist">Erweiterung erstellen</span>
     </button>
-    <button id="cancel-add-valuelist-modal-button"
+    <button id="cancel-valuelist-extension-modal-button"
          class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>

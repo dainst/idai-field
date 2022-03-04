@@ -19,8 +19,8 @@ export function getSearchResultLabel(item: I18N.LabeledValue, searchTerm: string
 }
 
 
-export function containsSearchTerm(term: string, searchTerm: string): boolean {
+export function containsSearchTerm(term: string, searchTerm: string, keepOriginal: boolean = true): boolean {
 
-    return tokenize([term.toLocaleLowerCase()])
+    return tokenize([term.toLocaleLowerCase()], keepOriginal)
         .find(token => token.startsWith(searchTerm.toLocaleLowerCase())) !== undefined;
 }

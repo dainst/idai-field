@@ -17,11 +17,5 @@
 
   #no-images-placeholder {
     width: calc(100% - 258px);
-    height: calc(100% + 169px);
-    background-color: #252525;
-
-    .alert {
-      user-select: none;
-    }
   }
 }

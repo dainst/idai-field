@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {FieldDocument, ImageDocument} from 'idai-field-core';
-import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {ImageRowItem} from '../../image/row/image-row';
-import {ImageUploadResult} from '../../image/upload/image-uploader';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { FieldDocument, ImageDocument } from 'idai-field-core';
+import { ImageGridComponent } from '../../image/grid/image-grid.component';
+import { ImageRowItem } from '../../image/row/image-row';
+import { ImageUploadResult } from '../../image/upload/image-uploader';
 
 
 @Component({
@@ -27,7 +27,6 @@ export class ImageViewEditComponent implements OnChanges {
     @Input() selected: Array<ImageDocument> = [];
 
     @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
-
     @Output() startEditImages = new EventEmitter<any>();
 
 

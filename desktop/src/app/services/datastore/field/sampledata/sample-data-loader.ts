@@ -1,5 +1,5 @@
-import { ImageStore, SampleDataLoaderBase } from 'idai-field-core';
-import {ThumbnailGenerator} from '../../../imagestore/thumbnail-generator';
+import { SampleDataLoaderBase } from 'idai-field-core';
+import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -17,8 +17,9 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     constructor(private thumbnailGenerator: ThumbnailGenerator,
                 private imagestorePath: string,
                 locale: string) {
-                    super(locale);
-                }
+
+        super(locale);
+    }
 
 
     public async go(db: PouchDB.Database, project: string) {

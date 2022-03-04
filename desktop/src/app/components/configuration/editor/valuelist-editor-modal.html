@@ -6,7 +6,7 @@
     <h5 *ngIf="!new" class="modal-title" i18n="@@configuration.editSpecificValuelist">
         Werteliste <code>{{valuelist.id}}</code> bearbeiten
     </h5>
-    <button id="confirm-button" class="btn btn-primary"
+    <button id="confirm-valuelist-button" class="btn btn-primary"
             [ngClass]="{ 'disabled': applyingChanges || !isChanged() }"
             (click)="applyingChanges || !isChanged() || confirm()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>

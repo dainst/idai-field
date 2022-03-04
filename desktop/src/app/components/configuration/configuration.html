@@ -10,27 +10,32 @@
                 <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
                 <div id="categories-filter-selection-menu" class="dropdown-menu" ngbDropdownMenu>
                     <div id="categories-filter-selection-buttons">
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[0].name"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[0])">
                             {{categoriesFilterOptions[0].label}}
                         </button>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[1].name"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[1])">
                             {{categoriesFilterOptions[1].label}}
                         </button>
                         <div class="dropdown-divider"></div>
                         <button *ngIf="isCategoryConfigured('Trench')"
+                                [id]="'categories-filter-selection-button-' + categoriesFilterOptions[2].name"
                                 class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[2])">
                             {{categoriesFilterOptions[2].label}}
                         </button>
                         <button *ngIf="isCategoryConfigured('Building')"
+                                [id]="'categories-filter-selection-button-' + categoriesFilterOptions[3].name"
                                 class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[3])">
                             {{categoriesFilterOptions[3].label}}
                         </button>
                         <button *ngIf="isCategoryConfigured('Survey')"
+                                [id]="'categories-filter-selection-button-' + categoriesFilterOptions[4].name"
                                 class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[4])">
                             {{categoriesFilterOptions[4].label}}
@@ -39,11 +44,13 @@
                                     || isCategoryConfigured('Building')
                                     || isCategoryConfigured('Survey')"
                             class="dropdown-divider"></div>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[5].name"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[5])">
                             {{categoriesFilterOptions[5].label}}
                         </button>
-                        <button class="dropdown-item categories-filter-selection-button"
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[6].name"
+                                class="dropdown-item categories-filter-selection-button"
                                 (click)="setCategoriesFilter(categoriesFilterOptions[6])">
                             {{categoriesFilterOptions[6].label}}
                         </button>
@@ -94,6 +101,7 @@
             <div class="col-10">
                 <configuration-category [category]="selectedCategory"
                                         [configurationDocument]="configurationDocument"
+                                        [clonedProjectConfiguration]="clonedProjectConfiguration"
                                         [showHiddenFields]="isShowHiddenFields()"
                                         [availableInputTypes]="availableInputTypes"
                                         [contextMenu]="contextMenu"

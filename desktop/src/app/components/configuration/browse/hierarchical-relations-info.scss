@@ -1,0 +1,48 @@
+hierarchical-relations-info {
+  .btn {
+    position: relative;
+    bottom: 7px;
+
+    &.no-categories {
+      @extend .disabled;
+      pointer-events: initial !important;
+    }
+
+    span {
+      position: relative;
+      top: 1px;
+    }
+  }
+
+  #hierarchical-relations-info-popover {
+    .popover-custom-title {
+      font-size: 14px;
+
+      &.no-categories {
+        background-color: white;
+      }
+    }
+
+    ul {
+      margin: 3px;
+      padding: 0;
+
+      li {
+        display: block;
+        list-style: none;
+        padding: 5px;
+
+        .category-icon {
+          position: relative;
+          top: 3px;
+        }
+
+        .hierarchical-relation-category-label {
+          position: relative;
+          bottom: 3px;
+          left: 6px;
+        }
+      }
+    }
+  }
+}

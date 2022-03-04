@@ -28,6 +28,9 @@ export class EditFormGroup implements OnChanges {
     }
 
 
+    public getFieldId = (field: Field) => 'edit-form-element-' + field.name.replace(':', '-');
+
+
     public shouldShow(field: Field): boolean {
 
         return field !== undefined && field.editable === true;

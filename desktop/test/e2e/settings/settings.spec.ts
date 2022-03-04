@@ -44,6 +44,7 @@ describe('settings --', function() {
 
     it('show warnings if an invalid imagestore path is set', async done => {
 
+        await SettingsPage.clickOpenAdvancedSettings();
         await typeIn(await SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
         await SettingsPage.clickSaveSettingsButton();
         await NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);

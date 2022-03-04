@@ -44,7 +44,7 @@ export class ImageViewerComponent implements OnChanges {
         try {
             image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.ORIGINAL);
         } catch (e) {
-            image.imgSrc = ImageUrlMaker.blackImg;
+            image.imgSrc = undefined;
         }
 
         try {

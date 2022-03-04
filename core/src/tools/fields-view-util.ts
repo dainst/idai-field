@@ -6,7 +6,7 @@ import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
-import { BaseGroup, Group } from '../model/configuration/group';
+import { BaseGroup, Group, Groups } from '../model/configuration/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
@@ -28,6 +28,7 @@ export interface FieldsViewGroup extends BaseGroup {
 
 export interface FieldsViewField {
 
+    name: string;
     label: string;
     type: 'default'|'array'|'object'|'relation';
     value?: string|string[]; // TODO add object types
@@ -78,15 +79,21 @@ export module FieldsViewUtil {
     export async function getGroupsForResource(resource: Resource,
                                                projectConfiguration: ProjectConfiguration,
                                                datastore: Datastore,
-                                               labels: Labels): Promise<Array<FieldsViewGroup>> {
+                                               labels: Labels,
+                                               presentInInverseRelationLabel?: string): Promise<Array<FieldsViewGroup>> {
 
         const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
 
-        return await aFlow(
+        const result = await aFlow(
             projectConfiguration.getCategory(resource.category).groups,
             putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
             filter(shouldBeDisplayed)
         );
+
+        if (presentInInverseRelationLabel) {
+            await addPresentInInverseRelation(result, resource, datastore, presentInInverseRelationLabel);
+        }
+        return result; 
     }
 
 
@@ -141,6 +148,7 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 filter(on(R, value => isDefined(value) && value !== '')),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
                 map(makeField(projectConfiguration, relationTargets, labels)),
+                filter(field => !field.targets || field.targets.length > 0),
                 flatten() as any /* TODO review typing*/
             )
         )
@@ -157,11 +165,13 @@ function makeField(projectConfiguration: ProjectConfiguration,
         return (field.inputType === Field.InputType.RELATION
                 || field.inputType === Field.InputType.INSTANCE_OF)
             ? {
+                name: field.name,
                 label: labels.get(field),
                 type: 'relation',
                 targets: relationTargets[field.name]
             }
             : {
+                name: field.name,
                 label: labels.get(field),
                 value: isArray(fieldContent)
                     ? fieldContent.map((fieldContent: any) =>
@@ -201,4 +211,28 @@ async function getRelationTargets(resource: Resource, datastore: Datastore): Pro
     }
 
     return targets;
+}
+
+
+async function addPresentInInverseRelation(groups: Array<FieldsViewGroup>, resource: Resource, datastore: Datastore,
+                                           presentInInverseRelationLabel: string) {
+
+    if (resource.category !== 'Profile' && resource.category !== 'Planum') return;
+
+    let group = groups.find(group => group.name === Groups.POSITION);
+    if (!group) group = groups.find(group => group.name === Groups.OTHER);
+    if (!group) group = groups[0];
+
+    const targets: Array<Document> = (await datastore.find(
+        { constraints: { 'isPresentIn:contain': resource.id } }
+    )).documents;
+
+    if (targets.length > 0) {
+        group.fields.push({
+            name: 'hasPresent',
+            label: presentInInverseRelationLabel,
+            type: 'relation',
+            targets: targets
+        });
+    }
 }

@@ -1,17 +1,6 @@
-import {
-    CategoryConverter,
-    ConfigLoader,
-    ConfigReader,
-    ConfigurationDocument,
-    ConstraintIndex,
-    DocumentCache,
-    FulltextIndex,
-    getConfigurationName,
-    Indexer,
-    IndexFacade,
-    PouchdbDatastore,
-    ProjectConfiguration
-} from 'idai-field-core';
+import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
+    DocumentCache, FulltextIndex, getConfigurationName, ImageStore, Indexer, IndexFacade,
+    PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -22,6 +11,7 @@ import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
 import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
+import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 
 
 interface Services {
@@ -100,6 +90,7 @@ export const appInitializerFactory = (
     serviceLocator: AppInitializerServiceLocator,
     settingsService: SettingsService,
     pouchdbDatastore: PouchdbDatastore,
+    imageStore: ImageStore,
     expressServer: ExpressServer,
     documentCache: DocumentCache,
     thumbnailGenerator: ThumbnailGenerator,
@@ -111,10 +102,11 @@ export const appInitializerFactory = (
     await expressServer.setupServer();
 
     const settings = await loadSettings(settingsService, progress);
-
     await setUpDatabase(settingsService, settings, progress);
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
+
+    await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),

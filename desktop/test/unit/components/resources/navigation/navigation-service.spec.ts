@@ -7,21 +7,27 @@ describe('NavigationService', () => {
     let viewFacade;
     let projectConfiguration;
     let navigationService;
+    let messages;
 
 
     beforeEach(() => {
 
         viewFacade = jasmine.createSpyObj(
-            'vf',
+            'viewFacade',
             ['isInOverview', 'moveInto', 'isInExtendedSearchMode']
         );
 
         projectConfiguration = jasmine.createSpyObj(
-            'pc',
+            'projectConfiguration',
             ['getRelationsForRangeCategory', 'getCategory']
         );
 
-        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
+        messages = jasmine.createSpyObj(
+            'messages',
+            ['add']
+        );
+
+        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade, messages);
 
         viewFacade.isInOverview.and.returnValue(false);
         viewFacade.isInExtendedSearchMode.and.returnValue(false);

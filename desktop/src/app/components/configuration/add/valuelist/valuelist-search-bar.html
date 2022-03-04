@@ -2,7 +2,7 @@
     <input type="text"
            id="valuelist-search-input"
            class="form-control"
-           [(ngModel)]="queryString"
+           [(ngModel)]="searchQuery.queryString"
            (ngModelChange)="submitQuery()">
     <span id="valuelist-filter-button">
         <div class="btn btn-primary"
@@ -24,7 +24,7 @@
                                 class="form-check-input"
                                 name="custom-filter"
                                 type="checkbox"
-                                [checked]="onlyCustom"
+                                [checked]="searchQuery.onlyCustom"
                                 (change)="toggleCustomFilter()">
                         <label id="custom-filter-label"
                                 class="form-check-label"
@@ -38,7 +38,7 @@
                                 class="form-check-input"
                                 name="in-use-filter"
                                 type="checkbox"
-                                [checked]="onlyInUse"
+                                [checked]="searchQuery.onlyInUse"
                                 (change)="toggleInUseFilter()">
                         <label id="custom-filter-label"
                                 class="form-check-label"

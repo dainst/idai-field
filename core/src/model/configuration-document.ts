@@ -183,8 +183,8 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function swapCategoryForm(configurationDocument: ConfigurationDocument,
-                                     currentForm: CategoryForm, newForm: CategoryForm): ConfigurationDocument {
+    export function swapCategoryForm(configurationDocument: ConfigurationDocument, currentForm: CategoryForm,
+                                     newForm: CategoryForm, parentForm?: CategoryForm): ConfigurationDocument {
 
         const clonedConfigurationDocument = ConfigurationDocument.deleteCategory(
             configurationDocument, currentForm, false
@@ -203,19 +203,24 @@ export namespace ConfigurationDocument {
             }
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
         });
+
+        if (parentForm) addCustomParentFields(newForm, parentForm, clonedConfigurationDocument);
         
         return clonedConfigurationDocument;
     }
 
 
-    export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm) {
+    export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm,
+                                    parentForm?: CategoryForm) {
 
         const clonedConfigurationDocument = Document.clone(configurationDocument);
 
         clonedConfigurationDocument.resource.forms[categoryForm.libraryId] = {
             fields: {},
             hidden: []
-        };
+        }
+        
+        if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
 
         return addToCategoriesOrder(
             clonedConfigurationDocument, categoryForm.name, categoryForm.parentCategory?.name
@@ -287,13 +292,26 @@ export namespace ConfigurationDocument {
     }
 
 
+    function addCustomParentFields(categoryForm: CategoryForm, parentForm: CategoryForm,
+                                   clonedConfigurationDocument: ConfigurationDocument) {
+
+        parentForm.groups.forEach(group => {
+            group.fields.filter(field => parentForm.customFields?.includes(field.name))
+                .forEach(field => addFieldToGroup(clonedConfigurationDocument, categoryForm,
+                    getPermanentlyHiddenFields(clonedConfigurationDocument, categoryForm), group.name, field.name));
+        });
+    }
+
+
     function addFieldToGroup(configurationDocument: ConfigurationDocument, category: CategoryForm,
                              permanentlyHiddenFields: string[], groupName: string, fieldName: string) {
         
         const form: CustomFormDefinition = configurationDocument.resource
             .forms[category.libraryId ?? category.name];
 
-        form.groups = CategoryForm.getGroupsConfiguration(category, permanentlyHiddenFields);
+        if (!form.groups || form.groups.length === 0) {
+            form.groups = CategoryForm.getGroupsConfiguration(category, permanentlyHiddenFields);
+        }
         let group: BaseGroupDefinition = form.groups.find(on('name', groupName));
         if (!group) {
             group = { name: groupName, fields: [] };

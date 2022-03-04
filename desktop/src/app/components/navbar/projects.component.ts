@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import { MenuNavigator } from '../menu-navigator';
+import { Component, OnInit } from '@angular/core';
+import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { SettingsProvider } from '../../services/settings/settings-provider';
 
 
 @Component({
@@ -17,10 +17,10 @@ export class ProjectsComponent implements OnInit {
 
 
     constructor(private settingsProvider: SettingsProvider,
-                private menuNavigator: MenuNavigator) {}
+                private projectModalLauncher: ProjectModalLauncher) {}
 
 
-    public openModal = () => this.menuNavigator.editProject();
+    public openModal = () => this.projectModalLauncher.editProject();
 
 
     ngOnInit() {

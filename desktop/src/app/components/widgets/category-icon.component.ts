@@ -20,6 +20,7 @@ export class CategoryIconComponent implements OnChanges {
 
     @Input() size: number;
     @Input() category: string|CategoryForm;
+    @Input() customProjectConfiguration: ProjectConfiguration;
 
     public character: Character;
     public color: Color;
@@ -47,7 +48,7 @@ export class CategoryIconComponent implements OnChanges {
         this.character =
             StringUtils.first(
                 isString(this.category)
-                    ? this.labels.get(this.projectConfiguration.getCategory(this.category))
+                    ? this.labels.get(this.getCategory(this.category))
                     : this.labels.get(this.category));
     }
 
@@ -57,9 +58,17 @@ export class CategoryIconComponent implements OnChanges {
         this.color =
             (
                 isString(this.category)
-                    ? this.projectConfiguration.getCategory(this.category)
+                    ? this.getCategory(this.category)
                     : this.category
             )
             .color;
+    }
+
+
+    private getCategory(categoryName: string): CategoryForm {
+
+        return this.customProjectConfiguration
+            ? this.customProjectConfiguration.getCategory(categoryName)
+            : this.projectConfiguration.getCategory(categoryName);
     }
 }

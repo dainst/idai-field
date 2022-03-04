@@ -19,23 +19,6 @@ export class Validator {
 
 
     /**
-     * @throws [NO_ISRECORDEDIN_TARGET]
-     */
-    public async assertIsRecordedInTargetsExist(document: Document|NewDocument): Promise<void> {
-
-        if (document.resource.relations[RECORDED_IN] && document.resource.relations[RECORDED_IN].length > 0) {
-            const invalidRelationTargets = await this.validateRelationTargets(document as Document, RECORDED_IN);
-            if (invalidRelationTargets) {
-                throw [
-                    ValidationErrors.NO_ISRECORDEDIN_TARGET,
-                    invalidRelationTargets.join(', ')
-                ];
-            }
-        }
-    }
-
-
-    /**
      * @throws [IDENTIFIER_ALREADY_EXISTS]
      */
     public async assertIdentifierIsUnique(document: Document|NewDocument): Promise<void> {
@@ -55,12 +38,6 @@ export class Validator {
         if (result.totalCount > 0 && on(['resource', 'id'], isnt(result.documents[0].resource.id))(document)) {
             throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
-    }
-
-
-    async isExistingRelationTarget(targetId: string): Promise<boolean> {
-
-        return (await this.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 
@@ -93,20 +70,5 @@ export class Validator {
             .getRegularCategories()
             .map(Named.toName)
             .includes(document.resource.category);
-    }
-
-
-    private async validateRelationTargets(document: Document,
-                                          relationName: string): Promise<string[]|undefined> {
-
-        if (!Document.hasRelations(document, relationName)) return [];
-
-        const invalidRelationTargetIds: string[] = [];
-
-        for (let targetId of document.resource.relations[relationName]) {
-            if (!(await this.isExistingRelationTarget(targetId))) invalidRelationTargetIds.push(targetId);
-        }
-
-        return invalidRelationTargetIds.length > 0 ? invalidRelationTargetIds : undefined;
     }
 }

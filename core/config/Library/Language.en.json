@@ -107,9 +107,6 @@
         },
         "trenchComment": {
           "label": "Trench comment"
-        },
-        "excavationType": {
-          "label": "Excavation type"
         }
       }
     },

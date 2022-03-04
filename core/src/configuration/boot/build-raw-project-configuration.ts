@@ -1,5 +1,5 @@
 import { compose, cond, filter, flow, identity, includedIn, isDefined, isNot, Map, Mapping,
-    update as updateStruct, curry, clone } from 'tsfun';
+    update as updateStruct, curry } from 'tsfun';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { LanguageConfigurations } from '../model/language/language-configurations';

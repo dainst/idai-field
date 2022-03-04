@@ -210,6 +210,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
     public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
+    public static RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY = 'resources.error.parentResourceUnknownCategory';
+    public static RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY = 'resources.error.parentOperationUnknownCategory';
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
 
 
@@ -1690,6 +1692,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.resourceMissingDuringSyncing',
                 value: 'Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY] = {
+            content: i18n({
+                id: 'messages.resources.error.parentResourceUnknownCategory',
+                value: 'Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY] = {
+            content: i18n({
+                id: 'messages.resources.error.parentOperationUnknownCategory',
+                value: 'Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.'
             }),
             level: 'danger',
             params: [],

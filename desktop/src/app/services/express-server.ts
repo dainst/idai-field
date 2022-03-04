@@ -3,10 +3,11 @@ import { ImageStore, ImageVariant, FileInfo } from 'idai-field-core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
 const bodyParser = typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
+
+let PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 @Injectable()
 export class ExpressServer {
@@ -19,16 +20,20 @@ export class ExpressServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private imagestore: ImageStore) { }
+    constructor(private imagestore: ImageStore) {}
+
+    public getPouchDB = () => PouchDB;
 
 
     /**
      * Provides Fauxton and the CouchDB REST API
      */
-    public async setupServer() {
+    public async setupServer(pouchDirectory?: string) {
 
         const self = this;
         const app = express();
+
+        if (pouchDirectory) PouchDB = PouchDB.defaults({ prefix: pouchDirectory });
 
         app.use(expressBasicAuth({
             challenge: true,
@@ -102,14 +107,14 @@ export class ExpressServer {
         });
 
 
-        app.put('/files/:project/:uuid', this.binaryBodyParser, (req: any, res: any) => {
+        app.put('/files/:project/:uuid', this.binaryBodyParser, async (req: any, res: any) => {
 
             try {
                 if (!req.query.type) {
-                    this.imagestore.store(req.params.uuid, req.body, req.params.project);
+                    await this.imagestore.store(req.params.uuid, req.body, req.params.project);
                     res.status(200).send({});
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
-                    this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
+                    await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
                     res.status(200).send({});
                 }
             } catch (e) {
@@ -123,10 +128,10 @@ export class ExpressServer {
         });
 
 
-        app.delete('/files/:project/:uuid', (req: any, res: any) => {
+        app.delete('/files/:project/:uuid', async (req: any, res: any) => {
 
             try {
-                this.imagestore.remove(req.params.uuid, req.params.project);
+                await this.imagestore.remove(req.params.uuid, req.params.project);
                 res.status(200).send({});
             } catch (e) {
                 if (e.code === 'ENOENT') {
@@ -138,41 +143,60 @@ export class ExpressServer {
             }
         });
 
+        let conditionalParameters = {};
+        if (remote) {
+            conditionalParameters = Object.assign(conditionalParameters, { logPath: remote.getGlobal('appDataPath') });
+        }
 
         app.use('/db/', expressPouchDB(PouchDB, {
-            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
-            mode: 'fullCouchDB',
-            overrideMode: {
-                exclude: [
-                    'routes/authentication',
-                    'routes/authorization',
-                    'routes/fauxton',
-                    'routes/session'
-                ]
-            },
+            ...conditionalParameters,
+            ...{
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    exclude: [
+                        'routes/authentication',
+                        'routes/authorization',
+                        'routes/fauxton',
+                        'routes/session'
+                    ]
+                }
+            }
         }));
 
-        await app.listen(3000, () => {
-            console.log('PouchDB Server is listening on port 3000');
+        let mainAppHandle: any;
+        await new Promise<void>((resolve) => {
+            mainAppHandle = app.listen(3000, () => {
+                console.log('PouchDB Server is listening on port 3000');
+                resolve();
+            });
         });
 
         const fauxtonApp = express();
 
         fauxtonApp.use(expressPouchDB(PouchDB, {
-            mode: 'fullCouchDB',
-            overrideMode: {
-                exclude: [
-                    'replicator',
-                    'routes/authentication',
-                    'routes/authorization',
-                    'routes/security',
-                    'routes/session'
-                ]
+            ...conditionalParameters,
+            ...{
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    exclude: [
+                        'replicator',
+                        'routes/authentication',
+                        'routes/authorization',
+                        'routes/security',
+                        'routes/session'
+                    ]
+                }
             }
         }));
 
-        await fauxtonApp.listen(3001, () => {
-            console.log('Fauxton is listening on port 3001');
+        let fauxtonAppHandle: any;
+        await new Promise<void>((resolve) => {
+            fauxtonAppHandle = fauxtonApp.listen(3001, () => {
+                console.log('Fauxton is listening on port 3001');
+                resolve();
+            });
         });
+
+        return [mainAppHandle, fauxtonAppHandle];
     }
 }

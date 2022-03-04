@@ -120,10 +120,6 @@
         "trenchComment": {
           "label": "Schnittkommentar",
           "description": "Schnittkommentar zur Auswertung und Dokumentation, Bericht für die Grabungsleitung"
-        },
-        "excavationType": {
-          "label": "Ausgrabungsart",
-          "description": "Art der durchgeführten Ausgrabung"
         }
       }
     },

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { is, Predicate, to } from 'tsfun';
-import { CategoryForm, Labels } from 'idai-field-core';
+import { CategoryForm, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 
@@ -32,6 +32,7 @@ export class CategoryPickerComponent {
     @Input() allowChangingOrder: boolean = false;
     @Input() dragging: boolean = false;
     @Input() contextMenu: ConfigurationContextMenu;
+    @Input() customProjectConfiguration: ProjectConfiguration;
 
     @Output() onCategoryPicked: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
     @Output() onCreateSubcategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();

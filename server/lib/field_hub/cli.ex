@@ -41,6 +41,36 @@ defmodule FieldHub.CLI do
     end
 
     FileStore.create_directories(project_name)
+    |> Enum.each(fn(result) ->
+      case result do
+        {:ok, file_variant} ->
+          Logger.info("Created directory for #{file_variant}.")
+        {{:error, reason}, file_variant } ->
+          Logger.error("Got posix error #{reason} while trying to create directory for #{file_variant}.")
+      end
+    end)
+  end
+
+  def delete_project(project_name) do
+    HTTPoison.start()
+
+    CouchService.delete_project(project_name, get_admin_credentials())
+    |> case do
+      %{status_code: 412} ->
+        Logger.warning("Project database '#{project_name}' already exists.")
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info("Created project database '#{project_name}'.")
+    end
+
+    FileStore.remove_directories(project_name)
+    |> case do
+      {:ok, deleted} ->
+        Logger.info("Deleted files for #{project_name}")
+        Logger.info(deleted)
+
+      {:error, reason, file} ->
+        Logger.error("Got posix error #{reason} while trying to delete #{file}.")
+    end
   end
 
   def create_user(name, password) do
@@ -64,6 +94,18 @@ defmodule FieldHub.CLI do
       |> binary_part(0, password_length)
 
     create_user(user_name, password)
+  end
+
+  def delete_user(user_name) do
+    HTTPoison.start()
+
+    CouchService.delete_user(user_name, get_admin_credentials())
+    |> case do
+      %{status_code: 200} ->
+        Logger.info("Deleted user #{user_name}.")
+      val ->
+        Logger.warning(val)
+    end
   end
 
   def set_password(user_name, user_password) do
@@ -96,6 +138,9 @@ defmodule FieldHub.CLI do
   defp get_admin_credentials() do
     HTTPoison.start()
 
-    %CouchService.Credentials{name: Application.get_env(:field_hub, :couchdb_admin_name), password: Application.get_env(:field_hub, :couchdb_admin_password)}
+    %CouchService.Credentials{
+      name: Application.get_env(:field_hub, :couchdb_admin_name),
+      password: Application.get_env(:field_hub, :couchdb_admin_password)
+    }
   end
 end

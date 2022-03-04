@@ -48,6 +48,9 @@ export class ImageUrlMaker {
 
             return relevantList[imageId];
         } catch (e) {
+            if (type === ImageVariant.ORIGINAL) {
+                throw e;
+            }
             return ImageUrlMaker.blackImg;
         }
     }

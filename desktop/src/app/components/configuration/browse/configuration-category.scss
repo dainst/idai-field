@@ -1,48 +1,67 @@
 configuration-category {
   user-select: none;
+
+  .category-header {
+    position: relative;
+    top: 1px;
+    height: 45px;
+
+    &.with-description {
+      height: 101px;
+    }
+
+    .header {
+      height: 45px;
+      border-bottom: 1px solid #ccc;
+      background-color: #e7e7e7;
+
+      &.header-left {
+        padding: 7px;
+      }
+
+      &.header-right {
+        padding-top: 10px;
+        padding-right: 8px;
+      }
+
+      category-icon {
+        position: relative;
+        bottom: 2px;
+      }
+
+      h6 {
+        position: relative;
+        top: 4px;
+        max-width: 450px;
+        margin: 0 8px;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .category-name {
+        padding-top: 6px;
+      }
+
+      .mdi-script-text-outline {
+        position: relative;
+        top: 1px;
+        margin-right: 6px;
+        color: #414952;
+      }
+    }
+
+    .subheader {
+      height: 56px;
+      padding: 1rem;
+      background-color: #eee;
+      overflow-y: auto;
+    }
   
-  .header {
-    border-bottom: 1px solid #ccc;
-    background-color: #e7e7e7;
-
-    &.header-left {
-      padding: 7px;
+    .custom-category .header {
+      background-color: $custom-highlight-color;
     }
-
-    &.header-right {
-      padding-top: 16px;
-      padding-right: 8px;
-    }
-
-    h5 {
-      max-width: 450px;
-      margin: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .category-name {
-      padding-top: 11px;
-    }
-
-    .mdi-script-text-outline {
-      position: relative;
-      top: 1px;
-      margin-right: 6px;
-      color: #414952;
-    }
-  }
-
-  .subheader {
-    height: 56px;
-    padding: 1rem;
-    background-color: #eee;
-    overflow-y: auto;
-  }
-
-  .custom-category .header {
-    background-color: $custom-highlight-color;
   }
 
   .groups {
@@ -87,11 +106,11 @@ configuration-category {
   }
   
   .content {
-    height: calc(100vh - 156px);
+    height: calc(100vh - 145px);
     padding: 0;
 
     &.shortened {
-      height: calc(100vh - 212px);
+      height: calc(100vh - 201px);
     }
 
     .fields-container {
@@ -103,6 +122,11 @@ configuration-category {
         margin-top: 0;
       }
     }
+  }
+
+  .configuration-category {
+    position: relative;
+    top: 1px;
   }
 
   .category-editor {

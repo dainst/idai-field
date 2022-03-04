@@ -2,6 +2,7 @@ import { Observable, Observer } from 'rxjs';
 import { Document, ProjectConfiguration, FieldDocument, CategoryForm, ObserverUtil } from 'idai-field-core';
 import { ViewFacade } from '../view/view-facade';
 import { Routing } from '../../../services/routing';
+import { Messages } from '../../messages/messages';
 
 
 /**
@@ -17,7 +18,8 @@ export class NavigationService {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: Routing,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private messages: Messages) {
     }
 
 
@@ -47,15 +49,24 @@ export class NavigationService {
     public async jumpToResourceInSameView(document: FieldDocument) { // arrow up
 
         await this.viewFacade.setExtendedSearchMode(false);
-        await this.routingService.jumpToResource(document);
+
+        try {
+            await this.routingService.jumpToResource(document);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
     }
 
 
     public async jumpToResourceFromOverviewToOperation(document: FieldDocument) { // arrow top right, when in search
 
-        await this.routingService.jumpToResource(document);
+        try {
+            await this.routingService.jumpToResource(document);
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
+
         await this.viewFacade.setExtendedSearchMode(false);
-        await this.routingService.jumpToResource(document);
     }
 
 

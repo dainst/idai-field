@@ -23,7 +23,7 @@ import { TabManager } from '../../../services/tabs/tab-manager';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ResourcesComponent } from '../resources.component';
-import { ViewModalLauncher } from '../service/view-modal-launcher';
+import { ViewModalLauncher } from '../../viewmodal/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
@@ -32,6 +32,7 @@ import { Routing } from '../../../services/routing';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { TypeImagesUtil } from '../../../util/type-images-util';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -88,6 +89,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,
                 private projectConfiguration: ProjectConfiguration,
+                private messages: Messages,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -148,7 +150,11 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public async jumpToResource(document: FieldDocument) {
 
-        await this.routingService.jumpToResource(document);
+        try {
+            await this.routingService.jumpToResource(document);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
     }
 
 

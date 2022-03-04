@@ -40,12 +40,12 @@ defmodule FieldHubWeb.Api.FileController do
           valid
       end
 
-    image_store_data =
+    file_store_data =
       project
       |> Zarex.sanitize()
       |> FileStore.get_file_list(parsed_types)
 
-    render(conn, "list.json", %{files: image_store_data})
+    render(conn, "list.json", %{files: file_store_data})
   end
 
   def index(conn, %{"project" => _project, "types" => types}) do
@@ -55,22 +55,21 @@ defmodule FieldHubWeb.Api.FileController do
     |> render("400.json", message: "Invalid 'types' parameter: '#{types}'.")
   end
 
-  # Default to type original_image if none provided.
   def index(conn, %{"project" => project}) do
 
-    image_store_data =
+    file_store_data =
       project
       |> Zarex.sanitize()
       |> FileStore.get_file_list()
 
-    render(conn, "list.json", %{files: image_store_data})
+    render(conn, "list.json", %{files: file_store_data})
   end
 
   def show(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
     parsed_type =
       parse_type(type)
 
-    image_store_data =
+    file_store_data =
       case parsed_type do
         {:error, type} ->
           conn
@@ -80,7 +79,7 @@ defmodule FieldHubWeb.Api.FileController do
           FileStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
       end
 
-    case image_store_data do
+    case file_store_data do
       {:error, :enoent} ->
         conn
         |> put_view(ErrorView)
@@ -96,7 +95,7 @@ defmodule FieldHubWeb.Api.FileController do
 
     {:ok, data, conn} = read_body(conn, length: 100_000_000)
 
-    image_store_data =
+    file_store_data =
       case parsed_type do
         {:error, type} ->
           conn
@@ -106,9 +105,10 @@ defmodule FieldHubWeb.Api.FileController do
           FileStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
       end
 
-    case image_store_data do
+    case file_store_data do
       :ok ->
         conn
+        |> put_status(:created)
         |> put_view(ErrorView)
         |> render("201.json")
       {:error, _} ->
@@ -120,9 +120,9 @@ defmodule FieldHubWeb.Api.FileController do
 
   def delete(conn, %{"project" => project, "id" => uuid}) do
 
-    image_store_data = FileStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project)})
+    file_store_data = FileStore.delete(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project)})
 
-    case image_store_data do
+    case file_store_data do
       :ok ->
         conn
         |> put_view(ErrorView)

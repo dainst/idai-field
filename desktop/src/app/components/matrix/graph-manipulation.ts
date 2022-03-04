@@ -1,5 +1,6 @@
-import {ElementRef} from '@angular/core';
+import { ElementRef } from '@angular/core';
 import 'viz.js';
+
 
 /**
  * @author Thomas Kleinke

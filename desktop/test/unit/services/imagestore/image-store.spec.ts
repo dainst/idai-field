@@ -1,8 +1,8 @@
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 import { ImageStore, ImageVariant } from 'idai-field-core';
-import { FsAdapter } from '../../../../../src/app/services/imagestore/fs-adapter';
-import { ThumbnailGenerator } from '../../../../../src/app/services/imagestore/thumbnail-generator';
+import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
+import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
 
 
 
@@ -20,7 +20,7 @@ describe('Imagestore', () => {
 
     beforeAll(async done => {
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        imageStore.init(testFilePath, testProjectName);
+        await imageStore.init(testFilePath, testProjectName);
 
         done();
     });
@@ -32,9 +32,9 @@ describe('Imagestore', () => {
     });
 
 
-    it('should be able to create a file', (done) => {
+    it('should be able to create a file', async (done) => {
 
-        imageStore.store('test_create', mockImage);
+        await imageStore.store('test_create', mockImage);
         const expectedPath = testFilePath + testProjectName + '/test_create';
         fs.readFile(expectedPath, (err, data) => {
             if (err) fail(err);
@@ -46,7 +46,7 @@ describe('Imagestore', () => {
 
     it('should be able to read a file', async (done) => {
 
-        imageStore.store('test_read', mockImage);
+        await imageStore.store('test_read', mockImage);
 
         const readFile = await imageStore.getData('test_read', ImageVariant.ORIGINAL);
 

@@ -1,4 +1,4 @@
-import {ProjectConfiguration, Datastore} from 'idai-field-core';
+import { ProjectConfiguration, Datastore } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validator } from '../../../../src/app/model/validator';
 
@@ -45,44 +45,6 @@ describe('Validator', () => {
             []
         ] as any
     );
-
-
-    it('should report nothing', async done => {
-
-        const find = () => Promise.resolve({ documents: [], ids: [], totalCount: 0 });
-
-        const doc = {
-            resource: {
-                id: '1',
-                identifier: '',
-                category: 'T',
-                mandatory: 'm',
-                relations: {
-                    isRelatedTo: ['2']
-                },
-            }
-        };
-        await new Validator(projectConfiguration, find)
-            .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
-        done();
-    });
-
-
-    it('should report missing isRecordedInTarget', async done => {
-
-        const find = () => Promise.resolve({ documents: [] } as Datastore.FindResult);
-
-        const doc = { resource: { id: '1', identifier: '', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
-
-        try {
-            await new Validator(projectConfiguration, find)
-                .assertIsRecordedInTargetsExist(doc);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
-        }
-        done();
-    });
 
 
     it('should report duplicate identifier', async done => {

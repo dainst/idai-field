@@ -68,9 +68,6 @@
         "Trench": {
             "label": "Corte",
             "fields": {
-                "excavationType": {
-                    "label": "Tamaño de la excavación"
-                },
                 "researchQuestion": {
                     "label": "Planteamiento"
                 }

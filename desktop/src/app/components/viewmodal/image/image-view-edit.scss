@@ -1,69 +1,52 @@
-$bg-c: #f8f9fa;
+image-view-edit {
+  #image-grid-container {
+    position: relative;
+    top: 10px;
+    margin-top: 0;
+    height: 100%;
+    background-color: $image-view-background-color;
+    padding-left: 20px;
+    padding-right: 6px;
+    overflow-y: auto;
 
-.modal-content {
-    background-color: $bg-c;
-
-    .no-images-message {
-        top: 50%;
-        padding: 20px;
-        background-color: white;
-        text-align: center;
-        position: relative;
+    .card-block {
+      padding-top: 0;
     }
 
-    #view-modal-body {
-        background-color: $bg-c;
-
-        #image-grid-container {
-            margin-top: 0;
-
-            background-color:$bg-c;
-
-            .card-block {
-                padding-top: 0;
-            }
-
-            #create-depicts-relations-btn,
-            #delete-images,
-            #deselect-images,
-            #set-main-image {
-                height: 40px;
-            }
-
-            padding-left: 20px;
-            padding-right: 6px;
-            height: calc(100vh - 131px);
-            overflow-y: auto;
-            margin: 10px 0;
-
-            .btn-group .btn {
-                margin-left: 0.5rem;
-            }
-
-            .image-grid {
-                margin-top: 0;
-            }
-
-            #link-images-button,
-            #add-images-button {
-                border-style: none;
-                width: 100%;
-                background-color: white;
-                color: #5572a1;
-
-                &:hover {
-                    background: darken(white, 5%)
-                }
-            }
-
-            .popover-body {
-                padding: 5px !important;
-            }
-
-            #add-images-button {
-                border-bottom-style: solid;
-                border-bottom-color: lighten(#5572a1, 33%);
-            }
-        }
+    #create-depicts-relations-btn,
+    #delete-images,
+    #deselect-images,
+    #set-main-image {
+      height: 40px;
     }
+
+    .btn-group .btn {
+      margin-left: 0.5rem;
+    }
+
+    .image-grid {
+      margin-top: 0;
+    }
+
+    #link-images-button,
+    #add-images-button {
+      border-style: none;
+      width: 100%;
+      background-color: white;
+      color: #5572a1;
+
+      &:hover {
+        background: darken(white, 5%)
+      }
+    }
+
+    .popover-body {
+      padding: 5px !important;
+    }
+
+    #add-images-button {
+      border-bottom-style: solid;
+      border-bottom-color: lighten(#5572a1, 33%);
+    }
+  }
 }

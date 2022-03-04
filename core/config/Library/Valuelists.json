@@ -1809,43 +1809,6 @@
       }
     }
   },
-  "trench-excavationType-default": {
-    "creationDate": "",
-    "createdBy": "IT-Referat, DAI, 2019",
-    "description": {},
-    "values": {
-      "Feldgrabung": {
-        "label": {
-          "de": "Feldgrabung",
-          "it": "Scavo sul campo"
-        }
-      },
-      "Stadtgrabung": {
-        "label": {
-          "de": "Stadtgrabung",
-          "it": "Scavo urbano"
-        }
-      },
-      "künstliche Schichten": {
-        "label": {
-          "de": "künstliche Schichten",
-          "it": "Strati artificiali"
-        }
-      },
-      "natürliche Schichten": {
-        "label": {
-          "de": "natürliche Schichten",
-          "it": "Strati naturali"
-        }
-      }
-    },
-    "order": [
-      "Feldgrabung",
-      "Stadtgrabung",
-      "künstliche Schichten",
-      "natürliche Schichten"
-    ]
-  },
   "glass-decorationTechnique-default": {
     "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
@@ -27863,38 +27826,6 @@
       "fruit stand": {
         "label": {
           "en": "fruit stand"
-        }
-      }
-    }
-  },
-  "Pottery-processor-Uruk": {
-    "createdBy": "Max Haibt",
-    "creationDate": "27-3-2019",
-    "description": {},
-    "values": {
-      "Margarete van Ess": {
-        "label": {
-          "en": "Margarete van Ess"
-        }
-      },
-      "Greta Fetting": {
-        "label": {
-          "en": "Greta Fetting"
-        }
-      },
-      "Barbara Huber": {
-        "label": {
-          "en": "Barbara Huber"
-        }
-      },
-      "Max Haibt": {
-        "label": {
-          "en": "Max Haibt"
-        }
-      },
-      "Jan Hubert": {
-        "label": {
-          "en": "Jan Hubert"
         }
       }
     }

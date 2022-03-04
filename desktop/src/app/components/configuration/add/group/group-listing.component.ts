@@ -31,8 +31,8 @@ export class GroupListingComponent {
     public getLabel = (value: any) => this.labels.get(value);
 
     public isNewGroupOptionShown = (): boolean => this.emptyGroup !== undefined
-        && !this.groups.map(group => group.name).includes(this.searchTerm)
-        && !this.category.groups.map(to(Named.NAME)).includes(this.searchTerm);
+        && !this.groups.map(group => group.name).includes(this.emptyGroup.name)
+        && !this.category.groups.map(to(Named.NAME)).includes(this.emptyGroup.name);
 
     public getSearchResultLabel = (group: GroupEntry) => getSearchResultLabel(group, this.searchTerm, this.getLabel);
 }

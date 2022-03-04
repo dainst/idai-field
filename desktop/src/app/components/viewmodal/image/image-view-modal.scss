@@ -1,0 +1,21 @@
+$image-view-background-color: #f8f9fa;
+
+.modal-content {
+  background-color: $image-view-background-color;
+
+  .no-images-message {
+    top: 50%;
+    padding: 20px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+  }
+
+  #view-modal-body {
+    background-color: $image-view-background-color;
+
+    .image-edit-content {
+      height: calc(100% - 10px) !important;
+    }
+  }
+}

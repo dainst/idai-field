@@ -7,9 +7,15 @@
         Möchten Sie das Formular <code>{{currentForm.libraryId}}</code>
         wirklich durch das Formular <code>{{newForm.libraryId}}</code> ersetzen?
     </span>
-    <div class="text-center alert alert-warning" i18n="@@configuration.swapCategoryForm.warning.changes">
+    <div *ngIf="hasChildCategories(currentForm)" class="text-center alert alert-warning"
+         i18n="@@configuration.swapCategoryForm.warning.changes.parent">
         Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen
         vorgenommen haben, beim Wechseln des Formulars verloren gehen.
+    </div>
+    <div *ngIf="!hasChildCategories(currentForm)" class="text-center alert alert-warning"
+         i18n="@@configuration.swapCategoryForm.warning.changes.child">
+        Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln
+        des Formulars verloren gehen.
     </div>
     <div id="confirm-delete-info" i18n="@@configuration.swapCategoryForm.confirmInfo">
         Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen.

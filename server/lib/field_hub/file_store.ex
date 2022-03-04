@@ -13,6 +13,12 @@ defmodule FieldHub.FileStore do
     |> Enum.zip(@variant_types)
   end
 
+  def remove_directories(project) do
+    project
+    |> get_project_directory()
+    |> File.rm_rf()
+  end
+
   def get_file_list(project, variants \\ @variant_types) do
       variants
       |> Stream.map(&get_type_directory(project, &1))

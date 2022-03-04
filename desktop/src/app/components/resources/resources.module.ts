@@ -38,7 +38,6 @@ import { ResourcesSearchBarComponent } from './searchbar/resources-search-bar.co
 import { ResourcesSearchConstraintsComponent } from './searchbar/resources-search-constraints.component';
 import { SearchSuggestionsComponent } from './searchbar/search-suggestions.component';
 import { DoceditLauncher } from './service/docedit-launcher';
-import { ViewModalLauncher } from './service/view-modal-launcher';
 import { TypeGridElementComponent } from './types/type-grid-element.component';
 import { TypeGridComponent } from './types/type-grid.component';
 import { TypeIconComponent } from './types/type-icon.component';
@@ -99,7 +98,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         { provide: StateSerializer, useClass: StandardStateSerializer },
         Routing,
         DoceditLauncher,
-        ViewModalLauncher,
         LayerManager,
         LayerImageProvider,
         ResourceDeletion,
@@ -107,11 +105,12 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,
                          routingService: Routing,
-                         viewFacade: ViewFacade) => {
+                         viewFacade: ViewFacade,
+                         messages: Messages) => {
 
-                return new NavigationService(projectConfiguration, routingService, viewFacade);
+                return new NavigationService(projectConfiguration, routingService, viewFacade, messages);
             },
-            deps: [ProjectConfiguration, Routing, ViewFacade]
+            deps: [ProjectConfiguration, Routing, ViewFacade, Messages]
         },
         {
             provide: ResourcesStateManager,

@@ -9,6 +9,8 @@ import { MenuContext } from '../../../../services/menu-context';
 import { InputType } from '../../configuration-util';
 import { ApplyChangesResult } from '../../configuration.component';
 import { Menus } from '../../../../services/menus';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { Naming } from '../naming';
 
 
 @Component({
@@ -39,7 +41,8 @@ export class AddFieldModalComponent {
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
-                private labels: Labels) {}
+                private labels: Labels,
+                private settingsProvider: SettingsProvider) {}
 
 
     public initialize() {
@@ -124,7 +127,7 @@ export class AddFieldModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {
-            name: this.searchTerm,
+            name: this.emptyField.name,
             inputType: 'input',
             label: {},
             defaultLabel: {},
@@ -151,7 +154,7 @@ export class AddFieldModalComponent {
         if (this.searchTerm.length === 0) return undefined;
 
         return {
-            name: this.searchTerm
+            name: Naming.getFieldOrGroupName(this.searchTerm, this.settingsProvider.getSettings().selectedProject)
         } as Field;
     }
 }

@@ -9,6 +9,8 @@ import { Modals } from '../../../../services/modals';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { GroupEditorModalComponent } from '../../editor/group-editor-modal.component';
+import { Naming } from '../naming';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
 
 @Component({
@@ -37,7 +39,8 @@ export class AddGroupModalComponent {
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
-                private labels: Labels) {}
+                private labels: Labels,
+                private settingsProvider: SettingsProvider) {}
 
 
     public initialize() {
@@ -120,7 +123,7 @@ export class AddGroupModalComponent {
         componentInstance.category = this.category;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
         componentInstance.group = {
-            name: this.searchTerm,
+            name: this.emptyGroup.name,
             label: {},
             defaultLabel: {},
             fields: []
@@ -141,7 +144,7 @@ export class AddGroupModalComponent {
         if (this.searchTerm.length === 0) return undefined;
 
         return {
-            name: this.searchTerm
+            name: Naming.getFieldOrGroupName(this.searchTerm, this.settingsProvider.getSettings().selectedProject)
         } as GroupEntry;
     }
 }

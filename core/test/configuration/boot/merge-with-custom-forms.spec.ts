@@ -414,4 +414,98 @@ describe('mergeWithCustomForms', () => {
         expect(result['A'].valuelists['f1']).toEqual('custom-valuelist');
         expect(result['NewCategory'].valuelists['f1']).toEqual('custom-valuelist');
     });
+
+
+    it('merge hidden arrays', () => {
+
+        const categories = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                description: {},
+                fields: {
+                    f1: {
+                        name: 'f1',
+                        inputType: Field.InputType.INPUT
+                    },
+                    f2: {
+                        name: 'f1',
+                        inputType: Field.InputType.INPUT
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'group1', fields: ['f1', 'f2'] }
+                    ]
+                }
+            },
+            B: {
+                parent: 'A',
+                description: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            A: {
+                name: 'A',
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            },
+            B: {
+                name: 'B',
+                categoryName: 'B',
+                parent: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                fields: {},
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {},
+                hidden: ['f1'],
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            },
+            B: {
+                fields: {},
+                hidden: ['f2'],
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            },
+            NewCategory: {
+                parent: 'A',
+                fields: {},
+                hidden: ['f2'],
+                groups: [
+                    { name: 'group1', fields: ['f1', 'f2'] }
+                ]
+            }
+        };
+
+        const result = mergeWithCustomForms(customForms, categories as any, {}, {}, [],
+            Object.keys(customForms))(forms);
+
+        expect(result['A'].hidden).toEqual(['f1']);
+        expect(result['B'].hidden).toEqual(['f1', 'f2']);
+        expect(result['NewCategory'].hidden).toEqual(['f1', 'f2']);
+    });
 });

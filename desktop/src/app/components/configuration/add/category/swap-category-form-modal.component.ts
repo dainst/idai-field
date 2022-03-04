@@ -27,6 +27,8 @@ export class SwapCategoryFormModalComponent {
     
     public checkConfirmSwappingFormName = () => this.confirmSwappingFormName === this.newForm.libraryId;
 
+    public hasChildCategories = (categoryForm: CategoryForm) => categoryForm.children?.length > 0;
+
     public cancel = () => this.activeModal.dismiss('cancel');
 
 

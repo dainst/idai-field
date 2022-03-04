@@ -1,5 +1,5 @@
 import { includedIn, isNot, isnt, Map, pairWith, flow, filter, clone, assoc, keysValues, map, forEach,
-    lookup, to, flatten } from 'tsfun';
+    lookup, to, flatten, set } from 'tsfun';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { ConfigurationErrors } from './configuration-errors';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
@@ -67,6 +67,8 @@ function handleDirectExtension(customForm: CustomFormDefinition,
         extendedForm
     );
 
+    if (parentForm) result.hidden = getMergedHiddenArray(result, parentForm);
+
     return mergeFormProperties(extendedForm, result);
 }
 
@@ -86,6 +88,7 @@ function handleChildExtension(customFormName: string,
     
     clonedCustomForm.name = customFormName;
     clonedCustomForm.categoryName = customFormName;
+    clonedCustomForm.hidden = getMergedHiddenArray(customForm, parentForm);
     
     clonedCustomForm.customFields = clonedCustomForm.groups ? flatten(clonedCustomForm.groups.map(to('fields'))): [];
 
@@ -107,6 +110,7 @@ function mergeFormProperties(target: TransientFormDefinition,
     target.fields = source.fields;
     target.defaultColor = target.color;
     if (source.color) target.color = source.color;
+    target.hidden = source.hidden;
     if (source.groups) {
         const sourceFields: string[] = flatten(source.groups.map(to('fields')));
         const targetFields: string[] = target.groups ? flatten(target.groups.map(to('fields'))) : [];
@@ -190,6 +194,12 @@ function inheritValuelists(childForm: CustomFormDefinition,
     });
 
     return clonedChildForm;
+}
+
+
+function getMergedHiddenArray(childForm: CustomFormDefinition, parentForm: CustomFormDefinition): string[] {
+
+    return set((parentForm.hidden ?? []).concat(childForm.hidden ?? []));
 }
 
 

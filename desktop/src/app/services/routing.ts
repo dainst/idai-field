@@ -2,10 +2,13 @@ import { Observable, Observer } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Document, Named, ProjectConfiguration } from 'idai-field-core';
-import { DatastoreErrors } from 'idai-field-core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, Document, Named, ProjectConfiguration, DatastoreErrors } from 'idai-field-core';
 import { ViewFacade } from '../components/resources/view/view-facade';
-import { MenuNavigator } from '../components/menu-navigator';
+import { MenuContext } from './menu-context';
+import { Menus } from './menus';
+import { DoceditComponent } from '../components/docedit/docedit.component';
+import { M } from '../components/messages/m';
 
 
 @Injectable()
@@ -27,7 +30,9 @@ export class Routing {
                 private viewFacade: ViewFacade,
                 private location: Location,
                 private projectConfiguration: ProjectConfiguration,
-                private menuNavigator: MenuNavigator) {}
+                private menus: Menus,
+                private modalService: NgbModal,
+                private datastore: Datastore) {}
 
 
     // For ResourcesComponent
@@ -45,13 +50,16 @@ export class Routing {
     }
 
 
+    /**
+     * @throws M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY
+     */
     public async jumpToResource(documentToSelect: Document,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (documentToSelect.resource.category === 'Project') {
-            await this.menuNavigator.editProject();
+            await this.editProject();
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
@@ -104,6 +112,18 @@ export class Routing {
 
         const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
 
+        if (!['project', 'types'].includes(viewName)) {
+            try {
+                await this.datastore.get(viewName);
+            } catch (errWithParams) {
+                if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
+                    throw [M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY, errWithParams[1]];
+                } else {
+                    throw errWithParams;
+                }
+            }
+        }
+
         if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
@@ -146,5 +166,28 @@ export class Routing {
             : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
+    }
+
+
+    private async editProject() {
+
+        this.menus.setContext(MenuContext.DOCEDIT);
+
+        const projectDocument: Document = await this.datastore.get('project');
+
+        const modalRef = this.modalService.open(
+            DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        modalRef.componentInstance.setDocument(projectDocument);
+        modalRef.componentInstance.activeGroup = 'stem';
+
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // Docedit modal has been canceled
+        }
+
+        this.menus.setContext(MenuContext.DEFAULT);
     }
 }

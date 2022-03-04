@@ -1,17 +1,18 @@
-import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose } from 'tsfun';
+import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose, clone } from 'tsfun';
 import { CategoryForm } from '../../model/configuration/category-form';
 import { Field } from '../../model/configuration/field';
 import { Group, Groups } from '../../model/configuration/group';
 import { Relation } from '../../model/configuration/relation';
-import { Resource } from '../../model/resource';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { Forest } from '../../tools/forest';
 import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
+import { applyHiddenForFields } from './hide-fields';
 
 
 const TEMP_FIELDS = 'fields';
 const TEMP_GROUPS = 'tempGroups';
+const TEMP_HIDDEN = 'hidden';
 
 
 /**
@@ -42,7 +43,8 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
             compose(
                 createGroups(relations), 
                 detach(TEMP_FIELDS), 
-                detach(TEMP_GROUPS)
+                detach(TEMP_GROUPS),
+                detach(TEMP_HIDDEN)
             )
         ),
         linkParentAndChildInstances
@@ -52,9 +54,8 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
 
 const createGroups = (relationDefinitions: Array<Relation>) => (category: CategoryForm): CategoryForm => {
 
-    const categoryRelations: Array<Relation> = Relation.getRelations(
-        relationDefinitions, category.name
-    );
+    const categoryRelations: Array<Relation> = clone(Relation.getRelations(relationDefinitions, category.name));
+    applyHiddenForFields(categoryRelations, category[TEMP_HIDDEN]);
 
     category.groups = category[TEMP_GROUPS].map(groupDefinition => {
         const group = Group.create(groupDefinition.name);
@@ -151,6 +152,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         category[TEMP_FIELDS] = formDefinition.fields || {};
         Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
         category[TEMP_GROUPS] = formDefinition.groups || [];
+        category[TEMP_HIDDEN] = formDefinition.hidden || [];
 
         return category as CategoryForm;
     }

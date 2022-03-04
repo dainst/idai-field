@@ -42,13 +42,33 @@
   #configuration-toolbar {
     height: 49px;
 
-    #categories-filter-container {
-      padding: 0;
-      margin: 0;
+    #categories-filter {
+      position: relative;
+      top: 5px;
+      left: 5px;
 
-      #categories-filter-select {
-        height: 100%;
-        border: none;
+      .categories-filter-selection-button {
+        max-width: 50vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: default;
+      }
+    
+      #categories-filter-selection-menu {
+        padding: 0;
+    
+        #categories-filter-selection-buttons {
+          max-height: calc(100vh - 350px);
+          overflow-y: auto;
+    
+          button:first-child {
+            margin-top: 7px;
+          }
+    
+          button:last-child {
+            margin-bottom: 7px;
+          }
+        }
       }
     }
 
@@ -67,7 +87,7 @@
     background-color: $sidebar-bg-color;
 
     #category-picker-container {
-      height: calc(100% - 38px);
+      height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
 
@@ -102,5 +122,5 @@
       left: 50%;
       z-index: 1001;
     }
-  }  
+  }
 }

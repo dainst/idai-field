@@ -1,11 +1,11 @@
 import { Document } from '../../model/document';
 import { getSampleDocuments } from './sample-data';
-import {  } from 'module';
 
 
 export class SampleDataLoaderBase {
 
-    constructor(private locale: string){}
+    constructor(private locale: string) {}
+    
 
     public async go(db: PouchDB.Database, project: string) {
         try {

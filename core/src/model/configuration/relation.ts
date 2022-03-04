@@ -50,7 +50,10 @@ export namespace Relation {
         export const CUTS = 'cuts';                       //
         export const CUTBY = 'isCutBy';               //
 
-        export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW];
+        export const FILLS = 'fills';
+        export const FILLEDBY = 'isFilledBy';
+
+        export const ALL = [BELOW, ABOVE, BORDERS, CUTS, CUTBY, FILLS, FILLEDBY];
     }
 
 

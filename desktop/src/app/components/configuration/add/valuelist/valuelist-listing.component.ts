@@ -39,8 +39,8 @@ export class ValuelistListingComponent {
     public isCustomValuelist = (valuelist: Valuelist) => valuelist.source === 'custom';
 
     public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
-        && !this.valuelists.map(valuelist => valuelist.id).includes(this.searchTerm)
-        && (!this.currentValuelistId || this.searchTerm !== this.currentValuelistId);
+        && !this.valuelists.map(valuelist => valuelist.id).includes(this.emptyValuelist.id)
+        && (!this.currentValuelistId || this.emptyValuelist.id !== this.currentValuelistId);
 
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {

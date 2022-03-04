@@ -1,6 +1,6 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from '.';
-import { CategoryConverter, DocumentCache } from '../datastore';
+import { CategoryConverter, DatastoreErrors, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
 
 
@@ -61,7 +61,9 @@ import { Document } from '../model/document';
                 return converter.convert(doc);
             } catch (err) {
                 if (err.length > 0) {
-                    console.warn('Error while converting document: ', err);
+                    if (err[0] !== DatastoreErrors.UNKNOWN_CATEGORY) {
+                        console.warn('Error while converting document: ', err);
+                    }
                     return undefined;
                 }
             }

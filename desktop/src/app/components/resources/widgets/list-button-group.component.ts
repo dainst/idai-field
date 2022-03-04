@@ -1,7 +1,7 @@
-import {Component, Input, ChangeDetectionStrategy, EventEmitter, Output} from '@angular/core';
-import {FieldDocument} from 'idai-field-core';
-import {ViewFacade} from '../../../components/resources/view/view-facade';
-import {NavigationService} from '../navigation/navigation-service';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { FieldDocument } from 'idai-field-core';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { NavigationService } from '../navigation/navigation-service';
 import { PopoverMenu, ResourcesComponent } from '../resources.component';
 
 
@@ -22,8 +22,7 @@ export class ListButtonGroupComponent {
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
-                private navigationService: NavigationService) {
-    }
+                private navigationService: NavigationService) {}
 
 
     public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);

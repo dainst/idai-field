@@ -49,11 +49,15 @@ export class ImageStore {
      * other functions.
      */
     public async init(fileSystemBasePath: string, activeProject: string) {
-        
-        this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
-        this.activeProject = activeProject;
-
-        this.setupDirectories(activeProject);
+        try {
+            this.absolutePath = fileSystemBasePath.endsWith('/') ? fileSystemBasePath : fileSystemBasePath + '/';
+            this.activeProject = activeProject;
+    
+            await this.setupDirectories(activeProject);
+        } catch (e) {
+            this.absolutePath = undefined;
+            throw (e);
+        }
     }
 
 

@@ -77,7 +77,11 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
-        await this.imagestore.init(settings.imagestorePath, settings.selectedProject);
+        try {
+            await this.imagestore.init(settings.imagestorePath, settings.selectedProject);
+        } catch (e) {
+            this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
+        }
 
         this.pouchdbServer.setPassword(settings.hostPassword);
 

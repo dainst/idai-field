@@ -50,7 +50,7 @@ describe('settings --', function() {
         await NavbarPage.clickCloseAllMessages();
 
         await navigateTo('images');
-        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../../test-data/Aldrin_Apollo_11.jpg'));
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../../test-data/logo.png'));
         await NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         await NavbarPage.clickCloseAllMessages();
 

@@ -8,7 +8,7 @@ const path = require('path');
 describe('images/upload --', () => {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
-    const imageFileName: string = 'Aldrin_Apollo_11.jpg';
+    const imageFileName: string = 'logo.png';
 
 
     beforeAll(async done => {

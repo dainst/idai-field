@@ -1,17 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-    AppConfigurator,
-    ConfigurationDocument,
-    getConfigurationName,
-    Name,
-    PouchdbDatastore,
-    ProjectConfiguration,
-    SyncService,
-    ImageStore,
-    ImageVariant,
-    ImageSyncService,
-    Template
-} from 'idai-field-core';
+import { AppConfigurator, ConfigurationDocument, getConfigurationName, Name, PouchdbDatastore,
+    ProjectConfiguration, SyncService, ImageStore, ImageSyncService, Template } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';

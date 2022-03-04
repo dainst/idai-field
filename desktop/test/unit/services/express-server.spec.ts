@@ -33,10 +33,10 @@ describe('ExpressServer', () => {
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
 
-        const expressServer = new ExpressServer(imageStore, testFilePath);
+        const expressServer = new ExpressServer(imageStore);
         expressServer.setPassword(password);
 
-        [expressMainApp, expressFauxtonApp] = await expressServer.setupServer();
+        [expressMainApp, expressFauxtonApp] = await expressServer.setupServer(testFilePath);
 
         const PouchDB = expressServer.getPouchDB();
 

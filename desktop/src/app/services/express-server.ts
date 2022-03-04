@@ -20,11 +20,7 @@ export class ExpressServer {
 
     public setPassword = (password: string) => this.password = password;
 
-    constructor(private imagestore: ImageStore, pouchDirectory?: string) {
-        if (pouchDirectory) {
-            PouchDB = PouchDB.defaults({ prefix: pouchDirectory });
-        }
-    }
+    constructor(private imagestore: ImageStore) {}
 
     public getPouchDB = () => PouchDB;
 
@@ -32,10 +28,12 @@ export class ExpressServer {
     /**
      * Provides Fauxton and the CouchDB REST API
      */
-    public async setupServer() {
+    public async setupServer(pouchDirectory?: string) {
 
         const self = this;
         const app = express();
+
+        if (pouchDirectory) PouchDB = PouchDB.defaults({ prefix: pouchDirectory });
 
         app.use(expressBasicAuth({
             challenge: true,

@@ -6,9 +6,12 @@
 * Docker & docker-compose
 
 
+## Deployment
+
+The Docker images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub)
+
 ## Building a new docker image version
 
-The images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub)
 
 To build a new image run:
 

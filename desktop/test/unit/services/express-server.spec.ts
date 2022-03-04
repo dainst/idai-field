@@ -1,16 +1,13 @@
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
-
-
-import { IdGenerator } from 'idai-field-core';
-import { PouchdbDatastore } from 'idai-field-core';
-import { ImageStore } from 'idai-field-core';
+import { IdGenerator, PouchdbDatastore, ImageStore } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
 import Ajv from 'ajv';
 // Not explicitely exported by idai-field-core, because it is only used for tests.
 import schema from '../../../../core/api-schemas/files-list.json';
+
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
 
 
 describe('ExpressServer', () => {
@@ -78,7 +75,8 @@ describe('ExpressServer', () => {
     });
 
 
-    it('/files/:project without credentials returns 401', async (done) => {
+    it('/files/:project without credentials returns 401', async done => {
+
         request(expressMainApp)
             .get('/files/test_tmp_project')
             .set('Content-Type', 'application/json')
@@ -90,7 +88,8 @@ describe('ExpressServer', () => {
     });
 
 
-    it('/files/:project returns an empty index', async (done) => {
+    it('/files/:project returns an empty index', async done => {
+
         try {
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
@@ -101,6 +100,7 @@ describe('ExpressServer', () => {
             // Body should be {}
             expect(Object.keys(response.body).length).toBe(0);
             expect(validate(response.body)).toBe(true);
+
             done();
         } catch (e) {
             fail(e);
@@ -108,10 +108,9 @@ describe('ExpressServer', () => {
     });
 
 
-    it('/files/:project returns an index of previously stored images', async (done) => {
+    it('/files/:project returns an index of previously stored images', async done => {
 
         try {
-
             const uuids = ['1', '2'];
 
             for (const uuid of uuids) {
@@ -131,13 +130,14 @@ describe('ExpressServer', () => {
 
             expect(Object.keys(response.body).length).toBe(2);
             expect(validate(response.body)).toBe(true);
+
             done();
         } catch (e) {
             fail(e);
         }
     });
 
-    it('/files/:project returns an images marked as deleted', async (done) => {
+    it('/files/:project returns an images marked as deleted', async done => {
 
         try {
             const uuids = ['1', '2', '3'];
@@ -157,7 +157,6 @@ describe('ExpressServer', () => {
                 .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
                 .expect(200);
 
-
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
@@ -169,6 +168,7 @@ describe('ExpressServer', () => {
             expect(response.body[uuids[1]].deleted).toBe(false);
             expect(response.body[uuids[2]].deleted).toBe(false);
             expect(validate(response.body)).toBe(true);
+
             done();
         } catch (e) {
             fail(e);

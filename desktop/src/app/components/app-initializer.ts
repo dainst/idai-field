@@ -1,18 +1,6 @@
-import {
-    CategoryConverter,
-    ConfigLoader,
-    ConfigReader,
-    ConfigurationDocument,
-    ConstraintIndex,
-    DocumentCache,
-    FulltextIndex,
-    getConfigurationName,
-    ImageStore,
-    Indexer,
-    IndexFacade,
-    PouchdbDatastore,
-    ProjectConfiguration
-} from 'idai-field-core';
+import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
+    DocumentCache, FulltextIndex, getConfigurationName, ImageStore, Indexer, IndexFacade,
+    PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -24,6 +12,7 @@ import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-
 import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
+
 
 interface Services {
 

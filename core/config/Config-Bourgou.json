@@ -412,6 +412,8 @@
     "Other": {
       "commons": [],
       "hidden": [],
+      "parent": "Feature",
+      "color": "#CC6600",
       "fields": {
         "isNatural": {
           "inputType": "boolean"

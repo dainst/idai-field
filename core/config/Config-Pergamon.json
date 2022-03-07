@@ -1425,6 +1425,12 @@
         "featureBorders": "Feature-featureBorders-default"
       }
     },
+    "Other": {
+      "parent": "Feature",
+      "fields": {},
+      "hidden": [],
+      "color": "#CC6600"
+    },
     "TypeCatalog:default": {
       "hidden": [],
       "fields": {}

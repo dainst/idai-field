@@ -969,28 +969,6 @@ export class BuiltInConfiguration {
 
     private addProjectSpecificBuiltinConfiguration(customConfigurationName: string) {
 
-        if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
-                || customConfigurationName === 'Bourgou') {
-
-            this.builtInCategories.Other = {
-                parent: 'Feature',
-                color: '#CC6600',
-                fields: {},
-                minimalForm: {
-                    groups: [
-                        {
-                            name: Groups.STEM,
-                            fields: ['identifier', 'shortDescription']
-                        },
-                        {
-                            name: Groups.POSITION,
-                            fields: ['geometry']
-                        }
-                    ]
-                }
-            };
-        }
-
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Bourgou') {
 
             this.builtInCategories.Wall_surface = {

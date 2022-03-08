@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {reloadAndSwitchToHomeRoute} from '../../services/reload';
+import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
 import { StateSerializer } from '../../services/state-serializer';
@@ -15,7 +15,6 @@ import { Messages } from '../messages/messages';
         '(window:keydown)': 'onKeyDown($event)',
     }
 })
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -60,6 +59,7 @@ export class DeleteProjectModalComponent {
 
 
     public isDeleting(): boolean {
+        
         return this.deleting;
     }
 

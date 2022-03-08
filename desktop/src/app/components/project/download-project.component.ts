@@ -168,6 +168,7 @@ export class DownloadProjectComponent {
         });
     }
 
+    
     private async syncFiles(progressModalRef: NgbModalRef, targetPercentile: number,
                             files: { [uuid: string]: FileInfo }): Promise<void> {
 

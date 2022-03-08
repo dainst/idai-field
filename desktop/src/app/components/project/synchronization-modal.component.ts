@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageVariant } from 'idai-field-core';
-import {Settings, SyncTarget} from '../../services/settings/settings';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {SettingsService} from '../../services/settings/settings-service';
+import { Settings, SyncTarget } from '../../services/settings/settings';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { SettingsService } from '../../services/settings/settings-service';
 
 
 @Component({
@@ -22,11 +22,10 @@ export class SynchronizationModalComponent implements OnInit {
     public settings: Settings;
     public syncTarget: SyncTarget;
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        private settingsProvider: SettingsProvider,
-        private settingsService: SettingsService
-    ) {}
+
+    constructor(public activeModal: NgbActiveModal,
+                private settingsProvider: SettingsProvider,
+                private settingsService: SettingsService) {}
 
 
     async ngOnInit() {
@@ -66,15 +65,19 @@ export class SynchronizationModalComponent implements OnInit {
 
 
     public async toggleThumbnailImageSync() {
+
         if (!this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL)) {
             this.syncTarget.activeFileSync.push(ImageVariant.THUMBNAIL);
         } else {
-            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter((val: ImageVariant) => val !== ImageVariant.THUMBNAIL);
+            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync.filter(
+                (val: ImageVariant) => val !== ImageVariant.THUMBNAIL
+            );
         }
     }
 
 
     public isThumbnailImageSyncActive() {
+
         return this.syncTarget.activeFileSync.includes(ImageVariant.THUMBNAIL);
     }
 
@@ -90,6 +93,7 @@ export class SynchronizationModalComponent implements OnInit {
 
 
     public isOriginalImageSyncActive() {
+        
         return this.syncTarget.activeFileSync.includes(ImageVariant.ORIGINAL);
     }
 

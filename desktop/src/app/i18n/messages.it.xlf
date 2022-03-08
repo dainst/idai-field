@@ -1851,7 +1851,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.abort" datatype="html">
+      <trans-unit id="project.download.abort" datatype="html">
         <source>Abbrechen</source>
         <target state="final">Annullare</target>
         <context-group purpose="location">
@@ -1859,7 +1859,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
@@ -1927,59 +1927,59 @@
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.connecting" datatype="html">
+      <trans-unit id="project.download.connecting" datatype="html">
         <source>Verbindung wird hergestellt...</source>
         <target state="final">Connessione in corso...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.progressInfo" datatype="html">
+      <trans-unit id="project.download.progressInfo" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </source>
         <target state="final">Il <x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% degli elementi del progetto è stato scaricato... </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.connect" datatype="html">
+      <trans-unit id="project.download.connect" datatype="html">
         <source>Download starten</source>
         <target state="final">Avviare lo scaricamento</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.address" datatype="html">
+      <trans-unit id="project.download.address" datatype="html">
         <source>Adresse</source>
         <target state="final">Indirizzo</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.address.info" datatype="html">
+      <trans-unit id="project.download.address.info" datatype="html">
         <source> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </source>
         <target state="final"> Come indirizzo può essere indicato l'URL di un server con banca dati di iDAI.field dell'Istituto Archeologico Germanico o l'indirizzo di rete di un'altra installazione di iDAI.field su un altro computer. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.projectName" datatype="html">
+      <trans-unit id="project.download.projectName" datatype="html">
         <source>Projektname</source>
         <target state="final">Nome del progetto</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.password" datatype="html">
+      <trans-unit id="project.download.password" datatype="html">
         <source>Passwort</source>
         <target state="final">Password</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
@@ -1987,7 +1987,7 @@
         <source>Vorschaubilder</source>
         <target state="final">Miniature</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">146,163</context>
         </context-group>
         <context-group purpose="location">
@@ -1999,7 +1999,7 @@
         <source>Original Bilder</source>
         <target state="final">Immagini originali</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">168</context>
         </context-group>
         <context-group purpose="location">
@@ -5967,7 +5967,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.tabs.networkProject" datatype="html">
+      <trans-unit id="navbar.tabs.downloadProject" datatype="html">
         <source>Projekt herunterladen</source>
         <target state="final">Collegarsi con la rete del progetto</target>
         <context-group purpose="location">

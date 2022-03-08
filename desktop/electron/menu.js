@@ -28,9 +28,9 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: isDefaultContext(context)
             }, {
-                label: messages.get('menu.project.networkProject'),
+                label: messages.get('menu.project.downloadProject'),
                 accelerator: 'CmdOrCtrl+D',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'downloadProject'),
                 enabled: isDefaultContext(context)
             }, {
                 type: 'separator'

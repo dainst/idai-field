@@ -1764,7 +1764,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.abort" datatype="html">
+      <trans-unit id="project.download.abort" datatype="html">
         <source>Abbrechen</source>
         <target state="final">Abbrechen</target>
         <context-group purpose="location">
@@ -1772,7 +1772,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
@@ -1840,59 +1840,59 @@
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.connecting" datatype="html">
+      <trans-unit id="project.download.connecting" datatype="html">
         <source>Verbindung wird hergestellt...</source>
         <target state="final">Verbindung wird hergestellt...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.progressInfo" datatype="html">
+      <trans-unit id="project.download.progressInfo" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </source>
         <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project-progress-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.connect" datatype="html">
+      <trans-unit id="project.download.connect" datatype="html">
         <source>Download starten</source>
         <target state="final">Download starten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.address" datatype="html">
+      <trans-unit id="project.download.address" datatype="html">
         <source>Adresse</source>
         <target state="final">Adresse</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.address.info" datatype="html">
+      <trans-unit id="project.download.address.info" datatype="html">
         <source> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </source>
         <target state="final"> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.projectName" datatype="html">
+      <trans-unit id="project.download.projectName" datatype="html">
         <source>Projektname</source>
         <target state="final">Projektname</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.network.password" datatype="html">
+      <trans-unit id="project.download.password" datatype="html">
         <source>Passwort</source>
         <target state="final">Passwort</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/network-project.component.ts</context>
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
@@ -5722,7 +5722,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.tabs.networkProject" datatype="html">
+      <trans-unit id="navbar.tabs.downloadProject" datatype="html">
         <source>Projekt herunterladen</source>
         <target state="final">Projekt herunterladen</target>
         <context-group purpose="location">

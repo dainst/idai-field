@@ -4,7 +4,7 @@ import { Menus } from '../../services/menus';
 import { FileInfo, ImageStore, ImageVariant, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
-import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
+import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { SettingsService } from '../../services/settings/settings-service';
 import { MenuContext } from '../../services/menu-context';
@@ -16,7 +16,7 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
 
 
 @Component({
-    templateUrl: './network-project.html',
+    templateUrl: './download-project.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -25,7 +25,7 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class NetworkProjectComponent {
+export class DownloadProjectComponent {
 
     public url: string = '';
     public projectName: string = '';
@@ -61,7 +61,7 @@ export class NetworkProjectComponent {
         this.menuService.setContext(MenuContext.MODAL);
 
         const progressModalRef: NgbModalRef = this.modalService.open(
-            NetworkProjectProgressModalComponent,
+            DownloadProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false }
         );
 
@@ -153,7 +153,7 @@ export class NetworkProjectComponent {
                     this.url, this.password, this.projectName, updateSequence, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
-                        const lastSequenceNumber: number = NetworkProjectComponent.parseSequenceNumber(lastSequence);
+                        const lastSequenceNumber: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
                         progressModalRef.componentInstance.progressPercent = Math.min(
                             (lastSequenceNumber / updateSequence * 100 * overallPercentile), 100
                         );
@@ -234,7 +234,7 @@ export class NetworkProjectComponent {
         // tslint:disable-next-line: no-string-throw
         if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';
 
-        return NetworkProjectComponent.parseSequenceNumber(info.update_seq);
+        return DownloadProjectComponent.parseSequenceNumber(info.update_seq);
     }
 
 

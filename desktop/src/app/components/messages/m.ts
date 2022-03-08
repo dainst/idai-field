@@ -44,7 +44,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
     public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
 
-    // Network Project Package
+    // Download Project Package
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
     public static INITIAL_SYNC_GENERIC_ERROR = 'M.InitialSync.genericError';
     public static INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR = 'M.InitialSync.couldNotStartGenericError';

@@ -4,15 +4,16 @@ import { CancelModalComponent } from './cancel-modal.component';
 
 
 @Component({
-    templateUrl: './network-project-progress-modal.html'
+    templateUrl: './download-project-progress-modal.html'
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class NetworkProjectProgressModalComponent {
+export class DownloadProjectProgressModalComponent {
 
     public progressPercent: number;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal) {}

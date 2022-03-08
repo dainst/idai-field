@@ -1,4 +1,4 @@
-<div id="network-project" class="row" (dragover)="false" (dragleave)="false" (drop)="false">
+<div id="download-project" class="row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
             <div class="col default-nav bg-light text-right">
@@ -6,7 +6,7 @@
                         class="btn btn-primary"
                         (click)="onStartClicked()">
                     <span class="mdi mdi-file-import"></span>
-                    <span class="button-label" i18n="@@project.network.connect">Download starten</span>
+                    <span class="button-label" i18n="@@project.download.connect">Download starten</span>
                 </button>
             </div>
         </div>
@@ -16,24 +16,24 @@
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">
                         <label class="control-label col-form-label"
-                               i18n="@@project.network.address">Adresse</label>
+                               i18n="@@project.download.address">Adresse</label>
                         <input class="form-control"
                             id="urlInput"
                             type="text"
                             [(ngModel)]="url">
-                        <div class="small-info-text" i18n="@@project.network.address.info">
+                        <div class="small-info-text" i18n="@@project.download.address.info">
                             Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die
                             Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden.
                         </div>
 
                         <label id="project-name-label" class="control-label col-form-label"
-                               i18n="@@project.network.projectName">Projektname</label>
+                               i18n="@@project.download.projectName">Projektname</label>
                         <input class="form-control"
                             id="projectInput"
                             type="text"
                             [(ngModel)]="projectName">
                         <label id="password-label" class="control-label col-form-label"
-                               i18n="@@project.network.password">Passwort</label>
+                               i18n="@@project.download.password">Passwort</label>
                             <input class="form-control"
                                 id="passwordInput"
                                 type="password"

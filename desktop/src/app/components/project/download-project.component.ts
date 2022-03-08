@@ -24,6 +24,7 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Simon Hohl
  */
 export class DownloadProjectComponent {
 

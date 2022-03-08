@@ -2,7 +2,8 @@ import { Map } from 'tsfun';
 import { BuiltInCategoryDefinition, CustomFormDefinition, LibraryCategoryDefinition,
     LibraryFormDefinition } from '../../../src/configuration';
 import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/boot';
-import { CategoryForm, Groups } from '../../../src/model';
+import { CategoryForm } from '../../../src/model/configuration/category-form';
+import { Groups } from '../../../src/model/configuration/group';
 import { Named, Tree } from '../../../src/tools';
 
 
@@ -18,9 +19,7 @@ describe('ConfigLoader', () => {
 
     function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
                          libraryForms: Map<LibraryFormDefinition> = {},
-                         customForms: Map<CustomFormDefinition> = {},
-                         languageConfiguration = {},
-                         customLanguageConfiguration = {}) {
+                         languageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
@@ -30,17 +29,20 @@ describe('ConfigLoader', () => {
             {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
+    }
 
-        pouchdbManager.getDb.and.returnValue({
-            get: (_: string) => Promise.resolve({
-                resource: {
-                    forms: customForms,
-                    languages: { de: customLanguageConfiguration },
-                    order: [],
-                    valuelists: {}
-                }
-            })
-        });
+
+    function getConfigurationDocument(customForms: Map<CustomFormDefinition> = {},
+                                      customLanguageConfiguration = {}): any {
+
+        return {
+            resource: {
+                forms: customForms,
+                languages: { de: customLanguageConfiguration },
+                order: [],
+                valuelists: {}
+            }
+        };
     }
 
 
@@ -50,7 +52,7 @@ describe('ConfigLoader', () => {
         pouchdbManager = jasmine.createSpyObj('pouchdbManager', ['getDb']);
         applyConfig();
 
-        configLoader = new ConfigLoader(configReader, pouchdbManager);
+        configLoader = new ConfigLoader(configReader);
     });
 
 
@@ -87,7 +89,7 @@ describe('ConfigLoader', () => {
             }
         };
 
-        applyConfig(libraryCategories, {}, customForms, {}, {});
+        applyConfig(libraryCategories);
 
         let pconf;
         try {
@@ -96,8 +98,7 @@ describe('ConfigLoader', () => {
                 builtInCategories,
                 [],
                 {},
-                undefined,
-                'User'
+                getConfigurationDocument(customForms)
             );
         } catch(err) {
             fail(err);
@@ -145,15 +146,13 @@ describe('ConfigLoader', () => {
         applyConfig(
             libraryCategories,
             {},
-            customForms,
             {
                 commons: {
                     processor: { label: 'Bearbeiter/Bearbeiterin', description: 'abc' }
                 },
                 categories: {},
                 relations: {}
-            },
-            {}
+            }
         );
 
         let pconf;
@@ -163,8 +162,7 @@ describe('ConfigLoader', () => {
                 builtInCategories,
                 [],
                 {},
-                undefined,
-                'User'
+                getConfigurationDocument(customForms)
             );
         } catch(err) {
             console.log('err', err);
@@ -229,13 +227,7 @@ describe('ConfigLoader', () => {
             'D': { fields: {} }
         };
 
-        applyConfig(
-            libraryCategories,
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig(libraryCategories);
 
         let pconf;
 
@@ -258,8 +250,7 @@ describe('ConfigLoader', () => {
                         inputType: 'relation'
                     }],
                 {},
-                undefined,
-                'User'
+                getConfigurationDocument(customForms)
             );
         } catch(err) {
             fail(err);
@@ -308,11 +299,7 @@ describe('ConfigLoader', () => {
             T: { fields: {} }
         };
 
-        applyConfig(
-            {},
-            {},
-            customForms
-        );
+        applyConfig();
 
         let pconf;
         try {
@@ -327,7 +314,9 @@ describe('ConfigLoader', () => {
                     editable: false,
                     inputType: 'relation'
                 }],
-                {}, undefined, 'User');
+                {},
+                getConfigurationDocument(customForms, {})
+            );
         } catch(err) {
             fail(err);
         }
@@ -362,7 +351,6 @@ describe('ConfigLoader', () => {
         applyConfig(
             {},
             {},
-            customForms,
             {
                 categories: {
                     A: { label: 'A_' },
@@ -370,10 +358,6 @@ describe('ConfigLoader', () => {
                 },
                 relations: {
                     r1: { label: 'r1_' }
-                }
-            }, {
-                categories: {
-                    B: { label: 'B__' }
                 }
             }
         );
@@ -388,7 +372,14 @@ describe('ConfigLoader', () => {
                     { name: 'r2', domain: ['A'], range: ['B'], editable: false, inputType: 'relation' }
                 ],
                 {},
-                undefined, 'User'
+                getConfigurationDocument(
+                    customForms,
+                    {
+                        categories: {
+                            B: { label: 'B__' }
+                        }
+                    }
+                )
             );
         } catch(err) {
             fail(err);
@@ -460,13 +451,7 @@ describe('ConfigLoader', () => {
             }
         };
 
-        applyConfig(
-            libraryCategories,
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig(libraryCategories);
 
         let pconf;
         try {
@@ -475,7 +460,7 @@ describe('ConfigLoader', () => {
                 builtInCategories,
                 [],
                 {},
-                undefined, 'User'
+                getConfigurationDocument(customForms)
             );
 
             expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldA1')
@@ -534,8 +519,6 @@ describe('ConfigLoader', () => {
         applyConfig(
             libraryCategories,
             {},
-            customForms,
-            {},
             {}
         );
 
@@ -544,7 +527,8 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 {},
                 builtInCategories,
-                [], {}, undefined, 'User'
+                [], {},
+                getConfigurationDocument(customForms)
             );
 
             expect(Named.arrayToMap<CategoryForm>(Tree.flatten(pconf.getCategories()))['B']
@@ -571,16 +555,13 @@ describe('ConfigLoader', () => {
             }
         };
 
-        applyConfig(
-            {},
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig();
 
         try {
-            await configLoader.go({}, {},[], {}, undefined, 'User');
+            await configLoader.go(
+                {}, {},[], {},
+                getConfigurationDocument(customForms)
+            );
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
@@ -610,18 +591,14 @@ describe('ConfigLoader', () => {
             }
         };
 
-        applyConfig(
-            {},
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig();
 
         try {
             await configLoader.go({},
                 builtInCategories,
-                [], {}, undefined, 'User');
+                [], {},
+                getConfigurationDocument(customForms)
+            );
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
@@ -760,10 +737,7 @@ describe('ConfigLoader', () => {
 
         applyConfig(
             libraryCategories,
-            libraryForms,
-            customForms,
-            {},
-            {}
+            libraryForms
         );
 
         let pconf;
@@ -771,7 +745,7 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go({},
                 builtInCategories,
                 [], {},
-                undefined, 'User'
+                getConfigurationDocument(customForms)
             );
 
             const result = Named.arrayToMap<CategoryForm>(Tree.flatten(pconf.getCategories()));
@@ -842,19 +816,14 @@ describe('ConfigLoader', () => {
             Parent: { fields: {} }
         };
 
-        applyConfig(
-            libraryCategories,
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig(libraryCategories);
 
         let pconf;
         try {
             pconf = await configLoader.go({},
                 builtInCategories,
-                [], {}, undefined, 'User'
+                [], {},
+                getConfigurationDocument(customForms)
             );
 
             expect(Tree.flatten(pconf.getCategories()).length).toBe(2);
@@ -924,20 +893,15 @@ describe('ConfigLoader', () => {
             }
         };
 
-        applyConfig(
-            libraryCategories,
-            {},
-            customForms,
-            {},
-            {}
-        );
+        applyConfig(libraryCategories);
 
         let pconf;
         try {
             pconf = await configLoader.go(
                 {}, builtInCategories,
                 [{ name: 'relation1', domain: ['A:inherit'], range: ['B'], inputType: 'relation' }],
-                {}, undefined, 'User'
+                {},
+                getConfigurationDocument(customForms)
             );
             
             const resultA = pconf.getCategory('A').groups[0];
@@ -1013,10 +977,7 @@ describe('ConfigLoader', () => {
 
         applyConfig(
             {},
-            libraryForms,
-            customForms,
-            {},
-            {}
+            libraryForms
         );
 
         let pconf;
@@ -1026,8 +987,7 @@ describe('ConfigLoader', () => {
                 builtInCategories,
                 [],
                 {},
-                undefined,
-                'User'
+                getConfigurationDocument(customForms)
             );
         } catch(err) {
             fail(err);

@@ -13,9 +13,8 @@ export class AppConfigurator {
     constructor(private configLoader: ConfigLoader) {}
 
 
-    public async go(username: string, 
-                    customConfigurationName: string|undefined,
-                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
+    public async go(customConfigurationName: string|undefined,
+                    configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
 
         const builtInConfiguration: BuiltInConfiguration = new BuiltInConfiguration(customConfigurationName);
 
@@ -24,9 +23,7 @@ export class AppConfigurator {
             builtInConfiguration.builtInCategories,
             builtInConfiguration.builtInRelations,
             builtInConfiguration.builtInFields,
-            username,
-            customConfigurationName,
-            customConfigurationDocument
+            configurationDocument
         );
     }
 }

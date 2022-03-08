@@ -39,6 +39,7 @@ class IdGenerator {
 export async function setupSettingsService(pouchdbdatastore, pouchdbserver, projectName = 'testdb') {
 
     const settingsProvider = new SettingsProvider();
+    const configReader = new ConfigReader();
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
@@ -46,9 +47,10 @@ export async function setupSettingsService(pouchdbdatastore, pouchdbserver, proj
         pouchdbdatastore,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbdatastore)),
+        new AppConfigurator(new ConfigLoader(configReader)),
         undefined,
-        settingsProvider
+        settingsProvider,
+        configReader
     );
 
     const settings = await settingsService.updateSettings({

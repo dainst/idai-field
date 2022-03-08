@@ -1,4 +1,5 @@
 const electron = require('electron');
+const remoteMain = require('@electron/remote/main');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const messages = require('./messages');
@@ -228,6 +229,8 @@ const getTemplate = (mainWindow, context, config) => {
                         enableRemoteModule: true
                     }
                 });
+
+                remoteMain.enable(infoWindow.webContents);
 
                 infoWindow.once('ready-to-show', function() {
                     infoWindow.show();

@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import {
-    FileInfo,
-    ImageStore,
-    ImageVariant,
-    SyncService
-} from 'idai-field-core';
+import { FileInfo, ImageStore, ImageVariant, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
@@ -32,26 +27,25 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  */
 export class NetworkProjectComponent {
 
-    public url = '';
-    public projectName = '';
-    public password = '';
-    public syncThumbnailImages = true;
-    public syncOriginalImages = false;
+    public url: string = '';
+    public projectName: string = '';
+    public password: string = '';
+    public syncThumbnailImages: boolean = true;
+    public syncOriginalImages: boolean = false;
 
-    private cancelling = false;
-    private fileDownloadPromises = [];
+    private cancelling: boolean = false;
+    private fileDownloadPromises: Array<Promise<void>> = [];
 
-    constructor(
-        private messages: Messages,
-        private syncService: SyncService,
-        private settingsService: SettingsService,
-        private settingsProvider: SettingsProvider,
-        private modalService: NgbModal,
-        private menuService: Menus,
-        private tabManager: TabManager,
-        private imageStore: ImageStore,
-        private remoteImageStore: RemoteImageStore
-    ) { }
+    
+    constructor(private messages: Messages,
+                private syncService: SyncService,
+                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
+                private modalService: NgbModal,
+                private menuService: Menus,
+                private tabManager: TabManager,
+                private imageStore: ImageStore,
+                private remoteImageStore: RemoteImageStore) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -60,6 +54,7 @@ export class NetworkProjectComponent {
             await this.tabManager.openActiveTab();
         }
     }
+
 
     public async onStartClicked() {
 
@@ -72,7 +67,6 @@ export class NetworkProjectComponent {
 
         progressModalRef.componentInstance.progressPercent = 0;
         progressModalRef.result.catch(async (canceled) => {
-
             try {
                 this.cancelling = true;
                 this.syncService.stopReplication();
@@ -90,7 +84,6 @@ export class NetworkProjectComponent {
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
         try {
-
             databaseSteps = await this.getUpdateSequence();
 
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
@@ -101,7 +94,6 @@ export class NetworkProjectComponent {
             );
 
             const overallSteps = databaseSteps + Object.keys(fileList).length;
-
             const databasePercentile = databaseSteps / overallSteps;
 
             await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
@@ -120,7 +112,6 @@ export class NetworkProjectComponent {
                 reloadAndSwitchToHomeRoute();
             });
         } catch (e) {
-
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
             } else if (e === 'unauthorized') {
@@ -141,7 +132,9 @@ export class NetworkProjectComponent {
         }
     }
 
+
     private getSelectedFileSync(): ImageVariant[] {
+
         const result = [];
 
         if (this.syncThumbnailImages) result.push(ImageVariant.THUMBNAIL);
@@ -150,13 +143,11 @@ export class NetworkProjectComponent {
         return result;
     }
 
-    private async syncDatabase(
-        progressModalRef: NgbModalRef,
-        updateSequence: number,
-        overallPercentile: number,
-        destroyExisting: boolean
-    ): Promise<void> {
-        return new Promise(async (res, rej) => {
+
+    private async syncDatabase(progressModalRef: NgbModalRef, updateSequence: number,
+                               overallPercentile: number, destroyExisting: boolean): Promise<void> {
+
+        return new Promise(async (resolve, reject) => {
             try {
                 (await this.syncService.startReplication(
                     this.url, this.password, this.projectName, updateSequence, destroyExisting
@@ -167,24 +158,17 @@ export class NetworkProjectComponent {
                             (lastSequenceNumber / updateSequence * 100 * overallPercentile), 100
                         );
                     },
-                    error: err => {
-                        rej(err);
-                    },
-                    complete: () => {
-                        res();
-                    }
+                    error: err => reject(err),
+                    complete: () => resolve()
                 });
             } catch (e) {
-                rej(e);
+                reject(e);
             }
         });
     }
 
-    private async syncFiles(
-        progressModalRef: NgbModalRef,
-        targetPercentile: number,
-        files: { [uuid: string]: FileInfo }
-    ): Promise<void> {
+    private async syncFiles(progressModalRef: NgbModalRef, targetPercentile: number,
+                            files: { [uuid: string]: FileInfo }): Promise<void> {
 
         let counter = 0;
         const fileCount = Object.keys(files).length;
@@ -202,13 +186,11 @@ export class NetworkProjectComponent {
             }
 
             for (const batch of batches) {
-
                 if (this.cancelling) throw 'canceled';
 
                 this.fileDownloadPromises = [];
 
                 for (const uuid of batch) {
-
                     for (const type of files[uuid].types) {
                         if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
                             this.fileDownloadPromises.push(
@@ -237,6 +219,7 @@ export class NetworkProjectComponent {
 
 
     private async getUpdateSequence(): Promise<number> {
+        
         const info = await new PouchDB(
             SyncService.generateUrl(this.url, this.projectName),
             {

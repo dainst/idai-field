@@ -3,6 +3,15 @@ FROM elixir:latest
 
 COPY . /opt/src/api
 
+RUN apt-get update
+RUN apt-get install nodejs -y
+RUN apt-get install npm -y
+
+WORKDIR "/opt/src/api/assets/js"
+
+RUN npm install
+RUN npm run build
+
 WORKDIR "/opt/src/api"
 
 RUN ["mix", "local.hex", "--force"]

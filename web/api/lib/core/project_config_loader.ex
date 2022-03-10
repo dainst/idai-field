@@ -2,19 +2,22 @@ defmodule Api.Core.ProjectConfigLoader do
   require Logger
   use Agent
 
-  def start_link({project_config_dir_name, projects}) do
-    
+  def start_link({projects}) do
     projects = (projects || Api.Core.Config.get(:projects)) ++ ["default"]
     
     configs = for project <- projects, into: %{} do
       {
         project,
-        load(project_config_dir_name, project)
+        load(project)
       }
     end
     Agent.start_link(fn -> configs end, name: __MODULE__)
   end
   def start_link(_), do: start_link({nil, nil})
+
+  def update(project) do
+    Agent.update(__MODULE__, fn configs -> Map.put(configs, project, load(project)) end)
+  end
 
   def get(project_name), do: Agent.get(__MODULE__, fn configs ->
     if configs[project_name] != nil do
@@ -24,9 +27,9 @@ defmodule Api.Core.ProjectConfigLoader do
     end
   end)
 
-  defp load(config_dir, project_name) do
-    
-    file_name = config_dir <> "/" <> project_name <> ".json"
+  defp load(project_name) do
+    project_config_dir_name = if Mix.env() == :test do "test/resources" else "resources/projects" end
+    file_name = project_config_dir_name <> "/" <> project_name <> ".json"
     
     Logger.info "Loading project configuration from #{file_name}"
     with {:ok, body} <- File.read(file_name),

@@ -88,17 +88,15 @@ defmodule Api.Core.LayoutTest do
                 en: "Color"
               },
               description: %{}
-           }
-        ],
-        relations: [
-          %{
-            name: "liesWithin",
-            targets: [%{ resource: %{ id: "45", parentId: "40" } }],
-            label: %{
-              de: "Liegt in",
-              en: "Lies within"
-            },
-            description: %{}
+           },
+           %{
+              name: "liesWithin",
+              targets: [%{ resource: %{ id: "45", parentId: "40" } }],
+              label: %{
+                de: "Liegt in",
+                en: "Lies within"
+              },
+              description: %{}
           }
         ]
        },
@@ -126,13 +124,11 @@ defmodule Api.Core.LayoutTest do
              },
              description: %{}
            }
-         ],
-         relations: []
+         ]
        },
       %{
         name: "time",
-        fields: [],
-        relations: []
+        fields: []
       }
      ]
     }

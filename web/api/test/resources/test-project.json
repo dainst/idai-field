@@ -112,10 +112,10 @@
                 "en": "Material"
               },
               "description": {}
-            }
-          ],
-          "relations": [
+            },
             {
+              "inputType": "relation",
+              "source": "builtin",
               "name": "liesWithin",
               "label": {
                 "de": "Liegt in",
@@ -170,7 +170,6 @@
               "description": {}
             }
           ],
-          "relations": [],
           "label": "Maße"
         },
         {
@@ -209,7 +208,6 @@
               "description": {}
             }
           ],
-          "relations": [],
           "label": {
             "de": "Zeit",
             "en": "Time"

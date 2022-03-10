@@ -34,7 +34,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
       }
     }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     result = Labels.add_labels(change, configuration)
@@ -116,7 +116,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
       }
     }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     result = Labels.add_labels(change, configuration)

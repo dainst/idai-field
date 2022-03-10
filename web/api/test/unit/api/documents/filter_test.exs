@@ -4,7 +4,7 @@ defmodule Api.Documents.FilterTest do
   use ExUnit.Case
 
   test "expand" do
-    start_supervised({ProjectConfigLoader, {"resources/projects", ["default"]}})
+    start_supervised({ProjectConfigLoader, {["default"]}})
     conf = ProjectConfigLoader.get("default")
 
     filters = [

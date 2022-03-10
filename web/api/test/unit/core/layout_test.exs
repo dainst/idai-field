@@ -33,7 +33,7 @@ defmodule Api.Core.LayoutTest do
 
     project_resource = %{ license: "Test-Lizenz" }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     layouted_resource = Layout.to_layouted_resource(configuration, resource, project_resource)

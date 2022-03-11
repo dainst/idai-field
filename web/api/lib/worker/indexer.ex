@@ -44,6 +44,7 @@ defmodule Api.Worker.Indexer do
     IdaiFieldDb.fetch_changes(project)
     |> Enum.filter(&filter_non_owned_document/1)
     |> Enum.map(Mapper.process)
+    |> Enum.filter(&filter_configuration_document/1)
     |> log_finished("mapping", project)
     |> Enricher.process(project, IdaiFieldDb.get_doc(project), configuration)
     |> log_finished("enriching", project)
@@ -58,4 +59,7 @@ defmodule Api.Worker.Indexer do
 
   defp filter_non_owned_document(_change = %{ doc: %{ project: _project } }), do: false
   defp filter_non_owned_document(_change), do: true
+
+  defp filter_configuration_document(_change = %{ doc: %{ resource: %{ category: "Configuration" } } }), do: false
+  defp filter_configuration_document(_change), do: true
 end

@@ -4,7 +4,7 @@ defmodule Api.Worker.Enricher.Labels do
   alias Api.Core.CategoryTreeList
 
   @core_properties [:id, :identifier, :shortDescription, :geometry, :geometry_wgs84, :georeference,
-    :gazId, :parentId, :featureVectors, :license, :shortName]
+    :gazId, :parentId, :featureVectors, :license, :shortName, :originalFilename]
 
   def add_labels(change = %{ doc: %{ resource: resource } }, configuration) do
     put_in(change.doc.resource, add_labels_to_resource(resource, configuration))

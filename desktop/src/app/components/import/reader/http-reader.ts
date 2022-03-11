@@ -1,6 +1,7 @@
-import {HttpClient} from '@angular/common/http';
-import {Reader} from './reader';
-import {M} from '../../../components/messages/m';
+import { HttpClient } from '@angular/common/http';
+import { Reader } from './reader';
+import { M } from '../../../components/messages/m';
+
 
 /**
  * @author Daniel de Oliveira

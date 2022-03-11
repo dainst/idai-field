@@ -143,7 +143,7 @@
             {
               "inputType": "dimension",
               "source": "common",
-              "positionValues": {
+              "valuelist": {
                 "createdBy": "",
                 "creationDate": "",
                 "description": {},
@@ -166,6 +166,35 @@
               "label": {
                 "de": "Breite",
                 "en": "Width"
+              },
+              "description": {}
+            },
+            {
+              "inputType": "dimension",
+              "source": "common",
+              "valuelist": {
+                "createdBy": "",
+                "creationDate": "",
+                "description": {},
+                "values": {
+                  "Maximale Ausdehnung": {
+                    "labels": {
+                      "de": "Maximale Ausdehnung",
+                      "en": "Maximum expansion"
+                    }
+                  },
+                  "Minimale Ausdehnung": {
+                    "labels": {
+                      "de": "Minimale Ausdehnung",
+                      "en": "Minimum expansion"
+                    }
+                  }
+                }
+              },
+              "name": "height",
+              "label": {
+                "de": "Höhe",
+                "en": "Height"
               },
               "description": {}
             }

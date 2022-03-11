@@ -14,6 +14,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
           "color" => ["Grün", "Blau"],
           "material" => ["Eisen"],
           "width" => [%{ "inputValue" => 10, "inputUnit" => "cm", "measurementPosition" => "Maximale Ausdehnung" }],
+          "height" => [%{ "inputValue" => 20, "inputUnit" => "cm" }],
           "period" => %{ "value" => "Old Babylonian", "endValue" => "New Babylonian" },
           :id => "42",
           :relations => %{
@@ -64,6 +65,12 @@ defmodule Api.Worker.Enricher.LabelsTest do
                  en: "Maximum expansion"
                 }
               }
+            }
+          ],
+          height: [
+            %{
+              inputValue: 20,
+              inputUnit: "cm"
             }
           ],
           period: %{

@@ -3,7 +3,7 @@ defmodule Api.Core.ProjectConfigLoader do
   use Agent
 
   def start_link({projects}) do
-    projects = (projects || Api.Core.Config.get(:projects)) ++ ["default"]
+    projects = (projects || Api.Core.Config.get(:projects))
     
     configs = for project <- projects, into: %{} do
       {
@@ -19,13 +19,7 @@ defmodule Api.Core.ProjectConfigLoader do
     Agent.update(__MODULE__, fn configs -> Map.put(configs, project, load(project)) end)
   end
 
-  def get(project_name), do: Agent.get(__MODULE__, fn configs ->
-    if configs[project_name] != nil do
-      configs[project_name]
-    else
-      configs["default"]
-    end
-  end)
+  def get(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end)
 
   defp load(project_name) do
     project_config_dir_name = if Mix.env() == :test do "test/resources" else "resources/projects" end
@@ -38,7 +32,7 @@ defmodule Api.Core.ProjectConfigLoader do
       Api.Core.Utils.atomize(json, [:values])
     else
       _ ->
-        Logger.info "No configuration found for project #{project_name}, using default configuration"
+        Logger.warn "No configuration found for project #{project_name}."
         nil
     end
   end

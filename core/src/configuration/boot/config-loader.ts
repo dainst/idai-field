@@ -40,7 +40,8 @@ export class ConfigLoader {
                     builtInCategories: Map<BuiltInCategoryDefinition>,
                     relations: Array<Relation>,
                     builtInFields: Map<BuiltInFieldDefinition>,
-                    configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
+                    configurationDocument: ConfigurationDocument,
+                    includeAllRelations: boolean = false): Promise<ProjectConfiguration> {
 
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryFile('Categories.json');
         const libraryForms: Map<LibraryFormDefinition> = this.readLibraryFile('Forms.json');
@@ -59,7 +60,8 @@ export class ConfigLoader {
             commonFields,
             relations,
             builtInFields,
-            configurationDocument
+            configurationDocument,
+            includeAllRelations
         );
     }
 
@@ -81,7 +83,8 @@ export class ConfigLoader {
                                     commonFields: Map<BuiltInFieldDefinition>,
                                     relations: Array<Relation>,
                                     builtInFields: Map<BuiltInFieldDefinition>,
-                                    configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
+                                    configurationDocument: ConfigurationDocument,
+                                    includeAllRelations: boolean): Promise<ProjectConfiguration> {
 
         let customForms;
         let languageConfigurations: LanguageConfigurations;
@@ -122,8 +125,11 @@ export class ConfigLoader {
                             ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
                         if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
                         return categories;
-                    }));
-
+                    },
+                    undefined,
+                    includeAllRelations
+                )
+            );
         } catch (msgWithParams) {
             throw msgWithParams;
         }

@@ -999,4 +999,80 @@ describe('ConfigLoader', () => {
         
         done();
     });
+
+
+    it('include all relations', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['isSimilarTo'] }
+                    ]
+                },
+                supercategory: true
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['isSameAs'] }
+                    ]
+                },
+                supercategory: true
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': { fields: {} },
+            'B': { fields: {} }
+        };
+
+        applyConfig();
+
+        let pconf;
+
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [
+                    {
+                        name: 'isRecordedIn',
+                        domain: ['A'],
+                        range: ['B'],
+                        editable: false,
+                        visible: false,
+                        inputType: 'relation'
+                    },
+                    {
+                        name: 'isSimilarTo',
+                        domain: ['A'],
+                        range: ['A'],
+                        inputType: 'relation'
+                    },
+                    {
+                        name: 'isSameAs',
+                        domain: ['B'],
+                        range: ['B'],
+                        inputType: 'relation'
+                    }
+                ],
+                {},
+                getConfigurationDocument(customForms),
+                true
+            );
+        } catch(err) {
+            fail(err);
+        }
+
+        expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
+        expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('isSimilarTo');
+        expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('isRecordedIn');
+        expect(pconf.getCategory('B').groups[0].fields.length).toBe(1);
+        expect(pconf.getCategory('B').groups[0].fields[0].name).toEqual('isSameAs');
+
+        done();
+    });
 });

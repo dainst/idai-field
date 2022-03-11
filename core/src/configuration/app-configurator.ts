@@ -14,7 +14,8 @@ export class AppConfigurator {
 
 
     public async go(customConfigurationName: string|undefined,
-                    configurationDocument: ConfigurationDocument): Promise<ProjectConfiguration> {
+                    configurationDocument: ConfigurationDocument,
+                    includeAllRelations: boolean = false): Promise<ProjectConfiguration> {
 
         const builtInConfiguration: BuiltInConfiguration = new BuiltInConfiguration(customConfigurationName);
 
@@ -23,7 +24,8 @@ export class AppConfigurator {
             builtInConfiguration.builtInCategories,
             builtInConfiguration.builtInRelations,
             builtInConfiguration.builtInFields,
-            configurationDocument
+            configurationDocument,
+            includeAllRelations
         );
     }
 }

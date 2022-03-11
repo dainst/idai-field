@@ -24,7 +24,8 @@ async function start() {
         fullConfiguration = getForest(
             await appConfigurator.go(
                 getConfigurationName(projectName),
-                configurationDocument
+                configurationDocument,
+                true
             )
         );
     } catch (err) {
@@ -52,20 +53,17 @@ async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string,
 async function fetchConfigurationDocumentFromCouchdb(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
                                                      projectName: string): Promise<ConfigurationDocument> {
 
-    try {
-        const result = await axios.get(
-            couchdbUrl + '/' + projectName + '/configuration',
-            {
-                auth: {
-                    username: couchdbUser,
-                    password: couchdbPassword
-                }
+    const result = await axios.get(
+        couchdbUrl + '/' + projectName + '/configuration',
+        {
+            auth: {
+                username: couchdbUser,
+                password: couchdbPassword
             }
-        );
-        return result.data;
-    } catch (err) {
-        console.error('Error while fetching configuration document:', err);
-    }   
+        }
+    );
+
+    return result.data;
 }
 
 
@@ -78,10 +76,9 @@ function writeProjectConfiguration(fullProjectConfiguration: any, project: strin
 }
 
 
-function getForest(projectConfiguration: ProjectConfiguration) {
+function getForest(projectConfiguration: ProjectConfiguration): Forest<CategoryForm> {
 
     return Forest.map((category: CategoryForm) => {
-
         delete category.children;
         delete category.parentCategory;
         return category;

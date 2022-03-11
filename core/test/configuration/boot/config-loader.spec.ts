@@ -15,7 +15,6 @@ describe('ConfigLoader', () => {
 
     let configLoader: ConfigLoader;
     let configReader;
-    let pouchdbManager;
 
     function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
                          libraryForms: Map<LibraryFormDefinition> = {},
@@ -49,7 +48,6 @@ describe('ConfigLoader', () => {
     beforeEach(() => {
 
         configReader = jasmine.createSpyObj('configReader', ['read', 'exists']);
-        pouchdbManager = jasmine.createSpyObj('pouchdbManager', ['getDb']);
         applyConfig();
 
         configLoader = new ConfigLoader(configReader);

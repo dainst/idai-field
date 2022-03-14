@@ -39,23 +39,22 @@ export class LayerImageProvider {
             url = this.sanitizer.sanitize(
                 SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.ORIGINAL)
             );
+
+            return { imgSrc: url };
         } catch (err) {
             console.error(err);
             console.error('Error while creating image container. Original image not found in imagestore ' +
                 'for document:', document);
-            return { imgSrc: ImageUrlMaker.blackImg };
-        }
 
-        if (url !== '') {
-            return { imgSrc: url };
-        } else {
             try {
-                return {
-                    thumbSrc: this.sanitizer.sanitize(
-                        SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.THUMBNAIL)
-                    )
-                };
+                url =  this.sanitizer.sanitize(
+                    SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.THUMBNAIL)
+                );
+                return { imgSrc: url };
             } catch (err) {
+
+                console.error('Error while creating fallback image container. Thumbnail image also not found in imagestore ' +
+                    'for document:', document);
                 return { imgSrc: ImageUrlMaker.blackImg };
             }
         }

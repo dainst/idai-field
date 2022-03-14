@@ -16,7 +16,7 @@ defmodule Api.Application do
           :start_link,
           [
             {
-              Api.Core.Config.get(:projects)
+              Api.Core.Config.get(:projects) ++ ["default"]
             }
           ]
         }

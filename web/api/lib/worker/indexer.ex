@@ -5,7 +5,6 @@ defmodule Api.Worker.Indexer do
   alias Api.Worker.Adapter.IdaiFieldDb
   alias Api.Worker.Enricher.Enricher
   alias Api.Core.ProjectConfigLoader
-  alias Api.Core.Config
 
   @doc """
   For a project (identified by its alias) a new index gets created.
@@ -15,7 +14,7 @@ defmodule Api.Worker.Indexer do
   def reindex(project) do
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
 
-    update_project_configuration project
+    ProjectConfigLoader.update project
     perform_reindex ProjectConfigLoader.get(project), project, new_index
 
     IndexAdapter.add_alias_and_remove_old_index project, new_index, old_index
@@ -24,20 +23,6 @@ defmodule Api.Worker.Indexer do
 
   def stop_reindex(project) do
     IndexAdapter.remove_stale_index_alias project
-  end
-
-  def update_project_configuration project do
-    IO.inspect System.cmd(
-      "node",
-      [
-        "assets/js/createConfigurationFile.js",
-        project,
-        Config.get(:couchdb_url),
-        Config.get(:couchdb_user),
-        Config.get(:couchdb_password)
-      ]
-    )
-    ProjectConfigLoader.update(project)
   end
 
   defp perform_reindex configuration, project, index do

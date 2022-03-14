@@ -87,5 +87,5 @@ function getForest(projectConfiguration: ProjectConfiguration): Forest<CategoryF
 
 
 start().then(() => {
-    console.log('Finished generating configuration file.');
+    console.log('Finished generating configuration file for project: ' + projectName);
 });

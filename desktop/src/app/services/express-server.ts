@@ -148,6 +148,11 @@ export class ExpressServer {
             conditionalParameters = Object.assign(conditionalParameters, { logPath: remote.getGlobal('appDataPath') });
         }
 
+
+        // prevent the creation of new databases when syncing
+        app.put('/db/:db', (_: any, res: any) =>
+            res.status(401).send( { status: 401 }));
+
         app.use('/db/', expressPouchDB(PouchDB, {
             ...conditionalParameters,
             ...{
@@ -179,6 +184,10 @@ export class ExpressServer {
                 expressBasicAuth.safeCompare(password, this.password),
             unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
         }));
+
+        // prevent the creation of new databases when syncing
+        fauxtonApp.put('/:db', (_: any, res: any) =>
+            res.status(401).send( { status: 401 }));
 
         fauxtonApp.use(expressPouchDB(PouchDB, {
             ...conditionalParameters,

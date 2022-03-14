@@ -173,6 +173,13 @@ export class ExpressServer {
 
         const fauxtonApp = express();
 
+        fauxtonApp.use(expressBasicAuth({
+            challenge: true,
+            authorizer: (_: string, password: string) =>
+                expressBasicAuth.safeCompare(password, this.password),
+            unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
+        }));
+
         fauxtonApp.use(expressPouchDB(PouchDB, {
             ...conditionalParameters,
             ...{

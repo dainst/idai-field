@@ -8,7 +8,14 @@
 
 ## Deployment
 
-The Docker images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub)
+The Docker images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub).
+
+Required environment variables:
+* HOST, the host domain you will run the application from, for example "server.field.test.idai.world".
+* SECRET_KEY_BASE, see https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
+* COUCHDB_URL, base url to your couchdb installation, for example "http://example.com:5984".
+* COUCHDB_ADMIN_NAME
+* COUCHDB_ADMIN_PASSWORD
 
 ## Building a new docker image version
 

@@ -3,7 +3,8 @@
     "core",
     "desktop",
     "mobile",
-    "web/ui"
+    "web/ui",
+    "web/api/assets/js"
   ],
   "version": "independent"
 }

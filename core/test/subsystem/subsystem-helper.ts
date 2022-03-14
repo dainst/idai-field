@@ -54,10 +54,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         modified: [{ user: db, date: new Date() }]
     };
 
-    const configLoader = new ConfigLoader(
-        new ConfigReader(), 
-        pouchdbDatastore,
-    );
+    const configLoader = new ConfigLoader(new ConfigReader());
 
     const template: Template = (await configLoader.readTemplates())['default'];
 
@@ -84,8 +81,8 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
     const appConfigurator = new AppConfigurator(configLoader);
 
     const projectConfiguration = await appConfigurator.go(
-        user,
-        undefined
+        'test',
+        configurationDocument
     );
 
     const createdConstraintIndex = ConstraintIndex.make(basicIndexConfiguration, Tree.flatten(projectConfiguration.getCategories()));

@@ -52,16 +52,18 @@ export async function setupSettingsService(pouchdbdatastore, projectName = 'test
     const remoteImageStore = new RemoteImageStore(settingsProvider);
 
     const imageSync = new ImageSyncService(imageStore, remoteImageStore);
+    const configReader = new ConfigReader();
 
     const settingsService = new SettingsService(
         imageStore,
         pouchdbdatastore,
         pouchdbServer,
         undefined,
-        new AppConfigurator(new ConfigLoader(new ConfigReader(), pouchdbdatastore)),
+        new AppConfigurator(new ConfigLoader(configReader)),
         undefined,
         imageSync,
-        settingsProvider
+        settingsProvider,
+        configReader
     );
 
     const settings = await settingsService.updateSettings({

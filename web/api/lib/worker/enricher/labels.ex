@@ -4,7 +4,7 @@ defmodule Api.Worker.Enricher.Labels do
   alias Api.Core.CategoryTreeList
 
   @core_properties [:id, :identifier, :shortDescription, :geometry, :geometry_wgs84, :georeference,
-    :gazId, :parentId, :featureVectors, :license, :shortName]
+    :gazId, :parentId, :featureVectors, :license, :shortName, :originalFilename]
 
   def add_labels(change = %{ doc: %{ resource: resource } }, configuration) do
     put_in(change.doc.resource, add_labels_to_resource(resource, configuration))
@@ -60,8 +60,9 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp get_value_with_label(field_name, dimension = %{ "measurementPosition" => position }, category_definition) do
-    label = get_label(field_name, position, category_definition, :positionValues)
+  defp get_value_with_label(field_name, dimension = %{ "inputValue" => _ }, category_definition) do
+    position = dimension["measurementPosition"]
+    label = if is_nil(position) do nil else get_label(field_name, position, category_definition) end
     if !is_nil(label) do
       put_in(dimension["measurementPosition"], %{ name: position, label: label })
     else
@@ -74,7 +75,7 @@ defmodule Api.Worker.Enricher.Labels do
     |> put_labels_in_subfields(field_name, "endValue", category_definition)
   end
   defp get_value_with_label(field_name, field_value, category_definition) do
-    label = get_label(field_name, field_value, category_definition, :valuelist)
+    label = get_label(field_name, field_value, category_definition)
     if !is_nil(label) do
       %{ name: field_value, label: label }
     else
@@ -83,7 +84,7 @@ defmodule Api.Worker.Enricher.Labels do
   end
 
   defp put_labels_in_subfields(field_value, field_name, field_value_subfield, category_definition) do
-    label = get_label(field_name, field_value[field_value_subfield], category_definition, :valuelist)
+    label = get_label(field_name, field_value[field_value_subfield], category_definition)
     if !is_nil(label) do
       put_in(field_value[field_value_subfield], %{ name: field_value[field_value_subfield], label: label })
     else
@@ -91,15 +92,15 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp get_label(_, nil, _, _), do: nil
-  defp get_label(field_name, field_value, category_definition, valuelist_property_name) do
+  defp get_label(_, nil, _), do: nil
+  defp get_label(field_name, field_value, category_definition) do
      field_definition = get_field_definition(category_definition, field_name)
      cond do
       is_nil(field_definition) -> raise "No field definition found for field #{field_name} of category "
         <> category_definition.name
-      !Map.has_key?(field_definition, valuelist_property_name) -> nil
-      Map.has_key?(field_definition[valuelist_property_name]["values"], field_value) ->
-        get_labels_object(field_definition[valuelist_property_name]["values"][field_value])
+      !Map.has_key?(field_definition, :valuelist) -> nil
+      Map.has_key?(field_definition[:valuelist]["values"], field_value) ->
+        get_labels_object(field_definition[:valuelist]["values"][field_value])
       true -> %{}
      end
   end

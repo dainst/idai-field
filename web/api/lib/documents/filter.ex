@@ -9,7 +9,7 @@ defmodule Api.Documents.Filter do
 
   defp parse_filter_string(filter_string) do
     [field, value] = String.split(filter_string, ":")
-    {field, [value]}
+    {field, [String.replace(value, "%3A", ":")]}
   end
 
   defp expand_filter({"resource.category.name", [parent_category]}, project_conf) do

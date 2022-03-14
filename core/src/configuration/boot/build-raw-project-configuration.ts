@@ -52,7 +52,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
-                                             selectedParentForms?: string[]): RawProjectConfiguration {
+                                             selectedParentForms?: string[],
+                                             includeAllRelations: boolean = false): RawProjectConfiguration {
 
     const valuelists: Map<Valuelist> = mergeValuelists(libraryValuelists, customValuelists);
 
@@ -90,7 +91,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
             CATEGORIES,
             processForms(
                 validateFields, languageConfigurations, categoriesOrder, relationDefinitions, categories,
-                selectedParentForms
+                selectedParentForms, includeAllRelations
             )
         )
     );
@@ -153,11 +154,12 @@ function processForms(validateFields: any,
                       categoriesOrder: string[],
                       relations: Array<Relation>,
                       categories: Map<TransientCategoryDefinition>,
-                      selectedParentForms?: string[]): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
+                      selectedParentForms?: string[],
+                      includeInvisibleRelations: boolean = false): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
 
     return compose(
         validateFields,
-        makeCategoryForest(relations, categories, selectedParentForms),
+        makeCategoryForest(relations, categories, selectedParentForms, includeInvisibleRelations),
         Forest.map(curry(setGroupLabels, languageConfigurations)),
         orderCategories(categoriesOrder),
         linkParentAndChildInstances

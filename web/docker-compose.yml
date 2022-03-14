@@ -49,9 +49,11 @@ services:
       - "./api/resources:/opt/src/api/resources"
       - "./api/lib:/opt/src/api/lib"
       - "./api/test:/opt/src/api/test"
+      - "./api/assets:/opt/src/api/assets"
       - "./api/_build:/opt/src/api/_build"
       - "./data/cantaloupe:/imageroot"
       - "./imagemagick:/etc/ImageMagick-6"
+      - "../core:/opt/src/api/assets/js/node_modules/idai-field-core"
 
   ui:
     image: "dainst/idai-field-web-ui"

@@ -14,6 +14,7 @@ defmodule Api.Worker.Indexer do
   def reindex(project) do
     {new_index, old_index} = IndexAdapter.create_new_index_and_set_alias project
 
+    ProjectConfigLoader.update project
     perform_reindex ProjectConfigLoader.get(project), project, new_index
 
     IndexAdapter.add_alias_and_remove_old_index project, new_index, old_index
@@ -28,6 +29,7 @@ defmodule Api.Worker.Indexer do
     IdaiFieldDb.fetch_changes(project)
     |> Enum.filter(&filter_non_owned_document/1)
     |> Enum.map(Mapper.process)
+    |> Enum.filter(&filter_configuration_document/1)
     |> log_finished("mapping", project)
     |> Enricher.process(project, IdaiFieldDb.get_doc(project), configuration)
     |> log_finished("enriching", project)
@@ -42,4 +44,7 @@ defmodule Api.Worker.Indexer do
 
   defp filter_non_owned_document(_change = %{ doc: %{ project: _project } }), do: false
   defp filter_non_owned_document(_change), do: true
+
+  defp filter_configuration_document(_change = %{ doc: %{ resource: %{ category: "Configuration" } } }), do: false
+  defp filter_configuration_document(_change), do: true
 end

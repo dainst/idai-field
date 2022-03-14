@@ -6,12 +6,8 @@ import React, { CSSProperties, ReactElement, ReactNode } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import {
-    convertMeasurementPosition,
-    Document, Field, FieldGroup, FieldValue,
-    getDocumentImages, isLabeled, isLabeledValue, LabeledValue,
-    Relation
-} from '../../api/document';
+import { convertMeasurementPosition, Document, Field, FieldGroup, FieldValue, getDocumentImages,
+    isLabeled, isLabeledValue, LabeledValue } from '../../api/document';
 import { ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
 import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
@@ -57,8 +53,10 @@ export const renderGroup = (t: TFunction, project: string, baseUrl: string, skip
 
     return (
         <div key={ `${group.name}_group` }>
-            { renderFieldList(group.fields.filter(field => !skip.includes(field.name)), t) }
-            { renderRelationList(group.relations, project, t, baseUrl) }
+            { renderFieldList(group.fields.filter(field => {
+                return field.value !== undefined && !skip.includes(field.name);
+            }), t) }
+            { renderRelationList(group.fields.filter(field => field.targets), project, t, baseUrl) }
         </div>
     );
 };
@@ -79,7 +77,7 @@ const renderFieldList = (fields: Field[], t: TFunction): ReactNode => {
 };
 
 
-const renderRelationList = (relations: Relation[], project: string, t: TFunction, baseUrl: string): ReactNode => {
+const renderRelationList = (relations: Field[], project: string, t: TFunction, baseUrl: string): ReactNode => {
 
     if (!relations) return null;
 

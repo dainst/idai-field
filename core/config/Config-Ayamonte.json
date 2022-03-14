@@ -415,6 +415,9 @@
     },
     "Profile:default": {
       "color": "#6da4fc",
+      "commons": [
+        "date"
+      ],
       "fields": {
         "profileClassification": {
           "inputType": "input"

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, ConfigurationDocument, getConfigurationName, Name, PouchdbDatastore,
-    ProjectConfiguration, SyncService, ImageStore, ImageSyncService, Template } from 'idai-field-core';
 import { isString } from 'tsfun';
+import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
@@ -35,8 +35,8 @@ export class SettingsService {
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
                 private imageSyncService: ImageSyncService,
-                private settingsProvider: SettingsProvider) {
-    }
+                private settingsProvider: SettingsProvider,
+                private configReader: ConfigReader) {}
 
 
     public async bootProjectDb(selectedProject: string,
@@ -91,11 +91,17 @@ export class SettingsService {
 
     public async loadConfiguration(): Promise<ProjectConfiguration> {
 
+        const configurationName: string = getConfigurationName(this.settingsProvider.getSettings().selectedProject);
+
+        const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => this.pouchdbDatastore.getDb().get(id),
+            this.configReader,
+            configurationName,
+            this.settingsProvider.getSettings().username
+        );
+
         try {
-            return this.appConfigurator.go(
-                this.settingsProvider.getSettings().username,
-                getConfigurationName(this.settingsProvider.getSettings().selectedProject)
-            );
+            return this.appConfigurator.go(configurationName, configurationDocument);
         } catch (msgsWithParams) {
             if (isString(msgsWithParams)) {
                 msgsWithParams = [[msgsWithParams]];

@@ -59,10 +59,10 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
     };
 
     if (query.filters) {
-        params.filters.push(...query.filters.map((filter: Filter) => `${filter.field}:${filter.value}`));
+        params.filters.push(...query.filters.map((filter: Filter) => `${filter.field}:${getFilterValue(filter)}`));
     }
     if (query.not) {
-        params.not.push(...query.not.map((filter: Filter) => `${filter.field}:${filter.value}`));
+        params.not.push(...query.not.map((filter: Filter) => `${filter.field}:${getFilterValue(filter)}`));
     }
     if (query.exists) {
         params.exists.push(...query.exists.map((fieldName: string) => `${fieldName}`));
@@ -164,4 +164,10 @@ const buildVectorQuery = async (imageQuery: ImageQuery): Promise<VectorQuery> =>
         query_vector,
         model: imageQuery.model
     };
+};
+
+
+const getFilterValue = (filter: Filter): string => {
+
+    return filter.value.replace(':', '%3A');
 };

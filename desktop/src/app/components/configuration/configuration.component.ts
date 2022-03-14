@@ -628,7 +628,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         try {
             return this.appConfigurator.go(
-               this.settingsProvider.getSettings().username,
                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                Document.clone(configurationDocument)
            );

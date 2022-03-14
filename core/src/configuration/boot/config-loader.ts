@@ -1,5 +1,4 @@
 import { clone, Map } from 'tsfun';
-import { PouchdbDatastore } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
 import { Relation } from '../../model/configuration/relation';
 import { LanguageConfiguration } from '../model/language/language-configuration';
@@ -34,19 +33,15 @@ const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it'];
  */
 export class ConfigLoader {
 
-    constructor(private configReader: ConfigReader,
-                private pouchdbDatastore: PouchdbDatastore) {}
+    constructor(private configReader: ConfigReader) {}
 
 
     public async go(commonFields: Map<BuiltInFieldDefinition>,
                     builtInCategories: Map<BuiltInCategoryDefinition>,
                     relations: Array<Relation>,
                     builtInFields: Map<BuiltInFieldDefinition>,
-                    username: string,
-                    customConfigurationName?: string|undefined,
-                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
-
-        if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
+                    configurationDocument: ConfigurationDocument,
+                    includeAllRelations: boolean = false): Promise<ProjectConfiguration> {
 
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryFile('Categories.json');
         const libraryForms: Map<LibraryFormDefinition> = this.readLibraryFile('Forms.json');
@@ -65,9 +60,8 @@ export class ConfigLoader {
             commonFields,
             relations,
             builtInFields,
-            username,
-            customConfigurationName,
-            customConfigurationDocument
+            configurationDocument,
+            includeAllRelations
         );
     }
 
@@ -89,9 +83,8 @@ export class ConfigLoader {
                                     commonFields: Map<BuiltInFieldDefinition>,
                                     relations: Array<Relation>,
                                     builtInFields: Map<BuiltInFieldDefinition>,
-                                    username: string,
-                                    customConfigurationName: string,
-                                    customConfigurationDocument?: ConfigurationDocument): Promise<ProjectConfiguration> {
+                                    configurationDocument: ConfigurationDocument,
+                                    includeAllRelations: boolean): Promise<ProjectConfiguration> {
 
         let customForms;
         let languageConfigurations: LanguageConfigurations;
@@ -99,13 +92,6 @@ export class ConfigLoader {
         let customValuelists: Map<Valuelist>;
 
         try {
-            const configurationDocument = customConfigurationDocument ??
-                await ConfigurationDocument.getConfigurationDocument(
-                    (id: string) => this.pouchdbDatastore.getDb().get(id),
-                    this.configReader,
-                    customConfigurationName,
-                    username
-                );
             customForms = configurationDocument.resource.forms;
             const defaultLanguageConfigurations = this.readDefaultLanguageConfigurations();
             languageConfigurations = {
@@ -139,8 +125,11 @@ export class ConfigLoader {
                             ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
                         if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
                         return categories;
-                    }));
-
+                    },
+                    undefined,
+                    includeAllRelations
+                )
+            );
         } catch (msgWithParams) {
             throw msgWithParams;
         }

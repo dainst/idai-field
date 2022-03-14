@@ -2,7 +2,7 @@ defmodule Api.Core.CorePropertiesAtomizing do
   import Api.Core.Utils
 
   @core_properties [:groups, :relations, :shortDescription, :id, :type, :category, :identifier, :geometry, :gazId,
-    :georeference, :parentId, :grandparentId, :featureVectors, :license, :shortName]
+    :georeference, :parentId, :grandparentId, :featureVectors, :license, :shortName, :originalFilename]
 
   def get_core_properties(), do: @core_properties
 

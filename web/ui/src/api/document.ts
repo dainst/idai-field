@@ -1,6 +1,6 @@
 import { Geometry } from 'geojson';
-import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
 import { isObject } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
 
@@ -37,7 +37,6 @@ export interface Resource {
 export interface FieldGroup {
     name: string;
     fields: Field[];
-    relations: Relation[];
 }
 
 
@@ -70,7 +69,8 @@ export interface Field {
     description: I18nString;
     label: I18nString;
     name: string;
-    value: FieldValue;
+    value?: FieldValue;
+    targets?: ResultDocument[];
 }
 
 
@@ -99,17 +99,9 @@ export function isLabeledValue(labeledValue: unknown): labeledValue is LabeledVa
 
 export type I18nString = { [languageCode: string]: string };
 
-
-export interface Relation {
-    description: I18nString;
-    label: I18nString;
-    name: string;
-    targets: ResultDocument[];
-}
-
 export const getDocumentImages = (document: Document): ResultDocument[] =>
     document.resource.groups.find((group: FieldGroup) => group.name === 'stem')
-        .relations.find((rel: Relation) => rel.name === 'isDepictedIn')?.targets;
+        .fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets;
 
 export const getDocumentDescription = (doc: Document): FieldValue => getFieldValue(doc, 'parent', 'description');
 

@@ -62,8 +62,6 @@ defmodule FieldHub.MixProject do
   defp aliases do
 
     dev_db_name = "development"
-    dev_db_admin_name = "development_admin"
-    dev_db_member_name = "development"
 
     [
       setup: [
@@ -72,11 +70,7 @@ defmodule FieldHub.MixProject do
         "seed"
       ],
       seed: [
-        "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\")'",
-        "run --eval 'FieldHub.CLI.create_user(\"#{dev_db_admin_name}\", \"pw\")'",
-        "run --eval 'FieldHub.CLI.create_user(\"#{dev_db_member_name}\", \"pw\")'",
-        "run --eval 'FieldHub.CLI.add_user_as_project_admin(\"#{dev_db_admin_name}\", \"#{dev_db_name}\")'",
-        "run --eval 'FieldHub.CLI.add_user_as_project_member(\"#{dev_db_member_name}\", \"#{dev_db_name}\")'"
+        "run --eval 'FieldHub.CLI.create_project_with_default_user(\"#{dev_db_name}\", \"pw\"')"
       ],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]

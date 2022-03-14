@@ -73,6 +73,21 @@ defmodule FieldHub.CLI do
     end
   end
 
+
+  def create_project_with_default_user(project_name, password) do
+    HTTPoison.start()
+
+    create_project(project_name)
+    create_user(project_name, password)
+    add_user_as_project_member(project_name, project_name)
+  end
+
+  def create_project_with_default_user(project_name) do
+    HTTPoison.start()
+
+    create_project_with_default_user(project_name, create_password(32))
+  end
+
   def create_user(name, password) do
     HTTPoison.start()
 
@@ -87,13 +102,7 @@ defmodule FieldHub.CLI do
   def create_user(user_name) do
     HTTPoison.start()
 
-    password_length = 32
-    password =
-      :crypto.strong_rand_bytes(password_length)
-      |> Base.encode64()
-      |> binary_part(0, password_length)
-
-    create_user(user_name, password)
+    create_user(user_name, create_password(32))
   end
 
   def delete_user(user_name) do
@@ -142,5 +151,12 @@ defmodule FieldHub.CLI do
       name: Application.get_env(:field_hub, :couchdb_admin_name),
       password: Application.get_env(:field_hub, :couchdb_admin_password)
     }
+  end
+
+  defp create_password(length) do
+      length
+      |> :crypto.strong_rand_bytes()
+      |> Base.encode64()
+      |> binary_part(0, length)
   end
 end

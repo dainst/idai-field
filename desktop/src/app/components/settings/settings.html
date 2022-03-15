@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col default-container">
+            <div #settingsContainer class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <h5 i18n="@@settings.general">Allgemeine Einstellungen</h5>
 
@@ -100,7 +100,7 @@
                     <hr>
 
                     <button id="advanced-settings-button"
-                            type="button" class="btn btn-link btn-block" (click)="areAdvancedSettingCollapsed = !areAdvancedSettingCollapsed"
+                            type="button" class="btn btn-link btn-block" (click)="toggleAdvancedSettings()"
                             [attr.aria-expanded]="!areAdvancedSettingCollapsed" aria-controls="advanced-settings">
                         <span *ngIf="areAdvancedSettingCollapsed" i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
                         <span *ngIf="!areAdvancedSettingCollapsed" i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>

@@ -95,38 +95,38 @@ defmodule FieldHubWeb.Api.FileController do
 
     max_payload = 1_000_000_000
 
-    {:ok, data, conn} =
-      conn
-      |> read_body(length: max_payload)
-      |> case do
-        {:ok, _data, _conn} = success ->
-          success
-        {:more, _, conn} ->
-          conn
-          |> put_view(ErrorView)
-          |> render("413.json", message: "Payload to large, maximum of #{max_payload} bytes allowed.")
-      end
+    conn
+    |> read_body(length: max_payload)
+    |> case do
+      {:ok, data, conn} ->
+        file_store_data =
+          case parsed_type do
+            {:error, type} ->
+              conn
+              |> put_status(:bad_request)
+              |> put_view(ErrorView)
+              |> render("400.json", message: "Unknown file type: #{type}")
+            valid ->
+              FileStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
+          end
 
-    file_store_data =
-      case parsed_type do
-        {:error, type} ->
-          conn
-          |> put_view(ErrorView)
-          |> render("400.json", message: "Unknown file type: #{type}")
-        valid ->
-          FileStore.store_file(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid, content: data})
-      end
-
-    case file_store_data do
-      :ok ->
+        case file_store_data do
+          :ok ->
+            conn
+            |> put_status(:created)
+            |> put_view(ErrorView)
+            |> render("201.json")
+          {:error, _} ->
+            conn
+            |> put_status(:internal_server_error)
+            |> put_view(ErrorView)
+            |> render("500.json")
+        end
+      {:more, _partial_body, conn} ->
         conn
-        |> put_status(:created)
+        |> put_status(:request_entity_too_large)
         |> put_view(ErrorView)
-        |> render("201.json")
-      {:error, _} ->
-        conn
-        |> put_view(ErrorView)
-        |> render("500.json")
+        |> render("413.json", message: "Payload to large, maximum of #{max_payload} bytes allowed.")
     end
   end
 

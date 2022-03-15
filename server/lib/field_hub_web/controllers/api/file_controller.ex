@@ -31,6 +31,7 @@ defmodule FieldHubWeb.Api.FileController do
       |> case do
         {:error, msg} ->
           conn
+          |> put_status(:bad_request)
           |> put_view(ErrorView)
           |> render("400.json", message: msg)
         [] ->
@@ -51,6 +52,7 @@ defmodule FieldHubWeb.Api.FileController do
   def index(conn, %{"project" => _project, "types" => types}) do
 
     conn
+    |> put_status(:bad_request)
     |> put_view(ErrorView)
     |> render("400.json", message: "Invalid 'types' parameter: '#{types}'.")
   end
@@ -73,6 +75,7 @@ defmodule FieldHubWeb.Api.FileController do
       case parsed_type do
         {:error, type} ->
           conn
+          |> put_status(:bad_request)
           |> put_view(ErrorView)
           |> render("400.json", message: "Unknown file types: #{type}")
         valid ->
@@ -82,6 +85,7 @@ defmodule FieldHubWeb.Api.FileController do
     case file_store_data do
       {:error, :enoent} ->
         conn
+        |> put_status(:not_found)
         |> put_view(ErrorView)
         |> render("404.json")
       {:ok, file_path} ->
@@ -141,6 +145,7 @@ defmodule FieldHubWeb.Api.FileController do
         |> render("200.json")
       _errors ->
         conn
+        |> put_status(:internal_server_error)
         |> put_view(ErrorView)
         |> render("500.json")
     end

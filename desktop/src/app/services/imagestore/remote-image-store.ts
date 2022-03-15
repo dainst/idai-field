@@ -20,36 +20,23 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      */
     public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
 
-        try {
-            const settings = this.settingsProvider.getSettings();
-            const syncSource = settings.syncTargets[project];
+        const settings = this.settingsProvider.getSettings();
+        const syncSource = settings.syncTargets[project];
 
-            const address = syncSource.address;
-            const password = syncSource.password;
+        const address = syncSource.address;
+        const password = syncSource.password;
 
-            const params = (type) ? { type } : {};
-            const response = await axios({
-                method: 'put',
-                url: address + '/files/' + project + '/' + uuid,
-                params,
-                data,
-                headers: {
-                    'Content-Type': 'image/x-www-form-urlencoded',
-                    Authorization: `Basic ${btoa(project + ':' + password)}`
-                }
-            });
-
-        } catch (error) {
-            if (error.response) {
-                console.error(error.response.data);
-                console.error(error.response.status);
-                console.error(error.response.headers);
-            } else if (error.request) {
-                console.error(error.request);
-            } else {
-                console.error(error.message);
+        const params = (type) ? { type } : {};
+        return axios({
+            method: 'put',
+            url: address + '/files/' + project + '/' + uuid,
+            params,
+            data,
+            headers: {
+                'Content-Type': 'image/x-www-form-urlencoded',
+                Authorization: `Basic ${btoa(project + ':' + password)}`
             }
-        }
+        });
     }
 
     /**

@@ -93,7 +93,19 @@ defmodule FieldHubWeb.Api.FileController do
     parsed_type =
       parse_type(type)
 
-    {:ok, data, conn} = read_body(conn, length: 100_000_000)
+    max_payload = 1_000_000_000
+
+    {:ok, data, conn} =
+      conn
+      |> read_body(length: max_payload)
+      |> case do
+        {:ok, _data, _conn} = success ->
+          success
+        {:more, _, conn} ->
+          conn
+          |> put_view(ErrorView)
+          |> render("413.json", message: "Payload to large, maximum of #{max_payload} bytes allowed.")
+      end
 
     file_store_data =
       case parsed_type do

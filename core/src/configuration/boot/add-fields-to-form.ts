@@ -92,27 +92,21 @@ function applyCustomChanges(clonedForm: TransientFormDefinition, form: Transient
 
     if (parentForm?.fields) {
         Object.keys(parentForm.fields).forEach(fieldName => {
-            applyCustomFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
+            applyCustomFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName], clonedForm);
         });
     }
 
     if (form.fields) {
         Object.keys(form.fields).forEach(fieldName => {
-            applyCustomFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName]);
+            applyCustomFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName], clonedForm);
         });
     }
 }
 
 
-function applyCustomFieldChanges(field: TransientFieldDefinition, customFieldDefinition: CustomFieldDefinition) {
+function applyCustomFieldChanges(field: TransientFieldDefinition, customFieldDefinition: CustomFieldDefinition, form: TransientFormDefinition) {
 
-    if (!field) {
-        return console.warn('Failed to apply custom field changes: missing field definition');
-    }
-
-    if (!customFieldDefinition) {
-        return console.warn('Failed to apply custom field changes: missing custom field definition');
-    }
+    if (!field || !customFieldDefinition) return;
 
     if (customFieldDefinition.inputType) {
         field.inputType = customFieldDefinition.inputType as Field.InputType;

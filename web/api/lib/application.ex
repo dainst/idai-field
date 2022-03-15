@@ -16,8 +16,7 @@ defmodule Api.Application do
           :start_link,
           [
             {
-              if Mix.env() == :test do "test/resources" else "resources/projects" end,
-              Api.Core.Config.get(:projects)
+              Api.Core.Config.get(:projects) ++ ["default"]
             }
           ]
         }

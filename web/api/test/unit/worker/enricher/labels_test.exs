@@ -14,6 +14,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
           "color" => ["Grün", "Blau"],
           "material" => ["Eisen"],
           "width" => [%{ "inputValue" => 10, "inputUnit" => "cm", "measurementPosition" => "Maximale Ausdehnung" }],
+          "height" => [%{ "inputValue" => 20, "inputUnit" => "cm" }],
           "period" => %{ "value" => "Old Babylonian", "endValue" => "New Babylonian" },
           :id => "42",
           :relations => %{
@@ -34,7 +35,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
       }
     }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     result = Labels.add_labels(change, configuration)
@@ -64,6 +65,12 @@ defmodule Api.Worker.Enricher.LabelsTest do
                  en: "Maximum expansion"
                 }
               }
+            }
+          ],
+          height: [
+            %{
+              inputValue: 20,
+              inputUnit: "cm"
             }
           ],
           period: %{
@@ -116,7 +123,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
       }
     }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     result = Labels.add_labels(change, configuration)

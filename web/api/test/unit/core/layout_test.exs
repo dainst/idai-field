@@ -33,7 +33,7 @@ defmodule Api.Core.LayoutTest do
 
     project_resource = %{ license: "Test-Lizenz" }
 
-    start_supervised({Api.Core.ProjectConfigLoader, {"test/resources", ["test-project"]}})
+    start_supervised({Api.Core.ProjectConfigLoader, {["test-project"]}})
     configuration = Api.Core.ProjectConfigLoader.get("test-project")
 
     layouted_resource = Layout.to_layouted_resource(configuration, resource, project_resource)
@@ -88,17 +88,15 @@ defmodule Api.Core.LayoutTest do
                 en: "Color"
               },
               description: %{}
-           }
-        ],
-        relations: [
-          %{
-            name: "liesWithin",
-            targets: [%{ resource: %{ id: "45", parentId: "40" } }],
-            label: %{
-              de: "Liegt in",
-              en: "Lies within"
-            },
-            description: %{}
+           },
+           %{
+              name: "liesWithin",
+              targets: [%{ resource: %{ id: "45", parentId: "40" } }],
+              label: %{
+                de: "Liegt in",
+                en: "Lies within"
+              },
+              description: %{}
           }
         ]
        },
@@ -126,13 +124,11 @@ defmodule Api.Core.LayoutTest do
              },
              description: %{}
            }
-         ],
-         relations: []
+         ]
        },
       %{
         name: "time",
-        fields: [],
-        relations: []
+        fields: []
       }
      ]
     }

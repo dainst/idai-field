@@ -18,39 +18,36 @@ defmodule Api.Core.Layout do
     fn config_item ->
       group = %{
           fields: Enum.flat_map(config_item.fields, scan_field(resource)),
-          relations: Enum.flat_map(config_item.relations, scan_relation(resource)),
           name: config_item.name
       }
-      if group.fields != nil or group.relations != nil, do: [group], else: []
-    end
-  end
-
-  defp scan_relation(resource) do
-    fn config_item ->
-      targets = resource.relations[String.to_atom(config_item.name)]
-
-      unless targets && length(targets) > 0, do: [], else:
-        [%{
-          name: config_item.name,
-          label: config_item.label,
-          description: config_item.description,
-          targets: targets
-        }]
+      if group.fields != nil, do: [group], else: []
     end
   end
 
   defp scan_field(resource) do
-    fn config_item ->
-      value = resource[config_item.name] || resource[String.to_atom(config_item.name)]
+    fn config_item -> scan_field(resource, config_item) end
+  end
+  defp scan_field(resource, config_item = %{ inputType: "relation" }) do
+    targets = resource.relations[String.to_atom(config_item.name)]
 
-      unless value, do: [], else:
-        [%{
-            name: config_item.name,
-            label: config_item.label,
-            description: config_item.description,
-            value: Api.Core.Utils.atomize(value)
-        }]
-    end
+    unless targets && length(targets) > 0, do: [], else:
+      [%{
+        name: config_item.name,
+        label: config_item.label,
+        description: config_item.description,
+        targets: targets
+      }]
+  end
+  defp scan_field(resource, config_item) do
+    value = resource[config_item.name] || resource[String.to_atom(config_item.name)]
+
+    unless value, do: [], else:
+      [%{
+          name: config_item.name,
+          label: config_item.label,
+          description: config_item.description,
+          value: Api.Core.Utils.atomize(value)
+      }]
   end
 
   defp add_license(resource, %{ license: license }), do: put_in(resource, [:license], license)

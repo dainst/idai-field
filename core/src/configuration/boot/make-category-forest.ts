@@ -1,4 +1,4 @@
-import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose, clone } from 'tsfun';
+import { flow, separate, detach, map, reduce, flatten, set, Map, values, compose, clone, to } from 'tsfun';
 import { CategoryForm } from '../../model/configuration/category-form';
 import { Field } from '../../model/configuration/field';
 import { Group, Groups } from '../../model/configuration/group';
@@ -8,6 +8,7 @@ import { Forest } from '../../tools/forest';
 import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { applyHiddenForFields } from './hide-fields';
+import { Named } from '../../tools/named';
 
 
 const TEMP_FIELDS = 'fields';
@@ -21,7 +22,7 @@ const TEMP_HIDDEN = 'hidden';
  * @author Sebastian Cuy
  */
 export const makeCategoryForest = (relations: Array<Relation>, categories: Map<TransientCategoryDefinition>,
-                                   selectedParentForms?: string[]) =>
+                                   selectedParentForms?: string[], includeAllRelations: boolean = false) =>
         (forms: Map<TransientFormDefinition>): Forest<CategoryForm> => {
 
     const [parentDefs, childDefs] = flow(
@@ -41,7 +42,7 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
         reduce(addChildCategory(categories, selectedParentForms), parentCategories),
         Forest.map(
             compose(
-                createGroups(relations), 
+                createGroups(relations, includeAllRelations), 
                 detach(TEMP_FIELDS), 
                 detach(TEMP_GROUPS),
                 detach(TEMP_HIDDEN)
@@ -52,7 +53,8 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
 }
 
 
-const createGroups = (relationDefinitions: Array<Relation>) => (category: CategoryForm): CategoryForm => {
+const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations: boolean) =>
+        (category: CategoryForm): CategoryForm => {
 
     const categoryRelations: Array<Relation> = clone(Relation.getRelations(relationDefinitions, category.name));
     applyHiddenForFields(categoryRelations, category[TEMP_HIDDEN]);
@@ -64,9 +66,19 @@ const createGroups = (relationDefinitions: Array<Relation>) => (category: Catego
                 return category[TEMP_FIELDS][fieldName]
                     ?? categoryRelations.find(relation => relation.name === fieldName)
             })
-            .filter(field => field !== undefined)
+            .filter(field => field !== undefined);
         return group;
     });
+
+    if (includeAllRelations && category.groups.length > 0) {
+        categoryRelations.filter(relation => {
+            return !flatten(category.groups.map(to(Group.FIELDS)))
+                .map(to(Named.NAME))
+                .includes(relation.name);
+        }).forEach(relation => {
+            category.groups[0].fields.push(relation);
+        });
+    }
 
     putUnassignedFieldsToOtherGroup(category);
 

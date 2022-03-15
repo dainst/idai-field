@@ -14,7 +14,7 @@ defmodule Api.Documents.MappingTest do
   # TODO: mock default_filters and test if labels are added to mapped result
   
   test "init", %{ result: result } do
-    start_supervised({ProjectConfigLoader, {"resources/projects", ["default"]}})
+    start_supervised({ProjectConfigLoader, {["default"]}})
     configuration = ProjectConfigLoader.get("default")
     mapped = Mapping.map(result, configuration)
     

@@ -145,7 +145,10 @@ export class ExpressServer {
 
         let conditionalParameters = {};
         if (remote) {
-            conditionalParameters = Object.assign(conditionalParameters, { logPath: remote.getGlobal('appDataPath') });
+            conditionalParameters = Object.assign(
+                conditionalParameters,
+                { logPath: `${remote.getGlobal('appDataPath')}/pouchdb-server.log` }
+            );
         }
 
 

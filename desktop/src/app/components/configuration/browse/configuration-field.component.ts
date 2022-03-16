@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Valuelist,
-    Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 

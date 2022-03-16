@@ -3,4 +3,13 @@
   label {
     user-select: none;
   }
+
+  span.disabled {
+    color: grey;
+  }
+
+  #thumbs-synchronization-slider,
+  #originals-synchronization-slider {
+    margin-left: 20px;
+  }
 }

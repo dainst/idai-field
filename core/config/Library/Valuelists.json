@@ -41830,110 +41830,110 @@
     "description": "Übernommen aus Meninx-1, angepasst an Bourgou",
     "values": {
       "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)": {
-        "labels": {
+        "label": {
           "de": "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)"
         }
       },
       "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)": {
-        "labels": {
+        "label": {
           "de": "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)"
         }
       },
       "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)": {
-        "labels": {
+        "label": {
           "de": "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)"
         }
       },
       "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)": {
-        "labels": {
+        "label": {
           "de": "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)"
         }
       },
       "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)": {
-        "labels": {
+        "label": {
           "de": "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)"
         }
       },
       "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)": {
-        "labels": {
+        "label": {
           "de": "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)"
         }
       },
       "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)": {
-        "labels": {
+        "label": {
           "de": "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)"
         }
       },
       "Spätantike II. 530 - 698 n. Chr. (byzantinisch)": {
-        "labels": {
+        "label": {
           "de": "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
         }
       },
       "Phase 1": {
-        "labels": {
+        "label": {
           "de": "Phase 1 (Mitte 8./1.Viertel 7. Jh. v. Chr.)",
           "en": "Phase 1 (Mid 8th/1st quarter 7th century BCE)",
           "fr": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)"
         }
       },
       "Phase 2": {
-        "labels": {
+        "label": {
           "de": "Phase 2 (2.Viertel 7.–Mitte 6. Jh. v. Chr.)",
           "en": "Phase 2 (2nd quarter 7th-mid 6th century BCE)",
           "fr": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)"
         }
       },
       "Phase 3": {
-        "labels": {
+        "label": {
           "de": "Phase 3 (Mitte 6.–1.Hälfte/Mitte 5. Jh. v. Chr.)",
           "en": "Phase 3 (Mid 6th - 1st half/mid 5th century BCE)",
           "fr": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)"
         }
       },
       "Phase 4": {
-        "labels": {
+        "label": {
           "de": "Phase 4 (4.–Ende 2. Jh. v. Chr.)",
           "en": "Phase 4 (4th - end of 2nd century BCE)",
           "fr": "Phase 4 (4e–fin du 2e siècle avant J.-C.))"
         }
       },
       "Phase 5": {
-        "labels": {
+        "label": {
           "de": "Phase 5 (Ende 2.–3.Viertel 1. Jh. v. Chr.)",
           "en": "Phase 5 (End of 2nd - last quarter of 1st century BCE)",
           "fr": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)"
         }
       },
       "Phase 6": {
-        "labels": {
+        "label": {
           "de": "Phase 6 (Letztes Viertel 1. Jh. v. Chr.–Mitte 1. Jh. n. Chr.)",
           "en": "Phase 6 (Last quarter of 1st century BCE.-Mid 1st century CE)",
           "fr": "Phase 6 (Dernier quart du 1er siècle avant-milieu du 1er siècle après J.-C.)"
         }
       },
       "Phase 7": {
-        "labels": {
+        "label": {
           "de": "Phase 7 (3.Viertel 1. Jh. n. Chr.)",
           "en": "Phase 7 (3rd quarter of the 1st century CE)",
           "fr": "Phase 7 (3eme quart du 1er siècle après J.-C.)"
         }
       },
       "Phase 8": {
-        "labels": {
+        "label": {
           "de": "Phase 8 (Letztes Drittel 1.–Ende 1. Jh. n. Chr.)",
           "en": "Phase 8 (Last third 1st - end of 1st century CE)",
           "fr": "Phase 8 (Dernier tiers du 1er siècle-fin du 1er siècle après J.-C.)"
         }
       },
       "Phase 9": {
-        "labels": {
+        "label": {
           "de": "Phase 9 (Mitte 2. Jh. n. Chr.)",
           "en": "Phase 9 (Mid 2nd century CE)",
           "fr": "Phase 9 (Milieu du 2e siècle après J.-C.)"
         }
       },
       "Phase 10": {
-        "labels": {
+        "label": {
           "de": "Phase 10 (Ende 2. Jh. n. Chr.)",
           "en": "Phase 10 (End of 2nd century CE)",
           "fr": "Phase 10 (Fin du 2e siècle après J.-C.)"
@@ -47883,7 +47883,7 @@
         }
       },
       "artificial_removal": {
-        "labels": {
+        "label": {
           "de": "Abhub (künstlich)",
           "en": "artificial (removal of fixed height value)",
           "fr": "artificial (removal of fixed height value) #todo"
@@ -48437,7 +48437,7 @@
         }
       },
       "04_no_processing": {
-        "labels": {
+        "label": {
           "de": "keinerlei Bearbeitung gewünscht",
           "en": "no processing requested",
           "fr": "aucun traitement demandé ?"
@@ -48516,91 +48516,91 @@
     "description": {},
     "values": {
       "Granit": {
-        "labels": {
+        "label": {
           "de": "Granit",
           "en": "Granite",
           "fr": "Granit"
         }
       },
       "Kalk": {
-        "labels": {
+        "label": {
           "de": "Kalk",
           "en": "Lime / chalk",
           "fr": "Calcaire / chaux"
         }
       },
       "Gneis": {
-        "labels": {
+        "label": {
           "de": "Gneis",
           "en": "Gneiss",
           "fr": "Gneiss"
         }
       },
       "Poros": {
-        "labels": {
+        "label": {
           "de": "Poros",
           "en": "Poros",
           "fr": "Poros"
         }
       },
       "Breccia": {
-        "labels": {
+        "label": {
           "de": "Brekzie",
           "en": "Breccia",
           "fr": "Brèche"
         }
       },
       "Kalkmörtel": {
-        "labels": {
+        "label": {
           "de": "Kalkmörtel",
           "en": "Lime mortar",
           "fr": "Calcaire / Chaux mortier"
         }
       },
       "Kalkstein": {
-        "labels": {
+        "label": {
           "de": "Kalkstein",
           "en": "Limestone",
           "fr": "(pièrre) meulière / calcaire"
         }
       },
       "Marmor": {
-        "labels": {
+        "label": {
           "de": "Marmor",
           "en": "Marble",
           "fr": "Marbre"
         }
       },
       "Pophyr": {
-        "labels": {
+        "label": {
           "de": "Pophyr",
           "en": "Porphyry",
           "fr": "Porphyre"
         }
       },
       "Quarz": {
-        "labels": {
+        "label": {
           "de": "Quarz",
           "en": "Quartz",
           "fr": "Quartz"
         }
       },
       "Sandstein": {
-        "labels": {
+        "label": {
           "de": "Sandstein",
           "en": "Sandstone",
           "fr": "Grès"
         }
       },
       "Tuffit": {
-        "labels": {
+        "label": {
           "de": "Tuffit",
           "en": "Tuffite",
           "fr": "Tuffit(e)"
         }
       },
       "Ziegel": {
-        "labels": {
+        "label": {
           "de": "Ziegel",
           "en": "Brick",
           "fr": "Brique / Tuile"
@@ -48785,7 +48785,7 @@
         }
       },
       "Streifenkeramik": {
-        "labels": {
+        "label": {
           "de": "Streifenkeramik",
           "en": "Banded Pottery",
           "fr": "céramique bandes (???; banded ware)"
@@ -50318,98 +50318,98 @@
     "description": {},
     "values": {
       "Pottery": {
-        "labels": {
+        "label": {
           "de": "001 Keramik",
           "en": "001 Pottery",
           "fr": "001 Céramique"
         }
       },
       "Bones": {
-        "labels": {
+        "label": {
           "de": "002 Knochen",
           "en": "002 Bones",
           "fr": "002 Os"
         }
       },
       "Mollusks": {
-        "labels": {
+        "label": {
           "de": "003 Mollusken",
           "en": "003 Mollusks",
           "fr": "003 Mollusques"
         }
       },
       "Glass": {
-        "labels": {
+        "label": {
           "de": "004 Glas",
           "en": "004 Glass",
           "fr": "004 Verre"
         }
       },
       "Metal": {
-        "labels": {
+        "label": {
           "de": "005 Metall",
           "en": "005 Metal",
           "fr": "005 Métal"
         }
       },
       "Stone": {
-        "labels": {
+        "label": {
           "de": "006 Stein",
           "en": "006 Stone",
           "fr": "006 Pierre"
         }
       },
       "Terracotta": {
-        "labels": {
+        "label": {
           "de": "007 Terrakotta",
           "en": "007 Terracotta",
           "fr": "007 Terre cuite"
         }
       },
       "Coins": {
-        "labels": {
+        "label": {
           "de": "008 Münzen",
           "en": "008 Coins",
           "fr": "008 Monnaies"
         }
       },
       "Plaster": {
-        "labels": {
+        "label": {
           "de": "009 Putz",
           "en": "009 Plaster",
           "fr": "009 Plâtre"
         }
       },
       "Sample": {
-        "labels": {
+        "label": {
           "de": "010 Proben",
           "en": "010 Sample",
           "fr": "010 Sample"
         }
       },
       "Tesserae": {
-        "labels": {
+        "label": {
           "de": "011 Tesserae",
           "en": "011 Tesserae",
           "fr": "011 Tesserae"
         }
       },
       "Inlays": {
-        "labels": {
+        "label": {
           "de": "012 Inkrustationen",
           "en": "012 Inlays",
           "fr": "012 Incrustations"
         }
       },
       "Ziegel": {
-        "labels": {
+        "label": {
           "de": "013 Ziegel",
           "en": "013 Bricks / Tiles",
           "fr": "013 Briques"
         }
       },
       "Holz": {
-        "labels": {
+        "label": {
           "de": "014 Holz",
           "en": "014 Wood",
           "fr": "014 Bois"

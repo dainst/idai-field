@@ -481,6 +481,38 @@ describe('configuration --', () => {
     });
 
 
+    it('hide parent field', async done => {
+
+        await CategoryPickerPage.clickSelectCategory('Operation');
+        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickOpenContextMenuForField('description');
+        await ConfigurationPage.clickContextMenuEditOption();    
+        await EditConfigurationPage.clickToggleHiddenSlider();
+        await EditConfigurationPage.clickConfirm();
+        
+        await CategoryPickerPage.clickSelectCategory('Trench', 'Operation');
+        await ConfigurationPage.clickSelectGroup('parent');
+        expect((await(await ConfigurationPage.getField('description')).getAttribute('class')))
+            .toContain('hidden');
+
+        await CategoryPickerPage.clickSelectCategory('Operation');
+        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickOpenContextMenuForField('description');
+        await ConfigurationPage.clickContextMenuEditOption();    
+        await EditConfigurationPage.clickToggleHiddenSlider();
+        await EditConfigurationPage.clickConfirm();
+        
+        await CategoryPickerPage.clickSelectCategory('Trench', 'Operation');
+        await ConfigurationPage.clickSelectGroup('parent');
+        expect((await(await ConfigurationPage.getField('description')).getAttribute('class')))
+            .not.toContain('hidden');
+
+        await ConfigurationPage.save();
+
+        done();
+    });
+
+
     it('swap valuelist', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');

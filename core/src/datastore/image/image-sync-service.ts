@@ -97,6 +97,8 @@ export class ImageSyncService {
             console.log(`   missing remotely: ${differences.missingRemotely.length}`);
             console.log(`   not yet deleted remotely: ${differences.deleteRemotely.length}`);
 
+            console.log('full differences:', differences);
+
             for (const uuid of differences.missingLocally) {
 
                 if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating

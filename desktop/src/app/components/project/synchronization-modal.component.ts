@@ -37,7 +37,7 @@ export class SynchronizationModalComponent implements OnInit {
                 address: '',
                 password: '',
                 isSyncActive: false,
-                activeFileSync: []
+                activeFileSync: [ImageVariant.THUMBNAIL]
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
@@ -55,12 +55,6 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleSync() {
 
         this.syncTarget.isSyncActive = !this.syncTarget.isSyncActive;
-
-        if (this.syncTarget.isSyncActive) {
-            this.syncTarget.activeFileSync = [ImageVariant.THUMBNAIL];
-        } else {
-            this.syncTarget.activeFileSync = [];
-        }
     }
 
 

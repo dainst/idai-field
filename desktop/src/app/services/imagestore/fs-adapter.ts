@@ -1,7 +1,8 @@
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-
 import { Injectable } from '@angular/core';
 import { FilesystemAdapterInterface } from 'idai-field-core';
+
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+
 
 /**
  * Filesystem adapter implementation that uses node's `fs` see:
@@ -52,6 +53,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
 
     public async mkdir(path: string, recursive: boolean = false): Promise<void> {
+
         return new Promise((resolve, reject) => {
             fs.mkdir(path, {recursive}, (err: Error) => {
                 if (err) reject(err);
@@ -62,6 +64,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
 
     public isFile(path: string): boolean {
+
         try {
             const stat = fs.statSync(path);
             return stat.isFile();
@@ -71,7 +74,8 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public isDirectory(path: string): boolean{
+    public isDirectory(path: string): boolean {
+
         try {
             const stat = fs.statSync(path);
             return stat.isDirectory();
@@ -82,9 +86,10 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
 
     public listFiles(dir: string, recursive: boolean = false): string[] {
+
         // see https://stackoverflow.com/a/16684530
         let results = [];
-        const list: string[] = fs.readdirSync(dir);
+        const list: string[] = fs.readdirSync(dir).filter(name => !name.includes('DS_Store'));
 
         for (const file of list) {
             const currentFile = dir + file;

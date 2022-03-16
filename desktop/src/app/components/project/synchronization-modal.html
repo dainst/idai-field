@@ -16,6 +16,38 @@
         </div>
     </div>
 
+    <div id="thumbs-synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.thumbnailImageFiles"
+                  [class.disabled]="!syncTarget.isSyncActive">Vorschaubilder synchronisieren</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
+                <input type="checkbox"
+                    [checked]="isThumbnailImageSyncActive()"
+                    (change)="toggleThumbnailImageSync()"
+                    [disabled]="!syncTarget.isSyncActive">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div id="originals-synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.originalImageFiles"
+                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder synchronisieren</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
+                <input type="checkbox"
+                    [checked]="isOriginalImageSyncActive()"
+                    (change)="toggleOriginalImageSync()"
+                    [disabled]="!syncTarget.isSyncActive">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="sync-target-address-input"
                 class="control-label col-form-label"
@@ -33,36 +65,7 @@
                 (ngModelChange)="syncTarget.password = $event"
                 class="form-control">
     </div>
-
-    <div [hidden]="!syncTarget.isSyncActive" id="thumbs-synchronization-slider" class="row" >
-        <div class="col-auto mr-auto">
-            <span i18n="@@settings.synchronization.thumbnailImageFiles">Vorschaubilder synchronisieren</span>
-        </div>
-        <div class="col-auto">
-            <label class="switch"  >
-                <input type="checkbox" [checked]="isThumbnailImageSyncActive()"
-                    (change)="toggleThumbnailImageSync()">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-
-    <div [hidden]="!syncTarget.isSyncActive" id="thumbs-synchronization-slider" class="row" >
-        <div class="col-auto mr-auto">
-            <span i18n="@@settings.synchronization.originalImageFiles">Originalbilder synchronisieren</span>
-        </div>
-        <div class="col-auto">
-            <label class="switch"  >
-                <input type="checkbox" [checked]="isOriginalImageSyncActive()"
-                    (change)="toggleOriginalImageSync()">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-
 </div>
-
-
 
 <div class="modal-footer">
     <div type="button" class="btn btn-primary" (click)="apply()">

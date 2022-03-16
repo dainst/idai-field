@@ -24,6 +24,14 @@ export class TaskbarSyncStatusComponent {
         });
     }
 
+    
+    public printStatus() {
+
+        console.log('Current status: ', this.getStatus());
+        console.log('Pouchdb status: ', this.pouchSyncService.getStatus());
+        console.log('Image status:', JSON.stringify(this.imageSyncService.getStatus()));
+    }
+
 
     public getStatus = (): SyncStatus => {
 

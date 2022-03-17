@@ -57,7 +57,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 fields: {},
                 groups: CategoryForm.getGroupsConfiguration(
                     this.category,
-                    ConfigurationDocument.getPermanentlyHiddenFields(this.configurationDocument, this.category)
+                    ConfigurationDocument.getPermanentlyHiddenFields(this.category)
                 )
             }
         } else {

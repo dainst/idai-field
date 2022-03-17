@@ -1,4 +1,4 @@
-import { flatten, isEmpty, on, to } from 'tsfun';
+import { isEmpty, on, to } from 'tsfun';
 import { Document } from './document';
 import { ConfigurationResource } from './configuration-resource';
 import { CategoryForm } from './configuration/category-form';
@@ -6,7 +6,6 @@ import { CustomFormDefinition } from '../configuration/model/form/custom-form-de
 import { CustomLanguageConfigurations } from './custom-language-configurations';
 import { Group } from './configuration/group';
 import { Field } from './configuration/field';
-import { Named } from '../tools/named';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
 import { Valuelist } from './configuration/valuelist';
@@ -84,7 +83,7 @@ export namespace ConfigurationDocument {
                                                       category: CategoryForm): CustomFormDefinition|undefined {
 
         return category.parentCategory
-            ? configurationDocument.resource.forms[category.libraryId ?? category.parentCategory.name]
+            ? configurationDocument.resource.forms[category.parentCategory.libraryId ?? category.parentCategory.name]
             : undefined;
     }
 
@@ -164,22 +163,11 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function getPermanentlyHiddenFields(configurationDocument: ConfigurationDocument,
-                                               category: CategoryForm): string[] {
+    export function getPermanentlyHiddenFields(category: CategoryForm): string[] {
 
-        const result: string[] = flatten(category.groups.map(to('fields')))
-            .filter(field => !field.visible
-                && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
-                && (category.source === 'custom' || !ConfigurationDocument.isHidden(
-                    getCustomCategoryDefinition(configurationDocument, category),
-                    getParentCustomCategoryDefinition(configurationDocument, category)
-                )(field))
-            )
-            .map(Named.toName);
-
-        if (category.name === 'Project') result.push(Resource.IDENTIFIER);
-
-        return result;
+        return category.name === 'Project'
+            ? [Resource.IDENTIFIER]
+            : [];
     }
 
 
@@ -198,7 +186,7 @@ export namespace ConfigurationDocument {
             if (form.source === 'custom' && form.parentCategory) {
                 formDefinition.parent = form.parentCategory.name;
                 formDefinition.groups = CategoryForm.getGroupsConfiguration(
-                    newForm, getPermanentlyHiddenFields(configurationDocument, newForm)
+                    newForm, getPermanentlyHiddenFields(newForm)
                 );
             }
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
@@ -298,7 +286,7 @@ export namespace ConfigurationDocument {
         parentForm.groups.forEach(group => {
             group.fields.filter(field => parentForm.customFields?.includes(field.name))
                 .forEach(field => addFieldToGroup(clonedConfigurationDocument, categoryForm,
-                    getPermanentlyHiddenFields(clonedConfigurationDocument, categoryForm), group.name, field.name));
+                    getPermanentlyHiddenFields(categoryForm), group.name, field.name));
         });
     }
 

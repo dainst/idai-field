@@ -82,7 +82,7 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, getTranslation)
         } else if (isString(element)) {
-            return labels.getValueLabel(field.valuelist, element);
+            return field.valuelist ? labels.getValueLabel(field.valuelist, element) : element;
         } else {
             return JSON.stringify(element);
         }

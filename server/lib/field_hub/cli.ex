@@ -56,10 +56,10 @@ defmodule FieldHub.CLI do
 
     CouchService.delete_project(project_name, get_admin_credentials())
     |> case do
-      %{status_code: 412} ->
-        Logger.warning("Project database '#{project_name}' already exists.")
+      %{status_code: 404} ->
+        Logger.warning("Project database '#{project_name}' does not exists.")
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created project database '#{project_name}'.")
+        Logger.info("Deleted project database '#{project_name}'.")
     end
 
     FileStore.remove_directories(project_name)

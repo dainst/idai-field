@@ -62,15 +62,18 @@ defmodule FieldHub.CLI do
         Logger.info("Deleted project database '#{project_name}'.")
     end
 
-    FileStore.remove_directories(project_name)
-    |> case do
-      {:ok, deleted} ->
-        Logger.info("Deleted files for #{project_name}")
-        Logger.info(deleted)
+    # Deactivated for now, we do not really delete images for existing projects (we are just adding tombstone files)
+    # so we probably should also keep the files directory when deleting project (?).
+    # FileStore.remove_directories(project_name)
+    # |> case do
+    #   {:ok, deleted} ->
+    #     Logger.info("Deleted #{Enum.count(deleted)} files for '#{project_name}'.")
+    #     deleted
+    #     |> Enum.each(&Logger.info(&1))
 
-      {:error, reason, file} ->
-        Logger.error("Got posix error #{reason} while trying to delete #{file}.")
-    end
+    #   {:error, reason, file} ->
+    #     Logger.error("Got posix error #{reason} while trying to delete #{file}.")
+    # end
   end
 
 

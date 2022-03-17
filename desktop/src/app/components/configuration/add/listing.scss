@@ -24,18 +24,12 @@
     }
 
     &.new-entry-button {
-      height: 41px;
+      height: auto;
       width: 100%;
-      padding: 12px;
-
-      .mdi {
-        position: relative;
-        bottom: 3px;
-      }
+      padding: 8px 12px;
 
       div {
         position: relative;
-        bottom: 3px;
         left: 4px;
         display: inline;
 

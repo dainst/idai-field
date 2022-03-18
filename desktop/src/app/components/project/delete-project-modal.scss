@@ -1,4 +1,10 @@
-#confirm-delete-info {
-  margin-bottom: 10px;
-  user-select: none;
+#delete-project-modal-body {
+  #confirm-delete-info {
+    margin-bottom: 10px;
+    user-select: none;
+  }
+
+  #file-deletion-slider {
+    user-select: none;
+  }
 }

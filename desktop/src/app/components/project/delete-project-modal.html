@@ -10,18 +10,16 @@
     </div>
 </div>
 <div *ngIf="!isDeleting()">
-    <div class="modal-body">
-        <div class="row">
-            <div id="file-deletion-slider">
-                <div class="col-auto mr-auto">
-                    <span i18n="@@settings.deleteModal.deleteFiles">Bilder löschen</span>
-                </div>
-                <div class="col-auto">
-                    <label class="switch">
-                        <input type="checkbox" [checked]="deleteFiles" (change)="deleteFiles = !deleteFiles">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+    <div id="delete-project-modal-body" class="modal-body">
+        <div id="file-deletion-slider" class="row">
+            <div class="col-auto mr-auto">
+                <span i18n="@@settings.deleteModal.deleteFiles">Bilder löschen</span>
+            </div>
+            <div class="col-auto">
+                <label class="switch">
+                    <input type="checkbox" [checked]="deleteFiles" (change)="deleteFiles = !deleteFiles">
+                    <span class="slider round"></span>
+                </label>
             </div>
         </div>
         <div id="confirm-delete-info">

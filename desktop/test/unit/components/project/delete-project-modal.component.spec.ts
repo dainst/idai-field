@@ -35,6 +35,7 @@ describe('DeleteProjectModalComponent', () => {
 
         settingsProvider.getSettings.and.returnValue({ dbs: ['current'], selectedProject: 'current' });
 
+        deleteProjectModalComponent.projectName = 'current';
         deleteProjectModalComponent.confirmDeletionProjectName = 'current';
 
         await deleteProjectModalComponent.confirmDeletion();

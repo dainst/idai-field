@@ -157,6 +157,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
+        if (event.key === 's' && this.menus.getContext() === MenuContext.CONFIGURATION
+                && (event.ctrlKey || event.metaKey)) {
+            await this.openSaveModal();
+        }
+
         if (event.key !== 'Escape') return;
 
         if (!this.escapeKeyPressed && this.menus.getContext() === MenuContext.CONFIGURATION) {

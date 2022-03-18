@@ -106,7 +106,6 @@ export class DownloadProjectComponent {
                     activeFileSync: this.getSelectedFileSync()
                 }
             ).then(() => {
-                this.closeModal(progressModalRef);
                 reloadAndSwitchToHomeRoute();
             });
         } catch (e) {

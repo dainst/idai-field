@@ -2,10 +2,6 @@
   height: 194px;
   transition: height 0.5s ease-in-out;
 
-  &.loading-files {
-    height: 254px;
-  }
-
   .spinner {
     position: relative;
     left: 5px;
@@ -17,7 +13,36 @@
     margin-bottom: 10px;
   }
 
+  #files-progress-bar,
+  #files-progress-info {
+    display: inline;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    transition-delay: 0.5s;
+  }
+
   #download-project-cancel-button {
-    margin-top: 10px;
+    position: absolute;
+    left: 198px;
+    top: 138px;
+    transition: top 0.5s ease-in-out;
+  }
+
+  &.loading-files {
+    height: 254px;
+
+    #files-progress-bar {
+      display: flex;
+      opacity: 1;
+    }
+
+    #files-progress-info {
+      display: block;
+      opacity: 1;
+    }
+
+    #download-project-cancel-button {
+      top: 200px;
+    }
   }
 }

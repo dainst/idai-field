@@ -7,14 +7,15 @@
                  [style.width]="databaseProgressPercent + '%'"></div>
         </div>
         <div *ngIf="databaseProgressPercent === 0" class="process-info" i18n="@@project.download.connecting">Verbindung wird hergestellt...</div>
-        <div *ngIf="databaseProgressPercent > 0" class="process-info" i18n="@@project.download.progressInfo">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
+        <div *ngIf="databaseProgressPercent > 0 && filesProgressPercent === 0" class="process-info" i18n="@@project.download.progressInfo.database">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
+        <div *ngIf="filesProgressPercent > 0" class="process-info" i18n="@@project.download.progressInfo.databaseFinished">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen. </div>
 
         <div id="files-progress-bar" class="progress replication-progress">
             <div class="progress-bar bg-success"
                  [class.disabled]="filesProgressPercent === 0"
                  [style.width]="filesProgressPercent + '%'"></div>
         </div>
-        <div id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo">{{getRoundedProgress(filesProgressPercent)}}% der Bilder geladen... </div>
+        <div id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.files">{{getRoundedProgress(filesProgressPercent)}}% der Bilder geladen... </div>
 
         <button id="download-project-cancel-button" type="button" class="btn btn-secondary"
                 (click)="cancel()">

@@ -66,7 +66,9 @@ export class DownloadProjectComponent {
             { backdrop: 'static', keyboard: false }
         );
 
-        progressModalRef.componentInstance.progressPercent = 0;
+        progressModalRef.componentInstance.databaseProgressPercent = 0;
+        progressModalRef.componentInstance.filesProgressPercent = 0;
+
         progressModalRef.result.catch(async (canceled) => {
             try {
                 this.cancelling = true;
@@ -80,12 +82,10 @@ export class DownloadProjectComponent {
             }
         });
 
-        let databaseSteps: number;
-
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
         try {
-            databaseSteps = await this.getUpdateSequence();
+            const databaseSteps = await this.getUpdateSequence();
 
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
                 this.url,
@@ -94,11 +94,8 @@ export class DownloadProjectComponent {
                 this.getSelectedFileSync()
             );
 
-            const overallSteps = databaseSteps + Object.keys(fileList).length;
-            const databasePercentile = databaseSteps / overallSteps;
-
-            await this.syncDatabase(progressModalRef, databaseSteps, databasePercentile, destroyExisting);
-            await this.syncFiles(progressModalRef, 1 - databasePercentile, fileList);
+            await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
+            await this.syncFiles(progressModalRef, fileList);
 
             this.settingsService.addProject(
                 this.projectName,
@@ -145,18 +142,18 @@ export class DownloadProjectComponent {
     }
 
 
-    private async syncDatabase(progressModalRef: NgbModalRef, updateSequence: number,
-                               overallPercentile: number, destroyExisting: boolean): Promise<void> {
+    private async syncDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
+                               destroyExisting: boolean): Promise<void> {
 
         return new Promise(async (resolve, reject) => {
             try {
                 (await this.syncService.startReplication(
-                    this.url, this.password, this.projectName, updateSequence, destroyExisting
+                    this.url, this.password, this.projectName, databaseSteps, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
-                        const lastSequenceNumber: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
-                        progressModalRef.componentInstance.progressPercent = Math.min(
-                            (lastSequenceNumber / updateSequence * 100 * overallPercentile), 100
+                        const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
+                        progressModalRef.componentInstance.databaseProgressPercent = Math.min(
+                            (databaseProgress / databaseSteps * 100), 100
                         );
                     },
                     error: err => reject(err),
@@ -169,21 +166,18 @@ export class DownloadProjectComponent {
     }
 
     
-    private async syncFiles(progressModalRef: NgbModalRef, targetPercentile: number,
-                            files: { [uuid: string]: FileInfo }): Promise<void> {
+    private async syncFiles(progressModalRef: NgbModalRef, files: { [uuid: string]: FileInfo }): Promise<void> {
 
-        let counter = 0;
-        const fileCount = Object.keys(files).length;
-        const batchSize = 20;
-
-        const startValue = progressModalRef.componentInstance.progressPercent;
+        let counter: number = 0;
+        const fileCount: number = Object.keys(files).length;
+        const batchSize: number = fileCount > 100 ? 20 : 1;
 
         try {
-            const uuids = Object.keys(files);
+            const uuids: string[] = Object.keys(files);
 
-            const batches = [];
+            const batches: string[][] = [];
             for (let i = 0; i < uuids.length; i += batchSize) {
-                const chunk = uuids.slice(i, i + batchSize);
+                const chunk: string[] = uuids.slice(i, i + batchSize);
                 batches.push(chunk);
             }
 
@@ -211,8 +205,8 @@ export class DownloadProjectComponent {
                 if (this.cancelling) throw 'canceled';
 
                 counter += batch.length;
-                const progressValue = startValue + ((counter / fileCount) * 100 * targetPercentile);
-                progressModalRef.componentInstance.progressPercent = progressValue;
+                const progressValue = ((counter / fileCount) * 100);
+                progressModalRef.componentInstance.filesProgressPercent = progressValue;
             }
         } catch (e) {
             throw (e);

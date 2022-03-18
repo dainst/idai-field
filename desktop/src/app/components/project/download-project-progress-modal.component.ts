@@ -12,16 +12,17 @@ import { CancelModalComponent } from './cancel-modal.component';
  */
 export class DownloadProjectProgressModalComponent {
 
-    public progressPercent: number;
+    public databaseProgressPercent: number;
+    public filesProgressPercent: number;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal) {}
 
 
-    public getRoundedProgress(): number {
+    public getRoundedProgress(progressPercent: number): number {
 
-        return Math.floor(this.progressPercent);
+        return Math.floor(progressPercent);
     }
 
 

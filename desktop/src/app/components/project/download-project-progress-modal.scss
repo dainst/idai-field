@@ -1,10 +1,17 @@
 #download-project-progress-modal {
+  height: 194px;
+  transition: height 0.5s ease-in-out;
+
+  &.loading-files {
+    height: 254px;
+  }
+
   .spinner {
     position: relative;
     left: 5px;
   }
   
-  #replication-progress {
+  .replication-progress {
     width: 300px;
     margin-top: 10px;
     margin-bottom: 10px;

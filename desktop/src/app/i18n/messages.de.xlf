@@ -905,7 +905,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectField" datatype="html">
@@ -933,7 +933,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectGroup" datatype="html">
@@ -1033,7 +1033,7 @@
         <target state="final">Ausgewähltes Formular</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -1045,7 +1045,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
@@ -1593,7 +1593,7 @@
         <target state="final"> Kategoriebezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
@@ -1645,7 +1645,7 @@
         <target state="final">Es werden Daten hochgeladen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
@@ -1653,7 +1653,7 @@
         <target state="final">Es werden Daten heruntergeladen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
@@ -1661,7 +1661,7 @@
         <target state="final">Synchronisation ist deaktiviert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
@@ -1669,7 +1669,7 @@
         <target state="final">Synchronisation abgeschlossen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
@@ -1677,15 +1677,15 @@
         <target state="final">Synchronisation fehlgeschlagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
@@ -1693,7 +1693,7 @@
         <target state="final">Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
@@ -1701,7 +1701,7 @@
         <target state="final">Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
@@ -1709,7 +1709,7 @@
         <target state="final">Sie besitzen nicht die nötigen Rechte.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
@@ -1772,8 +1772,8 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.continue" datatype="html">
@@ -1817,11 +1817,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
-        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="final"> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </target>
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
+        <target state="final"> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.deleteModal.deleteFiles" datatype="html">
@@ -1829,7 +1829,7 @@
         <target state="final">Bilder löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
@@ -1837,23 +1837,39 @@
         <target state="final"> Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.progressInfo.files" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.progressInfo.databaseFinished" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">20,11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.connecting" datatype="html">
         <source>Verbindung wird hergestellt...</source>
         <target state="final">Verbindung wird hergestellt...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.download.progressInfo" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress()}}"/>% des Projekts geladen... </target>
+      <trans-unit id="project.download.progressInfo.database" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">26,10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.connect" datatype="html">
@@ -1901,7 +1917,7 @@
         <target state="final">Vorschaubilder herunterladen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">176,187</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
@@ -1909,7 +1925,7 @@
         <target state="final">Originalbilder herunterladen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">201,211</context>
+          <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
@@ -1917,7 +1933,7 @@
         <target state="final">Vorschaubilder synchronisieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFiles" datatype="html">
@@ -1925,7 +1941,7 @@
         <target state="final">Originalbilder synchronisieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
@@ -1933,7 +1949,7 @@
         <target state="final">Projekt synchronisieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
@@ -2025,7 +2041,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -3687,11 +3703,11 @@
         <target state="final">Einstellungen übernehmen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.general" datatype="html">
@@ -3699,7 +3715,7 @@
         <target state="final">Allgemeine Einstellungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
@@ -3707,7 +3723,7 @@
         <target state="final"> Sprachen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -3715,7 +3731,7 @@
         <target state="final"> Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
@@ -3723,7 +3739,7 @@
         <target state="final"> Name des Bearbeiters/der Bearbeiterin </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -3731,7 +3747,7 @@
         <target state="final"> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -3747,7 +3763,7 @@
         <target state="final">Synchronisation aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
@@ -3755,7 +3771,7 @@
         <target state="final">Adresse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
@@ -3763,7 +3779,7 @@
         <target state="final">Passwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -4215,7 +4231,7 @@
         <target state="final">Projektspezifisches Feld</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
@@ -4223,7 +4239,7 @@
         <target state="final"> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> der Projekteinstellungen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.liesWithin" datatype="html">
@@ -5991,7 +6007,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>

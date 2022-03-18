@@ -21,6 +21,7 @@ import { Messages } from '../messages/messages';
  */
 export class DeleteProjectModalComponent {
 
+    public projectName: string;
     public confirmDeletionProjectName: string;
     public deleteFiles = false;
 
@@ -40,21 +41,17 @@ export class DeleteProjectModalComponent {
     }
 
 
-    public getProjectName = () => this.settingsProvider.getSettings().selectedProject;
-
-
     public async confirmDeletion() {
 
         if (!this.checkConfirmDeletionProjectName()) return;
 
         await this.performDeletion();
-        this.activeModal.close();
     }
 
 
     public checkConfirmDeletionProjectName(): boolean {
 
-        return this.getProjectName() === this.confirmDeletionProjectName;
+        return this.projectName === this.confirmDeletionProjectName;
     }
 
 
@@ -78,7 +75,7 @@ export class DeleteProjectModalComponent {
             // Ignore state file deletion errors
         }
 
-        await this.settingsService.deleteProject(this.getProjectName(), this.deleteFiles);
+        await this.settingsService.deleteProject(this.projectName, this.deleteFiles);
 
         reloadAndSwitchToHomeRoute();
     }

@@ -8,6 +8,7 @@ import { SynchronizationModalComponent } from '../components/project/synchroniza
 import { ViewModalLauncher } from '../components/viewmodal/view-modal-launcher';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
+import { SettingsProvider } from './settings/settings-provider';
 
 
 @Injectable()
@@ -19,7 +20,8 @@ export class ProjectModalLauncher {
     constructor(private modalService: NgbModal,
                 private menuService: Menus,
                 private viewModalLauncher: ViewModalLauncher,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private settingsProvider: SettingsProvider) {}
 
 
    public async createProject() {
@@ -72,6 +74,8 @@ export class ProjectModalLauncher {
             DeleteProjectModalComponent,
             { backdrop: 'static', keyboard: false }
         );
+
+        modalRef.componentInstance.projectName = this.settingsProvider.getSettings().selectedProject;
 
         try {
             await modalRef.result;

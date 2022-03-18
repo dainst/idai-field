@@ -31,17 +31,21 @@ configuration-category {
 
       h6 {
         position: relative;
-        top: 4px;
+        top: 0.3em;
         max-width: 450px;
         margin: 0 8px;
-        font-size: 18px;
+        font-size: 1.1em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .category-name {
-        padding-top: 6px;
+        padding-top: 0.4em;
+        max-width: 350px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .mdi-script-text-outline {

@@ -8,6 +8,10 @@
     position: relative;
     top: 5px;
     left: 9px;
+    max-width: calc(100% - 120px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #confirm-button,

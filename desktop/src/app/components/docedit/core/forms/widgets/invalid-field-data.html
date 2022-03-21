@@ -3,4 +3,9 @@
         Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:
     </div>
     <field-view [field]="fieldsViewField" [showFieldLabel]="false"></field-view>
+    <button class="btn btn-danger delete-invalid-field-data-button" type="button" (click)="delete()">
+        <span class="mdi mdi-delete"></span>
+        <span class="delete-invalid-data-button-label" 
+              i18n="docedit.forms.invalidFieldData.delete">Feldinhalte löschen</span>
+    </button>
 </div>

@@ -36,4 +36,10 @@ export class InvalidFieldDataComponent implements OnChanges {
             this.labels
         )([this.field, this.resource[this.field.name]]);
     }
+
+
+    public delete() {
+
+        delete this.resource[this.field.name];
+    }
 }

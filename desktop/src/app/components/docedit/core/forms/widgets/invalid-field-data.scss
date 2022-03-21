@@ -4,4 +4,16 @@ invalid-field-data {
     user-select: none;
     font-size: 14px;
   }
+
+  .delete-invalid-field-data-button {
+    width: 100% !important;
+
+    .mdi {
+      margin-right: 3px;
+    }
+    
+    .delete-invalid-data-button-label {
+      font-size: 14px;
+    }
+  }
 }

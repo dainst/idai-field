@@ -13,3 +13,4 @@ export * from './utils';
 export * from './valuelist-util';
 export * from './i18n';
 export * from './in-place';
+export * from './number-util';

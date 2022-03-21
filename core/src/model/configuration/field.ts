@@ -138,7 +138,7 @@ export module Field {
             } else if (inputType === BOOLEAN) {
                 return fieldData === true || fieldData === false;
             } else if (inputType === DATE) {
-                return parseDate(fieldData) !== undefined;
+                return !isNaN(parseDate(fieldData)?.getTime());
             } else if (inputType === DROPDOWNRANGE) {
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             } else if (inputType === DATING) {

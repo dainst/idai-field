@@ -38,9 +38,9 @@ export module CSVExport {
 
         return flow([headings, matrix],
             CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
-            CSVMatrixExpansion.expandDating,
+            CSVMatrixExpansion.expandDating(fieldDefinitions),
             CSVMatrixExpansion.expandDimension(fieldDefinitions),
-            CSVMatrixExpansion.expandLiterature,
+            CSVMatrixExpansion.expandLiterature(fieldDefinitions),
             combine);
     }
 

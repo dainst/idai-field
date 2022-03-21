@@ -6,12 +6,14 @@ export function makeFieldDefinitions(fieldNames: string[]) {
 
     return fieldNames.map(fieldName => {
 
-            let inputType = 'input';
-            if (fieldName.startsWith('dimension')) inputType = 'dimension';
-            if (fieldName.startsWith('period')) inputType = 'dropdownRange';
+        let inputType = 'input';
+        if (fieldName.startsWith('dimension')) inputType = 'dimension';
+        if (fieldName.startsWith('dating')) inputType = 'dating';
+        if (fieldName.startsWith('literature')) inputType = 'literature';
+        if (fieldName.startsWith('period')) inputType = 'dropdownRange';
 
-            return { name: fieldName, inputType: inputType }
-        }) as Array<Field>;
+        return { name: fieldName, inputType: inputType }
+    }) as Array<Field>;
 }
 
 

@@ -1,7 +1,7 @@
 import { flow, left, reverse } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, Field } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
-import { H, HeadingsAndMatrix } from './csv-export-consts';
+import { HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
 import { CSVHeadingsExpansion } from './csv-headings-expansion';
 

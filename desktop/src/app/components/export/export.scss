@@ -1,10 +1,21 @@
 /**
  * @author Thomas Kleinke
  */
+ #export {
+  .export-info {
+    font-size: 14px;
+    margin-bottom: 12px;
+    user-select: none;
+    cursor: default;
+  }
 
-.export-info {
-  font-size: 14px;
-  margin-bottom: 12px;
-  user-select: none;
-  cursor: default;
+  #back-to-export-button {
+    margin-top: 22px;
+  }
+
+  #ignored-identifiers {
+    max-height: calc(100vh - 258px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

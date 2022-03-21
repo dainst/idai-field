@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
-    Resource, ProjectConfiguration } from 'idai-field-core';
+    ProjectConfiguration } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../components/export/catalog/get-export-documents';
 import { CsvExporter } from '../../components/export/csv/csv-exporter';
@@ -19,6 +19,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { InvalidField } from './csv/csv-export';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -46,6 +47,8 @@ export class ExportComponent implements OnInit {
     public selectedOperationOrPlaceId: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema' | 'complete' = 'complete';
+    
+    public invalidFields: Array<InvalidField> = [];
 
     private modalRef: NgbModalRef|undefined;
 
@@ -209,7 +212,7 @@ export class ExportComponent implements OnInit {
         if (!this.selectedCategory) return console.error('No category selected');
 
         try {
-            await ExportRunner.performExport(
+            this.invalidFields = await ExportRunner.performExport(
                 this.find,
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 this.getExportContext(),
@@ -219,6 +222,8 @@ export class ExportComponent implements OnInit {
                     .map(_ => _.name),
                 CsvExporter.performExport(filePath)
             );
+
+            this.showInvalidFieldsWarning();
         } catch(err) {
             console.error(err);
             throw [M.EXPORT_ERROR_GENERIC];
@@ -336,5 +341,19 @@ export class ExportComponent implements OnInit {
     private getSelectedCatalog(): FieldDocument {
 
         return this.catalogs.find(catalog => catalog.resource.id === this.selectedCatalogId);
+    }
+
+
+    private showInvalidFieldsWarning() {
+
+        if (this.invalidFields.length === 1) {
+            this.messages.add([
+                M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE,
+                this.invalidFields[0].fieldName,
+                this.invalidFields[0].identifier
+            ]);
+        } else if (this.invalidFields.length > 1) {
+            this.messages.add([M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE]);
+        }
     }
 }

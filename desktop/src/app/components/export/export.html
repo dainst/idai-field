@@ -1,4 +1,4 @@
-<div class="row" (dragover)="false" (dragleave)="false" (drop)="false">
+<div id="export" class="row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
             <div class="col default-nav bg-light text-right">
@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="form-group col default-container">
-                <div class="col-lg-6 mx-lg-auto py-4">
+                <div *ngIf="invalidFields.length < 2" class="col-lg-6 mx-lg-auto py-4">
 
                     <div class="form-group">
                         <label class="control-label col-form-label"
@@ -115,6 +115,23 @@
                         <em>Kurzbeschreibung</em> (shortdesc) und <em>Kategorie</em> (category) der jeweiligen
                         Ressourcen.
                     </div>
+                </div>
+
+                <div *ngIf="invalidFields.length > 1" class="col-lg-6 mx-lg-auto py-4">
+                    <div class="card bg-light">
+                        <div class="card-header" i18n="@@export.invalidFields.heading">Nicht exportierte Felder:</div>
+                        <div id="invalid-fields" class="card-body">
+                            <div *ngFor="let invalidField of invalidFields">
+                                {{invalidField.fieldName}}
+                                <span i18n="@@export.invalidFields.resource">(Ressource {{invalidField.identifier}})</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="back-to-export-button"
+                            class="btn btn-secondary"
+                            (click)="invalidFields = []">
+                        <span class="button-label" i18n="@@buttons.back">Zurück</span>
+                    </button>
                 </div>
             </div>
         </div>

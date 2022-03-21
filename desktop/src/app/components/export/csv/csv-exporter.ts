@@ -1,5 +1,5 @@
 import { CategoryForm, FieldResource } from 'idai-field-core';
-import { CSVExport } from './csv-export';
+import { CSVExport, CSVExportResult } from './csv-export';
 import { M } from '../../../components/messages/m';
 import { PerformExport } from '../export-helper';
 
@@ -22,9 +22,10 @@ export module CsvExporter {
 
             return async (resources: Array<FieldResource>) => {
 
-                await writeFile(
-                    outputFilePath,
-                    CSVExport.createExportable(resources, CategoryForm.getFields(category), relations));
+                const result: CSVExportResult = CSVExport.createExportable(resources, CategoryForm.getFields(category), relations);
+                await writeFile(outputFilePath, result.csvData);
+
+                return result.invalidFields;
             }
         }
     }

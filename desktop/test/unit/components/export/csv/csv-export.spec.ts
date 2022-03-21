@@ -41,7 +41,7 @@ describe('CSVExport', () => {
 
         const t = makeFieldDefinitions(['identifier', 'shortDescription', 'custom', 'id']);
 
-        const result = CSVExport.createExportable([], t, []);
+        const result = CSVExport.createExportable([], t, []).csvData;
         expect(result[0]).toBe('"identifier","shortDescription","custom"');
     });
 
@@ -49,7 +49,7 @@ describe('CSVExport', () => {
     it('create document line', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
-        const result = CSVExport.createExportable([resource], t, []);
+        const result = CSVExport.createExportable([resource], t, []).csvData;
         expect(result[0]).toEqual('"identifier","shortDescription"');
         expect(result[1]).toEqual('"identifier1","shortDescription1"');
     });
@@ -60,7 +60,7 @@ describe('CSVExport', () => {
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.relations = { someRelation: ["identifier2"] } as any;
 
-        const result = CSVExport.createExportable([resource], t, ['someRelation', 'liesWithin']);
+        const result = CSVExport.createExportable([resource], t, ['someRelation', 'liesWithin']).csvData;
         expect(result[0]).toBe('"identifier","shortDescription","relations.someRelation","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1","identifier2",""');
     });
@@ -68,7 +68,7 @@ describe('CSVExport', () => {
 
     function expectCorrectChildOfTarget(resource, t, expectation) {
 
-        const result = CSVExport.createExportable([resource], t, Relation.Hierarchy.ALL);
+        const result = CSVExport.createExportable([resource], t, Relation.Hierarchy.ALL).csvData;
         expect(result[0]).toBe('"identifier","shortDescription","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1",' + expectation);
     }
@@ -78,7 +78,7 @@ describe('CSVExport', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.shortDescription = 'ABC " "DEF"';
-        const result = CSVExport.createExportable([resource], t, []);
+        const result = CSVExport.createExportable([resource], t, []).csvData;
         expect(result[0]).toEqual('"identifier","shortDescription"');
         expect(result[1]).toEqual('"identifier1","ABC "" ""DEF"""');
     });
@@ -86,10 +86,11 @@ describe('CSVExport', () => {
 
     it('export array fields', () => {
 
-        const t = makeFieldDefinitions(['identifier', 'shortDescription', 'color']);
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'color']);
+        fields.find(field => field.name === 'color').inputType = 'checkboxes';
         const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'category');
         resource.color = ['blue', 'red', 'yellow'];
-        const result = CSVExport.createExportable([resource], t, []);
+        const result = CSVExport.createExportable([resource], fields, []).csvData;
         expect(result[0]).toEqual('"identifier","shortDescription","color"');
         expect(result[1]).toEqual('"identifier1","shortDescription1","blue;red;yellow"');
     });
@@ -134,7 +135,7 @@ describe('CSVExport', () => {
             value: 'A'
         };
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','))
 
         expect(result[0][1]).toBe('"period.value"');
         expect(result[0][2]).toBe('"period.endValue"');
@@ -166,7 +167,7 @@ describe('CSVExport', () => {
         resources[0].periodB = { value: 'C', endValue: 'D' };
         resources[0].custom = 'custom';
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"periodA.value"');
         expect(result[0][2]).toBe('"periodA.endValue"');
@@ -192,13 +193,15 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'category')
         ];
         resources[0].dating = [
-            { begin: { inputYear: 10 }, end: { inputYear: 20 }, source: 'some1' },
-            { begin: { inputYear: 20 }, end: { inputYear: 30 }, source: 'some2' }];
+            { begin: { inputYear: 10 }, end: { inputYear: 20 }, type: 'range', source: 'some1' },
+            { begin: { inputYear: 20 }, end: { inputYear: 30 }, type: 'range', source: 'some2' }
+        ];
         resources[1].dating = [
-            { begin: { inputYear: 40 }, end: { inputYear: 50 }, source: 'some3' }];
+            { begin: { inputYear: 40 }, end: { inputYear: 50 }, type: 'range', source: 'some3' }
+        ];
         resources[1].custom = 'custom';
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dating.0.type"');
         expect(result[0][2]).toBe('"dating.0.begin.inputType"');
@@ -254,7 +257,7 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', 'shortDescription1', 'category'),
         ];
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dating.0.type"');
         expect(result[0][2]).toBe('"dating.0.begin.inputType"');
@@ -274,7 +277,7 @@ describe('CSVExport', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dating']);
 
-        const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable([], t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dating.0.type"');
         expect(result[0][2]).toBe('"dating.0.begin.inputType"');
@@ -293,7 +296,7 @@ describe('CSVExport', () => {
         const {t, resource} = makeSimpleCategoryAndResource();
         resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: 'some1', label: 'blablabla1' }];
 
-        CSVExport.createExportable([resource], t, []).map(row => row.split(','));
+        CSVExport.createExportable([resource], t, []).csvData.map(row => row.split(','));
 
         expect(resource['dating'][0]['begin']['year']).toBe(10);
         expect(resource['dating'][0]['end']['year']).toBe(20);
@@ -306,7 +309,7 @@ describe('CSVExport', () => {
         const { t, resource } = makeSimpleCategoryAndResource();
         resource['relations']['isAbove'] = ['abc'];
 
-        CSVExport.createExportable([resource], t, ['isAbove']).map(row => row.split(','));
+        CSVExport.createExportable([resource], t, ['isAbove']).csvData.map(row => row.split(','));
 
         expect(resource['relations']['isAbove'][0]).toBe('abc');
     });
@@ -322,13 +325,13 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'category'),
         ];
         resources[0]['dimensionX'] = [
-            { inputValue: 100, measurementComment: 'abc' },
-            { inputValue: 200, measurementPosition: 'def' }];
+            { inputValue: 100, inputUnit: 'cm', measurementComment: 'abc' },
+            { inputValue: 200, inputUnit: 'cm', measurementPosition: 'def' }];
         resources[1]['dimensionX'] = [
-            { inputValue: 300, inputRangeEndValue: 'ghc' }];
+            { inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc' }];
         resources[1]['custom'] = 'custom';
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
@@ -364,7 +367,7 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', 'shortDescription1', 'category'),
         ];
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
@@ -381,7 +384,7 @@ describe('CSVExport', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
-        const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable([], t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
@@ -400,10 +403,10 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', 'shortDescription1', 'category'),
             ifResource('i2', 'identifier2', 'shortDescription2', 'category'),
         ];
-        resources[0]['dimensionX'] = [{ inputValue: 100, measurementComment: 'abc' }];
-        resources[1]['dimensionY'] = [{ inputValue: 300, inputRangeEndValue: 'ghc' }];
+        resources[0]['dimensionX'] = [{ inputValue: 100, inputUnit: 'cm', measurementComment: 'abc' }];
+        resources[1]['dimensionY'] = [{ inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc' }];
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
@@ -440,7 +443,7 @@ describe('CSVExport', () => {
             { quotation: 'Quotation 3', zenonId: '7654321', doi: 'https://www.example.de', page: '12', figure: '1' }
         ];
 
-        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"literature.0.quotation"');
         expect(result[0][2]).toBe('"literature.0.zenonId"');

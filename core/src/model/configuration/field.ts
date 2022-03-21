@@ -148,7 +148,7 @@ export module Field {
             } else if (inputType === LITERATURE) {
                 return isArray(fieldData) && fieldData.every(element => Literature.isLiterature(element));
             } else if (inputType === GEOMETRY) {
-                return fieldData.type && fieldData.coordinates;
+                return fieldData.type !== undefined && fieldData.coordinates !== undefined;
             } else if ([RELATION, INSTANCE_OF].includes(inputType)) {
                 return isObject(fieldData) && Object.values(fieldData).every(relationTargets => {
                     return isArray(relationTargets) && relationTargets.every(element => isString(element));

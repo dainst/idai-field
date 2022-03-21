@@ -2,7 +2,6 @@ import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys, isUnd
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
-import { doc } from '../../test';
 
 export type RevisionId = string;
 export type DocumentId = string;

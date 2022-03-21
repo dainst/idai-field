@@ -2,7 +2,7 @@ import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, 
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { Field } from './field';
-import { Group, GroupDefinition, Groups } from './group';
+import { Group, GroupDefinition } from './group';
 
 
 export interface CategoryForm {

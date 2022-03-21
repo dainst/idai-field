@@ -1,4 +1,5 @@
-export type FieldGeometryType = 'Polygon' | 'MultiPolygon' | 'LineString' | 'MultiLineString' | 'Point' | 'MultiPoint'
+export type FieldGeometryType = 'Polygon' | 'MultiPolygon' | 'LineString' | 'MultiLineString' | 'Point' | 'MultiPoint';
+
 export interface FieldGeometry {
 
     type: FieldGeometryType;

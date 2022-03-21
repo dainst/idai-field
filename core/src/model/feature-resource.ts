@@ -1,5 +1,5 @@
 import { Dating } from './dating';
-import {FieldResource} from './field-resource';
+import { FieldResource } from './field-resource';
 import { OptionalRange } from './optional-range';
 
 

@@ -458,6 +458,6 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private static getFieldName(constraintName: string): string {
 
-        return constraintName.substring(0, constraintName.indexOf(':'));
+        return constraintName.substring(0, constraintName.lastIndexOf(':'));
     }
 }

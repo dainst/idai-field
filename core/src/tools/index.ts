@@ -9,6 +9,7 @@ export { sortStructArray } from './sort-struct-array';
 export { SortUtil } from './sort-util';
 export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
+export { parseDate } from './parse-date';
 export * from './utils';
 export * from './valuelist-util';
 export * from './i18n';

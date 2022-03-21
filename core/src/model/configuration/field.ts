@@ -1,6 +1,7 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/number-util';
+import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../dating';
 import { Dimension } from '../dimension';
 import { Literature } from '../literature';
@@ -137,7 +138,7 @@ export module Field {
             } else if (inputType === BOOLEAN) {
                 return fieldData === true || fieldData === false;
             } else if (inputType === DATE) {
-                return !isNaN(Date.parse(fieldData));
+                return parseDate(fieldData) !== undefined;
             } else if (inputType === DROPDOWNRANGE) {
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             } else if (inputType === DATING) {

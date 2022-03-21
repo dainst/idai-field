@@ -1,6 +1,5 @@
-import { aFlow, assoc, compose, isEmpty, filter, flatten, 
-    is, isArray, isDefined, isObject, isString, L, map, 
-    Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
+import { aFlow, assoc, compose, isEmpty, filter, flatten, is, isArray, isDefined, isObject, isString,
+    L, map, Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
@@ -14,7 +13,6 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { Field } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
-import { SortUtil } from './sort-util';
 
 
 type FieldContent = any;

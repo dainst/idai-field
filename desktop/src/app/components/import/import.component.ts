@@ -357,7 +357,7 @@ export class ImportComponent implements OnInit {
 
         for (let segment of fileName.split('.')) {
             const category: CategoryForm|undefined = Tree.flatten(this.projectConfiguration.getCategories())
-                .find(category => category.name.toLowerCase() === segment.toLowerCase());
+                .find(category => category.name.toLowerCase() === segment.toLowerCase().replace('+', ':'));
             if (category) return category;
         }
 

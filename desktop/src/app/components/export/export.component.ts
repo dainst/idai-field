@@ -35,7 +35,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'geojson' | 'shapefile' | 'csv' | 'catalog'  = 'csv';
+    public format: 'geojson'|'shapefile'|'csv'|'catalog' = 'csv';
     public initializing: boolean = false;
     public running: boolean = false;
     public javaInstalled: boolean = true;
@@ -46,7 +46,7 @@ export class ExportComponent implements OnInit {
     public selectedCategory: CategoryForm|undefined = undefined;
     public selectedOperationOrPlaceId: string = 'project';
     public selectedCatalogId: string;
-    public csvExportMode: 'schema' | 'complete' = 'complete';
+    public csvExportMode: 'schema'|'complete' = 'complete';
     
     public invalidFields: Array<InvalidField> = [];
 
@@ -243,7 +243,7 @@ export class ExportComponent implements OnInit {
                     options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
                 }
 
-                if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase();
+                if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase().replace(':', '+');
                 if (remote.process.platform === 'linux') { // under linux giving the extensions entries in fileFilter will not automatically add the extensions
                     let ext = 'csv';
                     if (this.format === 'shapefile') ext = 'zip';

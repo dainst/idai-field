@@ -141,11 +141,11 @@ export module Field {
             } else if (inputType === DROPDOWNRANGE) {
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             } else if (inputType === DATING) {
-                return Dating.isDating(fieldData);
+                return isArray(fieldData) && fieldData.every(element => Dating.isDating(element));
             } else if (inputType === DIMENSION) {
-                return Dimension.isDimension(fieldData);
+                return isArray(fieldData) && fieldData.every(element => Dimension.isDimension(element));
             } else if (inputType === LITERATURE) {
-                return Literature.isLiterature(fieldData);
+                return isArray(fieldData) && fieldData.every(element => Literature.isLiterature(element));
             } else if (inputType === GEOMETRY) {
                 return fieldData.type && fieldData.coordinates;
             } else if ([RELATION, INSTANCE_OF].includes(inputType)) {

@@ -21,6 +21,7 @@ import { IdaiMessagesModule } from '../messages/idai-messages.module';
 import { PagingButtonsComponent } from './paging-buttons.component';
 import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
+import { FieldViewComponent } from './documentinfo/field-view.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { EditSaveDialogComponent } from './edit-save-dialog.component';
         DocumentTeaserComponent,
         DocumentInfoComponent,
         FieldsViewComponent,
+        FieldViewComponent,
         GeoreferenceViewComponent,
         DepictsRelationsViewComponent,
         ThumbnailComponent,
@@ -57,6 +59,7 @@ import { EditSaveDialogComponent } from './edit-save-dialog.component';
         DocumentTeaserComponent,
         DocumentInfoComponent,
         FieldsViewComponent,
+        FieldViewComponent,
         ThumbnailComponent,
         LoadingIconComponent,
         SearchBarComponent,

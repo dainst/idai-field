@@ -44,6 +44,7 @@ import { CategorySwitcherButtonComponent } from './widgets/category-switcher-but
 import { ImagePickerComponent } from './widgets/image-picker.component';
 import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
 import { RelationPickerComponent } from './widgets/relationpicker/relation-picker.component';
+import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         GeometryComponent,
         OutliersComponent,
         EmptyValuelistInfoComponent,
-        LiteratureComponent
+        LiteratureComponent,
+        InvalidFieldDataComponent
     ],
     exports: [
         DoceditComponent,

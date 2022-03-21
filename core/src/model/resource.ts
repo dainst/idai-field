@@ -1,6 +1,9 @@
-import { set, sameset, samemap, isnt, includedIn, flatMap, remove, isUndefinedOrEmpty } from 'tsfun';
+import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty } from 'tsfun';
+import { Datastore } from '../datastore/datastore';
+import { Document } from './document';
 import { notBothEqual, notCompareInBoth } from '../tools/compare';
 import { Name } from '../tools/named';
+import { SortUtil } from '../tools/sort-util';
 import { concatIf } from '../tools/utils';
 
 
@@ -81,6 +84,21 @@ export module Resource {
             : ownKeys;
 
         return flatMap(usableRelations, (prop: string) => resource.relations[prop as string]);
+    }
+
+
+    export async function getRelationTargetDocuments(resource: Resource, datastore: Datastore): Promise<Map<Array<Document>>> {
+
+        const targets: Map<Array<Document>> = {};
+    
+        for (let relationName of Object.keys(resource.relations)) {
+            targets[relationName] = (await datastore.getMultiple(resource.relations[relationName]))
+                .sort((target1, target2) => SortUtil.alnumCompare(
+                    target1.resource.identifier, target2.resource.identifier
+                ));
+        }
+    
+        return targets;
     }
 
 

@@ -1,0 +1,6 @@
+<div *ngIf="fieldsViewField">
+    <div i18n="@@docedit.forms.invalidFieldData.info" class="invalid-field-data-info">
+        Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:
+    </div>
+    <field-view [field]="fieldsViewField" [showFieldLabel]="false"></field-view>
+</div>

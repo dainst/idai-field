@@ -36,6 +36,16 @@ export class EditFormGroup implements OnChanges {
         return field !== undefined && field.editable === true;
     }
 
+    
+    public isValidFieldData(field: Field): boolean {
+
+        const fieldData: any = this.document.resource[field.name];
+
+        return fieldData === undefined
+            ? true
+            : Field.InputType.isValidFieldData(fieldData, field.inputType);
+    }
+
 
     private updateLabelsAndDescriptions() {
 

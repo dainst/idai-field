@@ -71,7 +71,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroupLabel = (group: Group) => this.labels.get(group);
 
-    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.category.groups.map(group => this.getGroupId(group));
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 

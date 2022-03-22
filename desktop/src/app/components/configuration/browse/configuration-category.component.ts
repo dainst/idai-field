@@ -11,6 +11,7 @@ import { ConfigurationContextMenu } from '../context-menu/configuration-context-
 import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
 import { ApplyChangesResult } from '../configuration.component';
+import { ConfigurationState } from '../configuration-state';
 
 
 @Component({
@@ -48,14 +49,16 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     constructor(private modals: Modals,
                 private messages: Messages,
-                private labels: Labels) {}
+                private labels: Labels,
+                private configurationState: ConfigurationState) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes['category']) {
-            if (!changes['category'].previousValue
-                    || changes['category'].currentValue.name !== changes['category'].previousValue.name
+            if (!changes['category'].previousValue) {
+                this.selectedGroup = this.configurationState.getSelectedGroupName() ?? this.category.groups[0].name;
+            } else if (changes['category'].currentValue.name !== changes['category'].previousValue.name
                     || !this.category.groups.map(to(Named.NAME)).includes(this.selectedGroup)) {
                 this.selectedGroup = this.category.groups[0].name;
             }
@@ -118,6 +121,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.selectedGroup = groupName;
         this.openedFieldName = undefined;
+        this.configurationState.setSelectedGroupName(groupName);
     }
 
 

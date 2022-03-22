@@ -64,6 +64,7 @@ export class DeleteProjectModalComponent {
             await this.stateSerializer.delete('resources-state');
             await this.stateSerializer.delete('matrix-state');
             await this.stateSerializer.delete('tabs-state');
+            await this.stateSerializer.delete('configuration-state');
         } catch (err) {
             // Ignore state file deletion errors
         }

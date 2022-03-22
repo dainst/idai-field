@@ -2,7 +2,7 @@
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
 
-<div *ngIf="configurationDocument && selectedCategory" class="project-configuration row bg-light" [class.dragging]="dragging">
+<div *ngIf="ready" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
         <div id="configuration-toolbar" class="row">
             <div id="categories-filter" class="btn-group dropdown"

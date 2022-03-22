@@ -65,6 +65,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
     public clonedProjectConfiguration: ProjectConfiguration;
     
+    public ready: boolean = false;
     public dragging: boolean = false;
     public changed: boolean = false;
     public escapeKeyPressed: boolean = false;
@@ -151,6 +152,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
+            
+        this.ready = true;
     }
 
 

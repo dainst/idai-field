@@ -43,12 +43,6 @@ export module ConfigurationUtil {
     }
 
 
-    export function isEditableGroup(group: Group): boolean {
-
-        return group.name !== Groups.PARENT && group.name !== Groups.CHILD;
-    }
-
-
     export function getInputTypeLabel(inputTypeName: string, availableInputTypes: Array<InputType>): string {
 
         return availableInputTypes

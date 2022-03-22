@@ -152,7 +152,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
-            
+
         this.ready = true;
     }
 
@@ -357,8 +357,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public async editGroup(category: CategoryForm, group: Group) {
-
-        if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
         const [result, componentInstance] = this.modals.make<GroupEditorModalComponent>(
             GroupEditorModalComponent,

@@ -69,6 +69,14 @@ export class ConfigurationState {
     }
 
 
+    public resetForE2E() {
+
+        this.selectedCategoriesFilterName = undefined;
+        this.selectedCategoryName = undefined;
+        this.selectedGroupName = undefined;
+    }
+
+
     private createSerializationObject(): any {
 
         return {

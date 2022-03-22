@@ -10,6 +10,7 @@ import { Settings } from './settings/settings';
 import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
 import { ConfigurationIndex } from './configuration/index/configuration-index';
+import { ConfigurationState } from '../components/configuration/configuration-state';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
@@ -22,8 +23,9 @@ const express = typeof window !== 'undefined' ? window.require('express') : requ
 export class AppController {
 
     constructor(private resourcesState: ResourcesStateManager,
-                private documentCache: DocumentCache,
                 private imagesState: ImagesState,
+                private configurationState: ConfigurationState,
+                private documentCache: DocumentCache,
                 private indexFacade: IndexFacade,
                 private imageConverter: ImageConverter,
                 private pouchdbDatastore: PouchdbDatastore,
@@ -73,6 +75,7 @@ export class AppController {
 
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();
+        this.configurationState.resetForE2E();
         this.tabManager.resetForE2E();
         this.documentCache.reset();
 

@@ -50,9 +50,6 @@
     },
     "Find:default": {
       "hidden": [],
-      "commons": [
-        "dating"
-      ],
       "valuelists": {
         "period": "periods-Abbircella-1",
         "drawn": "Feature-drawn-Abbircella",
@@ -68,11 +65,77 @@
         "photographed": {
           "inputType": "radio"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Feature:default": {
       "hidden": [],
-      "commons": [],
       "valuelists": {
         "period": "periods-Abbircella-1",
         "stratigraphicReliability": "Feature-stratigraphicReliability-Abbircella",
@@ -119,7 +182,78 @@
         "natural": {
           "inputType": "boolean"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Room:default": {
       "hidden": [],
@@ -153,23 +287,330 @@
     },
     "Glass:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "formDescription",
+            "color",
+            "transparency",
+            "decorationTechnique",
+            "decorationDescription",
+            "manufacturingMethod",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Mollusk:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "classification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Brick:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Wood:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Architecture:default": {
       "hidden": [],
-      "commons": [],
       "fields": {
         "decoration": {
           "inputType": "input"
@@ -201,16 +642,111 @@
         "conditionAmount": "Architecture-conditionAmount-Abbircella",
         "buildingTechnique": "Architecture-buildingTechnique-Abbircella",
         "walling": "Architecture-walling-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "layerAmount",
+            "layerHeight",
+            "muralCrown",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "materialForm",
+            "materialCharacteristic",
+            "construction",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "brickwork",
+            "blockTreatment",
+            "blockProcessing",
+            "bibliography",
+            "hasGrouting",
+            "wallClassification",
+            "wallType",
+            "decoration",
+            "conjoinedWith",
+            "interpretation",
+            "buildingTechnique",
+            "walling"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Layer:default": {
       "hidden": [
         "distinguishingCriteria",
         "isNatural"
-      ],
-      "commons": [
-        "orientation",
-        "spatialLocation"
       ],
       "fields": {
         "interpretation": {
@@ -237,17 +773,96 @@
         "consistency": "Layer-consistency-Abbircella",
         "soilType": "Layer-soilType-Abbircella",
         "layerClassification": "Layer-layerClassification-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural",
+            "distinguishingCriteria",
+            "layerClassification",
+            "isNatural",
+            "soilType",
+            "consistency",
+            "interpretation",
+            "complete",
+            "geologicalComponents",
+            "organicComponents",
+            "artificialComponents",
+            "specialFinds"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "orientation",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Floor:default": {
       "hidden": [
         "distinguishingCriteria"
-      ],
-      "commons": [
-        "orientation",
-        "dimensionHeight",
-        "dimensionThickness",
-        "spatialLocation"
       ],
       "fields": {
         "interpretation": {
@@ -270,26 +885,457 @@
         "mortarBinder": "Architecture-mortarBinder-Abbircella",
         "condition": "Architecture-condition-Abbircella",
         "conditionAmount": "Architecture-conditionAmount-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "consistency",
+            "distinguishingCriteria",
+            "floorClassification",
+            "layerClassification",
+            "mortarBinder",
+            "interpretation",
+            "mortarColor",
+            "mortarConsistency"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionHeight",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "orientation",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Pottery:default": {
       "hidden": [],
       "fields": {},
       "valuelists": {
         "specificType": "Pottery-potteryTypeSpecific-Meninx"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "materialType",
+            "specificType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "temperTypeClay",
+            "clayHardness",
+            "clayColorOutside",
+            "clayColorOutsideMunsell",
+            "clayColorInside",
+            "clayColorInsideMunsell",
+            "clayColorBreak",
+            "clayColorBreakMunsell",
+            "breakStructure",
+            "coatInside",
+            "coatColorInside",
+            "coatInsideType",
+            "coatOutside",
+            "coatColorOutside",
+            "coatOutsideType",
+            "formDescription",
+            "decorationTechnique",
+            "decorationDescription",
+            "objectType",
+            "purpose",
+            "provenance",
+            "sample",
+            "residueAnalysis",
+            "amountSherdsWall",
+            "amountSherdsBase",
+            "amountSherdsHandles",
+            "amountSherdsLip",
+            "amountSherdsPedestal",
+            "amountSherdsLid",
+            "amountSherdsRim",
+            "amountSherdsRimBase",
+            "amountSherdsRimShoulder",
+            "amountSherdsOther",
+            "amountSherdsShoulder",
+            "amountSherdsPercent",
+            "hasCoat"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Metal:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Bone:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "boneType",
+            "species",
+            "boneClassification",
+            "burningGrade",
+            "objectType",
+            "biologicalAge",
+            "sex"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Terracotta:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Photo:default": {
       "hidden": [],
@@ -301,11 +1347,166 @@
     },
     "Stone:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "material",
+            "temperAmount",
+            "treatment",
+            "workmanship",
+            "color",
+            "formDescription",
+            "objectType",
+            "architectureElement",
+            "purpose",
+            "origin",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Coin:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "metalMaterial",
+            "manufacturingMethod",
+            "preservedDiameter",
+            "frontSideDescription",
+            "reverseSideDescription",
+            "provenance",
+            "stampPositioning",
+            "denomination",
+            "mint",
+            "mintingRuler"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "PlasterFragment:default": {
       "hidden": [],
@@ -326,7 +1527,82 @@
         "mortarConsistency": "Architecture-mortarConsistency-Abbircella",
         "color": "colors-Abbircella-1",
         "plasterComponents": "PlasterFragment-plasterComponents-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "drawn",
+            "photographed",
+            "plasterComponents",
+            "color",
+            "composition",
+            "hasDecoration",
+            "mortarBinder",
+            "mortarConsistency",
+            "mortarColor"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther",
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],
@@ -334,9 +1610,6 @@
     },
     "Sample:default": {
       "hidden": [],
-      "commons": [
-        "dating"
-      ],
       "fields": {
         "isotopicSignature": {
           "inputType": "input"
@@ -357,16 +1630,50 @@
       "valuelists": {
         "sampleMaterial": "Sample-sampleMaterial-Abbircella",
         "sampleType": "Sample-sampleType-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "sampleType",
+            "labNumber",
+            "weight",
+            "isotopicSignature",
+            "calibration-1",
+            "calibration-2",
+            "carbonLevel",
+            "sampleMaterial"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "Negative": {
       "hidden": [
         "featureForm"
-      ],
-      "commons": [
-        "orientation",
-        "dimensionHeight",
-        "spatialLocation"
       ],
       "fields": {
         "modeOfFormation": {
@@ -383,19 +1690,90 @@
       "valuelists": {
         "orientation": "orientation-Abbircella",
         "otherClassification": "Negative-negativeClassification-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural",
+            "modeOfFormation",
+            "otherClassification",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionHeight"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "orientation",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "WallCladding": {
       "hidden": [
         "jointsCondition",
         "jointsType",
         "dimensionWidth"
-      ],
-      "commons": [
-        "orientation",
-        "dimensionHeight",
-        "dimensionThickness",
-        "spatialLocation"
       ],
       "fields": {
         "conditionComment": {
@@ -475,7 +1853,102 @@
         "wallOrientation": "Wall_surface-wallOrientation-Abbircella",
         "roomSide": "Wall_surface-wallOrientation-Abbircella",
         "wallSide": "Wall_surface-wallOrientation-Abbircella"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "differentFromOne",
+            "differentFromTwo",
+            "justificationOne",
+            "justificationTwo",
+            "stratigraphicReliability",
+            "photogrammetry",
+            "photographed",
+            "heights",
+            "sample",
+            "distinctionCriteria",
+            "natural",
+            "conditionComment",
+            "constructionDetailsDescription",
+            "markDescription",
+            "hasPlasterDecoration",
+            "plasterOlder",
+            "surfaceDecoration",
+            "wallConstructionTechnique",
+            "blockTreatment",
+            "buildingTechnique",
+            "condition",
+            "conditionAmount",
+            "constructionDetails",
+            "jointsCondition",
+            "jointsType",
+            "mark",
+            "plasterComponents",
+            "wallOrientation",
+            "roomSide",
+            "wallSide",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionHeight",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "orientation",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "TypeCatalog:default": {
       "hidden": [],

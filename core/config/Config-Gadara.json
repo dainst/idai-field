@@ -9,11 +9,50 @@
       "fields": {}
     },
     "Survey:default": {
-      "commons": [
-        "dating"
-      ],
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchMethod"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "SurveyUnit:default": {
       "hidden": [],
@@ -28,11 +67,55 @@
       "fields": {}
     },
     "Trench:default": {
-      "commons": [
-        "dating"
-      ],
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "trenchComment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "Building:default": {
       "hidden": [],
@@ -46,9 +129,6 @@
       "fields": {}
     },
     "Find:default": {
-      "commons": [
-        "dating"
-      ],
       "hidden": [
         "bibliography",
         "catalogueNumber",
@@ -79,23 +159,79 @@
         "samples": "Find-sample-Gadara",
         "sampleStatus": "Find-samplePl-Gadara",
         "storagePlace": "Find-Store-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Feature": {
       "color": "black",
-      "commons": [
-        "beginningDate",
-        "endDate",
-        "diary",
-        "description",
-        "processor",
-        "campaign",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionVerticalExtent",
-        "area",
-        "dimensionHeight"
-      ],
       "valuelists": {
         "period": "periods-Gadara"
       },
@@ -109,17 +245,117 @@
         "bibliography": {
           "inputType": "literature"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Room:default": {
-      "commons": [
-        "dating"
-      ],
       "hidden": [],
       "fields": {},
       "valuelists": {
         "period": "periods-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "condition",
+            "conditionAmount",
+            "conditionComment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "RoomCeiling:default": {
       "hidden": [],
@@ -134,14 +370,50 @@
       "fields": {}
     },
     "Inscription:default": {
-      "commons": [
-        "dating"
-      ],
       "hidden": [],
       "fields": {},
       "valuelists": {
         "period": "periods-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "objectType",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "language",
+            "content",
+            "comparison"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Image:default": {
       "hidden": [],
@@ -165,11 +437,161 @@
         "objectType": "glass-objectType-Gadara",
         "decorationTechnique": "glass-decorationTechnique-Gadara",
         "manufacturingMethod": "glass-manufacturingMethod-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "formDescription",
+            "color",
+            "transparency",
+            "decorationTechnique",
+            "decorationDescription",
+            "manufacturingMethod",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "vesselpart"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Mollusk:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "classification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Metal:default": {
       "hidden": [
@@ -184,7 +606,84 @@
         "decorationTechnique": "Metal-decorationTechnique-Gadara",
         "manufacturingMethod": "Metal-manufacturingMethod-Gadara",
         "metalMaterial": "Coin-metalMaterial-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Brick:default": {
       "hidden": [
@@ -208,11 +707,169 @@
         "formDescription": "glass-formDescription-Gadara",
         "manufacturingMethod": "Brick-manufacturingMethod-Gadara",
         "temper": "Brick-temper-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance",
+            "surfaceTreatment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Burial:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "conditionComment",
+            "graveFeature",
+            "amountIndividuals",
+            "positioningIndividuals",
+            "palaeopathologicalReport",
+            "burialCharacteristic",
+            "burialDocumentation",
+            "burialRite",
+            "bodyHeightAndRobustness",
+            "positionArms",
+            "positionLegs",
+            "ageDetermination",
+            "ageDeterminationBasis",
+            "sexDetermination",
+            "sexDeterminationBasis",
+            "dietReconstruction"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Wood:default": {
       "hidden": [
@@ -242,15 +899,96 @@
         "objectType": "Wood-objectType-Gadara",
         "manufacturingMethod": "Wood-manufacturingMethod-Gadara",
         "typeOfWood": "Wood-typeOfWood-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Architecture": {
       "parent": "Feature",
       "color": "#707070",
-      "commons": [
-        "spatialLocation",
-        "orientation"
-      ],
       "hidden": [],
       "fields": {
         "conditionComment": {
@@ -329,7 +1067,89 @@
         "inclusions": "inclusions-Gadara",
         "samples": "Find-sample-Gadara",
         "sampleStatus": "Find-samplePl-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "conditionComment",
+            "structureType",
+            "structureTypeOther",
+            "featureBorders",
+            "material",
+            "construction",
+            "masonry",
+            "stoneWorking",
+            "stoneDressing",
+            "mortar",
+            "mortarInclusion",
+            "mortarComment",
+            "plaster",
+            "plasterInclusion",
+            "plastercoloring",
+            "plasterComment",
+            "inclusions",
+            "inclusionsOther",
+            "samples",
+            "sampleStatus",
+            "sampleComm"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Layer:default": {
       "hidden": [
@@ -389,11 +1209,154 @@
         "inclusions": "inclusions-Gadara",
         "samples": "Find-sample-Gadara",
         "sampleStatus": "Find-samplePl-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "distinguishingCriteria",
+            "layerClassification",
+            "isNatural",
+            "soilType",
+            "consistency",
+            "depositType",
+            "depositTypeOther",
+            "featureBorders",
+            "colorLightness",
+            "colorModifier",
+            "colorBasecolor",
+            "inclusions",
+            "inclusionsOther",
+            "samples",
+            "sampleStatus",
+            "sampleComm"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight",
+            "dimensionThickness"
+          ]
+        }
+      ]
     },
     "Floor:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "consistency",
+            "distinguishingCriteria",
+            "floorClassification",
+            "layerClassification",
+            "mortarBinder"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Pottery:default": {
       "hidden": [
@@ -471,14 +1434,129 @@
         "temperAmount": "Pottery-temperAmount-Gadara",
         "temperParticles": "Pottery-temperParticles-Gadara",
         "temper": "Brick-temper-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "materialType",
+            "specificType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "temperTypeClay",
+            "clayHardness",
+            "clayColorOutside",
+            "clayColorOutsideMunsell",
+            "clayColorInside",
+            "clayColorInsideMunsell",
+            "clayColorBreak",
+            "clayColorBreakMunsell",
+            "breakStructure",
+            "coatInside",
+            "coatColorInside",
+            "coatInsideType",
+            "coatOutside",
+            "coatColorOutside",
+            "coatOutsideType",
+            "formDescription",
+            "decorationTechnique",
+            "decorationDescription",
+            "objectType",
+            "purpose",
+            "provenance",
+            "sample",
+            "residueAnalysis",
+            "amountSherdsWall",
+            "amountSherdsBase",
+            "amountSherdsHandles",
+            "amountSherdsLip",
+            "amountSherdsPedestal",
+            "amountSherdsLid",
+            "amountSherdsRim",
+            "amountSherdsRimBase",
+            "amountSherdsRimShoulder",
+            "amountSherdsOther",
+            "amountSherdsShoulder",
+            "amountSherdsPercent",
+            "hasCoat",
+            "vesselpart",
+            "potteryTypeSpecific",
+            "comment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Grave": {
       "parent": "Feature",
       "color": "#339900",
-      "commons": [
-        "spatialLocation"
-      ],
       "valuelists": {
         "condition": "Building-condition-default",
         "conditionAmount": "Building-conditionAmount-default",
@@ -528,7 +1606,80 @@
         "tombBuilding": {
           "inputType": "checkboxes"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "conditionComment",
+            "findingPlace",
+            "publicationDatingFinds",
+            "publicationDatingScientific",
+            "publicationDatingStratigraphy",
+            "publicationRemark",
+            "condition",
+            "conditionAmount",
+            "distinguishingCriteria",
+            "graveType",
+            "specificType",
+            "soilType",
+            "tombBuilding"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Cut": {
       "parent": "Feature",
@@ -571,7 +1722,75 @@
         "shapeBreakSlopeBase": "Cut-ShapeBreakSlopeBase-Gadara",
         "shapeBase": "Cut-ShapeBase-Gadara",
         "featureBorders": "featureBorders-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "bibliography",
+            "cutType",
+            "cutTypeOther",
+            "featureBorders",
+            "shapeInPlan",
+            "shapeInProfile",
+            "shapeEdges",
+            "shapeBreakSlopeTop",
+            "shapeBreakSlopeBase",
+            "shapeBase"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionHeight"
+          ]
+        }
+      ]
     },
     "Bone:default": {
       "hidden": [],
@@ -595,7 +1814,83 @@
         "boneType": "Bone-boneType-Gadara",
         "objectType": "Bone-objectType-Gadara",
         "species": "Bone-species-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "boneType",
+            "species",
+            "boneClassification",
+            "burningGrade",
+            "objectType",
+            "biologicalAge",
+            "sex"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Terracotta:default": {
       "hidden": [
@@ -634,7 +1929,96 @@
         "manufacturingMethod": "Brick-manufacturingMethod-Gadara",
         "objectType": "Terracotta-objectType-Gadara",
         "surfaceCondition": "Terracotta-surfaceCondition-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside",
+            "coatInsideType",
+            "coatOutsideType",
+            "potteryTypeSpecific",
+            "objectType"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Photo:default": {
       "hidden": [],
@@ -662,7 +2046,87 @@
         "color": "Pottery-coatColor-Gadara",
         "treatment": "Stone-treatment-Gadara",
         "material": "Stone-material-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "material",
+            "temperAmount",
+            "treatment",
+            "workmanship",
+            "color",
+            "formDescription",
+            "objectType",
+            "architectureElement",
+            "purpose",
+            "origin",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Coin:default": {
       "hidden": [
@@ -675,7 +2139,86 @@
         "metalMaterial": "Coin-metalMaterial-Gadara",
         "mintingRuler": "Coin-mintingRuler-Gadara",
         "stampPositioning": "Coin-stampPositioning-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "metalMaterial",
+            "manufacturingMethod",
+            "preservedDiameter",
+            "frontSideDescription",
+            "reverseSideDescription",
+            "provenance",
+            "stampPositioning",
+            "denomination",
+            "mint",
+            "mintingRuler"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "PlasterFragment:default": {
       "hidden": [],
@@ -703,7 +2246,85 @@
         "plasterComponents": "Brick-temper-Gadara",
         "temperAmount": "Pottery-temperAmount-Gadara",
         "temperParticles": "Pottery-temperParticles-Gadara"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "amountDescription",
+            "samples",
+            "sampleStatus",
+            "sampleComm",
+            "plasterComponents",
+            "color",
+            "composition",
+            "hasDecoration",
+            "decoration",
+            "plasterType",
+            "temperAmount",
+            "temperParticles"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther",
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],

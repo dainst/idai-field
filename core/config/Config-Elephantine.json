@@ -43,10 +43,6 @@
         "featureForm",
         "featureBorders"
       ],
-      "commons": [
-        "date",
-        "literature"
-      ],
       "valuelists": {
         "period": "periods-elephantine",
         "featureSamples": "featureSamples-elephantine"
@@ -91,7 +87,82 @@
         "searchFeatureType": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "literature",
+            "potteryStage",
+            "drawingPlanum",
+            "drawingProfile",
+            "photoNumber",
+            "findsLeftAtTrench",
+            "featureVolume",
+            "stratum",
+            "areal",
+            "architectUnitNumber",
+            "roomNumber",
+            "installationNumber",
+            "featureSamples",
+            "searchFeatureType"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Room:default": {
       "hidden": [],
@@ -115,11 +186,31 @@
     },
     "Image:default": {
       "hidden": [],
-      "commons": [
-        "date"
-      ],
       "valuelists": {},
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature"
+          ]
+        }
+      ]
     },
     "Glass:default": {
       "hidden": [],
@@ -155,11 +246,61 @@
     },
     "Photo:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature"
+          ]
+        }
+      ]
     },
     "Drawing:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "drawingMaterial",
+            "drawingTool",
+            "drawingType",
+            "scale"
+          ]
+        }
+      ]
     },
     "Stone:default": {
       "hidden": [],

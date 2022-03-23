@@ -42,17 +42,9 @@
     },
     "BuildingPart": {
       "color": "#707070",
-      "commons": [
-        "period",
-        "description",
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionDepth",
-        "dimensionWidth",
-        "dimensionDiameter",
-        "dimensionOther"
+      "hidden": [
+        "borders"
       ],
-      "hidden": ["borders"],
       "valuelists": {
         "denomination": "BuildingPart-denomination-Selinunt",
         "period": "BuildingPart-dating-Selinunt",
@@ -107,7 +99,60 @@
         "note": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "descriptionFindingPlace",
+            "storageLocation",
+            "editingDates",
+            "denomination",
+            "material",
+            "conservationStatus",
+            "assignment",
+            "evaluationAssignment",
+            "positionAtBuilding",
+            "referenceTypes",
+            "belongingMap",
+            "pencilDrawing",
+            "inkDrawing",
+            "note"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionDepth",
+            "dimensionWidth",
+            "dimensionDiameter",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Inscription:default": {
       "hidden": [],
@@ -137,5 +182,25 @@
       "hidden": [],
       "fields": {}
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Inscription",
+    "BuildingPart",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

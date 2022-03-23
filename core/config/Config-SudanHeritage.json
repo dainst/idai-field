@@ -13,10 +13,6 @@
         "findspotClassification"
       ],
       "color": "#5572A1",
-      "commons": [
-        "dating",
-        "description"
-      ],
       "valuelists": {
         "siteClassification": "Place-siteClassification-SudanHeritage",
         "periodSudanHeritage": "period-SudanHeritage"
@@ -55,7 +51,53 @@
         "securityMeasures": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "gazId",
+            "placeName",
+            "siteClassification",
+            "findspotClassification",
+            "modernIntervention",
+            "excavationHistory",
+            "buildingResearchHistory",
+            "buildingHistory",
+            "findSituation",
+            "placeNameOriginalLanguage",
+            "periodSudanHeritage",
+            "researchHistory",
+            "stateOfPreservation",
+            "conservationMeasures",
+            "objectCirculation",
+            "staffInCharge",
+            "securityMeasures"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "Image:default": {
       "hidden": [],

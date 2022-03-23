@@ -54,19 +54,66 @@
           "inputType": "checkboxes"
         }
       },
-      "commons": [
-        "orientation",
-        "diary",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionVerticalExtent"
-      ],
       "valuelists": {
         "orientation": "orientation-default-1",
         "researchMethod": "SurveyUnit-researchMethod-Kephissostal",
         "modernIntervention": "SurveyUnit-modernIntervention-Kephissostal",
         "periods": "periods-default-1"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchMethod",
+            "researchMethodDescription",
+            "modernIntervention",
+            "cultivatedPlants",
+            "excavationHistory",
+            "researchHistory",
+            "terrain",
+            "slope",
+            "soilType",
+            "vegetation",
+            "waterResources",
+            "residentsInformation",
+            "other",
+            "periods"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "orientation",
+            "dimensionVerticalExtent"
+          ]
+        }
+      ]
     },
     "SurveyUnit:default": {
       "hidden": [],
@@ -136,7 +183,64 @@
         "findsAmount": "SurveyUnit-findsAmount-Kephissostal",
         "modernIntervention": "SurveyUnit-modernIntervention-Kephissostal",
         "periods": "periods-default-1"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "researchMethod",
+            "measuring",
+            "findSituation",
+            "siteClassification",
+            "findspotClassification",
+            "finds",
+            "findsAmount",
+            "findsAmountm2",
+            "modernIntervention",
+            "cultivatedPlants",
+            "terrain",
+            "slope",
+            "soilType",
+            "vegetation",
+            "waterResources",
+            "residentsInformation",
+            "other",
+            "periods"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Place:default": {
       "fields": {},
@@ -152,17 +256,44 @@
           "inputType": "text"
         }
       },
-      "commons": [
-        "beginningDate",
-        "endDate",
-        "diary",
-        "description",
-        "processor",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionVerticalExtent",
-        "area",
-        "spatialLocation"
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
       ]
     },
     "Trench:default": {
@@ -232,18 +363,62 @@
         "context": "Building-context-default",
         "material": "Building-material-default"
       },
-      "commons": [
-        "period",
-        "beginningDate",
-        "endDate",
-        "diary",
-        "description",
-        "processor",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionVerticalExtent",
-        "area",
-        "spatialLocation"
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "buildingHistory",
+            "buildingResearchHistory",
+            "conditionComment",
+            "excavationHistory",
+            "history",
+            "hasRestoration",
+            "architecturalOrders",
+            "buildingCategory",
+            "buildingTechnique",
+            "condition",
+            "conditionAmount",
+            "context",
+            "material",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
       ]
     },
     "Find:default": {
@@ -437,7 +612,70 @@
         "positionArms": "Burial-positionArms-default",
         "positionLegs": "Burial-positionLegs-default",
         "positioningIndividuals": "Burial-positioningIndividuals-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "ageDetermination",
+            "ageDeterminationBasis",
+            "bodyHeightAndRobustness",
+            "burialRite",
+            "conditionComment",
+            "dietReconstruction",
+            "findingPlace",
+            "palaeopathologicalReport",
+            "publicationDatingFinds",
+            "publicationDatingStratigraphy",
+            "sexDetermination",
+            "sexDeterminationBasis",
+            "amountIndividuals",
+            "burialCharacteristic",
+            "burialDocumentation",
+            "graveFeature",
+            "positionArms",
+            "positionLegs",
+            "positioningIndividuals"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Architecture_Survey": {
       "hidden": [],
@@ -559,7 +797,79 @@
         "mortarConsistency": "Architecture-mortarConsistency-default",
         "wallClassification": "Architecture-wallClassification-default",
         "wallType": "Architecture-wallType-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "bibliography",
+            "conditionComment",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "findingPlace",
+            "hasGrouting",
+            "layerAmount",
+            "layerHeight",
+            "markDescription",
+            "materialCharacteristic",
+            "materialForm",
+            "muralCrown",
+            "publicationDatingFinds",
+            "publicationDatingScientific",
+            "publicationDatingStratigraphy",
+            "publicationRemark",
+            "blockProcessing",
+            "blockTreatment",
+            "brickwork",
+            "condition",
+            "conditionAmount",
+            "construction",
+            "mark",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "wallClassification",
+            "wallType"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Layer_Survey": {
       "hidden": [],
@@ -598,9 +908,6 @@
           "inputType": "dropdown"
         }
       },
-      "commons": [
-        "dimensionThickness"
-      ],
       "parent": "Area",
       "color": "#663300",
       "valuelists": {
@@ -610,7 +917,58 @@
         "distinguishingCriteria": "Layer-distinguishingCriteria-default",
         "layerClassification": "Layer-layerClassification-default",
         "soilType": "Layer-soilType-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "appearance",
+            "isNatural",
+            "consistency",
+            "distinguishingCriteria",
+            "layerClassification",
+            "soilType"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Floor_Survey": {
       "hidden": [],
@@ -667,7 +1025,59 @@
         "floorClassification": "Floor-floorClassification-default",
         "layerClassification": "Layer-layerClassification-default",
         "mortarBinder": "Architecture-mortarBinder-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "conditionComment",
+            "condition",
+            "conditionAmount",
+            "consistency",
+            "distinguishingCriteria",
+            "floorClassification",
+            "layerClassification",
+            "mortarBinder"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Grave_Survey": {
       "hidden": [],
@@ -730,7 +1140,6 @@
           "inputType": "checkboxes"
         }
       },
-      "commons": [],
       "parent": "Area",
       "color": "#339900",
       "valuelists": {
@@ -743,7 +1152,65 @@
         "specificType": "Grave-specificType-default",
         "soilType": "Layer-soilType-default",
         "tombBuilding": "Grave-tombBuilding-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "bibliography",
+            "conditionComment",
+            "findingPlace",
+            "publicationDatingFinds",
+            "publicationDatingScientific",
+            "publicationDatingStratigraphy",
+            "publicationRemark",
+            "condition",
+            "conditionAmount",
+            "distinguishingCriteria",
+            "graveType",
+            "specificType",
+            "soilType",
+            "tombBuilding"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],
@@ -751,7 +1218,47 @@
         "isIllegal": {
           "inputType": "boolean"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "isIllegal"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "TerrainFeature": {
       "hidden": [],
@@ -763,7 +1270,47 @@
       "parent": "Area",
       "valuelists": {
         "GeländemerkmalType": "TerrainFeature-GeländemerkmalType-Kephissostal"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "interpretation",
+            "GeländemerkmalType"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "TypeCatalog:default": {
       "hidden": [],

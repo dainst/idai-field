@@ -19,10 +19,50 @@
       },
       "valuelists": {
         "researchMethod": "Survey-researchMethod-Selinunt"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchHistory",
+            "researchPerspective",
+            "researchMethod"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Survey": {
-      "hidden": ["researchMethod"],
+      "hidden": [
+        "researchMethod"
+      ],
       "valuelists": {
         "slope": "Survey-slope-Seliunt",
         "visibility": "Survey-visibility-Seliunt",
@@ -48,7 +88,51 @@
         "interpretation": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchHistory",
+            "researchPerspective",
+            "researchMethod",
+            "descriptionOfArea",
+            "currentUse",
+            "slope",
+            "visibility",
+            "chronologyFinds",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "SurveyUnit:default": {
       "hidden": [],
@@ -119,7 +203,56 @@
         "remarks": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "currentSurfaceUtilization",
+            "visibility",
+            "shade",
+            "humidity",
+            "slope",
+            "vegetation",
+            "buildingStructures",
+            "soilComposition",
+            "consistency",
+            "clumps",
+            "stones",
+            "samplingMethod",
+            "surfaceTreatment",
+            "quantityOfFinds",
+            "findDensity",
+            "qualityOfFinds",
+            "remarks"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        }
+      ]
     },
     "Place:default": {
       "hidden": [
@@ -133,35 +266,168 @@
         "siteClassification": "Place-siteClassification-Selinunt"
       },
       "fields": {
-        "condition" : {
+        "condition": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "gazId",
+            "placeName",
+            "siteClassification",
+            "findspotClassification",
+            "modernIntervention",
+            "excavationHistory",
+            "buildingResearchHistory",
+            "buildingHistory",
+            "findSituation",
+            "condition"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "Area:default": {
       "hidden": [],
       "fields": {}
     },
     "Trench:default": {
-      "hidden": ["researchHistory"],
+      "hidden": [
+        "researchHistory"
+      ],
       "fields": {},
-      "commons": []
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchHistory",
+            "researchPerspective",
+            "researchMethod",
+            "trenchComment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent",
+            "orientation"
+          ]
+        }
+      ]
     },
     "Building:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchHistory",
+            "researchPerspective",
+            "researchMethod",
+            "material",
+            "context",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "hasRestoration",
+            "buildingType",
+            "buildingTechnique",
+            "buildingCategory",
+            "buildingCategorySpecific",
+            "buildingResearchHistory"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Find": {
       "color": "black",
-      "commons": [
-        "spatialLocation",
-        "processor",
-        "campaign",
-        "description",
-        "period",
-        "dating",
-        "date"
-      ],
       "valuelists": {
         "period": "periods-Selinunt-1",
         "storagePlace": "Find-storagePlace-Selinunt",
@@ -195,22 +461,58 @@
         "alignments": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Feature": {
       "color": "black",
-      "commons": [
-        "beginningDate",
-        "endDate",
-        "diary",
-        "description",
-        "processor",
-        "campaign",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionVerticalExtent",
-        "area"
-      ],
       "hidden": [],
       "valuelists": {
         "period": "periods-Selinunt-1"
@@ -222,7 +524,64 @@
         "furtherReading": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "Room:default": {
       "hidden": [],
@@ -250,43 +609,146 @@
     },
     "Glass:default": {
       "hidden": [],
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "formDescription",
+            "color",
+            "transparency",
+            "decorationTechnique",
+            "decorationDescription",
+            "manufacturingMethod",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Mollusk:default": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "classification"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Brick:default": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [
         "manufacturingMethod",
         "provenance",
@@ -347,25 +809,248 @@
         "remarks": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance",
+            "applicationInArchitecture",
+            "tileType",
+            "roofingSystem",
+            "type",
+            "clayColorInside",
+            "coatColor",
+            "weight",
+            "amountSherds",
+            "remarks"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Burial:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "conditionComment",
+            "graveFeature",
+            "amountIndividuals",
+            "positioningIndividuals",
+            "palaeopathologicalReport",
+            "burialCharacteristic",
+            "burialDocumentation",
+            "burialRite",
+            "bodyHeightAndRobustness",
+            "positionArms",
+            "positionLegs",
+            "ageDetermination",
+            "ageDeterminationBasis",
+            "sexDetermination",
+            "sexDeterminationBasis",
+            "dietReconstruction"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "Wood:default": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Architecture:default": {
       "hidden": [
@@ -423,7 +1108,93 @@
         "descriptionOfBuildingTechnique": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "layerAmount",
+            "layerHeight",
+            "muralCrown",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "materialForm",
+            "materialCharacteristic",
+            "construction",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "brickwork",
+            "blockTreatment",
+            "blockProcessing",
+            "bibliography",
+            "hasGrouting",
+            "wallClassification",
+            "wallType",
+            "classification",
+            "material",
+            "layerType",
+            "masonry",
+            "masonryJoint",
+            "cladding"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "Layer:default": {
       "hidden": [
@@ -472,17 +1243,80 @@
         "workflowSampleDescription": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "distinguishingCriteria",
+            "layerClassification",
+            "isNatural",
+            "soilType",
+            "consistency",
+            "colorLightness",
+            "colorDetermination",
+            "borders",
+            "form",
+            "findComposition",
+            "workflowOptions",
+            "workflowSampleDescription"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area",
+            "dimensionThickness"
+          ]
+        }
+      ]
     },
     "Pottery": {
       "hidden": [],
-      "commons": [      
-        "dimensionHeight",
-        "dimensionWidth",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent"
-      ],
       "valuelists": {
         "clayColorBreak": "colors-default-1",
         "clayColorInside": "colors-default-1",
@@ -570,19 +1404,89 @@
           "inputType": "checkboxes"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "clayColorBreakMunsell",
+            "clayColorInsideMunsell",
+            "clayColorOutsideMunsell",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside",
+            "temper",
+            "temperAmount",
+            "vesselForm",
+            "miniatureVesselForm",
+            "vesselDecorationOutside",
+            "vesselDecorationInside",
+            "clayHardness",
+            "clayDensity",
+            "clayDescription",
+            "manufacturingMethod",
+            "weight",
+            "amountSherds",
+            "coatTypeOutside",
+            "coatTypeInside",
+            "sample",
+            "coatQuality"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionWidth",
+            "dimensionDiameter",
+            "dimensionThickness"
+          ]
+        }
+      ]
     },
     "Metal:default": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [
         "formDescription",
         "objectType",
@@ -624,7 +1528,84 @@
         "amountFragments": {
           "inputType": "unsignedInt"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "origins",
+            "weaponsArmor",
+            "jewelryTrachtComponents",
+            "vesselParts",
+            "toolsEquipment",
+            "miscellaneous",
+            "weight",
+            "amountFragments"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Grave:default": {
       "hidden": [
@@ -641,20 +1622,82 @@
       "valuelists": {
         "graveType": "Grave-graveType-Selinunt"
       },
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "soilType",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "distinguishingCriteria",
+            "graveType",
+            "specificType",
+            "tombBuilding",
+            "findingPlace",
+            "bibliography",
+            "publicationDatingFinds",
+            "publicationDatingStratigraphy",
+            "publicationDatingScientific",
+            "publicationRemark"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "AnimalBones": {
       "color": "#CCFFFF",
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "valuelists": {
         "biologicalAge": "Bone-biologicalAge-default",
         "boneClassification": "AnimalBones-boneClassification-Selinunt",
@@ -679,26 +1722,143 @@
           "inputType": "dropdown"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "biologicalAge",
+            "boneClassification",
+            "burningGrade",
+            "sex",
+            "species"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "HumanBones": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
       "fields": {},
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "BoneObjects": {
       "hidden": [],
-      "valuelists": {  
+      "valuelists": {
         "objectType": "Bone-objectType-default",
         "boneType": "Bone-boneType-default"
       },
@@ -710,20 +1870,60 @@
           "inputType": "radio"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "objectType",
+            "boneType"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Terracotta": {
       "color": "#FF6600",
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
       "valuelists": {
         "coatColor": "colors-default-1",
@@ -789,7 +1989,84 @@
           "inputType": "input"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "clayColorBreak",
+            "clayStructure",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayColorBreakMunsell",
+            "coatColor",
+            "coatColorMunsell",
+            "clayColor",
+            "clayColorMunsell",
+            "decorationTechnique",
+            "architecturalDecorationType",
+            "architecturalScupltureType",
+            "toolType",
+            "origins"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Photo:default": {
       "hidden": [],
@@ -801,16 +2078,6 @@
     },
     "Stone": {
       "color": "#5c5c8a",
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
       "valuelists": {
         "color": "Stone-color-Selinunt",
@@ -851,19 +2118,80 @@
           "inputType": "checkboxes"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "purpose",
+            "treatment",
+            "workmanship",
+            "architectureElement",
+            "color",
+            "material",
+            "objectType",
+            "origin",
+            "colorMunsell",
+            "decorationType"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "Coin:default": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
       "valuelists": {
         "provenance": "Coin-provenance-Selinunt",
@@ -880,22 +2208,84 @@
         "stampPositioning": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "metalMaterial",
+            "manufacturingMethod",
+            "preservedDiameter",
+            "frontSideDescription",
+            "reverseSideDescription",
+            "provenance",
+            "stampPositioning",
+            "denomination",
+            "mint",
+            "mintingRuler",
+            "weight",
+            "legend"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "ConstructionMaterial": {
       "color": "#737373",
       "hidden": [],
-      "commons": [
-        "area",
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "valuelists": {
         "denomination": "ConstructionMaterial-denomination-Selinunt",
         "material": "ConstructionMaterial-material-Selinunt",
@@ -912,7 +2302,7 @@
           "inputType": "checkboxes"
         },
         "floorCovering": {
-          "inputType":"dropdown"
+          "inputType": "dropdown"
         },
         "floorCoveringDescription": {
           "inputType": "text"
@@ -924,7 +2314,75 @@
           "inputType": "text"
         }
       },
-      "parent": "Find"
+      "parent": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "denomination",
+            "material",
+            "floorCovering",
+            "floorCoveringDescription",
+            "wallCovering",
+            "wallCoveringDescription"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "SurfaceCleaning": {
       "hidden": [],
@@ -936,7 +2394,40 @@
           "inputType": "checkboxes"
         }
       },
-      "parent": "Area"
+      "parent": "Area",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "operation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],
@@ -954,12 +2445,68 @@
       "hidden": [],
       "fields": [],
       "parent": "Feature",
-      "valuelists": {}
+      "valuelists": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "ProcessUnit": {
       "parent": "Feature",
       "hidden": [],
-      "commons": [],
       "color": "#f779e7",
       "valuelists": {
         "classification": "ProcessUnit-operationClassification-Selinunt",
@@ -984,7 +2531,69 @@
         "identifiability": {
           "inputType": "radio"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "classification",
+            "orientationTowardsCardinalPoints",
+            "horizontalCourse",
+            "verticalCourse",
+            "identifiability"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "Interface": {
       "hidden": [],
@@ -1015,19 +2624,72 @@
         "sides": "Interface-sides-Campidoglio",
         "breakSlopeBase": "Interface-breakSlopeTop-Campidoglio",
         "base": "Interface-base-Campidoglio"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "classification",
+            "breakSlopeTop",
+            "sides",
+            "breakSlopeBase",
+            "base",
+            "comment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     },
     "FindCollection": {
-      "commons": [
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionWidth",
-        "dimensionPerimeter",
-        "dimensionDiameter",
-        "dimensionThickness",
-        "dimensionVerticalExtent",
-        "dimensionOther"
-      ],
       "hidden": [],
       "fields": {
         "potteryFormsOverview": {
@@ -1096,7 +2758,86 @@
         "stoneCollection": "Stone-Collection-Selinunt",
         "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
         "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "bibliography",
+            "comparison",
+            "conditionComment",
+            "storagePlace",
+            "otherIdentificationNumber",
+            "restorationDescription",
+            "furtherAnalysis",
+            "analysisMethod",
+            "alignments",
+            "potteryFormsOverview",
+            "potteryFineWareByProvenance",
+            "potteryFineWareByProvenanceQuantityWeightDetails",
+            "potteryAmphoraeByProvenance",
+            "potteryAmphoraeByProvenanceQuantityWeightDetails",
+            "potteryCoarseWareByFunction",
+            "potteryCoarseWareByFunctionQuantityWeightDetails",
+            "miniaturePotteryCollection",
+            "terracottaCollection",
+            "terracottaCollectionQuantityWeightDetails",
+            "buildingMaterialCollection",
+            "buildingMaterialCollectionQuantityWeightDetails",
+            "stoneCollection",
+            "stoneCollectionQuantityWeightDetails",
+            "metalAndGlasCollection",
+            "metalAndGlasCollectionQuantityWeightDetails",
+            "organicMaterialCollection",
+            "organicMaterialCollectionQuantityWeightDetails"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "GeoLayer": {
       "hidden": [],
@@ -1172,7 +2913,128 @@
           "inputType": "dropdown"
         }
       },
-      "parent": "Feature"
+      "parent": "Feature",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "isSameAs",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isAfter",
+            "isBefore",
+            "isContemporaryWith"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "furtherReading",
+            "facies",
+            "depthRange",
+            "boundariesUpwards",
+            "boundariesDownwards",
+            "grainSizeSmallerThan2mm",
+            "grainSizeBiggerThan2mm",
+            "boneAmount",
+            "soilColor",
+            "soilConsistency",
+            "moistureCondition",
+            "hydromorphologyOxidativeFeatures",
+            "hydromorphologyReductiveFeatures",
+            "humusContent",
+            "limeContent",
+            "rootPenetration",
+            "constituents",
+            "notes",
+            "macroStructuralForms"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionLength",
+            "dimensionWidth",
+            "area"
+          ]
+        }
+      ]
     }
-  }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "SurfaceCleaning",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "Mollusk",
+    "AnimalBones",
+    "HumanBones",
+    "BoneObjects",
+    "ConstructionMaterial",
+    "FindCollection",
+    "Inscription",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "ProcessUnit",
+    "Bedrock",
+    "Interface",
+    "GeoLayer",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

@@ -23,14 +23,23 @@ const commonFieldGroups = {
     endDate: Groups.STEM,
     processor: Groups.STEM,
     campaign: Groups.STEM,
-    description: 'default',
+    description: Groups.PROPERTIES,
     date: Groups.STEM,
     spatialLocation: Groups.POSITION,
-    provenance: 'default',
+    provenance: Groups.PROPERTIES,
     orientation: Groups.POSITION,
-    literature: 'default',
+    literature: Groups.PROPERTIES,
     geometry: Groups.POSITION
 };
+
+
+const defaultCategoriesOrder = [
+    'Project', 'Operation', 'Trench', 'Building', 'Survey', 'Place', 'Feature', 'Layer', 'Grave', 'Burial',
+    'Architecture', 'Floor', 'DrillCoreLayer', 'Wall_surface', 'Area', 'SurveyUnit', 'Sondage', 'Excavation',
+    'Find', 'Pottery', 'Terracotta', 'Brick', 'Bone', 'Glass', 'Metal', 'Stone', 'Wood', 'Coin', 'PlasterFragment',
+    'Mollusk', 'Inscription',  'BuildingPart', 'Room', 'RoomCeiling', 'RoomWall', 'RoomFloor', 'ProcessUnit',
+    'Profile', 'Planum', 'Drilling', 'Sample', 'Image', 'Drawing', 'Photo', 'TypeCatalog', 'Type'
+];
 
 
 const projectPrefix: string = process.argv[2];
@@ -51,12 +60,16 @@ Object.keys(projectConfiguration.forms).forEach(formId => {
 
     if (parentFormId) {
         const parentForm = clone(getForm(parentFormId, builtInConfiguration, forms, categories));
-        setGroups(parentForm, customParentForm, 'parent', false);
+        setGroups(parentForm, customParentForm, false);
         form.groups = mergeGroupsConfigurations(parentForm.groups ?? {}, form.groups ?? {});
     }
-    setGroups(form, customForm, parentFormId ? 'child' : 'parent', true);
+    setGroups(form, customForm, true);
     delete customForm.commons;
 });
+
+projectConfiguration.order = getCategoriesOrder(projectConfiguration.forms, forms, categories, builtInConfiguration);
+
+fs.writeFileSync('Config-' + projectPrefix + '.json', JSON.stringify(projectConfiguration, null, 2));
 
 
 function getForm(formId, builtInConfiguration, forms, categories, customForm?) {
@@ -64,12 +77,13 @@ function getForm(formId, builtInConfiguration, forms, categories, customForm?) {
     if (forms[formId]) {
         return forms[formId];
     } else if (builtInConfiguration.builtInCategories[formId]) {
-        return builtInConfiguration.builtInCategories[formId].minimalForm;
+        return getMinimalForm(formId, builtInConfiguration.builtInCategories[formId]);
     } else if (categories[formId]) {
         const category = categories[formId];
-        return builtInConfiguration.builtInCategories[category.parent].minimalForm;
+        return getMinimalForm(formId, builtInConfiguration.builtInCategories[category.parent]);
     } else if (customForm?.parent) {
         return {
+            categoryName: formId,
             parent: customForm.parent,
             groups: []
         };
@@ -79,11 +93,17 @@ function getForm(formId, builtInConfiguration, forms, categories, customForm?) {
 }
 
 
+function getMinimalForm(formId, category) {
+
+    const minimalForm = clone(category.minimalForm);
+    minimalForm.categoryName = formId;
+    return minimalForm;
+}
+
+
 function getParentFormId(form, builtInConfiguration, forms, categories, customForms) {
 
-    const parent = categories[form.categoryName]?.parent
-        ?? builtInConfiguration.builtInCategories?.[form.categoryName]?.parent
-        ?? form.parent;
+    const parent = getParentCategoryName(form, categories, builtInConfiguration);
     if (!parent) return undefined;
 
     return Object.keys(customForms).find(customFormId => {
@@ -93,20 +113,27 @@ function getParentFormId(form, builtInConfiguration, forms, categories, customFo
 }
 
 
-function setGroups(form, customForm, defaultGroupName: 'parent'|'child', setInCustomForm: boolean) {
+function getParentCategoryName(form, categories, builtInConfiguration) {
+
+    return categories[form.categoryName]?.parent
+        ?? builtInConfiguration.builtInCategories?.[form.categoryName]?.parent
+        ?? form.parent;
+}
+
+
+function setGroups(form, customForm, setInCustomForm: boolean) {
 
     const groups = clone(form.groups);
 
     if (customForm.commons) {
         customForm.commons.forEach(commonFieldName => {
             let groupName = commonFieldGroups[commonFieldName];
-            if (groupName === 'default') groupName = defaultGroupName;
             addToGroup(groups, groupName, commonFieldName);
         });
     }
 
     Object.keys(customForm.fields).forEach(fieldName => {
-        addToGroup(groups, defaultGroupName, fieldName);
+        addToGroup(groups, Groups.PROPERTIES, fieldName);
     });
 
     if (setInCustomForm) {
@@ -137,4 +164,37 @@ function isCustomized(form) {
 }
 
 
-fs.writeFileSync('Config-' + projectPrefix + '.json', JSON.stringify(projectConfiguration, null, 2));
+function getCategoriesOrder(customForms, forms, categories, builtInConfiguration): string[] {
+
+    const usedForms = Object.keys(customForms)
+        .map(formId => getForm(formId, builtInConfiguration, forms, categories, customForms[formId]));
+
+    const order = defaultCategoriesOrder.filter(categoryName => {
+        return usedForms.map(form => form.categoryName).includes(categoryName);
+    });
+    const newlyCreatedCustomForms = usedForms.filter(form => !order.includes(form.categoryName));
+
+    newlyCreatedCustomForms.forEach(customForm => {
+        const parent = getParentCategoryName(customForm, categories, builtInConfiguration);
+        const orderParents = order.map(categoryName => {
+            return getParentCategoryNameForCategoryName(categoryName, customForms, categories, builtInConfiguration);
+        });
+        const index = orderParents.lastIndexOf(parent);
+        if (index === -1) {
+            order.push(customForm.categoryName);
+        } else {
+            order.splice(index + 1, 0, customForm.categoryName);
+        }
+    });
+
+    return order;
+}
+
+
+function getParentCategoryNameForCategoryName(categoryName, customForms, categories, builtInConfiguration) {
+
+    return categories[categoryName]?.parent
+        ?? builtInConfiguration.builtInCategories?.[categoryName]?.parent
+        ?? customForms[categoryName]?.parent
+        ?? 'NONE';
+}

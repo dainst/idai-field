@@ -11,6 +11,7 @@ import { ConfigurationContextMenu } from '../context-menu/configuration-context-
 import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
 import { ApplyChangesResult } from '../configuration.component';
+import { ConfigurationState } from '../configuration-state';
 
 
 @Component({
@@ -48,16 +49,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     constructor(private modals: Modals,
                 private messages: Messages,
-                private labels: Labels) {}
+                private labels: Labels,
+                private configurationState: ConfigurationState) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes['category']) {
-            if (!changes['category'].previousValue
-                    || changes['category'].currentValue.name !== changes['category'].previousValue.name
+            if (!changes['category'].previousValue) {
+                this.selectGroup(this.configurationState.getSelectedGroupName() ?? this.category.groups[0].name);
+            } else if (changes['category'].currentValue.name !== changes['category'].previousValue.name
                     || !this.category.groups.map(to(Named.NAME)).includes(this.selectedGroup)) {
-                this.selectedGroup = this.category.groups[0].name;
+                this.selectGroup(this.selectedGroup = this.category.groups[0].name);
             }
             this.permanentlyHiddenFields = ConfigurationDocument.getPermanentlyHiddenFields(this.category);
             this.openedFieldName = undefined;
@@ -68,7 +71,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroupLabel = (group: Group) => this.labels.get(group);
 
-    public getGroupListIds = () => this.category.groups.map(group => 'group-' + group.name);
+    public getGroupListIds = () => this.category.groups.map(group => this.getGroupId(group));
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -118,6 +121,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
         this.selectedGroup = groupName;
         this.openedFieldName = undefined;
+        this.configurationState.setSelectedGroupName(groupName);
     }
 
 

@@ -49,8 +49,7 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
         if (this.contextMenu.valuelist) return this.contextMenu.valuelist.source === 'custom';
 
-        return (!this.contextMenu.group
-            || (this.contextMenu.group && ConfigurationUtil.isEditableGroup(this.contextMenu.group)));
+        return true;
     }
 
 

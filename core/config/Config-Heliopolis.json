@@ -39,7 +39,49 @@
         "squareNumber": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "trenchComment",
+            "squareNumber"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent",
+            "orientation"
+          ]
+        }
+      ]
     },
     "Feature:default": {
       "color": "green",
@@ -57,12 +99,6 @@
         "dimensionWidth",
         "dimensionLength",
         "period"
-      ],
-      "commons": [
-        "date",
-        "dating",
-        "spatialLocation",
-        "literature"
       ],
       "fields": {
         "unitNumber": {
@@ -114,7 +150,85 @@
       "valuelists": {
         "unitCategory": "Feature-unitCategory-heliopolis-project",
         "consistency": "Feature-consistency-heliopolis-project"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "literature",
+            "unitNumber",
+            "areaNumber",
+            "squareNumber",
+            "unitCategory",
+            "categoryOther",
+            "shortDescription",
+            "remarks",
+            "colour",
+            "consistency",
+            "consistencyOther",
+            "finds",
+            "unitsheetAuthorDateFilename",
+            "featureDrawingAuthorDateFilename",
+            "sectionsDrawingDescriptionAuthorDateFilename",
+            "photosAuthorDateFilenames"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "Find:default": {
       "color": "red",
@@ -134,9 +248,6 @@
         "condition",
         "conditionAmount",
         "storagePlace"
-      ],
-      "commons": [
-        "literature"
       ],
       "fields": {
         "findNumber": {
@@ -228,7 +339,100 @@
         "tracesOfBurning": "Find-tracesOfBurning-heliopolis-project",
         "deliberatlyDestroyed": "Find-deliberatlyDestroyed-heliopolis-project",
         "currentLocation": "Find-currentLocation-heliopolis-project"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "literature",
+            "findNumber",
+            "findNumberOld1",
+            "findNumberOld2",
+            "objectType",
+            "objectTypeOther",
+            "material",
+            "materialColour",
+            "drawingsAuthorDateFilenameOriginalfolder",
+            "vectorfileAuthorFilename",
+            "photosAuthorFilenames",
+            "model3DAuthorFolder",
+            "scannedFindsheetAuthorFilenameOriginalfolder",
+            "findDescription",
+            "inscriptionHieroglyphicSigns",
+            "inscriptionTransliteration",
+            "inscriptionTranslation",
+            "colourPigmentsPreserved",
+            "preservation",
+            "preservationAmount",
+            "tracesOfBurning",
+            "deliberatlyDestroyed",
+            "jointTo",
+            "remarks",
+            "currentLocation",
+            "currentLocationOther",
+            "currentLocationName",
+            "lastSeen"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Image:default": {
       "hidden": [],
@@ -246,7 +450,32 @@
         "photoFilename": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "photoAuthor",
+            "photoDate",
+            "photoFilename"
+          ]
+        }
+      ]
     },
     "Drawing:default": {
       "hidden": [],
@@ -260,7 +489,36 @@
         "drawingScanFilename": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "drawingMaterial",
+            "drawingTool",
+            "drawingType",
+            "scale",
+            "drawingAuthor",
+            "drawingDate",
+            "drawingScanFilename"
+          ]
+        }
+      ]
     },
     "Unitsheet": {
       "parent": "Image",
@@ -275,7 +533,32 @@
         "unitsheetScanFilename": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "unitsheetAuthor",
+            "unitsheetDate",
+            "unitsheetScanFilename"
+          ]
+        }
+      ]
     },
     "Findsheet": {
       "parent": "Image",
@@ -290,7 +573,32 @@
         "findsheetScanFilename": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "findsheetAuthor",
+            "findsheetDate",
+            "findsheetScanFilename"
+          ]
+        }
+      ]
     },
     "TypeCatalog:default": {
       "hidden": [],

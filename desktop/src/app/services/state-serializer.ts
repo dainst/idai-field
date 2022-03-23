@@ -1,4 +1,5 @@
-import {StateType} from './standard-state-serializer';
+import { StateType } from './standard-state-serializer';
+
 
 /**
  * This base class is necessary for the ViewFacade subsystem tests to work

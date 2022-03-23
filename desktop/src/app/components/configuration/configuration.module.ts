@@ -44,6 +44,7 @@ import { SaveModalComponent } from './save/save-modal.component';
 import { ConfigurationGuard } from './configuration-guard';
 import { GroupListingComponent } from './add/group/group-listing.component';
 import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relations-info.component';
+import { ConfigurationState } from './configuration-state';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relati
     ],
     providers: [
         ConfigurationChangeNotifications,
-        ConfigurationGuard
+        ConfigurationGuard,
+        ConfigurationState
     ],
     exports: [
         ConfigurationComponent

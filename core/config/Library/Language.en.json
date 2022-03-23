@@ -1,6 +1,7 @@
 {
   "groups": {
     "stem": "Core",
+    "properties": "Properties",
     "time": "Time",
     "position": "Position / Context",
     "dimension": "Dimensions",

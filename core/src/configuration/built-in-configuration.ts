@@ -151,7 +151,7 @@ export class BuiltInConfiguration {
                         fields: ['shortName', 'category', 'shortDescription']
                     },
                     {
-                        name: Groups.PARENT,
+                        name: Groups.PROPERTIES,
                         fields: ['staff', 'campaigns', 'coordinateReferenceSystem']
                     }
                 ]
@@ -273,7 +273,7 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
-                        name: Groups.PARENT,
+                        name: Groups.PROPERTIES,
                         fields: ['gazId']
                     },
                     {
@@ -548,7 +548,7 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
-                        name: Groups.PARENT,
+                        name: Groups.PROPERTIES,
                         fields: ['height', 'width']
                     }
                 ]
@@ -1137,7 +1137,7 @@ export class BuiltInConfiguration {
                             fields: ['identifier', 'shortDescription']
                         },
                         {
-                            name: Groups.PARENT,
+                            name: Groups.PROPERTIES,
                             fields: ['gazId']
                         },
                         {

@@ -1580,7 +1580,7 @@ describe('buildRawProjectConfiguration', () => {
                 minimalForm: {
                     groups: [
                         { name: Groups.STEM, fields: ['field1'] },
-                        { name: Groups.PARENT, fields: ['field2'] }
+                        { name: Groups.PROPERTIES, fields: ['field2'] }
                     ]
                 } as any,
                 description: {}
@@ -1601,7 +1601,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe('text');
-        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
+        expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 
 
@@ -1666,7 +1666,7 @@ describe('buildRawProjectConfiguration', () => {
                 valuelists: {},
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PARENT, fields: ['field2'] }
+                    { name: Groups.PROPERTIES, fields: ['field2'] }
                 ],
                 creationDate: '',
                 createdBy: '',
@@ -1682,7 +1682,7 @@ describe('buildRawProjectConfiguration', () => {
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PARENT, fields: ['field2', 'field3'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3'] }
                 ],
             }
         };
@@ -1698,7 +1698,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe('input');
         expect(result['A'].groups[1].fields[1].inputType).toBe('text');
-        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
+        expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 
 
@@ -1801,7 +1801,7 @@ describe('buildRawProjectConfiguration', () => {
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PARENT, fields: ['aCommon', 'field2', 'field3'] },
+                    { name: Groups.PROPERTIES, fields: ['aCommon', 'field2', 'field3'] },
                 ]
             }
         };
@@ -1819,7 +1819,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[1].fields[0].source).toBe(Field.Source.COMMON);
         expect(result['A'].groups[1].fields[1].source).toBe(Field.Source.LIBRARY);
         expect(result['A'].groups[1].fields[2].source).toBe(Field.Source.CUSTOM);
-        expect(result['A'].groups[1].name).toBe(Groups.PARENT);
+        expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 
 
@@ -1837,7 +1837,7 @@ describe('buildRawProjectConfiguration', () => {
                 minimalForm: {
                     groups: [
                         { name: Groups.STEM, fields: ['field1', 'field2'] },
-                        { name: Groups.PARENT, fields: ['field3'] }
+                        { name: Groups.PROPERTIES, fields: ['field3'] }
                     ]
                 }
             }
@@ -1852,8 +1852,7 @@ describe('buildRawProjectConfiguration', () => {
                 minimalForm: {
                     groups: [
                         { name: Groups.STEM, fields: ['field1', 'field2'] },
-                        { name: Groups.PARENT, fields: ['field3'] },
-                        { name: Groups.CHILD, fields: ['field4'] }
+                        { name: Groups.PROPERTIES, fields: ['field3', 'field4'] }
                     ]
                 } as any,
                 description: {}
@@ -1874,7 +1873,7 @@ describe('buildRawProjectConfiguration', () => {
                 de: [{
                     groups: {
                         'stem': 'Stem',
-                        'parent': 'Parent'
+                        'properties': 'Eigenschaften'
                     },
                     categories: {
                         A: { label: 'A_' },
@@ -1895,11 +1894,10 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].groups[0].label.de).toEqual('Stem');
-        expect(result['A'].groups[1].label.de).toEqual('A_');
+        expect(result['A'].groups[1].label.de).toEqual('Eigenschaften');
 
         expect(result['B'].groups[0].label.de).toEqual('Stem');
-        expect(result['B'].groups[1].label.de).toEqual('A_');
-        expect(result['B'].groups[2].label.de).toEqual('B_');
+        expect(result['B'].groups[1].label.de).toEqual('Eigenschaften');
     });
 
 
@@ -2204,7 +2202,7 @@ describe('buildRawProjectConfiguration', () => {
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PARENT, fields: ['aCommon', 'field2', 'field3'] },
+                    { name: Groups.PROPERTIES, fields: ['aCommon', 'field2', 'field3'] },
                 ]
             }
         };

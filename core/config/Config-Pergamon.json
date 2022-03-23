@@ -17,7 +17,45 @@
           "inputType": "text"
         }
       },
-      "hidden": []
+      "hidden": [],
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "researchMethod",
+            "quantityFinds",
+            "naturalEnvironment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "SurveyUnit:default": {
       "hidden": [],
@@ -31,10 +69,45 @@
         "naturalEnvironment": {
           "inputType": "text"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasFinds",
+            "quantityFinds",
+            "naturalEnvironment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        }
+      ]
     },
     "Place:default": {
-      "fields":  {
+      "fields": {
         "findSpot": {
           "inputType": "checkboxes"
         },
@@ -73,6 +146,53 @@
         "findspotClassification",
         "buildingHistory",
         "description"
+      ],
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "gazId",
+            "placeName",
+            "siteClassification",
+            "findspotClassification",
+            "modernIntervention",
+            "excavationHistory",
+            "buildingResearchHistory",
+            "buildingHistory",
+            "findSituation",
+            "findSpot",
+            "surfaceContextsAndFinds",
+            "researchHistory",
+            "descriptions",
+            "stateOfPreservation",
+            "iDAI-objects-ID",
+            "iDAI-archives-ID",
+            "bibliography",
+            "recordedOnMaps"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
       ]
     },
     "Area:default": {
@@ -89,18 +209,6 @@
     },
     "BuildingPart:default": {
       "hidden": [],
-      "commons": [
-        "area",
-        "beginningDate",
-        "endDate",
-        "dating",
-        "description",
-        "processor",
-        "dimensionLength",
-        "dimensionVerticalExtent",
-        "dimensionWidth",
-        "spatialLocation"
-      ],
       "valuelists": {
         "orientation": "orientation-default-1",
         "color": "colors-default-1",
@@ -218,7 +326,82 @@
         "wallClassification": {
           "inputType": "dropdown"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "bibliography",
+            "conditionComment",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "findingPlace",
+            "hasGrouting",
+            "layerAmount",
+            "layerHeight",
+            "markDescription",
+            "materialCharacteristic",
+            "materialForm",
+            "muralCrown",
+            "publicationDatingFinds",
+            "publicationDatingScientific",
+            "publicationDatingStratigraphy",
+            "publicationRemark",
+            "blockProcessing",
+            "blockTreatment",
+            "brickwork",
+            "condition",
+            "conditionAmount",
+            "construction",
+            "mark",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "wallClassification"
+          ]
+        }
+      ]
     },
     "Find:default": {
       "hidden": [
@@ -248,7 +431,74 @@
         "hasRestoration": "Find-hasRestoration-Pergamon",
         "conditionAmount": "Find-conditionAmount-Pergamon",
         "storagePlace": "Find-storagePlace-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Feature:default": {
       "fields": {},
@@ -324,7 +574,90 @@
         "manufacturingMethod": "Glass-manufacturingMethod-Pergamon",
         "transparency": "Glass-transparency-Pergamon",
         "decorationTechnique": "Glass-decorationTechnique-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "formDescription",
+            "color",
+            "transparency",
+            "decorationTechnique",
+            "decorationDescription",
+            "manufacturingMethod",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "surfaceCondition",
+            "form"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Metal:default": {
       "hidden": [],
@@ -392,7 +725,96 @@
         "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
         "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
         "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "form",
+            "colorOutside",
+            "colorInside",
+            "colorBreak",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition",
+            "depictedBeing",
+            "depictedBeingSpecific",
+            "depictedBeingSex",
+            "depictedBeingAge",
+            "depictedBeingFormat",
+            "artist",
+            "depictedBeingClothing"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Mollusk:default": {
       "hidden": [],
@@ -418,7 +840,79 @@
         "treatment": "Mollusk-treatment-Pergamon",
         "objectType": "Mollusk-objectType-Pergamon",
         "form": "Mollusk-form-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "classification",
+            "treatment",
+            "objectType",
+            "form",
+            "manufacturingMethod"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Brick:default": {
       "hidden": [
@@ -494,7 +988,99 @@
         "decorationTechnique": "Brick-decorationTechnique-Pergamon",
         "coatQuality": "Pottery-coatQuality-Pergamon",
         "coatCondition": "Wood-paintCondition-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance",
+            "objectType",
+            "colorInside",
+            "colorOutside",
+            "colorBreak",
+            "colorBreakMunsell",
+            "colorInsideMunsell",
+            "colorOutsideMunsell",
+            "surfaceCondition",
+            "coatQuality",
+            "coatCondition",
+            "coatColorOutsideMunsell",
+            "coatColorInsideMunsell"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Burial:default": {
       "fields": {},
@@ -538,7 +1124,97 @@
         "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
         "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
         "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition",
+            "depictedBeing",
+            "depictedBeingSpecific",
+            "depictedBeingSex",
+            "depictedBeingAge",
+            "depictedBeingFormat",
+            "artist",
+            "depictedBeingClothing"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Architecture:default": {
       "fields": {},
@@ -719,13 +1395,151 @@
         "decorationTechnique": "Pottery-decorationTechnique-Pergamon",
         "decorationPlacement": "Pottery-decorationPlacement-Pergamon",
         "paintCondition": "Wood-paintCondition-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "materialType",
+            "specificType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "temperTypeClay",
+            "clayHardness",
+            "clayColorOutside",
+            "clayColorOutsideMunsell",
+            "clayColorInside",
+            "clayColorInsideMunsell",
+            "clayColorBreak",
+            "clayColorBreakMunsell",
+            "breakStructure",
+            "coatInside",
+            "coatColorInside",
+            "coatInsideType",
+            "coatOutside",
+            "coatColorOutside",
+            "coatOutsideType",
+            "formDescription",
+            "decorationTechnique",
+            "decorationDescription",
+            "objectType",
+            "purpose",
+            "provenance",
+            "sample",
+            "residueAnalysis",
+            "amountSherdsWall",
+            "amountSherdsBase",
+            "amountSherdsHandles",
+            "amountSherdsLip",
+            "amountSherdsPedestal",
+            "amountSherdsLid",
+            "amountSherdsRim",
+            "amountSherdsRimBase",
+            "amountSherdsRimShoulder",
+            "amountSherdsOther",
+            "amountSherdsShoulder",
+            "amountSherdsPercent",
+            "hasCoat",
+            "isImport",
+            "isMisfired",
+            "conditionPercentRim",
+            "conditionPercentBase",
+            "conditionpercentVessel",
+            "manufacturingDescription",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "porosity",
+            "coatCondition",
+            "fragmentSize",
+            "breakEdge",
+            "sintering",
+            "surfaceCondition",
+            "coatType",
+            "coatQuality",
+            "coatColorOutsideMunsell",
+            "coatColorInsideMunsell",
+            "decorationPlacement",
+            "paintColorOutside",
+            "paintColorOutsideMunsell",
+            "paintColorInside",
+            "paintColorInsideMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Lamps": {
       "parent": "Find",
-      "commons": [
-        "provenance"
-      ],
       "color": "blue",
       "hidden": [
         "amountSherdsLip",
@@ -868,7 +1682,107 @@
         "porosity": "Pottery-porosity-Pergamon",
         "lampFragment": "Lamps-lampFragment-Pergamon",
         "typ": "Lamps-typ-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "provenance",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "manufacturingDescription",
+            "temper",
+            "porosity",
+            "clayHardness",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "toneColorOutside",
+            "toneColorOutsideMunsell",
+            "breakStructure",
+            "breakEdge",
+            "fragmentSize",
+            "coatType",
+            "coatQuality",
+            "coatColorOutside",
+            "coatColorOutsideMunsell",
+            "decorationTechnique",
+            "decorationDescription",
+            "decorationPlacement",
+            "isImport",
+            "sintering",
+            "surfaceCondition",
+            "sample",
+            "residueAnalysis",
+            "isMisfired",
+            "coatCondition",
+            "lampFragment",
+            "typ"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Grave:default": {
       "fields": {},
@@ -901,7 +1815,85 @@
         "objectType": "Bone-objectType-Pergamon",
         "form": "Bone-form-Pergamon",
         "decorationTechnique": "Bone-decorationTechnique-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "boneType",
+            "species",
+            "boneClassification",
+            "burningGrade",
+            "objectType",
+            "biologicalAge",
+            "sex",
+            "treatment",
+            "form",
+            "manufacturingMethod",
+            "decorationTechnique"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Terracotta:default": {
       "hidden": [
@@ -1021,7 +2013,114 @@
         "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
         "depictedBeingFormat": "Terracotta-depictedBeingFormat-Pergamon",
         "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside",
+            "manufacturing",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "coatColorInsideMunsell",
+            "coatColorOutsideMunsell",
+            "paintColor",
+            "paintColorMunsell",
+            "coatQuality",
+            "coatCondition",
+            "paintCondition",
+            "objectType",
+            "form",
+            "decorationDescription",
+            "depictedBeing",
+            "depictedBeingSpecific",
+            "depictedBeingSex",
+            "depictedBeingAge",
+            "depictedBeingFormat",
+            "artist",
+            "depictedBeingClothing"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Photo:default": {
       "fields": {},
@@ -1116,7 +2215,102 @@
         "depictedBeingAge": "Terracotta-depictedBeingAge-Pergamon",
         "depictedBeingFormat": "Metal-depictedBeingFormat-Pergamon",
         "depictedBeingClothing": "Terracotta-depictedBeingClothing-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "material",
+            "temperAmount",
+            "treatment",
+            "workmanship",
+            "color",
+            "formDescription",
+            "objectType",
+            "architectureElement",
+            "purpose",
+            "origin",
+            "provenance",
+            "form",
+            "usedAsSpolia",
+            "colorOutside",
+            "colorInside",
+            "colorBreak",
+            "constructionDetails",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition",
+            "depictedBeing",
+            "depictedBeingSpecific",
+            "depictedBeingSex",
+            "depictedBeingAge",
+            "depictedBeingFormat",
+            "artist",
+            "depictedBeingClothing"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Coin:default": {
       "hidden": [],
@@ -1134,7 +2328,84 @@
       "valuelists": {
         "denomination": "Coin-denomination-Pergamon",
         "mint": "Coin-mint-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "metalMaterial",
+            "manufacturingMethod",
+            "preservedDiameter",
+            "frontSideDescription",
+            "reverseSideDescription",
+            "provenance",
+            "stampPositioning",
+            "denomination",
+            "mint",
+            "mintingRuler"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "PlasterFragment:default": {
       "hidden": [
@@ -1198,7 +2469,95 @@
         "paintingTechnique": "PlasterFragment-paintingTechnique-Pergamon",
         "paintCondition": "Wood-paintCondition-default",
         "specialFeatures": "PlasterFragment-specialFeatures-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "specialStatus",
+            "deviatingStoragePlace",
+            "plasterComponents",
+            "color",
+            "composition",
+            "hasDecoration",
+            "objectType",
+            "materialPlasterUndercoat1",
+            "colorPlasterUndercoat1",
+            "colorPlasterUndercoat1Munsell",
+            "materialPlasterUndercoat2",
+            "colorPlasterUndercoat2",
+            "colorPlasterUndercoat2Munsell",
+            "materialFinePlaster",
+            "colorFinePlaster",
+            "colorFinePlasterMunsell",
+            "decorationTechnique",
+            "paintingTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition",
+            "specialFeatures"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther",
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Profile:default": {
       "color": "#c6dbef",
@@ -1210,7 +2569,51 @@
       },
       "valuelists": {
         "operationClassification": "operationClassification-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "operationClassification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionWidth",
+            "dimensionHeight"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Sample:default": {
       "hidden": [],
@@ -1226,23 +2629,40 @@
       "valuelists": {
         "soilType": "Layer-soilType-default",
         "operationClassification": "operationClassification-Pergamon"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "sampleType",
+            "labNumber",
+            "weight",
+            "soilType",
+            "operationClassification"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "SurveyBurial": {
       "hidden": [],
-      "commons": [
-        "area",
-        "beginningDate",
-        "endDate",
-        "dating",
-        "description",
-        "diary",
-        "dating",
-        "processor",
-        "dimensionLength",
-        "dimensionVerticalExtent",
-        "dimensionWidth"
-      ],
       "fields": {
         "comparison": {
           "inputType": "text"
@@ -1331,21 +2751,75 @@
         "positionArms": "Burial-positionArms-default",
         "positionLegs": "Burial-positionLegs-default",
         "positioningIndividuals": "Burial-positioningIndividuals-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "shortDescription",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "ageDetermination",
+            "ageDeterminationBasis",
+            "bodyHeightAndRobustness",
+            "burialRite",
+            "conditionComment",
+            "dietReconstruction",
+            "findingPlace",
+            "palaeopathologicalReport",
+            "publicationDatingFinds",
+            "publicationDatingStratigraphy",
+            "sexDetermination",
+            "sexDeterminationBasis",
+            "amountIndividuals",
+            "burialCharacteristic",
+            "burialDocumentation",
+            "graveFeature",
+            "positionArms",
+            "positionLegs",
+            "positioningIndividuals"
+          ]
+        }
+      ]
     },
     "BuildingFloor": {
       "hidden": [],
-      "commons": [
-        "area",
-        "beginningDate",
-        "endDate",
-        "diary",
-        "description",
-        "processor",
-        "dimensionLength",
-        "dimensionVerticalExtent",
-        "dimensionWidth"
-      ],
       "fields": {
         "comparison": {
           "inputType": "text"
@@ -1401,17 +2875,58 @@
         "floorClassification": "Floor-floorClassification-default",
         "layerClassification": "Layer-layerClassification-default",
         "mortarBinder": "Architecture-mortarBinder-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "shortDescription",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "comparison",
+            "hasDisturbance",
+            "featureAmount",
+            "color",
+            "featureBorders",
+            "featureForm",
+            "conditionComment",
+            "condition",
+            "conditionAmount",
+            "consistency",
+            "distinguishingCriteria",
+            "floorClassification",
+            "layerClassification",
+            "mortarBinder"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],
-      "commons": [
-        "beginningDate",
-        "endDate",
-        "dating",
-        "diary",
-        "processor"
-      ],
       "fields": {
         "color": {
           "inputType": "checkboxes"
@@ -1423,7 +2938,52 @@
       "valuelists": {
         "color": "colors-default-1",
         "featureBorders": "Feature-featureBorders-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary",
+            "processor"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "isIllegal",
+            "color",
+            "featureBorders"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "dating"
+          ]
+        }
+      ]
     },
     "Other": {
       "parent": "Feature",
@@ -1453,6 +3013,7 @@
     "Burial",
     "Architecture",
     "Floor",
+    "Other",
     "Area",
     "SurveyUnit",
     "Excavation",
@@ -1468,15 +3029,15 @@
     "Coin",
     "PlasterFragment",
     "Mollusk",
+    "Lamps",
     "Inscription",
     "Sample",
+    "Profile",
     "BuildingPart",
     "Room",
     "RoomCeiling",
     "RoomWall",
     "RoomFloor",
-    "Profile",
-    "ProcessUnit",
     "SurveyBurial",
     "BuildingFloor",
     "Image",

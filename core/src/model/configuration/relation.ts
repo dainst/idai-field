@@ -1,7 +1,7 @@
-import {flow} from 'tsfun';
-import {assocReduce} from '../../tools/assoc-reduce';
-import {Name} from '../../tools/named';
-import {toPair} from '../../tools/utils';
+import { flow } from 'tsfun';
+import { assocReduce } from '../../tools/assoc-reduce';
+import { Name } from '../../tools/named';
+import { toPair } from '../../tools/utils';
 import { Field } from './field';
 
 

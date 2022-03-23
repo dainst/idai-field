@@ -292,8 +292,8 @@
           <context context-type="linenumber">126</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/field-view.component.ts</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="boolean.no" datatype="html">
@@ -652,8 +652,20 @@
         <source>Zurück</source>
         <target state="final">Zurück</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">219</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.invalidFields.resource" datatype="html">
+        <source>(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</source>
+        <target state="final">(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">140,126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -669,7 +681,7 @@
         <target state="final">Export starten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
@@ -709,7 +721,7 @@
         <target state="final">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
@@ -765,7 +777,7 @@
         <target state="final"> Keine Ressourcen gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">341</context>
+          <context context-type="linenumber">356</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
@@ -773,7 +785,7 @@
         <target state="final"> Keine Kataloge gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">341</context>
+          <context context-type="linenumber">360</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -781,7 +793,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">341</context>
+          <context context-type="linenumber">360</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -792,12 +804,20 @@
           <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.invalidFields.heading" datatype="html">
+        <source>Nicht exportierte Felder:</source>
+        <target state="final">Nicht exportierte Felder:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">126,132</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -1025,7 +1045,7 @@
         <target state="final">Projektspezifisches Formular</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.seletedForm" datatype="html">
@@ -1061,7 +1081,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSubcategory" datatype="html">
@@ -3332,7 +3352,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.categorySwitcherButton.changeCategory" datatype="html">
@@ -3390,6 +3410,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.invalidFieldData.info" datatype="html">
+        <source> Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp: </source>
+        <target state="final"> Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.invalidFieldData.delete" datatype="html">
+        <source>Feldinhalte löschen</source>
+        <target state="final">Feldinhalte löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.component.ts</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.add" datatype="html">
@@ -3551,7 +3587,7 @@
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
@@ -5338,6 +5374,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.export.csv.warning.invalidFieldData.single" datatype="html">
+        <source>Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</source>
+        <target state="final">Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.csv.warning.invalidFieldData.multiple" datatype="html">
+        <source>Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</source>
+        <target state="final">Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.datastore.error.notFound" datatype="html">
         <source>Die Ressource konnte nicht gefunden werden.</source>
         <target state="final">Die Ressource konnte nicht gefunden werden.</target>
@@ -6047,7 +6099,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">

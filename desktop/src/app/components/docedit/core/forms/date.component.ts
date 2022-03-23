@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {Resource} from 'idai-field-core';
+import { Component, Input } from '@angular/core';
+import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Resource } from 'idai-field-core';
 
 
 @Component({
@@ -26,9 +26,7 @@ export class DateComponent {
     }
 
     public dateStruct: NgbDateStruct;
-
     public dateNotParsed = false;
-
     public _field : any;
 
 

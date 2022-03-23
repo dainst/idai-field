@@ -1,11 +1,23 @@
-import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove } from 'tsfun';
+import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is } from 'tsfun';
 import { Resource, FieldResource, StringUtils, Relation, Field } from 'idai-field-core';
 import { CSVMatrixExpansion } from './csv-matrix-expansion';
 import { CsvExportUtils } from './csv-export-utils';
-import { CsvExportConsts, Heading, HeadingsAndMatrix } from './csv-export-consts';
+import { CsvExportConsts, Heading, Headings, HeadingsAndMatrix, Matrix } from './csv-export-consts';
 import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
+
+
+export type CSVExportResult = {
+    csvData: string[];
+    invalidFields: Array<InvalidField>;
+}
+
+
+export type InvalidField = {
+    identifier: string;
+    fieldName: string;
+};
 
 
 /**
@@ -36,12 +48,20 @@ export module CSVExport {
             .map(CsvExportUtils.convertToResourceWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        return flow([headings, matrix],
+        const invalidFields: Array<InvalidField> = removeInvalidFieldData(
+            headings, matrix, fieldDefinitions
+        );
+
+        const csvData: string[] = flow(
+            [headings, matrix],
             CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
-            CSVMatrixExpansion.expandDating,
+            CSVMatrixExpansion.expandDating(fieldDefinitions),
             CSVMatrixExpansion.expandDimension(fieldDefinitions),
-            CSVMatrixExpansion.expandLiterature,
-            combine);
+            CSVMatrixExpansion.expandLiterature(fieldDefinitions),
+            combine
+        );
+
+        return { csvData, invalidFields };
     }
 
 
@@ -69,13 +89,36 @@ export module CSVExport {
             return getUsableFieldNames(Object.keys(resource))
                 .reduce((row, fieldName) => {
 
-                   const indexOfFoundElement = headings.indexOf(fieldName);
-                    if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
+                    const indexOfFoundElement = headings.indexOf(fieldName);
+                    if (indexOfFoundElement !== -1) {
+                        row[indexOfFoundElement] = (resource as any)[fieldName];
+                    }
 
                     return row;
-
                 }, dense(headings.length));
         }
+    }
+
+
+    function removeInvalidFieldData(headings: Headings, matrix: Matrix,
+                                    fieldDefinitions: Array<Field>): Array<InvalidField> {
+
+        const invalidFields: Array<InvalidField> = [];
+        const identifierIndex: number = headings.indexOf(Resource.IDENTIFIER);
+
+        headings.forEach((heading, index) => {
+            const field: Field = fieldDefinitions.find(on(Field.NAME, is(heading)));
+            if (!field) return;
+
+            matrix.filter(row => {
+                return row[index] !== undefined && !Field.InputType.isValidFieldData(row[index], field.inputType);
+            }).forEach(row => {
+                delete row[index];
+                invalidFields.push({ identifier: row[identifierIndex], fieldName: field.name });
+            });
+        });
+
+        return invalidFields;
     }
 
 

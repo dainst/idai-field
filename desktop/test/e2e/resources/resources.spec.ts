@@ -360,7 +360,7 @@ describe('resources --', () => {
         // delete invalid fields when changing the category of a resource to its parent category
         await DetailSidebarPage.doubleClickEditDocument('1');
 
-        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('wallType', 'Außenmauer');
         await DoceditPage.clickSaveDocument();
 

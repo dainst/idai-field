@@ -1,5 +1,5 @@
-import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
+import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints } from 'idai-field-core';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
 const IS_CHILD_OF_CONTAIN = 'isChildOf:contain';

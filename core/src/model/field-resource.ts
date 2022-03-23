@@ -1,12 +1,10 @@
-import {Resource} from './resource';
-import {FieldGeometry} from './field-geometry';
-
-
-
+import { Resource } from './resource';
+import { FieldGeometry } from './field-geometry';
 
 
 export module FieldRelations {
-    export const __UNUSED__ = 0
+
+    export const __UNUSED__ = 0;
 }
 
 

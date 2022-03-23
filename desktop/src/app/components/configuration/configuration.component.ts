@@ -32,6 +32,7 @@ import { OrderChange } from '../widgets/category-picker.component';
 import { SaveProcessModalComponent } from './save/save-process-modal.component';
 import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
+import { ConfigurationState } from './configuration-state';
 
 
 export type ApplyChangesResult = {
@@ -64,6 +65,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
     public clonedProjectConfiguration: ProjectConfiguration;
     
+    public ready: boolean = false;
     public dragging: boolean = false;
     public changed: boolean = false;
     public escapeKeyPressed: boolean = false;
@@ -124,6 +126,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private documentCache: DocumentCache,
                 private categoryConverter: CategoryConverter,
                 private pouchdbDatastore: PouchdbDatastore,
+                private configurationState: ConfigurationState,
                 private i18n: I18n) {}
 
 
@@ -141,10 +144,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.configurationDocument = await this.fetchConfigurationDocument();
         this.clonedProjectConfiguration = await this.buildProjectConfiguration(this.configurationDocument);
 
-        this.loadCategories();
+        await this.configurationState.load();
+        await this.loadCategories(
+            this.configurationState.getSelectedCategoriesFilterName(),
+            this.configurationState.getSelectedCategoryName()
+        );
 
         this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
             .subscribe(() => this.openValuelistsManagementModal());
+
+        this.ready = true;
     }
 
 
@@ -156,6 +165,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 's' && this.menus.getContext() === MenuContext.CONFIGURATION
+                && (event.ctrlKey || event.metaKey)) {
+            await this.openSaveModal();
+        }
 
         if (event.key !== 'Escape') return;
 
@@ -190,12 +204,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public setCategoriesFilter(filter: CategoriesFilter, selectFirstCategory: boolean = true) {
+    public async setCategoriesFilter(filter: CategoriesFilter, selectFirstCategory: boolean = true) {
 
         this.selectedCategoriesFilter = filter;
         this.filteredTopLevelCategoriesArray = ConfigurationUtil.filterTopLevelCategories(
             this.topLevelCategoriesArray, this.selectedCategoriesFilter, this.clonedProjectConfiguration
         );
+        await this.configurationState.setSelectedCategoriesFilterName(filter.name);
 
         if (selectFirstCategory) this.selectCategory(this.filteredTopLevelCategoriesArray[0]);
     }
@@ -273,6 +288,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public selectCategory(category: CategoryForm) {
 
         this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
+        this.configurationState.setSelectedCategoryName(this.selectedCategory.name);
     }
 
 
@@ -341,8 +357,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public async editGroup(category: CategoryForm, group: Group) {
-
-        if (group.name === Groups.PARENT || group.name === Groups.CHILD) return;
 
         const [result, componentInstance] = this.modals.make<GroupEditorModalComponent>(
             GroupEditorModalComponent,
@@ -582,17 +596,21 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    private loadCategories() {
+    private async loadCategories(selectedCategoriesFilterName?: string, selectedCategoryName?: string) {
 
         this.topLevelCategoriesArray = Tree.flatten(this.clonedProjectConfiguration.getCategories())
             .filter(category => !category.parentCategory);
 
         if (this.selectedCategory) {
             this.selectCategory(this.clonedProjectConfiguration.getCategory(this.selectedCategory.name));
-        }
+        } else if (selectedCategoryName) {
+            this.selectCategory(this.clonedProjectConfiguration.getCategory(selectedCategoryName));
+        };
 
-        this.setCategoriesFilter(
-            this.selectedCategoriesFilter ?? this.categoriesFilterOptions.find(filter => filter.name === 'project'),
+        await this.setCategoriesFilter(
+            this.selectedCategoriesFilter ?? this.categoriesFilterOptions.find(filter => {
+                return filter.name === (selectedCategoriesFilterName ?? 'project');
+            }),
             this.selectedCategory === undefined
         );
     }
@@ -610,7 +628,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
-            this.loadCategories();
+            await this.loadCategories();
         } catch (e) {
             console.error('error in updateProjectConfiguration', e);
         }

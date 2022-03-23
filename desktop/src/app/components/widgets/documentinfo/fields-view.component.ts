@@ -1,7 +1,5 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { isBoolean } from 'tsfun';
-import { Datastore, FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil,
+import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
 
@@ -27,12 +25,8 @@ export class FieldsViewComponent implements OnChanges {
     public groups: Array<FieldsViewGroup> = [];
 
 
-    public isBoolean = (value: any) => isBoolean(value);
-
-
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
                 private labels: Labels) {}
 
@@ -71,17 +65,5 @@ export class FieldsViewComponent implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         this.onJumpToResource.emit(document);
-    }
-
-
-    public getObjectLabel(object: any, field: FieldsViewField): string {
-
-        return FieldsViewUtil.getObjectLabel(
-            object,
-            field,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-            this.labels
-        );
     }
 }

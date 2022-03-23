@@ -263,7 +263,7 @@ describe('resources/state --', () => {
         await ResourcesPage.clickSwitchHierarchyMode();
 
         await ResourcesPage.openEditByDoubleClickResource('SE2');
-        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('layerClassification', 'Brandschicht');
         await DoceditPage.clickSaveDocument();
 
@@ -356,7 +356,7 @@ describe('resources/state --', () => {
         await ResourcesPage.clickSwitchHierarchyMode();
 
         await ResourcesPage.openEditByDoubleClickResource('SE2');
-        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('layerClassification', 'Brandschicht');
         await DoceditPage.clickSaveDocument();
 
@@ -378,11 +378,11 @@ describe('resources/state --', () => {
         await ResourcesPage.clickSwitchHierarchyMode();
 
         await ResourcesPage.openEditByDoubleClickResource('SE0');
-        await DoceditPage.clickGotoParentTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         await DoceditPage.clickSaveDocument();
         await ResourcesPage.openEditByDoubleClickResource('SE1');
-        await DoceditPage.clickGotoParentTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         await DoceditPage.clickSaveDocument();
 

@@ -46,15 +46,9 @@ export class DoceditPage {
     };
 
 
-    public static clickGotoParentTab() {
+    public static clickGotoPropertiesTab() {
 
-        return click('#edit-form-goto-parent');
-    }
-
-
-    public static clickGotoChildTab() {
-
-        return click('#edit-form-goto-child');
+        return click('#edit-form-goto-properties');
     }
 
 

@@ -652,7 +652,7 @@ describe('ConfigLoader', () => {
                 minimalForm: {
                     groups: [
                         { name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] },
-                        { name: Groups.PARENT, fields: ['fieldB3'] }
+                        { name: Groups.PROPERTIES, fields: ['fieldB3'] }
                     ],
                 } as any,
                 description: {}
@@ -715,7 +715,7 @@ describe('ConfigLoader', () => {
                 categoryName: 'C',
                 groups: [
                     { name: Groups.STEM, fields: ['fieldC1'] },
-                    { name: Groups.PARENT, fields: ['fieldC2'] }
+                    { name: Groups.PROPERTIES, fields: ['fieldC2'] }
                 ],
                 valuelists: {},
                 description: {},
@@ -758,14 +758,14 @@ describe('ConfigLoader', () => {
             expect(result['B'].groups[0].fields.length).toBe(2);
             expect(result['B'].groups[0].fields[0].name).toEqual('fieldB1');
             expect(result['B'].groups[0].fields[1].name).toEqual('fieldB2');
-            expect(result['B'].groups[1].name).toBe(Groups.PARENT);
+            expect(result['B'].groups[1].name).toBe(Groups.PROPERTIES);
             expect(result['B'].groups[1].fields.length).toBe(1);
             expect(result['B'].groups[1].fields[0].name).toEqual('fieldB3');
             expect(result['C'].name).toEqual('C');
             expect(result['C'].groups[0].name).toBe(Groups.STEM);
             expect(result['C'].groups[0].fields.length).toBe(1);
             expect(result['C'].groups[0].fields[0].name).toEqual('fieldC1');
-            expect(result['C'].groups[1].name).toBe(Groups.PARENT);
+            expect(result['C'].groups[1].name).toBe(Groups.PROPERTIES);
             expect(result['C'].groups[1].fields.length).toBe(1);
             expect(result['C'].groups[1].fields[0].name).toEqual('fieldC2');
             expect(result['D'].name).toEqual('D');

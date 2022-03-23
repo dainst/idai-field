@@ -1,4 +1,5 @@
-import {flow, cond, on, isUndefinedOrEmpty, detach, isObject} from 'tsfun';
+import { flow, cond, on, isUndefinedOrEmpty, detach, isObject } from 'tsfun';
+
 
 /**
  * @author Sebastian Cuy

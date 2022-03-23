@@ -1,6 +1,5 @@
-import { aFlow, assoc, compose, isEmpty, filter, flatten, 
-    is, isArray, isDefined, isObject, isString, L, map, 
-    Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
+import { aFlow, assoc, compose, isEmpty, filter, flatten, is, isArray, isDefined, isObject, isString,
+    L, map, Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
@@ -14,7 +13,6 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { Field } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
-import { SortUtil } from './sort-util';
 
 
 type FieldContent = any;
@@ -31,7 +29,7 @@ export interface FieldsViewField {
     name: string;
     label: string;
     type: 'default'|'array'|'object'|'relation';
-    value?: string|string[]; // TODO add object types
+    value?: any;
     valuelist?: Valuelist;
     targets?: Array<Document>;
 }
@@ -82,7 +80,7 @@ export module FieldsViewUtil {
                                                labels: Labels,
                                                presentInInverseRelationLabel?: string): Promise<Array<FieldsViewGroup>> {
 
-        const relationTargets: Map<Array<Document>> = await getRelationTargets(resource, datastore);
+        const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(resource, datastore);
 
         const result = await aFlow(
             projectConfiguration.getCategory(resource.category).groups,
@@ -131,6 +129,39 @@ export module FieldsViewUtil {
             return object;
         }
     }
+
+
+    export function makeField(projectConfiguration: ProjectConfiguration, 
+                              relationTargets: Map<Array<Document>>,
+                              labels: Labels) {
+
+        return function([field, fieldContent]: [Field, FieldContent]): FieldsViewField {
+
+            return (field.inputType === Field.InputType.RELATION
+                    || field.inputType === Field.InputType.INSTANCE_OF)
+                ? {
+                    name: field.name,
+                    label: labels.get(field),
+                    type: 'relation',
+                    targets: relationTargets[field.name]
+                }
+                : {
+                    name: field.name,
+                    label: labels.get(field),
+                    value: isArray(fieldContent)
+                        ? fieldContent.map((fieldContent: any) =>
+                            FieldsViewUtil.getValue(
+                                fieldContent, field.name, projectConfiguration, labels, field.valuelist
+                            )
+                        )
+                        : FieldsViewUtil.getValue(
+                            fieldContent, field.name, projectConfiguration, labels, field.valuelist
+                        ),
+                    type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
+                    valuelist: field.valuelist
+                };
+        }
+    } 
 }
 
 
@@ -147,45 +178,12 @@ function putActualResourceFieldsIntoGroups(resource: Resource, projectConfigurat
                 map(pairWith(fieldContent)),
                 filter(on(R, value => isDefined(value) && value !== '')),
                 filter(on(L, FieldsViewUtil.isVisibleField)),
-                map(makeField(projectConfiguration, relationTargets, labels)),
+                map(FieldsViewUtil.makeField(projectConfiguration, relationTargets, labels)),
                 filter(field => !field.targets || field.targets.length > 0),
                 flatten() as any /* TODO review typing*/
             )
         )
     );
-}
-
-
-function makeField(projectConfiguration: ProjectConfiguration, 
-                   relationTargets: Map<Array<Document>>,
-                   labels: Labels) {
-
-    return function([field, fieldContent]: [Field, FieldContent]): FieldsViewField {
-
-        return (field.inputType === Field.InputType.RELATION
-                || field.inputType === Field.InputType.INSTANCE_OF)
-            ? {
-                name: field.name,
-                label: labels.get(field),
-                type: 'relation',
-                targets: relationTargets[field.name]
-            }
-            : {
-                name: field.name,
-                label: labels.get(field),
-                value: isArray(fieldContent)
-                    ? fieldContent.map((fieldContent: any) =>
-                        FieldsViewUtil.getValue(
-                            fieldContent, field.name, projectConfiguration, labels, field.valuelist
-                        )
-                    )
-                    : FieldsViewUtil.getValue(
-                        fieldContent, field.name, projectConfiguration, labels, field.valuelist
-                    ),
-                type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
-                valuelist: field.valuelist
-            };
-    }
 }
 
 
@@ -196,21 +194,6 @@ const getFieldContent = (resource: Resource) => (fieldName: string): any => {
             ? resource.relations[fieldName]
             : undefined
         );
-}
-
-
-async function getRelationTargets(resource: Resource, datastore: Datastore): Promise<Map<Array<Document>>> {
-
-    const targets: Map<Array<Document>> = {};
-
-    for (let relationName of Object.keys(resource.relations)) {
-        targets[relationName] = (await datastore.getMultiple(resource.relations[relationName]))
-            .sort((target1, target2) => SortUtil.alnumCompare(
-                target1.resource.identifier, target2.resource.identifier
-            ));
-    }
-
-    return targets;
 }
 
 

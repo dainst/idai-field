@@ -1,53 +1,45 @@
 {
-  "Project:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Operation:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Survey:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "SurveyUnit:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Place:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Area:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Trench:default": {
-    "hidden": [],
-    "fields": {},
-    "commons": []
-  },
-  "Building:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "BuildingPart": {
+  "forms": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Operation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Survey:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "SurveyUnit:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Place:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Area:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Building:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "BuildingPart": {
       "color": "#707070",
-      "commons": [
-        "period",
-        "description",
-        "dimensionHeight",
-        "dimensionLength",
-        "dimensionDepth",
-        "dimensionWidth",
-        "dimensionDiameter",
-        "dimensionOther"
+      "hidden": [
+        "borders"
       ],
-      "hidden": ["borders"],
       "valuelists": {
         "denomination": "BuildingPart-denomination-Selinunt",
         "period": "BuildingPart-dating-Selinunt",
@@ -102,11 +94,65 @@
         "note": {
           "inputType": "input"
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "descriptionFindingPlace",
+            "storageLocation",
+            "editingDates",
+            "denomination",
+            "material",
+            "conservationStatus",
+            "assignment",
+            "evaluationAssignment",
+            "positionAtBuilding",
+            "referenceTypes",
+            "belongingMap",
+            "pencilDrawing",
+            "inkDrawing",
+            "note"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionDepth",
+            "dimensionWidth",
+            "dimensionDiameter",
+            "dimensionOther"
+          ]
+        }
+      ]
     },
     "ColumnDrum": {
-      "commons": [],
-      "hidden": ["dimensionOther"],
+      "hidden": [
+        "dimensionOther"
+      ],
       "parent": "BuildingPart",
       "valuelists": {
         "material": "BuildingPart-material-Selinunt",
@@ -136,287 +182,701 @@
         "comment": {
           "inputType": "text"
         }
-      }
-    },
-  "Find:default": {
-    "commons": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Feature:default": {
-    "commons": [],
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Room:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomCeiling:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomFloor:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomWall:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Inscription:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Image:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Glass:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Mollusk:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Brick:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Burial:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Wood:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Architecture:default": {
-    "commons": [
-      "dimensionOther",
-      "dimensionHeight"
-    ],
-    "hidden": ["muralCrown","brickwork","descriptionOfBuildingTechnique","materialCharacteristic","layerHeight"],
-    "valuelists": {
-      "position": "Architecture-position-SelinuntAkropolis",
-      "wallClassification": "Architecture-wallClassification-SelinuntAkropolis",
-      "blockProcessing": "Architecture-blockProcessing-SelinuntAkropolis",
-      "construction": "Architecture-construction-SelinuntAkropolis",
-      "wallType": "Architecture-wallType-SelinuntAkropolis"
-    },
-    "fields": {
-      "templePositionOnTheStructure": {
-        "inputType": "text"
       },
-      "position": {
-        "inputType": "checkboxes"
-      }
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "descriptionFindingPlace",
+            "storageLocation",
+            "editingDates",
+            "denomination",
+            "material",
+            "conservationStatus",
+            "assignment",
+            "evaluationAssignment",
+            "positionAtBuilding",
+            "referenceTypes",
+            "belongingMap",
+            "pencilDrawing",
+            "inkDrawing",
+            "note",
+            "column",
+            "fromBottomToTop",
+            "number",
+            "top",
+            "bottom",
+            "coat",
+            "comment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionDepth",
+            "dimensionWidth",
+            "dimensionDiameter",
+            "dimensionOther"
+          ]
+        }
+      ]
+    },
+    "Find:default": {
+      "valuelists": {},
+      "fields": {}
+    },
+    "Feature:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Room:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomCeiling:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomFloor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Glass:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Mollusk:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Brick:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Burial:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Wood:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Architecture:default": {
+      "hidden": [
+        "muralCrown",
+        "brickwork",
+        "descriptionOfBuildingTechnique",
+        "materialCharacteristic",
+        "layerHeight"
+      ],
+      "valuelists": {
+        "position": "Architecture-position-SelinuntAkropolis",
+        "wallClassification": "Architecture-wallClassification-SelinuntAkropolis",
+        "blockProcessing": "Architecture-blockProcessing-SelinuntAkropolis",
+        "construction": "Architecture-construction-SelinuntAkropolis",
+        "wallType": "Architecture-wallType-SelinuntAkropolis"
+      },
+      "fields": {
+        "templePositionOnTheStructure": {
+          "inputType": "text"
+        },
+        "position": {
+          "inputType": "checkboxes"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "layerAmount",
+            "layerHeight",
+            "muralCrown",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "materialForm",
+            "materialCharacteristic",
+            "construction",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "brickwork",
+            "blockTreatment",
+            "blockProcessing",
+            "bibliography",
+            "hasGrouting",
+            "wallClassification",
+            "wallType",
+            "templePositionOnTheStructure",
+            "position"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionOther",
+            "dimensionHeight"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Layer:default": {
+      "hidden": [
+        "layerClassification"
+      ],
+      "fields": {
+        "designation": {
+          "inputType": "checkboxes"
+        },
+        "componentsCeramics": {
+          "inputType": "checkboxes"
+        },
+        "componentsStone": {
+          "inputType": "checkboxes"
+        },
+        "componentsOrganic": {
+          "inputType": "checkboxes"
+        },
+        "componentsMetal": {
+          "inputType": "checkboxes"
+        },
+        "componentsOthers": {
+          "inputType": "checkboxes"
+        }
+      },
+      "valuelists": {
+        "designation": "Layer-designation-SelinuntAkropolis",
+        "componentsCeramics": "Layer-componentsCeramics-SelinuntAkropolis",
+        "componentsStone": "Layer-componentsStone-SelinuntAkropolis",
+        "componentsOrganic": "Layer-componentsOrganic-SelinuntAkropolis",
+        "componentsMetal": "Layer-componentsMetal-SelinuntAkropolis",
+        "componentsOthers": "Layer-componentsOthers-SelinuntAkropolis"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "distinguishingCriteria",
+            "layerClassification",
+            "isNatural",
+            "soilType",
+            "consistency",
+            "designation",
+            "componentsCeramics",
+            "componentsStone",
+            "componentsOrganic",
+            "componentsMetal",
+            "componentsOthers"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Pottery:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Metal:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Grave:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Bone:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Terracotta:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Stone:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Coin:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "Excavation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "FindCollection": {
+      "hidden": [],
+      "fields": {
+        "potteryFormsOverview": {
+          "inputType": "checkboxes"
+        },
+        "potteryFineWareByProvenance": {
+          "inputType": "checkboxes"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "potteryAmphoraeByProvenance": {
+          "inputType": "checkboxes"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "potteryCoarseWareByFunction": {
+          "inputType": "checkboxes"
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "miniaturePotteryCollection": {
+          "inputType": "text"
+        },
+        "terracottaCollection": {
+          "inputType": "checkboxes"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "buildingMaterialCollection": {
+          "inputType": "checkboxes"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "stoneCollection": {
+          "inputType": "checkboxes"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "metalAndGlasCollection": {
+          "inputType": "checkboxes"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "inputType": "text"
+        },
+        "organicMaterialCollection": {
+          "inputType": "checkboxes"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "inputType": "text"
+        }
+      },
+      "parent": "Find",
+      "valuelists": {
+        "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
+        "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
+        "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
+        "terracottaCollection": "Terracotta-Collection-Selinunt",
+        "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
+        "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
+        "stoneCollection": "Stone-Collection-Selinunt",
+        "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
+        "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "potteryFormsOverview",
+            "potteryFineWareByProvenance",
+            "potteryFineWareByProvenanceQuantityWeightDetails",
+            "potteryAmphoraeByProvenance",
+            "potteryAmphoraeByProvenanceQuantityWeightDetails",
+            "potteryCoarseWareByFunction",
+            "potteryCoarseWareByFunctionQuantityWeightDetails",
+            "miniaturePotteryCollection",
+            "terracottaCollection",
+            "terracottaCollectionQuantityWeightDetails",
+            "buildingMaterialCollection",
+            "buildingMaterialCollectionQuantityWeightDetails",
+            "stoneCollection",
+            "stoneCollectionQuantityWeightDetails",
+            "metalAndGlasCollection",
+            "metalAndGlasCollectionQuantityWeightDetails",
+            "organicMaterialCollection",
+            "organicMaterialCollectionQuantityWeightDetails"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "NegativeFeature": {
+      "hidden": [],
+      "parent": "Feature",
+      "valuelists": {
+        "position": "Architecture-position-SelinuntAkropolis",
+        "orientation": "orientation-default-1",
+        "condition": "Building-condition-default",
+        "conditionAmount": "Building-conditionAmount-default",
+        "classificationFeature": "NegativeFeature-classificationFeature-SelinuntAkropolis",
+        "toolTraces": "NegativeFeature-toolTraces-SelinuntAkropolis"
+      },
+      "fields": {
+        "condition": {
+          "inputType": "dropdown"
+        },
+        "conditionAmount": {
+          "inputType": "dropdown"
+        },
+        "conditionComment": {
+          "inputType": "input"
+        },
+        "templePositionOnTheStructure": {
+          "inputType": "text"
+        },
+        "position": {
+          "inputType": "checkboxes"
+        },
+        "classificationFeature": {
+          "inputType": "checkboxes"
+        },
+        "toolTraces": {
+          "inputType": "checkboxes"
+        },
+        "form": {
+          "inputType": "text"
+        },
+        "maximumHeight": {
+          "inputType": "text"
+        },
+        "bibliography": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "templePositionOnTheStructure",
+            "position",
+            "classificationFeature",
+            "toolTraces",
+            "form",
+            "maximumHeight",
+            "bibliography"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     }
   },
-  "Layer:default": {
-    "hidden": ["layerClassification"],
-    "fields": {
-      "designation": {
-        "inputType": "checkboxes"
-      },
-      "componentsCeramics": {
-        "inputType": "checkboxes"
-      },
-      "componentsStone": {
-        "inputType": "checkboxes"
-      },
-      "componentsOrganic": {
-        "inputType": "checkboxes"
-      },
-      "componentsMetal": {
-        "inputType": "checkboxes"
-      },
-      "componentsOthers": {
-        "inputType": "checkboxes"
-      }
-    },
-    "valuelists": {
-      "designation": "Layer-designation-SelinuntAkropolis",
-      "componentsCeramics": "Layer-componentsCeramics-SelinuntAkropolis",
-      "componentsStone": "Layer-componentsStone-SelinuntAkropolis",
-      "componentsOrganic": "Layer-componentsOrganic-SelinuntAkropolis",
-      "componentsMetal": "Layer-componentsMetal-SelinuntAkropolis",
-      "componentsOthers": "Layer-componentsOthers-SelinuntAkropolis"
-    }
-  },
-  "Pottery:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Metal:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Grave:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Bone:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Terracotta:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Photo:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Drawing:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Stone:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Coin:default": {
-    "hidden": [],
-    "valuelists": {},
-    "fields": {}
-  },
-  "Excavation:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "FindCollection": {
-    "hidden": [],
-    "fields": {
-      "potteryFormsOverview": {
-        "inputType": "checkboxes"
-      },
-      "potteryFineWareByProvenance": {
-        "inputType": "checkboxes"
-      },
-      "potteryFineWareByProvenanceQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "potteryAmphoraeByProvenance": {
-        "inputType": "checkboxes"
-      },
-      "potteryAmphoraeByProvenanceQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "potteryCoarseWareByFunction": {
-        "inputType": "checkboxes"
-      },
-      "potteryCoarseWareByFunctionQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "miniaturePotteryCollection": {
-        "inputType": "text"
-      },
-      "terracottaCollection": {
-        "inputType": "checkboxes"
-      },
-      "terracottaCollectionQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "buildingMaterialCollection": {
-        "inputType": "checkboxes"
-      },
-      "buildingMaterialCollectionQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "stoneCollection": {
-        "inputType": "checkboxes"
-      },
-      "stoneCollectionQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "metalAndGlasCollection": {
-        "inputType": "checkboxes"
-      },
-      "metalAndGlasCollectionQuantityWeightDetails": {
-        "inputType": "text"
-      },
-      "organicMaterialCollection": {
-        "inputType": "checkboxes"
-      },
-      "organicMaterialCollectionQuantityWeightDetails": {
-        "inputType": "text"
-      }
-    },
-    "parent": "Find",
-    "valuelists": {
-      "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
-      "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
-      "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
-      "terracottaCollection": "Terracotta-Collection-Selinunt",
-      "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
-      "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
-      "stoneCollection": "Stone-Collection-Selinunt",
-      "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
-      "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
-    }
-  },
-  "NegativeFeature": {
-    "commons": [
-      "spatialLocation",
-      "orientation"
-    ],
-    "hidden": [],
-    "parent": "Feature",
-    "valuelists": {
-      "position": "Architecture-position-SelinuntAkropolis",
-      "orientation": "orientation-default-1",
-      "condition": "Building-condition-default",
-      "conditionAmount": "Building-conditionAmount-default",
-      "classificationFeature": "NegativeFeature-classificationFeature-SelinuntAkropolis",
-      "toolTraces": "NegativeFeature-toolTraces-SelinuntAkropolis"
-    },
-    "fields": {
-      "condition": {
-        "inputType": "dropdown"
-      },
-      "conditionAmount": {
-        "inputType": "dropdown"
-      },
-      "conditionComment": {
-        "inputType": "input"
-      },
-      "templePositionOnTheStructure": {
-        "inputType": "text"
-      },
-      "position": {
-        "inputType": "checkboxes"
-      },
-      "classificationFeature": {
-        "inputType": "checkboxes"
-      },
-      "toolTraces": {
-        "inputType": "checkboxes"
-      },
-      "form": {
-        "inputType": "text"
-      },
-      "maximumHeight": {
-        "inputType": "text"
-      },
-      "bibliography": {
-        "inputType": "text"
-      }
-    }
-  }
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "NegativeFeature",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Glass",
+    "Metal",
+    "Stone",
+    "Wood",
+    "Coin",
+    "Mollusk",
+    "FindCollection",
+    "Inscription",
+    "BuildingPart",
+    "ColumnDrum",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
 }

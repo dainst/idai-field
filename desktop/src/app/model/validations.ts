@@ -1,7 +1,7 @@
 import { is, isArray, Predicate, isString, and } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
-    CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation } from 'idai-field-core';
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../util/number-util';
+    CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
+    validateUnsignedFloat, validateUnsignedInt, parseDate } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -143,18 +143,6 @@ export module Validations {
                 document.resource.category
             ];
         }
-    }
-
-
-    function parseDate(dateString: string): Date {
-
-        const dateComponents: string[] = dateString.split('.');
-
-        return new Date(
-            parseInt(dateComponents[2]),
-            parseInt(dateComponents[1]) - 1,
-            parseInt(dateComponents[0])
-        );
     }
 
 

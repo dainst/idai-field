@@ -154,6 +154,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
     public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
+    public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE = 'export.csv.warning.invalidFieldData.single';
+    public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE = 'export.csv.warning.invalidFieldData.multiple';
 
     // Datastore Package
     public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
@@ -1280,6 +1282,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE] = {
+            content: i18n({
+                id: 'messages.export.csv.warning.invalidFieldData.single',
+                value: 'Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE] = {
+            content: i18n({
+                id: 'messages.export.csv.warning.invalidFieldData.multiple',
+                value: 'Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).'
+            }),
+            level: 'warning',
             params: [],
             hidden: false
         };

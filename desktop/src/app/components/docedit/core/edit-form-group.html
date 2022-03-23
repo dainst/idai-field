@@ -10,8 +10,11 @@
                   class="mdi mdi-information-outline float-right"></span>
         </div>
 
-        <div class="card-block">
+        <div *ngIf="isValidFieldData(field)" class="card-block">
             <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+        </div>
+        <div *ngIf="!isValidFieldData(field)" class="card-block">
+            <invalid-field-data [resource]="document['resource']" [field]="field"></invalid-field-data>
         </div>
     </div>
 </div>

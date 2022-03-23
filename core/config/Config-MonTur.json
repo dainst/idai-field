@@ -123,10 +123,6 @@
           "inputType": "radio"
         }
       },
-      "commons": [
-        "orientation",
-        "spatialLocation"
-      ],
       "valuelists": {
         "blockProcessing": "Architecture-blockProcessing-default",
         "blockTreatment": "Architecture-blockTreatment-default",
@@ -142,7 +138,61 @@
         "wallType": "Architecture-wallType-default",
         "wallSide": "BuildingPart-wallSide-MonTur",
         "orientation": "orientation-default-1"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "orientation",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "bibliography",
+            "conditionComment",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "findingPlace",
+            "hasGrouting",
+            "layerAmount",
+            "layerHeight",
+            "markDescription",
+            "materialCharacteristic",
+            "materialForm",
+            "muralCrown",
+            "publicationDatingFinds",
+            "publicationDatingScientific",
+            "publicationDatingStratigraphy",
+            "publicationRemark",
+            "blockProcessing",
+            "blockTreatment",
+            "brickwork",
+            "condition",
+            "conditionAmount",
+            "construction",
+            "mark",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "wallClassification",
+            "wallType",
+            "wallSide"
+          ]
+        }
+      ]
     },
     "Find:default": {
       "fields": {},

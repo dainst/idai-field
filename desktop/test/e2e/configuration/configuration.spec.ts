@@ -200,7 +200,7 @@ describe('configuration --', () => {
     it('swap category form', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         await waitForExist(await ConfigurationPage.getField('gazId'));
         await waitForExist(await ConfigurationPage.getField('description'));
         expect((await ConfigurationPage.getFields()).length).toBeGreaterThan(1);
@@ -212,7 +212,7 @@ describe('configuration --', () => {
         await waitForNotExist(await AddCategoryFormModalPage.getSelectFormButton('Place:default'));
         await AddCategoryFormModalPage.clickSelectForm('Place');
         await AddCategoryFormModalPage.clickConfirmSelection();
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         await waitForExist(await ConfigurationPage.getField('gazId'));
         await waitForNotExist(await ConfigurationPage.getField('description'));
         expect((await ConfigurationPage.getFields()).length).toBe(1);
@@ -222,7 +222,7 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await CategoryPickerPage.clickSelectCategory('Place');
         await ResourcesPage.clickSelectGeometryType();
-        await DoceditPage.clickGotoParentTab();
+        await DoceditPage.clickGotoPropertiesTab();
         await waitForExist(await DoceditPage.getField('gazId'));
         await waitForNotExist(await DoceditPage.getField('description'));
         await DoceditPage.clickCloseEdit();
@@ -460,7 +460,7 @@ describe('configuration --', () => {
     it('hide field', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         await ConfigurationPage.clickOpenContextMenuForField('description');
         await ConfigurationPage.clickContextMenuEditOption();    
         await EditConfigurationPage.clickToggleHiddenSlider();
@@ -471,7 +471,7 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await CategoryPickerPage.clickSelectCategory('Place');
         await ResourcesPage.clickSelectGeometryType();
-        await DoceditPage.clickSelectGroup('parent');
+        await DoceditPage.clickSelectGroup('properties');
         await waitForExist(await DoceditPage.getField('description'));
         await waitForNotExist(await DoceditPage.getFieldFormGroup('description'));
         
@@ -484,26 +484,26 @@ describe('configuration --', () => {
     it('hide parent field', async done => {
 
         await CategoryPickerPage.clickSelectCategory('Operation');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         await ConfigurationPage.clickOpenContextMenuForField('description');
         await ConfigurationPage.clickContextMenuEditOption();    
         await EditConfigurationPage.clickToggleHiddenSlider();
         await EditConfigurationPage.clickConfirm();
         
         await CategoryPickerPage.clickSelectCategory('Trench', 'Operation');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         expect((await(await ConfigurationPage.getField('description')).getAttribute('class')))
             .toContain('hidden');
 
         await CategoryPickerPage.clickSelectCategory('Operation');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         await ConfigurationPage.clickOpenContextMenuForField('description');
         await ConfigurationPage.clickContextMenuEditOption();    
         await EditConfigurationPage.clickToggleHiddenSlider();
         await EditConfigurationPage.clickConfirm();
         
         await CategoryPickerPage.clickSelectCategory('Trench', 'Operation');
-        await ConfigurationPage.clickSelectGroup('parent');
+        await ConfigurationPage.clickSelectGroup('properties');
         expect((await(await ConfigurationPage.getField('description')).getAttribute('class')))
             .not.toContain('hidden');
 

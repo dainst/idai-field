@@ -10,7 +10,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {
@@ -39,7 +39,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {
@@ -67,7 +67,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {
@@ -95,7 +95,7 @@
           "fields": ["diary"]
         },
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["trenchComment"]
         },
         {
@@ -115,7 +115,7 @@
       "description": { "de": "Glass; IT-Referat, 2019" },
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["formDescription", "color", "transparency", "decorationTechnique",
             "decorationDescription", "manufacturingMethod", "objectType", "vesselForm",
             "vesselFormSpecific", "provenance"]
@@ -129,7 +129,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["classification"]
         }
       ]
@@ -141,7 +141,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["temper", "manufacturing", "manufacturingMethod", "brickForm", "brickUsage",
             "formDescription", "clayColorOutside", "decorationTechnique", "featureText", "coatColorOutside",
             "coatColorInside", "specificType", "provenance"]
@@ -159,7 +159,7 @@
           "fields": ["category", "shortName", "shortDescription"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "institution", "projectSupervisor", "contactPerson",
             "contactMail", "staff", "campaigns", "projectURI", "externalReference", "bibliographicReferences",
             "license", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"]
@@ -173,7 +173,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["conditionComment", "graveFeature", "amountIndividuals", "positioningIndividuals",
             "palaeopathologicalReport", "burialCharacteristic", "burialDocumentation", "burialRite",
             "bodyHeightAndRobustness", "positionArms", "positionLegs", "ageDetermination",
@@ -188,7 +188,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["material", "context", "condition", "conditionAmount", "conditionComment",
             "hasRestoration", "buildingType", "buildingTechnique", "buildingCategory",
             "buildingCategorySpecific", "buildingResearchHistory"]
@@ -210,7 +210,7 @@
       "createdBy": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["color", "typeOfWood", "objectType", "manufacturingMethod", "provenance",
             "colorOutside", "colorOutsideMunsell", "colorInside", "colorInsideMunsell", "colorBreak",
             "colorBreakMunsell", "surfaceCondition", "decorationTechnique", "paintColor",
@@ -225,7 +225,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight",
             "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm",
             "materialCharacteristic", "construction", "constructionDetailsDescription",
@@ -250,7 +250,7 @@
             "endDate"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "diaryAbstract"]
         },
         {
@@ -274,7 +274,7 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "gazId", "placeName", "siteClassification", "findspotClassification",
             "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory",
             "findSituation"]
@@ -296,7 +296,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["distinguishingCriteria", "layerClassification", "isNatural", "soilType", "consistency"]
         },
         {
@@ -317,7 +317,7 @@
             "endDate", "isSameAs"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
         },
         {
@@ -342,7 +342,7 @@
       "description": {},
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["condition", "conditionAmount", "conditionComment", "consistency", "distinguishingCriteria",
             "floorClassification", "layerClassification", "mortarBinder"]
         }
@@ -359,7 +359,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "objectType", "condition", "conditionAmount", "conditionComment",
             "language", "content", "comparison"]
         },
@@ -384,7 +384,7 @@
           "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "height", "width", "literature"]
         }
       ]
@@ -396,7 +396,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["materialType", "specificType", "vesselForm", "vesselFormSpecific", "typeNumber",
             "manufacturing", "manufacturingMethod", "temper", "temperAmount", "temperParticles",
             "temperTypeClay", "clayHardness", "clayColorOutside", "clayColorOutsideMunsell",
@@ -418,7 +418,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["vesselForm", "manufacturingMethod", "temper", "temperAmount", "temperParticles",
             "clayColorOutside", "clayColorInside", "coatOutsideType", "decorationTechnique",
             "vesselpart", "Firing", "FormComparisonCompendia", "FormComparisonCompendiadetail",
@@ -434,7 +434,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["soilType", "condition", "conditionAmount", "conditionComment", "distinguishingCriteria",
             "graveType", "specificType", "tombBuilding", "findingPlace", "bibliography",
             "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific",
@@ -454,7 +454,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["boneType", "species", "boneClassification", "burningGrade", "objectType",
             "biologicalAge", "sex"]
         }
@@ -471,7 +471,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "condition", "conditionAmount", "conditionComment"]
         },
         {
@@ -495,7 +495,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["temper", "temperAmount", "temperParticles", "clayStructure", "coatColorInside",
             "coatColorOutside", "surfaceCondition", "manufacturingMethod", "decorationTechnique",
             "formDescription", "vesselForm", "vesselFormSpecific", "provenance", "clayColorBreak",
@@ -510,7 +510,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["drawingMaterial", "drawingTool", "drawingType", "scale"]
         }
       ]
@@ -522,7 +522,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["researchMethod"]
         },
         {
@@ -542,7 +542,7 @@
       "creationDate": "2019",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["material", "temperAmount", "treatment", "workmanship", "color", "formDescription",
             "objectType", "architectureElement", "purpose", "origin", "provenance"]
         }
@@ -555,7 +555,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["metalMaterial", "manufacturingMethod", "preservedDiameter", "frontSideDescription",
             "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint",
             "mintingRuler"]
@@ -577,7 +577,7 @@
           "fields": ["isInstanceOf"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
             "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
             "storageInventoryNumber", "comparison", "bibliography"]
@@ -604,7 +604,7 @@
       "creationDate": "",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["plasterComponents", "color", "composition", "hasDecoration"]
         },
         {
@@ -627,7 +627,7 @@
       "categoryName": "Metal",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["metalMaterial", "formDescription", "manufacturingMethod", "decorationTechnique",
             "objectType", "vesselForm", "vesselFormSpecific", "provenance"]
         }
@@ -660,7 +660,7 @@
           "fields": ["identifier", "category", "shortDescription", "campaign"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {
@@ -687,7 +687,7 @@
       "categoryName": "Excavation",
       "groups": [
         {
-          "name": "child",
+          "name": "properties",
           "fields": ["isIllegal"]
         }
       ]
@@ -703,7 +703,7 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "date"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "sampleType", "labNumber", "weight"]
         },
         {
@@ -727,7 +727,7 @@
           "fields": ["criterion"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["literature"]
         }
       ]
@@ -743,7 +743,7 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description", "literature"]
         },
         {
@@ -764,7 +764,7 @@
             "beginningDate", "endDate"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {
@@ -793,7 +793,7 @@
             "beginningDate", "endDate"]
         },
         {
-          "name": "parent",
+          "name": "properties",
           "fields": ["description"]
         },
         {

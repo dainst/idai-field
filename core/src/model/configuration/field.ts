@@ -1,4 +1,11 @@
+import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/number-util';
+import { parseDate } from '../../tools/parse-date';
+import { Dating } from '../dating';
+import { Dimension } from '../dimension';
+import { Literature } from '../literature';
+import { OptionalRange } from '../optional-range';
 import { Valuelist } from './valuelist';
 
 
@@ -113,6 +120,42 @@ export module Field {
             });
 
             return alternativeTypes ?? [];
+        }
+
+
+        export function isValidFieldData(fieldData: any, inputType: InputType): boolean {
+
+            if ([INPUT, TEXT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
+                return isString(fieldData);
+            } else if ([MULTIINPUT, CHECKBOXES].includes(inputType)) {
+                return isArray(fieldData) && fieldData.every(element => isString(element));
+            } else if (inputType === UNSIGNEDINT) {
+                return validateUnsignedInt(fieldData);
+            } else if (inputType === UNSIGNEDFLOAT) {
+                return validateUnsignedFloat(fieldData);
+            } else if (inputType === FLOAT) {
+                return validateFloat(fieldData);
+            } else if (inputType === BOOLEAN) {
+                return fieldData === true || fieldData === false;
+            } else if (inputType === DATE) {
+                return !isNaN(parseDate(fieldData)?.getTime());
+            } else if (inputType === DROPDOWNRANGE) {
+                return OptionalRange.buildIsOptionalRange(isString)(fieldData);
+            } else if (inputType === DATING) {
+                return isArray(fieldData) && fieldData.every(element => Dating.isDating(element));
+            } else if (inputType === DIMENSION) {
+                return isArray(fieldData) && fieldData.every(element => Dimension.isDimension(element));
+            } else if (inputType === LITERATURE) {
+                return isArray(fieldData) && fieldData.every(element => Literature.isLiterature(element));
+            } else if (inputType === GEOMETRY) {
+                return fieldData.type !== undefined && fieldData.coordinates !== undefined;
+            } else if ([RELATION, INSTANCE_OF].includes(inputType)) {
+                return isObject(fieldData) && Object.values(fieldData).every(relationTargets => {
+                    return isArray(relationTargets) && relationTargets.every(element => isString(element));
+                });
+            } else {
+                return true;
+            }
         }
     }
 }

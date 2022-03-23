@@ -1,7 +1,7 @@
 import { flow, left, reverse } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, Field } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
-import { H, HeadingsAndMatrix } from './csv-export-consts';
+import { HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
 import { CSVHeadingsExpansion } from './csv-headings-expansion';
 
@@ -11,14 +11,9 @@ import { CSVHeadingsExpansion } from './csv-headings-expansion';
  */
 export module CSVMatrixExpansion {
 
-    const DIMENSION = 'dimension';
-
     const expandDimensionItems = CSVExpansion.expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
-
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
-
     const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
-
     const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 5);
 
 
@@ -41,16 +36,22 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandDating(headingsAndMatrix: HeadingsAndMatrix) {
+    export function expandDating(fieldDefinitions: Array<Field>) {
 
-        const indexOfDatingElement = H(headingsAndMatrix).indexOf('dating');
-        if (indexOfDatingElement === -1) return headingsAndMatrix;
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
 
-        return CSVExpansion.objectArrayExpand(
-            headingsAndMatrix,
-            CSVHeadingsExpansion.expandDatingHeadings,
-            expandDatingItems)([indexOfDatingElement]
-        );
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DATING),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    CSVHeadingsExpansion.expandDatingHeadings,
+                    expandDatingItems
+                )
+            );
+        }
     }
 
 
@@ -61,7 +62,7 @@ export module CSVMatrixExpansion {
             return flow(
                 headingsAndMatrix,
                 left,
-                CsvExportUtils.getIndices(fieldDefinitions, DIMENSION),
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DIMENSION),
                 reverse,
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
@@ -73,16 +74,22 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandLiterature(headingsAndMatrix: HeadingsAndMatrix) {
+    export function expandLiterature(fieldDefinitions: Array<Field>) {
 
-        const indexOfDatingElement = H(headingsAndMatrix).indexOf('literature');
-        if (indexOfDatingElement === -1) return headingsAndMatrix;
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
 
-        return CSVExpansion.objectArrayExpand(
-            headingsAndMatrix,
-            CSVHeadingsExpansion.expandLiteratureHeadings,
-            expandLiteratureItems)([indexOfDatingElement]
-        );
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.LITERATURE),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    CSVHeadingsExpansion.expandLiteratureHeadings,
+                    expandLiteratureItems
+                )
+            );
+        }
     }
 
 
@@ -107,9 +114,9 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithOptionalRangeElementsExpanded(valOptionalEndVal: OptionalRange<string>): string[] {
+    function rowsWithOptionalRangeElementsExpanded(optionalRange: OptionalRange<string>): string[] {
 
-        const { value, endValue } = valOptionalEndVal;
+        const { value, endValue } = optionalRange;
         return [value, endValue ? endValue : ''];
     }
 

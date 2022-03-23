@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {SettingsProvider} from './settings/settings-provider';
-import {StateSerializer} from './state-serializer';
+import { Injectable } from '@angular/core';
+import { SettingsProvider } from './settings/settings-provider';
+import { StateSerializer } from './state-serializer';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
-export type StateType = 'resources-state'|'matrix-state'|'tabs-state';
+export type StateType = 'resources-state'|'matrix-state'|'tabs-state'|'configuration-state';
 
 
 @Injectable()

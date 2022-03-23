@@ -1,6 +1,7 @@
 {
   "groups": {
     "stem": "Stammdaten",
+    "properties": "Eigenschaften",
     "time": "Zeit",
     "position": "Lage / Kontext",
     "dimension": "Maße",

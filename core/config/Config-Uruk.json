@@ -189,7 +189,91 @@
         "TerracottaType": "Terracotta-TerracottaType-Uruk",
         "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-Uruk",
         "manufacturingMethod": "Pottery-manufacturingMethod-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside",
+            "Firing",
+            "TerracottaType",
+            "TerracottaTypeSpecific"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "KnappingWasteProduct": {
       "color": "#5c5c8a",
@@ -220,7 +304,78 @@
         "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-Uruk",
         "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "OrientationPossible",
+            "CorticalSurface",
+            "PlaceOperationalSequence",
+            "TechnicalMarks",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "KnappedCore": {
       "color": "#5c5c8a",
@@ -271,7 +426,83 @@
         "color": "KnappingWasteProduct-color-Uruk",
         "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
         "dimensionWidthOfDebitageSurfaces": "position-values-expansion-default"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "CorticalSurface",
+            "ForceOnKnappingPlatform",
+            "KnappingPlatformFeatures",
+            "SecondaryKnappingPlatforms",
+            "dimensionLengthOfDebitageSurfaces",
+            "dimensionWidthOfDebitageSurfaces",
+            "AmountOfDebitageSurfaces",
+            "TechnicalMarks",
+            "TypicalCoreForms",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentOfDrill": {
       "color": "#5c5c8a",
@@ -310,7 +541,80 @@
         "color": "KnappingWasteProduct-color-Uruk",
         "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-Uruk",
         "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "TypeOfDrill",
+            "ProductionMethod",
+            "dimensionPreservedLengthOfDrillingaxis",
+            "dimensionWidthOfDrillfragment",
+            "AmountOfDrillinbitsOntheTool",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentOfCuttingtool": {
       "color": "#5c5c8a",
@@ -338,7 +642,77 @@
         "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
         "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "TypeOfCutter",
+            "ProductionMethod",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentOfHammertool": {
       "color": "#5c5c8a",
@@ -362,7 +736,76 @@
         "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
         "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "ProductionMethod",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentOfChopper": {
       "color": "#5c5c8a",
@@ -386,7 +829,76 @@
         "ProductionMethod": "FragmentOfChopper-ProductionMethod-Uruk",
         "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "ProductionMethod",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentofCoating": {
       "color": "#5c5c8a",
@@ -413,7 +925,77 @@
         "ContactMaterial": "FragmentofCoating-ContactMaterial-Uruk",
         "ProductionMethod": "FragmentofCoating-ProductionMethod-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "ContactMaterial",
+            "ProductionMethod",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "RawMaterial": {
       "color": "#5c5c8a",
@@ -429,7 +1011,74 @@
       "valuelists": {
         "material": "RawMaterial-material-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentofStonevessel": {
       "parent": "Find",
@@ -492,7 +1141,87 @@
         "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
         "vesselForm": "Pottery-vesselForm-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "decorationDescription",
+            "material",
+            "vesselpart",
+            "decorationTechnique",
+            "ProductionMethod",
+            "coatOutsideType",
+            "FormComparisonCompendia",
+            "FormComparisonCompendiadetail",
+            "DecorationComparisonCompendia",
+            "DecorationComparisonCompendiadetail",
+            "ApplicationComparisonCompendia",
+            "ApplicationComparisonCompendiadetail",
+            "Drawing",
+            "vesselForm",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "FragmentOfBead": {
       "color": "#5c5c8a",
@@ -532,7 +1261,80 @@
         "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-Uruk",
         "TracesOfUse": "FragmentOfBead-TracesOfUse-Uruk",
         "color": "KnappingWasteProduct-color-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "material",
+            "ShapeofBead",
+            "KnappingProductionMethod",
+            "TracesofPerforationProductionMethodSideA",
+            "TracesofPerforationProductionMethodSideB",
+            "TracesofPerforationProductionMethodBreakingedge",
+            "TracesOfUse",
+            "color"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Mollusk": {
       "color": "#ff99ff",
@@ -544,7 +1346,73 @@
       },
       "valuelists": {
         "classification": "Mollusk-classification-Uruk"
-      }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "classification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "TypeCatalog:default": {
       "hidden": [],

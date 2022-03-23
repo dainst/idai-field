@@ -107,7 +107,8 @@ function getParentFormId(form, builtInConfiguration, forms, categories, customFo
     if (!parent) return undefined;
 
     return Object.keys(customForms).find(customFormId => {
-        return getForm(customFormId, builtInConfiguration, forms, categories)?.categoryName === parent;
+        return getForm(customFormId, builtInConfiguration, forms, categories, customForms[customFormId])
+            ?.categoryName === parent;
     });
 
 }
@@ -179,7 +180,8 @@ function getCategoriesOrder(customForms, forms, categories, builtInConfiguration
         const orderParents = order.map(categoryName => {
             return getParentCategoryNameForCategoryName(categoryName, customForms, categories, builtInConfiguration);
         });
-        const index = orderParents.lastIndexOf(parent);
+        let index = orderParents.lastIndexOf(parent);
+        if (index === -1) index = order.indexOf(parent);
         if (index === -1) {
             order.push(customForm.categoryName);
         } else {

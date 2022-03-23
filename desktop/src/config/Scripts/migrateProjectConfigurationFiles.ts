@@ -37,8 +37,9 @@ const defaultCategoriesOrder = [
     'Project', 'Operation', 'Trench', 'Building', 'Survey', 'Place', 'Feature', 'Layer', 'Grave', 'Burial',
     'Architecture', 'Floor', 'DrillCoreLayer', 'Wall_surface', 'Area', 'SurveyUnit', 'Sondage', 'Excavation',
     'Find', 'Pottery', 'Terracotta', 'Brick', 'Bone', 'Glass', 'Metal', 'Stone', 'Wood', 'Coin', 'PlasterFragment',
-    'Mollusk', 'Inscription',  'BuildingPart', 'Room', 'RoomCeiling', 'RoomWall', 'RoomFloor', 'ProcessUnit',
-    'Profile', 'Planum', 'Drilling', 'Sample', 'Image', 'Drawing', 'Photo', 'TypeCatalog', 'Type'
+    'Mollusk', 'Inscription', 'Sample', 'BuildingPart', 'Room', 'RoomCeiling', 'RoomWall', 'RoomFloor', 'ProcessUnit',
+    'Profile', 'Planum', 'Drilling', 'SurveyBurial', 'BuildingFloor', 'Quantification', 'Impression',
+    'Image', 'Drawing', 'Photo', 'TypeCatalog', 'Type'
 ];
 
 
@@ -56,7 +57,7 @@ Object.keys(projectConfiguration.forms).forEach(formId => {
     const parentFormId = getParentFormId(form, builtInConfiguration, forms, categories, projectConfiguration.forms);
     const customParentForm = parentFormId ? originalProjectConfiguration.forms[parentFormId] : undefined;
 
-    if (!isCustomized(form) && (!customParentForm || !isCustomized(customParentForm))) return;
+    if (!isCustomized(customForm) && (!customParentForm || !isCustomized(customParentForm))) return;
 
     if (parentFormId) {
         const parentForm = clone(getForm(parentFormId, builtInConfiguration, forms, categories));
@@ -160,8 +161,8 @@ function addToGroup(groups, groupName, fieldName) {
 
 function isCustomized(form) {
 
-    return (!form.fields || Object.keys(form.fields).length === 0)
-        && (!form.commons || form.commons.length === 0);
+    return (form.fields !== undefined && Object.keys(form.fields).length > 0)
+        || (form.commons !== undefined && form.commons.length > 0);
 }
 
 

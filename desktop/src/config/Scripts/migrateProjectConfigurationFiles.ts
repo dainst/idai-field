@@ -37,8 +37,8 @@ const defaultCategoriesOrder = [
     'Project', 'Operation', 'Trench', 'Building', 'Survey', 'Place', 'Feature', 'Layer', 'Grave', 'Burial',
     'Architecture', 'Floor', 'DrillCoreLayer', 'Wall_surface', 'Area', 'SurveyUnit', 'Sondage', 'Excavation',
     'Find', 'Pottery', 'Terracotta', 'Brick', 'Bone', 'Glass', 'Metal', 'Stone', 'Wood', 'Coin', 'PlasterFragment',
-    'Mollusk', 'Inscription', 'Sample', 'BuildingPart', 'Room', 'RoomCeiling', 'RoomWall', 'RoomFloor', 'ProcessUnit',
-    'Profile', 'Planum', 'Drilling', 'SurveyBurial', 'BuildingFloor', 'Quantification', 'Impression',
+    'Mollusk', 'Inscription', 'Sample', 'Profile', 'Planum', 'BuildingPart', 'Room', 'RoomCeiling', 'RoomWall',
+    'RoomFloor', 'ProcessUnit', 'Drilling', 'SurveyBurial', 'BuildingFloor', 'Quantification', 'Impression',
     'Image', 'Drawing', 'Photo', 'TypeCatalog', 'Type'
 ];
 

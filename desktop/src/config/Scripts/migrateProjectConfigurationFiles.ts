@@ -57,7 +57,10 @@ Object.keys(projectConfiguration.forms).forEach(formId => {
     const parentFormId = getParentFormId(form, builtInConfiguration, forms, categories, projectConfiguration.forms);
     const customParentForm = parentFormId ? originalProjectConfiguration.forms[parentFormId] : undefined;
 
-    if (!isCustomized(customForm) && (!customParentForm || !isCustomized(customParentForm))) return;
+    if (!isCustomized(customForm) && (!customParentForm || !isCustomized(customParentForm))) {
+        delete customForm.commons;
+        return;
+    }
 
     if (parentFormId) {
         const parentForm = clone(getForm(parentFormId, builtInConfiguration, forms, categories));

@@ -43,37 +43,44 @@ const defaultCategoriesOrder = [
 ];
 
 
-const projectPrefix: string = process.argv[2];
+fs.readdirSync('.')
+    .filter(fileName => fileName.startsWith('Config-'))
+    .map(fileName => fileName.replace('Config-', '').replace('.json', ''))
+    .forEach(migrate);
+    
 
-const projectConfiguration = JSON.parse(fs.readFileSync('Config-' + projectPrefix + '.json'));
-const originalProjectConfiguration = clone(projectConfiguration);
-const categories = JSON.parse(fs.readFileSync('Library/Categories.json'));
-const forms = JSON.parse(fs.readFileSync('Library/Forms.json'));
-const builtInConfiguration = new BuiltInConfiguration(projectPrefix);
+function migrate(projectPrefix) {
 
-Object.keys(projectConfiguration.forms).forEach(formId => {
-    const customForm = projectConfiguration.forms[formId];
-    const form = clone(getForm(formId, builtInConfiguration, forms, categories, customForm));
-    const parentFormId = getParentFormId(form, builtInConfiguration, forms, categories, projectConfiguration.forms);
-    const customParentForm = parentFormId ? originalProjectConfiguration.forms[parentFormId] : undefined;
+    const projectConfiguration = JSON.parse(fs.readFileSync('Config-' + projectPrefix + '.json'));
+    const originalProjectConfiguration = clone(projectConfiguration);
+    const categories = JSON.parse(fs.readFileSync('Library/Categories.json'));
+    const forms = JSON.parse(fs.readFileSync('Library/Forms.json'));
+    const builtInConfiguration = new BuiltInConfiguration(projectPrefix);
 
-    if (!isCustomized(customForm) && (!customParentForm || !isCustomized(customParentForm))) {
+    Object.keys(projectConfiguration.forms).forEach(formId => {
+        const customForm = projectConfiguration.forms[formId];
+        const form = clone(getForm(formId, builtInConfiguration, forms, categories, customForm));
+        const parentFormId = getParentFormId(form, builtInConfiguration, forms, categories, projectConfiguration.forms);
+        const customParentForm = parentFormId ? originalProjectConfiguration.forms[parentFormId] : undefined;
+
+        if (!isCustomized(customForm) && (!customParentForm || !isCustomized(customParentForm))) {
+            delete customForm.commons;
+            return;
+        }
+
+        if (parentFormId) {
+            const parentForm = clone(getForm(parentFormId, builtInConfiguration, forms, categories));
+            setGroups(parentForm, customParentForm, false);
+            form.groups = mergeGroupsConfigurations(parentForm.groups ?? {}, form.groups ?? {});
+        }
+        setGroups(form, customForm, true);
         delete customForm.commons;
-        return;
-    }
+    });
 
-    if (parentFormId) {
-        const parentForm = clone(getForm(parentFormId, builtInConfiguration, forms, categories));
-        setGroups(parentForm, customParentForm, false);
-        form.groups = mergeGroupsConfigurations(parentForm.groups ?? {}, form.groups ?? {});
-    }
-    setGroups(form, customForm, true);
-    delete customForm.commons;
-});
+    projectConfiguration.order = getCategoriesOrder(projectConfiguration.forms, forms, categories, builtInConfiguration);
 
-projectConfiguration.order = getCategoriesOrder(projectConfiguration.forms, forms, categories, builtInConfiguration);
-
-fs.writeFileSync('Config-' + projectPrefix + '.json', JSON.stringify(projectConfiguration, null, 2));
+    fs.writeFileSync('Config-' + projectPrefix + '.json', JSON.stringify(projectConfiguration, null, 2));
+}
 
 
 function getForm(formId, builtInConfiguration, forms, categories, customForm?) {

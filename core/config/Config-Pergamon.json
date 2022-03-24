@@ -2989,7 +2989,67 @@
       "parent": "Feature",
       "fields": {},
       "hidden": [],
-      "color": "#CC6600"
+      "color": "#CC6600",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
     },
     "TypeCatalog:default": {
       "hidden": [],

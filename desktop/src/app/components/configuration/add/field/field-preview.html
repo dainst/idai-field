@@ -12,7 +12,9 @@
                 <span>{{getInputTypeLabel()}}</span>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
-                <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
+                <valuelist-view [valuelist]="field.valuelist"
+                                [showDescription]="false"
+                                [largeList]="true"></valuelist-view>
             </li>
         </ul>
     </div>

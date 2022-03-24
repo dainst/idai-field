@@ -114,7 +114,6 @@ function getParentFormId(form, builtInConfiguration, forms, categories, customFo
         return getForm(customFormId, builtInConfiguration, forms, categories, customForms[customFormId])
             ?.categoryName === parent;
     });
-
 }
 
 
@@ -165,7 +164,8 @@ function addToGroup(groups, groupName, fieldName) {
 function isCustomized(form) {
 
     return (form.fields !== undefined && Object.keys(form.fields).length > 0)
-        || (form.commons !== undefined && form.commons.length > 0);
+        || (form.commons !== undefined && form.commons.length > 0)
+        || form.parent !== undefined;
 }
 
 

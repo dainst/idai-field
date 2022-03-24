@@ -56,7 +56,7 @@
     },
     "linux": {
       "target": "AppImage",
-      "icon": "img/linux/logo256x256.png",
+      "icon": "img/logo.png",
       "publish": "github",
       "artifactName": "iDAI.field-${version}-Linux.${ext}",
       "category": "Science"

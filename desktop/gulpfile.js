@@ -5,7 +5,6 @@ var rename = require('gulp-rename');
 gulp.task('copy-fonts', () => {
 
     return gulp.src([
-        'node_modules/roboto-fontface/fonts/**/*',
         'node_modules/@mdi/font/fonts/**/*'
     ])
     .pipe(gulp.dest('src/fonts'));

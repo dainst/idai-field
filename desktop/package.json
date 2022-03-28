@@ -96,6 +96,7 @@
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
     "@electron/remote": "2.0.1",
+    "@fontsource/open-sans": "^4.5.8",
     "@geoman-io/leaflet-geoman-free": "^2.10.0",
     "@mdi/font": "6.5.95",
     "@ng-bootstrap/ng-bootstrap": "6.1.0",

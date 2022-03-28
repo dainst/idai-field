@@ -1,6 +1,7 @@
-import {Injectable, SecurityContext} from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ImageStore, ImageVariant} from 'idai-field-core';
+import { Injectable, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ImageStore, ImageVariant } from 'idai-field-core';
+
 
 @Injectable()
 /**
@@ -19,7 +20,9 @@ export class ImageUrlMaker {
     private originalUrls: { [imageKey: string]: SafeResourceUrl} = {};
     private thumbnailUrls: { [imageKey: string]: SafeResourceUrl} = {};
 
+
     constructor(private sanitizer: DomSanitizer, private imagestore: ImageStore) {}
+
 
     /**
      * Returns a URL to the image for the requested image resource.
@@ -60,7 +63,7 @@ export class ImageUrlMaker {
      * Forces a revokation of all URLs objects created by {@link getUrl}, freeing the linked binary data
      * up for garbage collection.
      */
-     public revokeAllUrls() {
+    public revokeAllUrls() {
 
         for (const imageId of Object.keys(this.originalUrls)) {
             this.revokeUrl(imageId, ImageVariant.ORIGINAL);
@@ -71,7 +74,8 @@ export class ImageUrlMaker {
         }
     }
 
-     private revokeUrl(imageId: string, type: ImageVariant) {
+
+    private revokeUrl(imageId: string, type: ImageVariant) {
 
         const requestedList = (type === ImageVariant.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
         if (!requestedList[imageId]) return;

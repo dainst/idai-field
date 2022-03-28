@@ -4,6 +4,7 @@ import { SettingsProvider } from '../settings/settings-provider';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
+
 @Injectable()
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
@@ -21,12 +22,13 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
     public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
 
         const settings = this.settingsProvider.getSettings();
-        const syncSource = settings.syncTargets[project];
 
+        const syncSource = settings.syncTargets[project];
         const address = syncSource.address;
         const password = syncSource.password;
 
-        const params = (type) ? { type } : {};
+        const params = type ? { type } : {};
+
         return axios({
             method: 'put',
             url: address + '/files/' + project + '/' + uuid,
@@ -49,11 +51,10 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-
         const address = syncSource.address;
         const password = syncSource.password;
 
-        const response = await axios({
+        await axios({
             method: 'delete',
             url: address + '/files/' + project + '/' + uuid,
             headers: {
@@ -70,15 +71,11 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * are returned, otherwise only images with the requested variants are returned.
      * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
      */
-    public async getFileInfos(
-        project: string,
-        types: ImageVariant[]
-    ): Promise<{ [uuid: string]: FileInfo }> {
+    public async getFileInfos(project: string,types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo }> {
 
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-
         const url = syncSource.address;
         const password = syncSource.password;
 
@@ -86,12 +83,8 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
     }
 
 
-    public async getFileInfosUsingCredentials(
-        url: string,
-        password: string,
-        project: string,
-        types: ImageVariant[]
-    ): Promise<{ [uuid: string]: FileInfo }> {
+    public async getFileInfosUsingCredentials(url: string, password: string, project: string,
+                                              types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo }> {
 
         return this.runFileInfoQuery(url, password, project, types);
     }
@@ -120,10 +113,10 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * @param project the project's name
      */
     public async getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer> {
+        
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];
-
         const url = syncSource.address;
         const password = syncSource.password;
 
@@ -131,18 +124,15 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
     }
 
 
-    public async getDataUsingCredentials(
-        url: string,
-        password: string,
-        uuid: string,
-        type: ImageVariant,
-        project: string
-    ): Promise<Buffer | null> {
+    public async getDataUsingCredentials(url: string, password: string, uuid: string, type: ImageVariant,
+                                         project: string): Promise<Buffer | null> {
 
         return this.runDataQuery(url, password, project, uuid, type);
     }
 
+
     private async runDataQuery(url: string, password: string, project: string, uuid: string, type: ImageVariant): Promise<Buffer> {
+
         const response = await axios({
             method: 'get',
             url: url + '/files/' + project + '/' + uuid,

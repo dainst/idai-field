@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
 
 const nativeImage = typeof window !== 'undefined'
@@ -8,6 +7,7 @@ const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('j
 const ExifImage = typeof window !== 'undefined' ? window.require('exif').ExifImage : require('exif').ExifImage;
 
 const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
+
 
 @Injectable()
 /**
@@ -21,7 +21,6 @@ const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
  * used as a fallback in case the nativeImage conversion doesn't work.
  */
 export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
-
 
     public async generate(buffer: Buffer): Promise<Buffer> {
 

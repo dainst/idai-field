@@ -1,22 +1,16 @@
-import {
-    ImageStore,
-    ImageVariant,
-    PouchdbDatastore
-} from 'idai-field-core';
-
 import { to } from 'tsfun';
+import { ImageStore, ImageVariant, PouchdbDatastore } from 'idai-field-core';
+
 
 const isThumbBroken = (data: Blob | any | undefined) => data === undefined || data.size === 0 || data.size === 2;
+
 
 /**
  * This is a migration function for upgrading the client version 2 to 3, which moved thumbnail data from couch/pouchdb to
  * the file system.
  */
-export const copyThumbnailsFromDatabase = async (
-    project: string,
-    pouchDatastore: PouchdbDatastore,
-    imageStore: ImageStore
-): Promise<void> => {
+export const copyThumbnailsFromDatabase = async (project: string, pouchDatastore: PouchdbDatastore,
+                                                 imageStore: ImageStore): Promise<void> => {
 
     try {
         const thumbnailCount = Object.keys(await imageStore.getFileInfos(project, [ImageVariant.THUMBNAIL])).length;

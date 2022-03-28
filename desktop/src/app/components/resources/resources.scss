@@ -46,7 +46,7 @@ $deactivated-button-color: lightgray;
 .resources-nav {
   position: relative;
   z-index: 1009;
-  height: 49px;
+  height: $toolbar-height;
   padding-top: 2px;
   padding-bottom: 6px;
 

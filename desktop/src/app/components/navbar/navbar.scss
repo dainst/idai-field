@@ -3,6 +3,7 @@ $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
 $tab-separator-color: darken($navbar-default-bg, 7%);
 $link-hover-color: lighten($navbar-default-bg, 30%);
 $navbar-link-color: $gray-800;
+$border-radius: 4px;
 
 @import 'taskbar';
 @import 'projects';
@@ -13,7 +14,7 @@ $navbar-link-color: $gray-800;
 
   .nav-item {
     -webkit-app-region: no-drag;
-    max-height: 51px;
+    max-height: $navbar-height;
   }
 
   .dropdown-menu {
@@ -44,12 +45,11 @@ $navbar-link-color: $gray-800;
 }
 
 .navbar-tabbed .nav-link {
-  padding: 0.7em 1em;
   margin-top: 0.3em;
 }
 
 #non-resources-tab {
-  height: 51px;
+  height: $navbar-height;
 
   button {
     -webkit-app-region: no-drag;
@@ -70,23 +70,23 @@ $navbar-link-color: $gray-800;
   }
 
   a.nav-link {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
     position: relative;
 
     &:before,
     &:after {
       position: absolute;
       bottom: 1px;
-      width: 6px;
-      height: 6px;
+      width: $border-radius;
+      height: $border-radius;
       content: " ";
     }
     &:before {
-      left: -5px;
+      left: 1 - $border-radius;
     }
     &:after {
-      right: -5px;
+      right: 1 - $border-radius;
     }
 
     &:focus {
@@ -102,7 +102,7 @@ $navbar-link-color: $gray-800;
       &:before {
         border-color: $tab-bg-color;
         box-shadow: 2px 2px 0 $tab-bg-color;
-        border-bottom-right-radius: 6px;
+        border-bottom-right-radius: $border-radius;
         border-bottom: 1px solid $tab-bg-color;
         border-right: 1px solid $tab-bg-color;
       }
@@ -110,7 +110,7 @@ $navbar-link-color: $gray-800;
       &:after {
         border-color: $tab-bg-color;
         box-shadow: -2px 2px 0 $tab-bg-color;
-        border-bottom-left-radius: 6px;
+        border-bottom-left-radius: $border-radius;
         border-bottom: 1px solid $tab-bg-color;
         border-left: 1px solid $tab-bg-color;
       }
@@ -136,7 +136,7 @@ $navbar-link-color: $gray-800;
       &:before {
         border-color: $tab-bg-color-hover;
         box-shadow: 2px 2px 0 $tab-bg-color-hover;
-        border-bottom-right-radius: 6px;
+        border-bottom-right-radius: $border-radius;
         border-bottom: 1px solid $tab-bg-color-hover;
         border-right: 1px solid $tab-bg-color-hover;
       }
@@ -144,15 +144,15 @@ $navbar-link-color: $gray-800;
       &:after {
         border-color: $tab-bg-color-hover;
         box-shadow: -2px 2px 0 $tab-bg-color-hover;
-        border-bottom-left-radius: 6px;
+        border-bottom-left-radius: $border-radius;
         border-bottom: 1px solid $tab-bg-color-hover;
         border-left: 1px solid $tab-bg-color-hover;
       }
     }
 
     .mdi-home {
-      font-size: 23px;
-      line-height: 23px;
+      font-size: 22px;
+      line-height: 22px;
 
       &:hover {
         color: inherit;
@@ -185,7 +185,7 @@ $navbar-link-color: $gray-800;
     }
 
     a.nav-link {
-      height: 48px;
+      height: $navbar-height - 3px;
       padding-right: 9px !important;
 
       .closable-tab-label {

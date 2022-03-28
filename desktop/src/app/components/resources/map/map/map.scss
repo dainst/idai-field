@@ -7,7 +7,7 @@
 #map-container {
   z-index: 1008;
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(100vh - #{$navbar-height + $toolbar-height});
   user-select: none;
 
   .leaflet-control-zoom {

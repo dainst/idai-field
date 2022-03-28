@@ -13,7 +13,7 @@ types {
   }
 
   #type-grid {
-    height: calc(100vh - 100px);
+    height: calc(100vh - #{$navbar-height + $toolbar-height});
     margin-top: 2px;
     margin-left: -15px;
     margin-right: -15px;

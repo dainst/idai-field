@@ -89,6 +89,8 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
         // see https://stackoverflow.com/a/16684530
         let results = [];
+        if (!fs.existsSync(dir)) return results;
+
         const list: string[] = fs.readdirSync(dir).filter(name => !name.includes('DS_Store'));
 
         for (const file of list) {

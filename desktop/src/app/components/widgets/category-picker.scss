@@ -179,17 +179,17 @@ category-picker .category-item,
     border-style: none;
     width: 100%;
     background-color: white !important;
-    color: #5572a1;
+    color: $primary-button-color;
 
     &:hover {
-        color: #5572a1;
+        color: $primary-button-color;
         background-color: darken(white, 5%) !important;
     }
 }
 
 .add-new-category-button {
     border-bottom-style: solid;
-    border-bottom-color: lighten(#5572a1, 33%);
+    border-bottom-color: lighten($primary-button-color, 33%);
 }
 
 .popover-inner {

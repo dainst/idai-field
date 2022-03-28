@@ -152,9 +152,9 @@ category-switcher-button {
 
 .btn-outline-primary:active,
 .btn-outline-primary:focus {
-  color: #5572A1 !important;
+  color: $primary-button-color !important;
   background-color: #fff !important;
-  border-color: #5572A1 !important;
+  border-color: $primary-button-color !important;
 }
 
 .btn-outline-primary:active {
@@ -163,7 +163,7 @@ category-switcher-button {
 
 .show > .btn-outline-primary.dropdown-toggle {
   @extend :active;
-  border-color: #5572A1;
+  border-color: $primary-button-color;
 }
 
 .dropdown {

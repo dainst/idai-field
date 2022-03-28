@@ -78,41 +78,41 @@ body {
 }
 
 .btn-primary {
-  background-color: rgba(85, 114, 161, 1);
-  border-color: rgba(85, 114, 161, 1);
+  background-color: $primary-button-color;
+  border-color: $primary-button-color;
 }
 
 .btn-primary:hover {
-  background-color: lighten(rgba(85, 114, 161, 1), 10%);
-  border-color: lighten(rgba(85, 114, 161, 1), 10%);
+  background-color: lighten($primary-button-color, 10%);
+  border-color: lighten($primary-button-color, 10%);
 }
 
 .btn-primary:disabled, .btn-primary.disabled {
-  background-color: darken(rgba(85, 114, 161, 1), 10%);
-  border-color: darken(rgba(85, 114, 161, 1), 10%);
+  background-color: darken($primary-button-color, 10%);
+  border-color: darken($primary-button-color, 10%);
   cursor: not-allowed;
 }
 
 .btn-primary:active, .btn-primary.active {
-  background-color: saturate(rgba(85, 114, 161, 1), 10%);
-  border-color: saturate(rgba(85, 114, 161, 1), 10%);
+  background-color: saturate($primary-button-color, 10%);
+  border-color: saturate($primary-button-color, 10%);
 }
 
 .btn-outline-primary {
-  border-color: #5572A1;
-  color: #5572A1;
+  border-color: $primary-button-color;
+  color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:hover {
-  border-color: lighten(#5572A1, 10%);
-  color: lighten(#5572A1, 10%);
+  border-color: lighten($primary-button-color, 10%);
+  color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  border-color: darken(#5572A1, 10%);
-  color: darken(#5572A1, 10%);
+  border-color: darken($primary-button-color, 10%);
+  color: darken($primary-button-color, 10%);
   cursor: not-allowed;
   background-color: white;
 }

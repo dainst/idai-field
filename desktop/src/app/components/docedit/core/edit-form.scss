@@ -25,7 +25,7 @@
               margin: 5px 12px;
 
               &.active {
-                background-color: #5572a1;
+                background-color: $primary-button-color;
               }
             }
           }
@@ -90,4 +90,3 @@
     }
   }
 }
-

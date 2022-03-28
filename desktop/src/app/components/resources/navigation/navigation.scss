@@ -33,18 +33,18 @@ navigation {
 
     .root-document ~ .navigation-button,
     .root-document ~ .navigation-button:active {
-      color: lighten(#5572A1, 30%);
-      border-color: lighten(#5572A1, 30%);
+      color: lighten($primary-button-color, 30%);
+      border-color: lighten($primary-button-color, 30%);
     }
 
     .root-document ~ .navigation-button:hover {
-      color: lighten(#5572A1, 35%);
-      border-color: lighten(#5572A1, 35%);
+      color: lighten($primary-button-color, 35%);
+      border-color: lighten($primary-button-color, 35%);
     }
 
     .root-document + .navigation-button,
     .root-document + .navigation-button:hover {
-      border-left-color: #5572A1;
+      border-left-color: $primary-button-color;
     }
 
     #navigation-button-group {
@@ -64,7 +64,7 @@ navigation {
     }
 
     .navigation-button:not(:last-child):before {
-      border-left-color: darken(#5572A1, 5%);
+      border-left-color: darken($primary-button-color, 5%);
       border-width: 6px;
       margin-top: -6px;
     }
@@ -76,7 +76,7 @@ navigation {
     }
 
     .root-document ~ .navigation-button:not(:last-child):before {
-      border-left-color: lighten(#5572A1, 30%);
+      border-left-color: lighten($primary-button-color, 30%);
     }
 
     #hierarchy-mode-switch {

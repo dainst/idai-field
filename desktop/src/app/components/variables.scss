@@ -31,10 +31,10 @@ $grid-breakpoints: (
 ) !default;
 
 //== Navbar
-$navbar-default-color:       #fff !default;
-$navbar-default-bg:          rgba(85, 114, 161, 1) !default;
+$navbar-default-color:       #333 !default;
+$navbar-default-bg:          #ccc !default;
 $navbar-default-border:      transparent !default;
-$navbar-dark-color:          #fff !default;
+$navbar-dark-color:          #333 !default;
 
 $brand-primary:           #37588e !default;
 

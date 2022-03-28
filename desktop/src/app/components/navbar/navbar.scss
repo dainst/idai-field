@@ -1,7 +1,8 @@
 $tab-bg-color: $gray-100;
 $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
-$tab-separator-color: lighten($navbar-default-bg, 7%);
+$tab-separator-color: darken($navbar-default-bg, 7%);
 $link-hover-color: lighten($navbar-default-bg, 30%);
+$navbar-link-color: $gray-800;
 
 @import 'taskbar';
 @import 'projects';
@@ -26,7 +27,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 }
 
 .navbar a {
-  color: #fff;
+  color: $navbar-link-color;
   cursor: default;
 
   &:hover {
@@ -39,7 +40,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 }
 
 .navbar button .mdi:hover {
-  color: #fff;
+  color: $navbar-link-color;
 }
 
 .navbar-tabbed .nav-link {
@@ -89,7 +90,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
 
     &:focus {
-      color: #fff;
+      color: $navbar-link-color;
       outline: none;
     }
 
@@ -118,19 +119,11 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
         color: #000;
         background-color: #dee2e6;
       }
-
-      .mdi-home {
-        color: $navbar-default-bg;
-
-        &:hover {
-          color: $navbar-default-bg;
-        }
-      }
     }
 
     &:not(.active) {
       .mdi-close:hover {
-        color: #fff;
+        color: $navbar-link-color;
         background-color: lighten($navbar-default-bg, 15%);
       }
     }
@@ -138,7 +131,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     &:hover:not(.active) {
       background-color: $tab-bg-color-hover;
       z-index: 5;
-      color: white;
+      color: $navbar-link-color;
 
       &:before {
         border-color: $tab-bg-color-hover;
@@ -261,4 +254,3 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
   }
 }
-

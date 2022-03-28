@@ -605,7 +605,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.selectCategory(this.clonedProjectConfiguration.getCategory(this.selectedCategory.name));
         } else if (selectedCategoryName) {
             this.selectCategory(this.clonedProjectConfiguration.getCategory(selectedCategoryName));
-        };
+        }
 
         await this.setCategoriesFilter(
             this.selectedCategoriesFilter ?? this.categoriesFilterOptions.find(filter => {
@@ -625,7 +625,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             if (reindexConfiguration) {
                 await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
             }
-            if (!this.projectConfiguration.getCategory(this.selectedCategory.name)) {
+            if (!this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
                 this.selectedCategory = undefined;
             }
             await this.loadCategories();

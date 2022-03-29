@@ -33,9 +33,13 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async readFile(path: string): Promise<Buffer> {
 
         return new Promise((resolve, reject) => {
+
             fs.readFile(path, (err: Error, data: Buffer) => {
-                if (err) reject(err);
-                resolve(data);
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
             });
         });
     }
@@ -45,8 +49,11 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
         return new Promise((resolve, reject) => {
             fs.rm(path, {recursive}, (err: Error) => {
-                if (err) reject(err);
-                resolve();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -56,8 +63,11 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
         return new Promise((resolve, reject) => {
             fs.mkdir(path, {recursive}, (err: Error) => {
-                if (err) reject(err);
-                resolve();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
             });
         });
     }

@@ -12,21 +12,21 @@ interface SyncDifference {
 
 
 export class ImageSyncService {
-    private intervalDuration = 1000 * 60 * 5;
+
+    private readonly intervalDuration = 1000 * 60 * 5;
 
     private active: ImageVariant[] = [];
-    private schedules: {[variant in ImageVariant]?: ReturnType<typeof setTimeout>} = {}
-    private status: {[variant in ImageVariant]: SyncStatus} = {
-        "original_image": SyncStatus.Offline,
-        "thumbnail_image": SyncStatus.Offline
-    }
+    private schedules: { [variant in ImageVariant]?: ReturnType<typeof setTimeout> } = {};
+    private status: { [variant in ImageVariant]: SyncStatus } = {
+        'original_image': SyncStatus.Offline,
+        'thumbnail_image': SyncStatus.Offline
+    };
 
-    constructor(
-        private imageStore: ImageStore,
-        private remoteImagestore: RemoteImageStoreInterface
-    ) {}
+    constructor(private imageStore: ImageStore,
+                private remoteImagestore: RemoteImageStoreInterface) {}
 
-    public getStatus(): {[variant in ImageVariant]: SyncStatus} {
+
+    public getStatus(): { [variant in ImageVariant]: SyncStatus } {
 
         return this.status;
     }
@@ -37,12 +37,12 @@ export class ImageSyncService {
      */
      public startSync(variant: ImageVariant) {
 
-        console.log(`Starting sync for ${variant}.`)
-        if(!(variant in this.active)) {
-            this.active.push(variant)
+        console.log(`Starting sync for ${variant}.`);
+        if (!(variant in this.active)) {
+            this.active.push(variant);
         }
 
-        if(variant in this.schedules) {
+        if (variant in this.schedules) {
             // If there is a sync schedule, stop schedule because we will
             // sync immediately.
             clearTimeout(this.schedules[variant]);
@@ -57,11 +57,11 @@ export class ImageSyncService {
      */
     public stopSync(variant: ImageVariant) {
 
-        console.log(`Stopping sync for ${variant}.`)
+        console.log(`Stopping sync for ${variant}.`);
 
         this.active = this.active.filter((value) => value !== variant);
 
-        if(variant in this.schedules) {
+        if (variant in this.schedules) {
             clearTimeout(this.schedules[variant]);
         }
 
@@ -79,6 +79,7 @@ export class ImageSyncService {
 
 
     private scheduleNextSync(variant: ImageVariant) {
+
         if (!this.active.includes(variant)) return;
 
         this.schedules[variant] = setTimeout(this.sync.bind(this), this.intervalDuration, variant);
@@ -121,7 +122,7 @@ export class ImageSyncService {
             }
 
             for (const uuid of differences.missingRemotely) {
-                
+
                 if (!this.active.includes(variant)) break; // Stop if sync was disabled while iterating
                 this.status[variant] = SyncStatus.Pushing;
 
@@ -139,8 +140,7 @@ export class ImageSyncService {
 
             // Set SyncStatus.Offline if sync was disabled while running sync, otherwise set SyncStatus.InSync
             this.status[variant] = this.active.includes(variant) ? SyncStatus.InSync : SyncStatus.Offline;
-        }
-        catch (e){
+        } catch (e) {
             this.status[variant] = SyncStatus.Error;
             console.error(e);
         }
@@ -184,6 +184,6 @@ export class ImageSyncService {
             missingRemotely: missingRemotely,
             deleteLocally: deleteLocally,
             deleteRemotely: deleteRemotely
-        } as SyncDifference
+        } as SyncDifference;
     }
 }

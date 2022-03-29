@@ -85,7 +85,9 @@ export class SettingsService {
 
         this.pouchdbServer.setPassword(settings.hostPassword);
 
-        return this.settingsProvider.setSettingsAndSerialize(settings).then(() => settings);
+        await this.settingsProvider.setSettingsAndSerialize(settings);
+
+        return settings;
     }
 
 

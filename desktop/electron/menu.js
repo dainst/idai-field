@@ -265,6 +265,11 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.configuration.valuelistManagement'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)
+            },
+            {
+                label: messages.get('menu.configuration.importConfiguration'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'importConfiguration'),
+                enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
             }, {

@@ -45,6 +45,7 @@ import { ConfigurationGuard } from './configuration-guard';
 import { GroupListingComponent } from './add/group/group-listing.component';
 import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relations-info.component';
 import { ConfigurationState } from './configuration-state';
+import { ImportConfigurationModalComponent } from './load/import-configuration-modal.component';
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import { ConfigurationState } from './configuration-state';
         ExtendValuelistModalComponent,
         ConfigurationChangeNotificationModalComponent,
         ConfigurationConflictsModalComponent,
-        HierarchicalRelationsInfoComponent
+        HierarchicalRelationsInfoComponent,
+        ImportConfigurationModalComponent
     ],
     providers: [
         ConfigurationChangeNotifications,
@@ -123,7 +125,8 @@ import { ConfigurationState } from './configuration-state';
         SaveModalComponent,
         SaveProcessModalComponent,
         ConfigurationChangeNotificationModalComponent,
-        ConfigurationConflictsModalComponent
+        ConfigurationConflictsModalComponent,
+        ImportConfigurationModalComponent
     ]
 })
 

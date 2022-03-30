@@ -27,18 +27,5 @@ resources-search-bar {
         width: 100% !important;
       }
     }
-
-    #resources-search-bar-filter-button {
-      right: 19px !important;
-
-      .search-filter {
-        height: 39px !important;
-      }
-    }
-
-    resources-search-constraints {
-      position: absolute;
-      top: 39px;
-    }
   }
 }

@@ -37,9 +37,11 @@
                             <input id="import-file-input" class="file-input" type="file"
                                    accept="{{allowedFileExtensions}}"
                                    (change)="selectFile($event)">
-                            <label for="import-file-input" class="btn btn-secondary file-input-label">
-                                <span class="mdi mdi-folder"></span>
-                            </label>
+                            <div class="input-group-append">
+                                <label for="import-file-input" class="btn btn-secondary file-input-label">
+                                    <span class="mdi mdi-folder"></span>
+                                </label>
+                            </div>
                         </div>
 
                     </div>
@@ -58,15 +60,15 @@
                     </div>
 
                     <div *ngIf="isDefaultFormat()">
-                        <div  
+                        <div
                             (click)="setMergeMode(false)"
                             id="radiobutton-merge-mode-false">
                             <div class="form-group form-check-inline">
-                            <input type="radio" 
+                            <input type="radio"
                                 class="form-check-input"
-                                name="radiobutton-merge-mode" 
+                                name="radiobutton-merge-mode"
                                 [checked]="!isMergeMode()" />
-                            <label for="radiobutton-merge-mode-false" 
+                            <label for="radiobutton-merge-mode-false"
                                 class="form-check-label"
                                 i18n="@@import.regularOption.label">
                                 Neue Ressourcen importieren</label>
@@ -77,15 +79,15 @@
                                 bereits vergeben ist, werden ignoriert.
                             </div>
                         </div>
-                        <div 
+                        <div
                             (click)="setMergeMode(true)"
                             id="radiobutton-merge-mode-true">
                             <div class="form-group form-check-inline">
-                                <input type="radio" 
+                                <input type="radio"
                                     class="form-check-input"
-                                    name="radiobutton-merge-mode" 
+                                    name="radiobutton-merge-mode"
                                     [checked]="isMergeMode()" />
-                                <label for="radiobutton-merge-mode-true" 
+                                <label for="radiobutton-merge-mode-true"
                                     class="form-check-label"
                                     i18n="@@import.mergeOption.label">
                                     Vorhandene Ressource ergänzen

@@ -28,10 +28,8 @@
     </div>
 
     <div *ngIf="!isInTypesManagement() || isInExtendedSearchMode()" class="col-md-6 mr-md-auto">
-        <div class="row">
-            <div id="search-bar-container"
-                 [class.col-md-9]="!isInTypesManagement()"
-                 [class.col-md-12]="isInTypesManagement()">
+        <div class="d-flex">
+            <div id="search-bar-container" class="flex-grow-1">
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
                                       [categories]="getCategoryFilters()"
@@ -41,8 +39,8 @@
                 </resources-search-bar>
             </div>
 
-            <div *ngIf="!isInTypesManagement()" id="buttons-container" class="col-md-3">
-                <div class="btn-group resources-mode-buttons">
+            <div *ngIf="!isInTypesManagement()" id="buttons-container">
+                <div class="resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
                             ngbTooltip="Kartendarstellung"
@@ -53,13 +51,13 @@
                             (mouseover)="mapModeTooltip.open()"
                             (mouseleave)="mapModeTooltip.close()"
                             (mousedown)="mapModeTooltip.close()"
-                            class="btn btn-primary m-0"
+                            class="btn btn-link m-0"
                             [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
                     </button>
                     <button id="list-mode-button"
                             (click)="switchMode('list')"
-                            class="btn btn-primary m-0"
+                            class="btn btn-link m-0"
                             ngbTooltip="Listendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"

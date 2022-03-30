@@ -66,7 +66,6 @@ body {
 
 .btn {
   text-transform: none !important;
-  border-radius: 0 !important;
 }
 
 .btn:focus, .btn.focus {
@@ -74,7 +73,7 @@ body {
 }
 
 .btn:active, .btn.active {
-  box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+
 }
 
 .btn-primary {
@@ -152,6 +151,17 @@ body {
 
 .btn-light {
   color: $link-color;
+}
+
+.btn-link {
+
+    &:hover {
+        background-color: rgba(200, 200, 200, 0.2);
+    }
+
+    &.active {
+        background-color: lighten($link-color, 50%);
+    }
 }
 
 .md-form {

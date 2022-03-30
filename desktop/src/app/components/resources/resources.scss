@@ -60,21 +60,9 @@ $deactivated-button-color: lightgray;
   }
 
   #buttons-container {
-    padding-left: 0;
-    padding-right: 8px;
 
     .resources-mode-buttons {
       margin-top: 3px;
-      margin-bottom: -1px;
-      width: 100% !important;
-
-      button {
-        width: 50% !important;
-
-        &.active {
-          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
-        }
-      }
     }
   }
 }

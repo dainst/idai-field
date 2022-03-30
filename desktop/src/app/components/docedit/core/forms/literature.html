@@ -2,13 +2,14 @@
     <div class="input-group mb-2" *ngIf="!isInEditing(literature)">
         <input value="{{getLabel(literature)}}" type="text" disabled class="form-control">
 
-        <button class="btn btn-danger" (click)="remove(literature)">
-            <span class="mdi mdi-delete"></span>
-        </button>
-
-        <button class="btn btn-info" (click)="startEditing(literature)">
-            <span class="mdi mdi-pencil"></span>
-        </button>
+        <div class="input-group-append">
+            <button class="btn btn-danger" (click)="remove(literature)">
+                <span class="mdi mdi-delete"></span>
+            </button>
+            <button class="btn btn-info" (click)="startEditing(literature)">
+                <span class="mdi mdi-pencil"></span>
+            </button>
+        </div>
     </div>
 
     <div *ngIf="isInEditing(literature)">
@@ -22,9 +23,11 @@
     <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.literature.add"
            type="text" disabled class="form-control">
 
-    <button class="btn btn-success" (click)="createNewLiterature()">
-        <span class="mdi mdi-plus-circle"></span>
-    </button>
+    <div class="input-group-append">
+        <button class="btn btn-success" (click)="createNewLiterature()">
+            <span class="mdi mdi-plus-circle"></span>
+        </button>
+    </div>
 </div>
 
 <div *ngIf="newLiterature">

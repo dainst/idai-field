@@ -1,8 +1,10 @@
 <div *ngFor="let dimension of resource[field.name]; index as i"  class="mb-2">
 	<div class="input-group mb-2" *ngIf="!isInEditing(dimension)">
 		<input value="{{getLabel(dimension)}}" type="text" disabled class="form-control">
-		<button class="btn btn-danger" (click)="removeDimensionAtIndex(i)"><span class="mdi mdi-delete"></span></button>
-		<button class="btn btn-info" (click)="startEditing(dimension)"><span class="mdi mdi-pencil"></span></button>
+		<div class="input-group-append">
+            <button class="btn btn-danger" (click)="removeDimensionAtIndex(i)"><span class="mdi mdi-delete"></span></button>
+            <button class="btn btn-info" (click)="startEditing(dimension)"><span class="mdi mdi-pencil"></span></button>
+        </div>
 	</div>
 
 	<div *ngIf="isInEditing(dimension)">
@@ -14,7 +16,9 @@
 
 <div class="input-group" *ngIf="!newDimension">
 	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text" disabled class="form-control">
-	<button class="btn btn-success" (click)="createNewDimension()"><span class="mdi mdi-plus-circle"></span></button>
+	<div class="input-group-append">
+        <button class="btn btn-success" (click)="createNewDimension()"><span class="mdi mdi-plus-circle"></span></button>
+    </div>
 </div>
 
 <div *ngIf="newDimension">

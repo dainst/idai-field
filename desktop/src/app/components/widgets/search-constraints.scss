@@ -6,11 +6,7 @@ image-overview-search-constraints {
   width: 100%;
 
   #constraints-menu-button {
-    position: absolute;
-    top: -36px;
-    right: 83px;
-    width: 42px;
-    height: 39px;
+    border-radius: 0;
     text-align: left;
     border-left-width: 0 !important;
     border-color: lightgrey;
@@ -27,8 +23,9 @@ image-overview-search-constraints {
   #constraints-menu {
     display: inline;
     position: absolute;
-    top: 3px;
-    width: calc(100% - 34px);
+    top: 38px;
+    left: 0;
+    width: calc(100% - 42px);
     background-color: #f7f7f7;
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
     cursor: default;

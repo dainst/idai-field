@@ -61311,5 +61311,1669 @@
         }
       }
     }
+  },
+  "BuildingType-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "Unknown": {
+        "label": {
+          "de": "Unbekannt / Unerkannt"
+        }
+      },
+      "Altar": {
+        "label": {
+          "de": "Altar"
+        }
+      },
+      "Amphitheater": {
+        "label": {
+          "de": "Amphitheater"
+        }
+      },
+      "Anbau": {
+        "label": {
+          "de": "Anbau"
+        }
+      },
+      "Archiv": {
+        "label": {
+          "de": "Archiv"
+        }
+      },
+      "Basilika": {
+        "label": {
+          "de": "Basilika"
+        }
+      },
+      "Bibliothek": {
+        "label": {
+          "de": "Bibliothek"
+        }
+      },
+      "Bogen": {
+        "label": {
+          "de": "Bogen"
+        }
+      },
+      "Brücke": {
+        "label": {
+          "de": "Brücke"
+        }
+      },
+      "Circus": {
+        "label": {
+          "de": "Circus"
+        }
+      },
+      "Depot/Lager": {
+        "label": {
+          "de": "Depot / Lager"
+        }
+      },
+      "Gehöft": {
+        "label": {
+          "de": "Gehöft"
+        }
+      },
+      "Grabbau": {
+        "label": {
+          "de": "Grabbau"
+        }
+      },
+      "Gymnasium": {
+        "label": {
+          "de": "Gymnasium"
+        }
+      },
+      "Halle": {
+        "label": {
+          "de": "Halle"
+        }
+      },
+      "Heiligtum": {
+        "label": {
+          "de": "Heiligtum"
+        }
+      },
+      "Kirche": {
+        "label": {
+          "de": "Kirche"
+        }
+      },
+      "Mauerkurtine": {
+        "label": {
+          "de": "Mauerkurtine"
+        }
+      },
+      "Moschee": {
+        "label": {
+          "de": "Moschee"
+        }
+      },
+      "Museum": {
+        "label": {
+          "de": "Museum"
+        }
+      },
+      "Nymphäum": {
+        "label": {
+          "de": "Nymphäum"
+        }
+      },
+      "Odeion": {
+        "label": {
+          "de": "Odeion"
+        }
+      },
+      "Palast": {
+        "label": {
+          "de": "Palast"
+        }
+      },
+      "Säulenhalle": {
+        "label": {
+          "de": "Säulenhalle"
+        }
+      },
+      "Synagoge": {
+        "label": {
+          "de": "Synagoge"
+        }
+      },
+      "Strasse": {
+        "label": {
+          "de": "Strasse"
+        }
+      },
+      "Stützmauer": {
+        "label": {
+          "de": "Stützmauer"
+        }
+      },
+      "Tempel": {
+        "label": {
+          "de": "Tempel"
+        }
+      },
+      "Theater": {
+        "label": {
+          "de": "Theater"
+        }
+      },
+      "Therme": {
+        "label": {
+          "de": "Therme"
+        }
+      },
+      "Toranlage": {
+        "label": {
+          "de": "Toranlage"
+        }
+      },
+      "Turm": {
+        "label": {
+          "de": "Turm"
+        }
+      },
+      "Wohnbau": {
+        "label": {
+          "de": "Wohnbau"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "BuildingCategory-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "Unknown": {
+        "label": {
+          "de": "Unbekannt / Unerkannt"
+        }
+      },
+      "Wohnbau": {
+        "label": {
+          "de": "Wohnbau"
+        }
+      },
+      "Sakralbau": {
+        "label": {
+          "de": "Sakralbau"
+        }
+      },
+      "Grabbau": {
+        "label": {
+          "de": "Grabbau"
+        }
+      },
+      "HandelGeschäft": {
+        "label": {
+          "de": "Handel- / Geschäft"
+        }
+      },
+      "HandwerkGewerbe": {
+        "label": {
+          "de": "Handwerk / Gewerbe"
+        }
+      },
+      "Industriebau": {
+        "label": {
+          "de": "Industriebau"
+        }
+      },
+      "Befestigung": {
+        "label": {
+          "de": "Befestigung"
+        }
+      },
+      "Militärbau": {
+        "label": {
+          "de": "Militärbau"
+        }
+      },
+      "administrativ-staatlicherBau": {
+        "label": {
+          "de": "administrativ-staatlicher Bau"
+        }
+      },
+      "öffentlicherBau": {
+        "label": {
+          "de": "öffentlicher Bau"
+        }
+      },
+      "otherCategory": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Building-material-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "unbekannt / unerkannt": {
+        "label": {
+          "de": "Unbekannt / Unerkannt"
+        }
+      },
+      "Naturstein": {
+        "label": {
+          "de": "Naturstein"
+        }
+      },
+      "Alabaster": {
+        "label": {
+          "de": "Alabaster"
+        }
+      },
+      "Andesit": {
+        "label": {
+          "de": "Andesit"
+        }
+      },
+      "Basalt": {
+        "label": {
+          "de": "Basalt"
+        }
+      },
+      "Gneis": {
+        "label": {
+          "de": "Gneis"
+        }
+      },
+      "Granit": {
+        "label": {
+          "de": "Granit"
+        }
+      },
+      "Kalkstein": {
+        "label": {
+          "de": "Kalkstein"
+        }
+      },
+      "Marmor": {
+        "label": {
+          "de": "Marmor"
+        }
+      },
+      "Porphyr": {
+        "label": {
+          "de": "Porphyr"
+        }
+      },
+      "Puzzolane": {
+        "label": {
+          "de": "Puzzolane"
+        }
+      },
+      "Sandstein": {
+        "label": {
+          "de": "Sandstein"
+        }
+      },
+      "Travertin": {
+        "label": {
+          "de": "Travertin"
+        }
+      },
+      "Tuff": {
+        "label": {
+          "de": "Tuff"
+        }
+      },
+      "Metall": {
+        "label": {
+          "de": "Metall"
+        }
+      },
+      "Blei": {
+        "label": {
+          "de": "Blei"
+        }
+      },
+      "Bronze": {
+        "label": {
+          "de": "Bronze"
+        }
+      },
+      "Edelstahl": {
+        "label": {
+          "de": "Edelstahl"
+        }
+      },
+      "Eisen": {
+        "label": {
+          "de": "Eisen"
+        }
+      },
+      "Gold": {
+        "label": {
+          "de": "Gold"
+        }
+      },
+      "Gusseisen": {
+        "label": {
+          "de": "Gusseisen"
+        }
+      },
+      "Kupfer": {
+        "label": {
+          "de": "Kupfer"
+        }
+      },
+      "Messing": {
+        "label": {
+          "de": "Messing"
+        }
+      },
+      "Silber": {
+        "label": {
+          "de": "Silber"
+        }
+      },
+      "Stahl": {
+        "label": {
+          "de": "Stahl"
+        }
+      },
+      "Zink": {
+        "label": {
+          "de": "Zink"
+        }
+      },
+      "Zinn": {
+        "label": {
+          "de": "Zinn"
+        }
+      },
+      "Holz": {
+        "label": {
+          "de": "Holz"
+        }
+      },
+      "Holzwerkstoff": {
+        "label": {
+          "de": "Holzwerkstoff"
+        }
+      },
+      "Sperrholz": {
+        "label": {
+          "de": "Sperrholz"
+        }
+      },
+      "Konstruktionsholz": {
+        "label": {
+          "de": "Konstruktionsholz"
+        }
+      },
+      "Ziegel": {
+        "label": {
+          "de": "Ziegel"
+        }
+      },
+      "Lehmziegel": {
+        "label": {
+          "de": "Lehmziegel"
+        }
+      },
+      "Klinker": {
+        "label": {
+          "de": "Klinker"
+        }
+      },
+      "Terrakotta": {
+        "label": {
+          "de": "Terrakotta"
+        }
+      },
+      "Beton": {
+        "label": {
+          "de": "Beton"
+        }
+      },
+      "Stahlbeton": {
+        "label": {
+          "de": "Stahlbeton"
+        }
+      },
+      "Mörtel": {
+        "label": {
+          "de": "Mörtel"
+        }
+      },
+      "Gipsmörtel": {
+        "label": {
+          "de": "Gipsmörtel"
+        }
+      },
+      "Hydr. Mörtel": {
+        "label": {
+          "de": "Hydr. Mörtel"
+        }
+      },
+      "Kalkmörtel": {
+        "label": {
+          "de": "Kalkmörtel"
+        }
+      },
+      "Lehmmörtel": {
+        "label": {
+          "de": "Lehmmörtel"
+        }
+      },
+      "Puzzolanmörtel": {
+        "label": {
+          "de": "Puzzolanmörtel"
+        }
+      },
+      "Zementmörtel": {
+        "label": {
+          "de": "Zementmörtel"
+        }
+      },
+      "Erde / Lehm": {
+        "label": {
+          "de": "Erde / Lehm"
+        }
+      },
+      "Gips ": {
+        "label": {
+          "de": "Gips "
+        }
+      },
+      "Glas": {
+        "label": {
+          "de": "Glas"
+        }
+      },
+      "Kalk": {
+        "label": {
+          "de": "Kalk"
+        }
+      },
+      "Puzzolanerde": {
+        "label": {
+          "de": "Puzzolanerde"
+        }
+      },
+      "Sand ": {
+        "label": {
+          "de": "Sand "
+        }
+      },
+      "Ton": {
+        "label": {
+          "de": "Ton"
+        }
+      },
+      "Pflaster": {
+        "label": {
+          "de": "Pflaster"
+        }
+      },
+      "Gipspflaster": {
+        "label": {
+          "de": "Gipspflaster"
+        }
+      },
+      "Lehmpflaster": {
+        "label": {
+          "de": "Lehmpflaster"
+        }
+      },
+      "Stuck": {
+        "label": {
+          "de": "Stuck"
+        }
+      },
+      "Tonpflaster": {
+        "label": {
+          "de": "Tonpflaster"
+        }
+      },
+      "Zementpflaster": {
+        "label": {
+          "de": "Zementpflaster"
+        }
+      },
+      "Fliesen": {
+        "label": {
+          "de": "Fliesen"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Building-technique-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "unbekannt / unerkannt": {
+        "label": {
+          "de": "Unbekannt / Unerkannt"
+        }
+      },
+      "Skelettbau": {
+        "label": {
+          "de": "Skelettbau"
+        }
+      },
+      "Massivbau": {
+        "label": {
+          "de": "Massivbau"
+        }
+      },
+      "Fachwerkbau": {
+        "label": {
+          "de": "Fachwerkbau"
+        }
+      },
+      "Holzblockbau": {
+        "label": {
+          "de": "Holzblockbau"
+        }
+      },
+      "Pfahlwerk": {
+        "label": {
+          "de": "Pfahlwerk"
+        }
+      },
+      "Steinkonstruktion": {
+        "label": {
+          "de": "Steinkonstruktion"
+        }
+      },
+      "Bruchsteinmauerwerk": {
+        "label": {
+          "de": "Bruchsteinmauerwerk"
+        }
+      },
+      "Fischgrätenverband": {
+        "label": {
+          "de": "Fischgrätenverband"
+        }
+      },
+      "Hausteinmauerwerk": {
+        "label": {
+          "de": "Hausteinmauerwerk"
+        }
+      },
+      "Kleinquaderverband": {
+        "label": {
+          "de": "Kleinquaderverband"
+        }
+      },
+      "Kyklopenmauerwerk": {
+        "label": {
+          "de": "Kyklopenmauerwerk"
+        }
+      },
+      "Lesesteinverband / Feldsteinmauerwerk": {
+        "label": {
+          "de": "Lesesteinverband / Feldsteinmauerwerk"
+        }
+      },
+      "Polygonalmauerwerk": {
+        "label": {
+          "de": "Polygonalmauerwerk"
+        }
+      },
+      "Quadermauerwerk": {
+        "label": {
+          "de": "Quadermauerwerk"
+        }
+      },
+      "Trapezoidalmauerwerk  ": {
+        "label": {
+          "de": "Trapezoidalmauerwerk"
+        }
+      },
+      "Lehmziegelmauerwerk": {
+        "label": {
+          "de": "Lehmziegelmauerwerk"
+        }
+      },
+      "Ziegelmauerwerk  ": {
+        "label": {
+          "de": "Ziegelmauerwerk"
+        }
+      },
+      "Gußmauerwerk / opus caementitium": {
+        "label": {
+          "de": "Gußmauerwerk / opus caementitium"
+        }
+      },
+      "Mischverband / opus mixtum  ": {
+        "label": {
+          "de": "Mischverband / opus mixtum"
+        }
+      },
+      "Verschalung": {
+        "label": {
+          "de": "Verschalung"
+        }
+      },
+      "opus incertum": {
+        "label": {
+          "de": "opus incertum"
+        }
+      },
+      "opus latericum": {
+        "label": {
+          "de": "opus latericum"
+        }
+      },
+      "opus mixtum": {
+        "label": {
+          "de": "opus mixtum"
+        }
+      },
+      "opus reticulatum": {
+        "label": {
+          "de": "opus reticulatum"
+        }
+      },
+      "opus testaceum": {
+        "label": {
+          "de": "opus testaceum"
+        }
+      },
+      "opus vittatum": {
+        "label": {
+          "de": "opus vittatum"
+        }
+      },
+      "Inkrustation": {
+        "label": {
+          "de": "Inkrustation"
+        }
+      },
+      "Putz": {
+        "label": {
+          "de": "Putz"
+        }
+      },
+      "Stein- / Marmorverkleidung": {
+        "label": {
+          "de": "Stein- / Marmorverkleidung"
+        }
+      },
+      "Stuck": {
+        "label": {
+          "de": "Stuck"
+        }
+      },
+      "Tonverkleidung (Ziegel)": {
+        "label": {
+          "de": "Tonverkleidung (Ziegel)"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Building-construction-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "Architrav": {
+        "label": {
+          "de": "Architrav"
+        }
+      },
+      "AufgehendesMauerwerk": {
+        "label": {
+          "de": "Aufgehendes Mauerwerk"
+        }
+      },
+      "Außenmauer": {
+        "label": {
+          "de": "Außenmauer"
+        }
+      },
+      "Balken": {
+        "label": {
+          "de": "Balken"
+        }
+      },
+      "Befestigungsmauer": {
+        "label": {
+          "de": "Befestigungsmauer"
+        }
+      },
+      "Bogen": {
+        "label": {
+          "de": "Bogen"
+        }
+      },
+      "Decke": {
+        "label": {
+          "de": "Decke"
+        }
+      },
+      "Fenster": {
+        "label": {
+          "de": "Fenster"
+        }
+      },
+      "Freitreppe": {
+        "label": {
+          "de": "Freitreppe"
+        }
+      },
+      "Fuge": {
+        "label": {
+          "de": "Fuge"
+        }
+      },
+      "Fundament": {
+        "label": {
+          "de": "Fundament"
+        }
+      },
+      "Fußboden": {
+        "label": {
+          "de": "Fußboden"
+        }
+      },
+      "Gebälk": {
+        "label": {
+          "de": "Gebälk"
+        }
+      },
+      "Gebinde": {
+        "label": {
+          "de": "Gebinde"
+        }
+      },
+      "Gesims": {
+        "label": {
+          "de": "Gesims"
+        }
+      },
+      "Gewände": {
+        "label": {
+          "de": "Gewände"
+        }
+      },
+      "Gewölbe": {
+        "label": {
+          "de": "Gewölbe"
+        }
+      },
+      "Giebel": {
+        "label": {
+          "de": "Giebel"
+        }
+      },
+      "Glacis": {
+        "label": {
+          "de": "Glacis"
+        }
+      },
+      "Grotte": {
+        "label": {
+          "de": "Grotte"
+        }
+      },
+      "Innenmauer": {
+        "label": {
+          "de": "Innenmauer"
+        }
+      },
+      "Kapitell": {
+        "label": {
+          "de": "Kapitell"
+        }
+      },
+      "Kuppel": {
+        "label": {
+          "de": "Kuppel"
+        }
+      },
+      "Orthostat": {
+        "label": {
+          "de": "Orthostat"
+        }
+      },
+      "Pendentif": {
+        "label": {
+          "de": "Pendentif"
+        }
+      },
+      "Plinthe": {
+        "label": {
+          "de": "Plinthe"
+        }
+      },
+      "Podium": {
+        "label": {
+          "de": "Podium"
+        }
+      },
+      "Postament/Piedestal": {
+        "label": {
+          "de": "Postament / Piedestal"
+        }
+      },
+      "Putz": {
+        "label": {
+          "de": "Putz"
+        }
+      },
+      "Rampe": {
+        "label": {
+          "de": "Rampe"
+        }
+      },
+      "Risalit": {
+        "label": {
+          "de": "Risalit"
+        }
+      },
+      "Säule": {
+        "label": {
+          "de": "Säule"
+        }
+      },
+      "Schwelle": {
+        "label": {
+          "de": "Schwelle"
+        }
+      },
+      "Sockel": {
+        "label": {
+          "de": "Sockel"
+        }
+      },
+      "Spolie": {
+        "label": {
+          "de": "Spolie"
+        }
+      },
+      "Ständer": {
+        "label": {
+          "de": "Ständer"
+        }
+      },
+      "Strebemauer": {
+        "label": {
+          "de": "Strebemauer"
+        }
+      },
+      "Strebepfeiler": {
+        "label": {
+          "de": "Strebepfeiler"
+        }
+      },
+      "Stütze": {
+        "label": {
+          "de": "Stütze"
+        }
+      },
+      "Stützmauer": {
+        "label": {
+          "de": "Stützmauer"
+        }
+      },
+      "Treppe": {
+        "label": {
+          "de": "Treppe"
+        }
+      },
+      "Tür": {
+        "label": {
+          "de": "Tür"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Monument-significance-kgr": {
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "creationDate": "",
+    "values": {
+      "A": {
+        "label": {
+          "en": "A: Areas of highest Conservation Value"
+        }
+      },
+      "B": {
+        "label": {
+          "en": "B: Areas of high Conservation Value"
+        }
+      },
+      "C": {
+        "label": {
+          "en": "C: Areas of minor Conservation Value"
+        }
+      },
+      "D": {
+        "label": {
+          "en": "D: Areas of no Conservation Value"
+        }
+      }
+    }
+  },
+  "damages-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "totalCollapse": {
+        "label": {
+          "de": "Totalschaden / Einsturz"
+        }
+      },
+      "partialCollapse": {
+        "label": {
+          "de": "Partieller Einsturz"
+        }
+      },
+      "missingconst": {
+        "label": {
+          "de": "Fehlendes Konstruktionselement"
+        }
+      },
+      "looseconst": {
+        "label": {
+          "de": "Loses Konstruktionselement"
+        }
+      },
+      "fractures": {
+        "label": {
+          "de": "Fraktur / Bruch"
+        }
+      },
+      "riss1": {
+        "label": {
+          "de": "Riss (<1mm)"
+        }
+      },
+      "riss2": {
+        "label": {
+          "de": "Riss (1mm-5mm)"
+        }
+      },
+      "riss3": {
+        "label": {
+          "de": "Riss (>5mm)"
+        }
+      },
+      "riss4": {
+        "label": {
+          "de": "Riss (>10mm)"
+        }
+      },
+      "deformationSwelling": {
+        "label": {
+          "de": "Verformung: Wölbung / Ausbauchung"
+        }
+      },
+      "delamination": {
+        "label": {
+          "de": "Delaminierung / Ablösung der Wände"
+        }
+      },
+      "moisture": {
+        "label": {
+          "de": "Feuchte"
+        }
+      },
+      "cavities": {
+        "label": {
+          "de": "Hohllagen"
+        }
+      },
+      "exfoliation": {
+        "label": {
+          "de": "Aufblättern"
+        }
+      },
+      "spalling": {
+        "label": {
+          "de": "Abplatzung / Ausbruch"
+        }
+      },
+      "efflorescence": {
+        "label": {
+          "de": "Salzausblühung"
+        }
+      },
+      "bioSettlement": {
+        "label": {
+          "de": "Biogener Befall"
+        }
+      },
+      "fireDamage": {
+        "label": {
+          "de": "Brandschaden"
+        }
+      },
+      "erosion": {
+        "label": {
+          "de": "Erosion"
+        }
+      },
+      "corrosion": {
+        "label": {
+          "de": "Korrosion"
+        }
+      },
+      "crusting": {
+        "label": {
+          "de": "Krustenbildung"
+        }
+      },
+      "mechanicDamage": {
+        "label": {
+          "de": "Mechanischer Schaden"
+        }
+      },
+      "discoloration": {
+        "label": {
+          "de": "Verfärbung"
+        }
+      },
+      "contamination": {
+        "label": {
+          "de": "Verschmutzung"
+        }
+      },
+      "fragmentation": {
+        "label": {
+          "de": "Zerbrechen"
+        }
+      },
+      "ruin": {
+        "label": {
+          "de": "Zerfall"
+        }
+      },
+      "weathering": {
+        "label": {
+          "de": "Verwitterung"
+        }
+      },
+      "rotting": {
+        "label": {
+          "de": "Holzschäden (strukturell unbedenklich)"
+        }
+      },
+      "rottingstr": {
+        "label": {
+          "de": "Holzschäden (strukturell bedenklich)"
+        }
+      },
+      "vandalizm": {
+        "label": {
+          "de": "Vandalismus"
+        }
+      },
+      "fissure": {
+        "label": {
+          "de": "Putzrisse"
+        }
+      }
+    }
+  },
+  "damages-kgr-str": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "totalCollapse": {
+        "label": {
+          "de": "Totalschaden / Einsturz"
+        }
+      },
+      "partialCollapse": {
+        "label": {
+          "de": "Partieller Einsturz"
+        }
+      },
+      "missingconst": {
+        "label": {
+          "de": "Fehlendes Konstruktionselement"
+        }
+      },
+      "looseconst": {
+        "label": {
+          "de": "Loses Konstruktionselement"
+        }
+      },
+      "fractures": {
+        "label": {
+          "de": "Fraktur / Bruch"
+        }
+      },
+      "riss1": {
+        "label": {
+          "de": "Riss (<1mm)"
+        }
+      },
+      "riss2": {
+        "label": {
+          "de": "Riss (1mm-5mm)"
+        }
+      },
+      "riss3": {
+        "label": {
+          "de": "Riss (>5mm)"
+        }
+      },
+      "riss4": {
+        "label": {
+          "de": "Riss (>10mm)"
+        }
+      },
+      "cavities": {
+        "label": {
+          "de": "Hohllagen"
+        }
+      },
+      "rottingstr": {
+        "label": {
+          "de": "Holzschäden (strukturell bedenklich)"
+        }
+      },
+      "deformationSwelling": {
+        "label": {
+          "de": "Verformung: Wölbung / Ausbauchung"
+        }
+      },
+      "delamination": {
+        "label": {
+          "de": "Delaminierung / Ablösung der Wände"
+        }
+      },
+      "vandalizm": {
+        "label": {
+          "de": "Vandalismus"
+        }
+      }
+    }
+  },
+  "damages-kgr-mat": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "exfoliation": {
+        "label": {
+          "de": "Aufblättern"
+        }
+      },
+      "spalling": {
+        "label": {
+          "de": "Abplatzung / Ausbruch"
+        }
+      },
+      "bioSettlement": {
+        "label": {
+          "de": "Biogener Befall"
+        }
+      },
+      "fireDamage": {
+        "label": {
+          "de": "Brandschaden"
+        }
+      },
+      "erosion": {
+        "label": {
+          "de": "Erosion"
+        }
+      },
+      "moisture": {
+        "label": {
+          "de": "Feuchte"
+        }
+      },
+      "corrosion": {
+        "label": {
+          "de": "Korrosion"
+        }
+      },
+      "crusting": {
+        "label": {
+          "de": "Krustenbildung"
+        }
+      },
+      "mechanicDamage": {
+        "label": {
+          "de": "Mechanischer Schaden"
+        }
+      },
+      "fissure": {
+        "label": {
+          "de": "Putzrisse"
+        }
+      },
+      "efflorescence": {
+        "label": {
+          "de": "Salzausblühung"
+        }
+      },
+      "vandalizm": {
+        "label": {
+          "de": "Vandalismus"
+        }
+      },
+      "rotting-mat": {
+        "label": {
+          "de": "Holzschäden (strukturell unbedenklich)"
+        }
+      },
+      "discoloration": {
+        "label": {
+          "de": "Verfärbung"
+        }
+      },
+      "contamination": {
+        "label": {
+          "de": "Verschmutzung"
+        }
+      },
+      "weathering": {
+        "label": {
+          "de": "Verwitterung"
+        }
+      },
+      "fragmentation": {
+        "label": {
+          "de": "Zerbrechen"
+        }
+      },
+      "ruin": {
+        "label": {
+          "de": "Zerfall"
+        }
+      }
+    }
+  },
+  "Monument-risks-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "fallHazard": {
+        "label": {
+          "de": "Absturzgefahr"
+        }
+      },
+      "dissolution": {
+        "label": {
+          "de": "Ablösen von Putzen / Beschichtungen / Zwischendecken…"
+        }
+      },
+      "fallDownBricks": {
+        "label": {
+          "de": "Herabfallende Ziegel / Schornsteine…"
+        }
+      },
+      "fallDownParts": {
+        "label": {
+          "de": "Herabfallende Gesimse / Brüstungen…"
+        }
+      },
+      "waterSanitary": {
+        "label": {
+          "de": "Schäden an der Wasser-/Abwasser-/Sanitäranlage"
+        }
+      },
+      "electricityGas": {
+        "label": {
+          "de": "Beschädigung des Stroms-/Gasnetzes"
+        }
+      },
+      "contaminant": {
+        "label": {
+          "de": "Schadstoff im Innenraum"
+        }
+      },
+      "moisturedamage": {
+        "label": {
+          "de": "Befeuchtung durch Wassereinfall"
+        }
+      },
+      "riskofinjury": {
+        "label": {
+          "de": "Verletzungsgefahr"
+        }
+      },
+      "otherRisks": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "risks-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "Absturz": {
+        "label": {
+          "de": "Absturz"
+        }
+      },
+      "Angst": {
+        "label": {
+          "de": "Angst"
+        }
+      },
+      "Atemgift": {
+        "label": {
+          "de": "Atemgift"
+        }
+      },
+      "Atomstrahlung": {
+        "label": {
+          "de": "Atomstrahlung"
+        }
+      },
+      "Ausbreitung": {
+        "label": {
+          "de": "Ausbreitung"
+        }
+      },
+      "Brand": {
+        "label": {
+          "de": "Brand"
+        }
+      },
+      "Chemie": {
+        "label": {
+          "de": "Chemie"
+        }
+      },
+      "Durchbruch": {
+        "label": {
+          "de": "Durchbruch"
+        }
+      },
+      "Einsturz": {
+        "label": {
+          "de": "Einsturz"
+        }
+      },
+      "Elektrizität": {
+        "label": {
+          "de": "Elektrizität"
+        }
+      },
+      "Erkrankung": {
+        "label": {
+          "de": "Erkrankung"
+        }
+      },
+      "Ertrinken": {
+        "label": {
+          "de": "Ertrinken"
+        }
+      },
+      "Explosion": {
+        "label": {
+          "de": "Explosion"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Building-condition-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "CCO": {
+        "label": {
+          "en": "CCO - No symptoms"
+        }
+      },
+      "CC1": {
+        "label": {
+          "en": "CC1 - Minor symptoms"
+        }
+      },
+      "CC2": {
+        "label": {
+          "en": "CC2 - Moderatly strong symptoms"
+        }
+      },
+      "CC3": {
+        "label": {
+          "en": "CC3 - Major symptoms"
+        }
+      },
+      "CC4": {
+        "label": {
+          "en": "CC4 - Total loss"
+        }
+      }
+    }
+  },
+  "priority-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "UC-": {
+        "label": {
+          "en": "Without need for action"
+        }
+      },
+      "UC0": {
+        "label": {
+          "en": "Long term – from 3 years"
+        }
+      },
+      "UC1": {
+        "label": {
+          "en": "Intermediate term – 1–3 years"
+        }
+      },
+      "UC2": {
+        "label": {
+          "en": "Short term – within 1 year"
+        }
+      },
+      "UC4": {
+        "label": {
+          "en": "Urgent and immediate with in 3 months"
+        }
+      }
+    }
+  },
+  "firstAid-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "KeineMaßnahme": {
+        "label": {
+          "de": "Keine Maßnahme"
+        }
+      },
+      "Abriss": {
+        "label": {
+          "de": "Abriss"
+        }
+      },
+      "Entfernen": {
+        "label": {
+          "de": "Entfernen"
+        }
+      },
+      "HorizontalStützen": {
+        "label": {
+          "de": "Horizontal stützen"
+        }
+      },
+      "Vertikalstützen": {
+        "label": {
+          "de": "Vertikal stützen"
+        }
+      },
+      "Reparatur": {
+        "label": {
+          "de": "Reparatur"
+        }
+      },
+      "Durchgangschutz": {
+        "label": {
+          "de": "Durchgangschutz / partielle Sperrung"
+        }
+      },
+      "Zugangsverbot": {
+        "label": {
+          "de": "Zugangsverbot / gänzliche Sperrung"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "roofing-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "Beton": {
+        "label": {
+          "de": "Beton"
+        }
+      },
+      "Blei": {
+        "label": {
+          "de": "Blei"
+        }
+      },
+      "Dachstein": {
+        "label": {
+          "de": "Dachstein"
+        }
+      },
+      "Dachziegel": {
+        "label": {
+          "de": "Dachziegel"
+        }
+      },
+      "Erde": {
+        "label": {
+          "de": "Erde"
+        }
+      },
+      "Holz": {
+        "label": {
+          "de": "Holz"
+        }
+      },
+      "Schiefer": {
+        "label": {
+          "de": "Schiefer"
+        }
+      },
+      "Sonstige": {
+        "label": {
+          "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "damage-collapse-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "structuralDamage": {
+        "label": {
+          "de": "Struktureller Schaden"
+        }
+      },
+      "totalCollapse": {
+        "label": {
+          "de": "Totalschaden / Einsturz"
+        }
+      },
+      "materialDamage": {
+        "label": {
+          "de": "Materieller Schaden"
+        }
+      },
+      "mechanicalDamage": {
+        "label": {
+          "de": "Mechanischer Schaden"
+        }
+      },
+      "partialCollapse": {
+        "label": {
+          "de": "Partieller Einsturz"
+        }
+      }
+    }
+  },
+  "level-kgr": {
+    "creationDate": "",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "1-SehrGering": {
+        "label": {
+          "de": "1 Sehr Gering"
+        }
+      },
+      "2-Gering": {
+        "label": {
+          "de": "2 Gering"
+        }
+      },
+      "3-Mittel": {
+        "label": {
+          "de": "3 Mittel"
+        }
+      },
+      "4-Schwer": {
+        "label": {
+          "de": "4 Schwer"
+        }
+      },
+      "5-SehrSchwer": {
+        "label": {
+          "de": "5 Sehr Schwer"
+        }
+      }
+    }
   }
 }

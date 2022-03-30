@@ -1,0 +1,1863 @@
+{
+  "forms": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Operation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Survey:default": {
+      "hidden": [],
+      "valuelists": {},
+      "fields": {}
+    },
+    "SurveyUnit:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Place:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Area:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Building:default": {
+      "hidden": [
+        "material",
+        "context",
+        "condition",
+        "conditionAmount",
+        "conditionComment",
+        "hasRestoration",
+        "buildingType",
+        "buildingTechnique",
+        "buildingCategory",
+        "buildingCategorySpecific",
+        "buildingResearchHistory"
+      ],
+      "valuelists": {
+        "buildingTypeKGR": "BuildingType-kgr",
+        "buildingCategoryKGR": "BuildingCategory-kgr",
+        "buildingMaterialKGR": "Building-material-kgr",
+        "buildingTechniqueKGR": "Building-technique-kgr",
+        "buildingConstructionKGR": "Building-construction-kgr",
+        "monumentSignificance": "Monument-significance-kgr",
+        "buildingDamage-str": "damages-kgr-str",
+        "buildingDamage-mat": "damages-kgr-mat",
+        "buildingRisks": "Monument-risks-kgr",
+        "monumentRisks": "risks-kgr",
+        "buildingCondition": "Building-condition-kgr",
+        "buildingPriority": "priority-kgr",
+        "monumentFirstAid": "firstAid-kgr"
+      },
+      "fields": {
+        "buildingAddress": {
+          "inputType": "input"
+        },
+        "buildingState": {
+          "inputType": "input"
+        },
+        "buildingCity": {
+          "inputType": "input"
+        },
+        "buildingDescriptionKGR": {
+          "inputType": "input"
+        },
+        "buildingTypeKGR": {
+          "inputType": "dropdown"
+        },
+        "buildingTypeKGR-other": {
+          "inputType": "input"
+        },
+        "buildingCategoryKGR": {
+          "inputType": "dropdown"
+        },
+        "buildingCategoryKGR-other": {
+          "inputType": "input"
+        },
+        "buildingMaterialKGR": {
+          "inputType": "checkboxes"
+        },
+        "buildingMaterialKGR-other": {
+          "inputType": "input"
+        },
+        "buildingTechniqueKGR": {
+          "inputType": "checkboxes"
+        },
+        "buildingTechniqueKGR-other": {
+          "inputType": "input"
+        },
+        "buildingConstructionKGR": {
+          "inputType": "checkboxes"
+        },
+        "buildingConstructionKGR-other": {
+          "inputType": "input"
+        },
+        "buildingStoreys": {
+          "inputType": "input"
+        },
+        "monumentSignificance": {
+          "inputType": "dropdown"
+        },
+        "buildingNotes": {
+          "inputType": "text"
+        },
+        "monumentAccessibility": {
+          "inputType": "input"
+        },
+        "buildingDamage-str": {
+          "inputType": "checkboxes"
+        },
+        "buildingDamage-mat": {
+          "inputType": "checkboxes"
+        },
+        "otherRisksKGR": {
+          "inputType": "input"
+        },
+        "buildingRisks": {
+          "inputType": "checkboxes"
+        },
+        "buildingRisks-other": {
+          "inputType": "input"
+        },
+        "monumentRisks": {
+          "inputType": "checkboxes"
+        },
+        "monumentRisks-other": {
+          "inputType": "input"
+        },
+        "buildingCondition": {
+          "inputType": "dropdown"
+        },
+        "buildingPriority": {
+          "inputType": "dropdown"
+        },
+        "monumentFirstAid": {
+          "inputType": "checkboxes"
+        },
+        "furtherProcedure": {
+          "inputType": "input"
+        },
+        "buildingArchitect": {
+          "inputType": "input"
+        },
+        "buildingMonumentStatus": {
+          "inputType": "input"
+        },
+        "monumentOccupation": {
+          "inputType": "input"
+        },
+        "buildingOwner": {
+          "inputType": "input"
+        },
+        "monumentAdministration": {
+          "inputType": "input"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "material",
+            "context",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "hasRestoration",
+            "buildingType",
+            "buildingTechnique",
+            "buildingCategory",
+            "buildingCategorySpecific",
+            "buildingResearchHistory",
+            "buildingAddress",
+            "buildingState",
+            "buildingCity",
+            "buildingDescriptionKGR",
+            "buildingTypeKGR",
+            "buildingTypeKGR-other",
+            "buildingCategoryKGR",
+            "buildingCategoryKGR-other",
+            "buildingMaterialKGR",
+            "buildingMaterialKGR-other",
+            "buildingTechniqueKGR",
+            "buildingTechniqueKGR-other",
+            "buildingConstructionKGR",
+            "buildingConstructionKGR-other",
+            "buildingStoreys",
+            "monumentSignificance",
+            "buildingNotes",
+            "monumentAccessibility",
+            "buildingDamage-str",
+            "buildingDamage-mat",
+            "otherRisksKGR",
+            "buildingRisks",
+            "buildingRisks-other",
+            "monumentRisks",
+            "monumentRisks-other",
+            "buildingCondition",
+            "buildingPriority",
+            "monumentFirstAid",
+            "furtherProcedure",
+            "buildingArchitect",
+            "buildingMonumentStatus",
+            "monumentOccupation",
+            "buildingOwner",
+            "monumentAdministration"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "BuildingPart:default": {
+      "hidden": [],
+      "fields": {
+        "level": {
+          "inputType": "input"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level"
+          ]
+        }
+      ]
+    },
+    "Find:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Feature:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Room:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomCeiling:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomFloor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Architecture:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Layer:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Floor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Grave:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Excavation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Sample:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "WallOutside": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "wallOutsideMaterial": "Building-material-kgr",
+        "wallOutsideTechnique": "Building-technique-kgr",
+        "wallOutsideConstruction": "Building-construction-kgr",
+        "wallOutsideDamages": "damages-kgr",
+        "wallOutsideCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "wallOutsideOrientation": {
+          "inputType": "input"
+        },
+        "wallOutsideMaterial": {
+          "inputType": "checkboxes"
+        },
+        "wallOutsideMaterial-other": {
+          "inputType": "input"
+        },
+        "wallOutsideTechnique": {
+          "inputType": "checkboxes"
+        },
+        "wallOutsideTechnique-other": {
+          "inputType": "input"
+        },
+        "wallOutsideConstruction": {
+          "inputType": "checkboxes"
+        },
+        "wallOutsideConstruction-other": {
+          "inputType": "input"
+        },
+        "wallOutsideDamages": {
+          "inputType": "checkboxes"
+        },
+        "wallOutsideDamages-other": {
+          "inputType": "input"
+        },
+        "wallOutsideCondition": {
+          "inputType": "dropdown"
+        },
+        "wallOutsideNotes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "wallOutsideOrientation",
+            "wallOutsideMaterial",
+            "wallOutsideMaterial-other",
+            "wallOutsideTechnique",
+            "wallOutsideTechnique-other",
+            "wallOutsideConstruction",
+            "wallOutsideConstruction-other",
+            "wallOutsideDamages",
+            "wallOutsideDamages-other",
+            "wallOutsideCondition",
+            "wallOutsideNotes"
+          ]
+        }
+      ]
+    },
+    "RoofOutside": {
+      "hidden": [],
+      "parent": "BuildingPart",
+      "valuelists": {
+        "roofOutsideMaterial": "roofing-kgr",
+        "roofOutsideDamages": "damages-kgr",
+        "roofOutsideCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "roofOutsideType": {
+          "inputType": "input"
+        },
+        "roofConstruction": {
+          "inputType": "input"
+        },
+        "roofConstructionMaterial": {
+          "inputType": "input"
+        },
+        "roofOutsideMaterial": {
+          "inputType": "checkboxes"
+        },
+        "roofOutsideMaterial-other": {
+          "inputType": "input"
+        },
+        "roofOutsideDamages": {
+          "inputType": "checkboxes"
+        },
+        "roofOutsideDamages-other": {
+          "inputType": "input"
+        },
+        "roofOutsideCondition": {
+          "inputType": "checkboxes"
+        },
+        "roofOutsideNotes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "roofOutsideType",
+            "roofConstruction",
+            "roofConstructionMaterial",
+            "roofOutsideMaterial",
+            "roofOutsideMaterial-other",
+            "roofOutsideDamages",
+            "roofOutsideDamages-other",
+            "roofOutsideCondition",
+            "roofOutsideNotes"
+          ]
+        }
+      ]
+    },
+    "WallInside": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "wallInsideMaterial": "Building-material-kgr",
+        "wallInsideTechnique": "Building-technique-kgr",
+        "wallInsideConstruction": "Building-construction-kgr",
+        "wallInsideDamages": "damages-kgr",
+        "wallInsideCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "wallInsideOrientation": {
+          "inputType": "input"
+        },
+        "wallInsideDimensions": {
+          "inputType": "input"
+        },
+        "wallInsideMaterial": {
+          "inputType": "checkboxes"
+        },
+        "wallInsideMaterial-other": {
+          "inputType": "input"
+        },
+        "wallInsideTechnique": {
+          "inputType": "checkboxes"
+        },
+        "wallInsideTechnique-other": {
+          "inputType": "input"
+        },
+        "wallInsideConstruction": {
+          "inputType": "checkboxes"
+        },
+        "wallInsideConstruction-other": {
+          "inputType": "input"
+        },
+        "wallInsideDamages": {
+          "inputType": "checkboxes"
+        },
+        "wallInsideDamages-other": {
+          "inputType": "input"
+        },
+        "wallInsideCondition": {
+          "inputType": "dropdown"
+        },
+        "WallInsideNotes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "wallInsideOrientation",
+            "wallInsideDimensions",
+            "wallInsideMaterial",
+            "wallInsideMaterial-other",
+            "wallInsideTechnique",
+            "wallInsideTechnique-other",
+            "wallInsideConstruction",
+            "wallInsideConstruction-other",
+            "wallInsideDamages",
+            "wallInsideDamages-other",
+            "wallInsideCondition",
+            "WallInsideNotes"
+          ]
+        }
+      ]
+    },
+    "FloorInside": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "floorMaterial": "Building-material-kgr",
+        "floorTechnique": "Building-technique-kgr",
+        "floorDamages": "damages-kgr",
+        "floorCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "floorlevel": {
+          "inputType": "input"
+        },
+        "floorDimensions": {
+          "inputType": "input"
+        },
+        "floorMaterial": {
+          "inputType": "checkboxes"
+        },
+        "floorMaterial-other": {
+          "inputType": "input"
+        },
+        "floorTechnique": {
+          "inputType": "checkboxes"
+        },
+        "floorTechnique-other": {
+          "inputType": "input"
+        },
+        "floorDamages": {
+          "inputType": "checkboxes"
+        },
+        "floorDamages-other": {
+          "inputType": "input"
+        },
+        "floorCondition": {
+          "inputType": "dropdown"
+        },
+        "floorNotes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "floorlevel",
+            "floorDimensions",
+            "floorMaterial",
+            "floorMaterial-other",
+            "floorTechnique",
+            "floorTechnique-other",
+            "floorDamages",
+            "floorDamages-other",
+            "floorCondition",
+            "floorNotes"
+          ]
+        }
+      ]
+    },
+    "CeilingInside": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "ceilingMaterial": "Building-material-kgr",
+        "ceilingTechnique": "Building-technique-kgr",
+        "ceilingConstruction": "Building-construction-kgr",
+        "ceilingDamages": "damages-kgr",
+        "ceilingCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "ceilinglevel": {
+          "inputType": "input"
+        },
+        "ceilingDimensions": {
+          "inputType": "input"
+        },
+        "ceilingMaterial": {
+          "inputType": "checkboxes"
+        },
+        "ceilingMaterial-other": {
+          "inputType": "input"
+        },
+        "ceilingTechnique": {
+          "inputType": "checkboxes"
+        },
+        "ceilingTechnique-other": {
+          "inputType": "input"
+        },
+        "ceilingConstruction": {
+          "inputType": "checkboxes"
+        },
+        "ceilingConstruction-other": {
+          "inputType": "input"
+        },
+        "ceilingDamages": {
+          "inputType": "checkboxes"
+        },
+        "ceilingDamages-other": {
+          "inputType": "input"
+        },
+        "ceilingCondition": {
+          "inputType": "dropdown"
+        },
+        "ceilingNotes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "ceilinglevel",
+            "ceilingDimensions",
+            "ceilingMaterial",
+            "ceilingMaterial-other",
+            "ceilingTechnique",
+            "ceilingTechnique-other",
+            "ceilingConstruction",
+            "ceilingConstruction-other",
+            "ceilingDamages",
+            "ceilingDamages-other",
+            "ceilingCondition",
+            "ceilingNotes"
+          ]
+        }
+      ]
+    },
+    "Stairs": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "stairsCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "stairsForm": {
+          "inputType": "input"
+        },
+        "stairslevel": {
+          "inputType": "input"
+        },
+        "stairsDimensions": {
+          "inputType": "input"
+        },
+        "stairsMaterial": {
+          "inputType": "input"
+        },
+        "stairsTechnique": {
+          "inputType": "input"
+        },
+        "stairsDamages": {
+          "inputType": "input"
+        },
+        "stairsCondition": {
+          "inputType": "dropdown"
+        },
+        "stairsDescription": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "stairsForm",
+            "stairslevel",
+            "stairsDimensions",
+            "stairsMaterial",
+            "stairsTechnique",
+            "stairsDamages",
+            "stairsCondition",
+            "stairsDescription"
+          ]
+        }
+      ]
+    },
+    "Window": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "windowDamages": "damages-kgr",
+        "windowCondition": "Building-condition-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "windowType": {
+          "inputType": "text"
+        },
+        "windowDimensions": {
+          "inputType": "input"
+        },
+        "windowMaterial": {
+          "inputType": "input"
+        },
+        "windowDamages": {
+          "inputType": "checkboxes"
+        },
+        "windowCondition": {
+          "inputType": "dropdown"
+        },
+        "windowDescription": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "windowType",
+            "windowDimensions",
+            "windowMaterial",
+            "windowDamages",
+            "windowCondition",
+            "windowDescription"
+          ]
+        }
+      ]
+    },
+    "Door": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "doorCondition": "Building-condition-kgr",
+        "doorDamages": "damages-kgr"
+      },
+      "fields": {
+        "allocation": {
+          "inputType": "input"
+        },
+        "doorType": {
+          "inputType": "text"
+        },
+        "doorDimensions": {
+          "inputType": "input"
+        },
+        "doorMaterial": {
+          "inputType": "input"
+        },
+        "doorDamages": {
+          "inputType": "checkboxes"
+        },
+        "doorCondition": {
+          "inputType": "dropdown"
+        },
+        "doorDescription": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "allocation",
+            "doorType",
+            "doorDimensions",
+            "doorMaterial",
+            "doorDamages",
+            "doorCondition",
+            "doorDescription"
+          ]
+        }
+      ]
+    },
+    "Damage": {
+      "hidden": [],
+      "parent": "BuildingPart",
+      "valuelists": {
+        "damages-kgr-str": "damages-kgr-str",
+        "damages-kgr-mat": "damages-kgr-mat",
+        "damage-level": "level-kgr",
+        "buildingRisks": "Monument-risks-kgr",
+        "buildingPriority": "priority-kgr",
+        "monumentFirstAid": "firstAid-kgr"
+      },
+      "fields": {
+        "location": {
+          "inputType": "input"
+        },
+        "affectedAreas": {
+          "inputType": "input"
+        },
+        "damages-kgr-str": {
+          "inputType": "checkboxes"
+        },
+        "damages-kgr-mat": {
+          "inputType": "checkboxes"
+        },
+        "damage-level": {
+          "inputType": "dropdown"
+        },
+        "damage-level-notes": {
+          "inputType": "input"
+        },
+        "OtherDamages": {
+          "inputType": "text"
+        },
+        "buildingRisks": {
+          "inputType": "checkboxes"
+        },
+        "otherRisksKGR": {
+          "inputType": "input"
+        },
+        "buildingPriority": {
+          "inputType": "dropdown"
+        },
+        "monumentFirstAid": {
+          "inputType": "checkboxes"
+        },
+        "procedure": {
+          "inputType": "input"
+        },
+        "damage-notes": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "location",
+            "affectedAreas",
+            "damages-kgr-str",
+            "damages-kgr-mat",
+            "damage-level",
+            "damage-level-notes",
+            "OtherDamages",
+            "buildingRisks",
+            "otherRisksKGR",
+            "buildingPriority",
+            "monumentFirstAid",
+            "procedure",
+            "damage-notes"
+          ]
+        }
+      ]
+    },
+    "Equipment": {
+      "parent": "BuildingPart",
+      "hidden": [],
+      "valuelists": {
+        "equipmentMaterial": "Building-material-kgr",
+        "equipmentCondition": "Building-condition-kgr",
+        "equipmentDamages": "damages-kgr"
+      },
+      "fields": {
+        "equipmentType": {
+          "inputType": "text"
+        },
+        "equipmentMaterial": {
+          "inputType": "dropdown"
+        },
+        "equipmentCondition": {
+          "inputType": "dropdown"
+        },
+        "equipmentDamages": {
+          "inputType": "dropdown"
+        },
+        "equipmentDescription": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "level",
+            "equipmentType",
+            "equipmentMaterial",
+            "equipmentCondition",
+            "equipmentDamages",
+            "equipmentDescription"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        }
+      ]
+    },
+    "FindRecording": {
+      "parent": "Find",
+      "hidden": [],
+      "fields": {
+        "findQR": {
+          "inputType": "text"
+        },
+        "findStatus": {
+          "inputType": "text"
+        },
+        "findDamages": {
+          "inputType": "text"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "findQR",
+            "findStatus",
+            "findDamages"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "OrganicAnimal": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {},
+      "fields": {
+        "Eierschale": {
+          "inputType": "boolean"
+        },
+        "Elfenbein": {
+          "inputType": "boolean"
+        },
+        "Feder": {
+          "inputType": "boolean"
+        },
+        "Fell": {
+          "inputType": "boolean"
+        },
+        "Geweih": {
+          "inputType": "boolean"
+        },
+        "Haar": {
+          "inputType": "boolean"
+        },
+        "Haut": {
+          "inputType": "boolean"
+        },
+        "Horn": {
+          "inputType": "boolean"
+        },
+        "KnochenBein": {
+          "inputType": "boolean"
+        },
+        "Koralle": {
+          "inputType": "boolean"
+        },
+        "Leder": {
+          "inputType": "boolean"
+        },
+        "Muschel": {
+          "inputType": "boolean"
+        },
+        "Pergament": {
+          "inputType": "boolean"
+        },
+        "Perlmutt": {
+          "inputType": "boolean"
+        },
+        "Schnecke": {
+          "inputType": "boolean"
+        },
+        "Zahn": {
+          "inputType": "boolean"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "Eierschale",
+            "Elfenbein",
+            "Feder",
+            "Fell",
+            "Geweih",
+            "Haar",
+            "Haut",
+            "Horn",
+            "KnochenBein",
+            "Koralle",
+            "Leder",
+            "Muschel",
+            "Pergament",
+            "Perlmutt",
+            "Schnecke",
+            "Zahn"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "OrganicVegetable": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {},
+      "fields": {
+        "Bernstein": {
+          "inputType": "boolean"
+        },
+        "Holz": {
+          "inputType": "boolean"
+        },
+        "Holzkohle": {
+          "inputType": "boolean"
+        },
+        "Papier/Pappe": {
+          "inputType": "boolean"
+        },
+        "Pech": {
+          "inputType": "boolean"
+        },
+        "Rinde/Kork": {
+          "inputType": "boolean"
+        },
+        "Samen/Früchte": {
+          "inputType": "boolean"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "Bernstein",
+            "Holz",
+            "Holzkohle",
+            "Papier/Pappe",
+            "Pech",
+            "Rinde/Kork",
+            "Samen/Früchte"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "OrganicHuman": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {},
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "OrganicSynthetic": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {},
+      "fields": {
+        "Gummi oder elastisch": {
+          "inputType": "boolean"
+        },
+        "Hartkunststoff oder plastisch": {
+          "inputType": "boolean"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "Gummi oder elastisch",
+            "Hartkunststoff oder plastisch"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "AnorganicMineral": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {
+        "Glas": "colors-default-1"
+      },
+      "fields": {
+        "Beton": {
+          "inputType": "boolean"
+        },
+        "Biolith": {
+          "inputType": "boolean"
+        },
+        "Bodenprobe": {
+          "inputType": "boolean"
+        },
+        "Email": {
+          "inputType": "boolean"
+        },
+        "Glas": {
+          "inputType": "radio"
+        },
+        "Keramik": {
+          "inputType": "boolean"
+        },
+        "Putz/Mörtel": {
+          "inputType": "boolean"
+        },
+        "Schlacke": {
+          "inputType": "boolean"
+        },
+        "Silex": {
+          "inputType": "boolean"
+        },
+        "Stein/Mineral": {
+          "inputType": "boolean"
+        },
+        "Ton/Lehm": {
+          "inputType": "boolean"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "Beton",
+            "Biolith",
+            "Bodenprobe",
+            "Email",
+            "Glas",
+            "Keramik",
+            "Putz/Mörtel",
+            "Schlacke",
+            "Silex",
+            "Stein/Mineral",
+            "Ton/Lehm"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "AnorganicMetal": {
+      "parent": "Find",
+      "hidden": [],
+      "valuelists": {},
+      "fields": {
+        "Aluminium": {
+          "inputType": "boolean"
+        },
+        "Blei": {
+          "inputType": "boolean"
+        },
+        "Eisen": {
+          "inputType": "boolean"
+        },
+        "Gold": {
+          "inputType": "boolean"
+        },
+        "Kupfer": {
+          "inputType": "boolean"
+        },
+        "Kupferlegierung": {
+          "inputType": "boolean"
+        },
+        "Silber": {
+          "inputType": "boolean"
+        },
+        "Zinn": {
+          "inputType": "boolean"
+        },
+        "Zink": {
+          "inputType": "boolean"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "Aluminium",
+            "Blei",
+            "Eisen",
+            "Gold",
+            "Kupfer",
+            "Kupferlegierung",
+            "Silber",
+            "Zinn",
+            "Zink"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Architecture",
+    "Floor",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "FindRecording",
+    "OrganicAnimal",
+    "OrganicVegetable",
+    "OrganicHuman",
+    "OrganicSynthetic",
+    "AnorganicMineral",
+    "AnorganicMetal",
+    "Inscription",
+    "Sample",
+    "BuildingPart",
+    "WallOutside",
+    "RoofOutside",
+    "WallInside",
+    "FloorInside",
+    "CeilingInside",
+    "Stairs",
+    "Window",
+    "Door",
+    "Damage",
+    "Equipment",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
+}

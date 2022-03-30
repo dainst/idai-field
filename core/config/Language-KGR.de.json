@@ -1,0 +1,664 @@
+{
+    "categories": {
+        "BuildingPart": {
+            "label": "Stockwerk (Bauwerksteil)",
+            "fields": {
+                "level": {
+                    "label": "Stockwerk"
+                }
+            }
+        },
+        "Building": {
+            "label": "Bauwerk",
+            "fields": {
+                "buildingAddress": {
+                    "label": "Lage_Adresse"
+                },
+                "buildingCity": {
+                    "label": "Lage_Stadt/Stadtteil/Bezirk"
+                },
+                "buildingState": {
+                    "label": "Lage_Staat/Region"
+                },
+                "buildingDescriptionKGR": {
+                    "label": "Bauwerk_Kurzbeschreibung"
+                },
+                "buildingTypeKGR": {
+                    "label": "Bauwerk_Typ"
+                },
+                "buildingTypeKGR-other": {
+                    "label": "Bauwerk_Typ (Sonstige)"
+                },
+                "buildingCategoryKGR": {
+                    "label": "Bauwerk_Funktion"
+                },
+                "buildingCategoryKGR-other": {
+                    "label": "Bauwerk_Funktion (Sonstige)"
+                },
+                "buildingMaterialKGR": {
+                    "label": "Bauwerk_Material"
+                },
+                "buildingMaterialKGR-other": {
+                    "label": "Bauwerk_Material (Sonstige)"
+                },
+                "buildingTechniqueKGR": {
+                    "label": "Bauwerk_Technik"
+                },
+                "buildingTechniqueKGR-other": {
+                    "label": "Bauwerk_Technik (Sonstige)"
+                },
+                "buildingConstructionKGR": {
+                    "label": "Bauwerk_Konstruktionselemente"
+                },
+                "buildingConstructionKGR-other": {
+                    "label": "Bauwerk_Konstruktionselemente (Sonstige)"
+                },
+                "buildingStoreys": {
+                    "label": "Bauwerk_Stockwerkzahl"
+                },
+                "monumentSignificance": {
+                    "label": "Bauwerk_Significance",
+                    "description": "Falls unbekannt nicht ausfüllen! Beispiele (aus SHAP): A_Änderungen in vorhandener Bausubstanz nicht gestattet / B_Änderungen an der bestehenden Bausubstanz sind zulässig (begrenzt) / C_Änderungen an der Grundfläche des Raumes sowie an der bestehenden Bausubstanz und Innenausstattung sind zulässig / D_Änderungen der bestehenden Struktur, des Grundrisses sowie der architektonischen Elemente sind zulässig"
+                },
+                "buildingNotes": {
+                    "label": "Bauwerk_Sonstiges"
+                },
+                "monumentAccessibility": {
+                    "label": "Bauwerk_Begehbarkeit",
+                    "description": "Begehbar? z.T. begehbar? nicht begehbar?"
+                },
+                "buildingDamage-str": {
+                    "label": "Schadenserfassung_Strukturelle Schäden"
+                },
+                "buildingDamage-mat": {
+                    "label": "Schadenserfassung_Materielle Schäden"
+                },
+                "buildingRisks": {
+                    "label": "Schadenserfassung_Risiken"
+                },
+                "buildingRisks-other": {
+                    "label": "Schadenserfassung_Risiken (Sonstige)"
+                },
+                "monumentRisks": {
+                    "label": "Schadenserfassung_Gefahren"
+                },
+                "monumentRisks-other": {
+                    "label": "Schadenserfassung_Gefahren (Sonstige)"
+                },
+                "buildingCondition": {
+                    "label": "Schadenserfassung_Allgemeinzustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                },
+                "otherRisksKGR": {
+                    "label": "Schadenserfassung (Sonstige)"
+                },
+                "buildingPriority": {
+                    "label": "Schadensbewertung_Priorisierung"
+                },
+                "monumentFirstAid": {
+                    "label": "Schadensbewertung_Erste Hilfe"
+                },
+                "furtherProcedure": {
+                    "label": "Schadensbewertung_Weitere Prozedur"
+                },
+                "buildingArchitect": {
+                    "label": "Info_Architekt"
+                },
+                "buildingMonumentStatus": {
+                    "label": "Info_Denkmalstatus"
+                },
+                "monumentOccupation": {
+                    "label": "Info_Bewohnt/Unbewohnt"
+                },
+                "buildingOwner": {
+                    "label": "Info_Besitzer"
+                },
+                "monumentAdministration": {
+                    "label": "Info_Zuständige Behörde"
+                }
+            }
+        },
+        "WallOutside": {
+            "label": "Außenwand",
+            "fields": {
+				"allocation": {
+					"label": "Zuordnung",
+                    "description": "Falls bekannt, mit welchem Raum / welcher Räume sie in Relation steht. Signatur eintragen!"
+				},
+				"wallOutsideOrientation": {
+					"label": "Ausrichtung",
+                    "description": "Himmelsrichtung eingeben!"
+				},
+                "wallOutsideMaterial": {
+                    "label": "Material"
+                },
+                "wallOutsideMaterial-other": {
+                    "label": "Material (Sonstige)"
+                },
+                "wallOutsideTechnique": {
+                    "label": "Bautechnik"
+                },
+                "wallOutsideTechnique-other": {
+                    "label": "Bautechnik (Sonstige)"
+                },
+				"wallOutsideConstruction": {
+					"label": "Konstruktionselemente"
+				},
+                "wallOutsideConstruction-other": {
+					"label": "Konstruktionselemente (Sonstige)"
+				},
+                "wallOutsideDamages": {
+                    "label": "Schäden"
+                },
+                "wallOutsideDamages-other": {
+                    "label": "Schäden (Sonstige)"
+                },
+                "wallOutsideCondition": {
+                    "label": "Zustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                },
+                "wallOutsideNotes": {
+                    "label": "Anmerkungen"
+                }
+            }
+        },
+        "RoofOutside": {
+            "label": "Dach",
+            "fields": {
+                "roofOutsideType": {
+                    "label": "Dachart"
+                },
+                "roofConstruction": {
+					"label": "Dachkonstruktion"
+				},
+				"roofConstructionMaterial": {
+					"label": "Konstruktionsmaterial"
+				},
+                "roofOutsideMaterial": {
+                    "label": "Deckungsmaterial"
+                },
+                "roofOutsideMaterial-other": {
+                    "label": "Deckungsmaterial (Sonstige)"
+                },
+                "roofOutsideDamages": {
+                    "label": "Schäden"
+                },
+                "roofOutsideDamages-other": {
+                    "label": "Schäden (Sonstige)"
+                },
+                "roofOutsideCondition": {
+                    "label": "Zustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                },
+                "roofOutsideNotes": {
+                    "label": "Anmerkungen"
+                }
+            }
+        },
+        "WallInside": {
+			"label": "Innenwand",
+			"fields": {
+				"allocation": {
+					"label": "Zuordnung",
+                    "description": "Raumsignatur eintragen!"
+				},
+				"wallInsideOrientation": {
+					"label": "Ausrichtung",
+                    "description":"Himmelsrichtung eingeben!"
+				},
+				"wallInsideDimensions": {
+					"label": "Maße"
+				},
+				"wallInsideMaterial": {
+					"label": "Material"
+				},
+                "wallInsideMaterial-other": {
+					"label": "Material (Sonstige)"
+				},
+				"wallInsideTechnique": {
+					"label": "Bautechnik"
+				},
+                "wallInsideTechnique-other": {
+					"label": "Bautechnik (Sonstige)"
+				},
+				"wallInsideConstruction": {
+					"label": "Konstruktionselemente"
+				},
+                "wallInsideConstruction-other": {
+					"label": "Konstruktionselemente (Sonstige)"
+				},
+                "wallInsideDamages": {
+					"label": "Schäden"
+				},
+                "wallInsideDamages-other": {
+					"label": "Schäden (Sonstige)"
+				},
+				"wallInsideCondition": {
+					"label": "Zustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+				},
+				"WallInsideNotes": {
+					"label": "Anmerkungen"
+				}
+			}
+		},
+        "FloorInside": {
+            "label": "Boden",
+            "fields": {
+                    "allocation": {
+                        "label": "Zuordnung",
+                        "description": "Raumsignatur eintragen!"
+                    },
+                    "floorlevel": {
+                        "label": "Niveau"
+                    },
+                    "floorDimensions": {
+                        "label": "Maße"
+                    },
+                    "floorMaterial": {
+                        "label": "Material"
+                    },
+                    "floorMaterial-other": {
+                        "label": "Material (Sonstige)"
+                    },
+                    "floorTechnique": {
+                        "label": "Bautechnik"
+                    },
+                    "floorTechnique-other": {
+                        "label": "Bautechnik (Sonstige)"
+                    },
+                    "floorDamages": {
+                        "label": "Schäden"
+                    },
+                    "floorDamages-other": {
+                        "label": "Schäden (Sonstige)"
+                    },
+                    "floorCondition": {
+                        "label": "Zustand",
+                        "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                    },
+                    "floorNotes": {
+                        "label": "Anmerkungen"
+                    }
+                }
+            },
+        "CeilingInside": {
+            "label": "Decke",
+            "fields": {
+                    "allocation": {
+                        "label": "Zuordnung",
+                        "description": "Raumsignatur eintragen!"
+                    },
+                    "ceilinglevel": {
+                        "label": "Niveau"
+                    },
+                    "ceilingDimensions": {
+                        "label": "Maße"
+                    },
+                    "ceilingMaterial": {
+                        "label": "Material"
+                    },
+                    "ceilingMaterial-other": {
+                        "label": "Material (Sonstige)"
+                    },
+                    "ceilingTechnique": {
+                        "label": "Bautechnik"
+                    },
+                    "ceilingTechnique-other": {
+                        "label": "Bautechnik (Sonstige)"
+                    },
+                    "ceilingConstruction": {
+                        "label": "Konstruktionselemente"
+                    },
+                    "ceilingConstruction-other": {
+                        "label": "Konstruktionselemente (Sonstige)"
+                    },
+                    "ceilingDamages": {
+                        "label": "Schäden"
+                    },
+                    "ceilingDamages-other": {
+                        "label": "Schäden (Sonstige)"
+                    },
+                    "ceilingCondition": {
+                        "label": "Zustand",
+                        "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                    },
+                    "ceilingNotes": {
+                        "label": "Anmerkungen"
+                    }
+                }
+            },
+            "Stairs": {
+                "label": "Treppe",
+                "fields": {
+                    "allocation": {
+                        "label": "Zuordnung",
+                        "description": "Raumsignatur eintragen!"
+                    },
+                    "stairsForm": {
+                        "label": "Form"
+                    },
+                    "stairslevel": {
+                        "label": "Niveau von - bis"
+                    },
+                    "stairsDimensions": {
+                        "label": "Maße"
+                    },
+                    "stairsMaterial": {
+                        "label": "Material"
+                    },
+                    "stairsTechnique": {
+                        "label": "Bautechnik"
+                    },
+                    "stairsCondition": {
+                        "label": "Zustand",
+                        "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                    },
+                    "stairsDamages": {
+                        "label": "Schaden"
+                    },
+                    "stairsDescription": {
+                        "label": "Anmerkungen"
+                    }}
+            },
+            "Window": {
+                "label": "Fenster",
+                "fields": {
+                    "allocation": {
+                        "label": "Zuordnung",
+                        "description": "Raumsignatur eintragen!"
+                    },
+                    "windowType": {
+                        "label": "Fenster-Art"
+                    },
+                    "windowDimensions": {
+                        "label": "Maße"
+                    },
+                    "windowMaterial": {
+                        "label": "Material"
+                    },
+                    "windowCondition": {
+                        "label": "Zustand",
+                        "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                    },
+                    "windowDamages": {
+                        "label": "Schäden"
+                    },
+                    "windowDescription": {
+                        "label": "Anmerkungen"
+                    }
+                }},
+        "Door": {
+            "label": "Tür",
+            "fields": {
+                "allocation": {
+                    "label": "Zuordnung",
+                    "description": "Raumsignatur eintragen!"
+                },
+                "doorType": {
+                    "label": "Tür-Art"
+                },
+				"doorDimensions": {
+					"label": "Maße"
+				},
+                "doorMaterial": {
+                    "label": "Material"
+                },
+                "doorCondition": {
+                    "label": "Zustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                },
+                "doorDamages": {
+                    "label": "Schäden"
+                },
+                "doorDescription": {
+                    "label": "Anmerkungen"
+                }
+            }
+        },
+        "Damage": {
+            "label": "Schaden",
+            "fields": {
+				"affectedAreas": {
+					"label": "Schadenserfassung_Betroffenes Bau- / Konstruktionselement",
+                    "description": "Signatur der Räume bzw. der Elemente eintragen!"
+				},
+				"location": {
+					"label": "Schadenserfassung_Lage"
+				},
+				"damages-kgr-str":{
+					"label": "Schadenserfassung_Strukturelle Schäden"
+				},
+                "damages-kgr-mat":{
+					"label": "Schadenserfassung_Materielle Schäden"
+				},
+                "OtherDamages": {
+					"label": "Schadenserfassung_Sonstige Schäden"
+				},
+				"damage-level" : {
+					"label": "Schadenserfassung_Schadensgrad"
+				},
+                "damage-level-notes": {
+                    "label": "Schadenserfassung_Notizen zu Schadensgrad"
+                },
+                "buildingRisks": {
+                    "label": "Schadenserfassung_Risiken"
+                },
+				"otherRisksKGR": {
+					"label": "Schadenserfassung_Risiken (Sonstige)"
+				},
+				"buildingPriority": {
+					"label": "Schadensbewertung_Priorisierung"
+				},
+				"monumentFirstAid": {
+					"label": "Schadensbewertung_Erste Hilfe"
+				},
+				"procedure": {
+					"label": "Schadensbewertung_Weitere Prozedur"
+				},
+                "damage-notes": {
+                    "label": "Anmerkungen"
+                }
+			}
+        },
+        "Equipment": {
+            "label": "Ausstattung",
+            "fields": {
+                "equipmentType": {
+                    "label": "Ausstattung - Typ"
+                },
+                "equipmentMaterial": {
+                    "label": "Material"
+                },
+                "equipmentCondition": {
+                    "label": "Zustand",
+                    "description": "Beispiele zu Zustandsklassen (aus EN 16096): CC1_Oberflächliche und keine wesentliche Veränderungen / CC2_Örtlich begrenzte Beschädigung - Oberflächenbeschädigung / CC3_Schwerwiegende Schäden, mehrere bedeutsame Verluste"
+                },
+                "equipmentDamages": {
+                    "label": "Schäden"
+                },
+                "equipmentDescription": {
+                    "label": "Anmerkungen"
+                }
+            }
+        },	
+        "FindRecording":{
+          "label": "Fundaufnahme",
+          "fields": {
+              "findQR": {
+                "label": "ID / QR"
+              },
+              "findStatus": {
+                "label": "Status"
+            },
+            "findDamages": {
+              "label": "Schäden"
+          }
+         }
+        },
+        "OrganicAnimal": {
+          "label": "Organisch-Tierisch",
+            "fields": {
+                "Eierschale": {
+                    "label": "Eierschale"
+                },
+                "Elfenbein": {
+                    "label": "Elfenbein"
+                },
+                "Feder": {
+                    "label": "Feder"
+              },
+              "Fell": {
+                "label": "Fell"
+              },
+              "Geweih": {
+                "label": "Geweih"
+              },
+              "Haar": {
+                  "label": "Haar"
+              },
+              "Haut": {
+                "label": "Haut"
+              },
+              "Horn": {
+                "label": "Horn"
+              },
+              "KnochenBein": {
+                "label": "Knochen / Bein"
+              },
+              "Koralle": {
+                "label": "Koralle"
+              },
+              "Leder": {
+                "label": "Leder"
+              },
+              "Muschel": {
+                "label": "Muschel"
+              },
+              "Pergament": {
+                "label": "Pergament"
+              },
+              "Perlmutt": {
+                "label": "Perlmutt"
+              },
+              "Schnecke": {
+                "label": "Schnecke"
+              },
+              "Zahn": {
+                "label": "Zahn"
+              }
+            }
+        },
+        "OrganicVegetable": {
+            "label": "Organisch-Pflanzlich",
+            "fields": {
+                "Bernstein": {
+                    "label": "Bernstein"
+                },
+                "Holz": {
+                    "label": "Holz"
+                },
+                "Holzkohle": {
+                    "label": "Holzkohle"
+                },
+                "Papier/Pappe": {
+                    "label": "Papier / Pappe"
+                },
+                "Pech": {
+                    "label": "Pech"
+                },
+                "Rinde/Kork": {
+                    "label": "Rinde/Kork"
+                },
+                "Samen/Früchte": {
+                    "label": "Samen /Früchte"
+                }
+            }
+        },
+        "OrganicHuman": {
+            "label": "Organisch-Menschlich",
+            "fields": {}
+        },
+        "OrganicSynthetic": {
+            "label": "Organisch-Kunststoff",
+            "fields": {
+                "Gummi oder elastisch": {
+                    "label": "Gummi oder elastisch"
+                },
+                "Hartkunststoff oder plastisch": {
+                    "label": "Hartkunstoff oder plastisch"
+                }
+            }
+        },
+        "AnorganicMineral": {
+            "label": "Anorganisch-Mineralisch",
+            "fields": {
+                "Beton": {
+                    "label": "Beton"
+                },
+                "Biolith": {
+                    "label": "Biolith"
+                },
+                "Bodenprobe": {
+                    "label": "Bodenprobe"
+                },
+                "Email": {
+                    "label": "Email"
+                },
+                "Glas": {
+                    "label": "Glas"
+                },
+                "Keramik": {
+                    "label": "Keramik"
+                },
+                "Putz/Mörtel": {
+                    "label": "Putz / Mörtel"
+                },
+                "Schlacke": {
+                    "label": "Schlacke"
+                },
+                "Silex": {
+                    "label": "Silex"
+                },
+                "Stein/Mineral": {
+                    "label": "Stein / Mineral"
+                },
+                "Ton/Lehm": {
+                    "label": "Ton / Lehm"
+                }
+            }
+        },
+        "AnorganicMetal": {
+            "label": "Anorganisch-Metal",
+            "fields": {
+                "Aluminium": {
+                    "label": "Aluminium"
+                },
+                "Blei": {
+                    "label": "Blei"
+                },
+                "Eisen": {
+                    "label": "Eisen"
+                },
+                "Gold": {
+                    "label": "Gold"
+                },
+                "Kupfer": {
+                    "label": "Kupfer"
+                },
+                "Kupferlegierung": {
+                    "label": "Kupferlegierung"
+                },
+                "Silber": {
+                    "label": "Silber"
+                },
+                "Zinn": {
+                    "label": "Zinn"
+                },
+                "Zink": {
+                    "label": "Zink"
+                }
+            }
+    }
+}
+}

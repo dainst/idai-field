@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@configuration.importModal.header">
+        Konfiguration aus anderem Projekt importieren
+    </h5>
+</div>
+
+<div id="import-configuration-modal-body" class="modal-body">
+    <div i18n="@@configuration.importModal.warning">
+        Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen.
+        Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt.
+    </div>
+    <div i18n="@@project.createModal.configuration">Projekt:</div>
+    <select (change)="selectProject($event.target.value)"
+            class="form-control">
+        <option *ngFor="let project of getProjects()"
+                value="{{project}}"
+                [selected]="selectedProject === project">
+            {{project}}
+        </option>
+    </select>
+</div>
+
+<div class="modal-footer">
+    <button id="import-configuration-confirm" class="btn btn-success" type="button"
+            [ngClass]="{ 'disabled': !selectedProject }"
+            (click)="confirm()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <button type="button" id="import-configuration-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

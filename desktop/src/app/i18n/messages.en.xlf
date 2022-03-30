@@ -1397,6 +1397,22 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.importModal.header" datatype="html">
+        <source> Konfiguration aus anderem Projekt importieren </source>
+        <target state="final"> Import configuration from other project </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/load/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">45,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.importModal.warning" datatype="html">
+        <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
+        <target state="final"> Please note that all configuration adjustments (including valuelists) will be lost during import. The project configuration will be completely replaced by the configuration of the selected project. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/load/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.changeNotification.header" datatype="html">
         <source> Die Projektkonfiguration hat sich geändert. </source>
         <target state="final"> The project configuration has been changed. </target>
@@ -1726,8 +1742,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
-        <source>Konfiguration:</source>
-        <target state="final">Configuration:</target>
+        <source>Projekt:</source>
+        <target state="translated">Configuration:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/load/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -2269,6 +2289,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/load/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
@@ -4269,6 +4293,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/load/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -6587,6 +6615,14 @@
       <trans-unit id="messages.configuration.error.invalidReference" datatype="html">
         <source>"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</source>
         <target state="final">"[0]" is not a valid URL. Please enter only URLs as references.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.importFailure" datatype="html">
+        <source>Die Projektkonfiguration konnte nicht importiert werden.</source>
+        <target state="final">The project configuration could not be imported.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

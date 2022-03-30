@@ -94,13 +94,13 @@ export class PouchdbDatastore {
             await db.get('project');
         } catch {
             await db.put(projectDocument);
-        }
 
-        if (configurationDocument) {
-            try {
-                await db.get('configuration');
-            } catch {
-                await db.put(configurationDocument);
+            if (configurationDocument) {
+                try {
+                    await db.get('configuration');
+                } catch {
+                    await db.put(configurationDocument);
+                }
             }
         }
 
@@ -112,11 +112,11 @@ export class PouchdbDatastore {
 
     
     public close() {
-        if (this.db) {
-            this.db.close();
-        }
+
+        if (this.db) this.db.close();
         this.open = false;
     }
+
     
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.changesObservers);
 

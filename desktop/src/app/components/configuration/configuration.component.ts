@@ -33,6 +33,7 @@ import { SaveProcessModalComponent } from './save/save-process-modal.component';
 import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
+import { ImportConfigurationModalComponent } from './load/import-configuration-modal.component';
 
 
 export type ApplyChangesResult = {
@@ -150,8 +151,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.configurationState.getSelectedCategoryName()
         );
 
-        this.menuSubscription = this.menuNavigator.valuelistsManagementNotifications()
-            .subscribe(() => this.openValuelistsManagementModal());
+        this.menuSubscription = this.menuNavigator.configurationMenuNotifications()
+            .subscribe(menuItem => this.onMenuItemClicked(menuItem));
 
         this.ready = true;
     }
@@ -200,6 +201,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             ))) {
 
             this.contextMenu.close();
+        }
+    }
+
+
+    public onMenuItemClicked(menuItem: string) {
+
+        switch (menuItem) {
+            case 'valuelists':
+                this.openValuelistsManagementModal();
+                break;
+            case 'importConfiguration':
+                this.openImportConfigurationModal();
+                break;
         }
     }
 
@@ -596,6 +610,28 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    private async openImportConfigurationModal() {
+
+        const [result, componentInstance] = this.modals.make<ImportConfigurationModalComponent>(
+            ImportConfigurationModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.applyChanges = this.applyChanges;
+
+        await this.modals.awaitResult(
+            result,
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
+            },
+            nop
+        );
+    }
+
+
     private async loadCategories(selectedCategoriesFilterName?: string, selectedCategoryName?: string) {
 
         this.topLevelCategoriesArray = Tree.flatten(this.clonedProjectConfiguration.getCategories())
@@ -619,19 +655,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
                                              reindexConfiguration?: boolean): Promise<ApplyChangesResult> {
 
-        try {
-            this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
-            this.configurationDocument = configurationDocument;
-            if (reindexConfiguration) {
-                await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
-            }
-            if (!this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
-                this.selectedCategory = undefined;
-            }
-            await this.loadCategories();
-        } catch (e) {
-            console.error('error in updateProjectConfiguration', e);
+        this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
+        this.configurationDocument = configurationDocument;
+        if (reindexConfiguration) {
+            await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
         }
+        if (!this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
+            this.selectedCategory = undefined;
+        }
+        await this.loadCategories();
 
         this.changed = true;
 

@@ -221,6 +221,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
+    public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -1766,6 +1767,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.invalidReference',
                 value: '"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_IMPORT_FAILURE] = {
+            content: i18n({
+                id: 'messages.configuration.error.importFailure',
+                value: 'Die Projektkonfiguration konnte nicht importiert werden.'
             }),
             level: 'danger',
             params: [],

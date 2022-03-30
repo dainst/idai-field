@@ -225,7 +225,7 @@ function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuel
     if (!field.valuelistId) return;
 
     field.valuelist = valuelists[field.valuelistId];
-    if (field.valuelist.extendedValuelist) {
+    if (field.valuelist?.extendedValuelist) {
         field.valuelist = Valuelist.applyExtension(field.valuelist, valuelists[field.valuelist.extendedValuelist]);
     }
     

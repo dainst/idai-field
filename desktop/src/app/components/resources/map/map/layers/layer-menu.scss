@@ -13,7 +13,6 @@ $layer-menu-remove-button-color: #c82333;
   z-index: 1008;
   right: 8px;
   border: none;
-  border-radius: 0;
 }
 
 #layer-button {
@@ -30,12 +29,12 @@ $layer-menu-remove-button-color: #c82333;
   top: 51px;
   min-width: 223px;
   max-width: 500px;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  border-radius: 0.25rem !important;
   background-color: #f8f9fa !important;
   cursor: default !important;
   user-select: none;
+  border-radius: 0;
 
   .card-body {
     padding: 7px;
@@ -95,29 +94,29 @@ $layer-menu-remove-button-color: #c82333;
         .layer-group-save-button:hover {
           color: lighten($layer-menu-save-button-color, 10%) !important;
         }
-  
+
         .layer-menu-add-button {
           height: 20px;
           margin-bottom: 2px;
           border: none;
-  
+
           .mdi {
             position: relative;
             bottom: 8px;
           }
         }
-  
+
         .form-group {
           margin-bottom: 0;
           clear: right;
-  
+
           .layer-entry {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
             height: 27px;
-  
+
             .layer-menu-drag-handle {
               display: inline-block;
               line-height: 1.9;
@@ -131,16 +130,16 @@ $layer-menu-remove-button-color: #c82333;
               }
             }
           }
-  
+
           .layer-menu-remove-button {
             margin-left: 5px;
             color: $layer-menu-remove-button-color;
-  
+
             &:hover {
               color: lighten($layer-menu-remove-button-color, 20%) !important;
             }
           }
-  
+
           .drag-placeholder {
             min-height: 27px;
             padding-left: 74px;

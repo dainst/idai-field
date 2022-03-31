@@ -1,7 +1,8 @@
-import {Reader} from './reader';
-import {ReaderErrors} from './reader-errors';
-import {APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP} from '../../export/catalog/catalog-exporter';
-import {Settings} from '../../../../app/services/settings/settings';
+import { ImageStore } from 'idai-field-core';
+import { Reader } from './reader';
+import { ReaderErrors } from './reader-errors';
+import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
+import { Settings } from '../../../../app/services/settings/settings';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const extract = typeof window !== 'undefined' ? window.require('extract-zip') : require('extract-zip');
@@ -14,7 +15,9 @@ const UTF8 = 'utf-8';
  */
 export class CatalogFilesystemReader implements Reader {
 
-    constructor(private file: any, private settings: Settings) {}
+    constructor(private file: any,
+                private settings: Settings,
+                private imagestore: ImageStore) {}
 
 
     public go(): Promise<string> {
@@ -34,11 +37,13 @@ export class CatalogFilesystemReader implements Reader {
             try {
                 await extract(this.file.path, { dir: tmpDir });
 
-                for (let imageFile of fs.readdirSync(imgDir)) {
-                    if (!fs.existsSync(targetDir + imageFile)) {
-                        fs.copyFileSync(
-                            imgDir + imageFile,
-                            targetDir + imageFile
+                for (let imageFileName of fs.readdirSync(imgDir)) {
+                    if (!fs.existsSync(targetDir + imageFileName)) {
+                        fs.copyFileSync(imgDir + imageFileName, targetDir + imageFileName);
+                        await this.imagestore.createThumbnail(
+                            imageFileName,
+                            fs.readFileSync(targetDir + imageFileName),
+                            this.settings.selectedProject
                         );
                     }
                 }

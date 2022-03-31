@@ -186,6 +186,14 @@ export class ImageStore {
     }
 
 
+    public async createThumbnail(imageId: string, data: Buffer, project: string) {
+
+        const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
+        const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
+        await this.filesystem.writeFile(thumbnailPath, buffer);
+    }
+
+
     private async setupDirectories(project: string) {
 
         const originalsPath = this.getDirectoryPath(project, ImageVariant.ORIGINAL);
@@ -222,14 +230,6 @@ export class ImageStore {
         }
 
         return this.filesystem.readFile(path);
-    }
-
-
-    private async createThumbnail(imageId: string, data: Buffer, project: string) {
-
-        const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
-        const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
-        await this.filesystem.writeFile(thumbnailPath, buffer);
     }
 
 

@@ -1,16 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { } from 'idai-field-core';
 import { M } from '../../components/messages/m';
-import {
-    ProjectConfiguration,
-    RelationsManager,
-    ImageStore,
-    CategoryForm,
-    Document,
-    Datastore,
-    Name,
-    Relation
-} from 'idai-field-core';
+import { ProjectConfiguration, RelationsManager, ImageStore, CategoryForm, Document, Datastore,
+    Name, Relation } from 'idai-field-core';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';
 import { buildImportDocuments } from './import/import-documents';
@@ -28,8 +20,9 @@ import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
 import { Reader } from './reader/reader';
 import { ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
-import {Settings} from '../../services/settings/settings';
-import {ImageRelationsManager} from '../../services/image-relations-manager';
+import { Settings } from '../../services/settings/settings';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
+
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -92,10 +85,8 @@ export module Importer {
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
      */
-    export async function doImport(services: ImporterServices,
-                                   context: ImporterContext,
-                                   generateId: () => string,
-                                   options: ImporterOptions,
+    export async function doImport(services: ImporterServices, context: ImporterContext,
+                                   generateId: () => string, options: ImporterOptions,
                                    documents: Array<Document>): Promise<ImporterReport> {
 
         if (options.format === 'catalog') {
@@ -162,8 +153,7 @@ export module Importer {
     }
 
 
-    export async function doParse(options: ImporterOptions,
-                                  fileContent: string) {
+    export async function doParse(options: ImporterOptions, fileContent: string) {
 
         const selectedCategory = options.format === 'csv' ? options.selectedCategory : undefined;
         const separator = options.format === 'csv' ? options.separator : undefined;
@@ -177,34 +167,26 @@ export module Importer {
     }
 
 
-    export async function doRead(http: HttpClient,
-                                 settings: Settings,
-                                 options: ImporterOptions) {
+    export async function doRead(http: HttpClient, settings: Settings, imagestore: ImageStore, options: ImporterOptions) {
 
-        const reader: Reader|undefined =
-            createReader(
-                http,
-                settings,
-                options);
+        const reader: Reader|undefined = createReader(http, settings, imagestore, options);
         if (!reader) throw [M.IMPORT_READER_GENERIC_START_ERROR];
+
         return reader.go();
     }
 
 
-    function createReader(http: HttpClient,
-                          settings: Settings,
+    function createReader(http: HttpClient, settings: Settings, imagestore: ImageStore,
                           options: ImporterOptions): Reader|undefined {
 
         if (options.sourceType !== 'file') return new HttpReader(options.url, http);
         if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.file);
-        if (options.format === 'catalog') return new CatalogFilesystemReader(options.file, settings);
+        if (options.format === 'catalog') return new CatalogFilesystemReader(options.file, settings, imagestore);
         return new FilesystemReader(options.file);
     }
 
 
-    function createParser(format: ImporterFormat,
-                          operationId: string,
-                          selectedCategory?: CategoryForm,
+    function createParser(format: ImporterFormat, operationId: string, selectedCategory?: CategoryForm,
                           separator?: string): any {
 
         switch (format) {

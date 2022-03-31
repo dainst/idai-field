@@ -20,10 +20,10 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public writeFile(path: string, contents: any): Promise<void> {
+    public async writeFile(path: string, contents: any): Promise<void> {
 
         try {
-            return fs.writeFile(path, contents);
+            return await fs.writeFile(path, contents);
         } catch (err) {
             console.error('Error while trying to write file: ' + path, err);
             throw err;
@@ -34,7 +34,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async readFile(path: string): Promise<Buffer> {
 
         try {
-            return fs.readFile(path);
+            return await fs.readFile(path);
         } catch (err) {
             console.error('Error while trying to read file: ' + path, err);
             throw err;
@@ -45,7 +45,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async remove(path: string, recursive: boolean = false): Promise<void> {
 
         try {
-            return fs.rm(path, { recursive });
+            return await fs.rm(path, { recursive });
         } catch (err) {
             console.error('Error while trying to remove file: ' + path, err);
             throw err;
@@ -56,7 +56,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async mkdir(path: string, recursive: boolean = false): Promise<void> {
 
         try {
-            return fs.mkdir(path, { recursive });
+            return await fs.mkdir(path, { recursive });
         } catch (err) {
             console.error('Error while trying to create directory: ' + path, err);
             throw err;

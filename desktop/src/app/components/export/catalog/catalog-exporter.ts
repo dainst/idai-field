@@ -35,7 +35,7 @@ export module CatalogExporter {
         const tmpDir = tmpBaseDir + 'catalog-export/';
         const imgDir = tmpDir + CATALOG_IMAGES + '/';
 
-        fs.rmdirSync(tmpDir, { recursive: true });
+        if (fs.existsSync(tmpDir)) fs.rmdirSync(tmpDir, { recursive: true });
         fs.mkdirSync(imgDir, { recursive: true });
 
         try {

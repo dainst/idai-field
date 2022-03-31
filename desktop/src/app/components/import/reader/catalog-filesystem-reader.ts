@@ -24,7 +24,7 @@ export class CatalogFilesystemReader implements Reader {
             const tmpBaseDir = remote.app.getPath(APP_DATA) + '/' + remote.app.getName() + '/' + TEMP + '/';
             const tmpDir = tmpBaseDir + 'catalog-import/';
             const imgDir = tmpDir + CATALOG_IMAGES + '/';
-            fs.rmdirSync(tmpDir, { recursive: true });
+            if (fs.existsSync(tmpDir)) fs.rmdirSync(tmpDir, { recursive: true });
             fs.mkdirSync(imgDir, { recursive: true });
             const targetDir = this.settings.imagestorePath
                 + this.settings.selectedProject

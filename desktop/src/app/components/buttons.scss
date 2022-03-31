@@ -156,17 +156,6 @@ category-switcher-button {
   }
 }
 
-.btn-outline-primary:active,
-.btn-outline-primary:focus {
-  color: $primary-button-color !important;
-  background-color: #fff !important;
-  border-color: $primary-button-color !important;
-}
-
-.btn-outline-primary:active {
-  box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7) !important;
-}
-
 .show > .btn-outline-primary.dropdown-toggle {
   @extend :active;
   border-color: $primary-button-color;

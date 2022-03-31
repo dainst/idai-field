@@ -75,6 +75,10 @@ navigation {
       margin-top: -5px;
     }
 
+    .navigation-button.root-document:not(:last-child):after {
+      border-left-color: $primary;
+    }
+
     .root-document ~ .navigation-button:not(:last-child):before {
       border-left-color: lighten($primary-button-color, 30%);
     }

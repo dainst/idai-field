@@ -16,6 +16,7 @@ export const PROJECT_MAPPING = {
     'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
     'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
+    'kgr': { prefix: 'KGR', label: 'KGR' },
     'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
     'milet': { prefix: 'Milet', label: 'Milet' },
     'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },

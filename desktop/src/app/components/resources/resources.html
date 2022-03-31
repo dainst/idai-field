@@ -28,7 +28,7 @@
     </div>
 
     <div *ngIf="!isInTypesManagement() || isInExtendedSearchMode()" class="col-md-6 mr-md-auto">
-        <div class="d-flex">
+        <div class="d-flex row">
             <div id="search-bar-container" class="flex-grow-1">
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"

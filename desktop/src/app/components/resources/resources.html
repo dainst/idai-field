@@ -51,13 +51,13 @@
                             (mouseover)="mapModeTooltip.open()"
                             (mouseleave)="mapModeTooltip.close()"
                             (mousedown)="mapModeTooltip.close()"
-                            class="btn btn-link m-0"
+                            class="btn btn-link btn-square m-0"
                             [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
                     </button>
                     <button id="list-mode-button"
                             (click)="switchMode('list')"
-                            class="btn btn-link m-0"
+                            class="btn btn-link btn-square m-0"
                             ngbTooltip="Listendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"

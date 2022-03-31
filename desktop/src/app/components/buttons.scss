@@ -6,10 +6,16 @@ $lightgraybgr: #eeeeee;
   cursor: default !important;
 }
 
+.btn-square {
+  height: 39px;
+  width: 39px;
+  padding: 0;
+}
+
 .circular-button {
   cursor: default !important;
   text-align: center;
-  padding: 4px 0 0 1px;
+  padding: 3px 0 0 1px;
   border-radius: 50%;
   min-width: 35px;
   height: 39px;

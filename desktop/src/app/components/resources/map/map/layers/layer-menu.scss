@@ -17,8 +17,7 @@ $layer-menu-remove-button-color: #c82333;
 
 #layer-button {
   top: 10px;
-  height: 41px;
-  padding-top: 8px;
+  padding-top: 5px;
 
   &.disabled {
     opacity: 1;
@@ -29,12 +28,12 @@ $layer-menu-remove-button-color: #c82333;
   top: 51px;
   min-width: 223px;
   max-width: 500px;
-  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
   background-color: #f8f9fa !important;
   cursor: default !important;
   user-select: none;
-  border-radius: 0;
 
   .card-body {
     padding: 7px;

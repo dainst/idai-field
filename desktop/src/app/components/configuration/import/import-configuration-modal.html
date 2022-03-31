@@ -5,13 +5,14 @@
 </div>
 
 <div id="import-configuration-modal-body" class="modal-body">
-    <div i18n="@@configuration.importModal.warning">
+    <div i18n="@@configuration.importModal.warning" class="text-center alert alert-warning">
         Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen.
         Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt.
     </div>
     <div i18n="@@project.createModal.configuration">Projekt:</div>
     <select (change)="selectProject($event.target.value)"
             class="form-control">
+        <option value="" selected disabled hidden></option>
         <option *ngFor="let project of getProjects()"
                 value="{{project}}"
                 [selected]="selectedProject === project">

@@ -45,7 +45,7 @@ import { ConfigurationGuard } from './configuration-guard';
 import { GroupListingComponent } from './add/group/group-listing.component';
 import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relations-info.component';
 import { ConfigurationState } from './configuration-state';
-import { ImportConfigurationModalComponent } from './load/import-configuration-modal.component';
+import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 
 
 @NgModule({

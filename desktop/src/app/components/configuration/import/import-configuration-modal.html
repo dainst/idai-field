@@ -12,6 +12,7 @@
     <div i18n="@@project.createModal.configuration">Projekt:</div>
     <select (change)="selectProject($event.target.value)"
             class="form-control">
+        <option value="" selected disabled hidden></option>
         <option *ngFor="let project of getProjects()"
                 value="{{project}}"
                 [selected]="selectedProject === project">

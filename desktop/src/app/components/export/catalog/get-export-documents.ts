@@ -1,5 +1,6 @@
-import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId, Datastore, childrenOf } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
+import { Document, Relation, Name, ON_RESOURCE_ID, Resource, RESOURCE_DOT_IDENTIFIER, toResourceId, Datastore,
+    childrenOf } from 'idai-field-core';
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 
 
@@ -8,14 +9,11 @@ export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-expor
 
 export async function getExportDocuments(datastore: Datastore,
                                          imageRelationsManager: ImageRelationsManager,
-                                         typeCatalog: Resource.Id,
+                                         typeCatalogId: Resource.Id,
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<Resource.Id>]>> {
 
-    const catalogAndTypes = (await datastore.find(childrenOf(typeCatalog)))
-        .documents
-        .map(Document.clone);
-
+    const catalogAndTypes = await getCatalogAndTypes(typeCatalogId, datastore);
     const linkedImages = (await imageRelationsManager.getLinkedImages(catalogAndTypes)).map(Document.clone);
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
@@ -44,6 +42,14 @@ export async function getExportDocuments(datastore: Datastore,
             relatedImages.map(toResourceId)
         ]
     ];
+}
+
+
+async function getCatalogAndTypes(typeCatalogId: Resource.Id, datastore: Datastore): Promise<Array<Document>> {
+
+    const catalog: Document = await datastore.get(typeCatalogId);
+    const types: Array<Document> = (await datastore.find(childrenOf(typeCatalogId))).documents;
+    return [catalog].concat(types).map(Document.clone);
 }
 
 

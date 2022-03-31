@@ -1,5 +1,5 @@
-import {Query} from './model/query';
-import {Resource} from './model/resource';
+import { Query } from './model/query';
+import { Resource } from './model/resource';
 
 
 export const childrenOf = (id: Resource.Id): Query => ({

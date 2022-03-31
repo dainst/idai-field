@@ -33,7 +33,7 @@ import { SaveProcessModalComponent } from './save/save-process-modal.component';
 import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
-import { ImportConfigurationModalComponent } from './load/import-configuration-modal.component';
+import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 
 
 export type ApplyChangesResult = {

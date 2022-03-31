@@ -189,12 +189,12 @@ export class ImageStore {
     private async setupDirectories(project: string) {
 
         const originalsPath = this.getDirectoryPath(project, ImageVariant.ORIGINAL);
-        if (!this.filesystem.exists(originalsPath)) {
+        if (!(await this.filesystem.exists(originalsPath))) {
             await this.filesystem.mkdir(originalsPath, true);
         }
 
         const thumbnailsPath = this.getDirectoryPath(project, ImageVariant.THUMBNAIL);
-        if (!this.filesystem.exists(thumbnailsPath)) {
+        if (!(await this.filesystem.exists(thumbnailsPath))) {
             await this.filesystem.mkdir(thumbnailsPath, true);
         }
     }
@@ -202,7 +202,7 @@ export class ImageStore {
 
     private async getFileNames(path: string): Promise<string[]> {
 
-        const listFiles = this.filesystem.listFiles(path);
+        const listFiles = await this.filesystem.listFiles(path);
 
         return listFiles.map((filePath) => {
             return filePath.slice((path).length);
@@ -214,9 +214,9 @@ export class ImageStore {
 
         const path = this.getFilePath(project, type, imageId);
 
-        if (type === ImageVariant.THUMBNAIL && !this.filesystem.exists(path)) {
+        if (type === ImageVariant.THUMBNAIL && !(await this.filesystem.exists(path))) {
             const originalFilePath = this.getFilePath(project, ImageVariant.ORIGINAL, imageId);
-            if (this.filesystem.exists(originalFilePath)) {
+            if (await this.filesystem.exists(originalFilePath)) {
                 await this.createThumbnail(imageId, await this.filesystem.readFile(originalFilePath), project);
             }
         }
@@ -229,7 +229,7 @@ export class ImageStore {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
         const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
-        this.filesystem.writeFile(thumbnailPath, buffer);
+        await this.filesystem.writeFile(thumbnailPath, buffer);
     }
 
 

@@ -18,7 +18,7 @@ export interface FilesystemAdapterInterface {
      * Returns if true if a directory or file exists for the for the given path
      * @param path
      */
-    exists(path: string): boolean;
+    exists(path: string): Promise<boolean>;
 
     /**
      * Removes a file from the filesystem. Does nothing if file not found.
@@ -38,13 +38,13 @@ export interface FilesystemAdapterInterface {
      * Returns `true` if the given path represents a file.
      * @param path
      */
-    isFile(path: string): boolean;
+    isFile(path: string): Promise<boolean>;
 
     /**
      * Returns `true` if the given path represents a directory.
      * @param path
      */
-    isDirectory(path: string): boolean;
+    isDirectory(path: string): Promise<boolean>;
 
 
     /**
@@ -52,5 +52,5 @@ export interface FilesystemAdapterInterface {
      * @param path
      * @param recursive (optional) also list files in subdirectories
      */
-    listFiles(path: string, recursive?: boolean): string[];
+    listFiles(path: string, recursive?: boolean): Promise<string[]>;
 }

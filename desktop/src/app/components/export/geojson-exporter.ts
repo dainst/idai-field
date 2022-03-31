@@ -1,9 +1,9 @@
-import {Feature, FeatureCollection, GeometryObject} from 'geojson';
-import {FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore} from 'idai-field-core';
-import {M} from '../../components/messages/m';
+import { Feature, FeatureCollection, GeometryObject } from 'geojson';
+import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'idai-field-core';
+import { M } from '../../components/messages/m';
 
 const geojsonRewind = typeof window !== 'undefined' ? window.require('geojson-rewind') : require('geojson-rewind');
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 
 /**
@@ -68,21 +68,17 @@ export module GeoJsonExporter {
     }
 
 
-    function writeFile(outputFilePath: string,
+    async function writeFile(outputFilePath: string,
                        featureCollection: FeatureCollection<GeometryObject>): Promise<void> {
 
         const json: string = JSON.stringify(featureCollection, null, 2);
 
-        return new Promise((resolve, reject) => {
-            fs.writeFile(outputFilePath, json, (err: any) => {
-                if (err) {
-                    console.error(err);
-                    reject([M.EXPORT_GEOJSON_ERROR_WRITE]);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        try {
+            await fs.writeFile(outputFilePath, json);
+        } catch (err) {
+            console.error('Error while trying to write file: ' + outputFilePath, err);
+            throw [M.EXPORT_GEOJSON_ERROR_WRITE];
+        }
     }
 
 

@@ -3,7 +3,7 @@ import { CSVExport, CSVExportResult } from './csv-export';
 import { M } from '../../../components/messages/m';
 import { PerformExport } from '../export-helper';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 /**
  * Small wrapper to separate async and file handling, including
@@ -31,18 +31,13 @@ export module CsvExporter {
     }
 
 
-    function writeFile(outputFilePath: string, lines: string[]): Promise<void> {
-
-        return new Promise((resolve, reject) => {
-            fs.writeFile(outputFilePath, lines.join('\n'),
-                (err: any) => {
-                if (err) {
-                    console.error(err);
-                    reject([M.EXPORT_ERROR_GENERIC]);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    async function writeFile(outputFilePath: string, lines: string[]): Promise<void> {
+        
+        try {
+            return await fs.writeFile(outputFilePath, lines.join('\n'));
+        } catch (err) {
+            console.error('Error while trying to write file: ' + outputFilePath, err);
+            throw [M.EXPORT_ERROR_GENERIC];
+        }
     }
 }

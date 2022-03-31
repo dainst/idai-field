@@ -49,7 +49,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
 
     private async copyImageFiles(srcFolderPath: string, destFolderPath: string, fileName: string) {
 
-        fs.mkdirSync(destFolderPath, {recursive: true});
+        fs.mkdirSync(destFolderPath, { recursive: true });
         fs.createReadStream(srcFolderPath + fileName).pipe(
             fs.createWriteStream(destFolderPath + '/' + fileName)
         );
@@ -62,17 +62,13 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     }
 
 
-    private static getFileNames(folderPath: string): Promise<string[]> {
+    private static async getFileNames(folderPath: string): Promise<string[]> {
 
-        return new Promise<any>((resolve, reject) => {
-            fs.readdir(folderPath, (err, fileNames) => {
-                if (fileNames && !err) {
-                    resolve(fileNames);
-                } else {
-                    console.error('Could not find sample data folder: ' + folderPath);
-                    reject(err);
-                }
-            });
-        });
+        try {
+            return fs.promises.readdir(folderPath);
+        } catch (err) {
+            console.error('Could not find sample data folder: ' + folderPath);
+            throw err;
+        }
     }
 }

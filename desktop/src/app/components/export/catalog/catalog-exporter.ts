@@ -1,8 +1,7 @@
-import {ImageRelationsManager} from '../../../services/image-relations-manager';
-import {Settings} from '../../../services/settings/settings';
 import { Resource, StringUtils, Datastore } from 'idai-field-core';
+import { ImageRelationsManager } from '../../../services/image-relations-manager';
+import { Settings } from '../../../services/settings/settings';
 import { getExportDocuments } from './get-export-documents';
-
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');

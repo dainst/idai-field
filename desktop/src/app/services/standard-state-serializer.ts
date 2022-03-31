@@ -3,7 +3,7 @@ import { SettingsProvider } from './settings/settings-provider';
 import { StateSerializer } from './state-serializer';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 
 export type StateType = 'resources-state'|'matrix-state'|'tabs-state'|'configuration-state';
@@ -23,56 +23,32 @@ export class StandardStateSerializer extends StateSerializer {
 
     public async load(stateType: StateType): Promise<any> {
 
-        return new Promise(resolve => {
-
-            fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
-                if (err) {
-                    resolve({});
-                } else {
-                    try {
-                        resolve(JSON.parse(content));
-                    } catch (_) {
-                        resolve({});
-                    }
-                }
-            });
-        });
+        try {
+            const content: string = await fs.readFile(this.getFilePath(stateType), 'utf-8');
+            return JSON.parse(content);
+        } catch (err) {
+            return {};
+        }
     }
 
 
-    public store(stateObject: any, stateType: StateType): Promise<any> {
+    public async store(stateObject: any, stateType: StateType): Promise<void> {
 
-        return new Promise((resolve, reject) => {
+        if (this.settingsProvider.getSettings().selectedProject === 'test') return;
 
-            if (this.settingsProvider.getSettings().selectedProject === 'test') return resolve(undefined);
-
-            fs.writeFile(this.getFilePath(stateType),
-                    JSON.stringify(stateObject), (err: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(undefined);
-                }
-            });
-        });
+        return fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject));
     }
 
 
-    public delete(stateType: StateType): Promise<any> {
+    public async delete(stateType: StateType): Promise<void> {
 
-        return new Promise((resolve, reject) => {
+        const filePath: string = this.getFilePath(stateType);
 
-            const filePath: string = this.getFilePath(stateType);
-            if (!fs.existsSync(filePath)) return resolve(undefined);
-
-            fs.unlink(filePath, (err: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(undefined);
-                }
-            });
-        });
+        try {
+            await fs.unlink(filePath);
+        } catch (_) {
+            return;
+        }
     }
 
 

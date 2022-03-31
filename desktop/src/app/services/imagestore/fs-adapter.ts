@@ -44,6 +44,8 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public async remove(path: string, recursive: boolean = false): Promise<void> {
 
+        if (!await this.exists(path)) return;
+
         try {
             return await fs.rm(path, { recursive });
         } catch (err) {

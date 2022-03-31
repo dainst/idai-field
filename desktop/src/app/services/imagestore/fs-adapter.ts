@@ -16,7 +16,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public async exists(path: string): Promise<boolean> {
 
-        return (this.isDirectory(path) || this.isFile(path));
+        return (await this.isDirectory(path) || await this.isFile(path));
     }
 
 
@@ -44,7 +44,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public async remove(path: string, recursive: boolean = false): Promise<void> {
 
-        if (!await this.exists(path)) return;
+        if (!(await this.exists(path))) return;
 
         try {
             return await fs.rm(path, { recursive });
@@ -69,7 +69,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async isFile(path: string): Promise<boolean> {
 
         try {
-            const stat = await fs.statSync(path);
+            const stat = await fs.stat(path);
             return stat.isFile();
         } catch (e) {
             return false;
@@ -92,7 +92,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
         // see https://stackoverflow.com/a/16684530
         let results = [];
-        if (!await this.isDirectory(folderPath)) return results;
+        if (!(await this.isDirectory(folderPath))) return results;
 
         const list: string[] = (await fs.readdir(folderPath)).filter(name => !name.includes('DS_Store'));
 

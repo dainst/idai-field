@@ -132,7 +132,10 @@ export class PouchdbDatastore {
     public async create(document: NewDocument, username: string): Promise<Document> {
 
         if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
-        if (document.resource.id) await this.assertNotExists(document.resource.id);
+        if (document.resource.id) {
+            await this.assertNotExists(document.resource.id);
+            this.deletedOnes = this.deletedOnes.filter(id => id !== document.resource.id);
+        }
 
         try {
             return await this.performPut(

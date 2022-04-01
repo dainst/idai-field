@@ -31,14 +31,9 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public async readFile(path: string): Promise<Buffer> {
+    public readFile(path: string): Promise<Buffer> {
 
-        try {
-            return await fs.readFile(path);
-        } catch (err) {
-            console.error('Error while trying to read file: ' + path, err);
-            throw err;
-        }
+        return fs.readFile(path);
     }
 
 

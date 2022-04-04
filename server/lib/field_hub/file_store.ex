@@ -69,7 +69,10 @@ defmodule FieldHub.FileStore do
     directory = get_type_directory(project, type)
     File.mkdir_p!(directory)
     file_path = "#{directory}/#{uuid}"
-    File.write(file_path, content)
+
+    if not File.exists?(file_path) do
+      File.write(file_path, content)
+    end
   end
 
   def delete(%{uuid: uuid, project: project}) do

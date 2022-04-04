@@ -29,6 +29,7 @@ navigation {
 
     .navigation-button {
       padding-top: 7px;
+      white-space: nowrap;
 
       &:active {
         color: $primary !important;

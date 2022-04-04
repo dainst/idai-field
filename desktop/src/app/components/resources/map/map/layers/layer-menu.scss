@@ -60,6 +60,7 @@ $layer-menu-remove-button-color: #c82333;
         padding-left: 7px;
         border-radius: 0.25rem;
         background-color: #e8e8e8;
+        overflow: hidden;
 
         &:first-child {
           background-color: transparent;

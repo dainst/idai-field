@@ -13,13 +13,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     |> Jason.decode!()
     |> ExJsonSchema.Schema.resolve()
 
-  setup_all do
-    on_exit(fn ->
-      # Run after all tests
-      File.rm_rf!(@file_directory_root)
-    end)
-  end
-
   setup do
     # Run before each test
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
@@ -27,6 +20,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     on_exit(fn ->
       # Run after each test
       TestHelper.remove_test_db_and_user(@project, @user_name)
+      File.rm_rf!(@file_directory_root)
     end)
     :ok
   end

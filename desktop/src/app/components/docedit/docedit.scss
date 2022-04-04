@@ -111,20 +111,19 @@
     }
   }
 
-  #document-edit-dropdown-menu {
-    .dropdown-entry-label {
-      margin-left: 5px;
-    }
+  main {
+    height: 86%;
+    padding: 0;
+    position: relative;
+  }
+}
+
+#document-edit-dropdown-menu {
+  .dropdown-entry-label {
+    margin-left: 5px;
   }
 
   .mdi-expand-all {
     color: #28a745;
-  }
-
-  main {
-    height: 86%;
-    padding: 0;
-
-    position: relative;
   }
 }

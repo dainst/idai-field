@@ -139,7 +139,6 @@ category-switcher-button {
 }
 
 .category-button:hover {
-
   category-icon {
     filter: brightness(1.15);
     transition: filter .3s ease;
@@ -154,6 +153,17 @@ category-switcher-button {
     filter: brightness(1.25);
     transition: filter .3s ease;
   }
+}
+
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+  color: #5572A1 !important;
+  background-color: #fff !important;
+  border-color: #5572A1 !important;
+}
+
+.btn-outline-primary:active {
+  box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7) !important;
 }
 
 .show > .btn-outline-primary.dropdown-toggle {

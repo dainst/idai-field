@@ -5,7 +5,7 @@ group-listing {
 
   .listing {
     li:hover:not(.new-entry-button) {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: $list-item-hover-color;
         transition: background-color .5s ease;
     }
   }

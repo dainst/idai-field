@@ -1,8 +1,12 @@
 #search-bar {
-
   .search-bar-input {
     width: 100%;
     padding: 9px;
+  }
+
+  .mdi-filter {
+    position: relative;
+    right: 1px;
   }
 
   .filter-button {
@@ -25,10 +29,6 @@
       border: none;
       width: 50px;
       height: 39px;
-
-      .mdi-filter {
-        line-height: 30px;
-      }
 
       category-icon {
         margin-left: -6px;

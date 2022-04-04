@@ -2,7 +2,6 @@
  * @author Thomas Kleinke
  */
 resources-search-bar {
-
   form {
     align-items: inherit !important;
     padding-top: 1px;
@@ -27,5 +26,11 @@ resources-search-bar {
         width: 100% !important;
       }
     }
+  }
+}
+
+.resources-filter-popover {
+  .arrow {
+    right: 9px !important;
   }
 }

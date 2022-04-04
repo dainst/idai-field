@@ -8,33 +8,31 @@
             class="form-control search-bar-input"
             placeholder="Suchen..." i18n-placeholder="@@widgets.searchBar.placeholder">
 
-        <div class="input-group-append">
-            <span *ngIf="isFilterMenuAvailable()" id="filter-button" class="filter-button">
-                <button class="btn btn-primary search-filter"
-                        type="button"
-                        [ngbPopover]="filterMenu"
-                        [autoClose]="false"
-                        #p="ngbPopover"
-                        placement="bottom-right">
-                    <span *ngIf="!categories || categories.length == 0" class="mdi mdi-filter"></span>
-                    <span *ngIf="categories && categories.length > 0">
-                        <category-icon [category]="categories[0]" size="30"></category-icon>
-                    </span>
-                </button>
-                <ng-template #filterMenu>
-                    <div class="filtermenu">
-                        <div class="popover-custom-title">
-                            <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
-                        </div>
-                        <category-picker [topLevelCategoriesArray]="filterOptions"
-                                        [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
-                                        [selectedCategories]="categories"
-                                        [allowPickingAbstractCategories]="true"
-                                        (onCategoryPicked)="chooseCategoryFilter($event)">
-                        </category-picker>
+        <div class="input-group-append filter-button" *ngIf="isFilterMenuAvailable()" id="filter-button">
+            <button class="btn btn-primary search-filter"
+                    type="button"
+                    [ngbPopover]="filterMenu"
+                    [autoClose]="false"
+                    #p="ngbPopover"
+                    placement="bottom-right">
+                <span *ngIf="!categories || categories.length == 0" class="mdi mdi-filter"></span>
+                <span *ngIf="categories && categories.length > 0">
+                    <category-icon [category]="categories[0]" size="30"></category-icon>
+                </span>
+            </button>
+            <ng-template #filterMenu>
+                <div class="filtermenu">
+                    <div class="popover-custom-title">
+                        <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                     </div>
-                </ng-template>
-            </span>
+                    <category-picker [topLevelCategoriesArray]="filterOptions"
+                                    [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
+                                    [selectedCategories]="categories"
+                                    [allowPickingAbstractCategories]="true"
+                                    (onCategoryPicked)="chooseCategoryFilter($event)">
+                    </category-picker>
+                </div>
+            </ng-template>
         </div>
     </div>
 </form>

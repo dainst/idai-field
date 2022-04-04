@@ -2,6 +2,8 @@
  * @author Thomas Kleinke
  */
 
+ $active-navigation-button-background-color: #d5dfef;
+
 navigation {
   width: 100%;
 
@@ -20,11 +22,18 @@ navigation {
 
     .root-document {
       @extend .btn-outline-primary, :active;
+      background-color: $active-navigation-button-background-color !important;
+      color: $primary !important;
       z-index: auto !important;
     }
 
     .navigation-button {
       padding-top: 7px;
+
+      &:active {
+        color: $primary !important;
+        background-color: $active-navigation-button-background-color !important;
+      }
     }
 
     #selected-operation {
@@ -67,16 +76,19 @@ navigation {
       border-left-color: darken($primary-button-color, 5%);
       border-width: 6px;
       margin-top: -6px;
+      transition: border-left-color 0.15s ease-in-out;
     }
 
     .navigation-button:not(:last-child):after {
       border-left-color: #fff;
       border-width: 5px;
       margin-top: -5px;
+      transition: border-left-color 0.15s ease-in-out;
     }
 
-    .navigation-button.root-document:not(:last-child):after {
-      border-left-color: $primary;
+    .navigation-button.root-document:not(:last-child):after,
+    .navigation-button:active:not(:last-child):after {
+      border-left-color: $active-navigation-button-background-color;
     }
 
     .root-document ~ .navigation-button:not(:last-child):before {

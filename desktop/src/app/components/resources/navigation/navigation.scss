@@ -61,6 +61,10 @@ navigation {
       max-width: calc(100% - 50px);
     }
 
+    .navigation-button {
+      box-shadow: none !important;
+    }
+
     .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
       position: absolute;
       top: 50%;

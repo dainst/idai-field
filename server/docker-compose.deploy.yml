@@ -3,51 +3,50 @@ version: '3.5'
 services:
   couchdb:
     image: couchdb:3.2.1
+    container_name: field-hub-db
     environment:
       - COUCHDB_USER
       - COUCHDB_PASSWORD
     volumes:
-      - db-data:/opt/couchdb/data
-    networks:
-      - web
-      - default
-    deploy:
-      labels:
-      - "traefik.docker.network=web"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:db.${HOST}"
-      - "traefik.port=5984"
+      - ${DB_DATA_DIRECTORY}:/opt/couchdb/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.db.rule=Host(`db.${HOST}`)        
+      - traefik.http.services.db.loadbalancer.server.port=5984
+      - traefik.http.routers.db.tls=true
+      - traefik.http.routers.db.tls.certresolver=myresolver
+    restart: always
 
   app:
     image: "ghcr.io/dainst/field_hub:${FIELD_HUB_VERSION}"
+    container_name: field-hub-app
     environment:
       - HOST
       - SECRET_KEY_BASE
-      - COUCHDB_URL
+      - COUCHDB_URL=http://couchdb:5984
       - COUCHDB_ADMIN_NAME=${COUCHDB_USER}
       - COUCHDB_ADMIN_PASSWORD=${COUCHDB_PASSWORD}
     depends_on:
       - "couchdb"
     volumes:
-      - file-data:/files
-    networks:
-      - web
-      - default
-    deploy:
-      labels:
-      - "traefik.docker.network=web"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:${HOST}"
-      - "traefik.port=4000"
+      - ${FILE_DIRECTORY}:/files
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(`${HOST}`)
+      - traefik.http.services.app.loadbalancer.server.port=4000
+      - traefik.http.routers.app.tls=true
+      - traefik.http.routers.app.tls.certresolver=myresolver
+    restart: always
 
-volumes:
-  file-data:
-    name: idai_field_server_files
-    external: true
-  db-data:
-    name: idai_field_server_db
-    external: true
-
-networks:
-  web:
-    external: true
+  traefik:
+    image: "traefik:v2.4"
+    ports:
+      - "80:80"
+      - "443:443"
+    command: 
+      - "--docker.domain=${HOST}"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/acme.json"
+      - "./traefik.toml:/etc/traefik/traefik.toml"
+    restart: always

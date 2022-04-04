@@ -11,7 +11,7 @@
   </head>
   <body>
       <header>
-        <section class="container">
+       <section class="container" style="position:absolute; bottom:0;">
           <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
             <nav>
               <ul>
@@ -19,7 +19,6 @@
               </ul>
             </nav>
           <% end %>
-          <img style="margin:auto; padding:5px" src={Routes.static_path(@conn, "/images/iDAI.field_weis_schatten.svg")} alt="iDAI.field Logo"/>
         </section>
       </header>
     <%= @inner_content %>

@@ -42,7 +42,6 @@ $deactivated-button-color: lightgray;
   color: $deactivated-button-color;
 }
 
-
 .resources-nav {
   position: relative;
   z-index: 1009;
@@ -59,9 +58,9 @@ $deactivated-button-color: lightgray;
   }
 
   #buttons-container {
-
     .resources-mode-buttons {
       margin-top: 3px;
+      margin-right: 8px;
     }
   }
 }

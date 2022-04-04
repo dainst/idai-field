@@ -336,8 +336,8 @@ relations-view .fieldvalue:hover {
 }
 
 .modal-content {
-  border-radius: 0;
   border: none;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {

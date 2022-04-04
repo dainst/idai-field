@@ -99,7 +99,7 @@
 
         .category-item:hover,
         .selected-category .category-item {
-          background-color: darken($list-item-hover-color, 5%) !important;
+          background-color: $list-item-hover-color !important;
           transition: background-color .5s ease;
         }
 

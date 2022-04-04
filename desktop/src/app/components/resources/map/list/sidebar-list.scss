@@ -26,11 +26,11 @@ sidebar-list {
     }
 
     .selected {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
     }
 
     .additional-selected {
-      background-color: $list-item-hover-color;
+      background-color: lighten($list-item-hover-color, 5%);
     }
 
     #document-limit-info {
@@ -42,7 +42,7 @@ sidebar-list {
       background-color: $sidebar-bg-color;
 
       &:hover {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: $list-item-hover-color;
       }
     }
   }

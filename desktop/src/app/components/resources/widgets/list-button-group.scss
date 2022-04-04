@@ -23,7 +23,7 @@ $button-width: 24px;
 
     &:hover {
       color: darken($activated-color, 10%);
-      background-color: darken($list-item-hover-color, 10%);
+      background-color: darken($list-item-hover-color, 5%);
       transition: background-color .2s ease;
     }
   }
@@ -37,7 +37,7 @@ $button-width: 24px;
   }
 
   .sidebar-list-button-group-active-button {
-    background-color: darken($list-item-hover-color, 10%);
+    background-color: $list-item-hover-color;
 
     @extend .btn, :active;
   }

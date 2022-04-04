@@ -67,7 +67,7 @@ document-info {
         border: none;
 
         &:hover {
-          background-color: darken($list-item-hover-color, 5%);
+          background-color: $list-item-hover-color;
         }
 
         &:active:focus {

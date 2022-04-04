@@ -13,7 +13,7 @@ configuration-category {
     .header {
       height: 45px;
       border-bottom: 1px solid #ccc;
-      background-color: #e7e7e7;
+      background-color: #ededed;
 
       &.header-left {
         padding: 7px;
@@ -101,7 +101,7 @@ configuration-category {
 
         &:hover,
         &.active {
-          background-color: darken($list-item-hover-color, 5%) !important;
+          background-color: $list-item-hover-color !important;
           transition: background-color .5s ease, border .5s ease;
         }
 

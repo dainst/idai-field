@@ -21,7 +21,7 @@
                 <span class="mdi mdi-selection-off"></span>
             </button>
         </span>
-        <button class="btn btn-primary"
+        <button class="btn btn-link btn-square m-0"
             id="viewer-mode-button"
             tabindex="-1"
             [class.active]="isActive('view')"
@@ -31,7 +31,7 @@
             placement="left">
             <span class="mdi mdi-image"></span>
         </button>
-        <button class="btn btn-primary"
+        <button class="btn btn-link btn-square m-0"
             id="tiles-mode-button"
             tabindex="-1"
             [class.active]="isActive('edit')"
@@ -45,9 +45,9 @@
             id="close-button"
             tabindex="-1"
             (click)="close()">
-        <span class="mdi mdi-close"></span>
-    </button>
-</div>
+            <span class="mdi mdi-close"></span>
+        </button>
+    </div>
 </div>
 
 <div *ngIf="mode === 'view'" id="view-modal-body" class="modal-body px-0">

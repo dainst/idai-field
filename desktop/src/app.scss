@@ -2,6 +2,7 @@ $mdi-font-path: 'fonts' !default;
 @import '../node_modules/@mdi/font/css/materialdesignicons';
 
 @import '@fontsource/open-sans/variable-full.css';
+@import "@fontsource/open-sans/variable-full-italic.css";
 
 @import 'app/components/variables';
 @import 'app/components/messages/messages';

@@ -51,7 +51,6 @@ export class ExpressServer {
                 if (!req.query.types) {
                     list = await this.imagestore.getFileInfos(req.params.project, []);
                 } else {
-
                     const imageVariants = [];
 
                     for (const type of req.query.types) {

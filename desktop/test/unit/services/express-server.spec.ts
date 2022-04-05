@@ -1,8 +1,8 @@
+import Ajv from 'ajv';
 import { IdGenerator, PouchdbDatastore, ImageStore } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
-import Ajv from 'ajv';
 // Not explicitely exported by idai-field-core, because it is only used for tests.
 import schema from '../../../../core/api-schemas/files-list.json';
 
@@ -11,6 +11,7 @@ const request = typeof window !== 'undefined' ? window.require('supertest') : re
 
 
 describe('ExpressServer', () => {
+
     const testFilePath = process.cwd() + '/test/test-temp/';
     const testProjectName = 'test_tmp_project';
     const password = 'pw';
@@ -23,6 +24,7 @@ describe('ExpressServer', () => {
     let expressFauxtonApp: any;
     let pouchdbDatastore: PouchdbDatastore;
     let imageStore: ImageStore;
+
 
     beforeAll(async done => {
 
@@ -47,17 +49,20 @@ describe('ExpressServer', () => {
         done();
     });
 
+
     // Re-initialize image store data for each test.
     beforeEach(async (done) => {
         await imageStore.init(`${testFilePath}imagestore/`, testProjectName);
         done();
     });
 
+
     afterEach(async (done) => {
         await imageStore.deleteData(testProjectName);
         done();
     });
 
+    
     afterAll(async (done) => {
 
         await pouchdbDatastore.destroyDb(testProjectName);

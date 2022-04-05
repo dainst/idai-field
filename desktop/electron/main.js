@@ -2,10 +2,11 @@
 
 const electron = require('electron');
 const remoteMain = require('@electron/remote/main');
-const fs = require('fs');
+const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
+require('./asynchronous-fs.js');
 
 remoteMain.initialize();
 
@@ -45,14 +46,6 @@ global.setConfigDefaults = config => {
 
     return config;
 };
-
-electron.ipcMain.handle('stat', async (_, path) => await fs.promises.stat(path));
-electron.ipcMain.handle('writeFile', async (_, path, contents) => await fs.promises.writeFile(path, contents));
-electron.ipcMain.handle('readFile', async (_, path, encoding) => await fs.promises.readFile(path, encoding));
-electron.ipcMain.handle('readdir', async (_, path) => await fs.promises.readdir(path));
-electron.ipcMain.handle('mkdir', async (_, path, options) => await fs.promises.mkdir(path, options));
-electron.ipcMain.handle('rm', async (_, path, options) => await fs.promises.rm(path, options));
-electron.ipcMain.handle('unlink', async (_, path) => await fs.promises.unlink(path));
 
 const setFileSync = config => {
     // migration for version 3 image sync rework 

@@ -63,10 +63,9 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async isFile(path: string): Promise<boolean> {
 
         try {
-            const stat = await getAsynchronousFs().stat(path);
-            return stat.isFile();
-        } catch (e) {
-            return false;
+            return await getAsynchronousFs().isFile(path);
+        } catch (err) {
+            console.error('isFile failed: ' + path, err);
         }
     }
 
@@ -74,10 +73,9 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async isDirectory(path: string): Promise<boolean> {
 
         try {
-            const stat = await getAsynchronousFs().stat(path);
-            return stat.isDirectory();
-        } catch (e) {
-            return false;
+            return await getAsynchronousFs().isDirectory(path);
+        } catch (err) {
+            console.error('isDirectory failed: ' + path, err);
         }
     }
 
@@ -92,8 +90,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
         for (const file of list) {
             const currentFile = folderPath + file;
-            const stat = await getAsynchronousFs().stat(currentFile);
-            if (stat && stat.isDirectory()) {
+            if (await this.isDirectory(currentFile)) {
                 /* Recurse into a subdirectory, otherwise do not add directory to results. */
                 if (recursive) results = results.concat(await this.listFiles(currentFile, recursive));
             } else {

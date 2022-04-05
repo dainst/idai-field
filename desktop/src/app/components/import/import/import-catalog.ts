@@ -47,7 +47,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
             const importCatalog = getImportTypeCatalog(importDocuments);
 
             if (isOwned(context, importCatalog)) {
-                await assertCatalogNotOwned(services, context, importCatalog);
+                await assertCatalogNotOwned(services, importCatalog);
                 await assertNoImagesOverwritten(services, importDocuments);
                 for (const importDocument of importDocuments) {
                     delete importDocument.project;
@@ -147,7 +147,6 @@ async function assertNoImagesOverwritten(services: ImportCatalogServices,
 // the owner of the catalog to remove the catalog consciously so that he then can
 // re-import it afterwards.
 async function assertCatalogNotOwned(services: ImportCatalogServices,
-                                     context: ImportCatalogContext,
                                      importCatalog: Document) {
 
 

@@ -120,8 +120,8 @@
 }
 
 header {
-  height: 500px;
-  background-image: url(/images/iDAI_field_header_logo.png);
+  height: 350px;
+  background-image: url(/images/header_background.png);
   background-position-y: bottom;
   background-position-x: center;
 }

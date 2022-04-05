@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { getAsynchronousFs } from './getAsynchronousFs';
 import { SettingsProvider } from './settings/settings-provider';
 import { StateSerializer } from './state-serializer';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 
 export type StateType = 'resources-state'|'matrix-state'|'tabs-state'|'configuration-state';
@@ -24,7 +24,7 @@ export class StandardStateSerializer extends StateSerializer {
     public async load(stateType: StateType): Promise<any> {
 
         try {
-            const content: string = await fs.readFile(this.getFilePath(stateType), 'utf-8');
+            const content: string = await getAsynchronousFs().readFile(this.getFilePath(stateType), 'utf-8');
             return JSON.parse(content);
         } catch (err) {
             return {};
@@ -36,7 +36,7 @@ export class StandardStateSerializer extends StateSerializer {
 
         if (this.settingsProvider.getSettings().selectedProject === 'test') return;
 
-        return fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject));
+        return getAsynchronousFs().writeFile(this.getFilePath(stateType), JSON.stringify(stateObject));
     }
 
 
@@ -45,7 +45,7 @@ export class StandardStateSerializer extends StateSerializer {
         const filePath: string = this.getFilePath(stateType);
 
         try {
-            await fs.unlink(filePath);
+            await getAsynchronousFs().unlink(filePath);
         } catch (_) {
             return;
         }

@@ -12,10 +12,7 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
 
-
-const fs = typeof window !== 'undefined'
-  ? window.require('fs')
-  : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 @Component({

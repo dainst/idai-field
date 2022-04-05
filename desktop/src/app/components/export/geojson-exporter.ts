@@ -1,9 +1,9 @@
 import { Feature, FeatureCollection, GeometryObject } from 'geojson';
 import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'idai-field-core';
 import { M } from '../../components/messages/m';
+import { getAsynchronousFs } from '../../services/getAsynchronousFs';
 
 const geojsonRewind = typeof window !== 'undefined' ? window.require('geojson-rewind') : require('geojson-rewind');
-const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 
 /**
@@ -74,7 +74,7 @@ export module GeoJsonExporter {
         const json: string = JSON.stringify(featureCollection, null, 2);
 
         try {
-            await fs.writeFile(outputFilePath, json);
+            await getAsynchronousFs().writeFile(outputFilePath, json);
         } catch (err) {
             console.error('Error while trying to write file: ' + outputFilePath, err);
             throw [M.EXPORT_GEOJSON_ERROR_WRITE];

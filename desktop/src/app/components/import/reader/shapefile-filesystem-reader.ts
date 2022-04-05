@@ -1,6 +1,6 @@
-import { Reader } from './reader';
-import { JavaToolExecutor } from '../../../services/java/java-tool-executor';
-import { ReaderErrors} from './reader-errors';
+import {Reader} from './reader';
+import {JavaToolExecutor} from '../../../services/java/java-tool-executor';
+import {ReaderErrors} from './reader-errors';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -25,7 +25,7 @@ export class ShapefileFilesystemReader implements Reader {
         }
 
         try {
-            const data = fs.readFileSync(ShapefileFilesystemReader.getTempFilePath(), 'utf-8');
+            const data = await fs.promises.readFile(ShapefileFilesystemReader.getTempFilePath(), 'utf-8');
             fs.unlinkSync(ShapefileFilesystemReader.getTempFilePath());
             return data;
         } catch (err) {

@@ -1,5 +1,4 @@
 import { SampleDataLoaderBase } from 'idai-field-core';
-import { getAsynchronousFs } from '../../../getAsynchronousFs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
 
@@ -55,12 +54,10 @@ export class SampleDataLoader extends SampleDataLoaderBase {
             fs.createWriteStream(destFolderPath + '/' + fileName)
         );
 
-        const buffer: Buffer = await this.thumbnailGenerator.generate(
-            fs.readFileSync(srcFolderPath + fileName)
-        ) as Buffer;
+        const buffer: Buffer = await this.thumbnailGenerator.generate(fs.readFileSync(srcFolderPath + fileName)) as Buffer;
         const thumbnailDir = destFolderPath + '/thumbs';
 
-        fs.mkdirSync(thumbnailDir, { recursive: true });
+        fs.mkdirSync(thumbnailDir, {recursive: true});
         fs.writeFileSync(thumbnailDir + '/' + fileName, buffer);
     }
 
@@ -68,7 +65,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     private static async getFileNames(folderPath: string): Promise<string[]> {
 
         try {
-            return await getAsynchronousFs().readdir(folderPath);
+            return fs.promises.readdir(folderPath);
         } catch (err) {
             console.error('Could not find sample data folder: ' + folderPath);
             throw err;

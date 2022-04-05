@@ -1,7 +1,7 @@
-import { getAsynchronousFs } from '../getAsynchronousFs';
 import { Settings } from './settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
 
 
 /**
@@ -12,7 +12,7 @@ export class SettingsSerializer {
 
     public async load(): Promise<Settings> {
 
-        const content: string = await getAsynchronousFs().readFile(remote.getGlobal('configPath'), 'utf-8');       
+        const content: string = await fs.readFile(remote.getGlobal('configPath'), 'utf-8');       
         const settings = JSON.parse(content);
         settings.selectedProject = '';
         return remote.getGlobal('setConfigDefaults')(settings);
@@ -55,7 +55,7 @@ export class SettingsSerializer {
     private async writeConfigFile(config: any): Promise<void> {
 
         try {
-            await getAsynchronousFs().writeFile(remote.getGlobal('configPath'), JSON.stringify(config));
+            await fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config));
         } catch (err) {
             console.error('Error while trying to write config file', err);
             throw err;

@@ -5,6 +5,9 @@
 * Elixir >= 1.12 (Development)
 * Docker & docker-compose
 
+## CLI
+
+FieldHub provides its own command line interface, which is documented separately in [CLI.md](CLI.md).
 
 ## Deployment
 
@@ -54,8 +57,6 @@ mix phx.server
 ``` 
 
 FieldHub is now runnig at http://localhost:4000 (and your machines IP address and port 4000) as a sync target for your desktop client. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
-
-On how to create additional projects and users see [CLI.md](CLI.md), the same module is used for setup and seeding (see `aliases` function in [mix.exs](mix.exs)).
 
 
 ## Building a new docker image version

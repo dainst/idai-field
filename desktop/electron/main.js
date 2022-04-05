@@ -230,11 +230,9 @@ const createWindow = () => {
         mainWindow.setIcon(electron.nativeImage.createFromPath(path));
     }
 
-    // and load the index.html of the app.
-    mainWindow.loadURL(global.distUrl + 'index.html');
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    setTimeout(() => {
+        mainWindow.loadURL(global.distUrl + 'index.html');
+    }, 100);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
@@ -313,20 +311,22 @@ electron.app.on('window-all-closed', () => {
 
 electron.ipcMain.on('reload', (event, route) => {
     mainWindow.reload();
-    mainWindow.loadURL(
-        url.format(
-            global.mode === 'production'
-            ? {
-                pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
-                protocol: 'file:',
-                slahes: true,
-                hash: route
-            }
-            : {
-                pathname: 'localhost:4200/dist/index.html',
-                protocol: 'http:',
-                slahes: true,
-                hash: route
-            })
-    );
+    setTimeout(() => {
+        mainWindow.loadURL(
+            url.format(
+                global.mode === 'production'
+                ? {
+                    pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
+                    protocol: 'file:',
+                    slahes: true,
+                    hash: route
+                }
+                : {
+                    pathname: 'localhost:4200/dist/index.html',
+                    protocol: 'http:',
+                    slahes: true,
+                    hash: route
+                })
+        )
+    }, 100);
 });

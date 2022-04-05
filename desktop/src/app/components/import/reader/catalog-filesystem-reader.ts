@@ -1,4 +1,5 @@
-import { ImageStore } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { ImageStore, IdGenerator } from 'idai-field-core';
 import { Reader } from './reader';
 import { ReaderErrors } from './reader-errors';
 import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
@@ -37,19 +38,31 @@ export class CatalogFilesystemReader implements Reader {
             try {
                 await extract(this.file.path, { dir: tmpDir });
 
+                const idGenerator = new IdGenerator();
+                const replacementMap: Map<string> = {};
+
                 for (let imageFileName of fs.readdirSync(imgDir)) {
-                    if (!fs.existsSync(targetDir + imageFileName)) {
-                        fs.copyFileSync(imgDir + imageFileName, targetDir + imageFileName);
+                    const newImageFileName: string = idGenerator.generateId();
+                    replacementMap[imageFileName] = newImageFileName;
+
+                    if (!fs.existsSync(targetDir + newImageFileName)) {
+                        fs.copyFileSync(imgDir + imageFileName, targetDir + newImageFileName);
                         await this.imagestore.createThumbnail(
-                            imageFileName,
-                            fs.readFileSync(targetDir + imageFileName),
+                            newImageFileName,
+                            fs.readFileSync(targetDir + newImageFileName),
                             this.settings.selectedProject
                         );
                     }
                 }
 
-                resolve(fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8));
+                let jsonlString = fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8);
+                for (let imageId of Object.keys(replacementMap)) {
+                    jsonlString = jsonlString.replace(new RegExp(imageId, 'g'), replacementMap[imageId]);
+                }
+
+                resolve(jsonlString);
             } catch (err) {
+                console.error(err);
                 reject([ReaderErrors.CATALOG_GENERIC]);
             } finally {
                 fs.rmdirSync(tmpDir, { recursive: true });

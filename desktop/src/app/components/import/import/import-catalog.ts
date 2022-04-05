@@ -68,13 +68,13 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 importOneDocument(services, existingCatalogAndImageDocuments));
 
             await removeRelatedImages(
-                services, updateDocuments, existingDocumentsRelatedImages);
+                services, updateDocuments, existingDocumentsRelatedImages
+            );
             await removeObsoleteCatalogDocuments(
-                services, existingCatalogDocuments, updateDocuments);
+                services, existingCatalogDocuments, updateDocuments
+            );
             return { errors: [], successfulImports: updateDocuments.length };
-
         } catch (errWithParams) {
-
             await cleanUpLeftOverImagesFromReader(services, importDocuments);
             return { errors: [errWithParams], successfulImports: 0 };
         }

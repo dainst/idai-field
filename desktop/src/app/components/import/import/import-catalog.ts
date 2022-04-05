@@ -92,7 +92,7 @@ async function assertNoIdentifierClashes(services: ImportCatalogServices,
                 { constraints: { 'identifier:match': document.resource.identifier } });
 
         if (found.totalCount > 0
-            && (document.resource.id !== found.documents[0].resource.id
+            && (document.project !== found.documents[0].project
                 // This is just to double check. Even if it has the same id and same identifier
                 // we won't import it if it is owned by the user.
                 // Currrently reimport of catalog as owner is forbidden, so this won't interfere there.

@@ -6,7 +6,7 @@ import Ajv from 'ajv';
 // Not explicitely exported by idai-field-core, because it is only used for tests.
 import schema from '../../../../core/api-schemas/files-list.json';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = require('fs');
 const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
 
 

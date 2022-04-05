@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilesystemAdapterInterface } from 'idai-field-core';
-
-const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
+import { getAsynchronousFs } from '../getAsynchronousFs';
 
 
 /**
@@ -23,7 +22,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async writeFile(path: string, contents: any): Promise<void> {
 
         try {
-            return await fs.writeFile(path, contents);
+            return await getAsynchronousFs().writeFile(path, contents);
         } catch (err) {
             console.error('Error while trying to write file: ' + path, err);
             throw err;
@@ -33,7 +32,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
 
     public readFile(path: string): Promise<Buffer> {
 
-        return fs.readFile(path);
+        return getAsynchronousFs().readFile(path);
     }
 
 
@@ -42,7 +41,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
         if (!(await this.exists(path))) return;
 
         try {
-            return await fs.rm(path, { recursive });
+            return await getAsynchronousFs().rm(path, { recursive });
         } catch (err) {
             console.error('Error while trying to remove file: ' + path, err);
             throw err;
@@ -53,7 +52,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async mkdir(path: string, recursive: boolean = false): Promise<void> {
 
         try {
-            return await fs.mkdir(path, { recursive });
+            return await getAsynchronousFs().mkdir(path, { recursive });
         } catch (err) {
             console.error('Error while trying to create directory: ' + path, err);
             throw err;
@@ -64,7 +63,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async isFile(path: string): Promise<boolean> {
 
         try {
-            const stat = await fs.stat(path);
+            const stat = await getAsynchronousFs().stat(path);
             return stat.isFile();
         } catch (e) {
             return false;
@@ -75,7 +74,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
     public async isDirectory(path: string): Promise<boolean> {
 
         try {
-            const stat = await fs.stat(path);
+            const stat = await getAsynchronousFs().stat(path);
             return stat.isDirectory();
         } catch (e) {
             return false;
@@ -89,11 +88,11 @@ export class FsAdapter implements FilesystemAdapterInterface {
         let results = [];
         if (!(await this.isDirectory(folderPath))) return results;
 
-        const list: string[] = (await fs.readdir(folderPath)).filter(name => !name.includes('DS_Store'));
+        const list: string[] = (await getAsynchronousFs().readdir(folderPath)).filter(name => !name.includes('DS_Store'));
 
         for (const file of list) {
             const currentFile = folderPath + file;
-            const stat = await fs.stat(currentFile);
+            const stat = await getAsynchronousFs().stat(currentFile);
             if (stat && stat.isDirectory()) {
                 /* Recurse into a subdirectory, otherwise do not add directory to results. */
                 if (recursive) results = results.concat(await this.listFiles(currentFile, recursive));

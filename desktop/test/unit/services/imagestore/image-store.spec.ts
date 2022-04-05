@@ -1,4 +1,4 @@
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = require('fs');
 
 import { ImageStore, ImageVariant } from 'idai-field-core';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';

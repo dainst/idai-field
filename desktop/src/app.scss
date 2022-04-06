@@ -25,6 +25,7 @@ $mdi-font-path: 'fonts' !default;
 @import 'app/components/help/help';
 @import 'app/components/configuration/configuration';
 @import 'app/components/project/project';
+@import 'app/components/backup/backup';
 
 .search-help-tooltip {
   .tooltip-inner {

@@ -113,6 +113,7 @@
     "express": "4.17.1",
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
+    "extract-zip": "2.0.1",
     "geojson-rewind": "0.3.1",
     "idai-field-core": "^1.1.1",
     "jimp": "0.9.8",
@@ -130,7 +131,6 @@
     "systemjs": "0.21.5",
     "tsfun": "5.5.38",
     "tslib": "2.3.0",
-    "unzipper": "0.10.11",
     "viz.js": "1.8.1",
     "zone.js": "~0.10.2"
   },

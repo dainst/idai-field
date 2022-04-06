@@ -1,4 +1,5 @@
 const fsPromises = typeof window !== 'undefined' ? undefined : require('fs').promises;
+const extract = typeof window !== 'undefined' ? undefined : require('extract-zip');
 
 
 // If called from Electron app: Return fs.promises instance from Electron main process via window['filesystem']
@@ -19,19 +20,21 @@ const filesystem = {
     readdir: (path: string) => callFsFunction('readdir', path),
     mkdir: (path: string, options: any) => callFsFunction('mkdir', path, options),
     rm: (path: string, options: any) => callFsFunction('rm', path, options),
-    unlink: (path: string) => callFsFunction('unlink', path)
+    unlink: (path: string) => callFsFunction('unlink', path),
+    extractZip: (source: string, destination: string) => callFsFunction('extractZip', source, destination)
 };
 
 
 const fsPromisesWrapper = {
-    isFile: async (path: string) => isFile(path),
-    isDirectory: async (path: string) => isDirectory(path),
-    writeFile: async (path: string, contents: any) => fsPromises.writeFile(path, contents),
-    readFile: async (path: string, encoding?: string) => fsPromises.readFile(path, encoding),
-    readdir: async (path: string) => fsPromises.readdir(path),
-    mkdir: async (path: string, options: any) => fsPromises.mkdir(path, options),
-    rm: async (path: string, options: any) => fsPromises.rm(path, options),
-    unlink: async (path: string) => fsPromises.unlink(path)
+    isFile: (path: string) => isFile(path),
+    isDirectory: (path: string) => isDirectory(path),
+    writeFile: (path: string, contents: any) => fsPromises.writeFile(path, contents),
+    readFile: (path: string, encoding?: string) => fsPromises.readFile(path, encoding),
+    readdir: (path: string) => fsPromises.readdir(path),
+    mkdir: (path: string, options: any) => fsPromises.mkdir(path, options),
+    rm: (path: string, options: any) => fsPromises.rm(path, options),
+    unlink: (path: string) => fsPromises.unlink(path),
+    extractZip: (source: string, destination: string) => extractZip(source, destination)
 };
 
 
@@ -66,4 +69,10 @@ async function isDirectory(path: string): Promise<boolean> {
     } catch (error) {
         return false;
     }
+}
+
+
+function extractZip(source: string, destination: string): Promise<any> {
+
+    return extract(source, { dir: destination });
 }

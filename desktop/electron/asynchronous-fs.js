@@ -1,5 +1,6 @@
 const electron = require('electron');
 const fs = require('original-fs');
+const extract = require('extract-zip');
 
 
 electron.ipcMain.handle('isFile', async (_, path) => {
@@ -61,6 +62,14 @@ electron.ipcMain.handle('rm', async (_, path, options) => {
 electron.ipcMain.handle('unlink', async (_, path) => {
     try {
         return { result: await fs.promises.unlink(path) };
+    } catch (error) {
+        return { error };
+    }
+});
+
+electron.ipcMain.handle('extractZip', async (_, source, destination) => {
+    try {
+        return { result: await extract(source, { dir: destination }) };
     } catch (error) {
         return { error };
     }

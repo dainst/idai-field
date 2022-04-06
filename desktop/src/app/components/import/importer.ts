@@ -20,8 +20,8 @@ import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
 import { Reader } from './reader/reader';
 import { ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
-import {Settings} from '../../services/settings/settings';
-import {ImageRelationsManager} from '../../services/image-relations-manager';
+import { Settings } from '../../services/settings/settings';
+import { ImageRelationsManager } from '../../services/image-relations-manager';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 

@@ -1,11 +1,9 @@
-import {
-    ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, Output, SimpleChanges
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, Output,
+    SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
-import { FieldDocument, FieldGeometry, PouchdbDatastore } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
-import { ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
 import { FieldMarker } from './field-marker';

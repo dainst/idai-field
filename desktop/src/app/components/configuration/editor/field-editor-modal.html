@@ -10,7 +10,7 @@
             (click)="applyingChanges || !isChanged() || confirm()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
-    <button class="btn btn-primary"
+    <button class="btn btn-primary btn-square"
             [class.disabled]="applyingChanges"
             (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>
@@ -104,7 +104,7 @@
                             ngbTooltip="Werteliste wechseln"
                             i18n-ngbTooltip="@@configuration.replaceValuelist"
                             container="body"
-                            placement="right">
+                            placement="left">
                         <span class="mdi mdi-swap-horizontal"></span>
                     </button>
                     <button *ngIf="isEditValuelistButtonVisible()"
@@ -116,7 +116,7 @@
                             ngbTooltip="Werteliste bearbeiten"
                             i18n-ngbTooltip="@@configuration.editValuelist"
                             container="body"
-                            placement="right">
+                            placement="left">
                         <span class="mdi mdi-pencil"></span>
                     </button>
                 </li>

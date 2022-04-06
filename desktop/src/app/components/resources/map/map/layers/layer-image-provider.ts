@@ -1,8 +1,9 @@
-import {Injectable, SecurityContext} from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ImageVariant} from 'idai-field-core';
-import {ImageContainer} from '../../../../../services/imagestore/image-container';
-import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
+import { Injectable, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ImageVariant } from 'idai-field-core';
+import { ImageUrlMaker } from '../../../../../services/imagestore/image-url-maker';
+import { ImageContainer } from '../../../../../services/imagestore/image-container';
+
 
 @Injectable()
 /**

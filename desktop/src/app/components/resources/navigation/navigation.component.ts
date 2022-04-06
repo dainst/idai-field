@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {FieldDocument} from 'idai-field-core';
-import {Loading} from '../../widgets/loading';
-import {ProjectConfiguration} from 'idai-field-core';
-import {NavigationPath} from '../../../components/resources/view/state/navigation-path';
-import {ViewFacade} from '../../../components/resources/view/view-facade';
-import {NavigationService} from './navigation-service';
+import { Component } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
+import { Loading } from '../../widgets/loading';
+import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
+import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { NavigationService } from './navigation-service';
 
 
 type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string, shortened: boolean } };
@@ -35,8 +34,8 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
-            this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
             NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
+            this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
         });
     }
 

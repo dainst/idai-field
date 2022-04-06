@@ -13,7 +13,7 @@ export class TabSpaceCalculator {
     private static TABS_DROPDOWN_WIDTH: number = 42;
     private static BASIC_TAB_WIDTH: number = 73;
     private static MAX_TAB_WIDTH: number = 500;
-    private static FONT: string = '16px Roboto';
+    private static FONT: string = '16px \'Open SansVariable\'';
 
 
     public setTabSpaceWidth(tabSpaceWidth: number) {

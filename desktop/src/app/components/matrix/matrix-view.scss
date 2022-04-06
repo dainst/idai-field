@@ -9,7 +9,7 @@
 #matrix-view {
   position: relative;
   height: 50px;
-  padding-top: 1px;
+  padding: 6px;
   border-bottom: 1px solid $gray-200;
   z-index: 1001;
   user-select: none;
@@ -19,18 +19,11 @@
     margin-right: 4px;
   }
 
-  .btn:not(.dropdown-toggle-split) {
-    margin-right: 4px;
-  }
-
   .toolbar {
     padding-right: 5px;
   }
 
   .btn-group {
-    top: 4px;
-    padding-left: 8px;
-    margin-bottom: 4px;
     max-width: 100%;
   }
 

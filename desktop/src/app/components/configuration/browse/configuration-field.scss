@@ -11,7 +11,7 @@ configuration-field {
 
       &.opened,
       &:hover:not(.parent-element) {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: $list-item-hover-color;
         transition: background-color .5s ease;
       }
 
@@ -48,7 +48,7 @@ configuration-field {
 
     .card-body {
       padding-top: 0;
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
 
       .list-group {
         color: initial;

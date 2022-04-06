@@ -2,9 +2,10 @@
 // Variables
 // --------------------------------------------------
 
-$list-item-hover-color: #f5f5f5;
+$list-item-hover-color: #ededed;
 
 $primary: #37588e !default;
+$primary-button-color: #5572a1;
 
 $item-height: 58px;
 $item-padding-top: 8px;
@@ -18,9 +19,6 @@ $modal-header-font-color: #424242;
 
 $custom-highlight-color: #fff3cd;
 
-//== Typography
-$font-family-sans-serif: 'Roboto', Helvetica, Arial, sans-serif;
-
 //== Media queries breakpoints
 $grid-breakpoints: (
   xs: 0,
@@ -31,12 +29,15 @@ $grid-breakpoints: (
 ) !default;
 
 //== Navbar
-$navbar-default-color:       #fff !default;
-$navbar-default-bg:          rgba(85, 114, 161, 1) !default;
+$navbar-default-color:       #333 !default;
+$navbar-default-bg:          #ccc !default;
 $navbar-default-border:      transparent !default;
-$navbar-dark-color:          #fff !default;
+$navbar-dark-color:          #333 !default;
 
 $brand-primary:           #37588e !default;
+
+$border-radius: 2rem !default;
+$dropdown-border-radius: .25rem !default;
 
 // Windows Ctrl Buttons
 $ctrl-button-close:               #d9534f;
@@ -50,3 +51,6 @@ $popover-header-bg-color: darken($popover-bg-color, 5%);
 $popover-header-hover-bg-color: darken($popover-header-bg-color, 3%);
 $resources-listing-item-wide-width: 300px;
 $resources-listing-item-slim-width: 258px;
+
+$navbar-height: 45px;
+$toolbar-height: 49px;

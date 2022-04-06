@@ -80,7 +80,7 @@ export module DotBuilder {
     function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
                                    groups: { [group: string]: Array<Document> }): string {
 
-        return 'node [style=filled, fontname="Roboto"] '
+        return 'node [style=filled, fontname="Open SansVariable"] '
             + Object
                 .keys(groups)
                 .map(group => createNodeDefinitionsForGroup(
@@ -102,7 +102,7 @@ export module DotBuilder {
             ? nodeDefinitions
             : 'subgraph "cluster ' + group + '" '
                 + '{label="' + group + '" '
-                + 'fontname="Roboto" '
+                + 'fontname="Open SansVariable" '
                 + 'color=grey '
                 + 'bgcolor=aliceblue '
                 + 'style=dashed '

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { M } from '../../components/messages/m';
 import { ProjectConfiguration, RelationsManager, ImageStore, CategoryForm, Document, Datastore,
     Name, Relation } from 'idai-field-core';
+import { M } from '../../components/messages/m';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';
 import { buildImportDocuments } from './import/import-documents';

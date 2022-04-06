@@ -1,4 +1,5 @@
 .configuration-editor-modal-header {
+  height: 54px;
   padding: 7px;
   border-bottom: 1px solid #ccc;
   user-select: none;
@@ -28,9 +29,9 @@
 }
 
 .configuration-editor-modal-body {
+  @extend .bg-light;
   height: calc(100vh - 110px);
   overflow-y: auto;
-  background-color: #eee;
 
   .configuration-editor-section-title {
     margin-bottom: 10px;

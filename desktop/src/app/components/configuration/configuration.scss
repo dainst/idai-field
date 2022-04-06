@@ -26,6 +26,7 @@
 @import './add/valuelist/valuelist-listing';
 @import './add/valuelist/valuelist-preview';
 @import './add/valuelist/valuelist-search-bar';
+@import './add/valuelist/extend-valuelist-modal';
 @import './widgets/valuelist-view';
 @import './notifications/configuration-change-notification-modal';
 @import './conflicts/configuration-conflicts-modal';
@@ -42,7 +43,7 @@
   }
 
   #configuration-toolbar {
-    height: 49px;
+    height: $toolbar-height;
 
     #categories-filter {
       position: relative;
@@ -55,18 +56,18 @@
         text-overflow: ellipsis;
         cursor: default;
       }
-    
+
       #categories-filter-selection-menu {
         padding: 0;
-    
+
         #categories-filter-selection-buttons {
           max-height: calc(100vh - 350px);
           overflow-y: auto;
-    
+
           button:first-child {
             margin-top: 7px;
           }
-    
+
           button:last-child {
             margin-bottom: 7px;
           }
@@ -83,7 +84,7 @@
   }
 
   .sidebar {
-    height: calc(100vh - 100px);
+    height: calc(100vh - #{$navbar-height + $toolbar-height});
     padding: 0;
     margin: 0;
     background-color: $sidebar-bg-color;
@@ -97,10 +98,10 @@
         .category-item {
           transition: background-color .25s ease;
         }
-    
+
         .category-item:hover,
         .selected-category .category-item {
-          background-color: darken($list-item-hover-color, 5%) !important;
+          background-color: $list-item-hover-color !important;
           transition: background-color .5s ease;
         }
 
@@ -110,7 +111,7 @@
             background-color: darken($custom-highlight-color, 5%) !important;
           }
         }
-    
+
         .list-group-item {
           border-top: 1px solid #f8f9fa !important;
         }

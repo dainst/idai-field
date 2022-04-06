@@ -2,7 +2,7 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!hasSelectedImages()" class="col-sm-8 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [categories]="getQuery().categories"
@@ -13,7 +13,7 @@
             </div>
 
             <div *ngIf="!hasSelectedImages() && getDocuments() && getTotalDocumentCount()"
-                    class="col-sm-2 image-overview-nav-content">
+                    class="col-auto image-overview-nav-content">
                 <paging-buttons
                     [currentPage]="getCurrentPage()"
                     [pageCount]="getPageCount()"
@@ -24,11 +24,11 @@
                 </paging-buttons>
             </div>
 
-            <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">
+            <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col">
                 <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
             </div>
 
-            <div class="col-sm-2 text-right slider-container">
+            <div class="col-auto text-right slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
                       (click)="decreaseNrImagesPerRow()"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrImagesPerRow()}}"

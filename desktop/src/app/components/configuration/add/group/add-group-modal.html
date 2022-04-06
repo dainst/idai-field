@@ -1,10 +1,10 @@
-<div class="modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 class="modal-title" i18n="@@configuration.addGroup">Gruppe hinzufügen</h5>
 </div>
 
-<div class="modal-body row add-group-modal-body">
+<div class="modal-body row add-group-modal-body bg-light">
     <div class="col">
-        <div class="input-group mb-2">
+        <div class="mb-2">
             <input type="text"
                    id="group-name"
                    class="form-control"
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer bg-light">
     <div id="confirm-selection-button"
          class="btn btn-success"
          [class.disabled]="!selectedGroup"

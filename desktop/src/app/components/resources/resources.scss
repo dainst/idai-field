@@ -42,13 +42,11 @@ $deactivated-button-color: lightgray;
   color: $deactivated-button-color;
 }
 
-
 .resources-nav {
   position: relative;
   z-index: 1009;
-  height: 49px;
-  padding-top: 2px;
-  padding-bottom: 6px;
+  height: $toolbar-height;
+  padding-top: 3px;
 
   #search-bar-container {
     padding-right: 8px;
@@ -60,21 +58,9 @@ $deactivated-button-color: lightgray;
   }
 
   #buttons-container {
-    padding-left: 0;
-    padding-right: 8px;
-
     .resources-mode-buttons {
       margin-top: 3px;
-      margin-bottom: -1px;
-      width: 100% !important;
-
-      button {
-        width: 50% !important;
-
-        &.active {
-          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
-        }
-      }
+      margin-right: 8px;
     }
   }
 }
@@ -133,7 +119,7 @@ $deactivated-button-color: lightgray;
     transition: background-color .25s ease;
 
     &:hover {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
       transition: background-color .5s ease;
     }
   }

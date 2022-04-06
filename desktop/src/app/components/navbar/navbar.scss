@@ -70,6 +70,10 @@ $border-radius: 4px;
 
   .btn-link {
     color: $navbar-link-color;
+
+    &:hover {
+      background-color: #c8c8c8;
+    }
   }
 }
 

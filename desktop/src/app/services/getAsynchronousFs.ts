@@ -21,7 +21,9 @@ const filesystem = {
     mkdir: (path: string, options: any) => callFsFunction('mkdir', path, options),
     rm: (path: string, options: any) => callFsFunction('rm', path, options),
     unlink: (path: string) => callFsFunction('unlink', path),
-    extractZip: (source: string, destination: string) => callFsFunction('extractZip', source, destination)
+    extractZip: (source: string, destination: string) => callFsFunction('extractZip', source, destination),
+    createCatalogZip: (outputFilePath, filePath, fileName, imageDirPath, imageDirName) =>
+        callFsFunction('createCatalogZip', outputFilePath, filePath, fileName, imageDirPath, imageDirName)
 };
 
 
@@ -34,7 +36,8 @@ const fsPromisesWrapper = {
     mkdir: (path: string, options: any) => fsPromises.mkdir(path, options),
     rm: (path: string, options: any) => fsPromises.rm(path, options),
     unlink: (path: string) => fsPromises.unlink(path),
-    extractZip: (source: string, destination: string) => extractZip(source, destination)
+    extractZip: (source: string, destination: string) => extractZip(source, destination),
+    createCatalogZip: () => {} // Not used in tests
 };
 
 

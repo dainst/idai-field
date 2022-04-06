@@ -1,6 +1,7 @@
 const electron = require('electron');
 const fs = require('original-fs');
 const extract = require('extract-zip');
+const archiver = require('archiver');
 
 
 electron.ipcMain.handle('isFile', async (_, path) => {
@@ -74,3 +75,29 @@ electron.ipcMain.handle('extractZip', async (_, source, destination) => {
         return { error };
     }
 });
+
+electron.ipcMain.handle('createCatalogZip', async (_, outputFilePath, filePath, fileName,
+        imageDirPath, imageDirName) => {
+    try {
+        return { result: await createCatalogZip(outputFilePath, filePath, fileName, imageDirPath, imageDirName) };
+    } catch (error) {
+        return { error };
+    }
+});
+
+
+function createCatalogZip(outputFilePath, filePath, fileName, imageDirPath, imageDirName) {
+
+    return new Promise((resolve, reject) => {
+        const archive = archiver('zip');
+        archive.on('error', err => reject(err));
+
+        const output = fs.createWriteStream(outputFilePath);
+        output.on('close', () => resolve());
+
+        archive.pipe(output);
+        archive.file(filePath, { name: fileName });
+        archive.directory(imageDirPath, imageDirName);
+        archive.finalize();
+    });
+}

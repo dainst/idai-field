@@ -12,3 +12,6 @@ window.filesystem.unlink = function(path) { return ipcRenderer.invoke('unlink', 
 window.filesystem.extractZip = function(source, destination) {
     return ipcRenderer.invoke('extractZip', source, destination);
 };
+window.filesystem.createCatalogZip = function(outputFilePath, filePath, fileName, imageDirPath, imageDirName) {
+    return ipcRenderer.invoke('createCatalogZip', outputFilePath, filePath, fileName, imageDirPath, imageDirName);
+};
